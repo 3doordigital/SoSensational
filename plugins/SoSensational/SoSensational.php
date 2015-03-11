@@ -1,0 +1,337 @@
+<?php
+/*
+Plugin Name: So Sensational
+Plugin URI:
+Description: So Sensational Brands & Boutiques
+Version: 0.1
+Author: 3doordigital.com 
+Developement
+Author URI: http://www.3doordigital.com
+*/
+
+/*Definitions*/
+if(!defined('SOSENSATIONAL_URL'))
+	define('SOSENSATIONAL_URL',WP_PLUGIN_URL.'/SoSensational');
+if(!defined('SOSENSATIONAL_DIR'))
+	define('SOSENSATIONAL_DIR',WP_PLUGIN_DIR.'/SoSensational');
+if(!defined('SITE_URL'))
+	define('SITE_URL',site_url());
+	
+require_once(SOSENSATIONAL_DIR . '/BFI_Thumb.php');
+
+ 
+/*Includes*/
+require_once (dirname(__FILE__).'/custom-post-types.php');
+require_once (dirname(__FILE__).'/custom-shortcodes.php');
+require_once (dirname(__FILE__).'/custom-sizes.php');
+require_once (dirname(__FILE__).'/page_settings.php');
+
+
+register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
+register_activation_hook( __FILE__, 'add_pages_on_plugin_activation' );
+register_activation_hook( __FILE__, 'move_template_pages_on_plugin_activation');
+
+add_theme_support( 'infinite-scroll', array(
+    'container'    => 'infiniteScroll',
+) );
+
+
+
+
+
+function add_roles_on_plugin_activation() {
+
+remove_role('boutique_role');
+remove_role('brand_role');
+
+       add_role( 'boutique_role', 'Boutique Role', 
+       	array( 
+		       	'read' => true, 
+		       	'delete_posts' => true,
+		       	'edit_posts' => true,
+		       	'edit_published_posts' => true,
+		       	'upload_files' => true,    
+		       	'publish_posts' => true,  
+		       	'publish_pages'=> true,
+		       	'edit_pages' => true,
+		       	'delete_pages' => true, 
+		       	'delete_published_posts' => true,
+                'create_posts' => true,	
+       		) 
+       	);
+        add_role( 'brand_role', 'Brand Role', 
+       	array( 
+		       	'read' => true, 
+		       	'delete_posts' => true,
+		       	'edit_posts' => true,
+		       	'edit_published_posts' => true,
+		       	'upload_files' => true,    
+		       	'publish_posts' => true,  
+		       	'publish_pages'=> true,
+		       	'edit_pages' => true,
+		       	'delete_pages' => true, 
+		       	'delete_published_posts' => true,	
+                'create_posts' => true, 
+
+		     ) 
+       	);
+
+        $boutique_role = get_role('boutique_role'); $boutique_role->add_cap('level_1');
+        $brand_role = get_role('brand_role'); $brand_role->add_cap('level_1');
+}
+
+function brand_boutique_no_admin_access()
+{
+    
+    if ( 
+        current_user_can( 'brand_role' )
+        OR current_user_can( 'boutique_role' )
+    )
+        exit( wp_redirect(SITE_URL.'/ss_directory/') );
+}
+add_action( 'admin_init', 'brand_boutique_no_admin_access', 100 );
+
+
+
+
+function CopyFile($filename) {
+
+      $TemplateFileSourceURL = SOSENSATIONAL_DIR . '/theme-files/'.$filename;
+      $TemplateFileTargetURL = get_stylesheet_directory() .'/'. $filename; 
+      if (file_exists($TemplateFileTargetURL)){
+        return FALSE;
+      }
+      if ( !file_exists( $TemplateFileSourceURL ) ) {
+        return FALSE;
+      }
+
+      $GetTemplate = file_get_contents( $TemplateFileSourceURL );
+      if ( !$GetTemplate ) {
+        return FALSE;
+      }
+
+      $WriteTemplate = file_put_contents( $TemplateFileTargetURL, $GetTemplate );
+      if ( !$WriteTemplate ) {
+        return FALSE;
+      }
+      return TRUE;
+    }
+
+function move_template_pages_on_plugin_activation(){
+    $filenames=array(
+        'page-add-product.php',
+        'page-edit-advertiser.php',
+        'page_ss_category.php',
+        'single-boutiques.php',
+        'single-brands.php',
+        'single-products.php',
+        'taxonomy-ss_category.php',
+        );
+
+    foreach($filenames as $filename){
+   //     CopyFile($filename);
+    }
+}
+
+function check_page_by_slug($slug){
+    $args=array(
+      'name' => $slug,
+      'post_type' => 'page',
+      'post_status' => 'publish',
+      'page_template' => 'page-add-product.php',
+
+    );
+   return $my_posts = get_posts($args);
+}
+function add_pages_on_plugin_activation(){
+    //page add product
+    $post_add_product = array(
+      'page_template' => 'page-add-product.php' ,
+      'comment_status' => 'closed',
+      'ping_status' => 'open',
+      'post_author' => 1,
+      'post_content' => '[ss_product]' ,
+      'post_name' => 'add-product',
+      'post_status' => 'publish',
+      'post_title' => 'Add product',
+      'post_type' => 'page',
+    );  
+    $check=check_page_by_slug('add-product');
+    if(empty($check)){
+     //   wp_insert_post( $post_add_product );
+    }
+
+    //page all categories
+    $post_all_cats = array(
+      'page_template' => 'page_ss_category.php' ,
+      'comment_status' => 'closed',
+      'ping_status' => 'open',
+      'post_author' => 1,
+      'post_content' => '' ,
+      'post_name' => 'all-categories',
+      'post_status' => 'publish',
+      'post_title' => 'All categories',
+      'post_type' => 'page',
+    );  
+    $check_all_cats=check_page_by_slug('all-categories');
+    if(empty($check_all_cats)){
+       // wp_insert_post( $post_all_cats );
+    }
+
+       //page edit advertiser
+    $post_edit_adv = array(
+      'page_template' => 'page-edit-advertiser.php' ,
+      'comment_status' => 'closed',
+      'ping_status' => 'open',
+      'post_author' => 1,
+      'post_content' => '[ss_edit_advertiser]' ,
+      'post_name' => 'edit-advertiser',
+      'post_status' => 'publish',
+      'post_title' => 'Edit advertiser',
+      'post_type' => 'page',
+    );  
+    $check_edit_adv=check_page_by_slug('edit-advertiser');
+    if(empty($check_edit_adv)){
+        //wp_insert_post( $post_edit_adv );
+    }
+}
+add_filter( 'page_template', 'edit_advertiser_page_template' );
+add_action( 'ss_css', 'load_ss_css');
+function load_ss_css(){
+	    wp_enqueue_style('SoSensationalCSS', plugins_url( 'SoSensational/sosensational.css'));
+
+}
+
+function edit_advertiser_page_template( $page_template )
+{
+    if ( is_page( 'my-custom-page-slug' ) ) {
+        $page_template = dirname( __FILE__ ) . '/web/edit-.php';
+    }
+    return $page_template;
+}
+
+
+
+function ss_rewrite_rule(){
+	
+	  add_rewrite_rule(
+       'brands-and-boutiques/([^/]*)/?([^/]*)/?([^/]*)/?([^/]*)/?$',
+       'index.php?pagename=brands-and-boutiques&ss_cat=$matches[1]&ss_sub_cat=$matches[2]&ss_advertiser=$matches[3]',
+      'top'
+  );
+    add_rewrite_rule(
+        'store/([^/]*)/?$',
+        'index.php?pagename=store&ss_advertiser=$matches[1]',
+        'top'
+    );
+
+	add_permastruct('brands', '/brands-and-boutiques/%post_title%');
+}
+
+add_action( 'init', 'ss_rewrite_rule' );
+
+function ss_query_vars($query_vars) {
+    $query_vars[] = 'ss_cat';
+    $query_vars[] = 'ss_sub_cat';
+	$query_vars[] = 'ss_advertiser';
+	$query_vars[] = 'paged';
+
+    return $query_vars;
+}
+
+add_filter( 'query_vars', 'ss_query_vars' );
+
+
+
+function create_firstpost( $user_id ) {
+
+
+	if (isset($_POST['action']))
+	{
+    if ( ( $_POST['action'] == "createuser" ) )
+	{
+		if 	($_POST['role'] == "brand_role") 
+		{
+			$post_type = "brands";
+				
+		} elseif ($_POST['role'] == "boutique_role")
+		{
+			$post_type = "boutiques";			
+		}
+		 $post1=array(
+		'post_title' => "Untitled Company",
+		'post_type' => $post_type,
+		'post_status' => 'draft',
+		'post_author' => $user_id,
+		);
+
+   		$post_id=wp_insert_post($post1);
+   
+	}
+	}
+}
+
+add_action( 'user_register', 'create_firstpost', 10, 1 );
+
+/* Change Login Form */
+
+function my_loginlogo() {
+  echo '<style type="text/css">
+    h1 a {
+      background-image: url(' . get_template_directory_uri() . '/images/logo.png) !important;
+    }
+  </style>';
+}
+add_action('login_head', 'my_loginlogo');
+
+function my_loginURL() {
+    return site_url();
+}
+add_filter('login_headerurl', 'my_loginURL');
+
+function my_logincustomCSSfile() {
+    wp_enqueue_style('login-styles', SOSENSATIONAL_URL . '/login_styles.css');
+}
+add_action('login_enqueue_scripts', 'my_logincustomCSSfile');
+
+
+function wpss_plugin_activation() {
+ 
+    flush_rewrite_rules();
+}
+register_activation_hook( __FILE__, 'wpss_plugin_activation');
+
+function wpss_plugin_deactivation() {
+ 
+    flush_rewrite_rules();
+}
+register_activation_hook( __FILE__, 'wpss_plugin_deactivation');
+
+
+function pbd_alp_init() {
+ 	global $wp_query;
+ 
+ 		// Queue JS and CSS
+ 		wp_enqueue_script(
+ 			'pbd-alp-load-posts',
+ 			plugin_dir_url( __FILE__ ) . 'sosensational-script.js',
+ 			array('jquery'),
+ 			'1.0',
+ 			false
+ 		);
+
+} // end pbd init
+
+add_action('template_redirect', 'pbd_alp_init');
+ 
+ 
+
+function wpa54064_inspect_scripts() {
+    global $wp_scripts;
+    foreach( $wp_scripts->queue as $handle ) :
+        echo $handle . ' | ';
+    endforeach;
+}
+//add_action( 'wp_print_scripts', 'wpa54064_inspect_scripts' );
+
+?>

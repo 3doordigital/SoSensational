@@ -1,0 +1,6 @@
+/backup-wp/
+index.php
+/themes/
+!/themes/sosen_theme/
+/upgrade/
+/uploads/
