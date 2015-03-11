@@ -1,0 +1,52 @@
+.wp-core-ui .button.productButton {
+    
+    margin-right: 10px;
+    margin-bottom: 10px;
+    
+}
+.wp-core-ui .button.productButton span {
+    color: red;   
+}
+#productSelects {
+    padding: 15px 0;
+    padding-top: 0;
+}
+.searchtable .form-table td {
+    vertical-align: top;
+}
+.searchtable p.submit {
+    margin-top: 0;
+    padding-top: 0;
+}
+.postbox .delete {
+    float: right;
+}
+.productList th {
+    font-weight: bold;
+}
+.productList th a {
+    font-weight: normal;
+    font-size: 13px;
+    text-decoration: underline;
+    margin-left: 10px;
+}
+.tags .tag, .colours .tag {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-top: 5px;
+    color: #555;
+    border-color: #ccc;
+    background: #f7f7f7;
+    -webkit-box-shadow: inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);
+    box-shadow: inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+.wp-list-table .column-img, .wp-list-table .column-price { width: 75px; }
