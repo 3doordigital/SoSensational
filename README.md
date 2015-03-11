@@ -4,7 +4,7 @@
 
 **AM:** Maria Sulisz
 
-**Osoby pracujace:** 
+**Osoby pracujące:** 
 - Łukasz Tarasiewicz ([@ltarasiewicz](https://github.com/ltarasiewicz))
 - dantaylorseo ([@dantaylorseo](https://github.com/dantaylorseo))
 - marccclevy ([@marccclevy](https://github.com/marccclevy))
