@@ -83,6 +83,8 @@
 </div>
 <div id="subfoot" class="container">
 	&copy; Copyright 3 Door Digital
+    <?php $page_id = $wp_query->get_queried_object_id();
+echo get_post_meta( $page_id, '_wp_page_template', true ); ?>
 </div>
 <?php wp_footer(); ?>
 </body>
