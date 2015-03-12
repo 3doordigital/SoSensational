@@ -213,7 +213,7 @@ function edit_advertiser_page_template( $page_template )
 
 
 function ss_rewrite_rule(){
-	
+    
 	  add_rewrite_rule(
        'brands-and-boutiques/([^/]*)/?([^/]*)/?([^/]*)/?([^/]*)/?$',
        'index.php?pagename=brands-and-boutiques&ss_cat=$matches[1]&ss_sub_cat=$matches[2]&ss_advertiser=$matches[3]',
@@ -319,6 +319,7 @@ function pbd_alp_init() {
  			'1.0',
  			false
  		);
+                wp_enqueue_script('custom-scripts', plugin_dir_url( __FILE__ ) . 'js/custom-scripts.js', array('pbd-alp-load-posts'), '120215', false);
 
 } // end pbd init
 
@@ -334,4 +335,12 @@ function wpa54064_inspect_scripts() {
 }
 //add_action( 'wp_print_scripts', 'wpa54064_inspect_scripts' );
 
+
+//function addCustomScripts() {
+//    wp_enqueue_scripts('custom-scripts', plugin_dir_path(__FILE__) . '/js/custom-scripts.js', array('jquery'), '120215');
+//}
+//
+//add_action('wp_enqueue_scripts', 'addCustomScripts');
+
 ?>
+

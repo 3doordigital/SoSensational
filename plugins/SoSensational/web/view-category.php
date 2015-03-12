@@ -5,7 +5,7 @@ $cat_params = array( 'width' => 367, 'height' => 240, 'crop' => true );
 
 global $wpdb;
 $category_id = isset($ss_sub_cat_id) ? $ss_sub_cat_id : "";
-	
+
 if(!empty($ss_cat_id)):
 
 	$category_id = preg_replace('/[^-a-zA-Z0-9_]/', '', $ss_cat_id);
@@ -64,6 +64,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
                  <div class="col-md-8 fadebox showme animated fadeIn" style="visibility: visible;">
                     <?php $children = get_term_children($category->term_id, get_query_var('taxonomy')); // get children 
                           $term_meta = get_option( "taxonomy_$category->term_id" );
+                          
 ?>
                         <a href="<?php echo get_site_url().'/brands-and-boutiques/'. $ss_cat . '/' . $category->slug.'/'; ?>" class="aHolderImgSS">
                             <img  src="<?php echo $term_meta['ss_cat_image']; ?>" class="img-responsive" />
@@ -145,6 +146,7 @@ $args = array(
 );
 
 	$term_meta = get_term_by("id",$category_id,"ss_category");
+
 	
     ?>     
 	     <h1><span><?php echo $term_meta->name; ?></span></h1>
@@ -181,13 +183,13 @@ $args = array(
 var pbd_alp = {"startPage":"1","maxPages":"<? echo $max; ?>","nextLink":"<? echo $_SERVER['REQUEST_URI'] ?>?p_num=<? echo $p_num; ?>"};
 /* ]]> */
 </script>
-<?
+<?php
 
 
         while ($my_query->have_posts()) : $my_query->the_post();
 		 ?>
                     <div class="post col-md-8 ss_border fadebox ss_advertisers_cats showme animated fadeIn <?php if($counterRows == 3) { echo 'breakRowClass';} ?>" style="visibility: visible;">
-<?
+<?php
 $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$my_query->post->post_author}' ", OBJECT );
 $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
 // echo "<pre>"; print_r($advertiser); echo "</pre>"; 
