@@ -48,6 +48,12 @@ jQuery(document).ready(function($) {
 		});
 	});
 	
+    if( typeof( minPrice ) == 'undefined' )
+        minPrice = 0;
+    
+    if( typeof( maxPrice ) == 'undefined' )
+        maxPrice = 0;
+    
     $( "#slider-range" ).slider({
       range: true,
       min: minPrice,
