@@ -54,6 +54,9 @@ jQuery(document).ready(function($) {
     if( typeof( maxPrice ) == 'undefined' )
         maxPrice = 0;
     
+    if( typeof( valuesPrice ) == 'undefined' )
+        valuesPrice = 0;
+    
     $( "#slider-range" ).slider({
       range: true,
       min: minPrice,
