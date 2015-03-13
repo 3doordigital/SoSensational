@@ -199,6 +199,7 @@ add_filter( 'page_template', 'edit_advertiser_page_template' );
 add_action( 'ss_css', 'load_ss_css');
 function load_ss_css(){
 	    wp_enqueue_style('SoSensationalCSS', plugins_url( 'SoSensational/sosensational.css'));
+            wp_enqueue_style('tags-input', plugins_url( 'SoSensational/js/tagsinput/bootstrap-tagsinput.css'));
 
 }
 
@@ -320,6 +321,7 @@ function pbd_alp_init() {
  			false
  		);
                 wp_enqueue_script('custom-scripts', plugin_dir_url( __FILE__ ) . 'js/custom-scripts.js', array('pbd-alp-load-posts'), '120215', false);
+                wp_enqueue_script('tagsinput-scripts', plugin_dir_url( __FILE__ ) . 'js/tagsinput/bootstrap-tagsinput.min.js', array('bootstrap-js'), '130215', false);
 
 } // end pbd init
 

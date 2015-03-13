@@ -30,5 +30,10 @@
 
 jQuery(document).ready(function($) {
     var elem = $('#charNum');
-    $('#advertiser_co_desc').limiter(180, elem);
+
+    if ($('#advertiser_co_desc').length) {
+        $('#advertiser_co_desc').limiter(180, elem);        
+    }
+
+
 });

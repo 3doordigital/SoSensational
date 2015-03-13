@@ -30,7 +30,7 @@ do_action('ss_css');
 	'author' => $user->ID 
 	);
          
-	?> <ul class="nav nav-pills nav-stacked"> <?
+	?> <ul class="nav nav-pills nav-stacked"> <?php
  
       $my_query = new WP_Query($args);
 	  $num_of_products = 0;

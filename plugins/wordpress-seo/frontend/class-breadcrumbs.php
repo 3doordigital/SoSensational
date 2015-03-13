@@ -656,7 +656,7 @@ class WPSEO_Breadcrumbs {
 
 		$link['url']  = get_term_link( $term );
 		$link['text'] = $bctitle;
-
+		var_dump($link);
 		return $link;
 	}
 

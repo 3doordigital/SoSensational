@@ -155,6 +155,8 @@ $args = array(
             yoast_breadcrumb('<div id="breadcrumbs">','</div>');
         } 
     ?>
+             
+<?php if ( function_exists( 'breadcrumb_trail' ) ) breadcrumb_trail(); ?>             
 
     <div class="category_ss_title_under">
     <span class="left_ss"><?php echo $term_meta->description; ?> </span>

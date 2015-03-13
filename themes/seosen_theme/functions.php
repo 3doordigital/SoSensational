@@ -331,3 +331,17 @@ function ST4_columns_content_only_movies($column_name, $post_ID) {
         echo $meta_values;
     }
 }
+
+// add_filter('wpseo_breadcrumb_single_link', 'breadcrumbLinksOutput');
+
+// function breadcrumbLinksOutput($links) {
+
+// 	var_dump($links);
+
+// }
+
+// add_filter('wpseo_breadcrumb_links', 'editBreadcrumbLinks');
+
+// function editBreadcrumbLinks($breadcrumbs) {
+// 	var_dump($breadcrumbs);
+// }
