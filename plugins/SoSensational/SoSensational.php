@@ -343,6 +343,3 @@ function wpa54064_inspect_scripts() {
 //}
 //
 //add_action('wp_enqueue_scripts', 'addCustomScripts');
-
-?>
-
