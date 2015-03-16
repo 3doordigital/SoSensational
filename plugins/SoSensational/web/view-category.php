@@ -120,6 +120,7 @@ $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $args = array(
     'post_type' => $post_type,
     'post_per_page' => 12,
+    'showposts' => 12,
     'post_status' => 'publish',
 	'author__in'  => $users,
     'tax_query' => array(
