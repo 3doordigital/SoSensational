@@ -491,4 +491,7 @@ color: #a0862a;
 	/* Opera 11.10+ */ background: -o-linear-gradient(#f5f5f5, #eaeaea);
 }
 
-
+.pagination-centered {
+    float: right;
+    margin-right: 10px;
+}

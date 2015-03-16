@@ -63,6 +63,7 @@
 		//	echo $ss_sub_cat;
 			$tax_term = get_term_by("slug",$ss_sub_cat,'ss_category',OBJECT);
 		//	print_r($tax_term);
+                        
 			
 			if (!empty($tax_term)) 		
 			{

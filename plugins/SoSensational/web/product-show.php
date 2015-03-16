@@ -11,18 +11,23 @@ do_action('ss_css');
 	$options = get_option( 'ss_settings' );
 	$user=wp_get_current_user();
 	$advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$user->ID}' ", OBJECT );
-	$advertisers_type = $advertiser[0]->post_type;
+                
+        $currentUserRole = $user->roles[0];
+        
 	$post_categories_available =  get_the_terms($advertiser[0]->ID,'ss_category');
 
-	if ($advertisers_type == "brands")
+        /**
+         * Determine the allowed uploads limit based on the user role - brand_role/ boutique_role
+         */
+	if ($currentUserRole == "brand_role")
 	{
 		$allowed_products = $options['ss_products_per_brand'];
-	} else 
+	} else
 	{
 		$allowed_products = $options['ss_products_per_boutique'];	
 	}
 
-	
+        
 	$args = array(
     'post_type' => 'products',
     'showposts' => -1,
@@ -30,7 +35,7 @@ do_action('ss_css');
 	'author' => $user->ID 
 	);
          
-	?> <ul class="nav nav-pills nav-stacked"> <?
+	?> <ul class="nav nav-pills nav-stacked"> <?php
  
       $my_query = new WP_Query($args);
 	  $num_of_products = 0;
@@ -44,7 +49,7 @@ do_action('ss_css');
                    		<a href="/add-product/?action=edit&product_id=<?php echo get_the_ID(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
                        	 <img class="ss_product_img" src="<?php echo get_post_meta( get_the_ID(), 'ss_product_image', true ); ?>" />  
                          <span class="large_font"><?php the_title(); ?></span>
-                     	
+                     
                 		</a>
                     </li>
 <?php endwhile; else : ?>
@@ -57,14 +62,14 @@ do_action('ss_css');
 	<?php endif; ?>
  
 </ul>
-<? if ($num_of_products < $allowed_products) { ?><br /><br />
+<?php if ($num_of_products < $allowed_products) { ?><br /><br />
                    		<a href="/add-product/" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
 
 <button type="button" class="btn btn-default navbar-btn">Add A New Product</button>
-<h4>You have entered <? echo $num_of_products ?> of <? echo $allowed_products ?> products</h4>
+<h4>You have entered <?php echo $num_of_products ?> of <?php echo $allowed_products ?> products</h4>
               <!--          	 <img class="ss_category_img" src="<?php echo get_post_meta( get_the_ID(), 'ss_logo', true ); ?>" />    -->
                 		</a>
-<? } ?>
+<?php } ?>
 
 
     <nav>

@@ -32,7 +32,7 @@ if (!empty($success_code)) :
 
 <div class="alert alert-success" role="alert"><? echo $display_message; ?></div>
 
-<?
+<?php
 elseif (!empty($error_code)) :
   switch($error_code)
         {
@@ -49,9 +49,9 @@ elseif (!empty($error_code)) :
 <div class="alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   <span class="sr-only">Error:</span>
-	<? echo $display_message ?>
+	<?php echo $display_message ?>
 </div>
-<?
+<?php
 endif; 
 
 ?> 
@@ -94,7 +94,7 @@ endif;
 <br />
 <div class="input-group">
   <span class="input-group-addon input-width" id="basic-addon1">Product Tags:</span>
-<input type="text" name="post_tags" id="post_tags" value="<?php echo $post_tags ;?>"   class="required form-control" aria-describedby="basic-addon1" />
+<input type="text" name="post_tags" id="post_tags" data-role="tagsinput" value="<?php echo $post_tags ;?>" class="required form-control" aria-describedby="basic-addon1" />
 </div>
 <br />
 
@@ -116,6 +116,7 @@ endif;
     <li class="previous"><a href="/view-products"><span aria-hidden="true">&larr;</span> Go Back To View Products </a></li>
   </ul>
 </nav>
+
 <script>
 function checkImage()
 {

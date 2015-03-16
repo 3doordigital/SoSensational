@@ -22,7 +22,7 @@ $options = get_option( 'ss_settings' );
     <li class="previous"><a href="/ss_directory"><span aria-hidden="true">&larr;</span> Go Back To Menu </a></li>
   </ul>
 </nav>
-<?
+<?php
 
 
 $error_code=isset($_GET['error_code']) ? $_GET['error_code'] : "";
@@ -41,7 +41,7 @@ if (!empty($success_code)) :
 
 <div class="alert alert-success" role="alert"><? echo $display_message; ?></div>
 
-<?
+<?php
 elseif (!empty($error_code)) :
   switch($error_code)
         {
@@ -56,7 +56,7 @@ elseif (!empty($error_code)) :
   <span class="sr-only">Error:</span>
 	<? echo $display_message ?>
 </div>
-<?
+<?php
 endif; 
 
 
@@ -128,7 +128,7 @@ $post_categories =  get_the_terms( $advertiser[0]->ID,'ss_category');
 <form action="<?php echo SOSENSATIONAL_URL?>/web/edit-advertiser-action.php" method="POST" enctype="multipart/form-data" >
     <input type="hidden" name="post_type" value="<?php echo $advertiser[0]->post_type ?>"/>
     <input type="hidden" name="post_id" value="<?php echo $advertiser[0]->ID ?>"/>
-<? 
+<?php
 	if ($advertiser[0]->post_type == "brands")
 	{
 		$cats_allowed = $options['ss_categories_per_brand'];
@@ -180,7 +180,7 @@ $post_categories =  get_the_terms( $advertiser[0]->ID,'ss_category');
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">1 Line Company Description:<br /><samll>Max 235 Characters</small> <br /><div id="charNum"></div></span>
+  <span class="input-group-addon input-width" id="basic-addon1">1 Line Company Description:<br /><div id="charNum"></div></span>
 	<textarea name="sosensational_options[advertiser_co_desc]" id="advertiser_co_desc"  class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_advertiser_co_desc'][0]) ? $meta['ss_advertiser_co_desc'][0] : "";?></textarea>
    
 </div>
@@ -265,7 +265,7 @@ $post_categories =  get_the_terms( $advertiser[0]->ID,'ss_category');
         <h3>Please choose up to <? echo $cats_allowed ?> categories</h3>
        
 <div id="num_checked"></div>
-       <? $count =0; ?>
+       <?php $count =0; ?>
    
         <?php foreach($categories as $category):
 		$count++;
@@ -326,7 +326,7 @@ var n = jQuery( "input:checked" ).length;
 //jQuery( "#num_checked" ).text( "number of categories chosen " + n + (n === 1 ? " is" : " are") + " checked!" );
 
 jQuery( "#num_checked" ).text( "number of categories chosen -" + n );
-if (n >= <? echo $cats_allowed ?>) { 
+if (n >= <?php echo $cats_allowed ?>) { 
 		
   jQuery(':checkbox:not(:checked)').prop('disabled', true);  
   } else  {
@@ -343,7 +343,7 @@ function disableVideoBoxes()
 
 	if (image_video == "")
 	{
-		var image_video = "<?  echo isset($meta['ss_image_video'][0]) ? $meta['ss_image_video'][0] : "" ?>"
+		var image_video = "<?php  echo isset($meta['ss_image_video'][0]) ? $meta['ss_image_video'][0] : "" ?>"
 	}
 
 	if ((image_video_text == "") && (image_video ==""))
@@ -373,16 +373,18 @@ disableVideoBoxes();
 
 jQuery( "#upload_image_video_text" ).on( "change", disableVideoBoxes );
 jQuery( "#upload_image_video" ).on( "change", disableVideoBoxes );
-jQuery('#advertiser_co_desc').keyup(function () {
-  var max = 235;
-  var len = jQuery(this).val().length;
-  if (len >= max) {
-    jQuery('#charNum').text('You have reached the limit');
-  } else {
-    var char = max - len;
-    jQuery('#charNum').text(char + ' characters left');
-  }
-});
+
+//jQuery('#advertiser_co_desc').keyup(function () {
+//
+//  var max = 235;
+//  var len = jQuery(this).val().length;
+//  if (len >= max) {
+//    jQuery('#charNum').text('You have reached the limit');
+//  } else {
+//    var char = max - len;
+//    jQuery('#charNum').text(char + ' characters left');
+//  }
+//});
 
 // Form inside a form
 

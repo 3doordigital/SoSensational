@@ -5,7 +5,7 @@ $cat_params = array( 'width' => 367, 'height' => 240, 'crop' => true );
 
 global $wpdb;
 $category_id = isset($ss_sub_cat_id) ? $ss_sub_cat_id : "";
-	
+
 if(!empty($ss_cat_id)):
 
 	$category_id = preg_replace('/[^-a-zA-Z0-9_]/', '', $ss_cat_id);
@@ -64,6 +64,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
                  <div class="col-md-8 fadebox showme animated fadeIn" style="visibility: visible;">
                     <?php $children = get_term_children($category->term_id, get_query_var('taxonomy')); // get children 
                           $term_meta = get_option( "taxonomy_$category->term_id" );
+                          
 ?>
                         <a href="<?php echo get_site_url().'/brands-and-boutiques/'. $ss_cat . '/' . $category->slug.'/'; ?>" class="aHolderImgSS">
                             <img  src="<?php echo $term_meta['ss_cat_image']; ?>" class="img-responsive" />
@@ -108,30 +109,17 @@ if(isset($_GET['p_type'])){
 
 }
 
-if(isset($_GET['p_num'])){
-    $paged=$_GET['p_num'];
-} else 
-{
-	$paged= 1;	
-}
+
 
 
 
 if(empty($mainChildren)):
-//$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-if ($paged == 1)
-{
-	$post_per_page = 12;	
-}
-else {
-	$post_per_page = 12;			
-}
+$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
 $args = array(
     'post_type' => $post_type,
-    'post_per_page' => $post_per_page,
-    'showposts' => $post_per_page,
+    'post_per_page' => 6,
     'post_status' => 'publish',
 	'author__in'  => $users,
     'tax_query' => array(
@@ -141,10 +129,11 @@ $args = array(
             'terms' => $category_id
         )
     ),
-        'paged' =>$paged
+        'paged' => $paged
 );
 
 	$term_meta = get_term_by("id",$category_id,"ss_category");
+
 	
     ?>     
 	     <h1><span><?php echo $term_meta->name; ?></span></h1>
@@ -153,6 +142,8 @@ $args = array(
             yoast_breadcrumb('<div id="breadcrumbs">','</div>');
         } 
     ?>
+             
+<?php if ( function_exists( 'breadcrumb_trail' ) ) breadcrumb_trail(); ?>             
 
     <div class="category_ss_title_under">
     <span class="left_ss"><?php echo $term_meta->description; ?> </span>
@@ -168,26 +159,26 @@ $args = array(
 </div>
     <div id="infiniteScroll" class="infiniteScroll">
     <?php
-      $my_query = new WP_Query($args);
-     	    $counterColor = 1;
-            $counterRows = 1;
-			$max = $my_query->max_num_pages;
-// Add some parameters for the JS.
-		$p_num = (isset($_GET['p_num']) ? $_GET['p_num'] : 2);
+    $my_query = new WP_Query($args);
+    
+    $counterColor = 1;
+    $counterRows = 1;
+    $max = $my_query->max_num_pages;
+    // Add some parameters for the JS.
+    $p_num = (isset($_GET['p_num']) ? $_GET['p_num'] : 2);
 
 ?>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var pbd_alp = {"startPage":"1","maxPages":"<? echo $max; ?>","nextLink":"<? echo $_SERVER['REQUEST_URI'] ?>?p_num=<? echo $p_num; ?>"};
+var pbd_alp = {"startPage":"1","maxPages":"<?php echo $max; ?>","nextLink":"<?php echo $_SERVER['REQUEST_URI'] ?>?p_num=<?php echo $p_num; ?>"};
 /* ]]> */
 </script>
-<?
-
+<?php
 
         while ($my_query->have_posts()) : $my_query->the_post();
 		 ?>
                     <div class="post col-md-8 ss_border fadebox ss_advertisers_cats showme animated fadeIn <?php if($counterRows == 3) { echo 'breakRowClass';} ?>" style="visibility: visible;">
-<?
+<?php
 $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$my_query->post->post_author}' ", OBJECT );
 $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
 // echo "<pre>"; print_r($advertiser); echo "</pre>"; 
@@ -206,7 +197,7 @@ $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null
                              </a>
                               <div class="ss_clear"></div>
 							 <div class="ss_advertisers_cats_description">
-                             		<?
+                             		<?php
 						$description = get_post_meta( get_the_ID(), 'ss_advertisers_cats_description', true );
 						$description = strip_tags($description);
 				
@@ -228,16 +219,18 @@ $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null
 
                     </div>
                           
-            <?php  $counterColor++;  $counterRows++; if($counterRows == 4) { $counterRows = 1;}
-        endwhile;
-        //wp_pagenavi( array( 'query' => $my_query ) );
- endif;//end if cat have children
-
+            <?php  $counterColor++;  $counterRows++; if($counterRows == 4) { $counterRows = 1;}         
+        endwhile;        
  ?>
  
     </div>
+    <div class="ss_clear"></div>
+    <?php wp_pagenavi(array('query' => $my_query)); ?>
+    <?php wp_reset_postdata(); ?>
+    
+<?php endif; ?> <!-- End if cat has children -->
 </div>
-<div class="ss_clear"></div>
+
 
 <?php
 $args2 = array(

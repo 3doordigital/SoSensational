@@ -1,5 +1,5 @@
 jQuery(document).ready(function() {
- 
+
 	jQuery('#upload_image_video_button').click(function() {
 	    uploadID = jQuery(this).prev('input'); /*grab the specific input*/
 
