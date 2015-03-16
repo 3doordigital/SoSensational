@@ -18,6 +18,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
 $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$user->ID}' ", OBJECT );
 $advertisers_type = $advertiser[0]->post_type;
 $post_categories_available =  get_the_terms($advertiser[0]->ID,'ss_category');
+
 //print_r($advertisers_type);
 if ($advertisers_type == "brands")
 {
@@ -58,7 +59,7 @@ function show_select_for_cats($post_categories_available,$slug)
 </nav>
 
 
-<?
+<?php
 echo  '<div class="row">';
 
 if (empty($post_categories_available)) {
@@ -71,7 +72,7 @@ if (empty($post_categories_available)) {
     <a href="/edit-advertiser/">Click here to edit your profile</a>  
 </div>
     
-    <?
+    <?php
 	
 } else {
 	
@@ -141,7 +142,7 @@ foreach ($post_categories_available as $cat)
 
   <div class="col-sm-12 col-md-12">
     <div class="thumbnail ss_fixheight">
-    <? $this_image = get_post_meta( get_the_ID(), 'ss_advertisers_cats_image', true );
+    <?php $this_image = get_post_meta( get_the_ID(), 'ss_advertisers_cats_image', true );
 		if ($this_image == "") { $this_image = get_template_directory_uri() . "/images/upload-artwork.png"; } 
 		
 		?>
@@ -152,13 +153,13 @@ foreach ($post_categories_available as $cat)
      <form action="<?php echo SOSENSATIONAL_URL?>/web/advertisers-cats-action.php" method="POST" enctype="multipart/form-data" >
  <div class="input-group">
   <span class="input-group-addon input-width" id="basic-addon1">Post Status:</span>
- <? if (get_post_status( get_the_ID()) == "publish") { echo '<span  aria-describedby="basic-addon1"  class="form-control label-success">Published</span>'; } else { echo '<span class=" form-control label-warning">Awaiting Review</span>'; } ?>
+ <?php if (get_post_status( get_the_ID()) == "publish") { echo '<span  aria-describedby="basic-addon1"  class="form-control label-success">Published</span>'; } else { echo '<span class=" form-control label-warning">Awaiting Review</span>'; } ?>
 </div>
 
 <br />
 <div class="input-group">
   <span class="input-group-addon input-width" id="basic-addon1">Product Category:</span>
- <? 
+ <?php 
 				
 				$this_terms = wp_get_post_terms(get_the_ID(), 'ss_category');
 				
@@ -204,7 +205,7 @@ creating product;
 
 
 <?php endif; ?>
-<?
+<?php
 	
 
 echo "</div>";
@@ -276,5 +277,5 @@ function DisableOptions()
 </script>
 
 
-<? } ?>
+<?php }
 
