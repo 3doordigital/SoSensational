@@ -591,8 +591,15 @@ class WordPress_Affiliate_Shop {
 	public function wp_aff_size_filter() {
 		if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_size_filter' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
+		if( is_array( $_REQUEST['wp_aff_sizes'] ) ) {
+			$sizes = $_REQUEST['wp_aff_sizes'];	
+		} else {
+			$sizes[] = $_REQUEST['wp_aff_sizes'];
+		}
+		$sizes = array_unique( $sizes );
+		$sizes = implode( $sizes, ',' );
 		$url = preg_replace( '#page/([0-9]+)/#', '', $_REQUEST['_wp_http_referer'] );	
-		$url = add_query_arg( 'size', $_REQUEST['wp_aff_sizes'], $url );
+		$url = add_query_arg( 'size', $sizes, $url );
 		wp_safe_redirect( $url );
 	}
 	
