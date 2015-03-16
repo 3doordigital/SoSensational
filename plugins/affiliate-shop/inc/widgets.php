@@ -409,7 +409,7 @@ class aff_size_widget extends WP_Widget {
 				}
 				echo '<div class="'. ( $checked > 0 ? 'col-sel ' : '' ).'size_filter">';
 				echo '<a href="'.$_SERVER['REQUEST_URI'].'" data-id="'.$size->term_id.'">'.$size->name.'</a>';
-				echo '<input type="checkbox" '.( $checked > 0 ? 'checked' : '' ).' data-id="'.$size->term_id.'" name="wp_aff_colours[]" class="hide_check" value="'.$size->term_id.'">';
+				echo '<input type="checkbox" '.( $checked > 0 ? 'checked' : '' ).' data-id="'.$size->term_id.'" name="wp_aff_sizes[]" class="hide_check" value="'.$size->term_id.'">';
 				echo '</div>';
 			}
 		} else {
@@ -478,6 +478,7 @@ class aff_active_widget extends WP_Widget {
             $term = get_term_by( 'slug', $wp_query->query_vars['shop-cat'], 'wp_aff_categories' );
             $cat_id = $term->term_id;
             $term_title = 'Category';
+			echo '<h4>Category</h4>';
 			echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->term_id.'" data-type="brand">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';
         } elseif( isset( $wp_query->query_vars['shop-brand'] ) ) {
             $term = get_term_by( 'slug', $wp_query->query_vars['shop-brand'], 'wp_aff_brands' );
@@ -486,6 +487,7 @@ class aff_active_widget extends WP_Widget {
 			echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->term_id.'" data-type="brand">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';
         } 
 		if ( isset ( $_REQUEST['brand'] ) ) {
+			echo '<h4>Brands</h4>';
 			$brands = explode( ',' , $_REQUEST['brand'] );
 			foreach( $brands as $brand ) {
 				$term = get_term_by( 'slug', $brand, 'wp_aff_brands' );
@@ -495,18 +497,27 @@ class aff_active_widget extends WP_Widget {
 			} 
 		} 
 		if ( isset( $_REQUEST['category'] ) ) {
+			echo '<h4>Category</h4>';
 			$category = get_term_by( 'slug', $_REQUEST['category'], 'wp_aff_categories' );
 			echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$category->term_id.'" data-type="category">'.$category->name.' <i class="fa fa-times-circle pull-right"></i> </a>'; 
 		}
 		
 		if( isset( $_REQUEST['size'] ) && $_REQUEST['size'] != -1 ) {
-			$size = get_term_by( 'id', $_REQUEST['size'], 'wp_aff_sizes' );
-			echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$size->term_id.'" data-type="size">'.$size->name.' <i class="fa fa-times-circle pull-right"></i> </a>';     
+			echo '<h4>Sizes</h4>';
+			$sizes = explode(',', $_REQUEST['size'] );
+			foreach( $sizes as $size ) {
+				$size = get_term_by( 'id', $size, 'wp_aff_sizes' );
+				echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$size->term_id.'" data-type="size">'.$size->name.' <i class="fa fa-times-circle pull-right"></i> </a>';  
+			}
 		}
 		
 		if( isset( $_REQUEST['colour'] ) && $_REQUEST['colour'] != -1 ) {
-			$colour = get_term_by( 'id', $_REQUEST['colour'], 'wp_aff_colours' );
-			echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$colour->term_id.'" data-type="colour">'.$colour->name.' <i class="fa fa-times-circle pull-right"></i> </a>';
+			echo '<h4>Colours</h4>';
+			$sizes = explode(',', $_REQUEST['colour'] );
+			foreach( $sizes as $size ) {
+				$size = get_term_by( 'id', $size, 'wp_aff_colours' );
+				echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$size->term_id.'" data-type="colour">'.$size->name.' <i class="fa fa-times-circle pull-right"></i> </a>';  
+			}
 		}
 		
 		if( isset( $_REQUEST['price-min'] ) && isset( $_REQUEST['price-max'] ) ) {

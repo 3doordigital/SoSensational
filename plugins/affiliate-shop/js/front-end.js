@@ -82,4 +82,15 @@ jQuery(document).ready(function($) {
 		}
 		$('#wp_aff_colour_filter').submit();
 	});
+	
+	$('.size_filter a').click( function( event ) {
+		event.preventDefault();
+		var id = $(this).attr('data-id');
+		if( $('.hide_check[data-id='+id+']').prop( 'checked') == true ) {
+			$('.hide_check[data-id='+id+']').prop('checked', false);
+		} else {
+			$('.hide_check[data-id='+id+']').prop('checked', true);
+		}
+		$('#wp_aff_size_filter').submit();
+	});
 });
