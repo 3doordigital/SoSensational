@@ -11,18 +11,22 @@ do_action('ss_css');
 	$options = get_option( 'ss_settings' );
 	$user=wp_get_current_user();
 	$advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$user->ID}' ", OBJECT );
-	$advertisers_type = $advertiser[0]->post_type;
+                
+        $currentUserRole = $user->roles[0];
+        
 	$post_categories_available =  get_the_terms($advertiser[0]->ID,'ss_category');
 
-	if ($advertisers_type == "brands")
+        /**
+         * Determine the allowed uploads limit based on the user role - brand_role/ boutique_role
+         */
+	if ($currentUserRole == "brand_role")
 	{
 		$allowed_products = $options['ss_products_per_brand'];
-	} else 
+	} else
 	{
 		$allowed_products = $options['ss_products_per_boutique'];	
 	}
 
-	var_dump($allowed_products);
         
 	$args = array(
     'post_type' => 'products',

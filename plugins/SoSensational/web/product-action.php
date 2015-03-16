@@ -53,14 +53,19 @@ $advertiserID=$advertiser[0]->ID;
 $countProducts= $wpdb->get_results("SELECT count(ID) as num FROM `{$wpdb->posts}` WHERE post_parent='{$advertiserID}' and post_type='products'",OBJECT);
 
 /**
- * Retrieve the limit of products to upload by a current advertiser
+ * Retrieve the limit of products to upload by the current user by user role
  */
+$currentUser = wp_get_current_user();
+$currentUserRole = $currentUser->roles[0];
+
 $options = get_option('ss_settings');
-if ($advertiser[0]->post_type == 'boutiques') {
+if ($currentUserRole == 'boutique_role') {
     $productsLimit = $options['ss_products_per_boutique'];
-} elseif ($advertiser[0]->post_type == 'brands') {
+} elseif ($currentUserRole == 'brand_role') {
     $productsLimit = $options['ss_products_per_brand'];
 }
+
+
 
 /* Proceed with the upload only if the limit has not been exhausted */
 if($countProducts[0]->num < $productsLimit) {
