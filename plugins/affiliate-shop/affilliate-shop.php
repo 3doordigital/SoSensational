@@ -941,7 +941,7 @@ class WordPress_Affiliate_Shop {
     
     public function add_products() { ?>
         <div class="wrap">
-            <h2>Affiliate Shop <a href="<?php print admin_url('admin.php?page=affiliate-shop&action=add-category'); ?>" class="add-new-h2">Manual Product</a></h2>
+            <h2>Affiliate Shop</h2>
                 <h3>Add Products</h3>
     <?php 
         if(!isset($_REQUEST['step'])) {
