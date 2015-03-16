@@ -22,7 +22,8 @@ do_action('ss_css');
 		$allowed_products = $options['ss_products_per_boutique'];	
 	}
 
-	
+	var_dump($allowed_products);
+        
 	$args = array(
     'post_type' => 'products',
     'showposts' => -1,
@@ -44,7 +45,7 @@ do_action('ss_css');
                    		<a href="/add-product/?action=edit&product_id=<?php echo get_the_ID(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
                        	 <img class="ss_product_img" src="<?php echo get_post_meta( get_the_ID(), 'ss_product_image', true ); ?>" />  
                          <span class="large_font"><?php the_title(); ?></span>
-                     	
+                     
                 		</a>
                     </li>
 <?php endwhile; else : ?>
@@ -57,14 +58,14 @@ do_action('ss_css');
 	<?php endif; ?>
  
 </ul>
-<? if ($num_of_products < $allowed_products) { ?><br /><br />
+<?php if ($num_of_products < $allowed_products) { ?><br /><br />
                    		<a href="/add-product/" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
 
 <button type="button" class="btn btn-default navbar-btn">Add A New Product</button>
-<h4>You have entered <? echo $num_of_products ?> of <? echo $allowed_products ?> products</h4>
+<h4>You have entered <?php echo $num_of_products ?> of <?php echo $allowed_products ?> products</h4>
               <!--          	 <img class="ss_category_img" src="<?php echo get_post_meta( get_the_ID(), 'ss_logo', true ); ?>" />    -->
                 		</a>
-<? } ?>
+<?php } ?>
 
 
     <nav>
