@@ -215,16 +215,23 @@ function edit_advertiser_page_template( $page_template )
 
 function ss_rewrite_rule(){
     
-	  add_rewrite_rule(
-       'brands-and-boutiques/([^/]*)/?([^/]*)/?([^/]*)/?([^/]*)/?$',
-       'index.php?pagename=brands-and-boutiques&ss_cat=$matches[1]&ss_sub_cat=$matches[2]&ss_advertiser=$matches[3]',
-      'top'
-  );
-    add_rewrite_rule(
-        'store/([^/]*)/?$',
-        'index.php?pagename=store&ss_advertiser=$matches[1]',
-        'top'
-    );
+	add_rewrite_rule(
+            'brands-and-boutiques/([^/]*)/?([^/]*)/?$',
+            'index.php?pagename=brands-and-boutiques&ss_cat=$matches[1]&ss_sub_cat=$matches[2]',
+            'top'
+        );
+	add_rewrite_rule(
+            'brands-and-boutiques/([^/]*)/?([^/]*)/page/([0-9]{1,})/?$',
+            'index.php?pagename=brands-and-boutiques&ss_cat=$matches[1]&ss_sub_cat=$matches[2]&paged=$matches[3]',
+            'top'
+        );        
+        add_rewrite_rule(
+            'store/([^/]*)/?$',
+            'index.php?pagename=store&ss_advertiser=$matches[1]',
+            'top'
+        );
+        
+  
 
 	add_permastruct('brands', '/brands-and-boutiques/%post_title%');
 }
