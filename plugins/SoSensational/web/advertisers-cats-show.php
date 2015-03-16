@@ -31,21 +31,34 @@ if ($advertisers_type == "brands")
 //echo "</pre>";
 
 function show_select_for_cats($post_categories_available,$slug)
-{
-	//global $post_categories_available;
-
-	$found = "";	
-	$to_return = '<select ondataavilable="DisableOptions()" onchange="DisableOptions()" class="advertisers_cat form-control" name="advertiser_category_id">';
-	$to_return .= '<option value="">Please Select A Category</option>';
+{       
+        $sortedTerms = array();        
+	$found = "";        
+        
 	foreach ($post_categories_available as $pca)
 	{
-		//	echo $pca->slug;
-		$to_return .= '<option ';
-		if ($slug == $pca->term_id) { $to_return .= ' selected="selected" '; $found = 1;}
-		$to_return .= ' value="' . $pca->term_id .'"';
-		$to_return .= '>'. $pca->name .'</option>';  		
+            $parentCategory = get_term($pca->parent, 'ss_category', OBJECT);  
+            $sortedTerms[$parentCategory->name][] = $pca->name;    
+        }         
+        
+	$to_return = '<select ondataavilable="DisableOptions()" onchange="DisableOptions()" class="advertisers_cat form-control" name="advertiser_category_id">';
+	$to_return .= '<option value="">Please Select A Category</option>';
+        
+        foreach ($sortedTerms as $parent => $children) {       
+            $to_return .= "<optgroup label='$parent'>";
+            foreach ($children as $child ) {
+                $to_return .= '<option ';
+                //if ($slug == $pca->term_id) { $to_return .= ' selected="selected" '; $found = 1;}
+                $to_return .= ' value="' . $pca->term_id .'"';
+                $to_return .= '>'. $child .'</option>'; 
+            }
+            $to_return .= "</optgroup>";
 	}
+        
+        
 	
+            
+       
 	$to_return .= "</select> ";
 	
 	return $to_return;
