@@ -8,6 +8,8 @@
 
 /*
  * A plugin that limits the number of characters a user can insert
+ * 
+ * @source http://www.scriptiny.com/2012/09/jquery-input-textarea-limiter/
  */               
 (function($) {
     $.fn.extend( {
@@ -29,11 +31,51 @@
 })(jQuery);
 
 jQuery(document).ready(function($) {
+    
+    /**
+     * Call the "Limiter" plugin function      
+     * @source http://www.scriptiny.com/2012/09/jquery-input-textarea-limiter/
+     */   
     var elem = $('#charNum');
-
-    if ($('#advertiser_co_desc').length) {
-        $('#advertiser_co_desc').limiter(180, elem);        
-    }
-
-
+    var input = $('#advertiser_co_desc'); 
+    
+    /* Make sure that the element is present on the page in order to attach the function call */
+    if (input.length) {
+        input.limiter(180, elem);        
+    }    
+    
+    /**
+     * Limit the number of tags a user can input to 5 items     
+     * @source http://timschlechter.github.io/bootstrap-tagsinput/examples/
+     */
+    var tagsInputField = $("#post_tags");
+    var tagsLimit = 5;
+    
+    /* Declare tagsInputField as input for tags */
+    tagsInputField.tagsinput('items');    
+        
+    $(".bootstrap-tagsinput").tagsinput({
+       maxTags: tagsLimit,
+       trimValue: true
+    });
+    
+    
+    var tagsLeftTmp = tagsLimit;
+    var tagsCounter = $("#tags-counter");
+    tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+    
+    $(".bootstrap-tagsinput").on('itemAdded', function(e) {       
+       tagsLeftTmp = tagsLeftTmp - 1;
+       tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+       return tagsLeftTmp;
+    });
+    
+    $(".bootstrap-tagsinput").on('itemRemoved', function(e) {       
+       tagsLeftTmp = tagsLeftTmp + 1;
+       tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+       return tagsLeftTmp;
+    });    
+     
+    
 });
+

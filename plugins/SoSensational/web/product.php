@@ -93,7 +93,7 @@ endif;
 </div>
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Product Tags:</span>
+    <span class="input-group-addon input-width" id="basic-addon1">Product Tags: <small id="tags-counter"></small></span>
 <input type="text" name="post_tags" id="post_tags" data-role="tagsinput" value="<?php echo $post_tags ;?>" class="required form-control" aria-describedby="basic-addon1" />
 </div>
 <br />
