@@ -20,17 +20,18 @@ $error_code=isset($_GET['error_code']) ? $_GET['error_code'] : "";
 $success_code=isset($_GET['success_code']) ? $_GET['success_code'] : "";
 
 if (!empty($success_code)) :
-  switch($success_code)
-        {
-            case '2':
-				$display_message = "Product Updated Successfully";
-			break;
-		}
+    switch($success_code) {
+        case '2':
+            $display_message = "Product Updated Successfully";                
+            break;        
+}
+
+/* Redirect the user to products listing on success */
+wp_redirect(home_url() . '/view-products/?adminmsg=s');
+
 ?>
 
-
-
-<div class="alert alert-success" role="alert"><? echo $display_message; ?></div>
+<div class="alert alert-success" role="alert"><?php echo $display_message; ?></div>
 
 <?php
 elseif (!empty($error_code)) :

@@ -2,15 +2,15 @@
  * Custom scripts for SoSensational Wordpress plugin
  * 
  * @author Lukasz Tarasiewicz <lukasz.tarasiewicz@polcode.net>
- * 
+ * @date 12.03.2015
  * 
  */
 
-/*
- * A plugin that limits the number of characters a user can insert
- * 
- * @source http://www.scriptiny.com/2012/09/jquery-input-textarea-limiter/
- */               
+/*------------------------------------------------------------------------------
+ A plugin that limits the number of characters a user can insert
+ Source: http://www.scriptiny.com/2012/09/jquery-input-textarea-limiter/
+ -----------------------------------------------------------------------------*/ 
+                
 (function($) {
     $.fn.extend( {
         limiter: function(limit, elem) {
@@ -32,10 +32,10 @@
 
 jQuery(document).ready(function($) {
     
-    /**
-     * Call the "Limiter" plugin function      
-     * @source http://www.scriptiny.com/2012/09/jquery-input-textarea-limiter/
-     */   
+    /*--------------------------------------------------------------------------
+      Call the "Limiter" plugin function      
+      Source: http://www.scriptiny.com/2012/09/jquery-input-textarea-limiter/
+     -------------------------------------------------------------------------*/   
     var elem = $('#charNum');
     var input = $('#advertiser_co_desc'); 
     
@@ -44,10 +44,10 @@ jQuery(document).ready(function($) {
         input.limiter(180, elem);        
     }    
     
-    /**
-     * Limit the number of tags a user can input to 5 items     
-     * @source http://timschlechter.github.io/bootstrap-tagsinput/examples/
-     */
+    /*--------------------------------------------------------------------------
+      Limit the number of tags a user can input to 5 items     
+      Source: http://timschlechter.github.io/bootstrap-tagsinput/examples/
+     -------------------------------------------------------------------------*/
     var tagsInputField = $("#post_tags");
     var tagsLimit = 5;
     
@@ -59,7 +59,9 @@ jQuery(document).ready(function($) {
        trimValue: true
     });
     
-    
+    /*--------------------------------------------------------------------------
+      Display a counter to indicate how meny tags are left to enter
+     -------------------------------------------------------------------------*/
     var tagsLeftTmp = tagsLimit;
     var tagsCounter = $("#tags-counter");
     tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
@@ -76,6 +78,25 @@ jQuery(document).ready(function($) {
        return tagsLeftTmp;
     });    
      
+    /*--------------------------------------------------------------------------
+      Ajax call for deleting products from /view-products/
+     -------------------------------------------------------------------------*/
     
+    
+    $('.ajax-delete').on('click', function(e) {
+        e.preventDefault();
+        var productId = $(this).attr('data');
+        var sampleData = {
+            'action': 'ss_delete_action',
+            'productToDelete': productId
+        };
+        $.ajax({
+            data: sampleData,
+            type: 'POST',
+            url: AjaxObject.ss_ajax_url,
+            success: function(msg) {
+                window.location.reload(true);
+            }               
+        });
+    });  
 });
-

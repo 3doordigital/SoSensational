@@ -4,6 +4,8 @@
   </ul>
 </nav>
 
+<?php echo displaySystemNotice(); ?>
+
 <?php
 do_action('ss_css');
     global $post;
@@ -44,14 +46,13 @@ do_action('ss_css');
 	  $num_of_products = count($my_query->posts);
 	  
 	  ?>
-        
-                    <li>
-                   		<a href="/add-product/?action=edit&product_id=<?php echo get_the_ID(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
-                       	 <img class="ss_product_img" src="<?php echo get_post_meta( get_the_ID(), 'ss_product_image', true ); ?>" />  
-                         <span class="large_font"><?php the_title(); ?></span>
-                     
-                		</a>
-                    </li>
+            <li>
+                        <a href="/add-product/?action=edit&product_id=<?php echo get_the_ID(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+                 <img class="ss_product_img" src="<?php echo get_post_meta( get_the_ID(), 'ss_product_image', true ); ?>" /> 
+                 <span class="large_font"><?php the_title(); ?></span> 
+                        </a>
+                <i data="<?php echo get_the_ID(); ?>" class="glyphicon glyphicon-remove ajax-delete"></i>
+            </li>
 <?php endwhile; else : ?>
     <div class="alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
