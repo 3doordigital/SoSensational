@@ -19,7 +19,7 @@ $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (
 $advertisers_type = $advertiser[0]->post_type;
 $post_categories_available =  get_the_terms($advertiser[0]->ID,'ss_category');
 
-//print_r($advertisers_type);
+
 if ($advertisers_type == "brands")
 {
 	$allowed_categories = $options['ss_categories_per_brand'];
@@ -27,41 +27,53 @@ if ($advertisers_type == "brands")
 {
 	$allowed_categories = $options['ss_categories_per_boutique'];	
 }
-//print_r($post_categories_available);
-//echo "</pre>";
 
-function show_select_for_cats($post_categories_available,$slug)
+/**
+ * A function that build and renders dropdown selection menus with the previously 
+ * selected item. Parent categories are not selectable.
+ * 
+ * @param   array     $post_categories_available
+ * @param   integer   $termId
+ * @return  string   $to_return
+ */
+function show_select_for_cats($post_categories_available, $termId)
 {       
-        $sortedTerms = array();        
-	$found = "";        
-        
-	foreach ($post_categories_available as $pca)
-	{
-            $parentCategory = get_term($pca->parent, 'ss_category', OBJECT);  
-            $sortedTerms[$parentCategory->name][] = $pca->name;    
-        }         
-        
-	$to_return = '<select ondataavilable="DisableOptions()" onchange="DisableOptions()" class="advertisers_cat form-control" name="advertiser_category_id">';
-	$to_return .= '<option value="">Please Select A Category</option>';
-        
-        foreach ($sortedTerms as $parent => $children) {       
-            $to_return .= "<optgroup label='$parent'>";
-            foreach ($children as $child ) {
-                $to_return .= '<option ';
-                //if ($slug == $pca->term_id) { $to_return .= ' selected="selected" '; $found = 1;}
-                $to_return .= ' value="' . $pca->term_id .'"';
-                $to_return .= '>'. $child .'</option>'; 
-            }
-            $to_return .= "</optgroup>";
-	}
-        
-        
-	
+
+    $sortedTerms = array();        
+    $found = "";        
+
+    /**
+     * Sort the terms and parents categories to prepare the data for display
+     */
+    foreach ($post_categories_available as $pca)
+    {
+        $parentCategory = get_term($pca->parent, 'ss_category', OBJECT);  
+        $sortedTerms[$parentCategory->name][$pca->name] = $pca->term_id;    
+    }         
+
+    $to_return = '<select ondataavilable="DisableOptions()" onchange="DisableOptions()" class="advertisers_cat form-control" name="advertiser_category_id">';
+    $to_return .= '<option value="">Please Select A Category</option>';
+
+    /**
+     * Render the terms in each parent category
+     */
+    foreach ($sortedTerms as $parent => $children) {       
+        $to_return .= "<optgroup label='$parent'>";
+        foreach ($children as $termName => $termNo ) {
+            $to_return .= '<option ';
             
-       
-	$to_return .= "</select> ";
-	
-	return $to_return;
+            /* Check if the term should be marked as selected  */
+            if ($termId == $termNo) { $to_return .= ' selected="selected" '; $found = 1;}
+            
+            $to_return .= ' value="' . $termNo .'"';
+            $to_return .= '>'. $termName .'</option>'; 
+        }
+        $to_return .= "</optgroup>";
+    }
+
+    $to_return .= "</select> ";
+
+    return $to_return;
 }
 
 ?>
