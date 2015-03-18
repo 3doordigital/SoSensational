@@ -1207,7 +1207,7 @@ class WordPress_Affiliate_Shop {
                         //echo '<pre>'.print_r($productArray, true).'</pre>';
                     ?>
                    <?php 
-                        print_var($aParams5);
+                        //print_var($aParams5);
                         if( !is_array( $productArray->oProduct ) ) {
                             $test = $productArray->oProduct;
                             $productArray->oProduct = array( $productArray->oProduct );
