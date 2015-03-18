@@ -50,11 +50,8 @@ jQuery(document).ready(function($) {
      -------------------------------------------------------------------------*/
     var tagsInputField = $("#post_tags");
     var tagsLimit = 5;
-    
-    /* Declare tagsInputField as input for tags */
-    tagsInputField.tagsinput('items');    
-        
-    $(".bootstrap-tagsinput").tagsinput({
+           
+    tagsInputField.tagsinput({
        maxTags: tagsLimit,
        trimValue: true
     });
@@ -62,17 +59,18 @@ jQuery(document).ready(function($) {
     /*--------------------------------------------------------------------------
       Display a counter to indicate how meny tags are left to enter
      -------------------------------------------------------------------------*/
-    var tagsLeftTmp = tagsLimit;
+    
+    var tagsLeftTmp = tagsLimit - tagsInputField.tagsinput('items').length;
     var tagsCounter = $("#tags-counter");
     tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
     
-    $(".bootstrap-tagsinput").on('itemAdded', function(e) {       
+    tagsInputField .on('itemAdded', function(e) {       
        tagsLeftTmp = tagsLeftTmp - 1;
        tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
        return tagsLeftTmp;
     });
     
-    $(".bootstrap-tagsinput").on('itemRemoved', function(e) {       
+    tagsInputField .on('itemRemoved', function(e) {       
        tagsLeftTmp = tagsLeftTmp + 1;
        tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
        return tagsLeftTmp;
