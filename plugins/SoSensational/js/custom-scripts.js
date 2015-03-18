@@ -59,28 +59,28 @@ jQuery(document).ready(function($) {
     /*--------------------------------------------------------------------------
       Display a counter to indicate how meny tags are left to enter
      -------------------------------------------------------------------------*/
-    
-    var tagsLeftTmp = tagsLimit - tagsInputField.tagsinput('items').length;
-    var tagsCounter = $("#tags-counter");
-    tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
-    
-    tagsInputField .on('itemAdded', function(e) {       
-       tagsLeftTmp = tagsLeftTmp - 1;
-       tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
-       return tagsLeftTmp;
-    });
-    
-    tagsInputField .on('itemRemoved', function(e) {       
-       tagsLeftTmp = tagsLeftTmp + 1;
-       tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
-       return tagsLeftTmp;
-    });    
-     
+    // Check if a user is on the single product page
+    if (tagsInputField.length) {
+        var tagsLeftTmp = tagsLimit - tagsInputField.tagsinput('items').length;
+        var tagsCounter = $("#tags-counter");
+        tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+
+        tagsInputField .on('itemAdded', function(e) {       
+           tagsLeftTmp = tagsLeftTmp - 1;
+           tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+           return tagsLeftTmp;
+        });
+
+        tagsInputField .on('itemRemoved', function(e) {       
+           tagsLeftTmp = tagsLeftTmp + 1;
+           tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+           return tagsLeftTmp;
+        });    
+    }
     /*--------------------------------------------------------------------------
       Ajax call for deleting products from /view-products/
      -------------------------------------------------------------------------*/
-    
-    
+        
     $('.ajax-delete').on('click', function(e) {
         e.preventDefault();
         var productId = $(this).attr('data');
@@ -92,8 +92,15 @@ jQuery(document).ready(function($) {
             data: sampleData,
             type: 'POST',
             url: AjaxObject.ss_ajax_url,
-            success: function(msg) {
-                window.location.reload(true);
+            success: function(msg, statusText) {
+                var pattern = /\?/;
+                var location = window.location.href;
+                var n = location.search(pattern);
+                console.log(statusText);
+                /*  Compose a query var based on whether query variables are 
+                    already present or not */
+                var queryVar = n === -1 ? '?adminmsg=d' : '&adminmsg=d';
+                window.location.href = window.location.href + queryVar;
             }               
         });
     });  

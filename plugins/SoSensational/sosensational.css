@@ -495,3 +495,11 @@ color: #a0862a;
     float: right;
     margin-right: 10px;
 }
+
+i.ajax-delete {
+    color: #7F0000;
+}
+
+i.ajax-delete:hover {
+    cursor: pointer;
+}

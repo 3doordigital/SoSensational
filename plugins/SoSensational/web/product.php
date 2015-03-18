@@ -29,11 +29,7 @@ if (!empty($success_code)) :
 /* Redirect the user to products listing on success */
 wp_redirect(home_url() . '/view-products/?adminmsg=s');
 
-?>
 
-<div class="alert alert-success" role="alert"><?php echo $display_message; ?></div>
-
-<?php
 elseif (!empty($error_code)) :
   switch($error_code)
         {

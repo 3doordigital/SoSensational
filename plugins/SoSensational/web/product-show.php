@@ -51,7 +51,7 @@ do_action('ss_css');
                  <img class="ss_product_img" src="<?php echo get_post_meta( get_the_ID(), 'ss_product_image', true ); ?>" /> 
                  <span class="large_font"><?php the_title(); ?></span> 
                         </a>
-                <i data="<?php echo get_the_ID(); ?>" class="glyphicon glyphicon-remove ajax-delete"></i>
+                <i data="<?php echo get_the_ID(); ?>" class="glyphicon glyphicon-remove ajax-delete" title="Delete a product"></i>
             </li>
 <?php endwhile; else : ?>
     <div class="alert alert-danger" role="alert">

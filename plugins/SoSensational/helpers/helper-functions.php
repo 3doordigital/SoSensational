@@ -28,6 +28,9 @@ function displaySystemNotice()
         $displayMessage =  'Something went wrong when saving a product. Please try again.';
         $alertClass = 'warning';
         
+    } elseif ($actionStatus === 'd') {
+        $displayMessage =  'A product has been deleted.';
+        $alertClass = 'success';        
     }
         
     return "<div class='alert alert-$alertClass' role='alert'>$displayMessage</div>";
