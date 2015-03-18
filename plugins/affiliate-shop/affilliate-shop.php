@@ -902,6 +902,16 @@ class WordPress_Affiliate_Shop {
             $term['parent'] = intval( $_POST['wp_term_parent'] );
             if( $term['alias'] == -1 ) {
                 $termarray = wp_update_term( $term['id'], 'wp_aff_categories', $args = array( 'name' => $term['name'], 'slug' => $term['slug'], 'description' => $term['desc'], 'parent' => $term['parent'] ) );
+				global $wpdb;
+                $wpdb->query( $wpdb->prepare(
+                    "
+                    UPDATE $wpdb->terms 
+                    SET term_group = %s
+                    WHERE term_id = %d 
+                    ",
+                    0,
+                    $termarray['term_id']
+                ) );
             } else {
                 $alias = get_term( $term['alias'], 'wp_aff_categories');
                 $term['alias'] = $alias->slug;
@@ -948,11 +958,51 @@ class WordPress_Affiliate_Shop {
     
     public function add_products() { ?>
         <div class="wrap">
-            <h2>Affiliate Shop</h2>
-                <h3>Add Products</h3>
+    <?php if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'manual' ) { ?>
+    	<h2>Affiliate Shop <a href="<?php print admin_url('admin.php?page=affiliate-shop/add-products'); ?>" class="add-new-h2">Add Product(s) from API</a></h2>
+    	<h3>Add Product Manually</h3>
+        <form method="POST" id="wp_add_prod_manual" action="<?php echo admin_url('admin-post.php'); ?>">
+            <div id="titlediv">
+                <div id="titlewrap">
+                    <input type="text" placeholder="Product name" name="product_name" size="30" value="" id="title" spellcheck="true" autocomplete="off">
+                </div>
+            </div>
+        	<table class="form-table">
+            	<tr>
+                	<th>Price</th>
+                    <td colspan="2">&pound;<input class="regular-text" type="text" name="product_price" placeholder="" value=""></td>
+                </tr>
+                <tr>
+                	<th>Description</th>
+                    <td colspan="2"><textarea class="large-text" rows="4" name="product_desc"></textarea>
+                </tr>
+                <tr>
+                	<td width="33%" valign="top">
+                       <div style="">
+                           <?php $categories = new Tag_Checklist('wp_aff_categories', 'all' ); ?>
+                        
+                        </div> 
+                    </td> 
+                    
+                   <td width="33%" valign="top">
+                        <div style="">
+                            <?php $colours = new Tag_Checklist('wp_aff_colours', 'all' ); ?>
+                        
+                        </div>
+                   </td>
+                   <td width="33%" valign="top">
+						<?php $sizes = new Tag_Checklist('wp_aff_sizes', 'all' ); ?>
+                   </td>
+                </tr>
+            </table>
+            <?php submit_button(); ?>
+        </form>
+    <?php } else { ?>
     <?php 
         if(!isset($_REQUEST['step'])) {
     ?>
+    <h2>Affiliate Shop <a href="<?php print admin_url('admin.php?page=affiliate-shop/add-products&action=manual'); ?>" class="add-new-h2">Add Product Manually</a></h2>
+    <h3>Add Products from API</h3>
                 <form method="POST" id="wp_aff_add_cat" class="searchtable" action="<?php echo admin_url('admin-post.php'); ?>">
                         <table class="form-table" >
                             <tr>
@@ -1116,7 +1166,7 @@ class WordPress_Affiliate_Shop {
                    <tr>
                         <th>Product Tagging</th>
                         <td>
-                            <div style="width: 25em; float: left; margin-right: 1em;">
+                            <div style="width: 33%; float: left; ">
                             <?php 
                                 if( isset( $_REQUEST['wp_aff_categories'] ) ) {
                                     $categories = new Tag_Checklist('wp_aff_categories', 'all', $_REQUEST['wp_aff_categories'] ); 
@@ -1125,10 +1175,10 @@ class WordPress_Affiliate_Shop {
                                 }
                             ?>
                             </div>
-                           <div style="width: 25em; float: left; margin-right: 1em;">
+                           <div style="width: 33%; float: left;">
                             <?php $categories = new Tag_Checklist('wp_aff_colours', 'all' ); ?>
                             </div>
-                            <div style="width: 25em; float: left; margin-right: 1em;">
+                            <div style="width: 33%; float: left; ">
                             <?php $categories = new Tag_Checklist('wp_aff_sizes', 'all' ); ?>
                             </div>
                         </td> 
@@ -1157,12 +1207,13 @@ class WordPress_Affiliate_Shop {
                         //echo '<pre>'.print_r($productArray, true).'</pre>';
                     ?>
                    <?php 
-                        
+                        //print_var($aParams5);
                         if( !is_array( $productArray->oProduct ) ) {
                             $test = $productArray->oProduct;
                             $productArray->oProduct = array( $productArray->oProduct );
                         }
                             $i = 0;
+							
                             foreach( $productArray->oProduct AS $product ) { 
                    ?>
                    <?php // echo '<pre>'.print_r($producta, true).'</pre>'; ?>
@@ -1244,7 +1295,9 @@ class WordPress_Affiliate_Shop {
                   </div>
                   </div>
             </form>
-    <?php } ?>
+    <?php } 
+	} 
+	?>
             </div>
     <?php } 
     
