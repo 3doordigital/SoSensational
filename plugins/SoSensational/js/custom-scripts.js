@@ -2,7 +2,7 @@
  * Custom scripts for SoSensational Wordpress plugin
  * 
  * @author Lukasz Tarasiewicz <lukasz.tarasiewicz@polcode.net>
- * @date 12.03.2015
+ * @date March 2015
  * 
  */
 
@@ -55,6 +55,12 @@ jQuery(document).ready(function($) {
        maxTags: tagsLimit,
        trimValue: true
     });
+    
+    /*-------------------------------------------------------------------------- 
+       Make the single input placeholder wider so that text does not slide under
+       the previous tag 
+     -------------------------------------------------------------------------*/
+    $('.bootstrap-tagsinput input').attr('style', 'width: 10em !important');
     
     /*--------------------------------------------------------------------------
       Display a counter to indicate how meny tags are left to enter

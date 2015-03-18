@@ -242,7 +242,7 @@ body {
 }
 
 .ss_product_slider {
-	width: 100%	
+	width: 100%;	
 	display: block;
 	float: left;
 }
@@ -496,6 +496,8 @@ color: #a0862a;
     margin-right: 10px;
 }
 
+
+/* Style the delet icon present next to items on /view-products/ */
 i.ajax-delete {
     color: #7F0000;
 }
