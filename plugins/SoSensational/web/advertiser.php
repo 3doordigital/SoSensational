@@ -78,7 +78,9 @@ foreach($products as $prod):
 
 
 <div class="ss_company_info_left">
-	<div class="ss_description_company"><?php echo $meta['ss_advertiser_desc'][0];?>
+    <!-- wpautop() - a Wordpress formatting function from formatting.php. Adds 
+    paragraphs automatically, e.g. in a text widget---------------------------->
+    <div class="ss_description_company"><?php echo $desc = wpautop($meta['ss_advertiser_desc'][0]); ?>
  	          
               </div>
               <div class="image_description_single">
