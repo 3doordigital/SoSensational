@@ -11,7 +11,7 @@ $product_params = array( 'width' => 245, 'crop' => true );
 // IB commented
 //$products=$wpdb->get_results( "SELECT * FROM {$wpdb->posts} WHERE post_parent = '{$advertiser->ID}' and post_type='products'", OBJECT);
 
-$products=$wpdb->get_results( "SELECT * FROM {$wpdb->posts} WHERE post_author = '{$advertiser->post_author}' and post_type='products'", OBJECT);
+$products=$wpdb->get_results( "SELECT * FROM {$wpdb->posts} WHERE `post_author` = '{$advertiser->post_author}' AND `post_type`='products' AND (`post_status`='publish' OR post_status='pending')", OBJECT);
 
 //print_r($advertiser->ID);
 //print_r($products);
@@ -46,7 +46,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
 foreach($products as $prod):
 ?> 
 <li class="ss_product_slide"> 
-<?
+<?php
   $product_meta=get_post_meta($prod->ID);?>
    <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?>">
    <div class="imageHolderSlide">
@@ -78,16 +78,18 @@ foreach($products as $prod):
 
 
 <div class="ss_company_info_left">
-	<div class="ss_description_company"><?php echo $meta['ss_advertiser_desc'][0];?>
+    <!-- wpautop() - a Wordpress formatting function from formatting.php. Adds 
+    paragraphs automatically, e.g. in a text widget---------------------------->
+    <div class="ss_description_company"><?php echo $desc = wpautop($meta['ss_advertiser_desc'][0]); ?>
  	          
               </div>
               <div class="image_description_single">
-              <? if (isset($meta['ss_image_video'][0]))
+              <?php if (isset($meta['ss_image_video'][0]))
 			  {
               		if (!empty($meta['ss_image_video'][0])) {
                ?>          <img src="<?php echo $meta['ss_image_video'][0];?>" />
   
-			 <? } elseif (!empty($meta['ss_image_video_text'][0])) {  
+			 <?php } elseif (!empty($meta['ss_image_video_text'][0])) {  
 			 			echo $meta['ss_image_video_text'][0];
 			 } }?>
               </div>
@@ -121,11 +123,11 @@ foreach($products as $prod):
          <?php $instagramUrl = isset($meta['ss_advertiser_instagram'][0]) ? $meta['ss_advertiser_instagram'][0] : "";?>
 
          <div class="ss_social_icons">
-         	<?php if($facebookUrl != ''){ ?><a href="<? echo $facebookUrl; ?>" target="_new" class="ss_social_icon facebook"></a><?php } ?>
-         	<?php if($pinterestUrl != ''){ ?><a href="<? echo $googleUrl; ?>" target="_new" class="ss_social_icon pinterest"></a><?php } ?>
-         	<?php if($googleUrl != ''){ ?><a href="<? echo $pinterestUrl;?>" target="_new" class="ss_social_icon gplus"></a><?php } ?>
-         	<?php if($twitterUrl != ''){ ?><a href="<? echo $twitterUrl;?>" target="_new" class="ss_social_icon twitter"></a><?php } ?>
-         	<?php if($instagramUrl != ''){ ?><a href="<? echo $instagramUrl;?>" target="_new" class="ss_social_icon instagram"></a><?php } ?>
+         	<?php if($facebookUrl != ''){ ?><a href="<?php echo $facebookUrl; ?>" target="_new" class="ss_social_icon facebook"></a><?php } ?>
+         	<?php if($pinterestUrl != ''){ ?><a href="<?php echo $googleUrl; ?>" target="_new" class="ss_social_icon pinterest"></a><?php } ?>
+         	<?php if($googleUrl != ''){ ?><a href="<?php echo $pinterestUrl;?>" target="_new" class="ss_social_icon gplus"></a><?php } ?>
+         	<?php if($twitterUrl != ''){ ?><a href="<?php echo $twitterUrl;?>" target="_new" class="ss_social_icon twitter"></a><?php } ?>
+         	<?php if($instagramUrl != ''){ ?><a href="<?php echo $instagramUrl;?>" target="_new" class="ss_social_icon instagram"></a><?php } ?>
          </div>
 
 </div>

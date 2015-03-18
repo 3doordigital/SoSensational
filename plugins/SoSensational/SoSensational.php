@@ -25,6 +25,7 @@ require_once (dirname(__FILE__).'/custom-post-types.php');
 require_once (dirname(__FILE__).'/custom-shortcodes.php');
 require_once (dirname(__FILE__).'/custom-sizes.php');
 require_once (dirname(__FILE__).'/page_settings.php');
+require_once (dirname(__FILE__).'/helpers/helper-functions.php');
 
 
 register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
@@ -82,12 +83,14 @@ remove_role('brand_role');
 
 function brand_boutique_no_admin_access()
 {
-    
-    if ( 
-        current_user_can( 'brand_role' )
-        OR current_user_can( 'boutique_role' )
-    )
-        exit( wp_redirect(SITE_URL.'/ss_directory/') );
+    /**
+     * Amend the conditional so that the redirect does not take place when executing
+     * a call to admin-ajax.php. Otherwise, ajax calls would fail.
+     */
+    if ( (current_user_can( 'brand_role' ) || current_user_can( 'boutique_role' ))  && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
+        exit( wp_redirect(SITE_URL.'/ss_directory/') );        
+    }
+
 }
 add_action( 'admin_init', 'brand_boutique_no_admin_access', 100 );
 
@@ -238,6 +241,17 @@ function ss_rewrite_rule(){
 
 add_action( 'init', 'ss_rewrite_rule' );
 
+
+/**
+ * This function allows for wp_redirect() to execute successfully.
+ */
+function doOutputBuffer() 
+{
+    ob_start();
+}
+
+add_action('init', 'doOutputBuffer');
+
 function ss_query_vars($query_vars) {
     $query_vars[] = 'ss_cat';
     $query_vars[] = 'ss_sub_cat';
@@ -329,10 +343,23 @@ function pbd_alp_init() {
  		);
                 wp_enqueue_script('custom-scripts', plugin_dir_url( __FILE__ ) . 'js/custom-scripts.js', array('pbd-alp-load-posts'), '120215', false);
                 wp_enqueue_script('tagsinput-scripts', plugin_dir_url( __FILE__ ) . 'js/tagsinput/bootstrap-tagsinput.min.js', array('bootstrap-js'), '130215', false);
+                wp_localize_script('custom-scripts', 'AjaxObject', array('ss_ajax_url' => admin_url('admin-ajax.php')));
 
 } // end pbd init
 
-add_action('template_redirect', 'pbd_alp_init');
+add_action('wp_enqueue_scripts', 'pbd_alp_init');
+
+function deleteSelectedProduct() 
+{
+    if ( isset($_POST['productToDelete']) && ! empty($_POST['productToDelete']) ) {
+      $postId=$_POST['productToDelete'];
+      wp_delete_post($postId);
+  }
+    die();
+}
+
+add_action('wp_ajax_ss_delete_action', 'deleteSelectedProduct');
+add_action('wp_ajax_nopriv_ss_delete_action', 'deleteSelectedProduct');
  
  
 
@@ -342,11 +369,3 @@ function wpa54064_inspect_scripts() {
         echo $handle . ' | ';
     endforeach;
 }
-//add_action( 'wp_print_scripts', 'wpa54064_inspect_scripts' );
-
-
-//function addCustomScripts() {
-//    wp_enqueue_scripts('custom-scripts', plugin_dir_path(__FILE__) . '/js/custom-scripts.js', array('jquery'), '120215');
-//}
-//
-//add_action('wp_enqueue_scripts', 'addCustomScripts');

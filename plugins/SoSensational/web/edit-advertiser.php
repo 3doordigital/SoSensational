@@ -96,19 +96,22 @@ $products=$wpdb->get_results( "SELECT * FROM {$wpdb->posts} WHERE post_parent = 
 //    LEFT JOIN wp_terms as wpt
 //   ON wpt.term_id=wptt.term_id
 //   WHERE wptt.taxonomy='ss_category' ", OBJECT);
+
 $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt 
     LEFT JOIN {$wpdb->terms} as wpt
    ON wpt.term_id=wptt.term_id
    WHERE wptt.taxonomy='ss_category' ", OBJECT);
+    
+
 
 $post_categories =  get_the_terms( $advertiser[0]->ID,'ss_category');
 
 
-		$attachments = get_posts( array(
-			'post_type' => 'attachment',
-			'posts_per_page' => -1,
-			'post_parent' => $advertiser[0]->ID,
-				) );
+$attachments = get_posts( array(
+        'post_type' => 'attachment',
+        'posts_per_page' => -1,
+        'post_parent' => $advertiser[0]->ID,
+                ) );
 
 //		print_r($attachments);
 		
@@ -262,21 +265,21 @@ $post_categories =  get_the_terms( $advertiser[0]->ID,'ss_category');
 
 
    
-        <h3>Please choose up to <? echo $cats_allowed ?> categories</h3>
+        <h3>Please choose up to <?php echo $cats_allowed ?> categories</h3>
        
 <div id="num_checked"></div>
        <?php $count =0; ?>
    
         <?php foreach($categories as $category):
+
 		$count++;
         if($category->parent==0):
 			if ($count > 1) { echo "</div>"; }
 		?>
         <br />
 <div class="clearfix"></div>
-         <div class="row"><h3><?php echo $category->name;?></h3>
-          <?php      foreach($categories as $subcategory):
-
+         <div class="row"><h3><?php echo $category->name; ?></h3>
+          <?php  foreach($categories as $subcategory):
 					//echo $subcategory->slug;
 					$selected = ""; 
 					 if (check_cat($subcategory->slug,$post_categories)) {

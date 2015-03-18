@@ -20,19 +20,16 @@ $error_code=isset($_GET['error_code']) ? $_GET['error_code'] : "";
 $success_code=isset($_GET['success_code']) ? $_GET['success_code'] : "";
 
 if (!empty($success_code)) :
-  switch($success_code)
-        {
-            case '2':
-				$display_message = "Product Updated Successfully";
-			break;
-		}
-?>
+    switch($success_code) {
+        case '2':
+            $display_message = "Product Updated Successfully";                
+            break;        
+}
+
+/* Redirect the user to products listing on success */
+wp_redirect(home_url() . '/view-products/?adminmsg=s');
 
 
-
-<div class="alert alert-success" role="alert"><? echo $display_message; ?></div>
-
-<?php
 elseif (!empty($error_code)) :
   switch($error_code)
         {
@@ -79,7 +76,7 @@ endif;
 <br />
 <div class="input-group">
   <span class="input-group-addon input-width" id="basic-addon1">Product Title:</span>
-        <input type="text" name="post_title" id="post_title" value="<?php echo !isset($meta)?'':get_the_title($product_id);?>"  class="required form-control" aria-describedby="basic-addon1" />
+        <input type="text" name="post_title" id="post_title" value="<?php echo !isset($meta)?'':get_the_title($product_id);?>"  class="required form-control" aria-describedby="basic-addon1"/>
 </div>
 <br />
 <div class="input-group">
@@ -93,8 +90,8 @@ endif;
 </div>
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Product Tags:</span>
-<input type="text" name="post_tags" id="post_tags" data-role="tagsinput" value="<?php echo $post_tags ;?>" class="required form-control" aria-describedby="basic-addon1" />
+    <span class="input-group-addon input-width" id="basic-addon1">Product Tags: <small id="tags-counter"></small></span>
+<input type="text" name="post_tags" id="post_tags" data-role="tagsinput" value="<?php echo $post_tags ;?>" class="required form-control" aria-describedby="basic-addon1" disable/>
 </div>
 <br />
 
