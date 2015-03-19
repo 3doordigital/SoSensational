@@ -213,7 +213,7 @@ get_header();
     <div class="row">
         <div class="advertisers-carousel">
 
-            <?php do_action( 'wp_aff_advertisers_carousel', $term); ?>
+            <?php displayRelatedAdvertisersCarousel($term); ?>
         </div>
     </div>
 </div>

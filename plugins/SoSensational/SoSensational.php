@@ -26,6 +26,7 @@ require_once (dirname(__FILE__).'/custom-shortcodes.php');
 require_once (dirname(__FILE__).'/custom-sizes.php');
 require_once (dirname(__FILE__).'/page_settings.php');
 require_once (dirname(__FILE__).'/helpers/helper-functions.php');
+require_once (dirname(__FILE__).'/helpers/template-tags.php');
 
 
 register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
@@ -200,10 +201,9 @@ function add_pages_on_plugin_activation(){
 }
 add_filter( 'page_template', 'edit_advertiser_page_template' );
 add_action( 'ss_css', 'load_ss_css');
-function load_ss_css(){
-	    wp_enqueue_style('SoSensationalCSS', plugins_url( 'SoSensational/sosensational.css'));
-            wp_enqueue_style('tags-input', plugins_url( 'SoSensational/js/tagsinput/bootstrap-tagsinput.css'));
 
+function load_ss_css(){
+   
 }
 
 function edit_advertiser_page_template( $page_template )
@@ -331,8 +331,6 @@ register_activation_hook( __FILE__, 'wpss_plugin_deactivation');
 
 
 function pbd_alp_init() {
- 	global $wp_query;
- 
  		// Queue JS and CSS
  		wp_enqueue_script(
  			'pbd-alp-load-posts',
@@ -344,8 +342,12 @@ function pbd_alp_init() {
                 wp_enqueue_script('custom-scripts', plugin_dir_url( __FILE__ ) . 'js/custom-scripts.js', array('pbd-alp-load-posts'), '120215', false);
                 wp_enqueue_script('tagsinput-scripts', plugin_dir_url( __FILE__ ) . 'js/tagsinput/bootstrap-tagsinput.min.js', array('bootstrap-js'), '130215', false);
                 wp_localize_script('custom-scripts', 'AjaxObject', array('ss_ajax_url' => admin_url('admin-ajax.php')));
+                wp_enqueue_script('flexslider-js', plugin_dir_url(__FILE__) . 'js/flexslider/jquery.flexslider.js', array('jquery'), 19032015, false );
+                wp_enqueue_style('flexslider-styles', plugins_url( 'SoSensational/js/flexslider/flexslider.css'));
+                wp_enqueue_style('SoSensationalCSS', plugins_url( 'SoSensational/sosensational.css'));
+                wp_enqueue_style('tags-input', plugins_url( 'SoSensational/js/tagsinput/bootstrap-tagsinput.css'));                 
 
-} // end pbd init
+}
 
 add_action('wp_enqueue_scripts', 'pbd_alp_init');
 
@@ -369,37 +371,3 @@ function wpa54064_inspect_scripts() {
         echo $handle . ' | ';
     endforeach;
 }
-
-
-
-function displayRelatedAdvertisersCarousel($currentTerm)
-{        
-//    global $wpdb;
-//    $advs = $wpdb->get_results( "SELECT id FROM sosen_posts brand
-//                                LEFT JOIN sosen_term_relationships tax
-//                                ON (tax.object_id = brand.id)
-//                                WHERE tax.term_taxonomy_id=1" );
-//    
-//    var_dump($advs);
-    
-    $args = array(      
-      'post_type'   =>  array('brands', 'boutiques'),
-      'post_status' =>  array('publish', 'draft'),
-      'numberposts' => -1,
-      'ss_category' =>  'Dresses'
-    );
-
-    $posts = get_posts( $args );
-    var_dump($posts);
-    
-    echo '<div class="flexslider">';
-        echo '<ul class="slides">';
-            echo '<li>Advertiser 1</li>';
-            echo '<li>Advertiser 2</li>';            
-            echo '<li>Advertiser 3</li>';            
-        echo '</div>';
-    echo '</div>';
-}
-
-add_action('wp_aff_advertisers_carousel', 'displayRelatedAdvertisersCarousel');
-

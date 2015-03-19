@@ -110,4 +110,17 @@ jQuery(document).ready(function($) {
             }               
         });
     });  
+    
+    /*--------------------------------------------------------------------------
+      Attaching a flexslider to 'related advertisers' module on the shop page.
+     -------------------------------------------------------------------------*/
+    
+    $('.flexslider').flexslider({
+        animation: 'slide',
+        itemWidth: 367,
+        itemMargin: 15,
+        controlNav: false,
+        prevText: "",
+        nextText: ""        
+    }); 
 });

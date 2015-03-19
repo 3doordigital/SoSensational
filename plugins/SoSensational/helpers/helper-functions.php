@@ -4,7 +4,7 @@
  * Helper function for the SoSensational plugin
  * 
  * @author Lukasz Tarasiewicz <lukasz.tarasiewicz@polcode.net>
- * @data 17.03.2015
+ * @data March 2015
  */
 
 
