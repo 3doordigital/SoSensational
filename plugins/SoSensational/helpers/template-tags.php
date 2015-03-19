@@ -58,10 +58,10 @@ function displayRelatedAdvertisersCarousel($currentCategory)
             // truncate string
             $shortDescription = substr($description, 0, 180);
             // make sure the string ends in a word
-            $description = substr($shortDescription, 0, strrpos($shortDescription, ' '));         
-            $description = $description . "... <a href='" . get_site_url() . '/brands-and-boutiques/' . $advertiser[0]->post_name . "'>Read More</a>";
+            $description = substr($shortDescription, 0, strrpos($shortDescription, ' '));     
+            $description = $description . '...';
         }
-
+            $description = $description . "&nbsp;&nbsp;<a href='" . get_site_url() . '/brands-and-boutiques/' . $advertiser[0]->post_name . "'>Read More</a>";
         ?>
         <li>
             <div class='related-item ss_border'>

@@ -28,4 +28,3 @@ function sosensational_custom_taxonomy() {
 }
     register_taxonomy( 'ss_category', array('brands'), $args );
 
-    ?>

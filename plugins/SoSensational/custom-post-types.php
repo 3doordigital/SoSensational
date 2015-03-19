@@ -27,7 +27,7 @@ function sosensational_custom_post_type() {
         'show_ui' => true,
         'show_in_menu' => true,
         'menu_position' => 5,
-		'register_meta_box_cb' => 'sosensational_brands_add_meta_box',        
+	'register_meta_box_cb' => 'sosensational_brands_add_meta_box',        
         'show_in_nav_menus' => true,
         'publicly_queryable' => true,
         'exclude_from_search' => false,
@@ -37,7 +37,7 @@ function sosensational_custom_post_type() {
         'rewrite' => array(
 			'slug' => 'brands-and-boutiques',
 			'with_front'=> false,
-		),
+                    ),
         'capability_type' => 'post',
         'supports' => array( 'title','author')
 
@@ -551,3 +551,6 @@ $post_type=get_post_type($_GET['post']);
 //         }
 //     }
 // }
+
+
+
