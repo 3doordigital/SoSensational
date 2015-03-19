@@ -36,8 +36,6 @@ get_header();
 			
             <?php 
                 $term = get_term_by( 'slug', $wp_query->query_vars['shop-cat'], 'wp_aff_categories' );
-                var_dump($wp_query->query_vars['shop-cat']);
-                print_var($term);
                 //echo get_term_link( $term->term_id, 'wp_aff_categories' );
 
                 $catname = $term->name;
@@ -212,8 +210,12 @@ get_header();
     </div>
     <div class="row">
         <div class="advertisers-carousel">
-
-            <?php displayRelatedAdvertisersCarousel($term); ?>
+            
+            <?php 
+                if ( isset($term) ) {
+                    displayRelatedAdvertisersCarousel($term);                     
+                }
+            ?>
         </div>
     </div>
 </div>
