@@ -991,8 +991,24 @@ class WordPress_Affiliate_Shop {
             </div>
         	<table class="form-table">
             	<tr>
+                	<th>Brand</th>
+                    <td>
+                    	<?php 
+							$arg = array(
+									'show_option_none'   => 'Select Brand',
+									'orderby'            => 'NAME', 
+									'order'              => 'ASC',
+									'hide_empty'         => 0, 
+									'name'               => 'brand',
+									'taxonomy'           => 'wp_aff_brands',
+								);
+							wp_dropdown_categories( $arg ); ?> <br>
+                           	<input class="regular-text" type="text" name="product_brand_new" placeholder="Or type a new one">
+                    </td>
+                </tr>
+                <tr>
                 	<th>Price</th>
-                    <td colspan="2">&pound;<input class="regular-text" type="text" name="product_price" placeholder="" value=""></td>
+                    <td colspan="2"><input class="regular-text" type="text" name="product_price" placeholder="" value=""><p class="description">&pound; sign not needed.</p></td>
                 </tr>
                 <tr>
                 	<th>Description</th>
