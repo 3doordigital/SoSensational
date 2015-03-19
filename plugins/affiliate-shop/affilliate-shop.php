@@ -1016,7 +1016,7 @@ class WordPress_Affiliate_Shop {
                 </tr>
                 <tr>
                 	<th>Image</th>
-                    <td><input id="upload_image_button" type="button" class="button button-primary" value="Upload Image" /></td>
+                    <td><input id="upload_image_button" type="button" class="button button-secondary" value="Upload Image" /></td>
                 </tr>
                 </table>
                 <table>
