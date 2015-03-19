@@ -305,6 +305,10 @@ Styles for the related advertisers slider on the shop page
     text-align: left;
 }
 
+.related-description a {
+    float: right;
+}
+
 .advertisers-carousel .flexslider .slides > li {
   display: none;
   -webkit-backface-visibility: hidden;

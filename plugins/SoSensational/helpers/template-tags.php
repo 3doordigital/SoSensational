@@ -61,7 +61,7 @@ function displayRelatedAdvertisersCarousel($currentCategory)
             $description = substr($shortDescription, 0, strrpos($shortDescription, ' '));     
             $description = $description . '...';
         }
-            $description = $description . "&nbsp;&nbsp;<a href='" . get_site_url() . '/brands-and-boutiques/' . $advertiser[0]->post_name . "'>Read More</a>";
+            $description = $description . "<br/><a href='" . get_site_url() . '/brands-and-boutiques/' . $advertiser[0]->post_name . "'>Read More</a>";
         ?>
         <li>
             <div class='related-item ss_border'>
