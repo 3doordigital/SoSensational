@@ -1008,13 +1008,19 @@ class WordPress_Affiliate_Shop {
                 </tr>
                 <tr>
                 	<th>Price</th>
-                    <td colspan="2"><input class="regular-text" type="text" name="product_price" placeholder="" value=""><p class="description">&pound; sign not needed.</p></td>
+                    <td><input class="regular-text" type="text" name="product_price" placeholder="" value=""><p class="description">&pound; sign not needed.</p></td>
                 </tr>
                 <tr>
                 	<th>Description</th>
-                    <td colspan="2"><textarea class="large-text" rows="4" name="product_desc"></textarea>
+                    <td><textarea class="large-text" rows="4" name="product_desc"></textarea></td>
                 </tr>
                 <tr>
+                	<th>Image</th>
+                    <td><input id="upload_image_button" type="button" class="button button-secondary" value="Upload Image" /></td>
+                </tr>
+                </table>
+                <table>
+                <tr class="form-table">
                 	<td width="33%" valign="top">
                        <div style="">
                            <?php $categories = new Tag_Checklist('wp_aff_categories', 'all' ); ?>
