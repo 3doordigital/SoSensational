@@ -300,10 +300,21 @@ Styles for the related advertisers slider on the shop page
 
 .related-description {
     padding: 10px;
+    height: 117px;
 }
 
 .advertisers-carousel .flexslider .slides > li {
   display: none;
   -webkit-backface-visibility: hidden;
   margin-right: 15px;
+}
+
+.advertisers-carousel .flex-direction-nav a {
+    top: 48%;
+}
+
+.page .advertisers-carousel > h1 {
+    border: none;
+    text-align: center;
+    margin: 40px 0;
 }

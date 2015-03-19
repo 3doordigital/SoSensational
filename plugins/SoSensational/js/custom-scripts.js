@@ -121,6 +121,8 @@ jQuery(document).ready(function($) {
         itemMargin: 15,
         controlNav: false,
         prevText: "",
-        nextText: ""        
+        nextText: "",
+        animationLoop: true,
+        
     }); 
 });

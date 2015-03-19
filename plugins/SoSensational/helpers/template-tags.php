@@ -20,11 +20,11 @@ function displayRelatedAdvertisersCarousel($currentCategory)
 
     $advertiserCategories = get_posts( $args );    
     $imgDimensions = array( 'width' => 366, 'height' => 240, 'crop' => true ); 
+    $advertiserTmp = array();
     
     global $wpdb;
-                                
-                                       
-    
+    echo '<hr>';
+    echo "<h1>See More $currentCategory->name in Brands & Boutiques</h1>";    
     echo '<div class="flexslider">';
         echo '<ul class="slides">';
     
@@ -33,7 +33,16 @@ function displayRelatedAdvertisersCarousel($currentCategory)
         $description = get_post_meta( $advertiserCategory->ID, 'ss_advertisers_cats_description', true );        
         $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts}
                                            WHERE(post_type='brands' OR post_type='boutiques') 
-                                           AND post_author='{$advertiserCategory->post_author}' ", OBJECT );     
+                                           AND post_author='{$advertiserCategory->post_author}' ", OBJECT );  
+        
+        // Skip an iteration of the loop if the advertiser has already been displayed                                   
+        if ( ! isset($advertiserTmp[$advertiser[0]->post_title]) ) {
+            $advertiserTmp[$advertiser[0]->post_title] = true;            
+        } else {
+            continue;
+        }                                          
+
+        
         $advertiserRedirectionLink = get_post_meta( $advertiserCategory->ID, 'ss_advertisers_cats_link', true );                                           
                                            
         if (strlen($description) > 180) {
@@ -42,9 +51,7 @@ function displayRelatedAdvertisersCarousel($currentCategory)
             // make sure the string ends in a word
             $description = substr($shortDescription, 0, strrpos($shortDescription, ' '));             
         }
-        
 
-        
         ?>
         <li>
             <div class='related-item ss_border'>
