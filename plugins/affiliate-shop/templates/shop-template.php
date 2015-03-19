@@ -208,9 +208,10 @@ get_header();
             </div>
         </div>
     </div>
+</div>
+<div class="container">
     <div class="row">
-        <div class="advertisers-carousel">
-            
+        <div class="advertisers-carousel">            
             <?php 
                 if ( isset($term) ) {
                     displayRelatedAdvertisersCarousel($term);                     
