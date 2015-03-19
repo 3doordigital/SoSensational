@@ -36,8 +36,10 @@ get_header();
 			
             <?php 
                 $term = get_term_by( 'slug', $wp_query->query_vars['shop-cat'], 'wp_aff_categories' );
-                //print_var($term);
+                var_dump($wp_query->query_vars['shop-cat']);
+                print_var($term);
                 //echo get_term_link( $term->term_id, 'wp_aff_categories' );
+
                 $catname = $term->name;
                 $catparent = $term->parent;
                 if($catparent != '') {
@@ -93,7 +95,7 @@ get_header();
         <div class="col-md-19 col-md-offset-1">
             <?php
                 $terms = get_terms('wp_aff_categories', array( 'orderby' => 'term_group', 'order'=>'DESC' ));
-                //print_var($terms);
+                //var_dump($terms);
                 //print_var($wp_query->query_vars);
                 if( isset( $wp_query->query_vars['shop-cat'] ) ) {
                     $term = get_term_by( 'slug', $wp_query->query_vars['shop-cat'], 'wp_aff_categories' );
@@ -112,6 +114,7 @@ get_header();
                     $catID = 0;
                     $parent = '0';
                 }
+                
             ?>
             <?php if( $parent != 0 ) { ?>
             <h1><?php echo $term->name; ?></h1>
@@ -203,10 +206,14 @@ get_header();
                         }
                     }
                 ?>
-                <?php do_action( 'wp_aff_after_listings' ); ?>
-                <?php wp_pagenavi( array( 'query' => $query ) ); ?>
-                <?php do_action( 'wp_aff_after_pagination' ); ?>
+                <?php wp_pagenavi( array( 'query' => $query ) ); ?>                
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="advertisers-carousel">
+
+            <?php do_action( 'wp_aff_advertisers_carousel', $term); ?>
         </div>
     </div>
 </div>

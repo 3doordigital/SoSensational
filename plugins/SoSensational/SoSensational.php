@@ -369,3 +369,37 @@ function wpa54064_inspect_scripts() {
         echo $handle . ' | ';
     endforeach;
 }
+
+
+
+function displayRelatedAdvertisersCarousel($currentTerm)
+{        
+//    global $wpdb;
+//    $advs = $wpdb->get_results( "SELECT id FROM sosen_posts brand
+//                                LEFT JOIN sosen_term_relationships tax
+//                                ON (tax.object_id = brand.id)
+//                                WHERE tax.term_taxonomy_id=1" );
+//    
+//    var_dump($advs);
+    
+    $args = array(      
+      'post_type'   =>  array('brands', 'boutiques'),
+      'post_status' =>  array('publish', 'draft'),
+      'numberposts' => -1,
+      'ss_category' =>  'Dresses'
+    );
+
+    $posts = get_posts( $args );
+    var_dump($posts);
+    
+    echo '<div class="flexslider">';
+        echo '<ul class="slides">';
+            echo '<li>Advertiser 1</li>';
+            echo '<li>Advertiser 2</li>';            
+            echo '<li>Advertiser 3</li>';            
+        echo '</div>';
+    echo '</div>';
+}
+
+add_action('wp_aff_advertisers_carousel', 'displayRelatedAdvertisersCarousel');
+
