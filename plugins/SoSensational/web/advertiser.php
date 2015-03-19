@@ -164,6 +164,7 @@ foreach($products as $prod):
     itemMargin: 20,
     prevText: " ",
     nextText: " ",
+    slideshow: false
   });
 });
 </script>

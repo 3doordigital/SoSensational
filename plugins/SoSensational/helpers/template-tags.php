@@ -8,7 +8,12 @@
  */
 
 
-
+/**
+ * A template tag that displays a carousel with random advertisers from the
+ * surrent category
+ * 
+ * @param stdClass $currentCategory | the currently selected category
+ */
 function displayRelatedAdvertisersCarousel($currentCategory)
 {          
     $args = array(      
@@ -24,7 +29,11 @@ function displayRelatedAdvertisersCarousel($currentCategory)
     
     global $wpdb;
     echo '<hr>';
-    echo "<h1>See More $currentCategory->name in Brands & Boutiques</h1>";    
+    
+    if ( ! empty($advertiserCategories) ) {
+        echo "<h1>See More $currentCategory->name in Brands & Boutiques</h1>";          
+    }
+  
     echo '<div class="flexslider">';
         echo '<ul class="slides">';
     
@@ -49,7 +58,8 @@ function displayRelatedAdvertisersCarousel($currentCategory)
             // truncate string
             $shortDescription = substr($description, 0, 180);
             // make sure the string ends in a word
-            $description = substr($shortDescription, 0, strrpos($shortDescription, ' '));             
+            $description = substr($shortDescription, 0, strrpos($shortDescription, ' '));         
+            $description = $description . "... <a href='" . get_site_url() . '/brands-and-boutiques/' . $advertiser[0]->post_name . "'>Read More</a>";
         }
 
         ?>
@@ -60,7 +70,7 @@ function displayRelatedAdvertisersCarousel($currentCategory)
                     <div class='title-bar'><h2><?php echo $advertiser[0]->post_title; ?></h2></div>
                 </a>           
                 <div class='related-description'>
-                    <p><?php echo strip_tags($description); ?></p>
+                    <p><?php echo $description; ?></p>
                 </div>
                 <a href="<?php echo $advertiserRedirectionLink ?>" class='button_ss large_ss'>Visit Website</a>
             </div>     

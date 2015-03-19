@@ -296,11 +296,13 @@ Styles for the related advertisers slider on the shop page
     position: absolute;
     width: 100%;
     bottom: 158px;
+    color: #fff;
 }
 
 .related-description {
     padding: 10px;
     height: 117px;
+    text-align: left;
 }
 
 .advertisers-carousel .flexslider .slides > li {
