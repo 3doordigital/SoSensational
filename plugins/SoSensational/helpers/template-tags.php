@@ -14,7 +14,7 @@ function displayRelatedAdvertisersCarousel($currentCategory)
     $args = array(      
       'post_type'   =>  array('advertisers_cats'),
       'post_status' =>  array('publish', 'draft'),
-      'numberposts' => -1,
+      'numberposts' =>  9,
       'ss_category' =>  $currentCategory->name
     );
 
