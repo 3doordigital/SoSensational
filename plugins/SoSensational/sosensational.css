@@ -425,7 +425,7 @@ color: #a0862a;
 	background: -webkit-linear-gradient(top, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
 	background: -o-linear-gradient(top, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
 	background: -ms-linear-gradient(top, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
-	background: linear-gradient(to bottom, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
+	background: linear-gradient(to bottom, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%) !important;
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', endColorstr='#6c20b1',GradientType=0 );
 	color: #fff;
 	text-transform: uppercase;
