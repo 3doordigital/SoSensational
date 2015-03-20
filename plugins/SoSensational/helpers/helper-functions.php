@@ -36,3 +36,34 @@ function displaySystemNotice()
     return "<div class='alert alert-$alertClass' role='alert'>$displayMessage</div>";
     
 }
+
+function checkIfSelected($currentCategoryId, $selectedCategories)
+{
+    if (is_array($selectedCategories)) {
+        if (in_array($currentCategoryId, $selectedCategories)) {
+            return true;
+        }           
+    }
+    return false;
+}
+
+/**
+ * Make the default in_array() function recursive
+ * 
+ * @author jwueller
+ * @source http://stackoverflow.com/questions/4128323/in-array-and-multidimensional-array
+ * 
+ * @param mixed $needle
+ * @param array $haystack
+ * @param bool $strict
+ * @return boolean
+ */
+function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+            return true;
+        }
+    }
+
+    return false;
+}

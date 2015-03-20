@@ -186,10 +186,10 @@ foreach ($post_categories_available as $cat)
   <span class="input-group-addon input-width" id="basic-addon1">Product Category:</span>
  <?php 
 				
-				$this_terms = wp_get_post_terms(get_the_ID(), 'ss_category');
-				
-				echo show_select_for_cats($post_categories_available ,isset($this_terms[0]->term_id) ? $this_terms[0]->term_id : ""); 
-				 ?>
+        $this_terms = wp_get_post_terms(get_the_ID(), 'ss_category');
+
+        echo show_select_for_cats($post_categories_available ,isset($this_terms[0]->term_id) ? $this_terms[0]->term_id : ""); 
+         ?>
                  
                  </div>
          <br/>     

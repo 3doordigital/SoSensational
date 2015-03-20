@@ -12,7 +12,7 @@
  * A template tag that displays a carousel with random advertisers from the
  * surrent category
  * 
- * @param stdClass $currentCategory | the currently selected category
+ * @param stdClass $currentCategory The currently selected category
  */
 function displayRelatedAdvertisersCarousel($currentCategory)
 {          
@@ -81,4 +81,66 @@ function displayRelatedAdvertisersCarousel($currentCategory)
         </div> <!-- .slides -->
     </div>' <!-- .flexslider -->
 <?php  
+}
+
+function displayFeaturedAdvertisers($currentCategory)
+{
+    $args = array(
+        'numberposts'   =>  -1,
+        'post_type'     =>  array('brands', 'boutiques'),
+        'meta_key'      =>  '_categories_featured',
+    );
+    
+    /**
+     * Select all advertisers that have been featured
+     */
+    $advertisers = get_posts($args);
+    
+    /**
+     * Extract each advertiser's meta data to see where he should be featured
+     */
+    foreach ($advertisers as $advertiser) {
+        $meta[$advertiser->ID] = get_post_meta($advertiser->ID, '_categories_featured', true);
+    }    
+    
+    /**
+     * Stop the script if no advertiser is featured in the current category
+     */
+    if ( ! in_array_r($currentCategory[0]->term_id, $meta)) {
+        exit();
+    }
+    
+    /**
+     * Find advertisers featured in the current category
+     */
+    foreach ($meta as $key => $values) {
+        foreach ($values as $value) {
+            if ($value === $currentCategory[0]->term_id) {
+                $featuredAdvertisersIds[] = $key;
+            }
+        }
+    }
+    
+    echo '<div class="flexslider">';
+        echo '<ul class="slides">';  
+            foreach($featuredAdvertisersIds as $advertiserId) {
+                $advertiserData = get_post($advertiserId);
+                $advertiserMeta = get_post_meta($advertiserId);
+            ?>    
+                
+                <li>
+                    <div class='related-item ss_border'>
+                        <a href='<?php echo get_site_url() . '/brands-and-boutiques/' . $advertiserData->post_name?>'>
+                            <img src='<?php echo $advertiserMeta['ss_logo'][0];  ?>' />
+                            <div class='title-bar'><h2><?php echo $advertiserData->post_title; ?></h2></div>
+                        </a>           
+                    </div>     
+                </li>                
+                
+            <?php
+            }            
+        echo '</div>'; // .slides
+    echo '</div>';  // .flexslider
+    
+
 }

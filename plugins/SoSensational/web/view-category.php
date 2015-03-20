@@ -8,16 +8,18 @@ $category_id = isset($ss_sub_cat_id) ? $ss_sub_cat_id : "";
 
 if(!empty($ss_cat_id)):
 
-	$category_id = preg_replace('/[^-a-zA-Z0-9_]/', '', $ss_cat_id);
+    $category_id = preg_replace('/[^-a-zA-Z0-9_]/', '', $ss_cat_id);
 
-	$category=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt 
-    LEFT JOIN {$wpdb->terms} as wpt
-    ON wpt.term_id=wptt.term_id
-    WHERE wptt.taxonomy='ss_category' 
-    AND wpt.term_id='{$category_id}'", OBJECT);
-    $mainChildren = get_term_children($category_id, get_query_var('taxonomy'));
+    $category = $wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt 
+                                    LEFT JOIN {$wpdb->terms} as wpt
+                                    ON wpt.term_id=wptt.term_id
+                                    WHERE wptt.taxonomy='ss_category' 
+                                    AND wpt.term_id='{$category_id}'", OBJECT);
+                                    $mainChildren = get_term_children($category_id, get_query_var('taxonomy'));
+                                    
+    $mainSsCategory = $category;                                
 
-	$term_meta = get_option( "taxonomy_$category_id" );
+    $term_meta = get_option( "taxonomy_$category_id" );
 
 	
 ?>
@@ -271,4 +273,15 @@ $args2 = array(
 if($i<get_option('ss_adv_number')){ $i++; }else{ break;}
 endforeach;?>
 <div class="ss_clear"></div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="advertisers-carousel featured">            
+            <?php 
+                if ( isset($mainSsCategory) ) {
+                    displayFeaturedAdvertisers($mainSsCategory);                     
+                }
+            ?>
+        </div>
+    </div>
 </div>

@@ -47,9 +47,18 @@ class FeaturedMeta
     {
         wp_nonce_field('featured-meat-box', 'featured-meta-box-nonce');
         
-        //$value = get_post_meta($post->ID, '_brands_fetured_in', true);
+        $selectedCategories = get_post_meta($post->ID, '_categories_featured', true);
         
-        new Form();
+        global $wpdb;
+        
+        /* Query for 'ss_category' term that do not have any parents (main categories)*/
+        $categoriesToRender=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt 
+            LEFT JOIN {$wpdb->terms} as wpt
+            ON wpt.term_id=wptt.term_id
+            WHERE wptt.taxonomy='ss_category' AND wptt.parent='0'", OBJECT);
+
+        $form = new Form($categoriesToRender, $selectedCategories);
+        $form->renderForm();
     }
     
     public function savePost($postId)
@@ -64,7 +73,7 @@ class FeaturedMeta
             return $postId;
         }
         
-        if ( define('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+        if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
             return $postId;
         }
         
@@ -78,9 +87,9 @@ class FeaturedMeta
             }
         }
         
-        $data = sanitize_text_field($_POST['selection_fields']);
+        $data = $_POST['categoriesFeatured'];        
         
-        update_post_meta($postId, '_brands_featured_in', $data);
+        update_post_meta($postId, '_categories_featured', $data);
         
     }
             
