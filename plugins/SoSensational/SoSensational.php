@@ -204,7 +204,7 @@ add_filter( 'page_template', 'edit_advertiser_page_template' );
 add_action( 'ss_css', 'load_ss_css');
 
 function load_ss_css(){
-   
+    wp_enqueue_style('SoSensationalCSS', plugins_url( 'SoSensational/sosensational.css'));   
 }
 
 function edit_advertiser_page_template( $page_template )
@@ -344,8 +344,7 @@ function pbd_alp_init() {
                 wp_enqueue_script('tagsinput-scripts', plugin_dir_url( __FILE__ ) . 'js/tagsinput/bootstrap-tagsinput.min.js', array('bootstrap-js'), '130215', false);
                 wp_localize_script('custom-scripts', 'AjaxObject', array('ss_ajax_url' => admin_url('admin-ajax.php')));
                 wp_enqueue_script('flexslider-js', plugin_dir_url(__FILE__) . 'js/flexslider/jquery.flexslider.js', array('jquery'), 19032015, false );
-                wp_enqueue_style('flexslider-styles', plugins_url( 'SoSensational/js/flexslider/flexslider.css'));
-                wp_enqueue_style('SoSensationalCSS', plugins_url( 'SoSensational/sosensational.css'));
+                wp_enqueue_style('flexslider-styles', plugins_url( 'SoSensational/js/flexslider/flexslider.css'));           
                 wp_enqueue_style('tags-input', plugins_url( 'SoSensational/js/tagsinput/bootstrap-tagsinput.css'));                 
 
 }
