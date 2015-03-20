@@ -8,6 +8,8 @@
  * @data March 2015
  */
 
+require_once 'inc/FeaturedMeta/Form.php';
+
 function callFeaturedMeta()
 {
     new FeaturedMeta;
@@ -47,9 +49,7 @@ class FeaturedMeta
         
         //$value = get_post_meta($post->ID, '_brands_fetured_in', true);
         
-        echo "<label for='featured-meta'>";
-        echo 'Choose categories the advertiser should be featured in';
-        echo '</label>';
+        new Form();
     }
     
     public function savePost($postId)

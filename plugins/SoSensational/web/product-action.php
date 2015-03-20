@@ -8,8 +8,9 @@ $error_code = "";
 $user=wp_get_current_user(); 
 $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$user->ID}' ", OBJECT );
 
-function upload_user_file( $file = array() ) {
 
+function upload_user_file( $file = array() ) {
+    
     require_once( ABSPATH . 'wp-admin/includes/admin.php' );
 
       $file_return = wp_handle_upload( $file, array('test_form' => false ) );
@@ -61,8 +62,11 @@ if ($currentUserRole == 'boutique_role') {
 
 
 
-/* Proceed with the upload only if the limit has not been exhausted */
-if($countProducts[0]->num < $productsLimit) {
+/**
+ * Proceed with the upload only if the limit has not been exhausted. The '+1'
+ * makes sure that the advertiser can still edit products once a limit has been reached
+ */
+if($countProducts[0]->num < $productsLimit + 1) {
 
     if (!empty($_FILES['upload_product_image'])) {
 
