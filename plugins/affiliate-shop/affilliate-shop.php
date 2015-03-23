@@ -1265,10 +1265,12 @@ class WordPress_Affiliate_Shop {
                   
                   </div>
                    <?php 
+				   		print_var( $products );
                         foreach( $products AS $key=>$value ) {
                                 $proda[] = $key;
                             }
                         $aParams5 = array('iProductId'	=> $proda, 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'iCategoryId', 'bHotPick', 'sSpecification', 'sPromotion', 'sModel') ); 
+						print_var($aParams5);
 						$this->oClient = ClientFactory::getClient();
                         $productArray= $this->oClient->call('getProduct', $aParams5);
                         //echo '<pre>'.print_r($productArray, true).'</pre>';
@@ -1288,8 +1290,9 @@ class WordPress_Affiliate_Shop {
                        <?php
                             $aParams8 = array('iMerchantId'	=> $product->iMerchantId);
                             $merch = $this->oClient->call('getMerchant', $aParams8);
+							$url = add_query_arg( array( 'action' => 'remove-product', 'product' => $product->iId ), $_SERVER['REQUEST_URI'] );
                         ?>
-<h3 class=" "><span><?php echo ucwords(($product->sName)); ?> (ID:<?php echo $product->iId; ?>)<br>Brand: <?php echo ucwords($merch->oMerchant->sName); ?><br><a class="button" target="_blank" href="<?php echo $product->sAwDeepLink; ?>">Visit URL</a></span> <?php submit_button( 'Remove Product', 'delete', '', false, array('disabled' => 'disabled') ); ?></h3>
+<h3 class=" "><span><?php echo ucwords(($product->sName)); ?> (ID:<?php echo $product->iId; ?>)<br>Brand: <?php echo ucwords($merch->oMerchant->sName); ?><br><a class="button" target="_blank" href="<?php echo $product->sAwDeepLink; ?>">Visit URL</a></span> <a href="<?php echo $url; ?>" class="delete button button-secondary" rel="<?php echo $product->iId; ?>">Remove Product</a></h3>
 <div class="inside">
                 <input type="hidden" value="<?php echo $product->sAwDeepLink; ?>" name="product_link[<?php echo $i; ?>]">
                 <input type="hidden" value="<?php echo $product->iId; ?>" name="product_id[<?php echo $i; ?>]">
