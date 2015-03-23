@@ -61,6 +61,7 @@ function displayFeaturedAdvertisers($currentCategory)
      * Find advertisers featured in the current category
      */
     foreach ($meta as $key => $values) {
+        var_dump($values);
         foreach ($values as $value) {
             if ($value === $currentCategory[0]->term_id) {
                 $featuredAdvertisersIds[] = $key;
