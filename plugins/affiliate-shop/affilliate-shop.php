@@ -68,6 +68,8 @@ class WordPress_Affiliate_Shop {
         add_action( 'admin_post_wp_aff_product_search', array ( $this, 'wp_aff_product_search' ) );
         add_action( 'admin_post_wp_aff_add_products', array ( $this, 'wp_aff_add_products' ) );
 		add_action( 'admin_post_wp_aff_edit_colours', array ( $this, 'wp_aff_edit_colours' ) );
+		
+		add_action( 'admin_post_wp_aff_add_man_product', array ( $this, 'wp_aff_add_man_product' ) );
         
 		add_action( 'admin_post_nopriv_wp_aff_size_filter', array( $this, 'wp_aff_size_filter' ) );
 		add_action( 'admin_post_wp_aff_size_filter', array( $this, 'wp_aff_size_filter' ) );
@@ -1004,6 +1006,7 @@ class WordPress_Affiliate_Shop {
 								);
 							wp_dropdown_categories( $arg ); ?> <br>
                            	<input class="regular-text" type="text" name="product_brand_new" placeholder="Or type a new one">
+                            <p class="description">If adding a new category, none should be selected from the dropdown.</p>
                     </td>
                 </tr>
                 <tr>
@@ -1012,15 +1015,24 @@ class WordPress_Affiliate_Shop {
                 </tr>
                 <tr>
                 	<th>Description</th>
-                    <td><textarea class="large-text" rows="4" name="product_desc"></textarea></td>
+                    <td>
+                    	<textarea class="large-text" cols="46" rows="4" name="product_desc"></textarea>
+                        <p class="description">Not currently used on site but may be in future.</p>
+                    </td>
                 </tr>
                 <tr>
                 	<th>Product Link</th>
-                    <td><input class="regular-text" type="url" name="product_url" placeholder="http://" value=""></td>
+                    <td>
+                    	<input class="large-text" type="url" name="product_url" placeholder="http://" value="">
+                        <p class="description">Affiliate link pasted here.</p>
+                    </td>
                 </tr>
                 <tr>
                 	<th>Image</th>
-                    <td><input id="upload_image_button" type="button" class="button button-secondary" value="Upload Image" /><input type="hidden" id="product_image" name="product_image"></td>
+                    <td>
+                    	<input id="upload_image_button" type="button" class="button button-secondary" value="Upload Image" /><input type="hidden" id="product_image" name="product_image">
+                        <p class="description">The image should be at least 300px x 300px.</p>
+                    </td>
                     
                 </tr>
                 </table>
@@ -1699,7 +1711,41 @@ class WordPress_Affiliate_Shop {
     </div>
     <?php }
 	
-	
+	public function wp_aff_add_man_product() {
+		if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_add_man_product' ) )
+            die( 'Invalid nonce.' . var_export( $_POST, true ) );
+		if( isset( $_POST['product_brand_new'] ) && $_POST['product_brand_new'] != '' ) {
+			$brand = wp_insert_term( $_POST['product_brand_new'], 'wp_aff_brands' );
+		} else {
+			$brand == $_POST['product_brand'];	
+		}
+		print_var( $_POST );
+		$my_post = array(
+              'post_title'    => $_POST['product_name'],
+              'post_status'   => 'publish',
+              'post_type'     => 'wp_aff_products',
+              'tax_input' => array(
+                'wp_aff_categories' => $_POST['wp_aff_categories']['all'],
+                'wp_aff_sizes' => $_POST['wp_aff_sizes']['all'],
+                'wp_aff_colours' => $_POST['wp_aff_colours']['all'],
+                'wp_aff_brands' => $brand
+               )
+            );
+            
+            // Insert the post into the database
+            
+            
+		$insID = wp_insert_post( $my_post );   
+		add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'], true);
+		add_post_meta($insID, 'wp_aff_product_link', $_POST['product_url'], true);
+		add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'], true);
+		//add_post_meta($insID, 'wp_aff_product_brand', , true);
+		add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'], true);
+		add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'], true);
+		add_post_meta($insID, 'wp_aff_product_manual', 1, true);
+		$url = add_query_arg( 'msg', 1, $_POST['_wp_http_referer'] );
+		wp_safe_redirect( $url );
+	}
 	
 	
     /**
