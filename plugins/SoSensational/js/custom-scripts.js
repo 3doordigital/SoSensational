@@ -41,7 +41,7 @@ jQuery(document).ready(function($) {
     
     /* Make sure that the element is present on the page in order to attach the function call */
     if (input.length) {
-        input.limiter(180, elem);        
+        input.limiter(300, elem);        
     }    
     
     /*--------------------------------------------------------------------------
