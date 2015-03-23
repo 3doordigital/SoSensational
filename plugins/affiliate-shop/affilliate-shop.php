@@ -1265,12 +1265,12 @@ class WordPress_Affiliate_Shop {
                   
                   </div>
                    <?php 
-				   		print_var( $products );
+				   		//print_var( $products );
                         foreach( $products AS $key=>$value ) {
                                 $proda[] = $key;
                             }
                         $aParams5 = array('iProductId'	=> $proda, 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'iCategoryId', 'bHotPick', 'sSpecification', 'sPromotion', 'sModel') ); 
-						print_var($aParams5);
+						//print_var($aParams5);
 						$this->oClient = ClientFactory::getClient();
                         $productArray= $this->oClient->call('getProduct', $aParams5);
                         //echo '<pre>'.print_r($productArray, true).'</pre>';
