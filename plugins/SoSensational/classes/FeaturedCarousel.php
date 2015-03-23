@@ -46,7 +46,7 @@ class FeaturedCarousel
     }
     
     private function getFeaturedAdvertisersInCurrentCategory()
-    {
+    {        
         
         if (!isset($this->metaData) || empty($this->metaData)) {
             return false;
@@ -59,28 +59,59 @@ class FeaturedCarousel
         foreach($this->metaData as $key => $values) {
             foreach ($values as $value) {
                 if ($value === $this->currentCategory[0]->term_id) {
-                    $this->eaturedAdvertisersIds[] = $key;
+                    $this->featuredAdvertisersIds[] = $key;
                 }
             }            
-        }
+        }        
     }
 
     private function getDataForDisplay()
     {
+        
         $args = array(
+            'post_type' => array('brands', 'boutiques'),
             'post__in'  =>  $this->featuredAdvertisersIds,
         );
-        
-        $advertisersData = get_posts($args);        
-        
-        $this->dataForDisplay = $advertisersData;
-        
+
+        $advertisersData = get_posts($args);  
+
+        foreach ($advertisersData as $advertiserData) {
+            
+            $args = array(      
+              'post_type'   =>  array('advertisers_cats'),
+              'post_status' =>  array('publish', 'draft'),
+              'ss_category' =>  $this->currentCategory[0]->name,
+              'author' =>  $advertiserData->post_author
+            );             
+            
+            $featuredAdvertiserCategory = get_posts($args);
+            
+            
+            if( ! isset ($featuredAdvertiserCategory[0]->ID)) {                    
+                continue;
+            }            
+            
+            $this->dataForDisplay[$advertiserData->post_title]['post_name'] = $advertiserData->post_name;
+            $this->dataForDisplay[$advertiserData->post_title]['post_title'] = $advertiserData->post_title;            
+            $this->dataForDisplay[$advertiserData->post_title]['image'] = bfi_thumb( get_post_meta( $featuredAdvertiserCategory[0]->ID, 
+                                                                                    'ss_advertisers_cats_image', true ), 
+                                                                                    $this->imgDimensions 
+                                                                            );
+            $this->dataForDisplay[$advertiserData->post_title]['description'] = get_post_meta($featuredAdvertiserCategory[0]->ID,
+                                                                                            'ss_advertisers_cats_description', 
+                                                                                            true 
+                                                                                );   
+            $this->dataForDisplay[$advertiserData->post_title]['advertiser_redirection_link'] = get_post_meta($featuredAdvertiserCategory[0]->ID, 
+                                                                                                'ss_advertisers_cats_link', 
+                                                                                                true 
+                                                                                                ); 
+        }     
         
     }
 
     public function displayCarousel()
     {
-        new FeaturedCarousel\Carousel($this->dataForDisplay, $this->currentCategory);
+        new FeaturedCarousel\Carousel($this->dataForDisplay);
     }
     
     

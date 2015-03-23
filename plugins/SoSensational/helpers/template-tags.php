@@ -13,14 +13,14 @@ function displayRelatedAdvertisersCarousel($currentCategory)
     $carousel->displayCarousel();
 }
 
-function displayFeaturedAdvertisersXXX($currentCategory) 
+function displayFeaturedAdvertisers($currentCategory) 
 {
     $carousel = new FeaturedCarousel($currentCategory);
     $carousel->displayCarousel();
 }
 
 
-function displayFeaturedAdvertisers($currentCategory)
+function displayFeaturedAdvertisersXXX($currentCategory)
 {
        
     $imgDimensions = array( 'width' => 366, 'height' => 240, 'crop' => true );     
@@ -78,6 +78,7 @@ function displayFeaturedAdvertisers($currentCategory)
         echo '<ul class="slides">';  
             foreach($featuredAdvertisersIds as $advertiserId) {
                 $advertiserData = get_post($advertiserId);
+                
  
                 $args = array(      
                   'post_type'   =>  array('advertisers_cats'),
@@ -99,7 +100,7 @@ function displayFeaturedAdvertisers($currentCategory)
                 
                 <li>
                     <div class='related-item ss_border'>
-                        <a href='<?php echo get_site_url() . '/brands-and-boutiques/' . $advertiserData->post_name?>'>
+                        <a href='<?php echo get_site_url() . '/brands-and-boutiques/' . $advertiserData->post_name; ?>'>
                             <img src='<?php echo $image;  ?>' />
                             <div class='title-bar'><h2><?php echo $advertiserData->post_title; ?></h2></div>
                         </a>           
