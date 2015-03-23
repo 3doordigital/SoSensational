@@ -55,13 +55,17 @@ class FeaturedCarousel
         if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData)) {
             return false;
         }           
-        
-        foreach($this->metaData as $key => $values) {
-            foreach ($values as $value) {
-                if ($value === $this->currentCategory[0]->term_id) {
-                    $this->featuredAdvertisersIds[] = $key;
-                }
-            }            
+               
+        foreach ($this->metaData as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $v) {
+                    if ($v === $this->currentCategory[0]->term_id) {
+                        $this->featuredAdvertisersIds[] = $key;
+                    }
+                }            
+            } else {
+                $this->featuredAdvertisersIds[] = $key;            
+            }
         }        
     }
 
