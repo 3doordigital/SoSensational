@@ -103,7 +103,7 @@ function displayFeaturedAdvertisers($currentCategory)
         $meta[$advertiser->ID] = get_post_meta($advertiser->ID, '_categories_featured', true);
     }    
     
-    if (!$meta) {
+    if (!isset($meta) || empty($meta)) {
         return;
     }
     
