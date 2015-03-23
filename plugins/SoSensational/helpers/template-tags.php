@@ -103,6 +103,9 @@ function displayFeaturedAdvertisers($currentCategory)
         $meta[$advertiser->ID] = get_post_meta($advertiser->ID, '_categories_featured', true);
     }    
     
+    /**
+     * Return if there are no featured advertisers for a given category
+     */
     if (!isset($meta) || empty($meta)) {
         return;
     }
@@ -111,7 +114,7 @@ function displayFeaturedAdvertisers($currentCategory)
      * Stop the script if no advertiser is featured in the current category
      */
     if ( ! in_array_r($currentCategory[0]->term_id, $meta)) {
-        exit();
+        return;
     }
     
     /**
