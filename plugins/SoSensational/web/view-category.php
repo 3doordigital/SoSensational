@@ -255,9 +255,6 @@ $args2 = array(
     )
 ); ?>
 <div class="ss_clear" style="padding-bottom: 50px;"></div>
-<h2 class="category_ss_title_under">
-    <span>Featured</span>
-</h2><div class="row margintop">
 
         <?php 
    $posts2 = get_posts($args2);

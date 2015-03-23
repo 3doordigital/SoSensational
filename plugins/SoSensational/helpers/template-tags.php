@@ -120,7 +120,8 @@ function displayFeaturedAdvertisers($currentCategory)
             }
         }
     }
-    
+    echo '<hr>';
+    echo '<h1>Featured Brands</h1>';
     echo '<div class="flexslider">';
         echo '<ul class="slides">';  
             foreach($featuredAdvertisersIds as $advertiserId) {
