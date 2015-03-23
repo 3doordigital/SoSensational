@@ -276,7 +276,7 @@ endforeach;?>
         <div class="advertisers-carousel featured">            
             <?php 
                 if ( isset($mainSsCategory) ) {
-                    displayFeaturedAdvertisers($mainSsCategory);                     
+                    //displayFeaturedAdvertisers($mainSsCategory);                     
                 }
             ?>
         </div>

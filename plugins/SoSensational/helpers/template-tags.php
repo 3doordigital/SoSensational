@@ -83,8 +83,11 @@ function displayRelatedAdvertisersCarousel($currentCategory)
 <?php  
 }
 
+
 function displayFeaturedAdvertisers($currentCategory)
 {
+       
+    
     $args = array(
         'numberposts'   =>  -1,
         'post_type'     =>  array('brands', 'boutiques'),
@@ -133,7 +136,10 @@ function displayFeaturedAdvertisers($currentCategory)
         echo '<ul class="slides">';  
             foreach($featuredAdvertisersIds as $advertiserId) {
                 $advertiserData = get_post($advertiserId);
-                $advertiserMeta = get_post_meta($advertiserId);
+                $advertiserMeta = get_post_meta($advertiserId); 
+                
+
+
             ?>    
                 
                 <li>
