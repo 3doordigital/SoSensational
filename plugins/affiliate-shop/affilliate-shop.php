@@ -99,24 +99,24 @@ class WordPress_Affiliate_Shop {
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
         
-        ini_set("soap.wsdl_cache_enabled", 0);
-
-        // Constants for AWin
-        define('API_VERSION', 3);
-        define('API_USER_TYPE', 'affiliate'); // (affiliate || merchant)
-
-        define('API_KEY', $this->option['awin'] );
-
-        define('PS_WSDL', 'http://v'.API_VERSION.'.core.com.productserve.com/ProductServeService.wsdl');
-        define('PS_NAMESPACE', 'http://api.productserve.com/');
-        define('PS_SOAP_TRACE', false);	// turn OFF when finished testing
-        define('API_WSDL', PS_WSDL);
-        define('API_NAMESPACE', PS_NAMESPACE);
-        define('API_SOAP_TRACE', PS_SOAP_TRACE);
-        define('API', 'PS');
-        require_once('classes/class.ClientFactory.php');
-        $this->oClient = ClientFactory::getClient();
-        
+        if( is_admin() ) {
+			ini_set("soap.wsdl_cache_enabled", 0);
+			// Constants for AWin
+			define('API_VERSION', 3);
+			define('API_USER_TYPE', 'affiliate'); // (affiliate || merchant)
+	
+			define('API_KEY', $this->option['awin'] );
+	
+			define('PS_WSDL', 'http://v'.API_VERSION.'.core.com.productserve.com/ProductServeService.wsdl');
+			define('PS_NAMESPACE', 'http://api.productserve.com/');
+			define('PS_SOAP_TRACE', false);	// turn OFF when finished testing
+			define('API_WSDL', PS_WSDL);
+			define('API_NAMESPACE', PS_NAMESPACE);
+			define('API_SOAP_TRACE', PS_SOAP_TRACE);
+			define('API', 'PS');
+			require_once('classes/class.ClientFactory.php');
+			$this->oClient = ClientFactory::getClient();
+		}
 		$this->run_plugin();
 		
 		update_metadata('wp_aff_colours', 876, 'new_metadata', 'test');
@@ -1044,6 +1044,10 @@ class WordPress_Affiliate_Shop {
                    </td>
                 </tr>
             </table>
+            <input type="hidden" value="wp_aff_add_man_product" name="action" />
+			<?php wp_nonce_field( 'wp_aff_add_man_product', '_wpnonce', FALSE ); ?>
+            <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
+            <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
             <?php submit_button(); ?>
         </form>
     <?php } else { ?>
