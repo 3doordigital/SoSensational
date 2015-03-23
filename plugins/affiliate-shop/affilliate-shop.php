@@ -1716,7 +1716,7 @@ class WordPress_Affiliate_Shop {
 	public function wp_aff_add_man_product() {
 		if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_add_man_product' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
-		
+		print_var($_POST);
 		if( isset( $_POST['product_brand_new'] ) && $_POST['product_brand_new'] != '' ) {
 			$brand = wp_insert_term( $_POST['product_brand_new'], 'wp_aff_brands' );
 		} else {
@@ -1739,7 +1739,6 @@ class WordPress_Affiliate_Shop {
          print_var($my_post);  
             
 		$insID = wp_insert_post( $my_post );   
-		add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'], true);
 		add_post_meta($insID, 'wp_aff_product_link', $_POST['product_url'], true);
 		add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'], true);
 		//add_post_meta($insID, 'wp_aff_product_brand', , true);
