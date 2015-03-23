@@ -174,7 +174,7 @@ get_header();
                         }
                         $post_meta = get_post_meta($post->ID);
                         $brand = wp_get_post_terms($post->ID, 'wp_aff_brands');
-                        print_var($post_meta);
+                        print_var($post);
 						print_var($brand);
                             echo '
                             <div class="col-md-8 product">
