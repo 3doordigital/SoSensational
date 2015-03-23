@@ -1,4 +1,4 @@
-<?php
+nk<?php
     
 if(!class_exists('WP_List_Table')){
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
@@ -804,6 +804,13 @@ function column_img($item) {
    return sprintf(
         '<img src="%1$s" style="max-height: 75px; width: auto;" />',
         /*$1%s*/ $item['img']  //Let's simply repurpose the table's singular label ("movie")
+    ); 
+}
+
+function column_link($item) {
+   return sprintf(
+        '<a href="%1$s" target="_blank" class="button button-secondary">View Product</a>',
+        /*$1%s*/ $item['link']  //Let's simply repurpose the table's singular label ("movie")
     ); 
 }
     
