@@ -505,3 +505,9 @@ i.ajax-delete {
 i.ajax-delete:hover {
     cursor: pointer;
 }
+
+/* Characters counter on /edit-advertisrt/ */
+
+#charNum {
+    margin-top: 5px;
+}

@@ -19,9 +19,12 @@
             });
             function setCount(src, elem) {
                 var chars = src.value.length;
-                if (chars > limit) {
+                if (chars >= limit) {
                     src.value = src.value.substr(0, limit);
                     chars = limit;
+                    elem.css('color', '#FF0000');
+                } else {
+                    elem.css('color', '#555');
                 }
                 elem.html( limit - chars + ' of ' + limit +' Characters Left' );
             }
