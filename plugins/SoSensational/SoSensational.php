@@ -27,7 +27,10 @@ require_once (dirname(__FILE__).'/custom-sizes.php');
 require_once (dirname(__FILE__).'/page_settings.php');
 require_once (dirname(__FILE__).'/helpers/helper-functions.php');
 require_once (dirname(__FILE__).'/helpers/template-tags.php');
+
 require_once (dirname(__FILE__).'/classes/FeaturedMeta.php');
+require_once (dirname(__FILE__).'/classes/RelatedCarousel.php');
+require_once (dirname(__FILE__).'/classes/FeaturedCarousel.php');
 
 
 register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );

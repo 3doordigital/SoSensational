@@ -325,10 +325,47 @@ Styles for the related advertisers slider on the shop page
     margin: 40px 0;
 }
 
+.button_ss {
+    background: rgb(147,93,195);
+    background: -moz-linear-gradient(top, rgba(147,93,195,1) 0%, rgba(108,32,177,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(147,93,195,1)), color-stop(100%,rgba(108,32,177,1)));
+    background: -webkit-linear-gradient(top, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
+    background: -o-linear-gradient(top, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
+    background: -ms-linear-gradient(top, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
+    background: linear-gradient(to bottom, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', endColorstr='#6c20b1',GradientType=0 );
+    color: #fff;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10px;
+    display: block;
+    text-shadow: none;
+    text-align: center;
+    padding: 6px 0px;
+    width: 90%;
+    margin: auto;
+}
+
+.button_ss.large_ss {
+    text-transform: none;
+    font-size: 13px;
+    width: 150px;
+    height: auto;
+    min-height: inherit;
+}
+
+.button_ss.large_ss:hover  {
+    color: #a0862a;
+}
+
 /*------------------------------------------------------------------------------
 Styles for the the carousel with advertisers featured for a given category
 ------------------------------------------------------------------------------*/
 
 .advertisers-carousel.featured .related-item {
     height: auto;
+}
+
+.advertisers-carousel.featured .title-bar {
+    bottom: 0;
 }
