@@ -1746,7 +1746,7 @@ class WordPress_Affiliate_Shop {
 		add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'], true);
 		add_post_meta($insID, 'wp_aff_product_manual', 1, true);
 		$url = add_query_arg( 'msg', 1, $_POST['_wp_http_referer'] );
-		//wp_safe_redirect( $url );
+		wp_safe_redirect( $url );
 	}
 	
 	
