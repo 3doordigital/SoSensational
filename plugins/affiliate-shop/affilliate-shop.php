@@ -980,7 +980,7 @@ class WordPress_Affiliate_Shop {
     
     public function add_products() { ?>
         <div class="wrap">
-    <?php if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'manual' ) { ?>
+    <?php if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'manual' ) { wp_enqueue_media(); ?>
     	<h2>Affiliate Shop <a href="<?php print admin_url('admin.php?page=affiliate-shop/add-products'); ?>" class="add-new-h2">Add Product(s) from API</a></h2>
     	<h3>Add Product Manually</h3>
         <form method="POST" id="wp_add_prod_manual" action="<?php echo admin_url('admin-post.php'); ?>">
@@ -1008,18 +1008,23 @@ class WordPress_Affiliate_Shop {
                 </tr>
                 <tr>
                 	<th>Price</th>
-                    <td><input class="regular-text" type="text" name="product_price" placeholder="" value=""><p class="description">&pound; sign not needed.</p></td>
+                    <td><input class="regular-text" type="number" min="0" name="product_price" placeholder="0.00" value=""><p class="description">&pound; sign not needed.</p></td>
                 </tr>
                 <tr>
                 	<th>Description</th>
                     <td><textarea class="large-text" rows="4" name="product_desc"></textarea></td>
                 </tr>
                 <tr>
+                	<th>Product Link</th>
+                    <td><input class="regular-text" type="url" name="product_url" placeholder="http://" value=""></td>
+                </tr>
+                <tr>
                 	<th>Image</th>
-                    <td><input id="upload_image_button" type="button" class="button button-secondary" value="Upload Image" /></td>
+                    <td><input id="upload_image_button" type="button" class="button button-secondary" value="Upload Image" /><input type="hidden" id="product_image" name="product_image"></td>
+                    
                 </tr>
                 </table>
-                <table>
+                <table class="form-table">
                 <tr class="form-table">
                 	<td width="33%" valign="top">
                        <div style="">
