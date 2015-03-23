@@ -60,13 +60,17 @@ function displayFeaturedAdvertisers($currentCategory)
     /**
      * Find advertisers featured in the current category
      */
-    foreach ($meta as $key => $values) {
-        var_dump($values);
-        foreach ($values as $value) {
-            if ($value === $currentCategory[0]->term_id) {
-                $featuredAdvertisersIds[] = $key;
-            }
+    foreach ($meta as $key => $value) {
+        if (is_array($value)) {
+            foreach ($value as $v) {
+                if ($v === $currentCategory[0]->term_id) {
+                    $featuredAdvertisersIds[] = $key;
+                }
+            }            
+        } else {
+            $featuredAdvertisersIds[] = $key;            
         }
+
     }
     echo '<hr>';
     echo '<h1>Featured Brands</h1>';
