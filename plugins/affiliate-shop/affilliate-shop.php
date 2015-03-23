@@ -117,7 +117,7 @@ class WordPress_Affiliate_Shop {
 			define('API_SOAP_TRACE', PS_SOAP_TRACE);
 			define('API', 'PS');
 			require_once('classes/class.ClientFactory.php');
-			$this->oClient = ClientFactory::getClient();
+			
 		}
 		$this->run_plugin();
 		
@@ -1088,6 +1088,7 @@ class WordPress_Affiliate_Shop {
                                 <td>
                                     <?php
                                         $aParams9 = array('iMaxResult' => 1000);
+										$this->oClient = ClientFactory::getClient();
                                         $merc_result = $this->oClient->call('getMerchantList', $aParams9);
             $i =1;
                                     ?>
@@ -1268,6 +1269,7 @@ class WordPress_Affiliate_Shop {
                                 $proda[] = $key;
                             }
                         $aParams5 = array('iProductId'	=> $proda, 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'iCategoryId', 'bHotPick', 'sSpecification', 'sPromotion', 'sModel') ); 
+						$this->oClient = ClientFactory::getClient();
                         $productArray= $this->oClient->call('getProduct', $aParams5);
                         //echo '<pre>'.print_r($productArray, true).'</pre>';
                     ?>
