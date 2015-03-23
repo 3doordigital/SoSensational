@@ -1720,7 +1720,7 @@ class WordPress_Affiliate_Shop {
 		if( isset( $_POST['product_brand_new'] ) && $_POST['product_brand_new'] != '' ) {
 			$brand = wp_insert_term( $_POST['product_brand_new'], 'wp_aff_brands' );
 		} else {
-			$brand == $_POST['product_brand'];	
+			$brand == $_POST['brand'];	
 		}
 		
 		$my_post = array(
