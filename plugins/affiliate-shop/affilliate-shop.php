@@ -1265,10 +1265,12 @@ class WordPress_Affiliate_Shop {
                   
                   </div>
                    <?php 
+				   		//print_var( $products );
                         foreach( $products AS $key=>$value ) {
                                 $proda[] = $key;
                             }
                         $aParams5 = array('iProductId'	=> $proda, 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'iCategoryId', 'bHotPick', 'sSpecification', 'sPromotion', 'sModel') ); 
+						//print_var($aParams5);
 						$this->oClient = ClientFactory::getClient();
                         $productArray= $this->oClient->call('getProduct', $aParams5);
                         //echo '<pre>'.print_r($productArray, true).'</pre>';
@@ -1288,8 +1290,9 @@ class WordPress_Affiliate_Shop {
                        <?php
                             $aParams8 = array('iMerchantId'	=> $product->iMerchantId);
                             $merch = $this->oClient->call('getMerchant', $aParams8);
+							$url = add_query_arg( array( 'action' => 'remove-product', 'product' => $product->iId ), $_SERVER['REQUEST_URI'] );
                         ?>
-<h3 class=" "><span><?php echo ucwords(($product->sName)); ?> (ID:<?php echo $product->iId; ?>)<br>Brand: <?php echo ucwords($merch->oMerchant->sName); ?><br><a class="button" target="_blank" href="<?php echo $product->sAwDeepLink; ?>">Visit URL</a></span> <?php submit_button( 'Remove Product', 'delete', '', false, array('disabled' => 'disabled') ); ?></h3>
+<h3 class=" "><span><?php echo ucwords(($product->sName)); ?> (ID:<?php echo $product->iId; ?>)<br>Brand: <?php echo ucwords($merch->oMerchant->sName); ?><br><a class="button" target="_blank" href="<?php echo $product->sAwDeepLink; ?>">Visit URL</a></span> <a href="<?php echo $url; ?>" class="delete button button-secondary" rel="<?php echo $product->iId; ?>">Remove Product</a></h3>
 <div class="inside">
                 <input type="hidden" value="<?php echo $product->sAwDeepLink; ?>" name="product_link[<?php echo $i; ?>]">
                 <input type="hidden" value="<?php echo $product->iId; ?>" name="product_id[<?php echo $i; ?>]">
@@ -1716,12 +1719,13 @@ class WordPress_Affiliate_Shop {
 	public function wp_aff_add_man_product() {
 		if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_add_man_product' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
+		print_var($_POST);
 		if( isset( $_POST['product_brand_new'] ) && $_POST['product_brand_new'] != '' ) {
 			$brand = wp_insert_term( $_POST['product_brand_new'], 'wp_aff_brands' );
 		} else {
-			$brand == $_POST['product_brand'];	
+			$brand = $_POST['brand'];	
 		}
-		print_var( $_POST );
+		
 		$my_post = array(
               'post_title'    => $_POST['product_name'],
               'post_status'   => 'publish',
@@ -1735,10 +1739,9 @@ class WordPress_Affiliate_Shop {
             );
             
             // Insert the post into the database
-            
+         print_var($my_post);  
             
 		$insID = wp_insert_post( $my_post );   
-		add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'], true);
 		add_post_meta($insID, 'wp_aff_product_link', $_POST['product_url'], true);
 		add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'], true);
 		//add_post_meta($insID, 'wp_aff_product_brand', , true);

@@ -174,7 +174,8 @@ get_header();
                         }
                         $post_meta = get_post_meta($post->ID);
                         $brand = wp_get_post_terms($post->ID, 'wp_aff_brands');
-                        //print_var($brand);
+                        //print_var($post);
+						//print_var($brand);
                             echo '
                             <div class="col-md-8 product">
                                         <div>
@@ -189,7 +190,7 @@ get_header();
                                                 <div class="prod_price col-md-7">
                                                     <div class="price">
                                                         <div class="amount">&pound;'.
-                                                            $post_meta['wp_aff_product_price'][0].
+                                                            number_format( $post_meta['wp_aff_product_price'][0], 2 ).
                                                         '</div>
                                                         <a href="'.$post_meta['wp_aff_product_link'][0].'" class="button">Shop Now</a>
                                                     </div>

@@ -178,3 +178,7 @@
 .colour_filter.col-sel {
 	background-color: #aaa;
 }
+.products img {
+	max-width: 200px;
+	max-height: 200px;
+}
