@@ -143,7 +143,7 @@ $attachments = get_posts( array(
 <div class="media">
   <div class="media-left media-middle">
     <a href="#">
-     <img height="150" src="<?php echo isset($meta['ss_logo'][0]) ? $meta['ss_logo'][0] : get_template_directory_uri() . "/images/upload-artwork.png";?>" />
+     <img src="<?php echo ! empty($meta['ss_logo'][0]) ? $meta['ss_logo'][0] : plugin_dir_url(__FILE__) . "../img/placeholders/advertiser-logo-280x185.jpg"; ?>" />
     </a>
   </div>
   <div class="media-body">
@@ -233,14 +233,14 @@ $attachments = get_posts( array(
 <div class="media">
   <div class="media-left media-middle">
     <a href="#">
-     <img height="150" src="<?php echo isset($meta['ss_image_video'][0]) ? $meta['ss_image_video'][0] : get_template_directory_uri() . "/images/upload-artwork.png";?>" />
+     <img src="<?php echo ! empty($meta['ss_image_video'][0]) ? $meta['ss_image_video'][0] : plugin_dir_url(__FILE__) . "../img/placeholders/promo-image-735x380.jpg";?>" />
     </a>
   </div>
   <div class="media-body">
     <h4 class="media-heading">Promo Image</h4>
       <input onchange="disableVideoBoxes()" id="upload_image_video" type="file" size="50" name="upload_image_video" value="" />
       <input type="submit" name="delete_video_image" value="Delete Image" />
-    
+    <?php echo plugin_dir_url(__FILE__); ?>
   </div>
 </div>
 

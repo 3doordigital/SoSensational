@@ -57,6 +57,15 @@ jQuery(document).ready(function($) {
         fullDescription.limiter(1000, fullDescriptionCounter);
     }
     
+    /* --------------------- Category description ----------------------------*/
+    var categoryDescriptionCounter = $('#catDescriptionCounter');
+    var categoryDescription = $('.category-description');
+    
+    if (categoryDescription.length) {
+        console.log(categoryDescription);
+        categoryDescription.limiter(180, categoryDescriptionCounter);
+    }
+    
     /*--------------------------------------------------------------------------
       Limit the number of tags a user can input to 5 items     
       Source: http://timschlechter.github.io/bootstrap-tagsinput/examples/
