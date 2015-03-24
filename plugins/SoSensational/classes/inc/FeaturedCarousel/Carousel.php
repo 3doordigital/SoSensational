@@ -5,7 +5,9 @@ class Carousel
 {
     public function __construct($dataForDisplay)
     {
-        $this->displayCarousel($dataForDisplay);
+        if ( ! empty($dataForDisplay) ) {
+            $this->displayCarousel($dataForDisplay);            
+        }
     }
     
     private function displayCarousel($dataForDisplay)

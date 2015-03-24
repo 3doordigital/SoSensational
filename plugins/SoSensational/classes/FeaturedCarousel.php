@@ -20,9 +20,7 @@ class FeaturedCarousel
         $this->getAllFeaturedAdvertisers();
         $this->getAllAdvertisersMetaData();
         $this->getFeaturedAdvertisersInCurrentCategory();
-        $this->getDataForDisplay();
-        
-        
+        $this->getDataForDisplay();        
     }
     
     private function getAllFeaturedAdvertisers()
@@ -33,7 +31,7 @@ class FeaturedCarousel
             'meta_key'      =>  '_categories_featured',
         );
 
-        $this->allFeaturedAdvertisers = get_posts($args);
+        $this->allFeaturedAdvertisers = get_posts($args);        
         
     }
     
@@ -41,8 +39,7 @@ class FeaturedCarousel
     {
         foreach ($this->allFeaturedAdvertisers as $featuredAdvertiser) {
             $this->metaData[$featuredAdvertiser->ID] = get_post_meta($featuredAdvertiser->ID, '_categories_featured', true);
-        }           
-        
+        }                         
     }
     
     private function getFeaturedAdvertisersInCurrentCategory()
@@ -63,21 +60,22 @@ class FeaturedCarousel
                         $this->featuredAdvertisersIds[] = $key;
                     }
                 }            
-            } else {
-                $this->featuredAdvertisersIds[] = $key;            
-            }
-        }        
+            } 
+        }    
+        
     }
 
     private function getDataForDisplay()
-    {
-        
+    {        
+        $ids = empty($this->featuredAdvertisersIds) ? array(0) : $this->featuredAdvertisersIds;
+
         $args = array(
             'post_type' => array('brands', 'boutiques'),
-            'post__in'  =>  $this->featuredAdvertisersIds,
+            'post__in'  =>  $ids,
         );
 
         $advertisersData = get_posts($args);  
+        
 
         foreach ($advertisersData as $advertiserData) {
             
