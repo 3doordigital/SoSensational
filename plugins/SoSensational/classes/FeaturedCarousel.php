@@ -51,11 +51,13 @@ class FeaturedCarousel
             return false;
         }       
         
-        var_dump($this->metaData);
+        
         
         if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData)) {
             return false;
-        }           
+        }      
+        
+        var_dump($this->metaData);
                
         foreach ($this->metaData as $key => $value) {
             if (is_array($value)) {
