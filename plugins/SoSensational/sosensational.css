@@ -508,6 +508,7 @@ i.ajax-delete:hover {
 
 /* Characters counter on /edit-advertisrt/ */
 
-#charNum {
+#charNumOneLine,
+#charNumFullDesc {
     margin-top: 5px;
 }

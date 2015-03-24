@@ -183,7 +183,7 @@ $attachments = get_posts( array(
 
 <br />
 <div class="input-group">
-    <span class="input-group-addon input-width" id="basic-addon1">1 Line Company Description:<br /><div id="charNum"></div></span>
+    <span class="input-group-addon input-width" id="basic-addon1">1 Line Company Description:<br /><div id="oneLineDescCounter"></div></span>
 	<textarea name="sosensational_options[advertiser_co_desc]" id="advertiser_co_desc"  class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_advertiser_co_desc'][0]) ? $meta['ss_advertiser_co_desc'][0] : "";?></textarea>
    
 </div>
@@ -191,7 +191,7 @@ $attachments = get_posts( array(
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Full Brand Description:</span>
+  <span class="input-group-addon input-width" id="basic-addon1">Full Brand Description:<br /><div id="fullDescCounter"></div></span>
 	<textarea name="sosensational_options[advertiser_desc]" id="advertiser_desc"  class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_advertiser_desc'][0]) ? $meta['ss_advertiser_desc'][0] : "";?></textarea>
 </div>
 
