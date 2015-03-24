@@ -51,7 +51,7 @@ class FeaturedCarousel
             return false;
         }                       
         
-        if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData) && ! in_array($this->currentCategory[0]->term_id, $this->metaDatak)) {
+        if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData) && ! in_array($this->currentCategory[0]->term_id, $this->metaData)) {
             return false;
         }      
         
