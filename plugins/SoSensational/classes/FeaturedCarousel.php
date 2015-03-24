@@ -31,7 +31,9 @@ class FeaturedCarousel
             'meta_key'      =>  '_categories_featured',
         );
 
-        $this->allFeaturedAdvertisers = get_posts($args);        
+        $this->allFeaturedAdvertisers = get_posts($args);     
+        
+        var_dump($this->allFeaturedAdvertisers);
         
     }
     
@@ -45,14 +47,9 @@ class FeaturedCarousel
     private function getFeaturedAdvertisersInCurrentCategory()
     {        
         
-        
-        
         if (!isset($this->metaData) || empty($this->metaData)) {
             return false;
         }                 
-        
-        var_dump($this->currentCategory[0]->term_id);
-        var_dump($this->metaData);
         
         if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData) && ! in_array($this->currentCategory[0]->term_id, $this->metaData)) {
                   
