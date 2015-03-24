@@ -21,6 +21,8 @@ class FeaturedCarousel
         $this->getAllAdvertisersMetaData();
         $this->getFeaturedAdvertisersInCurrentCategory();
         $this->getDataForDisplay();        
+        
+        var_dump($this->dataForDisplay);
     }
     
     private function getAllFeaturedAdvertisers()

@@ -5,7 +5,6 @@ class Carousel
 {
     public function __construct($dataForDisplay)
     {
-        var_dump($dataForDisplay);
         if ( ! empty($dataForDisplay) ) {
             $this->displayCarousel($dataForDisplay);            
         }
