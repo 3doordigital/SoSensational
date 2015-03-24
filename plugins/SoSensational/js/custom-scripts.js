@@ -12,10 +12,11 @@
  -----------------------------------------------------------------------------*/ 
                 
 (function($) {
-    $.fn.extend( {
+    $.fn.extend({
         limiter: function(limit, elem) {
             $(this).on("keyup focus", function() {
                 setCount(this, elem);
+                //$.each(elem, setCount.bind(this));
             });
             function setCount(src, elem) {
                 var chars = src.value.length;
@@ -62,7 +63,6 @@ jQuery(document).ready(function($) {
     var categoryDescription = $('.category-description');
     
     if (categoryDescription.length) {
-        console.log(categoryDescription);
         categoryDescription.limiter(180, categoryDescriptionCounter);
     }
     

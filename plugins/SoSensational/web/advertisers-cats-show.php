@@ -199,8 +199,8 @@ foreach ($post_categories_available as $cat)
 </div>
 <br />
       <div class="input-group">
-  <span class="input-group-addon input-width category-description" id="basic-addon1">Description<br /><div id="catDescriptionCounter"></div></span>
-      <textarea  class="form-control" name="sosensational_options[advertisers_cats_description]" id="advertiser_address" /><?php echo isset($meta['ss_advertisers_cats_description'][0]) ? $meta['ss_advertisers_cats_description'][0] : "";?></textarea>
+  <span class="input-group-addon input-width" id="basic-addon1">Description<br /><div id="catDescriptionCounter"></div></span>
+      <textarea  class="form-control category-description" name="sosensational_options[advertisers_cats_description]" id="advertiser_address" /><?php echo isset($meta['ss_advertisers_cats_description'][0]) ? $meta['ss_advertisers_cats_description'][0] : "";?></textarea>
    </div>
 <br />
       <div class="input-group">

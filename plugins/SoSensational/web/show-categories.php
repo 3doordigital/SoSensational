@@ -30,15 +30,22 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
             foreach($categories as $category):
 
             if($category->parent==0):?>
-
-
+                
+                <?php
+                    foreach($categories as $childCategory) {
+                        if ($childCategory->parent == $category->term_id) {
+                            $subCategoires[$category->slug][] = $childCategory->slug;
+                        }
+                    }
+                    $redirectSlug = count($subCategoires[$category->slug]) === 1 ? $subCategoires[$category->slug][0] : '';
+                ?>
     
                     <?php $children = get_term_children($category->term_id, get_query_var('taxonomy')); // get children 
                           $term_meta = get_option( "taxonomy_$category->term_id" );
                ?>
                    <div class="col-md-8 fadebox showme animated fadeIn" style="visibility: visible;">
                
-                                <a href="<?php echo get_site_url().'/brands-and-boutiques/'. $category->slug.'/'; ?>" class="aHolderImgSS">
+                                <a href="<?php echo get_site_url().'/brands-and-boutiques/'. $category->slug.'/' . $redirectSlug; ?>" class="aHolderImgSS">
                  
                  				<?php $image =  bfi_thumb( $term_meta['ss_cat_image'], $cat_params ); ?>
 
@@ -57,7 +64,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
           <?php
             endif;
         ?>
-    <?php endforeach;?>
+    <?php endforeach; ?>
 
     <div class="ss_clear"></div>
 </div>
