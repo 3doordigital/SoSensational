@@ -26,14 +26,12 @@ class FeaturedCarousel
     private function getAllFeaturedAdvertisers()
     {
         $args = array(
-            'numberposts'   =>  9,
+            'numberposts'   =>  -1,
             'post_type'     =>  array('brands', 'boutiques'),
             'meta_key'      =>  '_categories_featured',
         );
 
-        $this->allFeaturedAdvertisers = get_posts($args);     
-        
-        var_dump($this->allFeaturedAdvertisers);
+        $this->allFeaturedAdvertisers = get_posts($args);             
         
     }
     
