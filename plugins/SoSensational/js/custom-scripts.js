@@ -12,10 +12,11 @@
  -----------------------------------------------------------------------------*/ 
                 
 (function($) {
-    $.fn.extend( {
+    $.fn.extend({
         limiter: function(limit, elem) {
             $(this).on("keyup focus", function() {
                 setCount(this, elem);
+                //$.each(elem, setCount.bind(this));
             });
             function setCount(src, elem) {
                 var chars = src.value.length;
@@ -38,14 +39,32 @@ jQuery(document).ready(function($) {
     /*--------------------------------------------------------------------------
       Call the "Limiter" plugin function      
       Source: http://www.scriptiny.com/2012/09/jquery-input-textarea-limiter/
-     -------------------------------------------------------------------------*/   
-    var elem = $('#charNum');
-    var input = $('#advertiser_co_desc'); 
+     -------------------------------------------------------------------------*/  
+    /* ------------------ One line description limiter -----------------------*/
+    var oneLineCounter = $('#oneLineDescCounter');
+    var oneLineDescription = $('#advertiser_co_desc'); 
     
-    /* Make sure that the element is present on the page in order to attach the function call */
-    if (input.length) {
-        input.limiter(300, elem);        
+    /* Make sure that the element is present on the page in order to attach the 
+       function call */
+    if (oneLineDescription.length) {
+        oneLineDescription.limiter(300, oneLineCounter);        
     }    
+    
+    /* ------------------------ Full description -----------------------------*/
+    var fullDescriptionCounter = $('#fullDescCounter');
+    var fullDescription = $('#advertiser_desc');
+    
+    if (fullDescription.length) {
+        fullDescription.limiter(1000, fullDescriptionCounter);
+    }
+    
+    /* --------------------- Category description ----------------------------*/
+    var categoryDescriptionCounter = $('#catDescriptionCounter');
+    var categoryDescription = $('.category-description');
+    
+    if (categoryDescription.length) {
+        categoryDescription.limiter(180, categoryDescriptionCounter);
+    }
     
     /*--------------------------------------------------------------------------
       Limit the number of tags a user can input to 5 items     

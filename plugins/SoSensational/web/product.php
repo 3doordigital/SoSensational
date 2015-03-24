@@ -64,7 +64,7 @@ endif;
 <div class="media">
   <div class="media-left media-middle">
     <a href="#">
-        <img src="<?php echo isset($meta['ss_product_image'][0])? $meta['ss_product_image'][0] : get_template_directory_uri() . "/images/upload-artwork.png"; ?>"/>
+        <img src="<?php echo ! empty($meta['ss_product_image'][0])? $meta['ss_product_image'][0] : plugin_dir_url(__FILE__) . "../img/placeholders/product-uploads-265x350.jpg"; ?>"/>
     </a>
   </div>
   <div class="media-body">

@@ -168,7 +168,7 @@ foreach ($post_categories_available as $cat)
   <div class="col-sm-12 col-md-12">
     <div class="thumbnail ss_fixheight">
     <?php $this_image = get_post_meta( get_the_ID(), 'ss_advertisers_cats_image', true );
-		if ($this_image == "") { $this_image = get_template_directory_uri() . "/images/upload-artwork.png"; } 
+		if ($this_image == "") { $this_image = plugin_dir_url(__FILE__) . "../img/placeholders/category-uploads-380x250.jpg"; } 
 		
 		?>
         
@@ -199,8 +199,8 @@ foreach ($post_categories_available as $cat)
 </div>
 <br />
       <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Description</span>
-      <textarea  class="form-control" name="sosensational_options[advertisers_cats_description]" id="advertiser_address" /><?php echo isset($meta['ss_advertisers_cats_description'][0]) ? $meta['ss_advertisers_cats_description'][0] : "";?></textarea>
+  <span class="input-group-addon input-width" id="basic-addon1">Description<br /><div id="catDescriptionCounter"></div></span>
+      <textarea  class="form-control category-description" name="sosensational_options[advertisers_cats_description]" id="advertiser_address" /><?php echo isset($meta['ss_advertisers_cats_description'][0]) ? $meta['ss_advertisers_cats_description'][0] : "";?></textarea>
    </div>
 <br />
       <div class="input-group">
