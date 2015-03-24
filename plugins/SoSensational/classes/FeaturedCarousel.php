@@ -45,11 +45,13 @@ class FeaturedCarousel
     private function getFeaturedAdvertisersInCurrentCategory()
     {        
         
-        var_dump($this->metaData);
+        
         
         if (!isset($this->metaData) || empty($this->metaData)) {
             return false;
-        }        
+        }       
+        
+        var_dump($this->metaData);
         
         if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData)) {
             return false;
