@@ -150,6 +150,7 @@ foreach ($post_categories_available as $cat)
 	//print_r($my_query ); 
 	//echo "</pre>"; 
      
+        $index = 0;
     	if($my_query->have_posts()) : while($my_query->have_posts()) : $my_query->the_post(); 
 		
 	//	$term_meta = get_term_by("id",$category_id,"ss_category");
@@ -197,7 +198,7 @@ foreach ($post_categories_available as $cat)
 </div>
 <br />
       <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Description<br /><div id="catDescriptionCounter"></div></span>
+  <span class="input-group-addon input-width" id="basic-addon1">Description<br /><div class="catDescriptionCounter-<?php echo $index; ?>"></div></span>
       <textarea  class="form-control category-description" name="sosensational_options[advertisers_cats_description]" id="advertiser_address" /><?php echo isset($meta['ss_advertisers_cats_description'][0]) ? $meta['ss_advertisers_cats_description'][0] : "";?></textarea>
    </div>
 <br />
@@ -220,7 +221,7 @@ foreach ($post_categories_available as $cat)
   </div>
 
 
-    
+        <?php $index++; ?>
 	<?php endwhile; else : ?>
 <p>No products found</p>
 creating product;
