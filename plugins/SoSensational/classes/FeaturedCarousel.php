@@ -45,6 +45,8 @@ class FeaturedCarousel
     private function getFeaturedAdvertisersInCurrentCategory()
     {        
         
+        var_dump($this->metaData);
+        
         if (!isset($this->metaData) || empty($this->metaData)) {
             return false;
         }        
@@ -62,7 +64,6 @@ class FeaturedCarousel
                 }            
             } 
         }    
-        var_dump($this->featuredAdvertisersIds);
     }
 
     private function getDataForDisplay()
