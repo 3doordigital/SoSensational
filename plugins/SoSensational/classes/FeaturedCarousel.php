@@ -75,7 +75,7 @@ class FeaturedCarousel
         );
 
         $advertisersData = get_posts($args);  
-        
+
 
         foreach ($advertisersData as $advertiserData) {
             
@@ -88,6 +88,7 @@ class FeaturedCarousel
             
             $featuredAdvertiserCategory = get_posts($args);
             
+            var_dump($featuredAdvertiserCategory);
             
             if( ! isset ($featuredAdvertiserCategory[0]->ID)) {                    
                 continue;
@@ -108,8 +109,6 @@ class FeaturedCarousel
                                                                                                 true 
                                                                                                 ); 
         }     
-        
-        var_dump($this->dataForDisplay);
     }
 
     public function displayCarousel()
