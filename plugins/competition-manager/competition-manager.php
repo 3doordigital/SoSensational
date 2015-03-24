@@ -70,13 +70,13 @@ class WordPress_Competition_Manager {
 		add_action( 'admin_post_wp_comp_man_settings_save', array( $this, 'save_settings' ) ) ;
 		add_action( 'admin_post_wp_comp_man_gen_settings_save', array( $this, 'gen_save_settings' ) ) ;
 		
-        add_filter('manage_wp_comp_entries_posts_columns', array( $this, 'entries_columns' ), 10 );
-        add_action('manage_wp_comp_entries_posts_custom_column', array( $this,'entries_columns_content'), 10, 2 );
+        add_filter( 'manage_wp_comp_entries_posts_columns', array( $this, 'entries_columns' ), 10 );
+        add_action( 'manage_wp_comp_entries_posts_custom_column', array( $this,'entries_columns_content'), 10, 2 );
         
-        add_filter('manage_wp_comp_man_posts_columns', array( $this, 'comp_columns' ), 10 );
-        add_action('manage_wp_comp_man_posts_custom_column', array( $this,'comp_columns_content'), 10, 2 );
+        add_filter( 'manage_wp_comp_man_posts_columns', array( $this, 'comp_columns' ), 10 );
+        add_action( 'manage_wp_comp_man_posts_custom_column', array( $this,'comp_columns_content'), 10, 2 );
         
-        add_action('restrict_manage_posts', array( $this, 'comp_filter' ) );
+        add_action( 'restrict_manage_posts', array( $this, 'comp_filter' ) );
         add_filter( 'parse_query', array( $this, 'comp_filter_list' ) );
         
 		add_filter( 'the_content', array( $this, 'display_single_comp'), 10 );
@@ -344,34 +344,30 @@ class WordPress_Competition_Manager {
         
     }
     
+	public function get_include_contents($filename) {
+		if (is_file($filename)) {
+			ob_start();
+			include $filename;
+			return ob_get_clean();
+		}
+		return false;
+	}
+	
 	public function display_single_comp( $content = '' ) {
 		global $post;
 		
 		if ($post->post_type == "wp_comp_man" && is_single() ) {
-			ob_start();
-			echo $content;
+			$contents = $content;
 			if(file_exists(get_stylesheet_directory(). '/comp_templates/single.php')) {
-				include( get_stylesheet_directory(). '/comp_templates/single.php' );
+				$contents .= $this->get_include_contents(get_stylesheet_directory(). '/comp_templates/single.php');
 			} elseif(file_exists($this->plugin_path. '/templates/single.php')) {
-                include( $this->plugin_path . '/templates/single.php' );
+                $contents .= $this->get_include_contents( $this->plugin_path . '/templates/single.php' );
 			} 
-			$contents = ob_get_contents();
-			ob_end_clean();
 			return $contents;
 		} else {
 			return $content;	
 		}	
 	}
-	
-    public function single_template( $single ) {
-        global $wp_query, $post;
-
-        if ($post->post_type == "wp_comp_man"){
-            if(file_exists($this->plugin_path. '/templates/single.php'))
-                return $this->plugin_path . '/templates/single.php';
-        }
-        return $single;
-    }
     
     
     public function parse_message() {
@@ -447,6 +443,7 @@ class WordPress_Competition_Manager {
         
         if( isset( $_POST['comp_man_field_name'] )) {
 			$data = $this->get_option();
+			$data['form_fields'] = array();
 			$count = count( $_POST['comp_man_field_name'] );
 			for( $n = 0; $n<$count; $n++ ) {
 				$name = sanitize_text_field( $_POST['comp_man_field_name'][$n] );
@@ -457,12 +454,13 @@ class WordPress_Competition_Manager {
 				} else {
 					$req = 0;   
 				}
-				if( $_POST['comp_man_field_del'][$n] != 1 ) {
-					$data['form_fields'][$n] = array(
+				if( $_POST['comp_man_field_del'][$n] != '1' ) {
+					$data['form_fields'][] = array(
 						'field_name'    => $name,
 						'field_type'    => $type,
 						'field_req'     => $req,
 						'field_order'   => $order,
+						'del' => $_POST['comp_man_field_del'][$n]
 					);
 				}
 			}
@@ -470,8 +468,8 @@ class WordPress_Competition_Manager {
 		}
         $url = add_query_arg( 'msg', 3, $_REQUEST['_wp_http_referer'] );
         wp_safe_redirect( $url );
-        //print_var($_POST);
-        //print_var($data);
+        print_var($_POST);
+        print_var($data);
         
     }
     
@@ -657,7 +655,6 @@ class WordPress_Competition_Manager {
 		if( $cols ) $halfcol = $cols/2;
 		
         if( isset( $this->option['form_fields'] ) ) {
-			ob_start();
             $fields = $this->option['form_fields'];
 			$fields[] = array(
 				'field_name' => 'First Name',
