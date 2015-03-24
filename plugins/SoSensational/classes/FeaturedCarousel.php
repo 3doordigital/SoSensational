@@ -20,7 +20,7 @@ class FeaturedCarousel
         $this->getAllFeaturedAdvertisers();
         $this->getAllAdvertisersMetaData();
         $this->getFeaturedAdvertisersInCurrentCategory();
-        $this->getDataForDisplay();        
+        $this->getDataForDisplay();                
     }
     
     private function getAllFeaturedAdvertisers()
@@ -45,13 +45,21 @@ class FeaturedCarousel
     private function getFeaturedAdvertisersInCurrentCategory()
     {        
         
+        
+        
         if (!isset($this->metaData) || empty($this->metaData)) {
             return false;
-        }        
+        }                 
         
-        if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData)) {
+        var_dump($this->currentCategory[0]->term_id);
+        var_dump($this->metaData);
+        
+        if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData) && ! in_array($this->currentCategory[0]->term_id, $this->metaData)) {
+                  
             return false;
-        }           
+        }      
+        
+
                
         foreach ($this->metaData as $key => $value) {
             if (is_array($value)) {
@@ -62,7 +70,6 @@ class FeaturedCarousel
                 }            
             } 
         }    
-        
     }
 
     private function getDataForDisplay()
@@ -76,7 +83,6 @@ class FeaturedCarousel
 
         $advertisersData = get_posts($args);  
         
-
         foreach ($advertisersData as $advertiserData) {
             
             $args = array(      
@@ -86,8 +92,7 @@ class FeaturedCarousel
               'author' =>  $advertiserData->post_author
             );             
             
-            $featuredAdvertiserCategory = get_posts($args);
-            
+            $featuredAdvertiserCategory = get_posts($args);            
             
             if( ! isset ($featuredAdvertiserCategory[0]->ID)) {                    
                 continue;
@@ -108,7 +113,6 @@ class FeaturedCarousel
                                                                                                 true 
                                                                                                 ); 
         }     
-        
     }
 
     public function displayCarousel()
