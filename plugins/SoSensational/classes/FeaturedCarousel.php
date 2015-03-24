@@ -52,6 +52,7 @@ class FeaturedCarousel
         }                       
         
         if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData) && ! in_array($this->currentCategory[0]->term_id, $this->metaData)) {
+            echo 'dsf';
             return false;
         }      
         
