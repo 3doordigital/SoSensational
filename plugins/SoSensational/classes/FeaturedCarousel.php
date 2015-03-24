@@ -62,7 +62,7 @@ class FeaturedCarousel
                 }            
             } 
         }    
-        
+        var_dump($this->featuredAdvertisersIds);
     }
 
     private function getDataForDisplay()
@@ -75,8 +75,6 @@ class FeaturedCarousel
         );
 
         $advertisersData = get_posts($args);  
-
-        var_dump($advertisersData);
         
         foreach ($advertisersData as $advertiserData) {
             
