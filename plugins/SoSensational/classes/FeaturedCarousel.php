@@ -76,7 +76,8 @@ class FeaturedCarousel
 
         $advertisersData = get_posts($args);  
 
-
+        var_dump($advertisersData);
+        
         foreach ($advertisersData as $advertiserData) {
             
             $args = array(      
@@ -86,9 +87,7 @@ class FeaturedCarousel
               'author' =>  $advertiserData->post_author
             );             
             
-            $featuredAdvertiserCategory = get_posts($args);
-            
-            var_dump($featuredAdvertiserCategory);
+            $featuredAdvertiserCategory = get_posts($args);            
             
             if( ! isset ($featuredAdvertiserCategory[0]->ID)) {                    
                 continue;
