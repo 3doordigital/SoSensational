@@ -49,11 +49,9 @@ class FeaturedCarousel
         
         if (!isset($this->metaData) || empty($this->metaData)) {
             return false;
-        }       
+        }                       
         
-        
-        
-        if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData)) {
+        if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData) && ! in_array($this->currentCategory[0]->term_id, $this->metaDatak)) {
             return false;
         }      
         
