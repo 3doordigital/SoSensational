@@ -70,8 +70,8 @@ function displayFeaturedAdvertisersXXX($currentCategory)
         } else {
             $featuredAdvertisersIds[] = $key;            
         }
-
     }
+    
     echo '<hr>';
     echo '<h1>Featured Brands</h1>';
     echo '<div class="flexslider">';
