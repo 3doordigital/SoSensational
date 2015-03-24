@@ -38,9 +38,8 @@ if ($advertisers_type == "brands")
  */
 function show_select_for_cats($post_categories_available, $termId)
 {       
-
     $sortedTerms = array();        
-    $found = "";        
+    $found = 0;        
 
     /**
      * Sort the terms and parents categories to prepare the data for display
@@ -50,27 +49,25 @@ function show_select_for_cats($post_categories_available, $termId)
         $parentCategory = get_term($pca->parent, 'ss_category', OBJECT);  
         $sortedTerms[$parentCategory->name][$pca->name] = $pca->term_id;    
     }         
-
+    
     $to_return = '<select ondataavilable="DisableOptions()" onchange="DisableOptions()" class="advertisers_cat form-control" name="advertiser_category_id">';
     $to_return .= '<option value="">Please Select A Category</option>';
 
     /**
      * Render the terms in each parent category
      */
-    foreach ($sortedTerms as $parent => $children) {       
+    foreach ($sortedTerms as $parent => $children) {   
         $to_return .= "<optgroup label='$parent'>";
         foreach ($children as $termName => $termNo ) {
             $to_return .= '<option ';
             
             /* Check if the term should be marked as selected  */
             if ($termId == $termNo) { $to_return .= ' selected="selected" '; $found = 1;}
-            
             $to_return .= ' value="' . $termNo .'"';
             $to_return .= '>'. $termName .'</option>'; 
         }
         $to_return .= "</optgroup>";
     }
-
     $to_return .= "</select> ";
 
     return $to_return;
@@ -187,6 +184,7 @@ foreach ($post_categories_available as $cat)
  <?php 
 				
         $this_terms = wp_get_post_terms(get_the_ID(), 'ss_category');
+        
 
         echo show_select_for_cats($post_categories_available ,isset($this_terms[0]->term_id) ? $this_terms[0]->term_id : ""); 
          ?>

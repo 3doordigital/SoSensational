@@ -32,6 +32,10 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
             if($category->parent==0):?>
                 
                 <?php
+                    /**
+                     * Generate a redirect slug when a parent category has only one child.
+                     * If this is the case, redurect the user directly to the child category
+                     */
                     foreach($categories as $childCategory) {
                         if ($childCategory->parent == $category->term_id) {
                             $subCategoires[$category->slug][] = $childCategory->slug;
