@@ -20,9 +20,7 @@ class FeaturedCarousel
         $this->getAllFeaturedAdvertisers();
         $this->getAllAdvertisersMetaData();
         $this->getFeaturedAdvertisersInCurrentCategory();
-        $this->getDataForDisplay();        
-        
-        var_dump($this->dataForDisplay);
+        $this->getDataForDisplay();                
     }
     
     private function getAllFeaturedAdvertisers()
@@ -111,6 +109,7 @@ class FeaturedCarousel
                                                                                                 ); 
         }     
         
+        var_dump($this->dataForDisplay);
     }
 
     public function displayCarousel()
