@@ -113,6 +113,7 @@ class WordPress_Competition_Manager {
     
     public function register_styles() {
 		wp_enqueue_style( 'fancybox_css', $this->plugin_url . 'css/jquery.fancybox.css' );
+		wp_enqueue_style( 'all_css', $this->plugin_url . 'css/all.css' );
         $settings = $this->get_option();
 		if( $settings['general_settings']['frontend_css'] == 1 ) {
         	wp_enqueue_style( 'wp_news-man-style', $this->plugin_url . 'css/front-end.css' );
@@ -200,19 +201,36 @@ class WordPress_Competition_Manager {
 	
 	public function wp_footer() {
 		global $post;
-		if( get_post_type() == 'wp_comp_man' ) {
-			if( isset( $_REQUEST['msg'] ) ) { ?>
-            	<a href="#popUp" class="fancybox">Popup</a>
-            	<div id="popUp">
-                	Hello
-                </div>
-				<script type="text/javascript">
-                jQuery(document).ready( function($) {
-					$('.fancybox').fancybox().trigger('click');
-					
-				});
-				</script>
-			<?php }
+		if( get_post_type() == 'wp_comp_man' && isset( $_REQUEST['msg'] ) && is_archive() ) { ?>
+            	<a class="popup fancybox.ajax">Popup</a>
+				<?php if( $_REQUEST['msg'] == 1 ) { ?>
+					<script type="text/javascript">
+                    jQuery(document).ready( function($) {
+                        $('.popup').fancybox({
+                            wrapCSS: 'pop-up-thanks',
+                            width: 600,
+                            height: 372,
+                            dataType : 'html',
+                            href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php',
+                            fitToView: true
+                        }).trigger('click');
+                    });
+                    </script>
+                 <?php } elseif( $_REQUEST['msg'] == 2) { ?>
+                 	<script type="text/javascript">
+                    jQuery(document).ready( function($) {
+                        $('.popup').fancybox({
+                            wrapCSS: 'pop-up-fail',
+                            width: 600,
+                            height: 372,
+                            dataType : 'html',
+                            href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/duplicate.php',
+                            fitToView: true
+                        }).trigger('click');
+                    });
+                    </script>
+                 <?php } ?>
+			<?php 
 		}
 	}
 	
