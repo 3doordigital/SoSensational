@@ -213,8 +213,16 @@ get_header();
 <div class="container">
     <div class="row">
         <div class="advertisers-carousel">            
-            <?php 
+            <?php             
+                /**
+                 * If the term is the lowest level category nad has no children,
+                 * display advertisers from the parent category
+                 */
                 if ( isset($term) ) {
+                    $children = get_term_children($term->term_id, "wp_aff_categories");
+                    if ( empty($children) ) {
+                        $term = get_term($term->parent, "wp_aff_categories");
+                    }                    
                     displayRelatedAdvertisersCarousel($term);                     
                 }
             ?>

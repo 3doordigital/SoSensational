@@ -24,7 +24,8 @@ class RelatedCarousel
             'post_type'   =>  array('advertisers_cats'),
             'post_status' =>  array('publish', 'draft'),
             'numberposts' =>  9,
-            'ss_category' =>  $this->currentCategory->name
+            'ss_category' =>  $this->currentCategory->name,
+            'orderby'     =>  'rand'
         );                
         
         $advertiserCategories = get_posts( $args ); 

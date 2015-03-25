@@ -306,7 +306,8 @@ Styles for the related advertisers slider on the shop page
 }
 
 .related-description a {
-    float: right;
+    float: none;
+    white-space: nowrap;
 }
 
 .advertisers-carousel .flexslider .slides > li {

@@ -510,6 +510,13 @@ i.ajax-delete:hover {
 
 #oneLineDescCounter,
 #fullDescCounter,
-#catDescriptionCounter {
+.catDescriptionCounter-0,
+.catDescriptionCounter-1,
+.catDescriptionCounter-2,
+.catDescriptionCounter-3,
+.catDescriptionCounter-4,
+.catDescriptionCounter-5,
+.catDescriptionCounter-6,
+.catDescriptionCounter-7 {
     margin-top: 5px;
 }
