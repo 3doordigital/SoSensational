@@ -240,7 +240,6 @@ $attachments = get_posts( array(
     <h4 class="media-heading">Promo Image</h4>
       <input onchange="disableVideoBoxes()" id="upload_image_video" type="file" size="50" name="upload_image_video" value="" />
       <input type="submit" name="delete_video_image" value="Delete Image" />
-    <?php echo plugin_dir_url(__FILE__); ?>
   </div>
 </div>
 
