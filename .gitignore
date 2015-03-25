@@ -1,7 +1,7 @@
 /backup-wp/
 index.php
 /themes/
-!themes/seosen_theme/
+!/themes/seosen_theme/
 /upgrade/
 /uploads/
 README.md
