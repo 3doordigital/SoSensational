@@ -85,15 +85,13 @@ foreach($products as $prod):
  	          
               </div>
               <div class="image_description_single">
-
-              <?php if (isset($meta['ss_image_video'][0]))
-			  {
+              <?php 
               		if (!empty($meta['ss_image_video'][0])) {
                ?>          <img src="<?php echo $meta['ss_image_video'][0];?>" />
                
 			 <?php } elseif (!empty($meta['ss_image_video_text'][0])) {                              
                             echo $meta['ss_image_video_text'][0];
-			 } }?>               
+			 } ?>               
               </div>
 
               <a href="/brands-and-boutiques/" class="backToBB">Return to Brands & Boutiques</a>
