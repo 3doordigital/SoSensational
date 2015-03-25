@@ -218,11 +218,11 @@ get_header();
                  * If the term is the lowest level category nad has no children,
                  * display advertisers from the parent category
                  */
-                $children = get_term_children($term->term_id, "wp_aff_categories");
-                if ( empty($children) ) {
-                    $term = get_term($term->parent, "wp_aff_categories");
-                }
                 if ( isset($term) ) {
+                    $children = get_term_children($term->term_id, "wp_aff_categories");
+                    if ( empty($children) ) {
+                        $term = get_term($term->parent, "wp_aff_categories");
+                    }                    
                     displayRelatedAdvertisersCarousel($term);                     
                 }
             ?>
