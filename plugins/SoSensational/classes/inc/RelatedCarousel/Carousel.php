@@ -49,7 +49,9 @@ class Carousel
             // make sure the string ends in a word
             $singleBox['description'] = substr($shortDescription, 0, strrpos($shortDescription, ' '));     
         }
-            $singleBox['description'] = $singleBox['description']. "... <a href='" . get_site_url() . '/brands-and-boutiques/' . $singleBox['advertiser'][0]->post_name . "'>Read More</a>";        
+            $singleBox['description'] = trim($singleBox['description']);
+            $singleBox['description'] = $singleBox['description']. ".. <a href='" . get_site_url() . '/brands-and-boutiques/' . $singleBox['advertiser'][0]->post_name . "'>Read more</a>";        
+            
             
             return $singleBox['description'];
     }
