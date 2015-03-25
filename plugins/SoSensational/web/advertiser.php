@@ -8,8 +8,6 @@ $postID = $advertiser_id;
 $advertiser=get_post($postID);
 $meta=get_post_meta($postID);
 
-var_dump($meta);
-
 $product_params = array( 'width' => 245, 'crop' => true );       
 // IB commented
 //$products=$wpdb->get_results( "SELECT * FROM {$wpdb->posts} WHERE post_parent = '{$advertiser->ID}' and post_type='products'", OBJECT);
