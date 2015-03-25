@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* CSS Document */
+.pop-up-thanks {
+	width: 600px!important;
+	height: 372px!important;
+	background:url(../img/thank-you.png) no-repeat center;	
+}
+.pop-up-fail {
+	width: 600px!important;
+	height: 370px!important;
+	background:url(../img/fail.png) no-repeat center;	
+}
+.fancybox-skin, .fancybox-opened .fancybox-skin {
+	background: transparent;
+	box-shadow: none;
+}
