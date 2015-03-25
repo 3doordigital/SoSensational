@@ -124,11 +124,11 @@ foreach($products as $prod):
          <?php $instagramUrl = $meta['ss_advertiser_instragram'][0];?>
 
          <div class="ss_social_icons">
-         	<?php if($facebookUrl != ''){ ?><a href="<?php echo $facebookUrl; ?>" target="_new" class="ss_social_icon facebook"></a><?php } ?>
-         	<?php if($pinterestUrl != ''){ ?><a href="<?php echo $pinterestUrl; ?>" target="_new" class="ss_social_icon pinterest"></a><?php } ?>
-         	<?php if($googleUrl != ''){ ?><a href="<?php echo $googleUrl;?>" target="_new" class="ss_social_icon gplus"></a><?php } ?>
-         	<?php if($twitterUrl != ''){ ?><a href="<?php echo $twitterUrl;?>" target="_new" class="ss_social_icon twitter"></a><?php } ?>
-         	<?php if($instagramUrl != ''){ ?><a href="<?php echo $instagramUrl;?>" target="_new" class="ss_social_icon instagram"></a><?php } ?>
+         	<?php if($facebookUrl != '' && $facebookUrl !== 'http://'){ ?><a href="<?php echo $facebookUrl; ?>" target="_new" class="ss_social_icon facebook"></a><?php } ?>
+         	<?php if($pinterestUrl != '' && $pinterestUrl !== 'http://'){ ?><a href="<?php echo $pinterestUrl; ?>" target="_new" class="ss_social_icon pinterest"></a><?php } ?>
+         	<?php if($googleUrl != '' && $googleUrl !== 'http://'){ ?><a href="<?php echo $googleUrl;?>" target="_new" class="ss_social_icon gplus"></a><?php } ?>
+         	<?php if($twitterUrl != '' && $twitterUrl !== 'http://'){ ?><a href="<?php echo $twitterUrl;?>" target="_new" class="ss_social_icon twitter"></a><?php } ?>
+         	<?php if($instagramUrl != '' && $instagramUrl !== 'http://'){ ?><a href="<?php echo $instagramUrl;?>" target="_new" class="ss_social_icon instagram"></a><?php } ?>
          </div>
 
 </div>
