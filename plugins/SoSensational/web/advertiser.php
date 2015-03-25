@@ -103,25 +103,47 @@ foreach($products as $prod):
 	
         <img src="<?php echo $meta['ss_logo'][0];?>" />
         <div class="emailWeb">
+            <?php 
+            if ( ! empty($meta['ss_advertiser_email'][0])) {
+            ?>
             Email:
             <a href="mailto:<?php echo $meta['ss_advertiser_email'][0];?>">
                 <?php echo $meta['ss_advertiser_email'][0];?>
             </a>
+            <?php
+            }
+            ?>
         </div>
         <div class="emailWeb">
+            <?php 
+            if ( ! empty($meta['ss_advertiser_website'][0])) {
+            ?>            
             Website: 
             <a href="<?php echo $meta['ss_advertiser_website'][0];?>" target="_blank">
             <?php echo $meta['ss_advertiser_website'][0];?>
-           </a>
+            </a>
+            <?php
+            }
+            ?>
         </div>
     
         <input style="display: none;" id="geocomplete" class="googleMapInput" type="text" value="<?php echo $meta['ss_advertiser_address'][0];?>" /> 
-        <div class="map_canvas"></div>
-            <?php $facebookUrl = $meta['ss_advertiser_facebook'][0];?>
-            <?php $googleUrl = $meta['ss_advertiser_google'][0];?>
-           <?php $pinterestUrl = $meta['ss_advertiser_pinterest'][0];?>
-          <?php $twitterUrl = $meta['ss_advertiser_twitter'][0];?>
-         <?php $instagramUrl = $meta['ss_advertiser_instragram'][0];?>
+        
+        
+        <?php 
+        /**
+         * Display map only if the address parameter is present
+         */
+        if ( ! empty($meta['ss_advertiser_address'][0])) {
+            echo '<div class="map_canvas"></div>';
+        } 
+        ?>
+        
+        <?php $facebookUrl = $meta['ss_advertiser_facebook'][0];?>
+        <?php $googleUrl = $meta['ss_advertiser_google'][0];?>
+        <?php $pinterestUrl = $meta['ss_advertiser_pinterest'][0];?>
+        <?php $twitterUrl = $meta['ss_advertiser_twitter'][0];?>
+        <?php $instagramUrl = $meta['ss_advertiser_instragram'][0];?>
 
          <div class="ss_social_icons">
          	<?php if($facebookUrl != '' && $facebookUrl !== 'http://'){ ?><a href="<?php echo $facebookUrl; ?>" target="_blank" class="ss_social_icon facebook"><i class="fa fa-facebook-square"></i></a><?php } ?>
@@ -139,18 +161,21 @@ foreach($products as $prod):
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="<?php echo SOSENSATIONAL_URL?>/jquery.geocomplete.js"></script>
+    
  <script>
-                $(function(){
-                
-                var options = {
-                  map: ".map_canvas",
-                  location: "<?php echo $meta['ss_advertiser_address'][0];?>"     
-                };
-                
-                $("#geocomplete").geocomplete(options);
-                
-              });
-            </script>
+    
+    $(function(){
+        var location = "<?php echo $meta['ss_advertiser_address'][0]; ?>";
+        console.log(location);
+        var options = {
+          map: ".map_canvas",
+          location: "<?php echo $meta['ss_advertiser_address'][0];?>"     
+        };
+        if (location.length) {
+            $("#geocomplete").geocomplete(options);            
+        }
+    });
+    </script>
 
 <link rel="stylesheet" href="<?php echo SOSENSATIONAL_URL?>/flexslider.css" type="text/css">
 
