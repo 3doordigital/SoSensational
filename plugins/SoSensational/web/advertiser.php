@@ -7,6 +7,7 @@ $postID=get_the_ID();
 $postID = $advertiser_id;
 $advertiser=get_post($postID);
 $meta=get_post_meta($postID);
+
 $product_params = array( 'width' => 245, 'crop' => true );       
 // IB commented
 //$products=$wpdb->get_results( "SELECT * FROM {$wpdb->posts} WHERE post_parent = '{$advertiser->ID}' and post_type='products'", OBJECT);
@@ -120,12 +121,12 @@ foreach($products as $prod):
             <?php $googleUrl = $meta['ss_advertiser_google'][0];?>
            <?php $pinterestUrl = $meta['ss_advertiser_pinterest'][0];?>
           <?php $twitterUrl = $meta['ss_advertiser_twitter'][0];?>
-         <?php $instagramUrl = isset($meta['ss_advertiser_instagram'][0]) ? $meta['ss_advertiser_instagram'][0] : "";?>
+         <?php $instagramUrl = $meta['ss_advertiser_instragram'][0];?>
 
          <div class="ss_social_icons">
          	<?php if($facebookUrl != ''){ ?><a href="<?php echo $facebookUrl; ?>" target="_new" class="ss_social_icon facebook"></a><?php } ?>
-         	<?php if($pinterestUrl != ''){ ?><a href="<?php echo $googleUrl; ?>" target="_new" class="ss_social_icon pinterest"></a><?php } ?>
-         	<?php if($googleUrl != ''){ ?><a href="<?php echo $pinterestUrl;?>" target="_new" class="ss_social_icon gplus"></a><?php } ?>
+         	<?php if($pinterestUrl != ''){ ?><a href="<?php echo $pinterestUrl; ?>" target="_new" class="ss_social_icon pinterest"></a><?php } ?>
+         	<?php if($googleUrl != ''){ ?><a href="<?php echo $googleUrl;?>" target="_new" class="ss_social_icon gplus"></a><?php } ?>
          	<?php if($twitterUrl != ''){ ?><a href="<?php echo $twitterUrl;?>" target="_new" class="ss_social_icon twitter"></a><?php } ?>
          	<?php if($instagramUrl != ''){ ?><a href="<?php echo $instagramUrl;?>" target="_new" class="ss_social_icon instagram"></a><?php } ?>
          </div>

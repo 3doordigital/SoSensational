@@ -104,16 +104,7 @@ function upload_user_file( $file = array() ) {
 	}//cats_good
 
     foreach($_POST['sosensational_options'] as $key=>$value)
-    {
-		if (($key == "advertiser_twitter") || ($key == "advertiser_instagram") || ($key == "advertiser_pinterest") || ($key == "advertiser_google") || ($key == "advertiser_facebook") ||($key == "advertiser_website"))
-		{
-			if (preg_match("#https?://#", $value) === 0) {
- 			 $value = 'http://'.$value;
-			}	
-		}
-
-
-		
+    {	
              update_post_meta( $post_id, 'ss_'.$key, $value );
 			 if ($key == "advertiser_co_name")
 			 {
