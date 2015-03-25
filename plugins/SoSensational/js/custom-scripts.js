@@ -58,10 +58,10 @@ jQuery(document).ready(function($) {
     }
     
     /* --------------------- Category description ----------------------------*/
-    var categoryDescriptionCounter = $('.catDescriptionCounter');
+
     var categoryDescription = $('.category-description');
-    
     if (categoryDescription.length) {
+        /* Loop over each element on the page and attach the plugin function */
         $.each(categoryDescription, function(index, value) {
             var counter = $('.catDescriptionCounter-' + index);
             $(this).limiter(180, counter);
