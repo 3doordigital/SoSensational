@@ -85,6 +85,7 @@ foreach($products as $prod):
  	          
               </div>
               <div class="image_description_single">
+
               <?php if (isset($meta['ss_image_video'][0]))
 			  {
               		if (!empty($meta['ss_image_video'][0])) {
@@ -181,7 +182,7 @@ foreach($products as $prod):
 
 <script src="<?php echo SOSENSATIONAL_URL?>/jquery.flexslider.js"></script>
 <script>
-  $(window).load(function() {
+  $(window).ready(function() {
   $('.flexslider').flexslider({
     animation: "slide",
     animationLoop: false,
@@ -190,7 +191,10 @@ foreach($products as $prod):
     itemMargin: 20,
     prevText: " ",
     nextText: " ",
-    slideshow: false
+    slideshow: false,
+    start: function() {
+        $('.imageHolderSlide').show();
+    }
   });
 });
 </script>
