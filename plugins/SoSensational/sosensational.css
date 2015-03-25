@@ -279,26 +279,6 @@ body {
 	margin: 2px;
 }
 
-.ss_social_icon.facebook {
-	background-image: url("img/socFB.jpg");
-}
-
-.ss_social_icon.gplus {
-	background-image: url("img/socG.jpg");
-}
-
-.ss_social_icon.pinterest {
-	background-image: url("img/socPin.jpg");
-}
-
-.ss_social_icon.twitter {
-	background-image: url("img/socTwitter.png");
-}
-
-.ss_social_icon.instagram {
-	background-image: url("img/socInstagram.png");
-}
-
 .amount2 {
 	color: #404040;
 	font-family: 'Open Sans', sans-serif;
@@ -515,4 +495,13 @@ i.ajax-delete:hover {
 .catDescriptionCounter-6,
 .catDescriptionCounter-7 {
     margin-top: 5px;
+}
+
+
+.ss_social_icons a {
+    font-size: 40px;
+}
+
+.ss_social_icons a:hover {
+    color: #6b1eb0;
 }
