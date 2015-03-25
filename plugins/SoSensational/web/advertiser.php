@@ -91,16 +91,9 @@ foreach($products as $prod):
               		if (!empty($meta['ss_image_video'][0])) {
                ?>          <img src="<?php echo $meta['ss_image_video'][0];?>" />
                
-			 <?php } elseif (!empty($meta['ss_image_video_text'][0])) {  
-                            $videoIframe = preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"735\" height=\"380\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>", $meta['ss_image_video_text'][0]);
-                            echo $videoIframe;
-			 } }?>
-               
-               <?php 
-
-
-         
-               ?>
+			 <?php } elseif (!empty($meta['ss_image_video_text'][0])) {                              
+                            echo $meta['ss_image_video_text'][0];
+			 } }?>               
               </div>
 
               <a href="/brands-and-boutiques/" class="backToBB">Return to Brands & Boutiques</a>
