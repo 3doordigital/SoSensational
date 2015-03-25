@@ -305,6 +305,12 @@ Styles for the related advertisers slider on the shop page
     text-align: left;
 }
 
+.related-description p,
+.related-description a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+}
+
 .related-description a {
     float: none;
     white-space: nowrap;
@@ -356,7 +362,7 @@ Styles for the related advertisers slider on the shop page
 }
 
 .button_ss.large_ss:hover  {
-    color: #a0862a;
+    color: #fff;
 }
 
 .ss_border{
