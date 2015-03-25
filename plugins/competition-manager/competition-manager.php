@@ -199,6 +199,10 @@ class WordPress_Competition_Manager {
         </table>
 	<?php }
 	
+	public function get_comp_date( $comp_id ) {
+		return $comp = get_post_meta( $comp_id, 'wp_comp_edate', true);  	
+	}
+	
 	public function wp_footer() {
 		global $post;
 		if( get_post_type() == 'wp_comp_man' && isset( $_REQUEST['msg'] ) && is_archive() ) { ?>
@@ -210,12 +214,17 @@ class WordPress_Competition_Manager {
                             wrapCSS: 'pop-up-thanks',
                             width: 600,
                             height: 372,
+							maxWidth: 600,
+							maxHeight: 372,
+							padding: 0,
+							autoSize: false,
                             dataType : 'html',
-                            href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php',
-                            fitToView: true
+                            href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>',
+                            fitToView: true,
                         }).trigger('click');
                     });
                     </script>
+                    <?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>
                  <?php } elseif( $_REQUEST['msg'] == 2) { ?>
                  	<script type="text/javascript">
                     jQuery(document).ready( function($) {
@@ -223,6 +232,8 @@ class WordPress_Competition_Manager {
                             wrapCSS: 'pop-up-fail',
                             width: 600,
                             height: 372,
+							maxWidth: 600,
+							maxHeight: 372,
                             dataType : 'html',
                             href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/duplicate.php',
                             fitToView: true
