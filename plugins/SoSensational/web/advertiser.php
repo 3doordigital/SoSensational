@@ -193,7 +193,7 @@ foreach($products as $prod):
     nextText: " ",
     slideshow: false,
     start: function() {
-        $('.imageHolderSlide').show();
+        $('.slides').show();
     }
   });
 });

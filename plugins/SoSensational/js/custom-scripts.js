@@ -147,6 +147,9 @@ jQuery(document).ready(function($) {
         prevText: "",
         nextText: "",
         animationLoop: true,
-        slideshow: false
+        slideshow: false,
+        start: function() {
+            $('.slides').show();
+        }        
     }); 
 });

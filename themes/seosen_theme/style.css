@@ -294,9 +294,6 @@ p {
     width: 24%;
 }
 
-.ss_product_slide {
-
-}
 
 .ss_description_company {
     width: 100%;
@@ -313,7 +310,6 @@ p {
 }
 
 .imageHolderSlide {
-    display: none;
     width: 100%;
     padding: 0;
     background-color: #edebee;

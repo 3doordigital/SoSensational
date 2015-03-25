@@ -316,6 +316,10 @@ Styles for the related advertisers slider on the shop page
     white-space: nowrap;
 }
 
+.slides {
+    display: none;
+}
+
 .advertisers-carousel .flexslider .slides > li {
   display: none;
   -webkit-backface-visibility: hidden;
