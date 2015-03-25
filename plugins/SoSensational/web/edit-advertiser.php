@@ -245,7 +245,7 @@ $attachments = get_posts( array(
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Youtube Embedded Code:</span>
+  <span class="input-group-addon input-width" id="basic-addon1">Video Embedded Code:</span>
 	<textarea onchange="disableVideoBoxes()" name="sosensational_options[image_video_text]" id="image_video_text"  class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_image_video_text'][0]) ? $meta['ss_image_video_text'][0] : "";?></textarea>
 </div>
 </div>
