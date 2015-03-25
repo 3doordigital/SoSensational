@@ -35,7 +35,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
 <div class="ss_description_single">
        <div class="ss_description_single_left"><?php echo $meta['ss_advertiser_co_desc'][0];?></div>
        <div class="ss_description_single_right">
-        <a class="visit_site_ss" href="<?php echo $meta['ss_advertiser_website'][0];?>">Visit <?php echo $advertiser->post_title;?></a>
+        <a class="visit_site_ss" target="_blank" href="<?php echo $meta['ss_advertiser_website'][0];?>">Visit <?php echo $advertiser->post_title;?></a>
        </div>
        <div class="ss_clear"></div>
 </div>
@@ -49,7 +49,7 @@ foreach($products as $prod):
 <li class="ss_product_slide"> 
 <?php
   $product_meta=get_post_meta($prod->ID);?>
-   <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?>">
+   <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?> target="_blank"">
    <div class="imageHolderSlide">
    <?php $image_deets = isset($product_meta['ss_product_image'][0]) ? $product_meta['ss_product_image'][0] : get_template_directory_uri() . "/images/upload-artwork.jpg"; ?>
    <?php $image =  bfi_thumb( $image_deets , $product_params ); ?>
@@ -64,7 +64,7 @@ foreach($products as $prod):
         </div>
         <div class="rightProduct_info_slide">
             <div class="amount2">&pound;<?php echo !isset($product_meta)?'': $product_meta['ss_product_price'][0] ;?></div>
-            <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?>" class="button_ss">Buy Now</a>
+            <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?>" target="_blank" class="button_ss">Buy Now</a>
         </div>
         <div class="ss_clear"></div>
      </div>
@@ -110,7 +110,7 @@ foreach($products as $prod):
         </div>
         <div class="emailWeb">
             Website: 
-            <a href="<?php echo $meta['ss_advertiser_website'][0];?>">
+            <a href="<?php echo $meta['ss_advertiser_website'][0];?>" target="_blank">
             <?php echo $meta['ss_advertiser_website'][0];?>
            </a>
         </div>
@@ -124,15 +124,15 @@ foreach($products as $prod):
          <?php $instagramUrl = $meta['ss_advertiser_instragram'][0];?>
 
          <div class="ss_social_icons">
-         	<?php if($facebookUrl != '' && $facebookUrl !== 'http://'){ ?><a href="<?php echo $facebookUrl; ?>" target="_new" class="ss_social_icon facebook"><i class="fa fa-facebook-square"></i></a><?php } ?>
-         	<?php if($pinterestUrl != '' && $pinterestUrl !== 'http://'){ ?><a href="<?php echo $pinterestUrl; ?>" target="_new" class="ss_social_icon pinterest"><i class="fa fa-pinterest-square"></i></a><?php } ?>
-         	<?php if($googleUrl != '' && $googleUrl !== 'http://'){ ?><a href="<?php echo $googleUrl;?>" target="_new" class="ss_social_icon gplus"><i class="fa fa-google-plus-square"></i></a><?php } ?>
-         	<?php if($twitterUrl != '' && $twitterUrl !== 'http://'){ ?><a href="<?php echo $twitterUrl;?>" target="_new" class="ss_social_icon twitter"><i class="fa fa-twitter-square"></i></a><?php } ?>
-         	<?php if($instagramUrl != '' && $instagramUrl !== 'http://'){ ?><a href="<?php echo $instagramUrl;?>" target="_new" class="ss_social_icon instagram"><i class="fa fa-instagram"></i></a><?php } ?>
+         	<?php if($facebookUrl != '' && $facebookUrl !== 'http://'){ ?><a href="<?php echo $facebookUrl; ?>" target="_blank" class="ss_social_icon facebook"><i class="fa fa-facebook-square"></i></a><?php } ?>
+         	<?php if($pinterestUrl != '' && $pinterestUrl !== 'http://'){ ?><a href="<?php echo $pinterestUrl; ?>" target="_blank" class="ss_social_icon pinterest"><i class="fa fa-pinterest-square"></i></a><?php } ?>
+         	<?php if($googleUrl != '' && $googleUrl !== 'http://'){ ?><a href="<?php echo $googleUrl;?>" target="_blank" class="ss_social_icon gplus"><i class="fa fa-google-plus-square"></i></a><?php } ?>
+         	<?php if($twitterUrl != '' && $twitterUrl !== 'http://'){ ?><a href="<?php echo $twitterUrl;?>" target="_blank" class="ss_social_icon twitter"><i class="fa fa-twitter-square"></i></a><?php } ?>
+         	<?php if($instagramUrl != '' && $instagramUrl !== 'http://'){ ?><a href="<?php echo $instagramUrl;?>" target="_blank" class="ss_social_icon instagram"><i class="fa fa-instagram"></i></a><?php } ?>
          </div>
 
 </div>
- <a class="visit_site_ss" href="<?php echo $meta['ss_advertiser_website'][0];?>">Visit <?php echo $advertiser->post_title;?></a>
+ <a class="visit_site_ss" target="_blank" href="<?php echo $meta['ss_advertiser_website'][0];?>">Visit <?php echo $advertiser->post_title;?></a>
 </div>
 
 
