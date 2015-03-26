@@ -171,7 +171,7 @@ foreach ($post_categories_available as $cat)
 		
       <img src="<?php echo $this_image?>" alt="">
       <div class="caption wide">
-     <form action="<?php echo SOSENSATIONAL_URL?>/web/advertisers-cats-action.php" method="POST" enctype="multipart/form-data" >
+     <form action="<?php echo SOSENSATIONAL_URL?>/web/advertisers-cats-action.php" method="POST" enctype="multipart/form-data" class="category-edit-block">
  <div class="input-group">
   <span class="input-group-addon input-width" id="basic-addon1">Post Status:</span>
  <?php if (get_post_status( get_the_ID()) == "publish") { echo '<span  aria-describedby="basic-addon1"  class="form-control label-success">Published</span>'; } else { echo '<span class=" form-control label-warning">Awaiting Review</span>'; } ?>
@@ -204,7 +204,7 @@ foreach ($post_categories_available as $cat)
          </div>
         <br />
 
-        <p><button type="submit" class="button_ss_small" href="#" >Save</button></p>
+        <p><button type="submit" class="button_ss_small" href="#" disabled>Save</button></p>
   
        		 <input type="hidden" name="ss_action" value="edit" />     
         	<input type="hidden" name="advertisers_cats_id" value="<?php echo get_the_ID(); ?>" />  

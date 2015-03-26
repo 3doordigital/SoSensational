@@ -415,6 +415,10 @@ body {
 	
 }
 
+button:disabled {
+    background: grey !important;
+}
+
 .highlight {
 	border: 1px solid #C00;	
 }

@@ -154,17 +154,11 @@ jQuery(document).ready(function($) {
     });
     
     /*--------------------------------------------------------------------------
-     A function that extracts video ID from a youtube link to use in the embed
-     -------------------------------------------------------------------------*/
-    
-    function getId(url) {
-        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-        var match = url.match(regExp);
-
-        if (match && match[2].length == 11) {
-            return match[2];
-        } else {
-            return 'error';
-        }
-    }    
+     Enable submit button in a form that changed on categories edit page.
+     -------------------------------------------------------------------------*/     
+    var categoryEditForms = $('form.category-edit-block');
+    categoryEditForms.change(function(event) {
+        var submitButton = $(this).find('button[type=submit]');
+        submitButton.removeAttr('disabled');
+    });
 });

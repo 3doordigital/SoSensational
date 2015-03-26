@@ -108,6 +108,3 @@ function upload_user_file( $file = array() ) {
   
   
 wp_redirect(SITE_URL.'/show-advertisers-cats/');
-
-//endif; // end if product number ...
-?>
