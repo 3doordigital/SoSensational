@@ -28,18 +28,23 @@ class Walker_Tag_Checklist extends Walker {
 			$name = $taxonomy.'['.$this->counter.'][]';
         if( $tax_term->term_group <= 1 ) {
             $class = in_array( $tax_term->term_id, $popular_cats ) ? ' class="popular-category"' : '';
-            $output .= "\n<li id='{$taxonomy}-{$tax_term->term_id}'$class>" . '<label class="selectit"> ';
-
-            if( ($this->counter === 'faceted' && $depth == 0 ) ) {
-                $output .= ' ' . esc_html( apply_filters('the_category', $tax_term->name )) . '</label>';
-            } else {
-                $output .= '<input value="' . $tax_term->term_id . '" type="checkbox" ';
-                if($taxonomy == 'wp_aff_categories' && $depth == 0 && $this->counter != 'faceted' ) $output .= ' disabled ';
-                $output .= ' name="'.$name.'" id="in-'.$taxonomy.'-' . $tax_term->term_id . '"' . checked( in_array( $tax_term->term_id, $selected_cats ), true, false ) . disabled( empty( $args['disabled'] ), false, false ) . ' /> ' . esc_html( apply_filters('the_category', $tax_term->name ));
-                if( $tax_term->term_group >1 ) {
-                    $output .= ' (alias)';   
-                }
-                $output .= '</label>';
+            $output .= "\n<li id='{$taxonomy}-{$tax_term->term_id}'$class>";
+			if($taxonomy == 'wp_aff_categories' && $depth == 0 ) {
+				$output .= '<a href="#" class="drop_cats"><i class="fa fa-plus-square-o"></i> '.esc_html( apply_filters('the_category', $tax_term->name ) ).'</a>';
+			} else {
+				$output .='<label class="selectit"> ';
+	
+				if( ($this->counter === 'faceted' && $depth == 0 ) ) {
+					$output .= ' ' . esc_html( apply_filters('the_category', $tax_term->name )) . '</label>';
+				} else {
+					$output .= '<input value="' . $tax_term->term_id . '" type="checkbox" ';
+					//$output .= ' disabled ';
+					$output .= ' name="'.$name.'" id="in-'.$taxonomy.'-' . $tax_term->term_id . '"' . checked( in_array( $tax_term->term_id, $selected_cats ), true, false ) . disabled( empty( $args['disabled'] ), false, false ) . ' /> ' . esc_html( apply_filters('the_category', $tax_term->name ));
+					if( $tax_term->term_group >1 ) {
+						$output .= ' (alias)';   
+					}
+					$output .= '</label>';
+				}
             }
         }
 	}
@@ -80,7 +85,6 @@ class Tag_Checklist {
                 
 		    <div id="<?php echo $taxonomy; ?>-all" class="tabs-panel">
                 <input type="text" placeholder="Search" rel="<?php echo $taxonomy; ?>checklist" class="widefat searchList" style="margin-top: 5px;">
-                <small>This box is not in use yet</small>
 		       <input type="hidden" name="tax_input[<?php echo $taxonomy; ?>][]" value="0" />
 		       <ul id="<?php echo $taxonomy; ?>checklist" data-wp-lists="list:<?php echo $taxonomy; ?>" class="categorychecklist form-no-clear">
 					<?php wp_terms_checklist(null, array( 'taxonomy' => $taxonomy, 'walker' => $walker, 'selected_cats' => $this->selected, 'checked_ontop' => false ) ) ?>

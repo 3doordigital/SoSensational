@@ -50,3 +50,12 @@
     border-radius: 3px;
 }
 .wp-list-table .column-img, .wp-list-table .column-price { width: 75px; }
+.categorychecklist .children {
+	display:none;
+}
+.categorychecklist .open .children {
+	display:block;
+}
+.categorychecklist a {
+	text-decoration:none
+}
