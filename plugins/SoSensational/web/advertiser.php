@@ -49,7 +49,7 @@ foreach($products as $prod):
 <li class="ss_product_slide"> 
 <?php
   $product_meta=get_post_meta($prod->ID);?>
-   <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?> target="_blank"">
+   <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?> target="_blank">
    <div class="imageHolderSlide">
    <?php $image_deets = isset($product_meta['ss_product_image'][0]) ? $product_meta['ss_product_image'][0] : get_template_directory_uri() . "/images/upload-artwork.jpg"; ?>
    <?php $image =  bfi_thumb( $image_deets , $product_params ); ?>
