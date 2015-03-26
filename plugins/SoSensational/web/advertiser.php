@@ -119,7 +119,13 @@ foreach($products as $prod):
             ?>            
             Website: 
             <a href="<?php echo $meta['ss_advertiser_website'][0];?>" target="_blank">
-            <?php echo $meta['ss_advertiser_website'][0];?>
+            <?php 
+            /**
+             * Display only the domain name
+             */
+            $parsedUrl = parse_url($meta['ss_advertiser_website'][0]);
+            echo preg_replace('/^www\./' ,'', $parsedUrl['host']);
+            ?>
             </a>
             <?php
             }
