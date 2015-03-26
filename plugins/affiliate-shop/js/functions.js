@@ -11,7 +11,7 @@ jQuery(document).ready(function($) {
 		}
 	});
 	
-    $('.searchList').keyup( function(event) {
+    /*$('.searchList').keyup( function(event) {
         //console.log($(this).val());
         var search = $(this).val();
         var id = $(this).attr('rel');
@@ -34,7 +34,18 @@ jQuery(document).ready(function($) {
             });
         });
     });
-    
+    */
+	
+	$('.searchList').keyup( function(event) {
+		var searchTerms = $(this).val();
+		var ul = $(this).attr('rel');
+		$('#'+ul+' .children').show();
+		$('#'+ul+' li').each(function() {
+		  var hasMatch = searchTerms.length == 0 || $(this).text().toLowerCase().indexOf(searchTerms.toLowerCase()) > 0;
+		  $(this).toggle(hasMatch);
+		});
+	});
+	
     $('.add_product_confirm').click(function(event) {
         if($(this).prop('checked')) {
            $('#add_products_submit').removeAttr('disabled'); 
