@@ -510,3 +510,9 @@ i.ajax-delete:hover {
 .ss_social_icons a:hover {
     color: #6b1eb0;
 }
+
+.input-group-addon:last-child {
+    width: 100px;
+    padding: 0;
+    text-align: left;
+}

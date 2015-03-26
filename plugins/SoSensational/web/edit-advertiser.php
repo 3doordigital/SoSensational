@@ -293,7 +293,8 @@ $attachments = get_posts( array(
       <span class="input-group-addon">
                         <input type="checkbox" onchange="countChecked()" name="advertiser_category[]" value="<?php echo $subcategory->term_id;?>" <?php echo $selected ?>>
     </span>
-      <input type="text" class="form-control" value="<?php echo $subcategory->name;?>" aria-label="...">
+
+      <div class="input-group-addon"><?php echo $subcategory->name;?></div>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
   
