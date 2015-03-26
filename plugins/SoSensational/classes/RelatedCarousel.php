@@ -4,7 +4,7 @@ require_once 'inc/RelatedCarousel/Carousel.php';
 class RelatedCarousel
 {
 
-    private $imgDimensions = array( 'width' => 366, 'height' => 240, 'crop' => true );
+    private $imgDimensions = array( 'width' => 380, 'height' => 250, 'crop' => true );
     
     private $currentCategory;
     private $advertiserCategories;    
@@ -15,20 +15,24 @@ class RelatedCarousel
     {
         $this->currentCategory = $currentCategory;
         $this->getAdvertiserCategories();
-        $this->getDataForDisplay();
+        if ( ! empty ($this->advertiserCategories)) {
+            $this->getDataForDisplay();            
+        }
+
     }
     
     private function getAdvertiserCategories()
     {
+        $name  = $this->currentCategory->name === 'Accessories Boutique' ? 'accessories' : $this->currentCategory->name;
         $args = array(      
             'post_type'   =>  array('advertisers_cats'),
             'post_status' =>  array('publish', 'draft'),
             'numberposts' =>  9,
-            'ss_category' =>  $this->currentCategory->name,
+            'ss_category' =>  $name,
             'orderby'     =>  'rand'
         );                
         
-        $advertiserCategories = get_posts( $args ); 
+        $advertiserCategories = get_posts( $args );         
         
         if ( ! empty($advertiserCategories)) {            
             $this->advertiserCategories = $advertiserCategories;                        

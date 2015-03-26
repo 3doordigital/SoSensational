@@ -66,7 +66,7 @@ function show_select_for_cats($post_categories_available, $termId)
         }
         $to_return .= "</optgroup>";
     }
-    $to_return .= "</select> ";
+    $to_return .= "</select> ";   
 
     return $to_return;
 }
@@ -289,7 +289,11 @@ function DisableOptions()
             }
         });
     }); 
-
+    
+    
+    jQuery('optgroup').filter(function(){
+        return jQuery(this).find('option[hidden]').length === jQuery(this).find('option').length;
+    }).hide();
 }
 
 

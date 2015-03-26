@@ -4,7 +4,7 @@ require_once 'inc/FeaturedCarousel/Carousel.php';
 class FeaturedCarousel
 {
 
-    private $imgDimensions = array( 'width' => 366, 'height' => 240, 'crop' => true );
+    private $imgDimensions = array( 'width' => 380, 'height' => 250, 'crop' => false );
     private $currentCategory;
     private $allFeaturedAdvertisers = array();
     private $metaData = array();
@@ -46,15 +46,12 @@ class FeaturedCarousel
     {        
         
         if (!isset($this->metaData) || empty($this->metaData)) {
-            return false;
+            return false;            
         }                 
         
-        if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData) && ! in_array($this->currentCategory[0]->term_id, $this->metaData)) {
-                  
+        if ( ! in_array_r($this->currentCategory[0]->term_id, $this->metaData) && ! in_array($this->currentCategory[0]->term_id, $this->metaData)) {     
             return false;
-        }      
-        
-
+        }                    
                
         foreach ($this->metaData as $key => $value) {
             if (is_array($value)) {
@@ -83,8 +80,8 @@ class FeaturedCarousel
             $args = array(      
               'post_type'   =>  array('advertisers_cats'),
               'post_status' =>  array('publish', 'draft'),
-              'ss_category' =>  $this->currentCategory[0]->name,
-              'author' =>  $advertiserData->post_author
+              'author' =>  $advertiserData->post_author,
+              'ss_category' =>  $this->currentCategory[0]->slug              
             );             
             
             $featuredAdvertiserCategory = get_posts($args);            
