@@ -222,7 +222,7 @@ get_header();
                     $children = get_term_children($term->term_id, "wp_aff_categories");
                     if ( empty($children) ) {
                         $term = get_term($term->parent, "wp_aff_categories");
-                    }                    
+                    }       
                     displayRelatedAdvertisersCarousel($term);                     
                 }
             ?>

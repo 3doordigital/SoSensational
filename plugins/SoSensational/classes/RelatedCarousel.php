@@ -15,20 +15,24 @@ class RelatedCarousel
     {
         $this->currentCategory = $currentCategory;
         $this->getAdvertiserCategories();
-        $this->getDataForDisplay();
+        if ( ! empty ($this->advertiserCategories)) {
+            $this->getDataForDisplay();            
+        }
+
     }
     
     private function getAdvertiserCategories()
     {
+        $name  = $this->currentCategory->name === 'Accessories Boutique' ? 'accessories' : $this->currentCategory->name;
         $args = array(      
             'post_type'   =>  array('advertisers_cats'),
             'post_status' =>  array('publish', 'draft'),
             'numberposts' =>  9,
-            'ss_category' =>  $this->currentCategory->name,
+            'ss_category' =>  $name,
             'orderby'     =>  'rand'
         );                
         
-        $advertiserCategories = get_posts( $args ); 
+        $advertiserCategories = get_posts( $args );         
         
         if ( ! empty($advertiserCategories)) {            
             $this->advertiserCategories = $advertiserCategories;                        
