@@ -28,7 +28,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
            $counterCategories = 1;   
            $counterColor = 1;
             foreach($categories as $category):
-
+               
             if($category->parent==0):?>
                 
                 <?php
@@ -66,7 +66,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
                     <?php $counterColor++; $counterCategories++;  if($counterCategories == 4): $counterCategories=1; endif; ?>
                     <?php if($counterCategories == 1): echo '</div> <div class="row margintop">'; endif; ?>
           <?php
-            endif;
+            endif;            
         ?>
     <?php endforeach; ?>
 

@@ -125,11 +125,8 @@ p {
 	text-align:center;
 }
 
-.whitebar.ss_whitebar {
-	background-color: rgba(0,0,0,0.7);
-}
 .whitebar.ss_whitebar h2 {
-	color: #fff;
+	color: #000;
 }
 
 .whitebar.ss_whitebar, .blackbar.ss_blackbar {
