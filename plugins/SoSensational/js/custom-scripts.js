@@ -156,9 +156,11 @@ jQuery(document).ready(function($) {
     /*--------------------------------------------------------------------------
      Enable submit button in a form that changed on categories edit page.
      -------------------------------------------------------------------------*/     
+          
     var categoryEditForms = $('form.category-edit-block');
     categoryEditForms.change(function(event) {
         var submitButton = $(this).find('button[type=submit]');
         submitButton.removeAttr('disabled');
     });
+
 });
