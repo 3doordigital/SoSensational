@@ -204,17 +204,9 @@ $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null
 						$description = get_post_meta( get_the_ID(), 'ss_advertisers_cats_description', true );
 						$description = strip_tags($description);
 				
-						if (strlen($description) > 180) {
-									
-						// truncate string
-						$stringCut = substr($description, 0, 180);
-									
-						// make sure it ends in a word so assassinate doesn't become ass...
-						$description = substr($stringCut, 0, strrpos($stringCut, ' ')); 
-					}
-						echo $description;
+						echo truncateDescription($description, $post_name);
 				?>
-                                <a href="<?php echo get_site_url().'/brands-and-boutiques/' . $post_name; ?>">Read More</a>
+       
 	
                              </div>
                              

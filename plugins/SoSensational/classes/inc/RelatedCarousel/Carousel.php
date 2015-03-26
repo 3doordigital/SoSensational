@@ -3,11 +3,12 @@ namespace RelatedCarousel;
 
 class Carousel
 {
+    
     public function __construct($dataToDisplay, $currentCategory)
     {
         if ( ! empty($dataToDisplay) ) {
             $this->displayCarousel($dataToDisplay, $currentCategory);
-        }
+        }        
     }
     
     private function displayCarousel($dataToDisplay, $currentCategory)

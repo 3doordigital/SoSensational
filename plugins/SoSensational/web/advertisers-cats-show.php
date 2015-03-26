@@ -290,7 +290,7 @@ function DisableOptions()
         });
     }); 
     
-    
+    /* Remove the whole options group if all its children are hidden */
     jQuery('optgroup').filter(function(){
         return jQuery(this).find('option[hidden]').length === jQuery(this).find('option').length;
     }).hide();

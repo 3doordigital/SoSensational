@@ -320,7 +320,7 @@ body {
 }
 .ss_advertisers_cats_description {
 	height: 100px;
-	text-align:center;
+	text-align: left;
 	font-family: 'Open Sans', sans-serif;
 	width: 90%;
 	margin: auto;
@@ -352,8 +352,8 @@ body {
 }
 
 .ss_advertisers_cats  a {
-	display: block;
 	position: relative;
+        white-space: nowrap;
 }
 
 
