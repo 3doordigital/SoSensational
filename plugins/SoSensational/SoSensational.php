@@ -32,7 +32,6 @@ require_once (dirname(__FILE__).'/classes/FeaturedMeta.php');
 require_once (dirname(__FILE__).'/classes/RelatedCarousel.php');
 require_once (dirname(__FILE__).'/classes/FeaturedCarousel.php');
 
-
 register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
 register_activation_hook( __FILE__, 'add_pages_on_plugin_activation' );
 register_activation_hook( __FILE__, 'move_template_pages_on_plugin_activation');
