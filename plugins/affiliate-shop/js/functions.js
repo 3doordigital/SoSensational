@@ -1,5 +1,16 @@
 jQuery(document).ready(function($) {
     
+	$('.drop_cats').live( 'click' , function( e ) {
+		e.preventDefault();
+		if( $(this).parent().hasClass('open') ) {
+			$(this).children().first().addClass('fa-plus-square-o').removeClass('fa-minus-square-o');
+			$(this).parent().removeClass('open');
+		} else {
+			$(this).children().first().removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+			$(this).parent().addClass('open');
+		}
+	});
+	
     $('.searchList').keyup( function(event) {
         //console.log($(this).val());
         var search = $(this).val();
