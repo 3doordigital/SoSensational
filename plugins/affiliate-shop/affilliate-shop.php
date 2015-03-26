@@ -1265,7 +1265,8 @@ class WordPress_Affiliate_Shop {
                   
                   </div>
                    <?php 
-				   		//print_var( $products );
+				   		
+						if( !empty( $products ) ) {
                         foreach( $products AS $key=>$value ) {
                                 $proda[] = $key;
                             }
@@ -1360,8 +1361,11 @@ class WordPress_Affiliate_Shop {
                    </div>
                   
                   </div>
-                   <?php   $i++; } ?>
-                         
+                   <?php   $i++; } } else { ?>
+                         <div class="postbox">
+                         	<p>No products, <a href="<?php echo admin_url( 'admin.php?page=affiliate-shop/add-products' ); ?>">please go back and add more</a></p>
+                         </div>
+                   <?php } ?>
                   </div>
                   </div>
             </form>
