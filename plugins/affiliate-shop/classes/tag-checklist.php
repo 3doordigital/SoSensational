@@ -85,7 +85,6 @@ class Tag_Checklist {
                 
 		    <div id="<?php echo $taxonomy; ?>-all" class="tabs-panel">
                 <input type="text" placeholder="Search" rel="<?php echo $taxonomy; ?>checklist" class="widefat searchList" style="margin-top: 5px;">
-                <small>This box is not in use yet</small>
 		       <input type="hidden" name="tax_input[<?php echo $taxonomy; ?>][]" value="0" />
 		       <ul id="<?php echo $taxonomy; ?>checklist" data-wp-lists="list:<?php echo $taxonomy; ?>" class="categorychecklist form-no-clear">
 					<?php wp_terms_checklist(null, array( 'taxonomy' => $taxonomy, 'walker' => $walker, 'selected_cats' => $this->selected, 'checked_ontop' => false ) ) ?>
