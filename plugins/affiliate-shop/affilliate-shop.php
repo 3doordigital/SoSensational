@@ -1265,7 +1265,7 @@ class WordPress_Affiliate_Shop {
                   
                   </div>
                    <?php 
-				   		//print_var( $products );
+				   		print_var( $products );
                         foreach( $products AS $key=>$value ) {
                                 $proda[] = $key;
                             }

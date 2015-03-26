@@ -365,6 +365,8 @@ class WordPress_Competition_Manager {
             'labels' => array( 'name' => 'Competition Entries' ), 
             'public' => true, 
             'show_in_menu' =>  true, 
+			'query_var'    => true,
+			'publicly_queryable' => true,
             'menu_icon' => $this->admin_icon, 
             'supports' => array( 'title' ) ) );
     }
@@ -762,25 +764,26 @@ class WordPress_Competition_Manager {
         //print_var($_POST);
 		$return = array();
 		
-		$arg = array(
+		$args = array(
 			'post_type'		=> 'wp_comp_entries',
-			'meta_query'	=> array(
-				'relation'	=> 'AND', 
+			'posts_per_page' => -1,
+			'meta_query' => array(
+				'relation' => 'AND',
 				array(
-					'meta_key' 		=> 'wp_comp_entry_competition-id',
-					'meta_value'	=> $_POST['competition-id'],
-					'compare'		=> '='
+					'key'     => 'wp_comp_entry_competition-id',
+					'value'   => $_POST['competition-id'],
+					'compare' => '=',
 				),
 				array(
-					'meta_key'		=> 'wp_comp_entry_email',
-					'meta_value' 	=>	$_POST['email'],
-					'compare'		=> '='
-				)
-			)
+					'key'     => 'wp_comp_entry_email',
+					'value'   => $_POST['email'],
+					'compare' => '=',
+				),
+			),
 		);
-		
-		$lookup = new WP_Query( $arg ) ;
-		
+		print_var($args);
+		$lookup = new WP_Query( $args ) ;
+		print_var($lookup);
 		if( $lookup->have_posts() ) {
 			$return = array(
 				'status' 	=> 0,
