@@ -141,7 +141,7 @@ jQuery(document).ready(function($) {
     
     $('.advertisers-carousel > .flexslider').flexslider({
         animation: 'slide',
-        itemWidth: 367,
+        itemWidth: 365,
         itemMargin: 15,
         controlNav: false,
         prevText: "",
