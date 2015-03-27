@@ -207,7 +207,6 @@ class WPSEO_Admin_Pages {
 				<div class="inside">
 					<h4>' . esc_html( __( 'Current option:', 'wordpress-seo' ) ) . ' <span class="wpseo-debug">' . esc_html( $this->currentoption ) . '</span></h4>
 					' . ( $xdebug ? '' : '<pre>' );
-			var_dump( $this->get_option( $this->currentoption ) );
 			echo '
 					' . ( $xdebug ? '' : '</pre>' ) . '
 				</div>

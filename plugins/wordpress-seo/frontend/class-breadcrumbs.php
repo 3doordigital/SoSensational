@@ -653,10 +653,8 @@ class WPSEO_Breadcrumbs {
 		if ( ! is_string( $bctitle ) || $bctitle === '' ) {
 			$bctitle = $term->name;
 		}
-
 		$link['url']  = get_term_link( $term );
 		$link['text'] = $bctitle;
-		var_dump($link);
 		return $link;
 	}
 
