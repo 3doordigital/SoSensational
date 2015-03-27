@@ -168,5 +168,21 @@ jQuery(document).ready(function($) {
           removeDisabled(currentForm);
     });
     
+    /*--------------------------------------------------------------------------
+     Fix breadcrumbs on category listings
+     -------------------------------------------------------------------------*/
+    var str = $('#breadcrumbs span > a');
+    var urls = [];
+    str.each(function(index) {
+        var url = $(this).attr('href');
+        urls.push(url);      
+        if (urls.length === 3) {
+            var slug = urls[2].slice(7);            
+            $(this).attr('href', urls[1] + slug);
+            
+        } 
+        
+    });
+
 
 });

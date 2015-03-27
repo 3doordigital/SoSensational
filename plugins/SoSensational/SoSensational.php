@@ -221,6 +221,12 @@ function edit_advertiser_page_template( $page_template )
 
 function ss_rewrite_rule(){
     
+        add_rewrite_rule(
+                'brands-and-boutiques/?$',
+                'index.php?pagename=brands-and-boutiques',
+                'top'
+        );
+    
 	add_rewrite_rule(
             'brands-and-boutiques/([^/]*)/?([^/]*)/?$',
             'index.php?pagename=brands-and-boutiques&ss_cat=$matches[1]&ss_sub_cat=$matches[2]',

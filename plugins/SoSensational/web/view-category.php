@@ -6,6 +6,8 @@ $cat_params = array( 'width' => 367, 'height' => 240, 'crop' => true );
 global $wpdb;
 $category_id = isset($ss_sub_cat_id) ? $ss_sub_cat_id : "";
 
+var_dump($category_id);
+
 if(!empty($ss_cat_id)):
 
     $category_id = preg_replace('/[^-a-zA-Z0-9_]/', '', $ss_cat_id);
@@ -17,7 +19,7 @@ if(!empty($ss_cat_id)):
                                     AND wpt.term_id='{$category_id}'", OBJECT);
                                     $mainChildren = get_term_children($category_id, get_query_var('taxonomy'));
                                     
-    $mainSsCategory = $category;                                
+    $mainSsCategory = $category;         
 
     $term_meta = get_option( "taxonomy_$category_id" );
 
