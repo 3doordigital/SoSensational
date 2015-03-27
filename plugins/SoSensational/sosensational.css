@@ -472,8 +472,11 @@ button:disabled {
 }
 
 .pagination-centered {
-    float: right;
-    margin-right: 10px;
+    float: none;
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    margin-top: 35px;
 }
 
 
