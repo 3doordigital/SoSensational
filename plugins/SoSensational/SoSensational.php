@@ -242,10 +242,6 @@ function ss_rewrite_rule(){
             'index.php?pagename=store&ss_advertiser=$matches[1]',
             'top'
         );
-        
-  
-
-	add_permastruct('brands', '/brands-and-boutiques/%post_title%');
 }
 
 add_action( 'init', 'ss_rewrite_rule' );

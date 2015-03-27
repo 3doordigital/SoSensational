@@ -5,7 +5,11 @@ require( '../../../../wp-load.php');
 $post_type=$_POST['post_type'];
 $options = get_option( 'ss_settings' );
 $error_code = "";
-//print_r($_POST);
+
+/**
+ * Determine if the current request if for a preview
+ */
+$isPreview = isPreview($_POST) ? true: false;
 
 function upload_user_file( $file = array() ) {
 
@@ -45,8 +49,6 @@ function upload_user_file( $file = array() ) {
 
 	/* ============================= End of function =============================== */
 
-  
-  
 
         if(!empty($_FILES['upload_logo'])){
           $logo_id = upload_user_file( $_FILES['upload_logo']);
@@ -110,7 +112,8 @@ function upload_user_file( $file = array() ) {
 			 {
 				  $my_post = array(
    				    'ID'           => $post_id,
-      				'post_title' => $value,
+                                    'post_title' => $value,
+                                    'post_status' => 'publish'
   					);
 
 				// Update the post into the database
@@ -118,47 +121,32 @@ function upload_user_file( $file = array() ) {
 			 }
 			 
     }
-    switch($_POST['post_type'])
-        {
-            case 'boutiques':
-                if(!empty($logo))
-                {
-                   //  update_post_meta( $post_id, 'ss_logo', $logo['_wp_attached_file'][0] );
-				    update_post_meta( $post_id, 'ss_logo', $logo[0] );
-                }
-                if(!empty($image_video))
-                {
-                    update_post_meta( $post_id, 'ss_image_video', $image_video['_wp_attached_file'][0] );
-                } 
-				if(isset($_POST['delete_video_image'])) {
-					
-                    update_post_meta( $post_id, 'ss_image_video', "" );					
-				}
-                break;
-
-            case 'brands':
-                if(!empty($logo))
-                {
-                   //  update_post_meta( $post_id, 'ss_logo', $logo['_wp_attached_file'][0] );
-				    update_post_meta( $post_id, 'ss_logo', $logo[0] );
-                }
-                if(!empty($image_video))
-                {
-                    update_post_meta( $post_id, 'ss_image_video', $image_video['_wp_attached_file'][0] );
-                }
-				if(isset($_POST['delete_video_image'])) {
-					
-                    update_post_meta( $post_id, 'ss_image_video', "" );					
-				}        
-                break;
+    
+    
+    if ($_POST['post_type'] === 'boutiques' || $_POST['post_type'] === 'brands') {
+        if(!empty($logo)) {
+           //  update_post_meta( $post_id, 'ss_logo', $logo['_wp_attached_file'][0] );
+           update_post_meta( $post_id, 'ss_logo', $logo[0] );
         }
-		if (!empty($error_code))
-		{
-			
-		     wp_redirect(SITE_URL.'/edit-advertiser/?error_code=' . $error_code);
-		}
-		else 		
-		{
-		     wp_redirect(SITE_URL.'/edit-advertiser/?success_code=1' );			
-		}
-?>
+        if(!empty($image_video)) {
+            update_post_meta( $post_id, 'ss_image_video', $image_video['_wp_attached_file'][0] );
+        } 
+        if(isset($_POST['delete_video_image'])) {
+
+            update_post_meta( $post_id, 'ss_image_video', "" );					
+        }                
+    }
+    
+        echo $isPreview;
+        die();
+           
+    if ( ! empty($error_code)) {			
+         wp_redirect(SITE_URL.'/edit-advertiser/?error_code=' . $error_code);
+    } elseif (empty($error_code) && ! $isPreview) {
+         wp_redirect(SITE_URL.'/edit-advertiser/?success_code=1' );			
+    } elseif (empty($error_code) && $isPreview) {
+        $previewPost = get_post($_POST['post_id']);
+        $slug = $previewPost->post_name;
+        $previewURL = SITE_URL.'/brands-and-boutiques/' . $slug . '?preview=true';
+
+    }

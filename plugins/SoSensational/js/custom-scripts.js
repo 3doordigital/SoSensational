@@ -178,11 +178,30 @@ jQuery(document).ready(function($) {
         urls.push(url);      
         if (urls.length === 3) {
             var slug = urls[2].slice(7);            
-            $(this).attr('href', urls[1] + slug);
-            
-        } 
-        
+            $(this).attr('href', urls[1] + slug);            
+        }         
     });
-
+    
+    /*--------------------------------------------------------------------------
+     Preview functionality on advertiser edit page
+     -------------------------------------------------------------------------*/
+    $('#ajax-preview').on('click', function(e) {
+        e.preventDefault();
+        var formData =  $('#advertiser-edit-form').serialize();
+        
+        var previewData = {
+            formData: $('#advertiser-edit-form').serialize(),
+            preview: true
+        };        
+        
+        $.ajax({
+           type: 'post' ,
+           url: "../wp-content/plugins/SoSensational/web/edit-advertiser-action.php",
+           data: previewData,
+           success: function(data, status, jqXHR) {
+               console.log(data);
+           }           
+        });
+    });
 
 });

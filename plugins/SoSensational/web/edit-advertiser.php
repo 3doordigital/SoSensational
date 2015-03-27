@@ -128,7 +128,7 @@ $attachments = get_posts( array(
 	
 ?>
         <?php //echo isset($advertiser[0]->post_type) ? $advertiser[0]->post_type : "" .' '. isset($advertiser[0]->post_title) ? $advertiser[0]->post_title : "";?>
-<form action="<?php echo SOSENSATIONAL_URL?>/web/edit-advertiser-action.php" method="POST" enctype="multipart/form-data" >
+<form action="<?php echo SOSENSATIONAL_URL?>/web/edit-advertiser-action.php" method="POST" enctype="multipart/form-data" id="advertiser-edit-form">
     <input type="hidden" name="post_type" value="<?php echo $advertiser[0]->post_type ?>"/>
     <input type="hidden" name="post_id" value="<?php echo $advertiser[0]->ID ?>"/>
 <?php
@@ -249,21 +249,16 @@ $attachments = get_posts( array(
 	<textarea onchange="disableVideoBoxes()" name="sosensational_options[image_video_text]" id="image_video_text"  class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_image_video_text'][0]) ? $meta['ss_image_video_text'][0] : "";?></textarea>
 </div>
 </div>
-<br /><br />
+<br />
+<br />
+<div class="clearfix"></div>
+<br />
+<br />
+
+<hr />
+
 <div class="clearfix"></div>
 
-<br /><br /><hr />
-<div class="clearfix"></div>
-
-
-
-
-
-
-
-
-
-   
         <h3>Please choose up to <?php echo $cats_allowed ?> categories</h3>
        
 <div id="num_checked"></div>
@@ -312,8 +307,8 @@ $attachments = get_posts( array(
      </div>
  <hr />
     </p>
-  <button type="submit" class="button_ss_small btn ">Update Your Details</button>
-
+    <button type="submit" name="update" class="button_ss_small btn ">Update Your Details</button>
+    <button type="submit" name="preview" id="ajax-preview" class="button_ss_small btn ">Preview Changes</button>
     </form>
     <br /><br />
     <nav>
