@@ -873,6 +873,8 @@ class AllProductTable extends WP_List_Table {
         
 		$current_page = $this->get_pagenum();
         
+		$orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'ID'; //If no sort, default to title
+        $order = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'DESC'; //If no order, default to asc
         
 		$this->process_bulk_action();
         $paged = ( $current_page ) ? $current_page : 1;
@@ -880,14 +882,17 @@ class AllProductTable extends WP_List_Table {
         $args = array(
             'post_type' => 'wp_aff_products',
 			'posts_per_page' => $per_page,
-			'paged' => $paged
+			'paged' => $paged,
+			'orderby' => $orderby,
+			'order' => $order
         );
 		$args['meta_query'] = array();
 		if( isset( $_REQUEST['prod_type'] ) ) {
 			switch( $_REQUEST['prod_type'] ) {
 				case 1 :
-					$args['meta_query'] = array(
+					$args['meta_query'][] = array(
 						'key' => 'wp_aff_product_manual',
+						'value' => '',
 						'compare' => 'NOT EXISTS'
 					);
 					break;
@@ -902,7 +907,7 @@ class AllProductTable extends WP_List_Table {
 		}
 		
         $query = new WP_Query( $args );
-        //print_var($args);
+        //print_var($query);
 		
 		$total_items = $query->found_posts;
 		
@@ -947,14 +952,14 @@ class AllProductTable extends WP_List_Table {
             $i++;
         }
         //print_var($data);
-        function usort_reorder($a,$b){
+        /*function usort_reorder($a,$b){
             $orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'ID'; //If no sort, default to title
             $order = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'DESC'; //If no order, default to asc
             $result = strcmp($a[$orderby], $b[$orderby]); //Determine sort order
             return ($order==='asc') ? $result : -$result; //Send final sort direction to usort
         }
-        usort($data, 'usort_reorder');
-        
+        //usort($data, 'usort_reorder');
+        */
         
         
         //$data = array_slice($data,(($current_page-1)*$per_page),$per_page);
