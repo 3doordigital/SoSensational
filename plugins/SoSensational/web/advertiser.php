@@ -124,7 +124,8 @@ foreach($products as $prod):
              * Display only the domain name
              */
             $parsedUrl = parse_url($meta['ss_advertiser_website'][0]);
-            echo preg_replace('/^www\./' ,'', $parsedUrl['host']);
+            $domainName = isset($parsedUrl['host']) ? $parsedUrl['host'] : $parsedUrl['path'];
+            echo preg_replace('/^www\./' ,'', $domainName);
             ?>
             </a>
             <?php
