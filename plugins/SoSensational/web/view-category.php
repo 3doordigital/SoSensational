@@ -31,21 +31,7 @@ if(!empty($ss_cat_id)):
             yoast_breadcrumb('<div id="breadcrumbs">','</div>');
         } 
     ?>
-    
-    
-    
-<div class="category_ss_title_under">
-    <span class="left_ss"><?php echo $category[0]->description;?></span>
-    <p class="ss_description category_ss">
-        <b class="ss_trigger_dropdown">Brands & Boutiques</b>
-        <span class="dropdown_ss_bb">
-            <a class="showBBA" href="<?php echo $currentUriWithoutQuery; ?>">Show All</a>
-            <a class="showBBA" href="?p_type=brands">Just Brands</a>
-            <a class="showBBA" href="?p_type=boutiques">Just Boutiques</a>
-        </span>
-    </p>
-    <div class="ss_clear"></div> 
-</div>
+         
 <?php
 $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt 
     LEFT JOIN {$wpdb->terms} as wpt
