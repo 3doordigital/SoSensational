@@ -70,6 +70,7 @@ class WordPress_Affiliate_Shop {
 		add_action( 'admin_post_wp_aff_edit_colours', array ( $this, 'wp_aff_edit_colours' ) );
 		
 		add_action( 'admin_post_wp_aff_add_man_product', array ( $this, 'wp_aff_add_man_product' ) );
+		add_action( 'admin_post_wp_aff_edit_man_product', array ( $this, 'wp_aff_edit_man_product' ) );
         
 		add_action( 'admin_post_nopriv_wp_aff_size_filter', array( $this, 'wp_aff_size_filter' ) );
 		add_action( 'admin_post_wp_aff_size_filter', array( $this, 'wp_aff_size_filter' ) );
@@ -1758,20 +1759,148 @@ class WordPress_Affiliate_Shop {
 		wp_safe_redirect( $url );
 	}
 	
+	public function wp_aff_edit_man_product() {
+		if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_edit_man_product' ) )
+            die( 'Invalid nonce.' . var_export( $_POST, true ) );
+		print_var($_POST);
+		if( isset( $_POST['product_brand_new'] ) && $_POST['product_brand_new'] != '' ) {
+			$brand = wp_insert_term( $_POST['product_brand_new'], 'wp_aff_brands' );
+		} else {
+			$brand = $_POST['brand'];	
+		}
+		
+		$my_post = array(
+			  'ID'			  => $_POST['post_id'],
+              'post_title'    => $_POST['product_name'],
+              'post_status'   => 'publish',
+              'post_type'     => 'wp_aff_products',
+              'tax_input' => array(
+                'wp_aff_categories' => $_POST['wp_aff_categories']['all'],
+                'wp_aff_sizes' => $_POST['wp_aff_sizes']['all'],
+                'wp_aff_colours' => $_POST['wp_aff_colours']['all'],
+                'wp_aff_brands' => $brand
+               )
+            );
+            
+            // Insert the post into the database
+         print_var($my_post);  
+            
+		$insID = wp_update_post( $my_post );   
+		update_post_meta($insID, 'wp_aff_product_link', $_POST['product_url'], true);
+		update_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'], true);
+		update_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'], true);
+		update_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'], true);
+		$url = add_query_arg( 'msg', 1, $_POST['_wp_http_referer'] );
+		wp_safe_redirect( $url );
+	}
+	
 	public function products() { ?>
 		<div class="wrap">
         	<h2>Affiliate Shop</h2>
-        	<h3>Products</h3>
-            <?php
-				$ProductTable = new AllProductTable();
-				$ProductTable->prepare_items();
+        	<?php if( !isset( $_REQUEST['action'] ) || $_REQUEST['action'] == 'delete' ) { ?>
+                <h3>Products</h3>
+                <?php
+                    $ProductTable = new AllProductTable();
+                    $ProductTable->prepare_items();
+                ?>
+                <form id="category-table" method="get">
+                    <!-- For plugins, we also need to ensure that the form posts back to our current page -->
+                    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+                    <!-- Now we can render the completed list table -->
+                    <?php $ProductTable->display() ?>
+                </form>
+            <?php } elseif( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) { 
+				wp_enqueue_media();
+				$ID = $_REQUEST['product'];
+				$meta = get_post_meta( $ID );
+				$brands = wp_get_post_terms( $ID, 'wp_aff_brands' );
 			?>
-            <form id="category-table" method="get">
-                <!-- For plugins, we also need to ensure that the form posts back to our current page -->
-                <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
-                <!-- Now we can render the completed list table -->
-                <?php $ProductTable->display() ?>
-            </form>
+            	<h3>Edit Product</h3>
+                <form method="POST" id="wp_add_prod_manual" action="<?php echo admin_url('admin-post.php'); ?>">
+                    <div id="titlediv">
+                        <div id="titlewrap">
+                            <input type="text" placeholder="Product name" name="product_name" size="30" value="<?php echo get_the_title( $ID ); ?>" id="title" spellcheck="true" autocomplete="off">
+                        </div>
+                    </div>
+                    <table class="form-table">
+                        <tr>
+                            <th>Brand</th>
+                            <td>
+                                <?php 
+                                    $arg = array(
+                                            'show_option_none'   => 'Select Brand',
+                                            'orderby'            => 'NAME', 
+                                            'order'              => 'ASC',
+                                            'hide_empty'         => 0, 
+                                            'name'               => 'brand',
+                                            'taxonomy'           => 'wp_aff_brands',
+											'selected'  		 => $brands[0]->term_id
+                                        );
+                                    wp_dropdown_categories( $arg ); ?> <br>
+                                    <input class="regular-text" type="text" name="product_brand_new" placeholder="Or type a new one">
+                                    <p class="description">If adding a new category, none should be selected from the dropdown.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Price</th>
+                            <td><input class="regular-text" type="number" min="0" name="product_price" placeholder="0.00" value="<?php echo number_format( $meta['wp_aff_product_price'][0], 2); ?>"><p class="description">&pound; sign not needed.</p></td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>
+                                <textarea class="large-text" cols="46" rows="4" name="product_desc"><?php echo $meta['wp_aff_product_desc'][0]; ?></textarea>
+                                <p class="description">Not currently used on site but may be in future.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Product Link</th>
+                            <td>
+                                <input class="large-text" type="url" name="product_url" placeholder="http://" value="<?php echo $meta['wp_aff_product_link'][0]; ?>">
+                                <p class="description">Affiliate link pasted here.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Image</th>
+                            <td>
+                            	<div style="padding: 2px; padding-bottom: 0; border: solid 2px #ddd; background-color: #fff; display: inline-block;">
+                                	<img src="<?php echo $meta['wp_aff_product_image'][0]; ?>" style="width: 150px; height: auto;">
+                                </div>
+                                <br>
+                                <input id="upload_image_button" type="button" class="button button-secondary" value="Upload Image" />
+                                <input type="hidden" id="product_image" value="<?php echo $meta['wp_aff_product_image'][0]; ?>" name="product_image">
+                                <p class="description">The image should be at least 300px x 300px.</p>
+                            </td>
+                            
+                        </tr>
+                        </table>
+                        <table class="form-table">
+                        <tr class="form-table">
+                            <td width="33%" valign="top">
+                               <div style="">
+                                   <?php $categories = new Tag_Checklist('wp_aff_categories', 'all', $ID ); ?>
+                                
+                                </div> 
+                            </td> 
+                            
+                           <td width="33%" valign="top">
+                                <div style="">
+                                    <?php $colours = new Tag_Checklist('wp_aff_colours', 'all', $ID ); ?>
+                                
+                                </div>
+                           </td>
+                           <td width="33%" valign="top">
+                                <?php $sizes = new Tag_Checklist('wp_aff_sizes', 'all', $ID ); ?>
+                           </td>
+                        </tr>
+                    </table>
+                    <input type="hidden" value="wp_aff_edit_man_product" name="action" />
+                    <input type="hidden" value="<?php echo $ID; ?>" name="post_id" />
+                    <?php wp_nonce_field( 'wp_aff_edit_man_product', '_wpnonce', FALSE ); ?>
+                    <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
+                    <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
+                    <?php submit_button(); ?>
+                </form>
+            <?php } ?>
         </div>
 <?php }
 	

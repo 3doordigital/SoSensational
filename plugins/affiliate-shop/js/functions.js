@@ -97,4 +97,21 @@ jQuery(document).ready(function($) {
 		}
 	});
 	
+	$('.delete a').on( 'click', function(e) {
+		//e.preventDefault();
+		if( confirm( 'Are you sure?' ) ) {
+			return;
+		} else {
+			return false;	
+		}
+	});
+	$('#doaction').on( 'click', function(e) {
+		if( $('#bulk-action-selector-top').val() == 'delete' ) {
+			if( confirm( 'Are you sure?' ) ) {
+				return;
+			} else {
+				return false;	
+			}	
+		}
+	});
 });
