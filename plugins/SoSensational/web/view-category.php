@@ -52,8 +52,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
 
                  <div class="col-md-8 fadebox showme animated fadeIn" style="visibility: visible;">
                     <?php $children = get_term_children($category->term_id, get_query_var('taxonomy')); // get children 
-                          $term_meta = get_option( "taxonomy_$category->term_id" );
-
+                          $term_meta = get_option( "taxonomy_$category->term_id" );                          
 ?>
                         <a href="<?php echo get_site_url().'/brands-and-boutiques/'. $ss_cat . '/' . $category->slug.'/'; ?>" class="aHolderImgSS">
                             <img  src="<?php echo $term_meta['ss_cat_image']; ?>" class="img-responsive" />

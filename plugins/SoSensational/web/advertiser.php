@@ -115,19 +115,17 @@ foreach($products as $prod):
         </div>
         <div class="emailWeb">
             <?php 
-            if ( ! empty($meta['ss_advertiser_website'][0])) {
+            if ( ! empty($meta['ss_advertiser_website'][0])) {                
+                /**
+                 * Display only the domain name
+                 */
+                $parsedUrl = parse_url($meta['ss_advertiser_website'][0]);
+                $domainName = isset($parsedUrl['host']) ? $parsedUrl['host'] : $parsedUrl['path'];                
             ?>            
-            Website: 
-            <a href="<?php echo $meta['ss_advertiser_website'][0];?>" target="_blank">
-            <?php 
-            /**
-             * Display only the domain name
-             */
-            $parsedUrl = parse_url($meta['ss_advertiser_website'][0]);
-            $domainName = isset($parsedUrl['host']) ? $parsedUrl['host'] : $parsedUrl['path'];
-            echo preg_replace('/^www\./' ,'', $domainName);
-            ?>
-            </a>
+                Website: 
+                <a href="<?php echo 'http://' . $domainName;?>" target="_blank">
+                    <?php echo preg_replace('/^www\./' ,'', $domainName);?>
+                </a>
             <?php
             }
             ?>

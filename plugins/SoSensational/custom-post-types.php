@@ -127,7 +127,7 @@ function sosensational_custom_post_type() {
 
     register_post_type('products', $argsProducts);
 	
-	     $labelsAdvertisersCats = array( 
+	$labelsAdvertisersCats = array( 
         'name' => 'Advertisers Cats',
         'singular_name' => 'Advertisers Cat',
         'add_new' => 'Add New',
@@ -224,6 +224,16 @@ function sosensational_taxonomy_add_new_meta_field($term) {
         <br />Enter an URL or upload an media file.
         </label></td>
         </tr>
+        <tr valign="top">
+            <th scope="row">Priority</th>
+            <td>
+                <select name="term_meta[ss_cat_priority]">
+                    <?php for($x=10; $x>0; $x--) { ?>
+                        <option value="<?php echo $x; ?>" <?php selected($term_meta['ss_cat_priority'], $x); ?> ><?php echo $x; ?></option>
+                    <?php } ?>
+                </select>
+            </td>
+        </tr>
     </div>
 <?php
 }
@@ -250,28 +260,24 @@ add_action( 'edited_ss_category', 'save_taxonomy_custom_fields', 10, 2 );
 add_action( 'create_ss_category', 'save_taxonomy_custom_fields', 10, 2 );
 
 function sosensational_brands_add_meta_box(){
-		add_meta_box('sosensational_meta_box_brand_details', 'Brand Details', 'sosensational_brands_meta_box_details_content', 'brands', 'normal', 'default');
-
-
-		remove_meta_box('pageparentdiv', 'brands', 'side');
+    add_meta_box('sosensational_meta_box_brand_details', 'Brand Details', 'sosensational_brands_meta_box_details_content', 'brands', 'normal', 'default');
+    remove_meta_box('pageparentdiv', 'brands', 'side');
 
 }
 function sosensational_boutiques_add_meta_box(){
-        add_meta_box('sosensational_meta_box_boutique_details', 'Boutique Details', 'sosensational_boutiques_meta_box_details_content', 'boutiques', 'normal', 'default');
-        remove_meta_box('pageparentdiv', 'boutiques', 'side');
+    add_meta_box('sosensational_meta_box_boutique_details', 'Boutique Details', 'sosensational_boutiques_meta_box_details_content', 'boutiques', 'normal', 'default');
+    remove_meta_box('pageparentdiv', 'boutiques', 'side');
 
 }
 
 function sosensational_advertisers_cats_add_meta_box(){
-        add_meta_box('sosensational_meta_box_advertisers_cats_details', 'Advertisers Cats Details', 'sosensational_advertisers_cats_meta_box_details_content', 'advertisers_cats', 'normal', 'default');
-        remove_meta_box('pageparentdiv', 'advertisers_cats', 'side');
-
+    add_meta_box('sosensational_meta_box_advertisers_cats_details', 'Advertisers Cats Details', 'sosensational_advertisers_cats_meta_box_details_content', 'advertisers_cats', 'normal', 'default');
+    remove_meta_box('pageparentdiv', 'advertisers_cats', 'side');
 }
 
-
 function sosensational_products_add_meta_box(){
-        add_meta_box('sosensational_meta_box_product_details', 'Product Details', 'sosensational_products_meta_box_details_content', 'products', 'normal', 'default');
-        remove_meta_box('pageparentdiv', 'products', 'side');
+    add_meta_box('sosensational_meta_box_product_details', 'Product Details', 'sosensational_products_meta_box_details_content', 'products', 'normal', 'default');
+    remove_meta_box('pageparentdiv', 'products', 'side');
 }
 function sosensational_brands_meta_box_details_content($post)
 {

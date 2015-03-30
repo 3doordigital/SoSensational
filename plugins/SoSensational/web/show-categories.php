@@ -29,7 +29,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
            $counterColor = 1;
             foreach($categories as $category):
                
-            if($category->parent==0):?>
+            if($category->parent == 0):?>
                 
                 <?php
                     /**
@@ -50,8 +50,8 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
                    <div class="col-md-8 fadebox showme animated fadeIn" style="visibility: visible;">
                
                                 <a href="<?php echo get_site_url().'/brands-and-boutiques/'. $category->slug.'/' . $redirectSlug; ?>" class="aHolderImgSS">
-                 
-                 				<?php $image =  bfi_thumb( $term_meta['ss_cat_image'], $cat_params ); ?>
+
+                                <?php $image =  bfi_thumb( $term_meta['ss_cat_image'], $cat_params ); ?>
 
                                 <img src="<?php echo $image; ?>" class="img-responsive" />   
                           
