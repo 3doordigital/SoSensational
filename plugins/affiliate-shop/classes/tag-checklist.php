@@ -60,9 +60,10 @@ class Tag_Checklist {
     private $taxonomy;
     private $post_type;
 
-	function __construct( $taxonomy, $count, $selected = false ) {
+	function __construct( $taxonomy, $count, $post_id = null, $selected = false ) {
 		$this->taxonomy = $taxonomy;
 		$this->counter = $count;
+		$this->post_id = $post_id;
         $this->selected = array($selected);
         $this->metabox_content();
 	}
@@ -87,7 +88,7 @@ class Tag_Checklist {
                 <input type="text" placeholder="Search" rel="<?php echo $taxonomy; ?>checklist" class="widefat searchList" style="margin-top: 5px;">
 		       <input type="hidden" name="tax_input[<?php echo $taxonomy; ?>][]" value="0" />
 		       <ul id="<?php echo $taxonomy; ?>checklist" data-wp-lists="list:<?php echo $taxonomy; ?>" class="categorychecklist form-no-clear">
-					<?php wp_terms_checklist(null, array( 'taxonomy' => $taxonomy, 'walker' => $walker, 'selected_cats' => $this->selected, 'checked_ontop' => false ) ) ?>
+					<?php wp_terms_checklist($this->post_id, array( 'taxonomy' => $taxonomy, 'walker' => $walker, 'checked_ontop' => false ) ) ?>
 				</ul>
 		   </div>
 			

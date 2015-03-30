@@ -753,8 +753,8 @@ class AllProductTable extends WP_List_Table {
         global $status, $page;
         //Set parent defaults
         parent::__construct( array(
-            'singular'  => 'category',     //singular name of the listed records
-            'plural'    => 'categories',    //plural name of the listed records
+            'singular'  => 'product',     //singular name of the listed records
+            'plural'    => 'products',    //plural name of the listed records
             'ajax'      => false        //does this table support ajax?
         ) );
         
@@ -797,7 +797,7 @@ class AllProductTable extends WP_List_Table {
     function column_cb($item){
         return sprintf(
             '<input type="checkbox" name="%1$s[]" value="%2$s" />',
-            /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
+            /*$1%s*/ 'product',  //Let's simply repurpose the table's singular label ("movie")
             /*$2%s*/ $item['ID']                //The value of the checkbox should be the record's id
         );
     }
@@ -835,7 +835,18 @@ class AllProductTable extends WP_List_Table {
         
         //Detect when a bulk action is being triggered...
         if( 'delete'===$this->current_action() ) {
-            wp_die('Items deleted (or they would be if we had items to delete)!');
+            //wp_die('Items deleted (or they would be if we had items to delete)!');
+			$products = array();
+			if( isset( $_REQUEST['product'] ) ) {
+				if( !is_array( $_REQUEST['product'] ) ) {
+					$products[] = $_REQUEST['product'];
+				} else {
+					$products = $_REQUEST['product'];
+				}
+				foreach( $products as $product ) { 
+					wp_trash_post( $product );
+				}
+			}
         }
         
     }
