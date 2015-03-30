@@ -1,6 +1,7 @@
 <?php 
 do_action('ss_css');
-//require(ABSPATH . 'wp-load.php');
+
+$currentUriWithoutQuery= parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $cat_params = array( 'width' => 367, 'height' => 240, 'crop' => true ); 
 
 global $wpdb;
@@ -36,9 +37,9 @@ if(!empty($ss_cat_id)):
 <div class="category_ss_title_under">
     <span class="left_ss"><?php echo $category[0]->description;?></span>
     <p class="ss_description category_ss">
-        <b class="ss_trigger_dropdown">Brands & Boutique</b>
+        <b class="ss_trigger_dropdown">Brands & Boutiques</b>
         <span class="dropdown_ss_bb">
-            <a class="showBBA" href="#">Show All</a>
+            <a class="showBBA" href="<?php echo $currentUriWithoutQuery; ?>">Show All</a>
             <a class="showBBA" href="?p_type=brands">Just Brands</a>
             <a class="showBBA" href="?p_type=boutiques">Just Boutiques</a>
         </span>
@@ -151,9 +152,10 @@ $args = array(
     <div class="category_ss_title_under">
     <span class="left_ss"><?php echo $term_meta->description; ?> </span>
     <p class="ss_description category_ss">
-        <b class="ss_trigger_dropdown">Brands & Boutique</b>
+
+        <b class="ss_trigger_dropdown">Brands & Boutiques</b>
         <span class="dropdown_ss_bb">
-            <a class="showBBA" href="#">Show All</a>
+            <a class="showBBA" href="<?php echo $currentUriWithoutQuery; ?>">Show All</a>
             <a class="showBBA" href="?p_type=brands">Just Brands</a>
             <a class="showBBA" href="?p_type=boutiques">Just Boutiques</a>
         </span>
