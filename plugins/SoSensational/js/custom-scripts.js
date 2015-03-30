@@ -126,7 +126,6 @@ jQuery(document).ready(function($) {
                 var pattern = /\?/;
                 var location = window.location.href;
                 var n = location.search(pattern);
-                console.log(statusText);
                 /*  Compose a query var based on whether query variables are 
                     already present or not */
                 var queryVar = n === -1 ? '?adminmsg=d' : '&adminmsg=d';
@@ -184,24 +183,44 @@ jQuery(document).ready(function($) {
     
     /*--------------------------------------------------------------------------
      Preview functionality on advertiser edit page
-     -------------------------------------------------------------------------*/
-    $('#ajax-preview').on('click', function(e) {
-        e.preventDefault();
-        var formData =  $('#advertiser-edit-form').serialize();
+     -------------------------------------------------------------------------*/ 
+    
+    
+    $('#ajax-preview').click(function(e) {
+                
+        var formData =  $('#advertiser-edit-form').serializeArray();
         
-        var previewData = {
-            formData: $('#advertiser-edit-form').serialize(),
-            preview: true
-        };        
+        /* Pass another key/value pair for a later AJAX check in the script */
+        formData.push({name: 'ajaxPreview', value: true});
         
         $.ajax({
            type: 'post' ,
            url: "../wp-content/plugins/SoSensational/web/edit-advertiser-action.php",
-           data: previewData,
+           data: formData,
            success: function(data, status, jqXHR) {
-               console.log(data);
+                previewURL = data;
+                $('#ajax-preview').attr('href', previewURL);       
            }           
-        });
+        });        
     });
+    
+    $('#ajax-preview').one('mouseover', function(e) {
+        var formData =  $('#advertiser-edit-form').serializeArray();
+        
+        /* Pass another key/value pair for a later AJAX check in the script */
+        formData.push({name: 'ajaxPreview', value: true});
+        
+        $.ajax({
+           type: 'post' ,
+           url: "../wp-content/plugins/SoSensational/web/edit-advertiser-action.php",
+           data: formData,
+           success: function(data, status, jqXHR) {
+                previewURL = data;
+                $('#ajax-preview').attr('href', previewURL);        
+           }           
+        });        
+    });
+    
+
 
 });

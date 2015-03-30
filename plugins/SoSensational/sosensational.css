@@ -401,7 +401,7 @@ body {
 	background: -webkit-linear-gradient(top, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
 	background: -o-linear-gradient(top, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
 	background: -ms-linear-gradient(top, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
-	background: linear-gradient(to bottom, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%) !important;
+	background: linear-gradient(to bottom, rgba(147,93,195,1) 0%,rgba(108,32,177,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', endColorstr='#6c20b1',GradientType=0 );
 	color: #fff;
 	text-transform: uppercase;
@@ -518,4 +518,18 @@ i.ajax-delete:hover {
     width: 100px;
     padding: 0;
     text-align: left;
+}
+
+/* Preview button on /edit-advertiser/ */
+#ajax-preview {
+    display: inline-block;
+    width: 150px;
+    background: rgb(229,229,61); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(229,229,61,1) 0%, rgba(160,134,42,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(229,229,61,1)), color-stop(100%,rgba(160,134,42,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(229,229,61,1) 0%,rgba(160,134,42,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(229,229,61,1) 0%,rgba(160,134,42,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(229,229,61,1) 0%,rgba(160,134,42,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(229,229,61,1) 0%,rgba(160,134,42,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e53d', endColorstr='#a0862a',GradientType=0 ); /* IE6-9 */
 }

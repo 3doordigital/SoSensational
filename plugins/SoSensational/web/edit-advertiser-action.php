@@ -5,11 +5,19 @@ require( '../../../../wp-load.php');
 $post_type=$_POST['post_type'];
 $options = get_option( 'ss_settings' );
 $error_code = "";
+$isAjaxPreview = false;
 
 /**
- * Determine if the current request if for a preview
+ * Determine if the current request is an AJAX request for preview
+ * This is a double check on two global arrays
  */
-$isPreview = isPreview($_POST) ? true: false;
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
+    strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' &&
+    $_POST['ajaxPreview'] == true) {
+    
+    $isAjaxPreview = true;      
+    
+}
 
 function upload_user_file( $file = array() ) {
 
@@ -122,7 +130,6 @@ function upload_user_file( $file = array() ) {
 			 
     }
     
-    
     if ($_POST['post_type'] === 'boutiques' || $_POST['post_type'] === 'brands') {
         if(!empty($logo)) {
            //  update_post_meta( $post_id, 'ss_logo', $logo['_wp_attached_file'][0] );
@@ -137,16 +144,15 @@ function upload_user_file( $file = array() ) {
         }                
     }
     
-        echo $isPreview;
-        die();
-           
+              
     if ( ! empty($error_code)) {			
          wp_redirect(SITE_URL.'/edit-advertiser/?error_code=' . $error_code);
-    } elseif (empty($error_code) && ! $isPreview) {
+    } elseif (empty($error_code) && ! $isAjaxPreview) {
          wp_redirect(SITE_URL.'/edit-advertiser/?success_code=1' );			
-    } elseif (empty($error_code) && $isPreview) {
+    } elseif (empty($error_code) && $isAjaxPreview) {
         $previewPost = get_post($_POST['post_id']);
         $slug = $previewPost->post_name;
         $previewURL = SITE_URL.'/brands-and-boutiques/' . $slug . '?preview=true';
-
+        echo $previewURL;
+        die();
     }
