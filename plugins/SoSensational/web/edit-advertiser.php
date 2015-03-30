@@ -308,7 +308,8 @@ $attachments = get_posts( array(
  <hr />
     </p>
     <button type="submit" name="update" class="button_ss_small btn ">Update Your Details</button>
-    <button type="submit" name="preview" id="ajax-preview" class="button_ss_small btn ">Preview Changes</button>
+    <a  name="preview" id="ajax-preview" class="button_ss_small btn" target="_blank">Preview Changes</a>
+
     </form>
     <br /><br />
     <nav>
