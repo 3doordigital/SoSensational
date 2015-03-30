@@ -228,6 +228,7 @@ class WordPress_Affiliate_Shop {
         //add_menu_page( 'Affiliate Shop', 'Affiliate Shop', 'manage_options', 'affiliate-shop', array( $this, 'admin_page' ), $this->admin_icon, '60' );
 		//$this->main_page = add_menu_page( 'Affiliate Shop', 'Affiliate Shop', 'manage_options', 'affiliate-shop', array( $this, 'admin_page' ), $this->admin_icon, 58 ); 
         $this->main_page = add_submenu_page('affiliate-shop', 'Categories', 'Categories', 'manage_options', 'affiliate-shop', array( $this, 'admin_page' ));
+		$this->products = add_submenu_page('affiliate-shop', 'Products', 'Products', 'manage_options', 'affiliate-shop/products', array( $this, 'products' ));
 		$this->add_products = add_submenu_page('affiliate-shop', 'Add Products', 'Add Products', 'manage_options', 'affiliate-shop/add-products', array( $this, 'add_products' ));
         $this->brands = add_submenu_page('affiliate-shop', 'Brands', 'Brands', 'manage_options', 'affiliate-shop/brands', array( $this, 'list_brands' ));
         
@@ -243,6 +244,7 @@ class WordPress_Affiliate_Shop {
 		add_action( "load-$this->brands", array ( $this, 'parse_message' ) );
 		add_action( "load-$this->colours", array ( $this, 'parse_message' ) );
         add_action( "load-$this->main_page", array ( $this, 'parse_message' ) );
+		add_action( "load-$this->products", array ( $this, 'parse_message' ) );
 	}
     
     public function register_widgets() {
@@ -1756,6 +1758,22 @@ class WordPress_Affiliate_Shop {
 		wp_safe_redirect( $url );
 	}
 	
+	public function products() { ?>
+		<div class="wrap">
+        	<h2>Affiliate Shop</h2>
+        	<h3>Products</h3>
+            <?php
+				$ProductTable = new AllProductTable();
+				$ProductTable->prepare_items();
+			?>
+            <form id="category-table" method="get">
+                <!-- For plugins, we also need to ensure that the form posts back to our current page -->
+                <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+                <!-- Now we can render the completed list table -->
+                <?php $ProductTable->display() ?>
+            </form>
+        </div>
+<?php }
 	
     /**
      * Place code for your plugin's functionality here.

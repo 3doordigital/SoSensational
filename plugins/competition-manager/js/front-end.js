@@ -7,7 +7,7 @@ jQuery(document).ready( function($) {
     
     $('#comp_form').submit( function( event ) {
         event.preventDefault();
-		$('#submit_answer').html('Submitting...').prop('disabled', true);
+		//$('#submit_answer').html('Submitting...').prop('disabled', true);
         var data = $( this ).serialize();
         $.post( ajax_object.ajax_url, data, function( data ) {
 			console.log(data);

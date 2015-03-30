@@ -360,15 +360,24 @@ class WordPress_Competition_Manager {
             'menu_icon' => $this->admin_icon,
             'supports'           => array( 'title', 'editor', 'thumbnail' )
         );
+		
+		$args2 = array( 
+				'labels' => array( 'name' => 'Competition Entries' ), 
+				'public'             => true,
+				'publicly_queryable' => true,
+				'show_ui'            => true,
+				'show_in_menu'       => true,
+				'query_var'          => true,
+				'rewrite'            => false,
+				'capability_type'    => 'post',
+				'has_archive'        => false,
+				'hierarchical'       => false,
+				'menu_icon' => $this->admin_icon, 
+				'supports' => array( 'title', 'custom-fields' ) 
+			);
+		
         register_post_type( 'wp_comp_man', $args );
-        register_post_type( 'wp_comp_entries', array( 
-            'labels' => array( 'name' => 'Competition Entries' ), 
-            'public' => true, 
-            'show_in_menu' =>  true, 
-			'query_var'    => true,
-			'publicly_queryable' => true,
-            'menu_icon' => $this->admin_icon, 
-            'supports' => array( 'title' ) ) );
+        register_post_type( 'wp_comp_entries', $args2 );
     }
     
     public function register_taxonomies() {
@@ -767,20 +776,20 @@ class WordPress_Competition_Manager {
 		$args = array(
 			'post_type'		=> 'wp_comp_entries',
 			'posts_per_page' => -1,
-			'meta_query' => array(
-				'relation' => 'AND',
-				array(
-					'key'     => 'wp_comp_entry_competition-id',
-					'value'   => $_POST['competition-id'],
-					'compare' => '=',
-				),
-				array(
-					'key'     => 'wp_comp_entry_email',
-					'value'   => $_POST['email'],
-					'compare' => '=',
-				),
-			),
 		);
+		$args['meta_query'] = array( 'relation' => 'AND' );
+		$args['meta_query'][] = array(
+					'key'       => 'wp_comp_entry_competition-id',
+					'value'     => $_POST['competition-id'],
+					'compare'   => '=',
+					'type'      => 'CHAR',
+				);
+		$args['meta_query'][] = array(
+					'key'       => 'wp_comp_entry_email',
+					'value'     => $_POST['email'],
+					'compare'   => '=',
+					'type'      => 'CHAR',
+				);
 		print_var($args);
 		$lookup = new WP_Query( $args ) ;
 		print_var($lookup);
@@ -922,7 +931,7 @@ class WordPress_Competition_Manager {
     }
     
     public function comp_filter_list( $query ) {
-        if( is_admin() AND $query->query['post_type'] == 'wp_comp_entries' ) {
+        if( is_admin() && $query->query['post_type'] == 'wp_comp_entries' && !isset( $_POST ) ) {
             $qv = &$query->query_vars;
             $qv['meta_query'] = array();
         }
