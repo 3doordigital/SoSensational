@@ -90,4 +90,11 @@ jQuery(document).ready(function($) {
 	file_frame.open();
 	});
 	
+	$('.prod_type_filter').on('change', function(){
+		var prod_type = $(this).val();
+		if( prod_type != '' ){
+			document.location.href = 'admin.php?page=affiliate-shop/products&prod_type='+prod_type;    
+		}
+	});
+	
 });

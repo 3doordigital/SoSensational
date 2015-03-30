@@ -745,6 +745,232 @@ class ProductTable extends WP_List_Table {
 
 }
 
+class AllProductTable extends WP_List_Table {
+    
+    
+    
+    function __construct( ){
+        global $status, $page;
+        //Set parent defaults
+        parent::__construct( array(
+            'singular'  => 'category',     //singular name of the listed records
+            'plural'    => 'categories',    //plural name of the listed records
+            'ajax'      => false        //does this table support ajax?
+        ) );
+        
+    }
+
+    function column_default($item, $column_name){
+        return $item[$column_name];
+    }
+
+    function column_title($item){
+        
+        //Build row actions
+        $actions = array(
+            'edit'      => sprintf('<a href="?page=%s&action=%s&product=%s">Edit</a>',$_REQUEST['page'],'edit',$item['ID']),
+            'delete'    => sprintf('<a href="?page=%s&action=%s&product=%s">Delete</a>',$_REQUEST['page'],'delete',$item['ID']),
+        );
+        
+        //Return the title contents
+        return sprintf('<strong><a href="?page=%3$s&action=edit&product=%1$s">%2$s</a></strong>%4$s',
+            /*$1%s*/ $item['ID'],
+            /*$2%s*/ $item['title'],
+                     $_REQUEST['page'],
+            /*$3%s*/ $this->row_actions($actions)
+        );
+    }
+    function column_img($item) {
+       return sprintf(
+            '<img src="%1$s" style="max-height: 75px; width: auto;" />',
+            /*$1%s*/ $item['img']  //Let's simply repurpose the table's singular label ("movie")
+        ); 
+    }
+
+    function column_desc($item) {
+        if(strlen($item['desc']) < 100) {
+            return $item['desc'];
+        } else {
+            return substr($item['desc'], 0, 100).'...';   
+        }
+    }
+    function column_cb($item){
+        return sprintf(
+            '<input type="checkbox" name="%1$s[]" value="%2$s" />',
+            /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
+            /*$2%s*/ $item['ID']                //The value of the checkbox should be the record's id
+        );
+    }
+
+    function get_columns(){
+        $columns = array(
+            'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
+            'img'     => 'Image',
+            'title'     => 'Title',
+            'brands'     => 'Brand',
+            'colours'     => 'Colours',
+            'sizes'     => 'Sizes',
+            'price'    => 'Price'
+            
+        );
+        return $columns;
+    }
+
+    function get_sortable_columns() {
+        $sortable_columns = array(
+            'title'     => array('title',false),     //true means it's already sorted
+            'price'    => array('price',false),
+        );
+        return $sortable_columns;
+    }
+
+    function get_bulk_actions() {
+        $actions = array(
+            'delete'    => 'Delete'
+        );
+        return $actions;
+    }
+
+    function process_bulk_action() {
+        
+        //Detect when a bulk action is being triggered...
+        if( 'delete'===$this->current_action() ) {
+            wp_die('Items deleted (or they would be if we had items to delete)!');
+        }
+        
+    }
+	
+	function extra_tablenav( $which ) {
+    if ( $which == "top" ){
+        ?>
+        <div class="alignleft actions bulkactions">
+        
+            <select name="prod_type_filter" class="prod_type_filter">
+                <option <?php echo ( !isset( $_GET['prod_type'] ) || $_GET['prod_type'] == 0 ? ' selected ' : '' ); ?> value="0">All Products</option>
+                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 1 ? ' selected ' : '' ); ?> value="1">Affiliate Feed Products</option>
+                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 2 ? ' selected ' : '' ); ?> value="2">Manual Products</option>
+            </select>
+          
+        </div>
+        <?php
+    }
+    if ( $which == "bottom" ){
+        //The code that goes after the table is there
+
+    }
+}
+
+    function prepare_items() {
+        global $wpdb; //This is used only if making any database queries
+
+        $per_page = 10;
+        
+        $columns = $this->get_columns();
+        $hidden = array();
+        $sortable = $this->get_sortable_columns();
+        
+        $this->_column_headers = array($columns, $hidden, $sortable);
+        
+		$current_page = $this->get_pagenum();
+        
+        
+		$this->process_bulk_action();
+        $paged = ( $current_page ) ? $current_page : 1;
+		$offset = ( $paged - 1 ) * $per_page;
+        $args = array(
+            'post_type' => 'wp_aff_products',
+			'posts_per_page' => $per_page,
+			'paged' => $paged
+        );
+		$args['meta_query'] = array();
+		if( isset( $_REQUEST['prod_type'] ) ) {
+			switch( $_REQUEST['prod_type'] ) {
+				case 1 :
+					$args['meta_query'] = array(
+						'key' => 'wp_aff_product_manual',
+						'compare' => 'NOT EXISTS'
+					);
+					break;
+				case 2: 
+					$args['meta_query'][] = array(
+						'key' => 'wp_aff_product_manual',
+						'value' => 1,
+						'compare' => '='
+					);
+					break;	
+			}
+		}
+		
+        $query = new WP_Query( $args );
+        //print_var($args);
+		
+		$total_items = $query->found_posts;
+		
+        $data = array();
+        $i = 0;
+        foreach($query->posts AS $post) {
+            
+            $post_meta = get_post_meta($post->ID);
+            $colours = wp_get_post_terms( $post->ID, 'wp_aff_colours' );
+            $sizes = wp_get_post_terms( $post->ID, 'wp_aff_sizes' );
+            $brands = wp_get_post_terms( $post->ID, 'wp_aff_brands' );
+            
+            $prod_data = array();
+            
+            foreach( $colours AS $colour ) {
+                $prod_data['colours'][] = $colour->name;
+            }
+            foreach( $sizes AS $size ) {
+                $prod_data['sizes'][] = $size->name;
+            }
+            foreach( $brands AS $brand ) {
+                $prod_data['brands'][] = $brand->name;
+            }
+            //print_var($prod_data);
+            $colours = @implode( ', ', $prod_data['colours']);
+            $sizes = @implode( ', ', $prod_data['sizes']);
+            $brands = @implode( ', ', $prod_data['brands']);
+            
+            //print_var($terms);
+            
+            $data[$i] = array(
+                'ID'    => $post->ID,
+                'title' => $post->post_title,
+                'img' => $post_meta['wp_aff_product_image'][0],
+                'colours' => $colours,
+                'sizes' => $sizes,
+                'brands' => $brands,
+                'price' => $post_meta['wp_aff_product_price'][0],
+                'link' => $post_meta['wp_aff_product_link'][0],
+            );
+            
+            $i++;
+        }
+        //print_var($data);
+        function usort_reorder($a,$b){
+            $orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'ID'; //If no sort, default to title
+            $order = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'DESC'; //If no order, default to asc
+            $result = strcmp($a[$orderby], $b[$orderby]); //Determine sort order
+            return ($order==='asc') ? $result : -$result; //Send final sort direction to usort
+        }
+        usort($data, 'usort_reorder');
+        
+        
+        
+        //$data = array_slice($data,(($current_page-1)*$per_page),$per_page);
+        
+        $this->items = $data;
+        
+        $this->set_pagination_args( array(
+            'total_items' => $total_items,                  //WE have to calculate the total number of items
+            'per_page'    => $per_page,                     //WE have to determine how many items to show on a page
+            'total_pages' => ceil($total_items/$per_page)   //WE have to calculate the total number of pages
+        ) );
+    }
+
+
+}
+
 class ListProductSearch extends WP_List_Table {
 
     var $example_data;
