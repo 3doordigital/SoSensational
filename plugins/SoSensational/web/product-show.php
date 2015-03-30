@@ -13,7 +13,6 @@ do_action('ss_css');
 	$options = get_option( 'ss_settings' );
 	$user=wp_get_current_user();
 	$advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$user->ID}' ", OBJECT );
-                
         $currentUserRole = $user->roles[0];
         
 	$post_categories_available =  get_the_terms($advertiser[0]->ID,'ss_category');
@@ -64,9 +63,13 @@ do_action('ss_css');
  
 </ul>
 <?php if ($num_of_products < $allowed_products) { ?><br /><br />
-                   		<a href="/add-product/" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
-
-<button type="button" class="btn btn-default navbar-btn">Add A New Product</button>
+<a href="/add-product/" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+    
+<div class="form-buttons-group clearfix">
+    <button type="button" class="btn btn-default navbar-btn">Add A New Product</button>
+    <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
+</div>
+                                    
 <h4>You have entered <?php echo $num_of_products ?> of <?php echo $allowed_products ?> products</h4>
               <!--          	 <img class="ss_category_img" src="<?php echo get_post_meta( get_the_ID(), 'ss_logo', true ); ?>" />    -->
                 		</a>

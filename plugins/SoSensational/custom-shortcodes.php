@@ -92,14 +92,24 @@
 	add_shortcode( 'ss_directory', 'ss_directory' );
 
 	function ss_add_product(){
-		ob_start();
-  		include (SOSENSATIONAL_DIR.'/web/product.php'); 
-  		$content = ob_get_clean();
-   		echo $content;
+            ob_start();
+            include (SOSENSATIONAL_DIR.'/web/product.php'); 
+            $content = ob_get_clean();
+            echo $content;
 
 	}
 	add_shortcode( 'ss_product', 'ss_add_product' );
-
+        
+        
+        
+        function ss_manage_listing()
+        {
+            ob_start();
+            include (SOSENSATIONAL_DIR.'/web/manage-listing.php'); 
+            $content = ob_get_clean();
+            echo $content;            
+        }
+        add_shortcode( 'ss_manage_listing', 'ss_manage_listing' );
 
 
 	function ss_edit_advertisers_cats(){

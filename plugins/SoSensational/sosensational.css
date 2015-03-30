@@ -521,15 +521,13 @@ i.ajax-delete:hover {
 }
 
 /* Preview button on /edit-advertiser/ */
-#ajax-preview {
-    display: inline-block;
-    width: 150px;
-    background: rgb(229,229,61); /* Old browsers */
-    background: -moz-linear-gradient(top, rgba(229,229,61,1) 0%, rgba(160,134,42,1) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(229,229,61,1)), color-stop(100%,rgba(160,134,42,1))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(229,229,61,1) 0%,rgba(160,134,42,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(229,229,61,1) 0%,rgba(160,134,42,1) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(229,229,61,1) 0%,rgba(160,134,42,1) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(229,229,61,1) 0%,rgba(160,134,42,1) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e53d', endColorstr='#a0862a',GradientType=0 ); /* IE6-9 */
+
+.form-buttons-group {
+    position: relative;
+}
+
+a.preview-anchor-text {
+    position: absolute;
+    bottom: 0;
+    margin-left: 5px;
 }

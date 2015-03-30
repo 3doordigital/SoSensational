@@ -1180,3 +1180,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 		margin-bottom: 20px;
 	}
 }
+
+.form-buttons-group {
+    position: relative;
+}
+
+a.preview-anchor-text {
+    position: absolute;
+    bottom: 10px;
+    margin-left: 10px;
+}
