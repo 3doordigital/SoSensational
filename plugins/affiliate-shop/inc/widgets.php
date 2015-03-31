@@ -408,7 +408,7 @@ class aff_size_widget extends WP_Widget {
 					}
 				}
 				echo '<div class="'. ( $checked > 0 ? 'col-sel ' : '' ).'size_filter">';
-				echo '<a href="'.$_SERVER['REQUEST_URI'].'" data-id="'.$size->term_id.'">'.$size->name.'</a>';
+				echo '<a href="'.$_SERVER['REQUEST_URI'].'" data-id="'.$size->term_id.'">'.ltrim( $size->name, '0' ).'</a>';
 				echo '<input type="checkbox" '.( $checked > 0 ? 'checked' : '' ).' data-id="'.$size->term_id.'" name="wp_aff_sizes[]" class="hide_check" value="'.$size->term_id.'">';
 				echo '</div>';
 			}
