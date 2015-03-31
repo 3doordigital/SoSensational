@@ -211,6 +211,9 @@ function sosensational_taxonomy_add_new_meta_field($term) {
     // this will add the custom meta field to the add new term page
     $t_id = isset($term->term_id) ? $term->term_id : "" ;
     $term_meta = get_option( "taxonomy_$t_id" );
+    if ( ! key_exists('ss_cat_priority', $term_meta)) {
+        $term_meta['ss_cat_priority'] = 1;
+    }
     ?>
     <div class="form-field">
        <tr valign="top">
