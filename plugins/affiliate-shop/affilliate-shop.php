@@ -588,6 +588,10 @@ class WordPress_Affiliate_Shop {
             				$args['order'] 		= 'DESC';
 							break;	
 					}
+				} else {
+					$args['meta_key'] 	= 'wp_aff_product_price';
+					$args['orderby']	= 'meta_value_num';
+            		$args['order'] 		= 'ASC';
 				}
 				return $args;
 	}
