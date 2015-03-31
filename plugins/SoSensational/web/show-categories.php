@@ -29,7 +29,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
         $categoriesWithPriority[] = $singleCategory;
     }    
     usort($categoriesWithPriority, function($a, $b) {
-       return $b->ss_cat_priority - $a->ss_cat_priority;
+       return $a->ss_cat_priority - $b->ss_cat_priority;
     });
                     
     $counterCategories = 1;   

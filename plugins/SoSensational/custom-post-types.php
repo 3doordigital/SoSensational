@@ -212,7 +212,7 @@ function sosensational_taxonomy_add_new_meta_field($term) {
     $t_id = isset($term->term_id) ? $term->term_id : "" ;
     $term_meta = get_option( "taxonomy_$t_id" );
     if ( ! key_exists('ss_cat_priority', $term_meta)) {
-        $term_meta['ss_cat_priority'] = 1;
+        $term_meta['ss_cat_priority'] = 20;
     }
     ?>
     <div class="form-field">
@@ -228,10 +228,10 @@ function sosensational_taxonomy_add_new_meta_field($term) {
         </label></td>
         </tr>
         <tr valign="top">
-            <th scope="row">Priority</th>
+            <th scope="row">Order</th>
             <td>
                 <select name="term_meta[ss_cat_priority]">
-                    <?php for($x=10; $x>0; $x--) { ?>
+                    <?php for($x=0; $x<21; $x++) { ?>
                         <option value="<?php echo $x; ?>" <?php selected($term_meta['ss_cat_priority'], $x); ?> ><?php echo $x; ?></option>
                     <?php } ?>
                 </select>

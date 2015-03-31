@@ -14,14 +14,14 @@ class RelatedCarousel
     public function __construct($currentCategory)
     {
         $this->currentCategory = $currentCategory;
-        $this->getAdvertiserCategories();
+        $this->collectAdvertiserCategories();
         if ( ! empty ($this->advertiserCategories)) {
-            $this->getDataForDisplay();            
+            $this->collectDataForDisplay();            
         }
 
     }
     
-    private function getAdvertiserCategories()
+    private function collectAdvertiserCategories()
     {
         $name  = $this->currentCategory->name === 'Accessories Boutique' ? 'accessories' : $this->currentCategory->name;
         $args = array(      
@@ -45,7 +45,7 @@ class RelatedCarousel
         
     }
     
-    private function getDataForDisplay()
+    private function collectDataForDisplay()
     {
         
         global $wpdb;
@@ -85,9 +85,9 @@ class RelatedCarousel
         }
     }
     
-    public function displayCarousel()
+    public function getCarousel()
     {
-        new RelatedCarousel\Carousel($this->dataForDisplay, $this->currentCategory);
+        return new RelatedCarousel\Carousel($this->dataForDisplay, $this->currentCategory);
     }
     
     
