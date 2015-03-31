@@ -222,7 +222,7 @@ function sosensational_taxonomy_add_new_meta_field($term) {
             <img src="<?php echo $term_meta['ss_cat_image']; ?>"></img>
         <td>
         <td><label for="upload_image_video">
-        <input id="upload_image_video" type="text" size="36" name="term_meta[ss_cat_image]" value="" />
+        <input id="upload_image_video" type="text" size="36" name="term_meta[ss_cat_image]" value="<?php echo $term_meta['ss_cat_image']; ?>" />
         <input id="upload_image_video_button" type="button" value="Upload Image or Video" />
         <br />Enter an URL or upload an media file.
         </label></td>
