@@ -162,7 +162,7 @@ jQuery(document).ready(function($) {
     }
     
     var categoryEditForms = $('form.category-edit-block');
-    categoryEditForms.on('change, keyup', function(event) {
+    categoryEditForms.on('change keyup', function(event) {
           var currentForm = this;
           removeDisabled(currentForm);
     });

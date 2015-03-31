@@ -1,0 +1,13 @@
+var gulp = require('gulp');
+var sass = require('gulp-sass');
+var watch = require('gulp-watch');
+
+gulp.task('sass', function() {
+    gulp.src('plugins/SoSensational/styles/sass/*.scss')
+            .pipe(sass())
+            .pipe(gulp.dest('plugins/SoSensational/styles/dest/'));
+});
+
+gulp.task('watch', function() {
+    gulp.watch('plugins/SoSensational/styles/sass/*.scss', ['sass']);
+});
