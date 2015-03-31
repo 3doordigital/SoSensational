@@ -448,6 +448,70 @@ class aff_size_widget extends WP_Widget {
 		}
 }
 
+class aff_sale_widget extends WP_Widget {
+
+    /**
+     * Sets up the widgets name etc
+     */
+    public function __construct() {
+        parent::__construct(
+            'tim_sale', // Base ID
+            __('Facted Nav - Sale', 'text_domain'), // Name
+            array( 'description' => __( 'Shows the sale/new/top picks checkboxes', 'text_domain' ), ) // Args
+        );
+    }
+
+    /**
+     * Outputs the content of the widget
+     *
+     * @param array $args
+     * @param array $instance
+     */
+    public function widget( $args, $instance ) {
+        global $wp_query;
+        echo $args['before_widget'];
+        if ( ! empty( $instance['title'] ) ) {
+            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+        } 
+		echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_sale_filter" method="POST">';
+		
+		echo '<p class="checkbox"><label><input type="checkbox" value="1" name="wp_aff_sale"> <i class="fa fa-shopping-cart fa-fw"></i> Sale Items</label></p>';
+		echo '<p class="checkbox"><label><input type="checkbox" value="1" name="wp_aff_toppicks"> <i class="fa fa-heart fa-fw"></i> Top Picks</label></p>';
+		echo '<p class="checkbox"><label><input type="checkbox" value="1" name="wp_aff_new_arrivals"> <i class="fa fa-calendar fa-fw"></i> New Arrivals</label></p>';
+		
+		echo '<input type="hidden" name="action" value="wp_aff_sale_filter">';
+		wp_nonce_field( 'wp_aff_Sale_filter', '_wpnonce', true );
+		echo '</form>';
+        echo $args['after_widget'];
+    }
+
+    /**
+     * Outputs the options form on admin
+     *
+     * @param array $instance The widget options
+     */
+    public function form( $instance ) {
+			$instance = wp_parse_args( (array) $instance, array( 'title' => 'Options' ) );
+            $title = $instance['title'];
+?>
+            <p><label for="<?php echo $this->get_field_id('title'); ?>">Title: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
+            
+        <?php
+		}
+	
+		/**
+		 * Processing widget options on save
+		 *
+		 * @param array $new_instance The new options
+		 * @param array $old_instance The previous options
+		 */
+		public function update( $new_instance, $old_instance ) {
+			$instance = $old_instance;
+            $instance['title'] = $new_instance['title'];
+            return $instance;
+		}
+}
+
 class aff_active_widget extends WP_Widget {
 
     /**
