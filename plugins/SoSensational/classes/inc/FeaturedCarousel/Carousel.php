@@ -3,20 +3,24 @@ namespace FeaturedCarousel;
 
 class Carousel
 {
+    private $dataForDisplay;
+    
     public function __construct($dataForDisplay)
     {
-        if ( ! empty($dataForDisplay) ) {
-            $this->displayCarousel($dataForDisplay);            
-        }
+        if (empty($dataForDisplay) ) {
+            return false;            
+        }        
+        $this->dataForDisplay = $dataForDisplay;
+        
     }
     
-    private function displayCarousel($dataForDisplay)
+    public function display()
     {
         echo '<hr>';
         echo '<h1>Featured Brands</h1>';
         echo '<div class="flexslider">';
-            echo '<ul class="slides">';         
-                foreach($dataForDisplay as $singleBox) {
+            echo '<ul class="slides">';      
+                foreach($this->dataForDisplay as $singleBox) {
                     ?>
                     <li>
                         <div class='related-item ss_border'>
@@ -33,9 +37,10 @@ class Carousel
                     <?php
                 }
             echo '</div>'; // .slides
-        echo '</div>';  // .flexslider                
-    }  
-    
+        echo '</div>';  // .flexslider                   
+    }
+
+
     private function truncateDescription($singleBox)
     {
         if (strlen($singleBox['description']) > 180) {

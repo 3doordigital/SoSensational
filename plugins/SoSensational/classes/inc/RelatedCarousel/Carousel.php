@@ -3,26 +3,30 @@ namespace RelatedCarousel;
 
 class Carousel
 {
+    private $dataToDisplay;
+    private $currentCategory;
     
     public function __construct($dataToDisplay, $currentCategory)
     {
-        if ( ! empty($dataToDisplay) ) {
-            $this->displayCarousel($dataToDisplay, $currentCategory);
+        if (empty($dataToDisplay)) {
+            return false;
         }        
-    }
-    
-    private function displayCarousel($dataToDisplay, $currentCategory)
-    {
         
+        $this->dataToDisplay = $dataToDisplay;
+        $this->currentCategory = $currentCategory;
+    }    
+    
+    public function display()
+    {
         echo '<hr>';
 
-        if ( ! empty($dataToDisplay) ) {
-            echo "<h1>See More $currentCategory->name in Brands & Boutiques</h1>";          
+        if ( ! empty($this->dataToDisplay) ) {
+            echo '<h1>See More' . $this->currentCategory->name . 'in Brands & Boutiques</h1>';          
         }        
         
         echo '<div class="flexslider">';
             echo '<ul class="slides">';        
-                foreach ($dataToDisplay as $singleBox) {
+                foreach ($this->dataToDisplay as $singleBox) {
                     ?>
                     <li>
                         <div class='related-item ss_border'>

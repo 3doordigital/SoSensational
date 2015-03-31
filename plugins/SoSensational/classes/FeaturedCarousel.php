@@ -11,19 +11,16 @@ class FeaturedCarousel
     private $featuredAdvertisersIds = array();
     private $dataForDisplay = array();
     
-
-
-    
     public function __construct($currentCategory)
     {
         $this->currentCategory = $currentCategory;
-        $this->getAllFeaturedAdvertisers();
-        $this->getAllAdvertisersMetaData();
-        $this->getFeaturedAdvertisersInCurrentCategory();
-        $this->getDataForDisplay();                
+        $this->collectAllFeaturedAdvertisers();
+        $this->collectAllAdvertisersMetaData();
+        $this->collectFeaturedAdvertisersInCurrentCategory();
+        $this->collectDataForDisplay(); 
     }
     
-    private function getAllFeaturedAdvertisers()
+    private function collectAllFeaturedAdvertisers()
     {
         $args = array(
             'numberposts'   =>  -1,
@@ -35,14 +32,14 @@ class FeaturedCarousel
         
     }
     
-    private function getAllAdvertisersMetaData()
+    private function collectAllAdvertisersMetaData()
     {
         foreach ($this->allFeaturedAdvertisers as $featuredAdvertiser) {
             $this->metaData[$featuredAdvertiser->ID] = get_post_meta($featuredAdvertiser->ID, '_categories_featured', true);
         }                         
     }
     
-    private function getFeaturedAdvertisersInCurrentCategory()
+    private function collectFeaturedAdvertisersInCurrentCategory()
     {        
         
         if (!isset($this->metaData) || empty($this->metaData)) {
@@ -64,7 +61,7 @@ class FeaturedCarousel
         }    
     }
 
-    private function getDataForDisplay()
+    private function collectDataForDisplay()
     {        
         $ids = empty($this->featuredAdvertisersIds) ? array(0) : $this->featuredAdvertisersIds;
 
@@ -107,9 +104,9 @@ class FeaturedCarousel
         }     
     }
 
-    public function displayCarousel()
+    public function getCarousel()
     {
-        new FeaturedCarousel\Carousel($this->dataForDisplay);
+        return new FeaturedCarousel\Carousel($this->dataForDisplay);
     }
     
     

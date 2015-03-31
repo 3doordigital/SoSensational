@@ -9,14 +9,16 @@
 
 function displayRelatedAdvertisersCarousel($currentCategory)
 {
-    $carousel = new RelatedCarousel($currentCategory);
-    $carousel->displayCarousel();
+    $fcarousel = new RelatedCarousel($currentCategory);
+    $carousel = $fcarousel->getCarousel();
+    $carousel->display();
 }
 
 function displayFeaturedAdvertisers($currentCategory) 
 {
-    $carousel = new FeaturedCarousel($currentCategory);
-    $carousel->displayCarousel();
+    $fcarousel = new FeaturedCarousel($currentCategory);
+    $carousel = $fcarousel->getCarousel();
+    $carousel->display();
 }
 
 
