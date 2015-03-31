@@ -158,11 +158,12 @@ get_header();
                                 </div>
                             </div>
                             <div class="col-md-7">
-                                <select class="form-control">
-                                    <option>Sort by Price: Low to High</option>
-                                    <option>Sort by Price: High to Low</option>
-                                    <option>Sort by Name: A-Z</option>
-                                    <option>Sort by Name: Z-A</option>
+                                <select class="form-control" id="shop_sort">
+                                    <option value="price" <?php echo( !isset( $_REQUEST['sortby'] ) || $_REQUEST['sortby'] == 'priceasc' ? ' selected ' : '' ); ?>>Sort by Price: Low to High</option>
+                                    <option value="pricedesc" <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'pricedesc' ? ' selected ' : '' ); ?>>Sort by Price: High to Low</option>
+                                    <option value="sale" <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'sale' ? ' selected ' : '' ); ?>>Sale Items</option>
+                                    <option value="toppicks" <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'toppicks' ? ' selected ' : '' ); ?>>Top Picks</option>
+                                    <option value="new <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'new' ? ' selected ' : '' ); ?>">New Arrivals</option>
                                 </select>
                             </div>
                         </div>

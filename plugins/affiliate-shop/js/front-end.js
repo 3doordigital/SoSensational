@@ -22,17 +22,22 @@ jQuery(document).ready(function($) {
 		});
     });
     
-	$('.wp_aff_colours_select').change( function( event ) {
-		$('#wp_aff_colour_filter').submit();
-	});
-	
-	$('.wp_aff_sizes_select').change( function( event ) {
-		$('#wp_aff_size_filter').submit();
-	});
-	
 	$('.brand_check').change( function( event ) {
 		$('#wp_aff_brand_filter').submit();
 		console.log('in');
+	});
+	
+	$('#shop_sort').change( function( event ) {
+		event.preventDefault();
+		var thislink = $(this);
+		var data = {
+			'action' : 'sort_shop',
+			'sortby' : thislink.val(),
+			'redirect': window.location.href	
+		}	
+		$.post(ajax_object.ajax_url, data, function(response) {
+			window.location.assign(response);
+		});
 	});
 	
 	$(document).on( 'click', '.remove', function( event ) {
@@ -41,6 +46,7 @@ jQuery(document).ready(function($) {
 		var data = {
 			'action' : 'remove_facted_element',
 			'type' : thislink.attr('data-type'),
+			'term' : thislink.attr('data-term'),
 			'redirect': window.location.href	
 		}
 		$.post(ajax_object.ajax_url, data, function(response) {
@@ -77,8 +83,10 @@ jQuery(document).ready(function($) {
 		var id = $(this).attr('data-id');
 		if( $('.hide_check[data-id='+id+']').prop( 'checked') == true ) {
 			$('.hide_check[data-id='+id+']').prop('checked', false);
+			$('.hide_check[data-id='+id+']').attr('checked', false);
 		} else {
 			$('.hide_check[data-id='+id+']').prop('checked', true);
+			$('.hide_check[data-id='+id+']').attr('checked', true);
 		}
 		$('#wp_aff_colour_filter').submit();
 	});
@@ -88,8 +96,10 @@ jQuery(document).ready(function($) {
 		var id = $(this).attr('data-id');
 		if( $('.hide_check[data-id='+id+']').prop( 'checked') == true ) {
 			$('.hide_check[data-id='+id+']').prop('checked', false);
+			$('.hide_check[data-id='+id+']').attr('checked', false);
 		} else {
 			$('.hide_check[data-id='+id+']').prop('checked', true);
+			$('.hide_check[data-id='+id+']').attr('checked', true);
 		}
 		$('#wp_aff_size_filter').submit();
 	});
