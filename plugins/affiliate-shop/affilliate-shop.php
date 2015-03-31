@@ -257,6 +257,7 @@ class WordPress_Affiliate_Shop {
         register_widget( 'aff_colour_widget' );
         register_widget( 'aff_size_widget' );
         register_widget( 'aff_active_widget' );
+		register_widget( 'aff_sale_widget' );
     }
     
     public function custom_rewrite_rule() {

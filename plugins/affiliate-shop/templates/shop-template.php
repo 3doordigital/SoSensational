@@ -121,29 +121,31 @@ get_header();
             <div class="products">
                 <?php
                     global $wp_aff;
+					global $paged;
 					$args = $wp_aff->shop_args();
 					//print_var($args);
 					$per_page = $args['posts_per_page'];
 					$query = new WP_Query( $args );
-                    if( $paged == 1 ) {
+					//print_var($query);
+                    if( $args['paged'] == 1 || !isset( $args['paged'] ) ) {
                         $start = '1';
                     } else {
-                        $start = ( ( $paged - 1 ) * $per_page ) + 1;
+                        $start = ( ( $args['paged'] - 1 ) * $per_page ) + 1;
                     }
                     if( $per_page == -1 ) {
                         $end = $query->post_count;
                     } else {
-                        $end = $paged * $per_page;
+                        $end = $args['paged'] * $per_page;
                     }
                     ?>
                         <div id="product_filter" class="row">
                             <div class="col-md-17">
                                 <div id="product_count" class="col-md-12">
                     <?php
-                    if( $query->post_count == 0 ) { 
+                    if( $query->found_posts == 0 ) { 
                         echo 'No Products';
-                    } elseif( $query->post_count != 0 && $query->post_count < 12 ) {
-                        echo 'Viewing '.$start.' - '.$query->post_count.' of '.$query->post_count.' Products';
+                    } elseif( $query->found_posts != 0 && $query->found_posts < 12 ) {
+                        echo 'Viewing '.$start.' - '.$query->found_posts.' of '.$query->found_posts.' Products';
                     } else {
                         echo 'Viewing '.$start.' - '.$end.' of '.$query->found_posts.' Products';
                     }
@@ -154,16 +156,17 @@ get_header();
                                     <?php
                                         $url18 = add_query_arg( 'per_page', 18, $_SERVER['REQUEST_URI'] );
                                     ?>
-                                    View: <a href="<?php echo add_query_arg( 'per_page', 18, $_SERVER['REQUEST_URI'] ); ?>">18</a>/<a href="<?php echo add_query_arg( 'per_page', 36, $_SERVER['REQUEST_URI'] ); ?>">36</a>/<a href="<?php echo add_query_arg( 'per_page', 'all', $_SERVER['REQUEST_URI'] ); ?>">ALL</a>
+                                    View: 
+                                    <?php if( $query->found_posts >= 18 ) { ?><a href="<?php echo add_query_arg( 'per_page', 18, $_SERVER['REQUEST_URI'] ); ?>">18</a> /<?php } ?>
+                                    <?php if( $query->found_posts >= 36 ) { ?><a href="<?php echo add_query_arg( 'per_page', 36, $_SERVER['REQUEST_URI'] ); ?>">36</a> /<?php } ?>
+                                    <a href="<?php echo add_query_arg( 'per_page', 'all', $_SERVER['REQUEST_URI'] ); ?>">ALL</a>
                                 </div>
                             </div>
                             <div class="col-md-7">
                                 <select class="form-control" id="shop_sort">
                                     <option value="priceasc" <?php echo( !isset( $_REQUEST['sortby'] ) || $_REQUEST['sortby'] == 'priceasc' ? ' selected ' : '' ); ?>>Sort by Price: Low to High</option>
                                     <option value="pricedesc" <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'pricedesc' ? ' selected ' : '' ); ?>>Sort by Price: High to Low</option>
-                                    <option value="sale" <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'sale' ? ' selected ' : '' ); ?>>Sale Items</option>
-                                    <option value="toppicks" <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'toppicks' ? ' selected ' : '' ); ?>>Top Picks</option>
-                                    <option value="new <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'new' ? ' selected ' : '' ); ?>">New Arrivals</option>
+                                    
                                 </select>
                             </div>
                         </div>
@@ -200,7 +203,7 @@ get_header();
                                         </div>
                                   </div>';
                         $i++;
-                        if($i == 3) {
+                        if($i == 3 || $i == $query->found_posts) {
                             echo '</div>';
                             $i = 0;
                         }
