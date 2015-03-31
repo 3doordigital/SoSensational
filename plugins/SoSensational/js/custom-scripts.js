@@ -185,26 +185,11 @@ jQuery(document).ready(function($) {
      Preview functionality on advertiser edit page
      -------------------------------------------------------------------------*/ 
     
-    
-    $('#ajax-preview').click(function(e) {
-                
-        var formData =  $('#advertiser-edit-form').serializeArray();
-        
-        /* Pass another key/value pair for a later AJAX check in the script */
-        formData.push({name: 'ajaxPreview', value: true});
-        
-        $.ajax({
-           type: 'post' ,
-           url: "../wp-content/plugins/SoSensational/web/edit-advertiser-action.php",
-           data: formData,
-           success: function(data, status, jqXHR) {
-                previewURL = data;
-                $('#ajax-preview').attr('href', previewURL);       
-           }           
-        });        
-    });
-    
-    $('#ajax-preview').one('mouseover', function(e) {
+    /**
+     * Ajax call to a save routine is triggered on mouseover in order to save
+     * data before a 'Preview' link is clicked.
+     */  
+    $('#ajax-preview').on('mouseover', function(e) {
         var formData =  $('#advertiser-edit-form').serializeArray();
         
         /* Pass another key/value pair for a later AJAX check in the script */

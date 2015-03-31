@@ -305,11 +305,12 @@ $attachments = get_posts( array(
     <?php endforeach;?>
     
      </div>
- <hr />
+    <hr/>
     </p>
-    <button type="submit" name="update" class="button_ss_small btn ">Update Your Details</button>
-    <a  name="preview" id="ajax-preview" class="button_ss_small btn" target="_blank">Preview Changes</a>
-
+        <div class="form-buttons-group clearfix">
+            <button type="submit" name="update" class="button_ss_small btn pull-left">Update Your Details</button>
+            <a  name="preview" id="ajax-preview" class="preview-anchor-text" target="_blank">Preview Your Listing</a>
+        </div>
     </form>
     <br /><br />
     <nav>
