@@ -408,7 +408,7 @@ class aff_size_widget extends WP_Widget {
 					}
 				}
 				echo '<div class="'. ( $checked > 0 ? 'col-sel ' : '' ).'size_filter">';
-				echo '<a href="'.$_SERVER['REQUEST_URI'].'" data-id="'.$size->term_id.'">'.$size->name.'</a>';
+				echo '<a href="'.$_SERVER['REQUEST_URI'].'" data-id="'.$size->term_id.'">'.ltrim( $size->name, '0' ).'</a>';
 				echo '<input type="checkbox" '.( $checked > 0 ? 'checked' : '' ).' data-id="'.$size->term_id.'" name="wp_aff_sizes[]" class="hide_check" value="'.$size->term_id.'">';
 				echo '</div>';
 			}
@@ -473,57 +473,58 @@ class aff_active_widget extends WP_Widget {
         if ( ! empty( $instance['title'] ) ) {
             echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
         } 
-        
+        $output = '';
         if( isset( $wp_query->query_vars['shop-cat'] ) ) {
             $term = get_term_by( 'slug', $wp_query->query_vars['shop-cat'], 'wp_aff_categories' );
+			//print_var($term);
             $cat_id = $term->term_id;
             $term_title = 'Category';
-			echo '<h4>Category</h4>';
-			echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->term_id.'" data-type="brand">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';
+			$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->slug.'" data-type="category">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';
         } elseif( isset( $wp_query->query_vars['shop-brand'] ) ) {
             $term = get_term_by( 'slug', $wp_query->query_vars['shop-brand'], 'wp_aff_brands' );
             $cat_id = $term->term_id;
             $term_title = 'Brand';
-			echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->term_id.'" data-type="brand">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';
+			$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->term_id.'" data-type="brand">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';
         } 
 		if ( isset ( $_REQUEST['brand'] ) ) {
-			echo '<h4>Brands</h4>';
 			$brands = explode( ',' , $_REQUEST['brand'] );
 			foreach( $brands as $brand ) {
 				$term = get_term_by( 'slug', $brand, 'wp_aff_brands' );
 				$cat_id = $term->term_id;
 				$term_title = 'Brand';
-				echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->term_id.'" data-type="brand">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';  
+				$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->term_id.'" data-type="brand">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';  
 			} 
 		} 
 		if ( isset( $_REQUEST['category'] ) ) {
-			echo '<h4>Category</h4>';
 			$category = get_term_by( 'slug', $_REQUEST['category'], 'wp_aff_categories' );
-			echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$category->term_id.'" data-type="category">'.$category->name.' <i class="fa fa-times-circle pull-right"></i> </a>'; 
+			$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$category->term_id.'" data-type="category">'.$category->name.' <i class="fa fa-times-circle pull-right"></i> </a>'; 
 		}
 		
 		if( isset( $_REQUEST['size'] ) && $_REQUEST['size'] != -1 ) {
-			echo '<h4>Sizes</h4>';
 			$sizes = explode(',', $_REQUEST['size'] );
 			foreach( $sizes as $size ) {
 				$size = get_term_by( 'id', $size, 'wp_aff_sizes' );
-				echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$size->term_id.'" data-type="size">'.$size->name.' <i class="fa fa-times-circle pull-right"></i> </a>';  
+				$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$size->term_id.'" data-type="size">'.$size->name.' <i class="fa fa-times-circle pull-right"></i> </a>';  
 			}
 		}
 		
 		if( isset( $_REQUEST['colour'] ) && $_REQUEST['colour'] != -1 ) {
-			echo '<h4>Colours</h4>';
 			$sizes = explode(',', $_REQUEST['colour'] );
 			foreach( $sizes as $size ) {
 				$size = get_term_by( 'id', $size, 'wp_aff_colours' );
-				echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$size->term_id.'" data-type="colour">'.$size->name.' <i class="fa fa-times-circle pull-right"></i> </a>';  
+				$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$size->term_id.'" data-type="colour">'.$size->name.' <i class="fa fa-times-circle pull-right"></i> </a>';  
 			}
 		}
 		
 		if( isset( $_REQUEST['price-min'] ) && isset( $_REQUEST['price-max'] ) ) {
-			echo '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-type="price">£'.$_REQUEST['price-min'].' - £'.$_REQUEST['price-max'].' <i class="fa fa-times-circle pull-right"></i></a>';   
+			$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-type="price">£'.$_REQUEST['price-min'].' - £'.$_REQUEST['price-max'].' <i class="fa fa-times-circle pull-right"></i></a>';   
 		}
-		
+			if( $output != '' ) {
+				echo $output;
+				echo '<a href="/shop/" class="btn btn-default">Clear All Filters</a>';
+			} else {
+				echo '<p>No filters selected.</p>';	
+			}
         echo $args['after_widget'];
     }
 

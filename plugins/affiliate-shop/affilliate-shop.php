@@ -90,6 +90,8 @@ class WordPress_Affiliate_Shop {
 		add_action( 'wp_ajax_nopriv_remove_facted_element', array( $this, 'remove_facted_element' ) );
         add_action( 'wp_ajax_remove_facted_element', array( $this, 'remove_facted_element' ) );
         
+		add_action( 'wp_ajax_nopriv_sort_shop', array( $this, 'sort_shop' ) );
+        add_action( 'wp_ajax_sort_shop', array( $this, 'sort_shop' ) );
         
         add_action( 'widgets_init', array( $this, 'register_widgets' ) );
         
@@ -563,6 +565,34 @@ class WordPress_Affiliate_Shop {
 							);
 						}
                     }
+				if( isset( $_REQUEST['sortby'] ) ) {
+					switch ( $_REQUEST['sortby'] ) {
+						case 'priceasc' :
+							$args['meta_key'] 	= 'wp_aff_product_price';
+							$args['orderby']	= 'meta_value_num';
+            				$args['order'] 		= 'ASC';
+							break;
+						case 'pricedesc' :
+							$args['meta_key'] 	= 'wp_aff_product_price';
+							$args['orderby']	= 'meta_value_num';
+            				$args['order'] 		= 'DESC';
+							break;
+						case 'sale' :
+						
+							break;
+						case 'toppicks' :
+						
+							break;
+						case 'new' :
+							$args['orderby']	= 'date';
+            				$args['order'] 		= 'DESC';
+							break;	
+					}
+				} else {
+					$args['meta_key'] 	= 'wp_aff_product_price';
+					$args['orderby']	= 'meta_value_num';
+            		$args['order'] 		= 'ASC';
+				}
 				return $args;
 	}
 	
@@ -594,8 +624,10 @@ class WordPress_Affiliate_Shop {
 	}
 	
 	public function wp_aff_size_filter() {
+		print_var( $_POST );
 		if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_size_filter' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
+		$sizes = array();
 		if( is_array( $_REQUEST['wp_aff_sizes'] ) ) {
 			$sizes = $_REQUEST['wp_aff_sizes'];	
 		} else {
@@ -603,18 +635,16 @@ class WordPress_Affiliate_Shop {
 		}
 		
 		$url = preg_replace( '#page/([0-9]+)/#', '', $_REQUEST['_wp_http_referer'] );	
-		
+		$url = str_replace( '%2C', ',', $url);
 		if( empty( $sizes[0] ) ) {
 			$url = remove_query_arg( 'size', $url );
 		} else {
+			$sizes = array_unique( $sizes );
 			$sizes = implode( $sizes, ',' );
 			$url = add_query_arg( 'size', $sizes, $url );
 		}
-		
-		$sizes = array_unique( $sizes );
-		$sizes = implode( $sizes, ',' );
-		
-		$url = add_query_arg( 'size', $sizes, $url );
+		$url = str_replace( '%2C', ',', $url);
+		echo $url;
 		wp_safe_redirect( $url );
 	}
 	
@@ -639,6 +669,7 @@ class WordPress_Affiliate_Shop {
 		
 		
 		$url = add_query_arg( 'colour', $colours, $url );
+		$url = str_replace( '%2C', ',', $url);
 		wp_safe_redirect( $url );
 	}
 	
@@ -648,6 +679,7 @@ class WordPress_Affiliate_Shop {
 		$url = preg_replace( '#page/([0-9]+)/#', '', $_REQUEST['_wp_http_referer'] );
 		$url = add_query_arg( 'price-min', $_REQUEST['price-min'], $url );
 		$url = add_query_arg( 'price-max', $_REQUEST['price-max'], $url );
+		$url = str_replace( '%2C', ',', $url);
 		wp_safe_redirect( $url );
 	}
 	
@@ -668,16 +700,29 @@ class WordPress_Affiliate_Shop {
 			$brands = implode( $brands, ',' );
 			$url = add_query_arg( 'brand', $brands, $url );
 		}
+		$url = str_replace( '%2C', ',', $url);
 		wp_safe_redirect( $url );
 	}
 	
+	public function sort_shop() {
+		$url = preg_replace( '#page/([0-9]+)/#', '', $_REQUEST['redirect'] );
+		$url = add_query_arg( 'sortby', $_REQUEST['sortby'], $url );
+		$url = str_replace( '%2C', ',', $url);
+		echo $url;
+		die();
+	}
+		
 	public function remove_facted_element() {
+		global $wp_query;
 		if( $_REQUEST['type'] == 'price' ) {
 			$url = remove_query_arg( 'price-min', $_REQUEST['redirect'] );
 			$url = remove_query_arg( 'price-max', $url );
+		} elseif( $_REQUEST['type'] == 'category' && !isset( $_REQUEST['category'] ) ) {
+			$url = str_replace( $_REQUEST['term'].'/', '', $_REQUEST['redirect'] );
 		} else {
 			$url = remove_query_arg( $_REQUEST['type'], $_REQUEST['redirect'] );
 		}
+		
 		echo $url;
 		die();	
 	}

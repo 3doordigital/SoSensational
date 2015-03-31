@@ -175,7 +175,7 @@
 	visibility:hidden;
 	position: absolute;
 }
-.colour_filter.col-sel {
+.col-sel {
 	background-color: #aaa;
 }
 .products img {
