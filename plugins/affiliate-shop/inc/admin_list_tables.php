@@ -786,7 +786,12 @@ class AllProductTable extends WP_List_Table {
             /*$1%s*/ $item['img']  //Let's simply repurpose the table's singular label ("movie")
         ); 
     }
-
+	function column_stickers( $item ) {
+		$output = '<a href=""><i class="fa fa-shopping-cart fa-fw fa-lg"></i></a> ';
+		$output .= '<a href="" class="active"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
+		$output .= '<a href=""><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+		return $output;
+	}
     function column_desc($item) {
         if(strlen($item['desc']) < 100) {
             return $item['desc'];
@@ -807,6 +812,7 @@ class AllProductTable extends WP_List_Table {
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
             'img'     => 'Image',
             'title'     => 'Title',
+			'stickers'	=> '',
             'brands'     => 'Brand',
             'colours'     => 'Colours',
             'sizes'     => 'Sizes',

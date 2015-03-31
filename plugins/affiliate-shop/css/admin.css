@@ -59,3 +59,16 @@
 .categorychecklist a {
 	text-decoration:none
 }
+.widefat td.column-stickers {
+	vertical-align: top;
+	text-align: center;	
+}
+.column-stickers a i {
+	color: #bbb;	
+}
+.column-stickers a:hover i {
+	color: #666;	
+}
+.column-stickers a.active i {
+	color: #0074a2;	
+}
