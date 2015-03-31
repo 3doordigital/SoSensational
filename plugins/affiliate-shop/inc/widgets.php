@@ -479,7 +479,6 @@ class aff_active_widget extends WP_Widget {
 			//print_var($term);
             $cat_id = $term->term_id;
             $term_title = 'Category';
-			$output .= '<h4>Category</h4>';
 			$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->slug.'" data-type="category">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';
         } elseif( isset( $wp_query->query_vars['shop-brand'] ) ) {
             $term = get_term_by( 'slug', $wp_query->query_vars['shop-brand'], 'wp_aff_brands' );
@@ -488,7 +487,6 @@ class aff_active_widget extends WP_Widget {
 			$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$term->term_id.'" data-type="brand">'.$term->name.' <i class="fa fa-times-circle pull-right"></i> </a>';
         } 
 		if ( isset ( $_REQUEST['brand'] ) ) {
-			$output .= '<h4>Brands</h4>';
 			$brands = explode( ',' , $_REQUEST['brand'] );
 			foreach( $brands as $brand ) {
 				$term = get_term_by( 'slug', $brand, 'wp_aff_brands' );
@@ -498,13 +496,11 @@ class aff_active_widget extends WP_Widget {
 			} 
 		} 
 		if ( isset( $_REQUEST['category'] ) ) {
-			$output .= '<h4>Category</h4>';
 			$category = get_term_by( 'slug', $_REQUEST['category'], 'wp_aff_categories' );
 			$output .= '<a href="'.$_SERVER['REQUEST_URI'].'" class="btn btn-default remove filter" data-term="'.$category->term_id.'" data-type="category">'.$category->name.' <i class="fa fa-times-circle pull-right"></i> </a>'; 
 		}
 		
 		if( isset( $_REQUEST['size'] ) && $_REQUEST['size'] != -1 ) {
-			$output .= '<h4>Sizes</h4>';
 			$sizes = explode(',', $_REQUEST['size'] );
 			foreach( $sizes as $size ) {
 				$size = get_term_by( 'id', $size, 'wp_aff_sizes' );
@@ -513,7 +509,6 @@ class aff_active_widget extends WP_Widget {
 		}
 		
 		if( isset( $_REQUEST['colour'] ) && $_REQUEST['colour'] != -1 ) {
-			$output .= '<h4>Colours</h4>';
 			$sizes = explode(',', $_REQUEST['colour'] );
 			foreach( $sizes as $size ) {
 				$size = get_term_by( 'id', $size, 'wp_aff_colours' );
