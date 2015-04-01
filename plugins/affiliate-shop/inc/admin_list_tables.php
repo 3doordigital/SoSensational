@@ -130,6 +130,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 			'cb'          => '<input type="checkbox" />',
 			'name'        => _x( 'Name', 'term name' ),
 			'slug'        => __( 'Slug' ),
+			'alias'		  => __( 'Alias' ),
             'posts'       => _x( 'Products', 'Number/count of items' )
 		);
 
@@ -140,6 +141,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 		return array(
 			'name'        => 'name',
 			'slug'        => 'slug',
+			'alias'		  => 'alias',
 			'posts'       => 'count'
         );
 	}
@@ -346,6 +348,9 @@ class WP_Terms_List_Tables extends WP_List_Table {
 		return '&nbsp;';
 	}
 
+	public function column_alias( $tag ) {
+		print_var( $tag );	
+	}
 	/**
 	 * @param object $tag
 	 * @return string
@@ -868,6 +873,31 @@ class AllProductTable extends WP_List_Table {
                 <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 2 ? ' selected ' : '' ); ?> value="2">Manual Products</option>
             </select>
           
+        </div>
+        <div class="alignleft actions bulkactions">
+        
+            <select name="prod_type_filter" class="prod_type_filter">
+                <option <?php echo ( !isset( $_GET['prod_type'] ) || $_GET['prod_type'] == 0 ? ' selected ' : '' ); ?> value="0">All Categories</option>
+                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 1 ? ' selected ' : '' ); ?> value="1">Affiliate Feed Products</option>
+                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 2 ? ' selected ' : '' ); ?> value="2">Manual Products</option>
+            </select>
+          
+        </div>
+        <div class="alignleft actions bulkactions">
+        
+            <select name="prod_type_filter" class="prod_type_filter">
+                <option <?php echo ( !isset( $_GET['prod_type'] ) || $_GET['prod_type'] == 0 ? ' selected ' : '' ); ?> value="0">All Brands</option>
+                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 1 ? ' selected ' : '' ); ?> value="1">Affiliate Feed Products</option>
+                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 2 ? ' selected ' : '' ); ?> value="2">Manual Products</option>
+            </select>
+          
+        </div>
+        <div class="alignleft actions bulkactions">
+        <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="get">
+            <input type="text" placeholder="Search" class="prod_search_filter" /> <button type="submit" class="prod_search_filter_sub button button-secondary">Search</button>
+            <input type="hidden" value="wp_aff_add_category" name="action" />
+            <?php wp_nonce_field( 'wp_aff_add_category', '_wpnonce', TRUE ); ?>
+        </form>  
         </div>
         <?php
     }
