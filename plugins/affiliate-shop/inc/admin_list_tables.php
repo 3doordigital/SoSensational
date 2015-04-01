@@ -353,7 +353,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 		if( $alias = get_term_by( 'id', $tag->term_group, $this->screen->taxonomy ) ) {
 			return $alias->name;
 		} else {
-			return 'None';	
+			return '';	
 		}
 		
 	}
