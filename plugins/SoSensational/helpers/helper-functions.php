@@ -122,3 +122,22 @@ function removeCategoryPostOnCategoryUnselect($post_id, $add_cats)
         }
     }    
 }
+
+/**
+ * Append 'ss_cat_priority' key to each category. Then sort the categories
+ * from highest to lowest by the value of 'ss_cat_priority'
+ */
+function sortCategoriesByPriority($categories)
+{
+    foreach($categories as $singleCategory) {
+        $singleCategoriesMeta = get_option( "taxonomy_$singleCategory->term_id" );
+        $priority = isset($singleCategoriesMeta['ss_cat_priority']) ? $singleCategoriesMeta['ss_cat_priority'] : 20;
+        $singleCategory->ss_cat_priority = $priority;
+        $categoriesWithPriority[] = $singleCategory;
+    }    
+    usort($categoriesWithPriority, function($a, $b) {
+       return $a->ss_cat_priority - $b->ss_cat_priority;
+    });   
+    
+    return $categoriesWithPriority;
+}
