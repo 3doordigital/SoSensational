@@ -359,8 +359,8 @@ class WordPress_Affiliate_Shop {
             'labels'             => $labels,
             'public'             => false,
             'publicly_queryable' => true,
-            'show_ui'            => true,
-            'show_in_menu'       => true,
+            'show_ui'            => false,
+            'show_in_menu'       => false,
             'query_var'          => true,
             'rewrite'            => array( 'slug' => 'products' ),
             'capability_type'    => 'post',
@@ -892,6 +892,16 @@ class WordPress_Affiliate_Shop {
         
             if( $term['alias'] == -1 ) {
                 $termarray = wp_insert_term( $term['name'], 'wp_aff_categories', $args = array( 'slug' => $term['slug'], 'description' => $term['desc'], 'parent' => $term['parent'] ) );
+				global $wpdb;
+                $wpdb->query( $wpdb->prepare(
+                    "
+                    UPDATE $wpdb->terms 
+                    SET term_group = %d
+                    WHERE term_id = %d 
+                    ",
+                    0,
+                    $termarray['term_id']
+                ) );
             } else {
                 $alias = get_term( $term['alias'], 'wp_aff_categories');
                 $term['alias'] = $alias->slug;
@@ -903,7 +913,7 @@ class WordPress_Affiliate_Shop {
                 $wpdb->query( $wpdb->prepare(
                     "
                     UPDATE $wpdb->terms 
-                    SET term_group = %s
+                    SET term_group = %d
                     WHERE term_id = %d 
                     ",
                     $term['alias_id'],
@@ -979,7 +989,7 @@ class WordPress_Affiliate_Shop {
                 $wpdb->query( $wpdb->prepare(
                     "
                     UPDATE $wpdb->terms 
-                    SET term_group = %s
+                    SET term_group = %d
                     WHERE term_id = %d 
                     ",
                     0,
@@ -994,7 +1004,7 @@ class WordPress_Affiliate_Shop {
                 $wpdb->query( $wpdb->prepare(
                     "
                     UPDATE $wpdb->terms 
-                    SET term_group = %s
+                    SET term_group = %d
                     WHERE term_id = %d 
                     ",
                     $term['alias_id'],
@@ -1060,7 +1070,7 @@ class WordPress_Affiliate_Shop {
                 </tr>
                 <tr>
                 	<th>Price</th>
-                    <td><input class="regular-text" type="number" min="0" name="product_price" placeholder="0.00" value=""><p class="description">&pound; sign not needed.</p></td>
+                    <td><input class="regular-text" type="number" min="0" step="any" name="product_price" placeholder="0.00" value=""><p class="description">&pound; sign not needed.</p></td>
                 </tr>
                 <tr>
                 	<th>Description</th>
@@ -1889,7 +1899,7 @@ class WordPress_Affiliate_Shop {
                         </tr>
                         <tr>
                             <th>Price</th>
-                            <td><input class="regular-text" type="number" min="0" name="product_price" placeholder="0.00" value="<?php echo number_format( $meta['wp_aff_product_price'][0], 2); ?>"><p class="description">&pound; sign not needed.</p></td>
+                            <td><input class="regular-text" type="number" step="any" min="0" name="product_price" placeholder="0.00" value="<?php echo number_format( $meta['wp_aff_product_price'][0], 2); ?>"><p class="description">&pound; sign not needed.</p></td>
                         </tr>
                         <tr>
                             <th>Description</th>
