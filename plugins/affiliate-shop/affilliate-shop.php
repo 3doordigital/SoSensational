@@ -348,14 +348,7 @@ class WordPress_Affiliate_Shop {
             . $this->msg_text . '</p></div>';
     }
     public function register_post_type() {
-        global $wpdb;
-                $wpdb->query( $wpdb->prepare(
-                    "
-                    UPDATE $wpdb->terms 
-                    SET term_group = %d
-                    ",
-                    0
-                ) );
+        
         session_start();
         
         $labels = array(

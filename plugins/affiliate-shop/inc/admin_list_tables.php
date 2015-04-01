@@ -130,7 +130,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 			'cb'          => '<input type="checkbox" />',
 			'name'        => _x( 'Name', 'term name' ),
 			'slug'        => __( 'Slug' ),
-			'alias'		  => __( 'Alias' ),
+			'alias'		  => __( 'Alias of' ),
             'posts'       => _x( 'Products', 'Number/count of items' )
 		);
 
@@ -349,7 +349,13 @@ class WP_Terms_List_Tables extends WP_List_Table {
 	}
 
 	public function column_alias( $tag ) {
-		print_var( $tag );	
+		//print_var( $tag );
+		if( $alias = get_term_by( 'id', $tag->term_group, $this->screen->taxonomy ) ) {
+			return $alias->name;
+		} else {
+			return 'None';	
+		}
+		
 	}
 	/**
 	 * @param object $tag
