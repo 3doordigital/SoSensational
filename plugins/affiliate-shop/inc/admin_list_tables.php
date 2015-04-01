@@ -29,6 +29,8 @@ class WP_Terms_List_Tables extends WP_List_Table {
 		) );
         $this->screen->taxonomy = $args['taxonomy'];
         $this->screen->post_type = 'wp_aff_products';
+		
+		$this->out = array();
 		$action    = $this->screen->action;
 		$post_type = $this->screen->post_type;
 		$taxonomy  = $this->screen->taxonomy;
@@ -347,11 +349,29 @@ class WP_Terms_List_Tables extends WP_List_Table {
 
 		return '&nbsp;';
 	}
-
+	public function rec_parent( $tag ) {
+		//$this->out[] = $tag->name;
+		//print_var($tag);
+		if( $tag->parent != 0 ) {
+			$parent = get_term_by( 'id', $tag->parent, $this->screen->taxonomy );
+			//print_var($parent);
+			$this->out[] = $parent->name.' &raquo; ';
+			if( $parent->parent != 0 ) {
+				$this->rec_parent( $parent );	
+			}
+		}
+		return $this->out;
+	}
 	public function column_alias( $tag ) {
 		//print_var( $tag );
+		$this->out = array();
 		if( $alias = get_term_by( 'id', $tag->term_group, $this->screen->taxonomy ) ) {
-			return $alias->name;
+			
+			$out = $this->rec_parent( $alias );
+			
+			$out = array_reverse( $out );
+			$out[] = $alias->name;
+			return implode( '', $out );
 		} else {
 			return '';	
 		}
