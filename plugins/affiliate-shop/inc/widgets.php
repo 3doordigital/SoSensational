@@ -110,7 +110,7 @@ class aff_brand_widget extends WP_Widget {
         }
 		
 		global $wp_aff;
-        //$fn_include = $wp_aff->get_product_terms('wp_aff_brands');
+        $fn_include = $wp_aff->get_product_terms('wp_aff_brands');
 		
         echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_brand_filter" method="POST">';
         echo '<div class="wp_aff_brands"><ul>';
