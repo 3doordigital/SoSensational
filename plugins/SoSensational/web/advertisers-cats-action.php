@@ -42,48 +42,33 @@ function upload_user_file( $file = array() ) {
       }
 
       return false;
-} //end function
-
-//$advertiserID=$advertiser[0]->ID;
-
-//$countProducts= $wpdb->get_results("SELECT count(ID) as num FROM `{$wpdb->posts}` WHERE post_parent='{$advertiserID}' and post_type='advertisers_cats'",OBJECT);
-//if($countProducts[0]->num < get_option('ss_product_number')):
+} 
 
   $image_video_id = upload_user_file( $_FILES['upload_advertisers_cats_image']);
 	
-
   $post1=array(
     'post_title' => $advertiser[0]->post_title,
-  //  'post_title' => "title",
     'post_type' => 'advertisers_cats',
     'post_status' => 'pending',
     'post_parent' => $advertiser[0]->ID,
     'post_author' => $user->ID,
     );
 
-  if(isset($_POST['advertisers_cats_id']) && (!empty($_POST['advertisers_cats_id']) && ($_POST['ss_action']=='edit'))){
-      $post_id=$_POST['advertisers_cats_id']; 
-	  $post1['ID'] = $post_id;
-      wp_update_post($post1);
-	
-  }elseif (isset($_POST['advertisers_cats_id']) && (!empty($_POST['advertisers_cats_id']) && ($_POST['ss_action']=='delete'))) {
-      $post_id=$_POST['advertisers_cats_id'];
-      wp_delete_post($post_id);
-  }else{
-    $post_id=wp_insert_post($post1,$wp_error);
-  }
+    if(isset($_POST['advertisers_cats_id']) && (!empty($_POST['advertisers_cats_id']) && ($_POST['ss_action'] == 'edit'))){
+        $post_id=$_POST['advertisers_cats_id']; 
+        $post1['ID'] = $post_id;
+        wp_update_post($post1);	
+    } elseif (isset($_POST['advertisers_cats_id']) && (!empty($_POST['advertisers_cats_id']) && ($_POST['ss_action']=='delete'))) {
+        $post_id=$_POST['advertisers_cats_id'];
+        wp_delete_post($post_id);
+    } else {
+        $post_id = wp_insert_post($post1,$wp_error);
+    }
+        $term = get_term((int)$_POST['advertiser_category_id'], 'ss_category' );
+        $add_cats[]=(int)$_POST['advertiser_category_id'];
 
 
-   // foreach($_POST['advertiser_category'] as $key=>$value){
-		   $term = get_term((int)$_POST['advertiser_category_id'], 'ss_category' );
-          $add_cats[]=(int)$_POST['advertiser_category_id'];
-       //   if($term->parent){
-        //    $add_cats[]=(int)$term->parent;
-        //  }
-    //}
-
- $check = wp_set_post_terms($post_id,$_POST['advertiser_category_id'],'ss_category');
-
+ $check = wp_set_post_terms($post_id, $_POST['advertiser_category_id'],'ss_category');
 
   foreach($_POST['sosensational_options'] as $key=>$value)
       {

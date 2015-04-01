@@ -1,7 +1,7 @@
 <?php 
 do_action('ss_css');
 
-$currentUriWithoutQuery= parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$currentUriWithoutQuery = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $cat_params = array( 'width' => 367, 'height' => 240, 'crop' => true ); 
 
 global $wpdb;
@@ -38,7 +38,6 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
     ON wpt.term_id=wptt.term_id
     WHERE wptt.taxonomy='ss_category' ", OBJECT);     
 
-
 ?>
   <div class="row">
         <?php 
@@ -49,11 +48,10 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
         samo stavis link na taj page i dodas ?ss_cat_id=$category->term_id
         */
             if($category->parent==$category_id):?>
-
                  <div class="col-md-8 fadebox showme animated fadeIn" style="visibility: visible;">
                     <?php $children = get_term_children($category->term_id, get_query_var('taxonomy')); // get children 
                           $term_meta = get_option( "taxonomy_$category->term_id" );                          
-?>
+                    ?>
                         <a href="<?php echo get_site_url().'/brands-and-boutiques/'. $ss_cat . '/' . $category->slug.'/'; ?>" class="aHolderImgSS">
                             <img  src="<?php echo $term_meta['ss_cat_image']; ?>" class="img-responsive" />
                               <div class="<?php if($counterColor % 2): echo 'whitebar ss_whitebar'; else: echo 'blackbar ss_blackbar'; endif; ?>" style="display:block">
@@ -96,10 +94,6 @@ if(isset($_GET['p_type'])){
 	$users = $user_query->get_results();
 
 }
-
-
-
-
 
 if(empty($mainChildren)):
 
@@ -171,8 +165,6 @@ var pbd_alp = {"startPage":"1","maxPages":"<?php echo $max; ?>","nextLink":"<?ph
 <?php
 $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$my_query->post->post_author}' ", OBJECT );
 $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
-// echo "<pre>"; print_r($advertiser); echo "</pre>"; 
-
 ?>
 
                             <a href="<?php echo get_site_url().'/brands-and-boutiques/' . $post_name; ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>" class="aHolderImgSS">

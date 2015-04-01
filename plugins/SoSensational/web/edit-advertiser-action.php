@@ -61,11 +61,10 @@ function upload_user_file( $file = array() ) {
         if(!empty($_FILES['upload_logo'])){
           $logo_id = upload_user_file( $_FILES['upload_logo']);
 		  
-	        if($logo_id){
-    	        $logo=get_post_meta($logo_id);  
-				// Inserted to overwrite
-				$logo =  wp_get_attachment_image_src( $logo_id, 'ss_image' ) ;  
-   		     }
+	        if($logo_id) {
+                    $logo = get_post_meta($logo_id);  
+                    $logo = wp_get_attachment_image_src( $logo_id, 'ss_image' );  
+   		 }
 
         }
         if(!empty($_FILES['upload_image_video'])){
@@ -78,73 +77,63 @@ function upload_user_file( $file = array() ) {
 
 
 
-    $no_of_cats=count(isset($_POST['advertiser_category']) ? $_POST['advertiser_category'] : 0);
-    $cats_good=false;
-//	echo $options['ss_categories_per_brand'];
+    $no_of_cats = count(isset($_POST['advertiser_category']) ? $_POST['advertiser_category'] : 0);
+    $cats_good = false;
 	
-    if($post_type=='boutiques'){
-       if($no_of_cats<=$options['ss_categories_per_boutique']){
-         $cats_good=true;
+    if($post_type == 'boutiques'){
+       if($no_of_cats <= $options['ss_categories_per_boutique']){
+         $cats_good = true;
        }
     }
-   if($post_type=='brands'){
-      if($no_of_cats<=$options['ss_categories_per_brand']){
-        $cats_good=true;
+   if($post_type == 'brands'){
+      if($no_of_cats <= $options['ss_categories_per_brand']){
+        $cats_good = true;
       }
    }
    
-   if($cats_good) {
-  
-    $add_cats=array();
+    if($cats_good) {  
+        $add_cats = array();    
 	if (isset($_POST['advertiser_category'])) {
-      foreach($_POST['advertiser_category'] as $key=>$value){
-		   $term = get_term((int)$value, 'ss_category' );
-          $add_cats[]=(int)$value;
-       //   if($term->parent){
-        //    $add_cats[]=(int)$term->parent;
-        //  }
-   		 }
-	}
-	//print_r($post_id);
-    //insert categories into database. field ss_advertiser_category in post_meta of advertiser
- //   update_post_meta( $post_id, 'ss_category', $add_cats );
- 	wp_set_post_terms($post_id,$add_cats,'ss_category');
-   } else {
-		$error_code = "1"; // Too many cats		
-	}//cats_good
-
-    foreach($_POST['sosensational_options'] as $key=>$value)
-    {	
-             update_post_meta( $post_id, 'ss_'.$key, $value );
-			 if ($key == "advertiser_co_name")
-			 {
-				  $my_post = array(
-   				    'ID'           => $post_id,
-                                    'post_title' => $value,
-                                    'post_status' => 'publish'
-  					);
-
-				// Update the post into the database
-  				wp_update_post( $my_post ); 
-			 }
-			 
+            foreach($_POST['advertiser_category'] as $key=>$value) {
+                $term = get_term((int)$value, 'ss_category' );
+                $add_cats[] = (int)$value;
+            }
+	}        
+ 	wp_set_post_terms($post_id, $add_cats, 'ss_category');
+    } else {
+        $error_code = "1"; // Too many cats		
+    }
+                       
+    
+    foreach($_POST['sosensational_options'] as $key=>$value) {	
+        update_post_meta( $post_id, 'ss_'.$key, $value );
+        if ($key == "advertiser_co_name") {
+                $my_post = array(
+                    'ID'           => $post_id,
+                    'post_title' => $value,
+                    'post_status' => 'publish'
+                );
+            // Update the post into the database
+            wp_update_post( $my_post ); 
+        }			 
     }
     
     if ($_POST['post_type'] === 'boutiques' || $_POST['post_type'] === 'brands') {
         if(!empty($logo)) {
-           //  update_post_meta( $post_id, 'ss_logo', $logo['_wp_attached_file'][0] );
            update_post_meta( $post_id, 'ss_logo', $logo[0] );
         }
         if(!empty($image_video)) {
             update_post_meta( $post_id, 'ss_image_video', $image_video['_wp_attached_file'][0] );
         } 
         if(isset($_POST['delete_video_image'])) {
-
             update_post_meta( $post_id, 'ss_image_video', "" );					
         }                
     }
     
-              
+       
+    removeCategoryPostOnCategoryUnselect($post_id, $add_cats);
+    
+          
     if ( ! empty($error_code)) {			
          wp_redirect(SITE_URL.'/edit-advertiser/?error_code=' . $error_code);
     } elseif (empty($error_code) && ! $isAjaxPreview) {

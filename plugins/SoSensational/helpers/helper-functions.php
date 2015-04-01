@@ -91,3 +91,29 @@ function isPreview($array)
     
     return false;
 }
+
+function removeCategoryPostOnCategoryUnselect($post_id, $add_cats) 
+{
+    $currentPost = get_post($post_id);
+
+    $arguments = array(
+        'post_type' =>  'advertisers_cats',
+        'status'    =>  'publish',
+        'author'    =>  $currentPost->post_author,
+    );
+    
+    $publishedCategories = get_posts($arguments); 
+    
+    foreach($publishedCategories as $publishedCategory) {
+        $currentTerm = wp_get_post_terms($publishedCategory->ID, 'ss_category');
+        $publishedCategory->term_id = $currentTerm[0]->term_id;
+        $publishedCategoriesWithTerms[] = $publishedCategory;
+    }    
+    
+    
+    foreach($publishedCategoriesWithTerms as $publishedCategoryWithTerm) {
+        if ( ! in_array($publishedCategoryWithTerm->term_id, $add_cats)) {
+            wp_delete_post($publishedCategoryWithTerm->ID);
+        }
+    }    
+}
