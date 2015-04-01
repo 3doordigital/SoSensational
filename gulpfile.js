@@ -10,7 +10,7 @@ gulp.task('sass', function() {
 });
 
 gulp.task('minify-css', function() {
-    return gulp.src('plugins/SoSensational/styles/dest/*.css')
+    gulp.src('plugins/SoSensational/styles/dest/*.css')
             .pipe(minifyCSS())
             .pipe(gulp.dest('plugins/SoSensational/styles/dest/'));
 });

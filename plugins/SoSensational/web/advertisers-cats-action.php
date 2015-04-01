@@ -9,7 +9,6 @@ global $wpdb;
 $user=wp_get_current_user(); 
 $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$user->ID}' ", OBJECT );
 
-
 function upload_user_file( $file = array() ) {
 
     require_once( ABSPATH . 'wp-admin/includes/admin.php' );

@@ -18,10 +18,14 @@ class Carousel
     
     public function display()
     {
+        if (empty($this->dataToDisplay)) {
+            return false;
+        }   
+        
         echo '<hr>';
 
         if ( ! empty($this->dataToDisplay) ) {
-            echo '<h1>See More' . $this->currentCategory->name . 'in Brands & Boutiques</h1>';          
+            echo '<h1>See More ' . $this->currentCategory->name . ' in Brands & Boutiques</h1>';          
         }        
         
         echo '<div class="flexslider">';

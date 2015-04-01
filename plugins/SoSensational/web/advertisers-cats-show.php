@@ -186,6 +186,7 @@ foreach ($post_categories_available as $cat) {
   </div>
 
 
+
         <?php $index++; ?>
 	<?php endwhile; else : ?>
 <p>No products found</p>

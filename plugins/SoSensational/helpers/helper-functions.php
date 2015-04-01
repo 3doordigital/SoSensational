@@ -87,11 +87,16 @@ function isPreview($array)
 {
     if (key_exists('preview', $array)) {
         return true;
-    }
-    
+    }    
     return false;
 }
 
+/**
+ * Remove published categories with the term ID that a user unchecks on Step 1
+ * 
+ * @param integer $post_id ID of the current post needed for retrieving the author
+ * @param array $add_cats Categories that will be saved for the current advertiser
+ */
 function removeCategoryPostOnCategoryUnselect($post_id, $add_cats) 
 {
     $currentPost = get_post($post_id);
