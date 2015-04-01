@@ -1,0 +1,25 @@
+{
+  "name": "SoSensational",
+  "version": "0.1.0",
+  "description": "SoSensational Plugin",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.8.11",
+    "gulp-sass": "~1.3.3",
+    "gulp-watch": "~4.2.2",
+    "gulp-minify-css": "~1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/polcode/sosen.git"
+  },
+  "author": "Lukasz Tarasiewicz",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/polcode/sosen/issues"
+  }
+}
