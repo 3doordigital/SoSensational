@@ -16,6 +16,11 @@ class Carousel
     
     public function display()
     {
+        
+        if (empty($this->dataToDisplay)) {
+            return false;
+        }   
+        
         echo '<hr>';
         echo '<h1>Featured Brands</h1>';
         echo '<div class="flexslider">';

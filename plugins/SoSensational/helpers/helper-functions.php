@@ -87,7 +87,57 @@ function isPreview($array)
 {
     if (key_exists('preview', $array)) {
         return true;
-    }
-    
+    }    
     return false;
+}
+
+/**
+ * Remove published categories with the term ID that a user unchecks on Step 1
+ * 
+ * @param integer $post_id ID of the current post needed for retrieving the author
+ * @param array $add_cats Categories that will be saved for the current advertiser
+ */
+function removeCategoryPostOnCategoryUnselect($post_id, $add_cats) 
+{
+    $currentPost = get_post($post_id);
+
+    $arguments = array(
+        'post_type' =>  'advertisers_cats',
+        'status'    =>  'publish',
+        'author'    =>  $currentPost->post_author,
+    );
+    
+    $publishedCategories = get_posts($arguments); 
+    
+    foreach($publishedCategories as $publishedCategory) {
+        $currentTerm = wp_get_post_terms($publishedCategory->ID, 'ss_category');
+        $publishedCategory->term_id = $currentTerm[0]->term_id;
+        $publishedCategoriesWithTerms[] = $publishedCategory;
+    }    
+    
+    
+    foreach($publishedCategoriesWithTerms as $publishedCategoryWithTerm) {
+        if ( ! in_array($publishedCategoryWithTerm->term_id, $add_cats)) {
+            wp_delete_post($publishedCategoryWithTerm->ID);
+        }
+    }    
+}
+
+/**
+ * Append 'ss_cat_priority' key to each category. Then sort the categories
+ * from highest to lowest by the value of 'ss_cat_priority'
+ */
+function sortCategoriesByPriority($categories)
+{
+    foreach($categories as $singleCategory) {
+        $singleCategoriesMeta = get_option( "taxonomy_$singleCategory->term_id" );
+        $priority = isset($singleCategoriesMeta['ss_cat_priority']) ? $singleCategoriesMeta['ss_cat_priority'] : 20;
+        $singleCategory->ss_cat_priority = $priority;
+        $categoriesWithPriority[] = $singleCategory;
+    }    
+    usort($categoriesWithPriority, function($a, $b) {
+       return $a->ss_cat_priority - $b->ss_cat_priority;
+    });   
+    
+    return $categoriesWithPriority;
 }

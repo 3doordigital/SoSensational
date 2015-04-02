@@ -2,7 +2,7 @@
 if (!is_user_logged_in()){exit();}
 do_action('ss_css');
 global $wpdb;
-$user=wp_get_current_user(); 
+$user = wp_get_current_user(); 
 $options = get_option( 'ss_settings' );
 
 
@@ -11,21 +11,15 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
    ON wpt.term_id=wptt.term_id
    WHERE wptt.taxonomy='ss_category' ", OBJECT);
 
-//$term_meta = get_term_by("id",$category_id,"ss_category");
-//echo "<pre>";
-//print_r($options);
-
 $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$user->ID}' ", OBJECT );
 $advertisers_type = $advertiser[0]->post_type;
 $post_categories_available =  get_the_terms($advertiser[0]->ID,'ss_category');
 
 
-if ($advertisers_type == "brands")
-{
-	$allowed_categories = $options['ss_categories_per_brand'];
-} else 
-{
-	$allowed_categories = $options['ss_categories_per_boutique'];	
+if ($advertisers_type == "brands") {
+    $allowed_categories = $options['ss_categories_per_brand'];
+} else {
+    $allowed_categories = $options['ss_categories_per_boutique'];	
 }
 
 /**
@@ -60,7 +54,9 @@ function show_select_for_cats($post_categories_available, $termId)
         foreach ($children as $termName => $termNo ) {
             $to_return .= '<option ';
             /* Check if the term should be marked as selected  */
-            if ($termId == $termNo) { $to_return .= ' selected="selected" '; $found = 1;}
+            if ($termId == $termNo) { 
+                $to_return .= ' selected="selected" '; $found = 1;                
+            }
             $to_return .= ' value="' . $termNo .'"';
             $to_return .= '>'. $termName .'</option>'; 
         }
@@ -92,81 +88,54 @@ if (empty($post_categories_available)) {
     <a href="/edit-advertiser/">Click here to edit your profile</a>  
 </div>
     
-    <?php
+<?php
 	
 } else {
 	
-
-foreach ($post_categories_available as $cat)
-{
+foreach ($post_categories_available as $cat) {
 	$tax_to_use[] = $cat->slug;		
 }
-	// obtain post info
 
 
-	$args = array(
-    'post_type' => 'advertisers_cats',
-    'showposts' => -1,
-    'post_status' => array('publish','pending','draft'),
-	'author' => $user->ID, 
-//	   'tax_query' => array(
-//      		 array(
-//         	'taxonomy' => 'ss_category',
-//         	'field' => 'slug',
-//         	'terms' => $this_tax,
-		
-//        	)
-//		),
-	);
-//print_r($args);	
-  $my_query = new WP_Query($args);
-    //echo "<pre>";
-	//print_r(count($my_query->posts));
-	if (count($my_query->posts) < $allowed_categories) {
-		$cats_to_make =  $allowed_categories - count($my_query->posts) ;
-	//	echo "Need to create some cats: ".$cats_to_make;
-		  $post1=array(
- 		   'post_title' => $advertiser[0]->post_title,
-   		 	'post_type' => 'advertisers_cats',
-    		'post_status' => 'pending',
-    		'post_parent' => $advertiser[0]->ID,
-    		'post_author' => $user->ID,
-    		);
-		$i = 1;
-		while ($i <= $cats_to_make) {
-			$i++;  // the printed value would be
-   			$post_id=wp_insert_post($post1);		
-   		}
-
-		
-	 // run the query again		
-	  $my_query = new WP_Query($args);
-		
-	}
+    $args = array(
+        'post_type' => 'advertisers_cats',
+        'showposts' => -1,
+        'post_status' => array('publish','pending','draft'),
+            'author' => $user->ID, 
+    );
 	
-	
-	//print_r($my_query ); 
-	//echo "</pre>"; 
-     
+    $my_query = new WP_Query($args);
+        if (count($my_query->posts) < $allowed_categories) {            
+            $cats_to_make =  $allowed_categories - count($my_query->posts) ;
+            $post1 = array(
+                'post_title' => $advertiser[0]->post_title,
+                'post_type' => 'advertisers_cats',
+                'post_status' => 'pending',
+                'post_parent' => $advertiser[0]->ID,
+                'post_author' => $user->ID,
+            );
+            $i = 1;
+            while ($i <= $cats_to_make) {
+                    $i++;
+                    $post_id = wp_insert_post($post1);		
+            }	
+            $my_query = new WP_Query($args);		
+	}   
         $index = 0;
     	if($my_query->have_posts()) : while($my_query->have_posts()) : $my_query->the_post(); 
 		
-	//	$term_meta = get_term_by("id",$category_id,"ss_category");
-		$meta=get_post_meta( get_the_ID());
+		$meta = get_post_meta( get_the_ID());
 
-		?>
-        
-              
-
-
-	
+?>
 
   <div class="col-sm-12 col-md-12">
     <div class="thumbnail ss_fixheight">
-    <?php $this_image = get_post_meta( get_the_ID(), 'ss_advertisers_cats_image', true );
-		if ($this_image == "") { $this_image = plugin_dir_url(__FILE__) . "../img/placeholders/category-uploads-380x250.jpg"; } 
-		
-		?>
+    <?php 
+        $this_image = get_post_meta( get_the_ID(), 'ss_advertisers_cats_image', true );
+        if ($this_image == "") { 
+            $this_image = plugin_dir_url(__FILE__) . "../img/placeholders/category-uploads-380x250.jpg";         
+        } 
+    ?>
         
 		
       <img src="<?php echo $this_image?>" alt="">
@@ -180,11 +149,11 @@ foreach ($post_categories_available as $cat)
 <br />
 <div class="input-group">
   <span class="input-group-addon input-width" id="basic-addon1">Product Category:</span>
- <?php 
-				
-        $this_terms = wp_get_post_terms(get_the_ID(), 'ss_category');
-        echo show_select_for_cats($post_categories_available ,isset($this_terms[0]->term_id) ? $this_terms[0]->term_id : ""); 
-         ?>
+  
+<?php 				
+    $this_terms = wp_get_post_terms(get_the_ID(), 'ss_category');
+    echo show_select_for_cats($post_categories_available ,isset($this_terms[0]->term_id) ? $this_terms[0]->term_id : ""); 
+?>
                  
                  </div>
          <br/>     
@@ -215,6 +184,7 @@ foreach ($post_categories_available as $cat)
       </div>
     </div>
   </div>
+
 
 
         <?php $index++; ?>

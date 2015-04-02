@@ -24,6 +24,8 @@ class RelatedCarousel
     private function collectAdvertiserCategories()
     {
         $name  = $this->currentCategory->name === 'Accessories Boutique' ? 'accessories' : $this->currentCategory->name;
+        
+        
         $args = array(      
             'post_type'   =>  array('advertisers_cats'),
             'post_status' =>  array('publish', 'draft'),
@@ -32,7 +34,7 @@ class RelatedCarousel
             'orderby'     =>  'rand'
         );                
         
-        $advertiserCategories = get_posts( $args );         
+        $advertiserCategories = get_posts( $args );    
         
         if ( ! empty($advertiserCategories)) {            
             $this->advertiserCategories = $advertiserCategories;                        

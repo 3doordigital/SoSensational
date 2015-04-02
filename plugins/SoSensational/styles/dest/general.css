@@ -1,0 +1,7 @@
+/*------------------------------------------------------------------------------
+                            Max Mega Menu Custom Styles
+------------------------------------------------------------------------------*/
+#mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item a {
+  color: #000; }
+  #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item a:hover {
+    background: #fff; }
