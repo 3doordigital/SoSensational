@@ -913,6 +913,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     font-size: 14px; 
 	line-height: 1.8em;
 }
+.wp-post-image {
+	margin-bottom: 30px;
+}
 #wp_comp_form h4 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
