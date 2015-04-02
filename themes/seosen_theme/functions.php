@@ -36,8 +36,8 @@
 			'id' => 'page_sidebar',
 			'before_widget' => '<div class="sidebox">',
 			'after_widget' => "</div>",
-			'before_title' => '<h2><span>',
-			'after_title' => '</span></h2>',
+			'before_title' => '<h3><span>',
+			'after_title' => '</span></h3>',
 		) );
 		
 		register_sidebar( array(
@@ -45,8 +45,8 @@
 			'id' => 'blog_sidebar',
 			'before_widget' => '<div class="sidebox">',
 			'after_widget' => "</div>",
-			'before_title' => '<h2><span>',
-			'after_title' => '</span></h2>',
+			'before_title' => '<h3><span>',
+			'after_title' => '</span></h3>',
 		) ); 
 		
 		register_sidebar( array(
@@ -54,8 +54,8 @@
 			'id' => 'contact_sidebar',
 			'before_widget' => '<div class="sidebox">',
 			'after_widget' => "</div>",
-			'before_title' => '<h2><span>',
-			'after_title' => '</span></h2>',
+			'before_title' => '<h3><span>',
+			'after_title' => '</span></h3>',
 		) );
 		
 		register_sidebar( array(
@@ -63,8 +63,8 @@
 			'id' => 'shop_sidebar',
 			'before_widget' => '<div class="shop_side">',
 			'after_widget' => "</div>",
-			'before_title' => '<h2><span>',
-			'after_title' => '</span></h2>',
+			'before_title' => '<h3><span>',
+			'after_title' => '</span></h3>',
 		) );
         
         register_sidebar( array(
