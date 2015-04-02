@@ -27,7 +27,7 @@ class Form
     {
         foreach ($this->categoriesToRender as $categoryToRender) {
             
-            $checked= checkIfSelected($categoryToRender->term_id, $this->selectedCategories) ? 'checked' : '';
+            $checked = checkIfSelected($categoryToRender->term_id, $this->selectedCategories) ? 'checked' : '';
         ?>            
             <div class="input-group">
                 <span class="input-group-addon">

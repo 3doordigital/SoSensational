@@ -210,10 +210,17 @@ function sosensational_taxonomy_add_new_meta_field($term) {
     wp_enqueue_script('SoSensational', plugins_url( 'SoSensational/sosensational-script.js'), array('jquery'));
     // this will add the custom meta field to the add new term page
     $t_id = isset($term->term_id) ? $term->term_id : "" ;
+    
     $term_meta = get_option( "taxonomy_$t_id" );
+    
     if ( ! key_exists('ss_cat_priority', $term_meta)) {
         $term_meta['ss_cat_priority'] = 20;
     }
+    
+    if ( ! key_exists('ss_aff_categories', $term_meta)) {
+        $term_meta['ss_aff_categories'] = false;
+    }    
+    
     ?>
     <div class="form-field">
        <tr valign="top">
@@ -237,6 +244,22 @@ function sosensational_taxonomy_add_new_meta_field($term) {
                 </select>
             </td>
         </tr>
+        <?php
+            $shopCategories = get_terms('wp_aff_categories');
+            
+        ?>
+        <tr valign="top">
+            <th scope="row">Categories in the shop</th>
+            <td>
+                <?php foreach($shopCategories as $shopCategory) { 
+                    $checked = checkIfSelected($shopCategory->term_id, $term_meta['ss_aff_categories']) ? 'checked' : '';                    
+                ?>
+                <input type="checkbox" value="<?php echo $shopCategory->term_id; ?>" 
+                       name="term_meta[ss_aff_categories][]" <?php echo $checked; ?>>
+                           <?php echo $shopCategory->name; ?><br/>
+                <?php } ?>
+            </td>
+        </tr>        
     </div>
 <?php
 }

@@ -37,6 +37,17 @@ function displaySystemNotice()
     
 }
 
+/**
+ * A function that checks checkboxes by comparing the current value to the values
+ * saved in the database.
+ * 
+ * This function does the sama what the built-in 'checked()' function does,
+ * but it works with multidimensional arrays
+ * 
+ * @param integer $currentCategoryId Current value of the checkbox
+ * @param array $selectedCategories All selected categories
+ * @return boolean
+ */
 function checkIfSelected($currentCategoryId, $selectedCategories)
 {
     if (is_array($selectedCategories)) {
@@ -132,12 +143,17 @@ function sortCategoriesByPriority($categories)
     foreach($categories as $singleCategory) {
         $singleCategoriesMeta = get_option( "taxonomy_$singleCategory->term_id" );
         $priority = isset($singleCategoriesMeta['ss_cat_priority']) ? $singleCategoriesMeta['ss_cat_priority'] : 20;
+        $ssAffCategories = isset($singleCategoriesMeta['ss_aff_categories']) ? $singleCategoriesMeta['ss_aff_categories'] : false;
         $singleCategory->ss_cat_priority = $priority;
+        $singleCategory->ss_aff_categories = $ssAffCategories;
         $categoriesWithPriority[] = $singleCategory;
+        
     }    
     usort($categoriesWithPriority, function($a, $b) {
        return $a->ss_cat_priority - $b->ss_cat_priority;
     });   
+    
+
     
     return $categoriesWithPriority;
 }

@@ -22,21 +22,41 @@ class RelatedCarousel
     }
     
     private function collectAdvertiserCategories()
-    {
-        $name  = $this->currentCategory->name === 'Accessories Boutique' ? 'accessories' : $this->currentCategory->name;
+    {      
+        global $wpdb;
+
         
+        $categories = $wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt 
+            LEFT JOIN {$wpdb->terms} as wpt
+            ON wpt.term_id=wptt.term_id
+            WHERE wptt.taxonomy='ss_category' ", OBJECT);   
+            
+        $corelatedCategories = sortCategoriesByPriority($categories);
         
-        $args = array(      
-            'post_type'   =>  array('advertisers_cats'),
-            'post_status' =>  array('publish', 'draft'),
-            'numberposts' =>  9,
-            'ss_category' =>  $name,
-            'orderby'     =>  'rand'
-        );                
+        foreach ($corelatedCategories as $corelatedCategory) {    
+            if (is_array($corelatedCategory->ss_aff_categories) && in_array($this->currentCategory->term_id, $corelatedCategory->ss_aff_categories)) {                            
+                $terms[] = $corelatedCategory->term_id;        
+            }            
+        }
         
-        $advertiserCategories = get_posts( $args );    
+        if (! isset($terms) ) {
+            return false;
+        }
+
+        $args = array(
+            'post_type' => array('advertisers_cats'),
+            'tax_query' => array(
+                array(
+                    'taxonomy'  =>  'ss_category',
+                    'field' => 'id',
+                    'terms' =>  $terms
+                )
+            )
+        );
         
-        if ( ! empty($advertiserCategories)) {            
+        $advertiserCategories = get_posts($args);
+             
+        if ( ! empty($corelatedCategories)) {            
             $this->advertiserCategories = $advertiserCategories;                        
             return true;
         } else {
