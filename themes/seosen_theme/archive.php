@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <div class="container">
-    <h1><span>Style Advice &amp; Blog</span></h1>
+    <h2 class="pagetitle"><span>Style Advice &amp; Blog</span></h2>
     <?php if ( function_exists('wp_nav_menu') ) { wp_nav_menu( array(
                 'menu'              => 'blog',
                 'theme_location'    => 'blog',
@@ -21,7 +21,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-16" id="content">
-            <h1 class="cattitle"><?php single_cat_title('Category: ', true); ?></h1>
+            <h1 class="cattitle"><?php single_cat_title('', true); ?></h1>
             <?php
                 $i = 1;
                 $x = 0;
@@ -31,13 +31,20 @@
             <?php if( $i ==1 ) { ?>
                 <div class="row">
                     <div class="col-md-24">
+                    	<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                        <?php sosen_post_meta(); ?>
                         <?php 
                             if ( has_post_thumbnail( ) ) { // check if the post has a Post Thumbnail assigned to it.
-                                the_post_thumbnail( 'blog-large', array( 'class' => 'img-responsive' ) );
+                                 ?>
+                                <a href="<?php the_permalink(); ?>">
+                                <?php
+								the_post_thumbnail( 'blog-small', array( 'class' => 'img-responsive' ) );
+								?>
+                                </a>
+                                <?php
                             } 
                         ?>
-                        <?php sosen_post_meta(); ?>
-                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                        
                         <?php
                             the_excerpt_max_charlength(340);
                         ?>
@@ -48,13 +55,21 @@
                     <div class="row">
                 <?php } ?>
                     <div class="col-md-12 blog-small">
+                    	
+                        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                        <?php sosen_post_meta(); ?>
                         <?php 
                             if ( has_post_thumbnail() ) { // check if the post has a Post Thumbnail assigned to it.
-                                the_post_thumbnail( 'blog-small', array( 'class' => 'img-responsive' ) );
+                                 ?>
+                                <a href="<?php the_permalink(); ?>">
+                                <?php
+								the_post_thumbnail( 'blog-small', array( 'class' => 'img-responsive' ) );
+								?>
+                                </a>
+                                <?php
                             } 
                         ?>
-                        <?php sosen_post_meta(); ?>
-                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                        
                         <?php
                             the_excerpt_max_charlength(170);
                         ?>

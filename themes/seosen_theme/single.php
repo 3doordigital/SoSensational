@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <div class="container">
-    <h1><span>Style Advice &amp; Blog</span></h1>
+    <h2 class="pagetitle"><span>Style Advice &amp; Blog</span></h2>
     <?php if ( function_exists('wp_nav_menu') ) { wp_nav_menu( array(
                 'menu'              => 'blog',
                 'theme_location'    => 'blog',
@@ -27,13 +27,15 @@
             ?>
                 <div class="row">
                     <div class="col-md-24">
+                    	<h1><?php the_title(); ?></h1>
+                        <?php sosen_post_meta(); ?>
                         <?php 
                             if ( has_post_thumbnail( ) ) { // check if the post has a Post Thumbnail assigned to it.
                                 the_post_thumbnail( 'blog-large', array( 'class' => 'img-responsive' ) );
                             } 
                         ?>
-                        <?php sosen_post_meta(); ?>
-                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                        
+                        
                         <?php
                             the_content();
                         ?>
@@ -41,7 +43,11 @@
                 </div>
            
             <?php endwhile; ?>
-            <?php sosen_related_posts( $cur_cat_id, get_the_ID() ); ?>
+            <?php
+			 	$category = get_the_category(); 
+				$cur_cat_id =  $category[0]->term_id;
+				sosen_related_posts( $cur_cat_id, get_the_ID() ); 
+			?>
             <?php comments_template(); ?>
             <?php endif; ?>
         </div>
