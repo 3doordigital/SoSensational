@@ -141,10 +141,10 @@ class WP_Terms_List_Tables extends WP_List_Table {
 
 	protected function get_sortable_columns() {
 		return array(
-			'name'        => 'name',
-			'slug'        => 'slug',
-			'alias'		  => 'alias',
-			'posts'       => 'count'
+			'name'    	=> array('name', false),
+			'slug'    	=> array('slug', false),
+			'alias'		=> array('alias', false),
+			'posts'     => array('count', false)
         );
 	}
 
@@ -355,7 +355,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 		if( $tag->parent != 0 ) {
 			$parent = get_term_by( 'id', $tag->parent, $this->screen->taxonomy );
 			//print_var($parent);
-			$this->out[] = $parent->name.' &raquo; ';
+			$this->out[] = '<a href="'.$_SERVER['REQUEST_URI'].'#tag-'.$parent->term_id.'">'.$parent->name.'</a> &raquo; ';
 			if( $parent->parent != 0 ) {
 				$this->rec_parent( $parent );	
 			}
@@ -370,7 +370,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 			$out = $this->rec_parent( $alias );
 			
 			$out = array_reverse( $out );
-			$out[] = $alias->name;
+			$out[] = '<a href="'.$_SERVER['REQUEST_URI'].'#tag-'.$alias->term_id.'">'.$alias->name.'</a>';
 			return implode( '', $out );
 		} else {
 			return '';	
@@ -893,7 +893,7 @@ class AllProductTable extends WP_List_Table {
         ?>
         <div class="alignleft actions bulkactions">
         
-            <select name="prod_type_filter" class="prod_type_filter">
+            <select name="prod_type_filter" class="prod_filter" data-type="type">
                 <option <?php echo ( !isset( $_GET['prod_type'] ) || $_GET['prod_type'] == 0 ? ' selected ' : '' ); ?> value="0">All Products</option>
                 <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 1 ? ' selected ' : '' ); ?> value="1">Affiliate Feed Products</option>
                 <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 2 ? ' selected ' : '' ); ?> value="2">Manual Products</option>
@@ -902,29 +902,63 @@ class AllProductTable extends WP_List_Table {
         </div>
         <div class="alignleft actions bulkactions">
         
-            <select name="prod_type_filter" class="prod_type_filter">
-                <option <?php echo ( !isset( $_GET['prod_type'] ) || $_GET['prod_type'] == 0 ? ' selected ' : '' ); ?> value="0">All Categories</option>
-                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 1 ? ' selected ' : '' ); ?> value="1">Affiliate Feed Products</option>
-                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 2 ? ' selected ' : '' ); ?> value="2">Manual Products</option>
-            </select>
+            <?php 
+				if( isset( $_REQUEST['prod_category'] ) ) {
+					$selected = $_REQUEST['prod_category'];
+				} else {
+					$selected = 0;	
+				}
+				wp_dropdown_categories(
+					array(
+						'taxonomy' => 'wp_aff_categories', 
+						'hide_empty' => 1,
+						'selected' => $selected, 
+						'name' => 'product_cat_filter',
+						'class' => 'prod_filter',
+						'id' => 'category',
+						'orderby' => 'name', 
+						'hierarchical' => true, 
+						'show_option_none' => __('All Categories')
+					)
+				); 
+			?>
           
         </div>
         <div class="alignleft actions bulkactions">
         
-            <select name="prod_type_filter" class="prod_type_filter">
-                <option <?php echo ( !isset( $_GET['prod_type'] ) || $_GET['prod_type'] == 0 ? ' selected ' : '' ); ?> value="0">All Brands</option>
-                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 1 ? ' selected ' : '' ); ?> value="1">Affiliate Feed Products</option>
-                <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 2 ? ' selected ' : '' ); ?> value="2">Manual Products</option>
-            </select>
+            <?php 
+				if( isset( $_REQUEST['prod_brand'] ) ) {
+					$selected = $_REQUEST['prod_brand'];
+				} else {
+					$selected = 0;	
+				}
+        		
+				wp_dropdown_categories(
+					array(
+						'include' => $fn_include,
+						'taxonomy' => 'wp_aff_brands', 
+						'hide_empty' => 1, 
+						'selected' => $selected, 
+						'name' => 'product_brand_filter',
+						'class' => 'prod_filter',
+						'id' => 'brand',
+						'orderby' => 'name', 
+						'hierarchical' => true, 
+						'show_option_none' => __('All Brands')
+					)
+				); 
+			?>
           
         </div>
+        <!--
         <div class="alignleft actions bulkactions">
         <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="get">
-            <input type="text" placeholder="Search" class="prod_search_filter" /> <button type="submit" class="prod_search_filter_sub button button-secondary">Search</button>
+            <input type="text" placeholder="Search" /> <button type="submit" class="prod_search_filter_sub button button-secondary">Search</button>
             <input type="hidden" value="wp_aff_add_category" name="action" />
             <?php wp_nonce_field( 'wp_aff_add_category', '_wpnonce', TRUE ); ?>
         </form>  
         </div>
+        -->
         <?php
     }
     if ( $which == "bottom" ){
@@ -977,6 +1011,26 @@ class AllProductTable extends WP_List_Table {
 					);
 					break;	
 			}
+		}
+		
+		if( isset( $_REQUEST['prod_category'] ) ) {
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'wp_aff_categories',
+					'field'    => 'term_id',
+					'terms'    => $_REQUEST['prod_category'],
+				)
+			);
+		}
+		
+		if( isset( $_REQUEST['prod_brand'] ) ) {
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'wp_aff_brands',
+					'field'    => 'term_id',
+					'terms'    => $_REQUEST['prod_brand'],
+				)
+			);
 		}
 		
         $query = new WP_Query( $args );
