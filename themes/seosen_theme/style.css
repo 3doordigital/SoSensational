@@ -907,7 +907,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
 .blog .blog-small h2 a, .archive .blog-small h2 a, .single .blog-small h2 a {
     font-size: 18px;
 }
-.blog p, .archive p, .single p, .blog p a, .archive p a, .single p a, .blog p span, .archive p span, .single p span, .blog p i, .archive p i, .single p i, .blog p em, .archive p em, .single p em, .blog p strong, .archive p strong, .single p strong, .blog p a, .archive p a, .single p a, .blog label, .archive label, .single label, .single .form-control, .blog li, .archive li, .single li {
+.blog p, .archive p, .single p, .blog p a, .archive p a, .single p a, .blog li a, .archive li a, .single li a, .blog p span, .archive p span, .single p span, .blog p i, .archive p i, .single p i, .blog p em, .archive p em, .single p em, .blog p strong, .archive p strong, .single p strong, .blog p a, .archive p a, .single p a, .blog label, .archive label, .single label, .single .form-control, .blog li, .archive li, .single li {
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
     font-size: 14px; 
