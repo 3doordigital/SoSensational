@@ -87,7 +87,7 @@
 		wp_enqueue_style( 'fontawesome', get_stylesheet_directory_uri() . '/css/font-awesome.min.css', '1.0');
 		wp_enqueue_style( 'animate', get_stylesheet_directory_uri() . '/css/animate.css', '1.0');
 		wp_enqueue_style( 'webfont', get_stylesheet_directory_uri() . '/MyFontsWebfontsKit.css', '1.0');		
-		wp_enqueue_style( 'sosen-style', get_stylesheet_uri(), array( 'bootstrap', 'bootstrap_theme', 'fontawesome', 'animate' ) );
+		wp_enqueue_style( 'sosen-style', get_stylesheet_uri(), array( 'bootstrap', 'bootstrap_theme', 'fontawesome', 'animate' ), '1.1' );
 		wp_enqueue_style( 'general-sass-compiled', plugins_url( 'SoSensational/styles/dest/general.css' ), array('megamenu') ); 		
                 
 		wp_enqueue_script('jquery');
