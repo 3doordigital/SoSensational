@@ -9,10 +9,10 @@ gulp.task('sass', function() {
             .pipe(gulp.dest('plugins/SoSensational/styles/dest/'));
 });
 
-gulp.task('minify-css', function() {
+gulp.task('minify-css', ['sass'], function() {
     gulp.src('plugins/SoSensational/styles/dest/*.css')
             .pipe(minifyCSS())
-            .pipe(gulp.dest('plugins/SoSensational/styles/dest/'));
+            .pipe(gulp.dest('plugins/SoSensational/styles/dest/min'));
 });
 
 gulp.task('watch', function() {
