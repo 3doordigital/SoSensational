@@ -935,7 +935,6 @@ class AllProductTable extends WP_List_Table {
         		
 				wp_dropdown_categories(
 					array(
-						'include' => $fn_include,
 						'taxonomy' => 'wp_aff_brands', 
 						'hide_empty' => 1, 
 						'selected' => $selected, 
