@@ -41,7 +41,11 @@
                 </div>
            
             <?php endwhile; ?>
-            <?php sosen_related_posts( $cur_cat_id, get_the_ID() ); ?>
+            <?php
+			 	$category = get_the_category(); 
+				$cur_cat_id =  $category[0]->term_id;
+				sosen_related_posts( $cur_cat_id, get_the_ID() ); 
+			?>
             <?php comments_template(); ?>
             <?php endif; ?>
         </div>
