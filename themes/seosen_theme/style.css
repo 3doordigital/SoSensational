@@ -911,6 +911,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
     font-size: 14px; 
+	line-height: 1.8em;
 }
 #wp_comp_form h4 {
     font-family: 'Open Sans', sans-serif;
