@@ -905,6 +905,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     text-transform: uppercase;
 	border: none;
 	color: #a0862a;
+	margin-bottom: 0;
+}
+.blog h3, .archive h3 {
+	margin-bottom: 0;
 }
 .blog .blog-small h3 a, .archive .blog-small h2 a, .single .blog-small h2 a {
     font-size: 18px;
@@ -941,6 +945,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
 }
 .post_meta {
     padding: 10px 0;
+	padding-top: 0;
 }
 .blog-small {
     margin-bottom: 30px;
