@@ -37,7 +37,7 @@
                                  ?>
                                 <a href="<?php the_permalink(); ?>">
                                 <?php
-								the_post_thumbnail( 'blog-small', array( 'class' => 'img-responsive' ) );
+								the_post_thumbnail( 'blog-large', array( 'class' => 'img-responsive' ) );
 								?>
                                 </a>
                                 <?php
