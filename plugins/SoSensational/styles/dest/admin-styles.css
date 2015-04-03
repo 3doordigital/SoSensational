@@ -1,6 +1,9 @@
 /*------------------------------------------------------------------------------
                        SoSensational Plugin Admin Styles
 ------------------------------------------------------------------------------*/
-#aff-categories-list {
-  list-style: none; }
+#affiliate-shop-categories > ol > li {
+  float: left;
+  width: 250px; }
 
+.aff-categories-list {
+  list-style: none; }
