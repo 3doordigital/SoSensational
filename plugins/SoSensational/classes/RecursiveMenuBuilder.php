@@ -33,7 +33,7 @@ class RecursiveMenuBuilder
     private function buildTree($value, $key)
     {
         $checked = checkIfSelected($value->term_id, $this->termMeta) ? 'checked' : '';
-        echo '<div>';
+        echo '<div class="pull-left" style="width: 250px;">';
             echo '<input type="checkbox" value="' . $value->term_id . '" name="term_meta[ss_aff_categories][]"' . $checked . '>' . $value->name . '<br />';
             if (is_array($value->children)) {
                 $this->attachChildren($value->children);
