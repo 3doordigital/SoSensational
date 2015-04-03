@@ -21,12 +21,6 @@ function displayFeaturedAdvertisers($currentCategory)
     $carousel->display();
 }
 
-function buildMenuRecursively($sortedArray, $termMeta)
-{
-    $menu = new RecursiveMenuBuilder($sortedArray, $termMeta);
-    $menu->display();
-}
-
 function produceMenu($items, $termMeta, $level = 0)
 {
    $r = '' ;  

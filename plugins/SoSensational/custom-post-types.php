@@ -250,8 +250,6 @@ function sosensational_taxonomy_add_new_meta_field($term) {
                 <?php 
                 $shopCategories = get_terms('wp_aff_categories');
                 $sortedCategories = sortShopCategories($shopCategories);   
-                //buildTree($sortedCategories);
-                //buildMenuRecursively($sortedCategories, $term_meta['ss_aff_categories']); 
                 echo '<div id="affiliate-shop-categories">';
                     echo produceMenu($shopCategories, $term_meta['ss_aff_categories']);
                 echo '</div>';
