@@ -244,22 +244,16 @@ function sosensational_taxonomy_add_new_meta_field($term) {
                 </select>
             </td>
         </tr>
-        <?php
-            $shopCategories = get_terms('wp_aff_categories');
-            
-        ?>
         <tr valign="top">
-            <th scope="row">Categories in the shop</th>
+            <th scope="row">Corelated Shop Categories</th>
             <td>
-                <?php foreach($shopCategories as $shopCategory) { 
-                    $checked = checkIfSelected($shopCategory->term_id, $term_meta['ss_aff_categories']) ? 'checked' : '';                    
+                <?php 
+                $shopCategories = get_terms('wp_aff_categories');
+                $sortedCategories = sortShopCategories($shopCategories);            
+                buildMenuRecursively($sortedCategories, $term_meta['ss_aff_categories']);            
                 ?>
-                <input type="checkbox" value="<?php echo $shopCategory->term_id; ?>" 
-                       name="term_meta[ss_aff_categories][]" <?php echo $checked; ?>>
-                           <?php echo $shopCategory->name; ?><br/>
-                <?php } ?>
             </td>
-        </tr>        
+        </tr>
     </div>
 <?php
 }
