@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * A menu builder for the ss_category edit admin page - "Categories in the shop"
  * 
  * This is a menu with multiple, nested checkbox fields that show categories
@@ -18,6 +18,7 @@ class RecursiveMenuBuilder
     
     private $sortedArray;
     private $termMeta;
+    private $level;
     
     public function __construct($sortedArray, $termMeta)
     {
@@ -32,6 +33,7 @@ class RecursiveMenuBuilder
     
     private function buildTree($value, $key)
     {
+        $this->level = 1;
         $checked = checkIfSelected($value->term_id, $this->termMeta) ? 'checked' : '';
         echo '<div class="pull-left" style="width: 250px;">';
             echo '<input type="checkbox" value="' . $value->term_id . '" name="term_meta[ss_aff_categories][]"' . $checked . '>' . $value->name . '<br />';
@@ -45,11 +47,11 @@ class RecursiveMenuBuilder
     private function attachChildren($items)
     {        
         echo "&nbsp;&nbsp;";
-        foreach ($items as $item) {
+        foreach ($items as $item) {  
             $checked = checkIfSelected($item->term_id, $this->termMeta) ? 'checked' : '';
             echo '<input type="checkbox" value="' . $item->term_id . 
                     '" name="term_meta[ss_aff_categories][]"' . $checked . '>' . $item->name . ' ';
-            if (is_array($item->children)) {
+            if (is_array($item->children) && ! empty($item->children)) {   
                 echo "<br />" . "&nbsp;&nbsp;";
                 $this->attachChildren($item->children);
             }

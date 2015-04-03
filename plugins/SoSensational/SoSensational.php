@@ -361,6 +361,13 @@ function pbd_alp_init() {
 
 add_action('wp_enqueue_scripts', 'pbd_alp_init');
 
+function enqueueAdminStylesheets()
+{
+    wp_enqueue_style( 'sass-admin-styles', plugins_url( 'SoSensational/styles/dest/admin-styles.css' )); 
+}
+
+add_action('admin_enqueue_scripts', 'enqueueAdminStylesheets');
+
 function deleteSelectedProduct() 
 {
     if ( isset($_POST['productToDelete']) && ! empty($_POST['productToDelete']) ) {

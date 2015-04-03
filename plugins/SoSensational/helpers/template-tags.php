@@ -26,3 +26,15 @@ function buildMenuRecursively($sortedArray, $termMeta)
     $menu = new RecursiveMenuBuilder($sortedArray, $termMeta);
     $menu->display();
 }
+
+function produceMenu($items, $termMeta, $level = 0)
+{
+   $r = '' ;   
+   foreach ( $items as $item ) {
+       $checked = checkIfSelected($item->term_id, $termMeta) ? 'checked' : '';
+       if ($item->parent == $level ) {
+          $r = $r . "<li>" . '<input type="checkbox" value="'. $item->term_id .'" name="term_meta[ss_aff_categories][]" ' . $checked . '>' . $item->name . produceMenu( $items, $termMeta, $item->term_id ) . "</li>";
+       }
+   }
+   return ($r==''?'':"<ol id='aff-categories-list'>". $r . "</ol>");    
+}
