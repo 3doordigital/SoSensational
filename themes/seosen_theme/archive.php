@@ -31,14 +31,14 @@
             <?php if( $i ==1 ) { ?>
                 <div class="row">
                     <div class="col-md-24">
-                    	<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                    	<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
                         <?php sosen_post_meta(); ?>
                         <?php 
                             if ( has_post_thumbnail( ) ) { // check if the post has a Post Thumbnail assigned to it.
                                  ?>
                                 <a href="<?php the_permalink(); ?>">
                                 <?php
-								the_post_thumbnail( 'blog-small', array( 'class' => 'img-responsive' ) );
+								the_post_thumbnail( 'blog-large', array( 'class' => 'img-responsive' ) );
 								?>
                                 </a>
                                 <?php
@@ -56,7 +56,7 @@
                 <?php } ?>
                     <div class="col-md-12 blog-small">
                     	
-                        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
                         <?php sosen_post_meta(); ?>
                         <?php 
                             if ( has_post_thumbnail() ) { // check if the post has a Post Thumbnail assigned to it.
