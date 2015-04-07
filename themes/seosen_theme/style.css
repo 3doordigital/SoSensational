@@ -921,7 +921,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     font-size: 14px; 
 	line-height: 1.8em;
 }
-.blog li, .archive li, .single li {
+.blog #content li, .archive #content li, .single #content li {
 	margin-bottom: 10px;
 }
 .wp-post-image {
@@ -985,6 +985,7 @@ li.dropdown:hover > ul.dropdown-menu {
 }
 #topcats .dropdown-menu {
     padding: 0;
+	margin-top: 0;
 }
 #topcats .dropdown-menu li {
     display: block;

@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-md-24">
                     
-                        <h><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
                         <?php sosen_post_meta(); ?>
                         <?php 
                             if ( has_post_thumbnail( ) ) { // check if the post has a Post Thumbnail assigned to it.
