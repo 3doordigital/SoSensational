@@ -245,7 +245,7 @@ function sosensational_taxonomy_add_new_meta_field($term) {
             </td>
         </tr>
         <tr valign="top">
-            <th scope="row">Corelated Shop Categories</th>
+            <th scope="row">Display on shop categories:</th>
             <td>
                 <?php 
                 $shopCategories = get_terms('wp_aff_categories');
