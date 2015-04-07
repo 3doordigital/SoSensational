@@ -32,11 +32,14 @@ class RelatedCarousel
         $categories = $wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt 
             LEFT JOIN {$wpdb->terms} as wpt
             ON wpt.term_id=wptt.term_id
-            WHERE wptt.taxonomy='ss_category' ", OBJECT);   
-
+            WHERE wptt.taxonomy='ss_category' ", OBJECT);            
+            
             
         $corelatedCategories = $this->attachShopCategoriesToSSCategories($categories);
-        $terms = $this-> retrieveSSTermsCorelatedToCurrentTerm($corelatedCategories);               
+        
+        $terms = $this-> retrieveSSTermsCorelatedToCurrentTerm($corelatedCategories); 
+        
+
                
         if ($terms === false) {
             return false;
@@ -101,14 +104,15 @@ class RelatedCarousel
     
     private function attachShopCategoriesToSSCategories($categories)
     {
-        foreach($categories as $singleCategory) {    
+        foreach($categories as $singleCategory) {   
             $singleCategoriesMeta = get_option( "taxonomy_$singleCategory->term_id" );
             $ssAffCategories = isset($singleCategoriesMeta['ss_aff_categories']) ? $singleCategoriesMeta['ss_aff_categories'] : false;
             $singleCategory->ss_aff_categories = $ssAffCategories;
             $corelatedCategories[] = $singleCategory;
-
-            return $corelatedCategories;
-        }        
+        }     
+        
+        return $corelatedCategories;        
+        
     }
     
     private function retrieveSSTermsCorelatedToCurrentTerm($corelatedCategories)
