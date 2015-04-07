@@ -41,38 +41,31 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
 </div>
 <div class="ss_clear"></div>
 <div class="flexslider">
-  <ul class="slides">
-  
-<?php 
-foreach($products as $prod):
-?> 
-<li class="ss_product_slide"> 
-<?php
-  $product_meta=get_post_meta($prod->ID);?>
-   <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?> target="_blank">
-   <div class="imageHolderSlide">
-   <?php $image_deets = isset($product_meta['ss_product_image'][0]) ? $product_meta['ss_product_image'][0] : get_template_directory_uri() . "/images/upload-artwork.jpg"; ?>
-   <?php $image =  bfi_thumb( $image_deets , $product_params ); ?>
-    <img src="<?php echo $image ;?>"/>
-   </div>
-    </a>
-    <div class="product_info_slide"> 
-        <div class="leftProduct_info_slide">
-        	<?php $title = !isset($product_meta)?'':get_the_title($prod->ID); ?> 
-            <span class="titleProductInfoSlide"><?php echo substr($title, 0, 30).'...';  ?></span>
-            <span class="subtitleProductInfoSlide"><?php echo $advertiser->post_title; ?></span>
-        </div>
-        <div class="rightProduct_info_slide">
-            <div class="amount2">&pound;<?php echo !isset($product_meta)?'': $product_meta['ss_product_price'][0] ;?></div>
-            <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?>" target="_blank" class="button_ss">Buy Now</a>
-        </div>
-        <div class="ss_clear"></div>
-     </div>
-	
- 
-</li>  
-  
-<?php endforeach;?>
+    <ul class="slides">
+        <?php foreach($products as $prod): ?> 
+            <li class="ss_product_slide"> 
+                <?php $product_meta = get_post_meta($prod->ID);?>
+                <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?>" target="_blank">
+                    <div class="imageHolderSlide">
+                        <?php $image_deets = isset($product_meta['ss_product_image'][0]) ? $product_meta['ss_product_image'][0] : get_template_directory_uri() . "/images/upload-artwork.jpg"; ?>
+                        <?php $image =  bfi_thumb( $image_deets , $product_params ); ?>
+                        <img src="<?php echo $image ;?>"/>
+                    </div>
+                </a>
+                <div class="product_info_slide"> 
+                    <div class="leftProduct_info_slide">
+                        <?php $title = !isset($product_meta)?'':get_the_title($prod->ID); ?> 
+                        <span class="titleProductInfoSlide"><?php echo substr($title, 0, 30).'...';  ?></span>
+                        <span class="subtitleProductInfoSlide"><?php echo $advertiser->post_title; ?></span>
+                    </div>
+                    <div class="rightProduct_info_slide">
+                        <div class="amount2">&pound;<?php echo !isset($product_meta)?'': $product_meta['ss_product_price'][0] ;?></div>
+                        <a href="<?php echo !isset($product_meta)?'': $product_meta['ss_product_link'][0] ;?>" target="_blank" class="button_ss">Buy Now</a>
+                    </div>
+                    <div class="ss_clear"></div>
+                </div>
+            </li>  
+        <?php endforeach;?>
   </ul>
 </div><!--end flexslider -->
 <div class="ss_clear"></div>

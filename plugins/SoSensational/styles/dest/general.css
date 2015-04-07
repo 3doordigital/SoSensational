@@ -5,3 +5,8 @@
   color: #000; }
   #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item a:hover {
     background: #fff; }
+
+/* Advertsier.php flexslider carousel with products */
+.button_ss:hover {
+  text-decoration: underline;
+  color: #fff; }
