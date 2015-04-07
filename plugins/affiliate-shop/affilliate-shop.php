@@ -124,7 +124,7 @@ class WordPress_Affiliate_Shop {
 		}
 		$this->run_plugin();
 		
-		update_metadata('wp_aff_colours', 876, 'new_metadata', 'test');
+		//update_metadata('wp_aff_colours', 876, 'new_metadata', 'test');
 	}
 	public function get_plugin_url() {
 		return $this->plugin_url;
@@ -186,12 +186,12 @@ class WordPress_Affiliate_Shop {
      * Enqueue and register JavaScript files here.
      */
     public function register_scripts() {
-         wp_enqueue_script( 'jquery' );
-         wp_enqueue_script( 'jquery-ui-core' );
-        wp_enqueue_script( 'jquery-ui-slider' );
-         wp_enqueue_script( 'wp_aff_functions', $this->plugin_url . 'js/front-end.js' );
-         wp_localize_script( 'wp_aff_functions', 'ajax_object',
-            array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-slider' );
+		wp_enqueue_script( 'wp_aff_functions', $this->plugin_url . 'js/front-end.js' );
+		wp_localize_script( 'wp_aff_functions', 'ajax_object',
+			array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 	}
     /**
      * Enqueue and register CSS files here.
