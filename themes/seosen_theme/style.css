@@ -937,6 +937,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
 .blog label, .archive p label, .single p label {
     font-weight: 700;
 }
+li.dropdown:hover > ul.dropdown-menu {
+    display: block;    
+}
 .post_meta, .post_meta a {
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
