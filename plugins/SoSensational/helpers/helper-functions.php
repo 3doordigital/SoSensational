@@ -152,8 +152,33 @@ function sortCategoriesByPriority($categories)
     usort($categoriesWithPriority, function($a, $b) {
        return $a->ss_cat_priority - $b->ss_cat_priority;
     });   
-    
-
-    
+ 
     return $categoriesWithPriority;
+}
+
+/**
+ * Find children of each memebr of the array recursively and build a tree structure
+ * 
+ * @link http://stackoverflow.com/questions/29415723
+ * @author kainaw
+ * 
+ * @param array $shopCategories Input array - unsorted
+ * @param type $parent Parent ID to check the current member against
+ * @return array
+ */
+function sortShopCategories(&$shopCategories, $parent = 0)
+{
+    $tmp_array = array();
+    foreach($shopCategories as $obj)
+    {
+        if($obj->parent == $parent)
+        {
+            // The next line adds all children to this object
+            $obj->children = sortShopCategories($shopCategories, $obj->term_id);
+            $tmp_array[] = $obj;
+        }
+    }
+
+    // You *could* sort the temp array here if you wanted.
+    return $tmp_array;   
 }

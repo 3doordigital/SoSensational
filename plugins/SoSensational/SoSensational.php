@@ -28,6 +28,11 @@ require_once (dirname(__FILE__).'/page_settings.php');
 require_once (dirname(__FILE__).'/helpers/helper-functions.php');
 require_once (dirname(__FILE__).'/helpers/template-tags.php');
 
+/**
+ * My custom classes for SoSensational plugin
+ * 
+ * @author Lukasz Tarasiewicz
+ */
 require_once (dirname(__FILE__).'/classes/FeaturedMeta.php');
 require_once (dirname(__FILE__).'/classes/RelatedCarousel.php');
 require_once (dirname(__FILE__).'/classes/FeaturedCarousel.php');
@@ -354,6 +359,13 @@ function pbd_alp_init() {
 }
 
 add_action('wp_enqueue_scripts', 'pbd_alp_init');
+
+function enqueueAdminStylesheets()
+{
+    wp_enqueue_style( 'sass-admin-styles', plugins_url( 'SoSensational/styles/dest/admin-styles.css' )); 
+}
+
+add_action('admin_enqueue_scripts', 'enqueueAdminStylesheets');
 
 function deleteSelectedProduct() 
 {

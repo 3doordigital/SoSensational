@@ -267,6 +267,7 @@ class WordPress_Affiliate_Shop {
         add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
         add_rewrite_rule('^shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
         add_rewrite_rule('^shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
+        add_rewrite_rule('^category/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]', 'top');
 		
 		
     }
@@ -357,8 +358,8 @@ class WordPress_Affiliate_Shop {
 
         $args = array(
             'labels'             => $labels,
-            'public'             => false,
-            'publicly_queryable' => true,
+            'public'             => true,
+            'publicly_queryable' => false,
             'show_ui'            => false,
             'show_in_menu'       => false,
             'query_var'          => true,
@@ -391,7 +392,7 @@ class WordPress_Affiliate_Shop {
 
         $args = array(
             'hierarchical'      => true,
-            'public'            => false,
+            'public'            => true,
             'labels'            => $labels,
             'show_ui'           => true,
             'show_admin_column' => true,
@@ -444,7 +445,7 @@ class WordPress_Affiliate_Shop {
             'rewrite'           => array( 'slug' => 'aff-brands', 'with_front' => false ),
         );
 
-	   register_taxonomy( 'wp_aff_categories', array( 'wp_aff_products' ), $args );
+        register_taxonomy( 'wp_aff_categories', array( 'wp_aff_products' ), $args );
        register_taxonomy( 'wp_aff_colours', array( 'wp_aff_products' ), $args2 );
        register_taxonomy( 'wp_aff_sizes', array( 'wp_aff_products' ), $args3 );
        register_taxonomy( 'wp_aff_brands', array( 'wp_aff_products' ), $args4 );

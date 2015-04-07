@@ -13,10 +13,11 @@ class RelatedCarousel
     
     public function __construct($currentCategory)
     {
+        
         $this->currentCategory = $currentCategory;
-        $this->collectAdvertiserCategories();
-        if ( ! empty ($this->advertiserCategories)) {
-            $this->collectDataForDisplay();            
+        
+        if ($this->collectAdvertiserCategories()) {
+            $this->collectDataForDisplay();
         }
 
     }
@@ -25,43 +26,29 @@ class RelatedCarousel
     {      
         global $wpdb;
 
-        
+        /**
+         * Retrieve all terms from 'ss_category' taxonomy
+         */
         $categories = $wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt 
             LEFT JOIN {$wpdb->terms} as wpt
             ON wpt.term_id=wptt.term_id
             WHERE wptt.taxonomy='ss_category' ", OBJECT);   
+
             
-        $corelatedCategories = sortCategoriesByPriority($categories);
-        
-        foreach ($corelatedCategories as $corelatedCategory) {    
-            if (is_array($corelatedCategory->ss_aff_categories) && in_array($this->currentCategory->term_id, $corelatedCategory->ss_aff_categories)) {                            
-                $terms[] = $corelatedCategory->term_id;        
-            }            
-        }
-        
-        if (! isset($terms) ) {
+        $corelatedCategories = $this->attachShopCategoriesToSSCategories($categories);
+        $terms = $this-> retrieveSSTermsCorelatedToCurrentTerm($corelatedCategories);               
+               
+        if ($terms === false) {
             return false;
         }
-
-        $args = array(
-            'post_type' => array('advertisers_cats'),
-            'tax_query' => array(
-                array(
-                    'taxonomy'  =>  'ss_category',
-                    'field' => 'id',
-                    'terms' =>  $terms
-                )
-            )
-        );
         
-        $advertiserCategories = get_posts($args);
-             
-        if ( ! empty($corelatedCategories)) {            
-            $this->advertiserCategories = $advertiserCategories;                        
+        $advertiserCategoriesToDisplay = $this->retrieveAdvertiserCategoriesToDisplay($terms);
+                 
+        $this->advertiserCategories = $advertiserCategoriesToDisplay;  
+        
+        if ($advertiserCategoriesToDisplay) {                    
             return true;
-        } else {
-            $this->advertiserCategories = false;            
-        }
+        } 
         
         return false;
         
@@ -112,5 +99,48 @@ class RelatedCarousel
         return new RelatedCarousel\Carousel($this->dataForDisplay, $this->currentCategory);
     }
     
+    private function attachShopCategoriesToSSCategories($categories)
+    {
+        foreach($categories as $singleCategory) {    
+            $singleCategoriesMeta = get_option( "taxonomy_$singleCategory->term_id" );
+            $ssAffCategories = isset($singleCategoriesMeta['ss_aff_categories']) ? $singleCategoriesMeta['ss_aff_categories'] : false;
+            $singleCategory->ss_aff_categories = $ssAffCategories;
+            $corelatedCategories[] = $singleCategory;
+
+            return $corelatedCategories;
+        }        
+    }
+    
+    private function retrieveSSTermsCorelatedToCurrentTerm($corelatedCategories)
+    {
+        foreach ($corelatedCategories as $corelatedCategory) {    
+            if (is_array($corelatedCategory->ss_aff_categories) && 
+                in_array($this->currentCategory->term_id, $corelatedCategory->ss_aff_categories)) {                            
+                $terms[] = $corelatedCategory->term_id;        
+            }            
+        }        
+        if (isset($terms)) {
+            return $terms;
+        }
+        return false;
+    }
+    
+    private function retrieveAdvertiserCategoriesToDisplay($terms)
+    {
+        $args = array(
+            'post_type' => array('advertisers_cats'),
+            'tax_query' => array(
+                array(
+                    'taxonomy'  =>  'ss_category',
+                    'field' => 'id',
+                    'terms' =>  $terms
+                )
+            )
+        );
+        
+        $adverTisersToDisplay = get_posts($args);        
+        
+        return $adverTisersToDisplay;
+    }
     
 }
