@@ -813,7 +813,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     display: inline-block;
     margin-bottom: -2px;
     background: #fff;
-    padding: 14px 0;
+    padding: 6px 0;
     position: relative;
     z-index: 5;
     margin-top: 15px;
@@ -963,7 +963,7 @@ li.dropdown:hover > ul.dropdown-menu {
     list-style-type: none;
     float: right;
     position: relative;
-    top: -40px;
+    top: -44px;
 }
 #topcats li {
     display: inline-block;
@@ -980,7 +980,7 @@ li.dropdown:hover > ul.dropdown-menu {
     background-color: #000;
     width: 147px;
     text-align: center;
-    padding: 3px 0;
+    padding: 5px 0;
     -webkit-border-radius: 5px 5px 0 0;
     border-radius: 5px 5px 0 0;
 }
@@ -998,13 +998,16 @@ li.dropdown:hover > ul.dropdown-menu {
 #topcats .dropdown-menu li a {
     display: block;
     width: auto;
-    background: #ece8d9;
+    background: #ebe8d9;
     color: #000;
     text-align: left;
     padding: 10px;
     -webkit-border-radius: 0 0 0 0;
     border-radius: 0 0 0 0;
     border-bottom: 1px solid #dbd2b1;
+}
+#topcats .dropdown-menu li a:hover {
+	background: #f2f0e7;
 }
 .notfoundback {
     background-color: #727e8b;
