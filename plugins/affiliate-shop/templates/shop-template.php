@@ -199,11 +199,11 @@ get_header();
 								
                             echo '        <div>
                                             <div>
-                                                <img src="'.$post_meta['wp_aff_product_image'][0].'">
+                                                <a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'"><img src="'.$post_meta['wp_aff_product_image'][0].'"></a>
                                             </div>
                                             <div class="row product-info">
                                                 <div class="prod_title col-md-17">
-                                                    <h3><a href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'">'.get_snippet($post->post_title,4).'...</a></h3>
+                                                    <h3><a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'">'.get_snippet($post->post_title,4).'...</a></h3>
                                                     <h4>'. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
                                                 </div>
                                                 <div class="prod_price col-md-7">
@@ -211,7 +211,7 @@ get_header();
                                                         <div class="amount">&pound;'.
                                                             number_format( $post_meta['wp_aff_product_price'][0], 2 ).
                                                         '</div>
-                                                        <a href="'.$post_meta['wp_aff_product_link'][0].'" class="button">Shop Now</a>
+                                                        <a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" class="button">Shop Now</a>
                                                     </div>
                                                 </div>
                                             </div>
