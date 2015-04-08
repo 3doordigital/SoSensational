@@ -4,7 +4,6 @@ if(!class_exists('WP_List_Table')){
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-
 class WP_Terms_List_Tables extends WP_List_Table {
 
 	public $callback_args;
@@ -589,6 +588,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 	}
 	
 }
+
 class ProductTable extends WP_List_Table {
     
     
@@ -1140,11 +1140,28 @@ function column_default($item, $column_name){
         
         if( isset( $_REQUEST['category'] ) ) {
             $actions = array(
-                'add'      => sprintf('<a href="?page=%s&action=%s&product=%s&q=%s&category=%s&wp_aff_merch=%s">Add Product</a>',$_REQUEST['page'],'add',$item['ID'], $_REQUEST['q'], $_REQUEST['category'], $_REQUEST['wp_aff_merch']),
+                'add'      => sprintf(
+					'<a href="?page=%s&action=%s&product=%s&q=%s&category=%s&wp_aff_merch=%s&paged=%d">Add Product</a>',
+					$_REQUEST['page'],
+					'add',$item['ID'], 
+					$_REQUEST['q'], 
+					$_REQUEST['category'], 
+					$_REQUEST['wp_aff_merch'],
+					( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1 )
+				
+				),
             );
         } else {
             $actions = array(
-                'add'      => sprintf('<a href="?page=%s&action=%s&product=%s&q=%s&wp_aff_merch=%s">Add Product</a>',$_REQUEST['page'],'add',$item['ID'], $_REQUEST['q'], $_REQUEST['wp_aff_merch']),
+                'add'      => sprintf(
+					'<a href="?page=%s&action=%s&product=%s&q=%s&wp_aff_merch=%s&paged=%d">Add Product</a>',
+					$_REQUEST['page'],
+					'add',
+					$item['ID'], 
+					$_REQUEST['q'], 
+					$_REQUEST['wp_aff_merch'],
+					( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1 )
+				),
             );
         }
                                 
@@ -1315,7 +1332,6 @@ function prepare_items() {
     ) );
 }
 }
-
 
 class AddOnsTable extends WP_List_Table {
     
