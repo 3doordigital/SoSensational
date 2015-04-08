@@ -16,6 +16,7 @@ jQuery(document).ready(function($) {
 			'action': 'change_faceted_category',
 			'cat': $(this).attr('rel')
 		};
+		thislink.toggleClass('active');
 		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 		$.post(ajax_object.ajax_url, data, function(response) {
 			thislink.after(response);

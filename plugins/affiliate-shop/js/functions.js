@@ -11,6 +11,27 @@ jQuery(document).ready(function($) {
 		}
 	});
 	
+	$('.ajax_sticker').live( 'click', function( e ) {
+			e.preventDefault();
+			var thislink = $(this);
+			var data = {
+				'action': 'ajax_update_sticker',
+				'post': $(this).attr('data-item'),
+				'var' : $(this).attr('data-action')
+			};
+			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+			$.post(ajaxurl, data, function(response) {
+				console.log( response );
+				if( response.status == 1 ) {
+					if( response.new == 1 ) {
+						thislink.addClass('active');
+					} else {
+						thislink.removeClass('active');
+					}
+				}
+			}, 'json');
+	});
+	
     /*$('.searchList').keyup( function(event) {
         //console.log($(this).val());
         var search = $(this).val();

@@ -84,6 +84,8 @@ class WordPress_Affiliate_Shop {
 		add_action( 'admin_post_nopriv_wp_aff_brand_filter', array( $this, 'wp_aff_brand_filter' ) );
 		add_action( 'admin_post_wp_aff_brand_filter', array( $this, 'wp_aff_brand_filter' ) );
 		
+		add_action( 'wp_ajax_ajax_update_sticker', array( $this, 'ajax_update_sticker' ) );
+		
         add_action( 'wp_ajax_nopriv_change_faceted_category', array( $this, 'faceted_cat_ajax' ) );
         add_action( 'wp_ajax_change_faceted_category', array( $this, 'faceted_cat_ajax' ) );
 		
@@ -126,6 +128,11 @@ class WordPress_Affiliate_Shop {
 		
 		//update_metadata('wp_aff_colours', 876, 'new_metadata', 'test');
 	}
+	
+	public function get_option() {
+		return $this->option;
+	}
+	
 	public function get_plugin_url() {
 		return $this->plugin_url;
 	}
@@ -1469,6 +1476,12 @@ class WordPress_Affiliate_Shop {
                             ?>
                         </td>
                     </tr>
+                    <tr>
+                        <th>'NEW' Product for how many days?</th>
+                        <td>
+                            <input class="text" type="text" name="<?php echo $this->option_name; ?>[new_days]" value="<?php echo $this->option['new_days']; ?>" id="<?php echo $this->option_name; ?>[new_days]">
+                        </td>
+                    </tr>
                 </table>
                 <?php submit_button( 'Save' ); ?>
             </form>
@@ -1960,6 +1973,40 @@ class WordPress_Affiliate_Shop {
             <?php } ?>
         </div>
 <?php }
+	
+	public function ajax_update_sticker() {
+		$output = array();
+		$output['status'] = 0;
+		
+		$meta = get_post_meta( $_POST['post'], 'wp_aff_product_'.$_POST['var'], true );
+		if( isset( $meta ) && $meta == 1 ) {
+			if( update_post_meta( $_POST['post'], 'wp_aff_product_'.$_POST['var'], 0 ) ) {
+				$output['status'] = 1;
+				$output['previous'] = 1;
+				$output['new'] = 0;
+			} else {
+				$output['status'] = 0;	
+			}
+		} elseif( isset( $meta ) && $meta == 0 ) {
+			if( update_post_meta( $_POST['post'], 'wp_aff_product_'.$_POST['var'], 1 ) ) {
+				$output['status'] = 1;
+				$output['previous'] = 0;
+				$output['new'] = 1;
+			} else {
+				$output['status'] = 0;	
+			}
+		} else {
+			if( update_post_meta( $_POST['post'], 'wp_aff_product_'.$_POST['var'], 1 ) ) {
+				$output['status'] = 1;
+				$output['previous'] = 0;
+				$output['new'] = 1;
+			} else {
+				$output['status'] = 0;	
+			}
+		}
+		echo json_encode((object)$output);
+		die;	
+	}
 	
     /**
      * Place code for your plugin's functionality here.
