@@ -178,11 +178,26 @@ get_header();
                         }
                         $post_meta = get_post_meta($post->ID);
                         $brand = wp_get_post_terms($post->ID, 'wp_aff_brands');
-                        //print_var($post);
+                        //print_var($post_meta);
 						//print_var($brand);
                             echo '
-                            <div class="col-md-8 product">
-                                        <div>
+                            <div class="col-md-8 product">';
+							if( isset( $post_meta['wp_aff_product_sale'][0] ) && $post_meta['wp_aff_product_sale'][0] == 1 ) {
+								echo '<div class="product-sale"><span class="sr-only">Sale!</span></div>';
+							} else {
+								if( isset( $post_meta['wp_aff_product_picks'][0] ) && $post_meta['wp_aff_product_picks'][0] == 1 ) {
+									echo '<div class="product-picks"><span class="sr-only">Hot Pick!</span></div>';
+								} else {
+									global $wp_aff;
+									$options = $wp_aff->get_option();
+									$pastdate = strtotime('-'.$options['new_days'].' days');
+									if ( $pastdate <= strtotime( $post->post_date ) ) {
+										echo '<div class="product-new"><span class="sr-only">New In!</span></div>';
+									}	
+								}
+							}
+								
+                            echo '        <div>
                                             <div>
                                                 <img src="'.$post_meta['wp_aff_product_image'][0].'">
                                             </div>
