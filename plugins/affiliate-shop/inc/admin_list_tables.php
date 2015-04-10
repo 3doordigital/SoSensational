@@ -4,7 +4,6 @@ if(!class_exists('WP_List_Table')){
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-
 class WP_Terms_List_Tables extends WP_List_Table {
 
 	public $callback_args;
@@ -589,6 +588,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 	}
 	
 }
+
 class ProductTable extends WP_List_Table {
     
     
@@ -818,9 +818,24 @@ class AllProductTable extends WP_List_Table {
         ); 
     }
 	function column_stickers( $item ) {
-		$output = '<a href=""><i class="fa fa-shopping-cart fa-fw fa-lg"></i></a> ';
-		$output .= '<a href="" class="active"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
-		$output .= '<a href=""><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+		if( $item['sale'] == 1 ) {
+			$output = '<a href="" class="active ajax_sticker" data-item="'.$item['ID'].'" data-action="sale"><i class="fa fa-shopping-cart fa-fw fa-lg"></i></a> ';
+		} else {
+			$output = '<a href="" class="ajax_sticker" data-item="'.$item['ID'].'" data-action="sale"><i class="fa fa-shopping-cart fa-fw fa-lg"></i></a> ';	
+		}
+		
+		if( $item['picks'] == 1 ) {
+			$output .= '<a href="" class="active ajax_sticker" data-item="'.$item['ID'].'" data-action="picks"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
+		} else {
+			$output .= '<a href="" class="ajax_sticker" data-item="'.$item['ID'].'" data-action="picks"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
+		}
+		
+		if( $item['new'] == 1 ) {
+			$output .= '<a href="" class="active ajax_sticker" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+		} else {
+			$output .= '<a href="" class="ajax_sticker" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+		}
+		
 		return $output;
 	}
     function column_desc($item) {
@@ -1062,7 +1077,8 @@ class AllProductTable extends WP_List_Table {
             $sizes = @implode( ', ', $prod_data['sizes']);
             $brands = @implode( ', ', $prod_data['brands']);
             
-            //print_var($terms);
+						
+            //print_var($post_meta);
             
             $data[$i] = array(
                 'ID'    => $post->ID,
@@ -1074,7 +1090,14 @@ class AllProductTable extends WP_List_Table {
                 'price' => $post_meta['wp_aff_product_price'][0],
                 'link' => $post_meta['wp_aff_product_link'][0],
             );
-            
+			( isset( $post_meta['wp_aff_product_sale'] ) && $post_meta['wp_aff_product_sale'] == 1 ? $data[$i]['sale'] = 1 : $data[$i]['sale'] = 0 ); 
+			( isset( $post_meta['wp_aff_product_picks'] ) && $post_meta['wp_aff_product_picks'] == 1 ? $data[$i]['picks'] = 1 : $data[$i]['picks'] = 0 ); 
+			global $wp_aff;
+			$options = $wp_aff->get_option();
+			
+			$pastdate = strtotime('-'.$options['new_days'].' days');
+			( $pastdate <= strtotime( $post->post_date ) ? $data[$i]['new'] = 1 : $data[$i]['new'] = 0 ); 
+			
             $i++;
         }
         //print_var($data);
@@ -1140,11 +1163,28 @@ function column_default($item, $column_name){
         
         if( isset( $_REQUEST['category'] ) ) {
             $actions = array(
-                'add'      => sprintf('<a href="?page=%s&action=%s&product=%s&q=%s&category=%s&wp_aff_merch=%s">Add Product</a>',$_REQUEST['page'],'add',$item['ID'], $_REQUEST['q'], $_REQUEST['category'], $_REQUEST['wp_aff_merch']),
+                'add'      => sprintf(
+					'<a href="?page=%s&action=%s&product=%s&q=%s&category=%s&wp_aff_merch=%s&paged=%d">Add Product</a>',
+					$_REQUEST['page'],
+					'add',$item['ID'], 
+					$_REQUEST['q'], 
+					$_REQUEST['category'], 
+					$_REQUEST['wp_aff_merch'],
+					( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1 )
+				
+				),
             );
         } else {
             $actions = array(
-                'add'      => sprintf('<a href="?page=%s&action=%s&product=%s&q=%s&wp_aff_merch=%s">Add Product</a>',$_REQUEST['page'],'add',$item['ID'], $_REQUEST['q'], $_REQUEST['wp_aff_merch']),
+                'add'      => sprintf(
+					'<a href="?page=%s&action=%s&product=%s&q=%s&wp_aff_merch=%s&paged=%d">Add Product</a>',
+					$_REQUEST['page'],
+					'add',
+					$item['ID'], 
+					$_REQUEST['q'], 
+					$_REQUEST['wp_aff_merch'],
+					( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1 )
+				),
             );
         }
                                 
@@ -1315,7 +1355,6 @@ function prepare_items() {
     ) );
 }
 }
-
 
 class AddOnsTable extends WP_List_Table {
     

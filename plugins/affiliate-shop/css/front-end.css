@@ -124,6 +124,36 @@
 .ui-slider-horizontal .ui-slider-range-max {
   right: -1px;
 }
+.product {
+	position: relative;
+}
+.product .product-sale {
+	position: absolute;
+	top: -5px;
+	right: 5px;
+	background: url(../img/sale-overlay.png) no-repeat top right;
+	border: none;
+	width: 60px;
+	height: 60px;
+}
+.product .product-new {
+	position: absolute;
+	top: -5px;
+	right: 5px;
+	background: url(../img/new-overlay.png) no-repeat top right;
+	border: none;
+	width: 60px;
+	height: 60px;
+}
+.product .product-picks {
+	position: absolute;
+	top: -5px;
+	right: 5px;
+	background: url(../img/picks-overlay.png) no-repeat top right;
+	border: none;
+	width: 60px;
+	height: 60px;
+}
 .product-info, .products .prod_title {
     min-height: 85px;
 }

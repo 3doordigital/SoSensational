@@ -53,6 +53,9 @@
 .categorychecklist .children {
 	display:none;
 }
+#categorydiv .children {
+	display:block!important;
+}
 .categorychecklist .open .children {
 	display:block;
 }
