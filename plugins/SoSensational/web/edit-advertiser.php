@@ -160,30 +160,35 @@ $attachments = get_posts( array(
         
 
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon2">Company Name</span>
+  <span class="input-group-addon input-width">Company Name</span>
   <input type="text" value="<?php echo isset($meta['ss_advertiser_co_name'][0]) ? $meta['ss_advertiser_co_name'][0] : "";?>" name="sosensational_options[advertiser_co_name]" class=" form-control"  value="<?php echo $meta['ss_advertiser_co_name'][0];?>" placeholder="Company Name" aria-describedby="basic-addon1">
 </div>
 <br />
         
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon2">Email</span>
+  <span class="input-group-addon input-width">Email</span>
   <input type="text" value="<?php echo isset($meta['ss_advertiser_email'][0]) ? $meta['ss_advertiser_email'][0] : "";?>" name="sosensational_options[advertiser_email]" class=" form-control"  value="<?php echo $meta['ss_advertiser_email'][0];?>" placeholder="Email Address" aria-describedby="basic-addon1">
 </div>
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Website Address:</span>
+  <span class="input-group-addon input-width">Website Address:</span>
 	<input type="text" name="sosensational_options[advertiser_website]" id="advertiser_website" value="<?php echo isset($meta['ss_advertiser_website'][0]) ? $meta['ss_advertiser_website'][0] : "";?>" class="form-control" aria-describedby="basic-addon1" />
+</div>
+<div class="input-group">
+  <span class="input-group-addon input-width">Affiliate Advertiser Link:</span>
+  <span class="input-group-addon" id="basic-addon1">http://</span>
+	<input type="text" name="sosensational_options[affiliate_advertiser_link]" id="advertiser_website" value="<?php echo isset($meta['ss_affiliate_advertiser_link'][0]) ? $meta['ss_affiliate_advertiser_link'][0] : "";?>" class="form-control" aria-describedby="basic-addon1" />
 </div>
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Company Address:</span>
+  <span class="input-group-addon input-width">Company Address:</span>
 	<input type="text"  name="sosensational_options[advertiser_address]" id="advertiser_address"  value="<?php echo isset($meta['ss_advertiser_address'][0]) ? $meta['ss_advertiser_address'][0] : "";?>" class="form-control" aria-describedby="basic-addon1" />
 </div>
 
 <br />
 <div class="input-group">
-    <span class="input-group-addon input-width" id="basic-addon1">1 Line Company Description:<br /><div id="oneLineDescCounter"></div></span>
+    <span class="input-group-addon input-width">1 Line Company Description:<br /><div id="oneLineDescCounter"></div></span>
 	<textarea name="sosensational_options[advertiser_co_desc]" id="advertiser_co_desc"  class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_advertiser_co_desc'][0]) ? $meta['ss_advertiser_co_desc'][0] : "";?></textarea>
    
 </div>
@@ -191,7 +196,7 @@ $attachments = get_posts( array(
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Full Brand Description:<br /><div id="fullDescCounter"></div></span>
+  <span class="input-group-addon input-width">Full Brand Description:<br /><div id="fullDescCounter"></div></span>
 	<textarea name="sosensational_options[advertiser_desc]" id="advertiser_desc"  class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_advertiser_desc'][0]) ? $meta['ss_advertiser_desc'][0] : "";?></textarea>
 </div>
 
@@ -199,32 +204,32 @@ $attachments = get_posts( array(
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Facebook Page:</span>
+  <span class="input-group-addon input-width">Facebook Page:</span>
 	<input type="text" name="sosensational_options[advertiser_facebook]" id="advertiser_desc"  value="<?php echo isset($meta['ss_advertiser_facebook'][0]) ? $meta['ss_advertiser_facebook'][0] : "";?>" class="form-control" aria-describedby="basic-addon1" />
 </div>
 
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Google Plus Page:</span>
+  <span class="input-group-addon input-width">Google Plus Page:</span>
 	<input type="text"   name="sosensational_options[advertiser_google]" id="advertiser_google"  value="<?php echo isset($meta['ss_advertiser_google'][0]) ? $meta['ss_advertiser_google'][0] : "";?>" class="form-control" aria-describedby="basic-addon1" />
 </div>
 
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Pinterest Page:</span>
+  <span class="input-group-addon input-width">Pinterest Page:</span>
 	<input type="text"   name="sosensational_options[advertiser_pinterest]" id="advertiser_pinterest" value="<?php echo isset($meta['ss_advertiser_pinterest'][0]) ? $meta['ss_advertiser_pinterest'][0] : "";?>" class="form-control" aria-describedby="basic-addon1" />
 </div>
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Twitter Page:</span>
+  <span class="input-group-addon input-width">Twitter Page:</span>
 	<input type="text"   name="sosensational_options[advertiser_twitter]" id="advertiser_twitter" value="<?php echo isset($meta['ss_advertiser_twitter'][0]) ? $meta['ss_advertiser_twitter'][0] : "";?>" class="form-control" aria-describedby="basic-addon1" />
 </div>
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Instragram Page:</span>
+  <span class="input-group-addon input-width">Instragram Page:</span>
 	<input type="text"   name="sosensational_options[advertiser_instragram]" id="advertiser_instragram" value="<?php echo isset($meta['ss_advertiser_instragram'][0]) ? $meta['ss_advertiser_instragram'][0] : "";?>" class="form-control" aria-describedby="basic-addon1" />
 </div>
 
