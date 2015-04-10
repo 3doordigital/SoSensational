@@ -35,7 +35,6 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
         $advertiserLink = isset($meta['ss_affiliate_advertiser_link'][0]) 
                 ? $meta['ss_affiliate_advertiser_link'][0] 
                 : $meta['ss_advertiser_website'][0];
-        var_dump($advertiserLink);
     ?>
     
     
