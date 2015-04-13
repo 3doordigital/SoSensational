@@ -38,7 +38,8 @@ jQuery(document).ready(function($) {
 		var thislink = $(this);
 		var prod = thislink.attr('rel');
 		
-		thislink.parent().parent().children('.inside').addClass('HHHHHHHHHH');
+		thislink.html('Restore');
+		thislink.parent().parent().children('.inside').hide();
 	});
 	
     /*$('.searchList').keyup( function(event) {
