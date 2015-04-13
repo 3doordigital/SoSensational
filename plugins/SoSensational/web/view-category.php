@@ -193,7 +193,7 @@ $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null
 	
                              </div>
                              
-                             <a class="button_ss large_ss" target="_self" href="<?php  echo get_post_meta( get_the_ID(), 'ss_advertisers_cats_link', true );?>">Visit Website</a>
+                             <a class="button_ss large_ss" target="_new" href="<?php  echo get_post_meta( get_the_ID(), 'ss_advertisers_cats_link', true );?>">Visit Website</a>
 
                     </div>
                           
