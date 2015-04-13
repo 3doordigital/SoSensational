@@ -843,14 +843,15 @@ class WordPress_Affiliate_Shop {
             
             // Insert the post into the database
             
-            
-            $insID = wp_insert_post( $my_post );   
-            add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'][$i], true);
-            add_post_meta($insID, 'wp_aff_product_link', $_POST['product_link'][$i], true);
-            add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'][$i], true);
-            //add_post_meta($insID, 'wp_aff_product_brand', , true);
-            add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'][$i], true);
-            add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'][$i], true);
+            if( $_POST['product_skip'][$i] == 0 ) {
+				$insID = wp_insert_post( $my_post );   
+				add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'][$i], true);
+				add_post_meta($insID, 'wp_aff_product_link', $_POST['product_link'][$i], true);
+				add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'][$i], true);
+				//add_post_meta($insID, 'wp_aff_product_brand', , true);
+				add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'][$i], true);
+				add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'][$i], true);
+			}
         }
         //print_var($data);
         unset( $_SESSION['products'] );
