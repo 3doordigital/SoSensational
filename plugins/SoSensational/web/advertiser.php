@@ -31,11 +31,17 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
         } 
     ?>
     
+    <?php
+        $advertiserLink = isset($meta['ss_affiliate_advertiser_link'][0]) 
+                ? $meta['ss_affiliate_advertiser_link'][0] 
+                : $meta['ss_advertiser_website'][0];
+    ?>
+    
     
 <div class="ss_description_single">
        <div class="ss_description_single_left"><?php echo $meta['ss_advertiser_co_desc'][0];?></div>
        <div class="ss_description_single_right">
-        <a class="visit_site_ss" target="_blank" href="<?php echo $meta['ss_advertiser_website'][0];?>">Visit <?php echo $advertiser->post_title;?></a>
+        <a class="visit_site_ss" target="_blank" href="<?php echo 'http://' . $advertiserLink; ?>">Visit <?php echo $advertiser->post_title;?></a>
        </div>
        <div class="ss_clear"></div>
 </div>
@@ -116,7 +122,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
                 $domainName = isset($parsedUrl['host']) ? $parsedUrl['host'] : $parsedUrl['path'];                
             ?>            
                 Website: 
-                <a href="<?php echo 'http://' . $domainName;?>" target="_blank">
+                <a href="<?php echo 'http://' . $advertiserLink;?>" target="_blank">
                     <?php echo preg_replace('/^www\./' ,'', $domainName);?>
                 </a>
             <?php
@@ -151,7 +157,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
          </div>
 
 </div>
- <a class="visit_site_ss" target="_blank" href="<?php echo $meta['ss_advertiser_website'][0];?>">Visit <?php echo $advertiser->post_title;?></a>
+ <a class="visit_site_ss" target="_blank" href="<?php echo 'http://' . $advertiserLink; ?>">Visit <?php echo $advertiser->post_title;?></a>
 </div>
 
 
