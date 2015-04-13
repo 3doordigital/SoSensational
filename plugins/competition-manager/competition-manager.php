@@ -91,24 +91,25 @@ class WordPress_Competition_Manager {
 	
 	function remove_expired_comps( $query ) {
 		
-		
-		$meta_query = array( 'relation' => 'AND' );
-		$meta_query[] = array(
-                    'key'=>'wp_comp_sdate',
-                    'value'=> date("Y-m-d"),
-                    'compare'=>'<=',
-					'type' => 'date'
-                );
-		$meta_query[] = array(
-                    'key'=>'wp_comp_edate',
-                    'value'=> date("Y-m-d"),
-                    'compare'=>'>=',
-					'type' => 'date'
-                );
-		$query->set('meta_query',$meta_query);
-		//print_var( $query );
-		//print_var( $query->get('meta_query') );
-		//die();
+		if( is_post_type_archive( 'wp_comp_man' ) ) {
+			$meta_query = array( 'relation' => 'AND' );
+			$meta_query[] = array(
+						'key'=>'wp_comp_sdate',
+						'value'=> date("Y-m-d"),
+						'compare'=>'<=',
+						'type' => 'date'
+					);
+			$meta_query[] = array(
+						'key'=>'wp_comp_edate',
+						'value'=> date("Y-m-d"),
+						'compare'=>'>=',
+						'type' => 'date'
+					);
+			$query->set('meta_query',$meta_query);
+			//print_var( $query );
+			//print_var( $query->get('meta_query') );
+			//die();
+		}
 	}
 	
     function check_comp_date(  ) {
@@ -120,7 +121,7 @@ class WordPress_Competition_Manager {
 			if( $sdate > $cdate || $edate < $cdate) {
 				//wp_redirect( home_url( '/competitions/' ) ); 
 				echo $sdate.' : '.$edate.' : '.$cdate;
-				exit;
+				//exit;
 			} 
 		}
 	}
@@ -873,12 +874,12 @@ class WordPress_Competition_Manager {
 				'access_token' => 'your access token',
 				'refresh_token' => 'your refresh token');*/
 			
-			$auth = array('api_key' => 'your API key');
-			$wrap = new CS_REST_Subscribers('Your list ID', $auth);
+			$auth = array('api_key' => 'db073d15d60ca2279ed792532264c19e');
+			$wrap = new CS_REST_Subscribers('f59ef39c0b2b7b92bd444170cf5b260a', $auth);
 
 			$result = $wrap->add(array(
-				'EmailAddress' => 'Subscriber email',
-				'Name' => 'Subscriber name',
+				'EmailAddress' => $_POST['email'],
+				'Name' => $name,
 				'CustomFields' => array(
 					array(
 						'Key' => 'Competition ID',
@@ -903,6 +904,9 @@ class WordPress_Competition_Manager {
 					'message'	=> 'Entry successfully added, but an error occured at Campaign Monitor',
 					'redirect'	=> site_url('competitions/?msg=1')
 				);
+				 echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
+					var_dump($result->response);
+					echo '</pre>';
 			}
 		}
 		echo json_encode( $return );
