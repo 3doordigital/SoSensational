@@ -83,8 +83,8 @@ class WordPress_Competition_Manager {
         
 		add_filter( 'the_content', array( $this, 'display_single_comp'), 10 );
 		
-		add_action( 'template_redirect', array( $this, 'check_comp_date' ) );
-		add_action( 'pre_get_posts', array( $this, 'remove_expired_comps' ) );
+		//add_action( 'template_redirect', array( $this, 'check_comp_date' ) );
+		//add_action( 'pre_get_posts', array( $this, 'remove_expired_comps' ) );
 
 		$this->run_plugin();
 	}
