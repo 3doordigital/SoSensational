@@ -220,5 +220,6 @@
 }
 #amount {
 	text-align: left;
-	width: 90px;	
+	width: 90px;
+	padding: 5px 0;	
 }
