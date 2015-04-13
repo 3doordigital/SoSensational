@@ -41,11 +41,11 @@ jQuery(document).ready(function($) {
 		if( $( '#product-skip-'+prod ).val() == 0 ) {
 			thislink.html('Restore Product');
 			thislink.parent().parent().children('.inside').hide();
-			$( '#product-skip'+prod ).val(1);
+			$( '#product-skip-'+prod ).val(1);
 		} else {
 			thislink.html('Remove Product');
 			thislink.parent().parent().children('.inside').show();
-			$( '#product-skip'+prod ).val(0)
+			$( '#product-skip-'+prod ).val(0)
 		}
 	});
 	
