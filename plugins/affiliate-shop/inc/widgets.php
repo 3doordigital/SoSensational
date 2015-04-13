@@ -191,17 +191,23 @@ class aff_price_widget extends WP_Widget {
 		$prices = array_unique( $prices );
 		
 		sort( $prices, SORT_NUMERIC );
-		
-		$range = array(
-				'min' 	=> $prices[0],
-				'max'	=> end($prices)
-			);
-		if( isset( $_REQUEST['price-min'] ) && isset( $_REQUEST['price-max'] ) ) {
-			$range['start'] = $_REQUEST['price-min'];
-			$range['end'] 	= $_REQUEST['price-max'];
+		if( isset( $prices[0] ) ) {
+			$range = array(
+					'min' 	=> number_format( $prices[0], 0 ),
+					'max'	=> number_format( end($prices), 0 )
+				);
 		} else {
-			$range['start'] = $prices[0];
-			$range['end'] 	= end($prices);
+			$range = array(
+					'min' 	=> 0,
+					'max'	=> 0
+				);
+		}
+		if( isset( $_REQUEST['price-min'] ) && isset( $_REQUEST['price-max'] ) ) {
+			$range['start'] =  number_format( $_REQUEST['price-min'], 0 );
+			$range['end'] 	=  number_format( $_REQUEST['price-max'], 0 );
+		} else {
+			$range['start'] = $range['min'];
+			$range['end'] 	= $range['max'];
 		}
 		
 		?>
@@ -211,7 +217,7 @@ class aff_price_widget extends WP_Widget {
     <div id="slider-range"></div>
     <div class="price_text">
     <form action="<?php echo admin_url('admin-post.php'); ?>" id="wp_aff_price_filter" method="POST">
-      <input type="text" id="amount" readonly style="border:0; width: 70px;">
+      <input type="text" id="amount" readonly style="border:0;">
       <input type="hidden" id="price-min" name="price-min" value="75">
       <input type="hidden" id="price-max" name="price-max" value="300">
       <input type="hidden" name="action" value="wp_aff_price_filter">

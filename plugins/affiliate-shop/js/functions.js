@@ -32,6 +32,23 @@ jQuery(document).ready(function($) {
 			}, 'json');
 	});
 	
+	$('.remove-product').live( 'click', function( e ) {
+		e.preventDefault();
+		
+		var thislink = $(this);
+		var prod = thislink.attr('rel');
+		
+		if( $( '#product-skip-'+prod ).val() == 0 ) {
+			thislink.html('Restore Product');
+			thislink.parent().parent().children('.inside').hide();
+			$( '#product-skip-'+prod ).val(1);
+		} else {
+			thislink.html('Remove Product');
+			thislink.parent().parent().children('.inside').show();
+			$( '#product-skip-'+prod ).val(0)
+		}
+	});
+	
     /*$('.searchList').keyup( function(event) {
         //console.log($(this).val());
         var search = $(this).val();

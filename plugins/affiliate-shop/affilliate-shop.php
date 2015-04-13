@@ -843,14 +843,15 @@ class WordPress_Affiliate_Shop {
             
             // Insert the post into the database
             
-            
-            $insID = wp_insert_post( $my_post );   
-            add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'][$i], true);
-            add_post_meta($insID, 'wp_aff_product_link', $_POST['product_link'][$i], true);
-            add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'][$i], true);
-            //add_post_meta($insID, 'wp_aff_product_brand', , true);
-            add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'][$i], true);
-            add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'][$i], true);
+            if( $_POST['product_skip'][$i] == 0 ) {
+				$insID = wp_insert_post( $my_post );   
+				add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'][$i], true);
+				add_post_meta($insID, 'wp_aff_product_link', $_POST['product_link'][$i], true);
+				add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'][$i], true);
+				//add_post_meta($insID, 'wp_aff_product_brand', , true);
+				add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'][$i], true);
+				add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'][$i], true);
+			}
         }
         //print_var($data);
         unset( $_SESSION['products'] );
@@ -1225,7 +1226,7 @@ class WordPress_Affiliate_Shop {
                                                      $_SESSION['products'][$_GET['product']] = $_GET['product']; 
                                                  }
                                             }    
-                                        } elseif( isset( $ListProductSearch) && 'clear-products'===$ListProductSearch->current_action() ) {
+                                        } elseif( ( isset( $ListProductSearch) && 'clear-products'===$ListProductSearch->current_action() ) || ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'clear-products' ) ) {
                                             $_SESSION['products'] = '';
                                         } elseif( isset( $ListProductSearch) && 'remove-product'===$ListProductSearch->current_action() ) {
                                             if(isset($_GET['product'])) {
@@ -1337,6 +1338,8 @@ class WordPress_Affiliate_Shop {
                         foreach( $products AS $key=>$value ) {
                                 $proda[] = $key;
                             }
+						$prods = array_chunk( $proda, 5 );
+						//print_var( $prods );
                         $aParams5 = array('iProductId'	=> $proda, 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'iCategoryId', 'bHotPick', 'sSpecification', 'sPromotion', 'sModel') ); 
 						//print_var($aParams5);
 						$this->oClient = ClientFactory::getClient();
@@ -1350,20 +1353,21 @@ class WordPress_Affiliate_Shop {
                             $productArray->oProduct = array( $productArray->oProduct );
                         }
                             $i = 0;
-							
+							//print_var( $productArray );
                             foreach( $productArray->oProduct AS $product ) { 
                    ?>
                    <?php // echo '<pre>'.print_r($producta, true).'</pre>'; ?>
-                   <div class="postbox">
+                   <div class="postbox" id="product-<?php echo $product->iId; ?>">
                        <?php
                             $aParams8 = array('iMerchantId'	=> $product->iMerchantId);
                             $merch = $this->oClient->call('getMerchant', $aParams8);
-							$url = add_query_arg( array( 'action' => 'remove-product', 'product' => $product->iId ), $_SERVER['REQUEST_URI'] );
+							//$url = add_query_arg( array( 'action' => 'remove-product', 'product' => $product->iId ), $_SERVER['REQUEST_URI'] );
                         ?>
-<h3 class=" "><span><?php echo ucwords(($product->sName)); ?> (ID:<?php echo $product->iId; ?>)<br>Brand: <?php echo ucwords($merch->oMerchant->sName); ?><br><a class="button" target="_blank" href="<?php echo $product->sAwDeepLink; ?>">Visit URL</a></span> <a href="<?php echo $url; ?>" class="delete button button-secondary" rel="<?php echo $product->iId; ?>">Remove Product</a></h3>
+<h3 class=" "><span><?php echo ucwords(($product->sName)); ?> (ID:<?php echo $product->iId; ?>)<br>Brand: <?php echo ucwords($merch->oMerchant->sName); ?><br><a class="button" target="_blank" href="<?php echo $product->sAwDeepLink; ?>">Visit URL</a></span> <a href="#" class="delete button button-secondary remove-product" rel="<?php echo $product->iId; ?>">Remove Product</a></h3>
 <div class="inside">
                 <input type="hidden" value="<?php echo $product->sAwDeepLink; ?>" name="product_link[<?php echo $i; ?>]">
                 <input type="hidden" value="<?php echo $product->iId; ?>" name="product_id[<?php echo $i; ?>]">
+                <input type="hidden" value="0" id="product-skip-<?php echo $product->iId; ?>" name="product_skip[<?php echo $i; ?>]">
                 
                 <input type="hidden" value="<?php echo ucwords($merch->oMerchant->sName); ?>" name="product_brand[<?php echo $i; ?>]">
                <table class="widefat productList" >
