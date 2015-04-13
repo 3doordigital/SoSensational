@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
 		var thislink = $(this);
 		var prod = thislink.attr('rel');
 		
-		if( $( '#product-skip'+prod ).val() == 0 ) {
+		if( $( '#product-skip-'+prod ).val() == 0 ) {
 			thislink.html('Restore Product');
 			thislink.parent().parent().children('.inside').hide();
 			$( '#product-skip'+prod ).val(1);
