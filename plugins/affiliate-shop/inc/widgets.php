@@ -222,7 +222,7 @@ class aff_price_widget extends WP_Widget {
       <input type="hidden" id="price-max" name="price-max" value="300">
       <input type="hidden" name="action" value="wp_aff_price_filter">
 	  <?php wp_nonce_field( 'wp_aff_price_filter', '_wpnonce', true ); ?>
-	  <button type="submit" class="btn btn-default">Update</button>
+	  <button type="submit" class="btn btn-default pull-right">Update</button>
 	  </form>
     </div>
     <script type="text/javascript">
