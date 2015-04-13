@@ -65,7 +65,7 @@
 }
 
 .price_text {
-    margin-top: 30px;
+    margin: 10px 0;
 }
 .ui-slider-horizontal .ui-slider-range {
     background-color: #c0b17d;
@@ -217,4 +217,7 @@
 }
 #wp_aff_brand_filter label {
 	font-weight: normal;
+}
+#amount {
+	text-align: center;	
 }
