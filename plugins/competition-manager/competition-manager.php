@@ -83,15 +83,15 @@ class WordPress_Competition_Manager {
         
 		add_filter( 'the_content', array( $this, 'display_single_comp'), 10 );
 		
-		//add_action( 'template_redirect', array( $this, 'check_comp_date' ) );
-		//add_action( 'pre_get_posts', array( $this, 'remove_expired_comps' ) );
+		add_action( 'template_redirect', array( $this, 'check_comp_date' ) );
+		add_action( 'pre_get_posts', array( $this, 'remove_expired_comps' ) );
 
 		$this->run_plugin();
 	}
 	
 	function remove_expired_comps( $query ) {
 		
-		if( is_post_type_archive( 'wp_comp_man' ) ) {
+		if( is_post_type_archive( 'wp_comp_man' ) && !is_admin() ) {
 			$meta_query = array( 'relation' => 'AND' );
 			$meta_query[] = array(
 						'key'=>'wp_comp_sdate',
@@ -113,7 +113,7 @@ class WordPress_Competition_Manager {
 	}
 	
     function check_comp_date(  ) {
-		if( is_singular( 'wp_comp_man' ) ) {
+		if( is_singular( 'wp_comp_man' ) && !is_admin() ) {
 			$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ) );
 			$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ) );
 			$cdate = strtotime( date("Y-m-d H:i:s") );
