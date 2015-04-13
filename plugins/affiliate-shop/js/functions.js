@@ -32,6 +32,15 @@ jQuery(document).ready(function($) {
 			}, 'json');
 	});
 	
+	$('.remove-product').live( 'click', function( e ) {
+		e.preventDefault();
+		
+		var thislink = $(this);
+		var prod = thislink.attr('rel');
+		
+		thislink.children('.inside').hide();
+	});
+	
     /*$('.searchList').keyup( function(event) {
         //console.log($(this).val());
         var search = $(this).val();
