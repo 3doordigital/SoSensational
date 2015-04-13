@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
 		var thislink = $(this);
 		var prod = thislink.attr('rel');
 		
-		thislink.children('.inside').parent().parent().addClass('HHHHHHHHHH');
+		thislink.parent().parent().children('.inside').addClass('HHHHHHHHHH');
 	});
 	
     /*$('.searchList').keyup( function(event) {
