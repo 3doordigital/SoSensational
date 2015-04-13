@@ -960,7 +960,7 @@ class WordPress_Competition_Manager {
             if( $meta['wp_comp_brand'][0] != '' ) echo $meta['wp_comp_brand'][0] ;
         }
         if ($column_name == 'facebook') {
-            if( $meta['wp_comp_facebook'][0] == 1 ) echo '<i class="fa fa-facebook-square fa-lg"></i>';
+            if( isset( $meta['wp_comp_facebook'] ) && $meta['wp_comp_facebook'][0] == 1 ) echo '<i class="fa fa-facebook-square fa-lg"></i>';
         }
         if ($column_name == 'dates') {
             if( $meta['wp_comp_sdate'][0] != '' ) echo date('d-m-Y', strtotime( $meta['wp_comp_sdate'][0] ) );
