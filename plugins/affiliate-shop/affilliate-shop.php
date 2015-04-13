@@ -1352,7 +1352,7 @@ class WordPress_Affiliate_Shop {
                             $productArray->oProduct = array( $productArray->oProduct );
                         }
                             $i = 0;
-							print_var( $productArray );
+							//print_var( $productArray );
                             foreach( $productArray->oProduct AS $product ) { 
                    ?>
                    <?php // echo '<pre>'.print_r($producta, true).'</pre>'; ?>
