@@ -78,12 +78,52 @@ class WordPress_Competition_Manager {
         
         add_action( 'restrict_manage_posts', array( $this, 'comp_filter' ) );
         add_filter( 'parse_query', array( $this, 'comp_filter_list' ) );
+		
+		add_filter( 'template_include', array( $this, 'load_shop_template' ) );
         
 		add_filter( 'the_content', array( $this, 'display_single_comp'), 10 );
 		
+		add_action( 'template_redirect', array( $this, 'check_comp_date' ) );
+		add_action( 'pre_get_posts', array( $this, 'remove_expired_comps' ) );
+
 		$this->run_plugin();
 	}
-    
+	
+	function remove_expired_comps( $query ) {
+		
+		
+		$meta_query = array( 'relation' => 'AND' );
+		$meta_query[] = array(
+                    'key'=>'wp_comp_sdate',
+                    'value'=> date("Y-m-d"),
+                    'compare'=>'<=',
+					'type' => 'date'
+                );
+		$meta_query[] = array(
+                    'key'=>'wp_comp_edate',
+                    'value'=> date("Y-m-d"),
+                    'compare'=>'>=',
+					'type' => 'date'
+                );
+		$query->set('meta_query',$meta_query);
+		//print_var( $query );
+		//print_var( $query->get('meta_query') );
+		//die();
+	}
+	
+    function check_comp_date(  ) {
+		if( is_singular( 'wp_comp_man' ) ) {
+			$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ) );
+			$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ) );
+			$cdate = strtotime( date("Y-m-d H:i:s") );
+			
+			if( $sdate > $cdate || $edate < $cdate) {
+				//wp_redirect( home_url( '/competitions/' ) ); 
+				echo $sdate.' : '.$edate.' : '.$cdate;
+				exit;
+			} 
+		}
+	}
     public function get_option() {
         $option = $this->option;
         return $option;
@@ -324,13 +364,9 @@ class WordPress_Competition_Manager {
     }
     
     public function register_post_types() {
+        
         $labels = array(
-            'name' => 'Competition Manager',
-            'single' => 'Competition',
-            'plural' => 'Competitions',
-        );
-        $labels = array(
-            'name'               => _x( 'Competition Manager', 'post type general name', 'your-plugin-textdomain' ),
+            'name'               => _x( 'Competitions', 'post type general name', 'your-plugin-textdomain' ),
             'singular_name'      => _x( 'Competition', 'post type singular name', 'your-plugin-textdomain' ),
             'menu_name'          => _x( 'Competition Manager', 'admin menu', 'your-plugin-textdomain' ),
             'name_admin_bar'     => _x( 'Competition', 'add new on admin bar', 'your-plugin-textdomain' ),
@@ -691,81 +727,92 @@ class WordPress_Competition_Manager {
     }
     
     public function frontend_form( $bootstrap = false, $cols = false ) {
+		$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ) );
+		$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ) );
+		$cdate = strtotime( date("Y-m-d H:i:s") );
 		
-		if( $cols ) $halfcol = $cols/2;
+		if( $sdate > $cdate ) {
+			echo '<p>This competition has not yet started.</p>';
+		} elseif( $cdate > $edate ) {
+			echo '<p>This competition has ended.</p>';
+		} else {
 		
-        if( isset( $this->option['form_fields'] ) ) {
-            $fields = $this->option['form_fields'];
-			$fields[] = array(
-				'field_name' => 'First Name',
-				'field_type' => 'text',
-				'field_req'  => 1,
-				'field_order'=> 0
-			);
-			$fields[] = array(
-				'field_name' => 'Last Name',
-				'field_type' => 'text',
-				'field_req'  => 1,
-				'field_order'=> 1
-			);
-			$fields[] = array(
-				'field_name' => 'Email',
-				'field_type' => 'text',
-				'field_req'  => 1,
-				'field_order'=> 2
-			);
-            $i = 1;
-            $count = count( $fields );
-            echo '<form id="comp_form" method="post">';
-            echo '<h4>Your Answer</h4>
-            <p><textarea class="form-control" name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
-            foreach( $fields as $key=>$row ) {
-                $sort[$key] = $row['field_order'];
-            }
-            array_multisort($sort, SORT_ASC, $fields);
-            foreach( $fields as $field ) {  
-                $field_name = sanitize_title( $field['field_name'] );
-				if( $bootstrap ) {
-					if( !$this->is_even( $i ) ) {
-						echo '<div class="row">';
-					} 
-					echo '<div class="col-md-'.$halfcol.'">';	
-				} else {
-					echo '<p>';
+			if( $cols ) $halfcol = $cols/2;
+			
+			if( isset( $this->option['form_fields'] ) ) {
+				$fields = $this->option['form_fields'];
+				$fields[] = array(
+					'field_name' => 'First Name',
+					'field_type' => 'text',
+					'field_req'  => 1,
+					'field_order'=> 0
+				);
+				$fields[] = array(
+					'field_name' => 'Last Name',
+					'field_type' => 'text',
+					'field_req'  => 1,
+					'field_order'=> 1
+				);
+				$fields[] = array(
+					'field_name' => 'Email',
+					'field_type' => 'text',
+					'field_tooltip' => 'By entering your email address, you consent to receiving newsletters from SoSensational and the prize giving brand.',
+					'field_req'  => 1,
+					'field_order'=> 2
+				);
+				$i = 1;
+				$count = count( $fields );
+				echo '<form id="comp_form" method="post">';
+				echo '<h4>Your Answer</h4>
+				<p><textarea class="form-control" name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
+				foreach( $fields as $key=>$row ) {
+					$sort[$key] = $row['field_order'];
 				}
-                switch( $field['field_type'] ) {
-                    case 0 :
-                        echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <input class="form-control" type="text" placeholder="'.$field['field_name'].'" name="'.$field_name.'">';
-                        break;
-                    case 1 :
-                        echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <textarea class="form-control" placeholder="'.$field['field_name'].'" name="'.$field_name.'"></textarea>';
-                        break;
-                    case 2 :
-                        echo '<div class="checkbox"><label for="'.$field_name.'"><input type="checkbox" value="1" name="'.$field_name.'"> '.$field['field_name'].'</label></div>';
-                        break;
-                }
-                
-                if( $bootstrap ) {
-					echo '</div>';
-					if( $this->is_even( $i ) ) {
-						echo '</div>';   
-					} elseif( !$this->is_even( $i ) && $i == $count ) {
-						echo '</div>';   
-					}	
-				} else {
-					echo '</p>';
+				array_multisort($sort, SORT_ASC, $fields);
+				foreach( $fields as $field ) {  
+					$field_name = sanitize_title( $field['field_name'] );
+					if( $bootstrap ) {
+						if( !$this->is_even( $i ) ) {
+							echo '<div class="row">';
+						} 
+						echo '<div class="col-md-'.$halfcol.'">';	
+					} else {
+						echo '<p>';
+					}
+					switch( $field['field_type'] ) {
+						case 0 :
+							echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <input class="form-control" '.( isset( $field['field_tooltip'] ) ? 'data-toggle="tooltip" data-placement="top" title="'.$field['field_tooltip'].'"' : '' ).' type="text" placeholder="'.$field['field_name'].'" name="'.$field_name.'">';
+							break;
+						case 1 :
+							echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <textarea class="form-control" placeholder="'.$field['field_name'].'" name="'.$field_name.'"></textarea>';
+							break;
+						case 2 :
+							echo '<div class="checkbox"><label for="'.$field_name.'"><input type="checkbox" value="1" name="'.$field_name.'"> '.$field['field_name'].'</label></div>';
+							break;
+					}
+					
+					if( $bootstrap ) {
+						echo '</div>';
+						if( $this->is_even( $i ) ) {
+							echo '</div>';   
+						} elseif( !$this->is_even( $i ) && $i == $count ) {
+							echo '</div>';   
+						}	
+					} else {
+						echo '</p>';
+					}
+					$i++;
 				}
-                $i++;
-            }
-            echo '<input type="hidden" name="competition" value="'.get_the_title().'">';
-            echo '<input type="hidden" name="competition-id" value="'.get_the_ID().'">';
-            echo '<input type="hidden" name="action" value="wp_comp_man_add_entry">';
-            echo'<p><button type="submit" class="btn btn-primary" id="submit_answer">Submit Answer</button></p>';
-            echo '</form>';
-			return ob_get_contents();
-			ob_end_clean();
-        } else {
-			echo 'help';
+				echo '<input type="hidden" name="competition" value="'.get_the_title().'">';
+				echo '<input type="hidden" name="competition-id" value="'.get_the_ID().'">';
+				echo '<input type="hidden" name="action" value="wp_comp_man_add_entry">';
+				echo'<p><button type="submit" class="btn btn-primary" id="submit_answer">Submit Answer</button></p>';
+				echo '</form>';
+				return ob_get_contents();
+				ob_end_clean();
+			} else {
+				echo 'help';
+			}
 		}
     }
     
@@ -790,9 +837,9 @@ class WordPress_Competition_Manager {
 					'compare'   => '=',
 					'type'      => 'CHAR',
 				);
-		print_var($args);
+		//print_var($args);
 		$lookup = new WP_Query( $args ) ;
-		print_var($lookup);
+		//print_var($lookup);
 		if( $lookup->have_posts() ) {
 			$return = array(
 				'status' 	=> 0,
@@ -819,11 +866,44 @@ class WordPress_Competition_Manager {
 					update_post_meta($insID, 'wp_comp_entry_'.$key, $value);  
 				}
 			}
-			$return = array(
-				'status' 	=> 1,
-				'message'	=> 'Entry successfully added.',
-				'redirect'	=> site_url('competitions/?msg=1')
-			);
+			
+			require_once ( $this->get_plugin_path().'/campaign-monitor/csrest_subscribers.php' );
+
+			/*$auth = array(
+				'access_token' => 'your access token',
+				'refresh_token' => 'your refresh token');*/
+			
+			$auth = array('api_key' => 'your API key');
+			$wrap = new CS_REST_Subscribers('Your list ID', $auth);
+
+			$result = $wrap->add(array(
+				'EmailAddress' => 'Subscriber email',
+				'Name' => 'Subscriber name',
+				'CustomFields' => array(
+					array(
+						'Key' => 'Competition ID',
+						'Value' => $_POST['competition-id']
+					),
+					array(
+						'Key' => 'Entry ID',
+						'Value' => $insID
+					),
+				),
+				'Resubscribe' => true
+			));
+			if($result->was_successful()) {
+				$return = array(
+					'status' 	=> 1,
+					'message'	=> 'Entry successfully added.',
+					'redirect'	=> site_url('competitions/?msg=1')
+				);
+			} else {
+				$return = array(
+					'status' 	=> 1,
+					'message'	=> 'Entry successfully added, but an error occured at Campaign Monitor',
+					'redirect'	=> site_url('competitions/?msg=1')
+				);
+			}
 		}
 		echo json_encode( $return );
 		die();
@@ -1026,6 +1106,18 @@ class WordPress_Competition_Manager {
         die();
     }
     
+	public function load_shop_template($template) {
+         if( is_post_type_archive( 'wp_comp_man' ) ) {
+             if ( $overridden_template = locate_template( 'comp-archive.php' ) ) {
+               load_template( $overridden_template );
+             } else {
+               load_template( dirname( __FILE__ ) . '/templates/archive.php' );
+             }
+         } else {
+             return $template;
+         }
+    }
+	
     private function run_plugin() {
 	
     }
