@@ -38,8 +38,13 @@ jQuery(document).ready(function($) {
 		var thislink = $(this);
 		var prod = thislink.attr('rel');
 		
-		thislink.html('Restore');
-		thislink.parent().parent().children('.inside').hide();
+		if( $( '#product-skip'+prod ).val() == 0 ) {
+			thislink.html('Restore Product');
+			thislink.parent().parent().children('.inside').hide();
+		} else {
+			thislink.html('Remove Product');
+			thislink.parent().parent().children('.inside').show();
+		}
 	});
 	
     /*$('.searchList').keyup( function(event) {
