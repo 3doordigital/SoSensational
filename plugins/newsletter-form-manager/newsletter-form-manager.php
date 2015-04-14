@@ -43,7 +43,8 @@ class WordPress_Newsletter_Manager {
         
         add_action( 'init', array( $this, 'register_post_types' ) );
         add_action( 'init', array( $this, 'register_taxonomies' ) );
-        
+        add_action( 'init', array( $this, 'register_shortcodes' ) );
+		
 		add_action( 'wp_ajax_wp_news_man_cm_clients', array( $this, 'get_cm_clients' ) );
 		
 		add_action( 'admin_post_wp_news_man_api_settings_save', array( $this, 'save_api_settings' ) ) ;
@@ -330,6 +331,35 @@ class WordPress_Newsletter_Manager {
 			}
 		}	
 		if( $ajax ) die();
+	}
+	
+	public function register_shortcodes() {
+		add_shortcode( 'newsletter_form', array( $this, 'newsletter_form_shortcode' ) );
+	}
+	
+	public function newsletter_form_shortcode( $atts ) {
+		
+		$atts = shortcode_atts( array(
+			'placeholder' => 'Email address',
+			'title' => 'Sign up to our newsletter'
+		), $atts, 'newsletter_form' );
+		
+		$content = '
+				<form class="newsletter_form" method="post">
+					<div class="row">
+						<div class="col-md-24">
+							<h3>'.$atts['title'].'</h3>
+							<div class="input-group">
+								<input type="email" class="form-control" placeholder="'.$atts['placeholder'].'">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" type="button">Sign Up</button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</form>
+			';
+		return $content;
 	}
 	
     private function run_plugin() {
