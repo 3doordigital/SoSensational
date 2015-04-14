@@ -47,6 +47,9 @@ class WordPress_Newsletter_Manager {
 		
 		add_action( 'wp_ajax_wp_news_man_cm_clients', array( $this, 'get_cm_clients' ) );
 		
+		add_action( 'wp_ajax_wp_news_man_form_submit', array( $this, 'add_subscriber' ) );
+        add_action( 'wp_ajax_nopriv_wp_news_man_form_submit', array( $this, 'add_subscriber' ) );
+		
 		add_action( 'admin_post_wp_news_man_api_settings_save', array( $this, 'save_api_settings' ) ) ;
 		
         add_action( 'admin_menu', array( $this, 'create_menu' ) );
@@ -324,10 +327,10 @@ class WordPress_Newsletter_Manager {
 		$result = $wrap->get_lists();
 		
 		if($result->was_successful()) {
-			print_var($result->response);
+			//print_var($result->response);
 			foreach( $result->response as $res ) {
 				
-				echo '<option '. ( isset($option['api_settings']['cm_client'] ) &&  $option['api_settings']['cm_client'] == $res->ListID ? ' selected ' : '' ) .'value="'.$res->ListID.'">'.$res->Name.'</option>';
+				echo '<option '. ( isset($option['api_settings']['cm_list'] ) &&  $option['api_settings']['cm_list'] == $res->ListID ? ' selected ' : '' ) .'value="'.$res->ListID.'">'.$res->Name.'</option>';
 			}
 		}	
 		if( $ajax ) die();
@@ -345,14 +348,14 @@ class WordPress_Newsletter_Manager {
 		), $atts, 'newsletter_form' );
 		
 		$content = '
-				<form class="newsletter_form" method="post">
+				<form class="newsletter_form newsform_send" method="post">
 					<div class="row">
 						<div class="col-md-24">
 							<h3>'.$atts['title'].'</h3>
 							<div class="input-group">
-								<input type="email" class="form-control" placeholder="'.$atts['placeholder'].'">
+								<input type="email" name="email" class="form-control email" placeholder="'.$atts['placeholder'].'">
 								<span class="input-group-btn">
-									<button class="btn btn-primary" type="button">Sign Up</button>
+									<button class="btn btn-primary" type="submit">Sign Up</button>
 								</span>
 							</div>
 						</div>
@@ -360,6 +363,56 @@ class WordPress_Newsletter_Manager {
 				</form>
 			';
 		return $content;
+	}
+	
+	public function add_subscriber() {
+		$output = array();
+		$email = $_POST['email'];
+		$lookup = get_page_by_title($email, OBJECT, 'wp_news_man');
+		if( $lookup == NULL ) {
+			$my_post = array(
+				'post_title'    => $email,
+				'post_status'   => 'publish',
+				'post_type' => 'wp_news_man'
+			);
+			$insID = wp_insert_post( $my_post );
+			
+			require_once ( 'campaign-monitor/csrest_subscribers.php' );
+			
+			$option = $this->get_option();
+			
+			$apikey = ( isset( $option['api_settings']['cm_api_key'] ) ? $option['api_settings']['cm_api_key'] : '' );
+			$list = ( isset( $option['api_settings']['cm_list'] ) ? $option['api_settings']['cm_list'] : '' );
+			$auth = array( 'api_key' => $apikey );
+			$wrap = new CS_REST_Subscribers( $list, $auth );
+
+			$result = $wrap->add(array(
+				'EmailAddress' => $email,
+				'Name' => '',
+				'Resubscribe' => true
+			));
+			if( $result->was_successful() ) {
+				$output = array (
+					'status'	=> 1,
+					'email'		=> $email,
+					'message'	=> 'Successfully added a new susbscriber.'
+				);
+			} else {
+				$output = array (
+					'status'	=> 1,
+					'email'		=> $email,
+					'message'	=> 'Successfully added a new susbscriber, but there was an error with the API.'
+				);
+			}
+		} else {
+			$output = array (
+				'status'	=> 0,
+				'email'		=> $email,
+				'message'	=> 'There is already a subscriber with this email.'
+			);
+		}
+		echo json_encode( (object) $output );
+		die();	
 	}
 	
     private function run_plugin() {

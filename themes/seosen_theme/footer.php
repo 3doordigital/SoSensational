@@ -23,8 +23,8 @@
         	<div class="row">
             	<div class="col-md-24">
                 	<h2>Join Our Newsletter</h2>
-                    <form>
-                    	<input type="text" placeholder="Your email address" /> <button type="submit">Join Now</button>
+                    <form class="newsform_send">
+                    	<input type="email" name="email" placeholder="Your email address" /> <button type="submit">Join Now</button>
                     </form>
                 </div>
             </div>

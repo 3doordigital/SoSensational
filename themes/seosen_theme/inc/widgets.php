@@ -21,42 +21,19 @@
 		public function widget( $args, $instance ) {
 			echo $args['before_widget'];
 			?>
-                	<form id="form" class="newsletter_signup" action="https://umc.usearch.co.il/index.php" method="post">
+                	<form id="form" class="newsletter_signup newsform_send" action="" method="post">
                     	<?php echo $args['before_title']; ?><?php echo $instance['title']; ?><?php echo $args['after_title']; ?>
                         <span class="fieldRowContainer">
                             <span class="fieldRow">
                         <div class="input-group">
-                          <?php
-                                if(isset($_GET['signedup'])) {
-                            ?>
-                            <input type="text" class="form-control " value="Thank you for signing up!" disabled>
-                          <span class="input-group-btn" id="btnSubmit">
-                            <button class="btn btn-primary success" type="submit"><i class="fa fa-check"></i></button>
-                          </span>
-                            <?php } else { ?>
-                            <input type="text" class="input form-control" placeholder="<?php echo $instance['placeholder']; ?>" data-error-container="#alertBox" value="" name="fieldid[em003]" data-required="true" data-notblank="true" data-error-message="Email Address - שדה חובה" data-maxlength="120" data-type="email">
+                         
+                            <input type="email" class="input form-control" placeholder="<?php echo $instance['placeholder']; ?>"  name="email">
                           <span class="input-group-btn" id="btnSubmit">
                             <button class="btn btn-primary" type="submit"><i class="fa fa-chevron-right"></i></button>
                           </span>
-                            <?php } ?>
+                           
                         </div><!-- /input-group -->
-                        </span>
-                        </span>
-                        <input type="hidden" name="clid" value="526" />
-                        <input type="hidden" name="lID" value="143" />
-
-                        <input type="hidden" name="object" value="mastercampaingleadspost" />
-                        <input type="hidden" name="reqSource" value="" />
-                        <input type="hidden" name="backurl" id="backurl" value="" />
-                        <input type="hidden" name="params" id="params" value="" />
-                        <input type="hidden" name="params_ga" id="params_ga" value="" />
-                        <input type="hidden" name="jsOn" id="jsOn" value="false" />
-                        <!--################### END DON NOT CHANGE ##############################################################-->
-
-                        <!-- ANY STRING TO BE RECORDED -->
-                        <input type="hidden" name="extra_1" id="" value="" />
-                        <!-- FULL URL FOR REDIRECTING THE USER AFTER A SUCCESS SUBMIT -->
-                        <input type="hidden" name="redirect_success" id="redirect_success" value="http://<?php echo $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; ?>?signedup" />
+                        
                     </form>
             <?php
 			echo $args['after_widget'];
