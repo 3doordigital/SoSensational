@@ -203,7 +203,7 @@ class WordPress_Newsletter_Manager {
                     <p>The following settings are available.</p>
                     <?php 
 						$settings = $this->get_option(); 
-						$settings = $settings['general_settings'];
+						//$settings = $settings['general_settings'];
 					?>
                         <table class="form-table">
                     		
