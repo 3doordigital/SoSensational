@@ -39,9 +39,10 @@
   font-family: Open Sans; }
   #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item.mega-toggle-on > a {
     background: #fff;
-    color: #000; }
+    color: #000;
+    font-size: 14px; }
   #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item a {
-    color: #000; }
+    color: #1a1a1a; }
     #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item a:hover {
       background: #fff;
       color: #000; }
