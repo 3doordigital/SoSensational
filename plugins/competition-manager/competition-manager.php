@@ -106,7 +106,7 @@ class WordPress_Competition_Manager {
 						'type' => 'date'
 					);
 			$query->set('meta_query',$meta_query);
-			print_var( $query );
+			//print_var( $query );
 			//print_var( $query->get('meta_query') );
 			//die();
 		}
