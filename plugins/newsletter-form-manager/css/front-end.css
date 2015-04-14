@@ -1,6 +1,7 @@
 .newsletter_form {
 	padding: 30px;
 	margin: 30px 0;
+	margin-top: 15px; 
 	border: solid 1px #eeeeee;
 }
 .newsletter_form h3 {
