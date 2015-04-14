@@ -96,13 +96,13 @@ class WordPress_Competition_Manager {
 			$meta_query[] = array(
 						'key'=>'wp_comp_sdate',
 						'value'=> date("Y-m-d"),
-						'compare'=>'>=',
+						'compare'=>'<=',
 						'type' => 'date'
 					);
 			$meta_query[] = array(
 						'key'=>'wp_comp_edate',
 						'value'=> date("Y-m-d"),
-						'compare'=>'<=',
+						'compare'=>'>=',
 						'type' => 'date'
 					);
 			$query->set('meta_query',$meta_query);
