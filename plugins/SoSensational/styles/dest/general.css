@@ -1,15 +1,20 @@
 /*------------------------------------------------------------------------------
                             Max Mega Menu Custom Styles
 ------------------------------------------------------------------------------*/
-#mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item a {
-  color: #000; }
-  #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item a:hover {
-    background: #fff; }
+#mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item {
+  font-family: Open Sans; }
+  #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item a {
+    color: #000; }
+    #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item a:hover {
+      background: #fff; }
+  #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item > a {
+    text-transform: uppercase; }
+  #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item h4 {
+    text-transform: lowercase; }
+#mega-menu-wrap-primary #mega-menu-primary li.mega-menu-megamenu ul.mega-sub-menu {
+  background: #fff; }
 
 /* Advertsier.php flexslider carousel with products */
 .button_ss:hover {
   text-decoration: underline;
   color: #fff; }
-
-#mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-megamenu > ul.mega-sub-menu {
-  background: #fff; }

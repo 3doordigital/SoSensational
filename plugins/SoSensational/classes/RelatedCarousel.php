@@ -14,7 +14,7 @@ class RelatedCarousel
     public function __construct($currentCategory)
     {
         
-        $this->currentCategory = $currentCategory;
+        $this->currentCategory = $currentCategory;        
         
         if ($this->collectAdvertiserCategories()) {
             $this->collectDataForDisplay();
@@ -39,7 +39,6 @@ class RelatedCarousel
         
         $terms = $this-> retrieveSSTermsCorelatedToCurrentTerm($corelatedCategories); 
         
-
                
         if ($terms === false) {
             return false;
@@ -109,7 +108,7 @@ class RelatedCarousel
             $ssAffCategories = isset($singleCategoriesMeta['ss_aff_categories']) ? $singleCategoriesMeta['ss_aff_categories'] : false;
             $singleCategory->ss_aff_categories = $ssAffCategories;
             $corelatedCategories[] = $singleCategory;
-        }     
+        }             
         
         return $corelatedCategories;        
         
@@ -123,6 +122,7 @@ class RelatedCarousel
                 $terms[] = $corelatedCategory->term_id;        
             }            
         }        
+               
         if (isset($terms)) {
             return $terms;
         }
@@ -131,8 +131,10 @@ class RelatedCarousel
     
     private function retrieveAdvertiserCategoriesToDisplay($terms)
     {
+
         $args = array(
             'post_type' => array('advertisers_cats'),
+            'posts_per_page' => -1,
             'tax_query' => array(
                 array(
                     'taxonomy'  =>  'ss_category',
@@ -142,7 +144,7 @@ class RelatedCarousel
             )
         );
         
-        $adverTisersToDisplay = get_posts($args);        
+        $adverTisersToDisplay = get_posts($args);                   
         
         return $adverTisersToDisplay;
     }
