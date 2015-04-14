@@ -345,7 +345,7 @@ class WordPress_Newsletter_Manager {
 		), $atts, 'newsletter_form' );
 		
 		$content = '
-				<form class="newsletter_form" method="post">
+				<form class="newsletter_form newsform_send" method="post">
 					<div class="row">
 						<div class="col-md-24">
 							<h3>'.$atts['title'].'</h3>

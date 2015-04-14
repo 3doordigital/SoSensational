@@ -101,8 +101,8 @@
 </section>
 <section id="homenewsletter" class="container">
 	<div class="col-md-24">
-        <form role="form">
-            <input type="text" placeholder="Join the SoSensational Community" /><button type="submit">Sign Up Now</button>
+        <form role="form" class="newsform_send">
+            <input type="email" placeholder="Join the SoSensational Community" /><button type="submit">Sign Up Now</button>
         </form>
     </div>
 </section>
