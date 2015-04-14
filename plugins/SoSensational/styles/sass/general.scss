@@ -4,15 +4,30 @@
 #mega-menu-wrap-primary {
     #mega-menu-primary {
         li.mega-menu-item {
+            font-family: Open Sans;
             a {
-                color: #000;                           
+                color: #000;
                 &:hover {
                     background: #fff;
-                }                
+                }
+            }
+            & > a {
+                text-transform: uppercase;
+            }   
+            
+            h4 {
+                text-transform: lowercase;
             }
         }
+        li.mega-menu-megamenu {
+            ul.mega-sub-menu {
+                background: #fff;            
+            } 
+        } 
     }
-}
+} 
+
+
 
 /* Advertsier.php flexslider carousel with products */
 .button_ss {
@@ -21,3 +36,4 @@
         color: #fff;
     }
 }
+
