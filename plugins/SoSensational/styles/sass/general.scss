@@ -2,28 +2,97 @@
                             Max Mega Menu Custom Styles
 ------------------------------------------------------------------------------*/
 #mega-menu-wrap-primary {
-    #mega-menu-primary {
+    #mega-menu-primary { 
+        & > li.mega-menu-item > a {
+            line-height: 28px;
+        }
+        form {
+            button {
+                background: #000;
+            }            
+        }
+        input {
+            max-width: 89%;
+            float: left;
+        }
+        li {
+            margin-bottom: 5px;                      
+        }
+        
+        & > li.mega-menu-item.mega-item-align-right:first-child {
+            margin-left: 20px;
+            background-color: #f3f3f3;
+            border-radius: 3px;
+            border: solid 1px #e0e0e0;
+            box-shadow: none;  
+            height: 30px;
+            a {
+                &:after {
+                    content: none;
+                }
+            }                
+        }
+        
+        & > li.mega-menu-megamenu {
+            & > ul.mega-sub-menu {
+                & > li.mega-menu-item {
+                    & > h4.mega-block-title {
+                        text-transform: lowercase;
+                        color: #000;
+                        border-bottom: 2px solid #a0862a;
+                        padding-bottom: 15px;
+                        margin-bottom: 10px;
+
+                        &:after {
+                            content:" ";
+                            display: block;
+                            border-bottom: 2px solid #eee;
+                            position: absolute;
+                            width: 150px;
+                            margin-top: 15px;
+                            z-index: -1;
+
+                        }
+                        
+                        &:first-letter {
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+            }
+        }
+        
         li.mega-menu-item {
             font-family: Open Sans;
+            
+            &.mega-toggle-on > a {
+                background: #fff;
+                color: #000;
+            }
+            
             a {
                 color: #000;
                 &:hover {
                     background: #fff;
+                    color: #000;
                 }
             }
             & > a {
                 text-transform: uppercase;
             }   
             
-            h4 {
+            & > h4.mega-block-title {
                 text-transform: lowercase;
             }
         }
         li.mega-menu-megamenu {
             ul.mega-sub-menu {
-                background: #fff;            
+                background: #fff;   
+                border: 1px solid #a0862a;
+                border-top: 1px solid #eee;
             } 
         } 
+        
     }
 } 
 
