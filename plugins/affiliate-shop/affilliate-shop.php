@@ -276,6 +276,8 @@ class WordPress_Affiliate_Shop {
 		add_rewrite_tag('%shop-option%', '([^&]+)');
         
         add_rewrite_rule('^shop/new-in/?$','index.php?page_id=37&shop-option=new');
+		add_rewrite_rule('^shop/sale/?$','index.php?page_id=37&shop-option=sale');
+		add_rewrite_rule('^shop/picks/?$','index.php?page_id=37&shop-option=picks');
 		add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
         add_rewrite_rule('^shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
         add_rewrite_rule('^shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
@@ -515,6 +517,7 @@ class WordPress_Affiliate_Shop {
                                 ),
                         );
                     } elseif( isset( $wp_query->query_vars['shop-option'] ) ) { 
+					
 						if( $wp_query->query_vars['shop-option'] == 'new' ) {
 							$options = $this->get_option();
 							$pastdate = strtotime('-'.$options['new_days'].' days');
@@ -529,6 +532,20 @@ class WordPress_Affiliate_Shop {
 									'inclusive' => true,
 								),
 							);
+						} elseif( $wp_query->query_vars['shop-option'] == 'sale' ) {
+							$args['meta_query'][] = array(
+										'key' => 'wp_aff_product_sale',
+										'value'   => 1,
+										'type'    => 'numeric',
+										'compare' => '=',
+									);	
+						} elseif( $wp_query->query_vars['shop-option'] == 'picks' ) { 
+							$args['meta_query'][] = array(
+										'key' => 'wp_aff_product_picks',
+										'value'   => 1,
+										'type'    => 'numeric',
+										'compare' => '=',
+									);
 						}
 					}
 					if( 

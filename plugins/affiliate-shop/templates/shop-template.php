@@ -124,11 +124,11 @@ get_header();
 							echo '<h1>New In</h1>';
 							break;
 						case 'sale' :
-						
+							echo '<h1>Sale Items</h1>';
 							break;
 							
 						case 'picks' :
-							
+							echo '<h1>Top Picks</h1>';
 							break;	
 					}
 				}
