@@ -123,16 +123,16 @@ get_header();
 					$option = $wp_aff->get_option();
 					switch ( $wp_query->query_vars['shop-option'] ) {
 						case 'new' :
-							echo '<h1>'.$option['faceted']['newin']['title'].'</h1>';
+							echo '<h1>'.( isset( $option['faceted']['newin']['title'] ) ? $option['faceted']['newin']['title'] : 'New In' ).'</h1>';
 							echo wpautop(htmlspecialchars_decode( $option['faceted']['newin']['intro'] ));
 							break;
 						case 'sale' :
-							echo '<h1>'.$option['faceted']['sale']['title'].'</h1>';
+							echo '<h1>'.( isset( $option['faceted']['sale']['title'] ) ? $option['faceted']['sale']['title'] : 'Sale Items' ).'</h1>';
 							echo wpautop(htmlspecialchars_decode( $option['faceted']['sale']['intro'] ));
 							break;
 							
 						case 'picks' :
-							echo '<h1>'.$option['faceted']['picks']['title'].'</h1>';
+							echo '<h1>'.( isset( $option['faceted']['picks']['title'] ) ? $option['faceted']['picks']['title'] : 'Top Picks' ).'</h1>';
 							echo wpautop(htmlspecialchars_decode( $option['faceted']['picks']['intro'] ));
 							break;	
 					}
