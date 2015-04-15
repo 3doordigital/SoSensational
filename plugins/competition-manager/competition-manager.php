@@ -757,7 +757,7 @@ class WordPress_Competition_Manager {
 				$fields[] = array(
 					'field_name' => 'Email',
 					'field_type' => 'text',
-					'field_tooltip' => 'By entering your email address, you consent to receiving newsletters from SoSensational and the prize giving brand.',
+					'field_tooltip' => 'By entering your email address, you consent to receiving newsletters from SoSensational and the prize giving brand.You may unsubscribe at any time.',
 					'field_req'  => 1,
 					'field_order'=> 2
 				);
@@ -782,7 +782,7 @@ class WordPress_Competition_Manager {
 					}
 					switch( $field['field_type'] ) {
 						case 0 :
-							echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <input class="form-control" '.( isset( $field['field_tooltip'] ) ? 'data-toggle="tooltip" data-placement="top" title="'.$field['field_tooltip'].'"' : '' ).' type="text" placeholder="'.$field['field_name'].'" name="'.$field_name.'">';
+							echo '<label for="'.$field_name.'">'.$field['field_name'].' '. ( isset( $field['field_req'] ) && $field['field_req'] == 1 ? '*' : '' ).'</label> <input class="form-control" '.( isset( $field['field_tooltip'] ) ? 'data-toggle="tooltip" data-placement="top" title="'.$field['field_tooltip'].'"' : '' ).' type="text" placeholder="'.$field['field_name'].'" name="'.$field_name.'">';
 							break;
 						case 1 :
 							echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <textarea class="form-control" placeholder="'.$field['field_name'].'" name="'.$field_name.'"></textarea>';
@@ -804,6 +804,7 @@ class WordPress_Competition_Manager {
 					}
 					$i++;
 				}
+				echo '<p>* Required field</p>';
 				echo '<input type="hidden" name="competition" value="'.get_the_title().'">';
 				echo '<input type="hidden" name="competition-id" value="'.get_the_ID().'">';
 				echo '<input type="hidden" name="action" value="wp_comp_man_add_entry">';
