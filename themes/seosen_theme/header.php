@@ -47,6 +47,5 @@
 				)
             ); } ?>
             <div class="nav navbar-nav navbar-right">
-      	<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
       </div> 
 </nav>
