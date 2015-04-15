@@ -1199,7 +1199,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	font-size: 16px!important;	
 }
 
-
+.tooltip-inner {
+	text-align:left!important;
+	font-family: 'Open Sans', sans-serif!important;
+}
 /* =WordPress Core
 -------------------------------------------------------------- */
 .alignnone {
