@@ -84,6 +84,9 @@ class WordPress_Affiliate_Shop {
 		add_action( 'admin_post_nopriv_wp_aff_brand_filter', array( $this, 'wp_aff_brand_filter' ) );
 		add_action( 'admin_post_wp_aff_brand_filter', array( $this, 'wp_aff_brand_filter' ) );
 		
+		add_action( 'admin_post_nopriv_wp_aff_sale_filter', array( $this, 'wp_aff_sale_filter' ) );
+		add_action( 'admin_post_wp_aff_sale_filter', array( $this, 'wp_aff_sale_filter' ) );
+		
 		add_action( 'wp_ajax_ajax_update_sticker', array( $this, 'ajax_update_sticker' ) );
 		
         add_action( 'wp_ajax_nopriv_change_faceted_category', array( $this, 'faceted_cat_ajax' ) );
@@ -270,8 +273,10 @@ class WordPress_Affiliate_Shop {
     public function custom_rewrite_rule() {
         add_rewrite_tag('%shop-cat%', '([^&]+)');
         add_rewrite_tag('%shop-brand%', '([^&]+)');
+		add_rewrite_tag('%shop-option%', '([^&]+)');
         
-        add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
+        add_rewrite_rule('^shop/new-in/?$','index.php?page_id=37&shop-option=new');
+		add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
         add_rewrite_rule('^shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
         add_rewrite_rule('^shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
         add_rewrite_rule('^category/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]', 'top');
@@ -509,7 +514,23 @@ class WordPress_Affiliate_Shop {
                                     'terms'    => $catID,
                                 ),
                         );
-                    } 
+                    } elseif( isset( $wp_query->query_vars['shop-option'] ) ) { 
+						if( $wp_query->query_vars['shop-option'] == 'new' ) {
+							$options = $this->get_option();
+							$pastdate = strtotime('-'.$options['new_days'].' days');
+							$date = getdate( $pastdate );
+							$args['date_query'] = array(
+								array(
+									'after'    => array(
+										'year'  => $date['year'],
+										'month' => $date['mon'],
+										'day'   => $date['mday'],
+									),
+									'inclusive' => true,
+								),
+							);
+						}
+					}
 					if( 
 							isset( $_GET['colour'] ) || 
 							isset( $_GET['size'] ) || 
@@ -720,7 +741,19 @@ class WordPress_Affiliate_Shop {
 		echo $url;
 		die();
 	}
+	
+	public function wp_aff_sale_filter() {
+		if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_sale_filter' ) )
+            die( 'Invalid nonce. ' . var_export( $_POST, true ) );
 		
+		$url = preg_replace( '#page/([0-9]+)/#', '', $_REQUEST['_wp_http_referer'] );	
+		
+		if( isset( $_POST['wp_aff_new_in'] ) ) {
+			wp_safe_redirect( '/shop/new-in/' );		
+		}
+		
+	}
+	
 	public function remove_facted_element() {
 		global $wp_query;
 		if( $_REQUEST['type'] == 'price' ) {

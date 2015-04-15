@@ -117,7 +117,22 @@ get_header();
             <?php if( $parent != 0 ) { ?>
             <h1><?php echo $term->name; ?></h1>
             <?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
-            <?php } ?>
+            <?php } 
+				if( isset( $wp_query->query_vars['shop-option']	) ) {
+					switch ( $wp_query->query_vars['shop-option'] ) {
+						case 'new' :
+							echo '<h1>New In</h1>';
+							break;
+						case 'sale' :
+						
+							break;
+							
+						case 'picks' :
+							
+							break;	
+					}
+				}
+			?>
             <div class="products">
                 <?php
                     global $wp_aff;

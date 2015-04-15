@@ -193,8 +193,8 @@ class aff_price_widget extends WP_Widget {
 		sort( $prices, SORT_NUMERIC );
 		if( isset( $prices[0] ) ) {
 			$range = array(
-					'min' 	=> number_format( $prices[0], 0 ),
-					'max'	=> number_format( end($prices), 0 )
+					'min' 	=> number_format( $prices[0], 0, '.', '' ),
+					'max'	=> number_format( end($prices), 0, '.', '' )
 				);
 		} else {
 			$range = array(
@@ -203,8 +203,8 @@ class aff_price_widget extends WP_Widget {
 				);
 		}
 		if( isset( $_REQUEST['price-min'] ) && isset( $_REQUEST['price-max'] ) ) {
-			$range['start'] =  number_format( $_REQUEST['price-min'], 0 );
-			$range['end'] 	=  number_format( $_REQUEST['price-max'], 0 );
+			$range['start'] =  number_format( $_REQUEST['price-min'], 0, '.', '' );
+			$range['end'] 	=  number_format( $_REQUEST['price-max'], 0, '.', '' );
 		} else {
 			$range['start'] = $range['min'];
 			$range['end'] 	= $range['max'];
@@ -481,12 +481,13 @@ class aff_sale_widget extends WP_Widget {
         } 
 		echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_sale_filter" method="POST">';
 		
+		echo '<p class="checkbox"><label><input type="checkbox" value="1" name="wp_aff_new_in"> <i class="fa fa-calendar fa-fw"></i> New In</label></p>';
 		echo '<p class="checkbox"><label><input type="checkbox" value="1" name="wp_aff_sale"> <i class="fa fa-shopping-cart fa-fw"></i> Sale Items</label></p>';
 		echo '<p class="checkbox"><label><input type="checkbox" value="1" name="wp_aff_toppicks"> <i class="fa fa-heart fa-fw"></i> Top Picks</label></p>';
-		echo '<p class="checkbox"><label><input type="checkbox" value="1" name="wp_aff_new_arrivals"> <i class="fa fa-calendar fa-fw"></i> New Arrivals</label></p>';
+		
 		
 		echo '<input type="hidden" name="action" value="wp_aff_sale_filter">';
-		wp_nonce_field( 'wp_aff_Sale_filter', '_wpnonce', true );
+		wp_nonce_field( 'wp_aff_sale_filter', '_wpnonce', true );
 		echo '</form>';
         echo $args['after_widget'];
     }
