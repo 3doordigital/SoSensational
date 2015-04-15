@@ -499,6 +499,7 @@ class WordPress_Affiliate_Shop {
                             'posts_per_page' => $per_page,
                             'paged' => $paged
 							);
+					$args['meta_query']['relation'] = 'AND';
                     if( isset( $wp_query->query_vars['shop-cat'] ) ) {
                         $args['tax_query'] = array(
                                 array(
@@ -553,6 +554,7 @@ class WordPress_Affiliate_Shop {
 							isset( $_GET['size'] ) || 
 							isset( $_GET['brand'] ) || 
 							isset( $_GET['category'] ) || 
+							isset( $_GET['options'] ) || 
 							isset( $_GET['price-min'] ) || 
 							isset( $_GET['price-max'] ) 
 						) {
@@ -591,6 +593,44 @@ class WordPress_Affiliate_Shop {
 												'field'    => 'slug',
 												'terms'    => $_REQUEST['category'],
 											);
+											break;
+										case 'options' :
+											$options = explode( ',', $_REQUEST['options'] );
+											foreach( $options as $option ) {
+												switch ( $option ) {
+													case 'new' :
+														$options = $this->get_option();
+														$pastdate = strtotime('-'.$options['new_days'].' days');
+														$date = getdate( $pastdate );
+														$args['date_query'] = array(
+															array(
+																'after'    => array(
+																	'year'  => $date['year'],
+																	'month' => $date['mon'],
+																	'day'   => $date['mday'],
+																),
+																'inclusive' => true,
+															),
+														);
+														break;
+													case 'picks' :
+														$args['meta_query'][] = array(
+															'key' => 'wp_aff_product_picks',
+															'value'   => 1,
+															'type'    => 'numeric',
+															'compare' => '=',
+														);
+														break;
+													case 'sale' :
+														$args['meta_query'][] = array(
+															'key' => 'wp_aff_product_sale',
+															'value'   => 1,
+															'type'    => 'numeric',
+															'compare' => '=',
+														);	
+														break;	
+												}
+											}
 											break;
 									} 
 								} else {
@@ -764,11 +804,32 @@ class WordPress_Affiliate_Shop {
             die( 'Invalid nonce. ' . var_export( $_POST, true ) );
 		
 		$url = preg_replace( '#page/([0-9]+)/#', '', $_REQUEST['_wp_http_referer'] );	
-		
+		$url = str_replace( array( 'top-picks/', 'sale/', 'new/' ), '', $url );
 		if( isset( $_POST['wp_aff_new_in'] ) ) {
-			wp_safe_redirect( '/shop/new-in/' );		
+			if( $_POST['wp_aff_new_in'] == 2 ) {
+				$args[] = 'new';
+			} else {
+				$url = '/shop/new-in/';		
+			}
+		} 
+		if( isset( $_POST['wp_aff_sale'] ) ) {
+			if( $_POST['wp_aff_sale'] == 2 ) {
+				$args[] = 'sale';
+			} else {
+				$url = '/shop/sale/';		
+			}
+		} 
+		if( isset( $_POST['wp_aff_toppicks'] ) ) {
+			if( $_POST['wp_aff_toppicks'] == 2 ) {
+				$args[] = 'top-picks';
+			} else {
+				$url = '/shop/top-picks/';		
+			}
 		}
 		
+		$url = add_query_arg( 'options', implode( ',', $args ), $url );
+		$url = str_replace( '%2C', ',', $url);
+		wp_safe_redirect( $url );
 	}
 	
 	public function remove_facted_element() {
