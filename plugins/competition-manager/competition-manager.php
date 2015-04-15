@@ -192,23 +192,23 @@ class WordPress_Competition_Manager {
 		<table class="form-table">
         	<tr>
             	<th>Start Date</th>
-                <td><input name="wp_comp_sdate" type="date" value="<?php echo $meta['wp_comp_sdate'][0]; ?>"></td>
+                <td><input name="wp_comp_sdate" type="date" value="<?php echo ( isset( $meta['wp_comp_sdate'][0] ) ? $meta['wp_comp_sdate'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>End Date</th>
-                <td><input name="wp_comp_edate" type="date" value="<?php echo $meta['wp_comp_edate'][0]; ?>"></td>
+                <td><input name="wp_comp_edate" type="date" value="<?php echo ( isset( $meta['wp_comp_edate'][0] )? $meta['wp_comp_edate'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Brand</th>
-                <td><input name="wp_comp_brand" type="text" value="<?php echo $meta['wp_comp_brand'][0]; ?>"></td>
+                <td><input name="wp_comp_brand" type="text" value="<?php echo ( isset( $meta['wp_comp_brand'][0] ) ? $meta['wp_comp_brand'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Winners Required</th>
-                <td><input name="wp_comp_winners" type="number" min="1" step="1" value="<?php echo $meta['wp_comp_winners'][0]; ?>"></td>
+                <td><input name="wp_comp_winners" type="number" min="1" step="1" value="<?php echo ( isset( $meta['wp_comp_winners'][0] ) ? $meta['wp_comp_winners'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Facebook Only?</th>
-                <td><input name="wp_comp_facebook" type="checkbox" value="1" value="1" <?php checked( $meta['wp_comp_facebook'][0], 1 ); ?> ></td>
+                <td><input name="wp_comp_facebook" type="checkbox" value="1" value="1" <?php if( isset( $meta['wp_comp_facebook'][0] ) ) checked( $meta['wp_comp_facebook'][0], 1 ) ; ?> ></td>
             </tr>
         </table>
 	<?php }
@@ -226,15 +226,15 @@ class WordPress_Competition_Manager {
             </tr>
         	<tr>
             	<th>Question</th>
-                <td><input type="text" name="wp_comp_question" class="large-text" value="<?php echo $meta['wp_comp_question'][0]; ?>"></td>
+                <td><input type="text" name="wp_comp_question" class="large-text" value="<?php echo ( isset( $meta['wp_comp_question'][0] ) ? $meta['wp_comp_question'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Answer</th>
-                <td><input type="text" name="wp_comp_answer" class="large-text" value="<?php echo $meta['wp_comp_answer'][0]; ?>"></td>
+                <td><input type="text" name="wp_comp_answer" class="large-text" value="<?php echo ( isset( $meta['wp_comp_answer'][0] ) ? $meta['wp_comp_answer'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Special Instructions</th>
-                <td><input type="text" name="wp_comp_rules" class="large-text" value="<?php echo $meta['wp_comp_rules'][0]; ?>"><p class="description">e.g. Open to entrants in the UK and Europe only.</p></td>
+                <td><input type="text" name="wp_comp_rules" class="large-text" value="<?php echo ( isset( $meta['wp_comp_rules'][0] ) ? $meta['wp_comp_rules'][0] : '' ); ?>"><p class="description">e.g. Open to entrants in the UK and Europe only.</p></td>
             </tr>
             
         </table>
