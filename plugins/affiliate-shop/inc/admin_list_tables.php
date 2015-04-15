@@ -53,7 +53,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
         $sortable = $this->get_sortable_columns();
         
         $this->_column_headers = array($columns, $hidden, $sortable);
-		$tags_per_page = $this->get_items_per_page( 'edit_' . $this->screen->taxonomy . '_per_page' );
+		$tags_per_page = 99999999999;
 
 		if ( 'post_tag' == $this->screen->taxonomy ) {
 			/**

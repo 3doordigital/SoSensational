@@ -1141,7 +1141,7 @@ class WordPress_Affiliate_Shop {
                 $url = add_query_arg( 'msg', $msg, urldecode( $_POST['_wp_http_referer'] ) );
             } else {
                 $msg = 7;
-                $url = add_query_arg( 'msg', $msg, admin_url('admin.php?page=affiliate-shop' ) );
+                $url = add_query_arg( 'msg', $msg, urldecode( $_POST['_wp_http_referer'] ) );
             }
         if ( ! isset ( $_POST['_wp_http_referer'] ) )
             die( 'Missing target.' );
@@ -1903,7 +1903,7 @@ class WordPress_Affiliate_Shop {
                         </tr>
                     </table>
                     <input type="hidden" value="wp_aff_edit_category" name="action" />
-                    <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
+                    <?php $redirect =  remove_query_arg( 'msg', wp_get_referer() ); ?>
                     <?php wp_nonce_field( 'wp_aff_edit_category', '_wpnonce', FALSE ); ?>
                     <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
                     <?php submit_button( 'Edit Category' ); ?>
