@@ -980,7 +980,7 @@ class WordPress_Affiliate_Shop {
     public function wp_aff_update_settings() {
         if ( ! wp_verify_nonce( $_POST[ $this->option_name . '_nonce' ], 'wp_aff_save_api' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
-
+		$array = $this->get_option();
         if ( isset ( $_POST[ $this->option_name ] ) )
         {
             foreach( $_POST[ $this->option_name ] AS $key => $value ) {
@@ -1568,15 +1568,19 @@ class WordPress_Affiliate_Shop {
         ?>
         <div class="wrap">
             <h2>Settings</h2>
+            <h2 class="nav-tab-wrapper">
+            	<a class="nav-tab <?php echo ( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 0 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 0, $_SERVER['REQUEST_URI'] ); ?>">General Settings</a>
+                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 1 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 1, $_SERVER['REQUEST_URI'] ); ?>">Options Faceted Nav</a>
+                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 2 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 2, $_SERVER['REQUEST_URI'] ); ?>">API Settings</a>
+            </h2>
             <form method="POST" id="wp_aff_prod_search" action="<?php echo admin_url('admin-post.php'); ?>">
+            <?php if( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 0 ) { ?>
                 <table class="form-table" >
                     <tr>
                         <th>Affiliate Window API Key</th>
                         <td>
                             <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[awin]" value="<?php echo $this->option['awin']; ?>" id="<?php echo $this->option_name; ?>[awin]">
-                            <input type="hidden" value="wp_aff_save_api" name="action" />
-                            <?php wp_nonce_field( 'wp_aff_save_api', $this->option_name . '_nonce', FALSE ); ?>
-                            <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
+                            
                             <p class="description">Please enter your Affiliate Window product search API key.</p>
                         </td>
                     </tr>
@@ -1603,7 +1607,54 @@ class WordPress_Affiliate_Shop {
                         </td>
                     </tr>
                 </table>
-                <?php submit_button( 'Save' ); ?>
+                
+            
+            <?php } elseif( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 1 ) { 
+				$option = $this->get_option();
+			?>
+            	<table class="form-table" >
+                    <tr>
+                        <th>New In Title</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][newin][title]" value="<?php echo ( isset( $option['faceted']['newin']['title'] ) ? $option['faceted']['newin']['title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][newin][title]">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>New In Intro</th>
+                        <td>
+                        	<?php wp_editor( ( isset( $option['faceted']['newin']['intro'] ) ? $option['faceted']['newin']['intro'] : '' ), 'newin_intro', array( 'textarea_name' => $this->option_name.'[faceted][newin][intro]', 'textarea_rows' => 5 ) ); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Sale Title</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][sale][title]" value="<?php echo ( isset( $option['faceted']['sale']['title'] ) ? $option['faceted']['sale']['title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][sale][title]">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Sale Intro</th>
+                        <td>
+                        	<?php wp_editor( ( isset( $option['faceted']['sale']['intro'] ) ? $option['faceted']['sale']['intro'] : '' ), 'sale_intro', array( 'textarea_name' => $this->option_name.'[faceted][sale][intro]', 'textarea_rows' => 5 ) ); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Top Picks Title</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][picks][title]" value="<?php echo ( isset( $option['faceted']['picks']['title'] ) ? $option['faceted']['picks']['title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][packs][title]">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Top Picks Intro</th>
+                        <td>
+                        	<?php wp_editor( ( isset( $option['faceted']['picks']['intro'] ) ? $option['faceted']['picks']['intro'] : '' ), 'picks_intro', array( 'textarea_name' => $this->option_name.'[faceted][picks][intro]', 'textarea_rows' => 5 ) ); ?>
+                        </td>
+                    </tr>
+               </table>
+            <?php } ?>
+            	<?php submit_button( 'Save' ); ?>
+                <input type="hidden" value="wp_aff_save_api" name="action" />
+                <?php wp_nonce_field( 'wp_aff_save_api', $this->option_name . '_nonce', FALSE ); ?>
+                <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
             </form>
         </div>
     <?php } 
