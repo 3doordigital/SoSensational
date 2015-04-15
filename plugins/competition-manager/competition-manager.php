@@ -757,14 +757,14 @@ class WordPress_Competition_Manager {
 				$fields[] = array(
 					'field_name' => 'Email',
 					'field_type' => 'text',
-					'field_tooltip' => 'By entering your email address, you consent to receiving newsletters from SoSensational and the prize giving brand.You may unsubscribe at any time.',
+					'field_tooltip' => 'By entering your email address, you consent to receiving newsletters from SoSensational and the prize giving brand. You may unsubscribe at any time.',
 					'field_req'  => 1,
 					'field_order'=> 2
 				);
 				$i = 1;
 				$count = count( $fields );
 				echo '<form id="comp_form" method="post">';
-				echo '<h4>Your Answer</h4>
+				echo '<h4>Your Answer *</h4>
 				<p><textarea class="form-control" name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
 				foreach( $fields as $key=>$row ) {
 					$sort[$key] = $row['field_order'];
