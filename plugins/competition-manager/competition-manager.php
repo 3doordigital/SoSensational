@@ -782,13 +782,13 @@ class WordPress_Competition_Manager {
 					}
 					switch( $field['field_type'] ) {
 						case 0 :
-							echo '<label for="'.$field_name.'">'.$field['field_name'].' '. ( isset( $field['field_req'] ) && $field['field_req'] == 1 ? '*' : '' ).'</label> <input class="form-control" '.( isset( $field['field_tooltip'] ) ? 'data-toggle="tooltip" data-placement="top" title="'.$field['field_tooltip'].'"' : '' ).' type="text" placeholder="'.$field['field_name'].'" name="'.$field_name.'">';
+							echo '<label for="'.$field_name.'">'.$field['field_name'].' '. ( isset( $field['field_req'] ) && $field['field_req'] == 1 ? '*' : '' ).'</label> <input class="form-control" '.( isset( $field['field_tooltip'] ) ? 'data-toggle="tooltip" data-placement="top" title="'.$field['field_tooltip'].'"' : '' ).' '.( isset( $field['field_req'] ) && $field['field_req'] == 1 ? 'required' : '' ) .' type="text" placeholder="'.$field['field_name'].'" name="'.$field_name.'">';
 							break;
 						case 1 :
-							echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <textarea class="form-control" placeholder="'.$field['field_name'].'" name="'.$field_name.'"></textarea>';
+							echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <textarea '.( isset( $field['field_req'] ) && $field['field_req'] == 1 ? 'required' : '' ) .' class="form-control" placeholder="'.$field['field_name'].'" name="'.$field_name.'"></textarea>';
 							break;
 						case 2 :
-							echo '<div class="checkbox"><label for="'.$field_name.'"><input type="checkbox" value="1" name="'.$field_name.'"> '.$field['field_name'].'</label></div>';
+							echo '<div class="checkbox"><label for="'.$field_name.'"><input '.( isset( $field['field_req'] ) && $field['field_req'] == 1 ? 'required' : '' ) .' type="checkbox" value="1" name="'.$field_name.'"> '.$field['field_name'].'</label></div>';
 							break;
 					}
 					
