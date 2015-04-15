@@ -3,6 +3,24 @@
 ------------------------------------------------------------------------------*/
 #mega-menu-wrap-primary {
   background: none; }
+  #mega-menu-wrap-primary #mega-menu-primary ul > li:first-child {
+    margin-bottom: 25px; }
+    #mega-menu-wrap-primary #mega-menu-primary ul > li:first-child > a {
+      color: #000;
+      padding-bottom: 17px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold; }
+  #mega-menu-wrap-primary #mega-menu-primary div[class^="menu-shop"] ul > li:first-child > a {
+    border-bottom: 2px solid #a0862a; }
+    #mega-menu-wrap-primary #mega-menu-primary div[class^="menu-shop"] ul > li:first-child > a:after {
+      content: " ";
+      display: block;
+      border-bottom: 2px solid #eee;
+      position: absolute;
+      width: 150px;
+      margin-top: 15px;
+      z-index: -1; }
   #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item > a {
     line-height: 28px; }
   #mega-menu-wrap-primary #mega-menu-primary form button {
