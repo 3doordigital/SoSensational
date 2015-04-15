@@ -261,23 +261,23 @@ class WordPress_Competition_Manager {
 							autoSize: false,
                             dataType : 'html',
                             href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>',
-                            fitToView: true,
+                            fitToView: false,
                         }).trigger('click');
                     });
                     </script>
                     <?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>
-                 <?php } elseif( $_REQUEST['msg'] == 2) { ?>
+                 <?php } elseif( $_REQUEST['msg'] == 0) { ?>
                  	<script type="text/javascript">
                     jQuery(document).ready( function($) {
                         $('.popup').fancybox({
                             wrapCSS: 'pop-up-fail',
-                            width: 600,
+                            width: 630,
                             height: 372,
-							maxWidth: 600,
-							maxHeight: 372,
+							maxWidth: 570,
+							maxHeight: 337,
                             dataType : 'html',
-                            href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/duplicate.php',
-                            fitToView: true
+                            href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/duplicate.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>&comp=<?php echo $_REQUEST['comp']; ?>',
+                            fitToView: false
                         }).trigger('click');
                     });
                     </script>
@@ -847,7 +847,7 @@ class WordPress_Competition_Manager {
 			$return = array(
 				'status' 	=> 0,
 				'message'	=> 'The email address has already entered the competition.',
-				'redirect'	=> site_url('competitions/?msg=0')
+				'redirect'	=> site_url('competitions/?msg=0&comp='.$_POST['competition-id'])
 			);
 		} else {
 		
@@ -898,13 +898,15 @@ class WordPress_Competition_Manager {
 				$return = array(
 					'status' 	=> 1,
 					'message'	=> 'Entry successfully added.',
-					'redirect'	=> site_url('competitions/?msg=1')
+					'redirect'	=> site_url('competitions/?msg=1&comp='.$_POST['competition-id']),
+					'comp'		=> $_POST['competition-id']
 				);
 			} else {
 				$return = array(
 					'status' 	=> 1,
 					'message'	=> 'Entry successfully added, but an error occured at Campaign Monitor',
-					'redirect'	=> site_url('competitions/?msg=1')
+					'redirect'	=> site_url('competitions/?msg=1&comp='.$_POST['competition-id']),
+					'comp'		=> $_POST['competition-id']
 				);
 				 echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
 					var_dump($result->response);

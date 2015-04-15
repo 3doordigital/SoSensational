@@ -12,9 +12,11 @@ jQuery(document).ready( function($) {
         $.post( ajax_object.ajax_url, data, function( data ) {
 			console.log(data);
          	 if( data.status == 1 ) {
-				 $('#comp_form').html('<p>Thank you for your entry.</p>'); 
+				 //$('#comp_form').html('<p>Thank you for your entry.</p>'); 
+				 window.location.assign( data.redirect );
 			 } else if( data.status == 0 ) {
-				 $('#comp_form').html('<p>You have already entered this competition. Please check back later for other chances to win.</p>'); 
+				 //$('#comp_form').html('<p>You have already entered this competition. Please check back later for other chances to win.</p>'); 
+				 window.location.assign( data.redirect );
 			 }
         }, 'json' );
     });
