@@ -765,7 +765,7 @@ class WordPress_Competition_Manager {
 				$count = count( $fields );
 				echo '<form id="comp_form" method="post">';
 				echo '<h4>Your Answer *</h4>
-				<p><textarea class="form-control" name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
+				<p><textarea class="form-control" required name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
 				foreach( $fields as $key=>$row ) {
 					$sort[$key] = $row['field_order'];
 				}
