@@ -117,7 +117,22 @@ get_header();
             <?php if( $parent != 0 ) { ?>
             <h1><?php echo $term->name; ?></h1>
             <?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
-            <?php } ?>
+            <?php } 
+				if( isset( $wp_query->query_vars['shop-option']	) ) {
+					switch ( $wp_query->query_vars['shop-option'] ) {
+						case 'new' :
+							echo '<h1>New In</h1>';
+							break;
+						case 'sale' :
+							echo '<h1>Sale Items</h1>';
+							break;
+							
+						case 'picks' :
+							echo '<h1>Top Picks</h1>';
+							break;	
+					}
+				}
+			?>
             <div class="products">
                 <?php
                     global $wp_aff;
@@ -204,7 +219,7 @@ get_header();
                                             <div class="row product-info">
                                                 <div class="prod_title col-md-17">
                                                     <h3><a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'">'.get_snippet($post->post_title,4).'...</a></h3>
-                                                    <h4>'. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
+                                                    <h4>'.$post->post_date.' '. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
                                                 </div>
                                                 <div class="prod_price col-md-7">
                                                     <div class="price">

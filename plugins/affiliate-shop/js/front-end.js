@@ -25,7 +25,10 @@ jQuery(document).ready(function($) {
     
 	$('.brand_check').change( function( event ) {
 		$('#wp_aff_brand_filter').submit();
-		console.log('in');
+	});
+	
+	$('#wp_aff_sale_filter input').change( function( event ) {
+		$('#wp_aff_sale_filter').submit();
 	});
 	
 	$('#shop_sort').change( function( event ) {
