@@ -138,7 +138,7 @@ get_header();
                     global $wp_aff;
 					global $paged;
 					$args = $wp_aff->shop_args();
-					print_var($args);
+					//print_var($args);
 					$per_page = $args['posts_per_page'];
 					$query = new WP_Query( $args );
 					//print_var($query);
@@ -219,7 +219,7 @@ get_header();
                                             <div class="row product-info">
                                                 <div class="prod_title col-md-17">
                                                     <h3><a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'">'.get_snippet($post->post_title,4).'...</a></h3>
-                                                    <h4>'. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
+                                                    <h4>'.$post->post_date.' '. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
                                                 </div>
                                                 <div class="prod_price col-md-7">
                                                     <div class="price">

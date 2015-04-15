@@ -499,7 +499,7 @@ class WordPress_Affiliate_Shop {
                             'posts_per_page' => $per_page,
                             'paged' => $paged
 							);
-					$args['meta_query']['relation'] = 'AND';
+					
                     if( isset( $wp_query->query_vars['shop-cat'] ) ) {
                         $args['tax_query'] = array(
                                 array(
@@ -534,6 +534,7 @@ class WordPress_Affiliate_Shop {
 								),
 							);
 						} elseif( $wp_query->query_vars['shop-option'] == 'sale' ) {
+							$args['meta_query']['relation'] = 'AND';
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_sale',
 										'value'   => 1,
@@ -541,6 +542,7 @@ class WordPress_Affiliate_Shop {
 										'compare' => '=',
 									);	
 						} elseif( $wp_query->query_vars['shop-option'] == 'picks' ) { 
+							$args['meta_query']['relation'] = 'AND';
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_picks',
 										'value'   => 1,
@@ -600,7 +602,7 @@ class WordPress_Affiliate_Shop {
 												switch ( $option ) {
 													case 'new' :
 														$options = $this->get_option();
-														$pastdate = strtotime('-'.$options['new_days'].' days');
+														$pastdate = strtotime('-'. ( $options['new_days'] - 1).' days');
 														$date = getdate( $pastdate );
 														$args['date_query'] = array(
 															array(
@@ -614,6 +616,7 @@ class WordPress_Affiliate_Shop {
 														);
 														break;
 													case 'picks' :
+														$args['meta_query']['relation'] = 'AND';
 														$args['meta_query'][] = array(
 															'key' => 'wp_aff_product_picks',
 															'value'   => 1,
@@ -622,6 +625,7 @@ class WordPress_Affiliate_Shop {
 														);
 														break;
 													case 'sale' :
+														$args['meta_query']['relation'] = 'AND';
 														$args['meta_query'][] = array(
 															'key' => 'wp_aff_product_sale',
 															'value'   => 1,
@@ -634,6 +638,7 @@ class WordPress_Affiliate_Shop {
 											break;
 									} 
 								} else {
+									$args['meta_query']['relation'] = 'AND';
 									$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_price',
 										'value'   => array( $_REQUEST['price-min'], $_REQUEST['price-max'] ),
