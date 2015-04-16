@@ -3,6 +3,8 @@
 ------------------------------------------------------------------------------*/
 #mega-menu-wrap-primary {
   background: none; }
+  #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item-has-children > a:after {
+    margin-left: 2px; }
   #mega-menu-wrap-primary #mega-menu-primary ul > li > a span {
     font-weight: bold;
     font-family: inherit;
