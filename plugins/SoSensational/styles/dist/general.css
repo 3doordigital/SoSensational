@@ -58,25 +58,28 @@
     /* line 83, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
     #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item.mega-item-align-right:first-child a:after {
       content: none; }
-  /* line 93, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
-  #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item > h4.mega-block-title {
-    text-transform: lowercase;
-    color: #000;
-    border-bottom: 2px solid #a0862a;
-    padding-bottom: 15px;
-    margin-bottom: 10px; }
-    /* line 100, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
-    #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item > h4.mega-block-title:after {
-      content: " ";
-      display: block;
-      border-bottom: 2px solid #eee;
-      position: absolute;
-      width: 150px;
-      margin-top: 15px;
-      z-index: -1; }
-    /* line 111, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
-    #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item > h4.mega-block-title:first-letter {
-      text-transform: uppercase; }
+  /* line 91, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item {
+    margin-top: -20px; }
+    /* line 93, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+    #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item > h4.mega-block-title {
+      text-transform: lowercase;
+      color: #000;
+      border-bottom: 2px solid #a0862a;
+      padding-bottom: 15px;
+      margin-bottom: 10px; }
+      /* line 100, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+      #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item > h4.mega-block-title:after {
+        content: " ";
+        display: block;
+        border-bottom: 2px solid #eee;
+        position: absolute;
+        width: 150px;
+        margin-top: 15px;
+        z-index: -1; }
+      /* line 111, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+      #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item > h4.mega-block-title:first-letter {
+        text-transform: uppercase; }
   /* line 119, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
   #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item {
     font-family: Open Sans; }
