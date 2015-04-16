@@ -29,7 +29,14 @@
                         font: {
                             weight: bold;       
                             family: inherit;
+                        }             
+                        
+                        &:before {
+                            content: " ";
+                            display: block;
+                            margin-top: 23px;
                         }                        
+                        
                     }
                     span.mm-title {
                         padding-bottom: 12px;
