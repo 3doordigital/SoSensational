@@ -13,6 +13,15 @@
             } 
         }
         
+        a {
+            & > span.mm-purple {
+                color: #6A1CB0;
+                font: {
+                    family: inherit;
+                }                    
+            }
+        }
+        
         ul {            
             & > li {
                 & > a {
@@ -20,7 +29,9 @@
                         font: {
                             weight: bold;       
                             family: inherit;
-                        }
+                        }                        
+                    }
+                    span.mm-title {
                         padding-bottom: 12px;
                         border-bottom: 2px solid #a0862a;
                         &:after {

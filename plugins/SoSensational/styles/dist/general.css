@@ -5,12 +5,16 @@
   background: none; }
   #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-item-has-children > a:after {
     margin-left: 2px; }
+  #mega-menu-wrap-primary #mega-menu-primary a > span.mm-purple {
+    color: #6A1CB0;
+    font-family: inherit; }
   #mega-menu-wrap-primary #mega-menu-primary ul > li > a span {
     font-weight: bold;
-    font-family: inherit;
+    font-family: inherit; }
+  #mega-menu-wrap-primary #mega-menu-primary ul > li > a span.mm-title {
     padding-bottom: 12px;
     border-bottom: 2px solid #a0862a; }
-    #mega-menu-wrap-primary #mega-menu-primary ul > li > a span:after {
+    #mega-menu-wrap-primary #mega-menu-primary ul > li > a span.mm-title:after {
       content: " ";
       display: block;
       border-bottom: 2px solid #eee;
