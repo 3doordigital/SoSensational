@@ -192,23 +192,23 @@ class WordPress_Competition_Manager {
 		<table class="form-table">
         	<tr>
             	<th>Start Date</th>
-                <td><input name="wp_comp_sdate" type="date" value="<?php echo $meta['wp_comp_sdate'][0]; ?>"></td>
+                <td><input name="wp_comp_sdate" type="date" value="<?php echo ( isset( $meta['wp_comp_sdate'][0] ) ? $meta['wp_comp_sdate'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>End Date</th>
-                <td><input name="wp_comp_edate" type="date" value="<?php echo $meta['wp_comp_edate'][0]; ?>"></td>
+                <td><input name="wp_comp_edate" type="date" value="<?php echo ( isset( $meta['wp_comp_edate'][0] )? $meta['wp_comp_edate'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Brand</th>
-                <td><input name="wp_comp_brand" type="text" value="<?php echo $meta['wp_comp_brand'][0]; ?>"></td>
+                <td><input name="wp_comp_brand" type="text" value="<?php echo ( isset( $meta['wp_comp_brand'][0] ) ? $meta['wp_comp_brand'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Winners Required</th>
-                <td><input name="wp_comp_winners" type="number" min="1" step="1" value="<?php echo $meta['wp_comp_winners'][0]; ?>"></td>
+                <td><input name="wp_comp_winners" type="number" min="1" step="1" value="<?php echo ( isset( $meta['wp_comp_winners'][0] ) ? $meta['wp_comp_winners'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Facebook Only?</th>
-                <td><input name="wp_comp_facebook" type="checkbox" value="1" value="1" <?php checked( $meta['wp_comp_facebook'][0], 1 ); ?> ></td>
+                <td><input name="wp_comp_facebook" type="checkbox" value="1" value="1" <?php if( isset( $meta['wp_comp_facebook'][0] ) ) checked( $meta['wp_comp_facebook'][0], 1 ) ; ?> ></td>
             </tr>
         </table>
 	<?php }
@@ -226,15 +226,15 @@ class WordPress_Competition_Manager {
             </tr>
         	<tr>
             	<th>Question</th>
-                <td><input type="text" name="wp_comp_question" class="large-text" value="<?php echo $meta['wp_comp_question'][0]; ?>"></td>
+                <td><input type="text" name="wp_comp_question" class="large-text" value="<?php echo ( isset( $meta['wp_comp_question'][0] ) ? $meta['wp_comp_question'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Answer</th>
-                <td><input type="text" name="wp_comp_answer" class="large-text" value="<?php echo $meta['wp_comp_answer'][0]; ?>"></td>
+                <td><input type="text" name="wp_comp_answer" class="large-text" value="<?php echo ( isset( $meta['wp_comp_answer'][0] ) ? $meta['wp_comp_answer'][0] : '' ); ?>"></td>
             </tr>
             <tr>
             	<th>Special Instructions</th>
-                <td><input type="text" name="wp_comp_rules" class="large-text" value="<?php echo $meta['wp_comp_rules'][0]; ?>"><p class="description">e.g. Open to entrants in the UK and Europe only.</p></td>
+                <td><input type="text" name="wp_comp_rules" class="large-text" value="<?php echo ( isset( $meta['wp_comp_rules'][0] ) ? $meta['wp_comp_rules'][0] : '' ); ?>"><p class="description">e.g. Open to entrants in the UK and Europe only.</p></td>
             </tr>
             
         </table>
@@ -261,23 +261,23 @@ class WordPress_Competition_Manager {
 							autoSize: false,
                             dataType : 'html',
                             href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>',
-                            fitToView: true,
+                            fitToView: false,
                         }).trigger('click');
                     });
                     </script>
                     <?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>
-                 <?php } elseif( $_REQUEST['msg'] == 2) { ?>
+                 <?php } elseif( $_REQUEST['msg'] == 0) { ?>
                  	<script type="text/javascript">
                     jQuery(document).ready( function($) {
                         $('.popup').fancybox({
                             wrapCSS: 'pop-up-fail',
-                            width: 600,
+                            width: 630,
                             height: 372,
-							maxWidth: 600,
-							maxHeight: 372,
+							maxWidth: 570,
+							maxHeight: 337,
                             dataType : 'html',
-                            href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/duplicate.php',
-                            fitToView: true
+                            href: '<?php echo plugin_dir_url( __FILE__ ); ?>templates/duplicate.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>&comp=<?php echo $_REQUEST['comp']; ?>',
+                            fitToView: false
                         }).trigger('click');
                     });
                     </script>
@@ -765,7 +765,7 @@ class WordPress_Competition_Manager {
 				$count = count( $fields );
 				echo '<form id="comp_form" method="post">';
 				echo '<h4>Your Answer *</h4>
-				<p><textarea class="form-control" name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
+				<p><textarea class="form-control" required name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
 				foreach( $fields as $key=>$row ) {
 					$sort[$key] = $row['field_order'];
 				}
@@ -782,13 +782,13 @@ class WordPress_Competition_Manager {
 					}
 					switch( $field['field_type'] ) {
 						case 0 :
-							echo '<label for="'.$field_name.'">'.$field['field_name'].' '. ( isset( $field['field_req'] ) && $field['field_req'] == 1 ? '*' : '' ).'</label> <input class="form-control" '.( isset( $field['field_tooltip'] ) ? 'data-toggle="tooltip" data-placement="top" title="'.$field['field_tooltip'].'"' : '' ).' type="text" placeholder="'.$field['field_name'].'" name="'.$field_name.'">';
+							echo '<label for="'.$field_name.'">'.$field['field_name'].' '. ( isset( $field['field_req'] ) && $field['field_req'] == 1 ? '*' : '' ).'</label> <input class="form-control" '.( isset( $field['field_tooltip'] ) ? 'data-toggle="tooltip" data-placement="top" title="'.$field['field_tooltip'].'"' : '' ).' '.( isset( $field['field_req'] ) && $field['field_req'] == 1 ? 'required' : '' ) .' type="text" placeholder="'.$field['field_name'].'" name="'.$field_name.'">';
 							break;
 						case 1 :
-							echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <textarea class="form-control" placeholder="'.$field['field_name'].'" name="'.$field_name.'"></textarea>';
+							echo '<label for="'.$field_name.'">'.$field['field_name'].'</label> <textarea '.( isset( $field['field_req'] ) && $field['field_req'] == 1 ? 'required' : '' ) .' class="form-control" placeholder="'.$field['field_name'].'" name="'.$field_name.'"></textarea>';
 							break;
 						case 2 :
-							echo '<div class="checkbox"><label for="'.$field_name.'"><input type="checkbox" value="1" name="'.$field_name.'"> '.$field['field_name'].'</label></div>';
+							echo '<div class="checkbox"><label for="'.$field_name.'"><input '.( isset( $field['field_req'] ) && $field['field_req'] == 1 ? 'required' : '' ) .' type="checkbox" value="1" name="'.$field_name.'"> '.$field['field_name'].'</label></div>';
 							break;
 					}
 					
@@ -808,6 +808,7 @@ class WordPress_Competition_Manager {
 				echo '<input type="hidden" name="competition" value="'.get_the_title().'">';
 				echo '<input type="hidden" name="competition-id" value="'.get_the_ID().'">';
 				echo '<input type="hidden" name="action" value="wp_comp_man_add_entry">';
+				echo '<a href="/competition-terms-conditions/">Terms &amp; Conditions</a>';
 				echo'<p><button type="submit" class="btn btn-primary" id="submit_answer">Submit Answer</button></p>';
 				echo '</form>';
 				return ob_get_contents();
@@ -846,7 +847,7 @@ class WordPress_Competition_Manager {
 			$return = array(
 				'status' 	=> 0,
 				'message'	=> 'The email address has already entered the competition.',
-				'redirect'	=> site_url('competitions/?msg=0')
+				'redirect'	=> site_url('competitions/?msg=0&comp='.$_POST['competition-id'])
 			);
 		} else {
 		
@@ -897,13 +898,15 @@ class WordPress_Competition_Manager {
 				$return = array(
 					'status' 	=> 1,
 					'message'	=> 'Entry successfully added.',
-					'redirect'	=> site_url('competitions/?msg=1')
+					'redirect'	=> site_url('competitions/?msg=1&comp='.$_POST['competition-id']),
+					'comp'		=> $_POST['competition-id']
 				);
 			} else {
 				$return = array(
 					'status' 	=> 1,
 					'message'	=> 'Entry successfully added, but an error occured at Campaign Monitor',
-					'redirect'	=> site_url('competitions/?msg=1')
+					'redirect'	=> site_url('competitions/?msg=1&comp='.$_POST['competition-id']),
+					'comp'		=> $_POST['competition-id']
 				);
 				 echo 'Failed with code '.$result->http_status_code."\n<br /><pre>";
 					var_dump($result->response);

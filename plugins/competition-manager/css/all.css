@@ -4,11 +4,13 @@
 	width: 600px!important;
 	height: 372px!important;
 	background:url(../img/thank-you.png) no-repeat center;	
+	background-size: cover;
 }
 .pop-up-fail {
 	width: 600px!important;
 	height: 370px!important;
-	background:url(../img/fail.png) no-repeat center;	
+	background:url(../img/fail.png) no-repeat center;
+	background-size: cover;	
 }
 .fancybox-skin, .fancybox-opened .fancybox-skin {
 	background: transparent;
@@ -21,6 +23,44 @@
 	padding: 10px 0;
 	font-weight: normal;
 	margin-top: 0;	
+}
+.archive .duplicate-inner h1, .archive .duplicate-inner h2, .archive .duplicate-inner h3 {
+	border: none;
+	color: #fff;
+	padding: 0;
+	margin: 0;
+}
+.archive .duplicate-inner h1 {
+	font-size: 46px;
+	margin-bottom: 5px;
+}
+.archive .duplicate-inner h2 {
+	font-size: 24px;
+}
+.archive .duplicate-inner h3 {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	padding: 0;
+	margin: 0;
+	padding-bottom: 10px;
+}
+.archive .duplicate-inner .dup-detail {
+	padding: 10px 0 ;
+}
+.archive .duplicate-inner p {
+	color: #fff;
+	font-size: 14px;
+	padding: 0;
+	margin: 0;
+	padding-bottom: 10px;
+}
+.archive .duplicate-inner p a.popup_see_all {
+	color: #fff;
+}
+.archive .duplicate-inner li, .archive .duplicate-inner li a  {
+	font-size: 14px;
+	padding: 0;
+	margin: 0;
 }
 .pop-up-right {
   	width: 250px;
@@ -36,8 +76,9 @@
 }
 .archive .pop-up-info p {
 	font-family: 'Open Sans', sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	color: #421e1e;
+	margin-bottom: 5px;
 }
 .archive .pop-up-return .btn {
 	width: 100%;
