@@ -6,13 +6,13 @@ var minifyCSS = require('gulp-minify-css');
 gulp.task('sass', function() {
     gulp.src('plugins/SoSensational/styles/sass/*.scss')
             .pipe(sass())
-            .pipe(gulp.dest('plugins/SoSensational/styles/dest/'));
+            .pipe(gulp.dest('plugins/SoSensational/styles/dist/'));
 });
 
 gulp.task('minify-css', ['sass'], function() {
     gulp.src('plugins/SoSensational/styles/dest/*.css')
             .pipe(minifyCSS())
-            .pipe(gulp.dest('plugins/SoSensational/styles/dest/min'));
+            .pipe(gulp.dest('plugins/SoSensational/styles/dist/min'));
 });
 
 gulp.task('watch', function() {

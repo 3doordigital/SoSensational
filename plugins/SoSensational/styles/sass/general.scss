@@ -5,47 +5,32 @@
     
     background: none;
     
-    #mega-menu-primary { 
-        
+    #mega-menu-primary {       
             ul {            
                 & > li {
-                    &:first-child {
-
-                        margin-bottom: 25px;
-
-                        & > a {
-                            color: #000;
-                            padding-bottom: 17px;
-                            margin-bottom: 10px;
-                            font-size: 16px;
-                            font-weight: bold;                  
-                        }
-                    }
-                }            
-            }            
-        
-        div[class^="menu-shop"] {
-            ul {            
-                & > li {
-                    &:first-child {
-                        & > a {
-
-                            border-bottom: 2px solid #a0862a;        
-
+                    & > a {
+                        span {
+                            font: {
+                                weight: bold;       
+                                family: inherit;
+                            }
+                            padding-bottom: 12px;
+                            border-bottom: 2px solid #a0862a;
                             &:after {
                                 content: " ";
                                 display: block;
                                 border-bottom: 2px solid #eee;
-                                position: absolute;
+                                position: relative;
                                 width: 150px;
-                                margin-top: 15px;
-                                z-index: -1;                            
-                            }   
-                        }
+                                margin-top: 10px;
+                                margin-bottom: 9px;
+                                z-index: -1;             
+                            }
+                        }               
                     }
-                }
-            }
-        }
+                }            
+            }            
+
         
         
         & > li.mega-menu-item > a {
