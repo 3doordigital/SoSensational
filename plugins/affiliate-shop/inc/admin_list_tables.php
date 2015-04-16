@@ -1129,9 +1129,9 @@ class ListProductSearch extends WP_List_Table {
 
     var $example_data;
     var $total;
-function __construct( $params ){
+function __construct( $data ){
 
-    $this->params = $params;
+    $this->data = $data;
     global $status, $page;
     //Set parent defaults
     parent::__construct( array(
@@ -1236,6 +1236,9 @@ function column_aff($item) {
     if($item['aff'] == 'awin') {
         return '<img src="'.str_replace( 'inc/', '', plugin_dir_url( __FILE__ ) ).'img/awin.png" style="max-width: 50%; height: auto;" />';
     }
+	if($item['aff'] == 'linkshare') {
+        return '<img src="'.str_replace( 'inc/', '', plugin_dir_url( __FILE__ ) ).'img/linkshare.jpg" style="max-width: 50%; height: auto;" />';
+    }
 }
 function get_columns(){
     $columns = array(
@@ -1284,7 +1287,7 @@ function prepare_items() {
     $this->_column_headers = array($columns, $hidden, $sortable);
 
     $this->process_bulk_action();
-    $this->params["iLimit"] = $per_page;
+    /*$this->params["iLimit"] = $per_page;
     if( $this->get_pagenum() > 1 ) {
         $pageNum = $this->get_pagenum() - 1;
         $offset = $pageNum * $per_page;
@@ -1330,8 +1333,8 @@ function prepare_items() {
                 'price'     => number_format($product->fPrice, 2),
                 'link'      => addslashes($product->sAwDeepLink)
             );
-    }
-    $data = $array;
+    }*/
+    $data = $this->data;
     /*function usort_reorder($a,$b){
         $orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'title'; //If no sort, default to title
         $order = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'asc'; //If no order, default to asc

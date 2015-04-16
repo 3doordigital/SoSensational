@@ -13,7 +13,7 @@ require_once('classes/walkers.php');
 require_once('inc/admin_list_tables.php');
 require_once('classes/tag-checklist.php');
 require_once('inc/widgets.php');
-               
+require_once('classes/class.api.php');               
 class WordPress_Affiliate_Shop {
 	private static $instance = null;
 	private $plugin_path;
@@ -109,24 +109,6 @@ class WordPress_Affiliate_Shop {
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
         
-        if( is_admin() ) {
-			ini_set("soap.wsdl_cache_enabled", 0);
-			// Constants for AWin
-			define('API_VERSION', 3);
-			define('API_USER_TYPE', 'affiliate'); // (affiliate || merchant)
-	
-			define('API_KEY', $this->option['awin'] );
-	
-			define('PS_WSDL', 'http://v'.API_VERSION.'.core.com.productserve.com/ProductServeService.wsdl');
-			define('PS_NAMESPACE', 'http://api.productserve.com/');
-			define('PS_SOAP_TRACE', false);	// turn OFF when finished testing
-			define('API_WSDL', PS_WSDL);
-			define('API_NAMESPACE', PS_NAMESPACE);
-			define('API_SOAP_TRACE', PS_SOAP_TRACE);
-			define('API', 'PS');
-			require_once('classes/class.ClientFactory.php');
-			
-		}
 		$this->run_plugin();
 		
 		//update_metadata('wp_aff_colours', 876, 'new_metadata', 'test');
@@ -1264,16 +1246,18 @@ class WordPress_Affiliate_Shop {
                                 <th>Affiliate</th>
                                 <td>
                                     <select name="wp_aff_aff">
-                                        <option selected>Affiliate Window</option>
+                                        <option value="-1" selected>All</option>
+                                        <option value="1">Affiliate Window</option>
+                                        <option value="2">Linkshare</option>
                                     </select>
                                 </td>
                             
                                 <th>Merchant</th>
                                 <td>
                                     <?php
-                                        $aParams9 = array('iMaxResult' => 1000);
-										$this->oClient = ClientFactory::getClient();
-                                        $merc_result = $this->oClient->call('getMerchantList', $aParams9);
+                                        //$aParams9 = array('iMaxResult' => 1000);
+										//$this->oClient = ClientFactory::getClient();
+                                        //$merc_result = $this->oClient->call('getMerchantList', $aParams9);
             $i =1;
                                     ?>
                                     <select name="wp_aff_merch">
@@ -1298,9 +1282,12 @@ class WordPress_Affiliate_Shop {
             
                 <div id="wp_aff_prod_list">
                     <?php
-                        if(isset($_GET['q']) && $_GET['q'] != '' || isset($_GET['paged'])) {
+                        $api = new wpAffAPI();
+						
+						if(isset($_GET['q']) && $_GET['q'] != '' || isset($_GET['paged'])) {
+                            $table_data = $api->search( $_GET['q'], array( 'all' ) ) ;
                             
-                            if( $_GET['wp_aff_merch'] == 0 ) {
+							/*if( $_GET['wp_aff_merch'] == 0 ) {
                                 $aParams7 = array("sQuery"	=> $_GET['q'], "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription'));
                             } else {
                                 $oRefineBy = new stdClass();
@@ -1314,11 +1301,11 @@ class WordPress_Affiliate_Shop {
                                 $oRefineBy->oRefineByDefinition = $oRefineByDefinition;
                                 
                                 $aParams7 = array("sQuery"	=> $_GET['q'], "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription'), "oActiveRefineByGroup"	=>	$oRefineBy);
-                            }
+                            }*/
 
                             
-                            $ListProductSearch = new ListProductSearch($aParams7);
-                                        $ListProductSearch->prepare_items();
+                            $ListProductSearch = new ListProductSearch( $table_data );
+                            $ListProductSearch->prepare_items();
                         }
                             ?>
                             
