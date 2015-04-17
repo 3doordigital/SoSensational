@@ -22,57 +22,61 @@
         <div class="col-md-9 col-md-offset-1">
         	<div class="row">
             	<div class="col-md-24">
-                	<h2>Join Our Newsletter</h2>
-                    <form class="newsform_send">
-                    	<input type="email" name="email" placeholder="Your email address" /> <button type="submit">Join Now</button>
-                    </form>
+                    <div id="footer-newsletter">
+                        <h2>Join Our Newsletter</h2>
+                        <form class="newsform_send">
+                            <input type="email" name="email" placeholder="Your email address" /> <button type="submit">Join Now</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="row">
             	<div class="col-md-24 social">
-                	<h2>Connect With Us</h2>
-                    <a href="#">
-                        <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                    <a href="#">
-                        <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                    <a href="#">
-                        <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-pinterest fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                    <a href="#">
-                        <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-stumbleupon fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                    <a href="#">
-                        <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                    <a href="#">
-                        <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                    <a href="#">
-                        <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
+                    <div id="social-icons">
+                        <h2>Connect With Us</h2>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-pinterest fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-stumbleupon fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,8 +87,7 @@
 </div>
 <div id="subfoot" class="container">
 	&copy; Copyright 3 Door Digital
-    <?php $page_id = $wp_query->get_queried_object_id();
-echo get_post_meta( $page_id, '_wp_page_template', true ); ?>
+    <?php $page_id = $wp_query->get_queried_object_id(); ?>
 </div>
 <?php wp_footer(); ?>
 </body>

@@ -5,11 +5,17 @@
 	require_once('inc/widgets.php');
 	require_once('inc/template_functions.php');
 	
-	register_nav_menus( array(
-		'primary' => __( 'Primary Menu', 'sosen' ),
-		'blog' => __( 'Blog Top Menu', 'sosen' ),
-		'footer'  => __( 'Footer Menu', 'sosen' ),
-	) );
+        
+        function registerMenus() {
+            register_nav_menus( array(
+                    'primary' => __( 'Primary Menu', 'sosen' ),
+                    'blog' => __( 'Blog Top Menu', 'sosen' ),
+                    'footer'  => __( 'Footer Menu', 'sosen' ),
+            ) );            
+        }
+
+        
+        add_action( 'init', 'registerMenus' );
 	
 
 	add_theme_support( 'html5', array(
@@ -88,7 +94,12 @@
 		wp_enqueue_style( 'animate', get_stylesheet_directory_uri() . '/css/animate.css', '1.0');
 		wp_enqueue_style( 'webfont', get_stylesheet_directory_uri() . '/MyFontsWebfontsKit.css', '1.0');		
 		wp_enqueue_style( 'sosen-style', get_stylesheet_uri(), array( 'bootstrap', 'bootstrap_theme', 'fontawesome', 'animate' ), '1.1' );
-		wp_enqueue_style( 'general-sass-compiled', plugins_url( 'SoSensational/styles/dist/general.css' ), array('megamenu'),  '100415'); 		
+                
+                wp_enqueue_style( 'flexslider-styles', plugins_url('SoSensational/js/flexslider/flexslider.css'));
+		wp_enqueue_style( 'general-sass-styles', plugins_url( 'SoSensational/styles/dist/general.css' ), array('megamenu', 'flexslider-styles'), '100415'); 
+                wp_enqueue_style( 'mega-menu-custom', plugins_url( 'SoSensational/styles/dist/mega-menu-custom.css' ), array('general-sass-styles'), '170415');
+                wp_enqueue_style( 'media-queries', plugins_url( 'SoSensational/styles/dist/media-queries.css' ), array('mega-menu-custom', 'SoSensationalCSS'), '170415');
+                
                 
 		wp_enqueue_script('jquery');
 		wp_enqueue_script( 'bootstrap-js', get_stylesheet_directory_uri() . '/js/bootstrap.min.js', array( 'jquery'), '1.0', true );

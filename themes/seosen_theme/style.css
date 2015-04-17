@@ -367,17 +367,6 @@ p {
 }
 
 
-
-.ss_company_info_left {
-    width: 65%;
-    float: left;
-}
-
-.ss_conpany_info_right_wrapper {
-	width: 31%;
-    	float: right;
-}
-
 .ss_company_info_right {
     	width: 100%;
     	 border: 1px solid #eee;
@@ -807,7 +796,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     background: none;
 }
 .blog h1 span, .archive h1 span, .single h1 span, .page h1 span {
-    font-size: 38px;
     text-align: left;
     border-bottom: solid 2px #a0862a;
     display: inline-block;

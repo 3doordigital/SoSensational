@@ -35,17 +35,19 @@
     <a class="navbar-brand" href="#"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/logo.png"  alt=""/></a>
     </div>
    
-    <?php if ( function_exists('wp_nav_menu') ) { wp_nav_menu( array(
+    <?php if ( function_exists('wp_nav_menu') ) {
+            wp_nav_menu( array(
                 'menu'              => 'primary',
                 'theme_location'    => 'primary',
                 'container'         => 'div',
                 'container_class'   => 'collapse navbar-collapse bs-navbar-collapse2',
-        		'container_id'      => 'bs-navbar-collapse2',
+                'container_id'      => 'bs-navbar-collapse2',
                 'menu_class'        => 'nav navbar-nav',
                 'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
                 'walker'            => new wp_bootstrap_navwalker()
 				)
-            ); } ?>
+            ); }
+            ?>
             <div class="nav navbar-nav navbar-right">
       </div> 
 </nav>
