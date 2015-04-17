@@ -116,3 +116,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6c20b1', end
 	text-align: center;
 	padding: 15px 30px;
 }
+.toppost {
+	margin-bottom: 30px;
+}
