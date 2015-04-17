@@ -1,3 +1,96 @@
-h1 {
-    font-size: 100px;
+@media (min-width: 1200px) {
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+       
+    
+}    
+    
+
+@media (min-width: 768px) and (max-width: 991px) {
+      
+    
+}
+
+@media (max-width: 767px) {
+    .page h1 {
+        font-size: 3.04rem;
+    }    
+    
+    #breadcrumbs {
+        margin-bottom: 4rem;
+        &, & span {
+            font-size: 0.96rem;
+        }
+        a {
+            font-size: 0.96rem;
+        }
+    }        
+    
+    .ss_conpany_info_right_wrapper .visit_site_ss,
+    .ss_description_single_right .visit_site_ss {
+        font-size: 1.28rem;
+    }    
+    
+    .backToBB,
+    .ss_description_single_left {
+        font-size: 1.28rem;
+    }     
+    
+    #footer p,
+    #footer .nav>li>a,
+    .ss_description_company p {    
+            font-size: 1.12rem;
+            line-height: 2.24rem;
+    }    
+    
+    #footer h2 {
+        font-size: 1.76rem;
+    }    
+    
+    .flexslider {
+        margin-bottom: 10px;
+    }
+    
+    #subfoot {
+        text-align: center;
+    }
+    
+    #footer {
+        .nav > li {
+            display: list-item;
+            float: left;
+            margin-right: 15px;
+        }
+    }
+    
+    .fadebox {
+        img {
+            max-height: 9999px;
+        }
+    }
+    
+    .blackbar, 
+    .whitebar {
+        h2 > span {
+            font-size: 2.4rem;
+        }
+    }  
+    
+    #footer {
+        input {
+            font-size: 1.12rem;
+        }
+    }       
+    
+    /*---------------------Brands and Boutiques Categories -------------------*/
+    
+    .whitebar.ss_whitebar, 
+    .blackbar.ss_blackbar {
+        height: 49px;
+    }
+    
+ 
+    
 }

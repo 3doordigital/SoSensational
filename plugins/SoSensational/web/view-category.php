@@ -52,7 +52,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
         */
             if($category->parent==$category_id):?>
 
-                 <div class="col-md-8 fadebox showme animated fadeIn" style="visibility: visible;">
+                 <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn" style="visibility: visible;">
                     <?php $children = get_term_children($category->term_id, get_query_var('taxonomy')); // get children 
                           $term_meta = get_option( "taxonomy_$category->term_id" );                          
                     ?>

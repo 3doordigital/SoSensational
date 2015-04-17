@@ -41,7 +41,7 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
         $term_meta = get_option( "taxonomy_$category->term_id" );
         $image =  bfi_thumb( $term_meta['ss_cat_image'], $cat_params );
     ?>
-        <div class="col-md-8 fadebox showme animated fadeIn" style="visibility: visible;">
+        <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn" style="visibility: visible;">
 
             <a href="<?php echo get_site_url().'/brands-and-boutiques/'. $category->slug.'/' . $redirectSlug; ?>" class="aHolderImgSS">
                 <img src="<?php echo $image; ?>" class="img-responsive" />   
