@@ -5,12 +5,21 @@
     
     background: none;
     
-    #mega-menu-primary {       
-        
+    #mega-menu-primary { 
+               
         li.mega-menu-item-has-children {
             & > a:after {
                 margin-left: 2px;
             } 
+        }
+        
+        a {
+            & > span.mm-purple {
+                color: #6A1CB0;
+                font: {
+                    family: inherit;
+                }                    
+            }
         }
         
         ul {            
@@ -20,8 +29,16 @@
                         font: {
                             weight: bold;       
                             family: inherit;
-                        }
-                        padding-bottom: 12px;
+                        }             
+                        
+                        &:before {
+                            content: " ";
+                            display: block;
+                            margin-top: 23px;
+                        }                                                                          
+                    }
+                    span.mm-title {
+                        padding-bottom: 6px;
                         border-bottom: 2px solid #a0862a;
                         &:after {
                             content: " ";
@@ -29,9 +46,14 @@
                             border-bottom: 2px solid #eee;
                             position: relative;
                             width: 150px;
-                            margin-top: 10px;
+                            margin-top: 2px;
                             margin-bottom: 9px;
                             z-index: -1;             
+                        }
+                        &:before {
+                            content: " ";
+                            display: block;
+                            margin-top: 23px;
                         }
                     }               
                 }
@@ -72,8 +94,8 @@
         
         & > li.mega-menu-megamenu {
             & > ul.mega-sub-menu {
-                & > li.mega-menu-item {                                        
-                    
+                & > li.mega-menu-item {   
+                    margin-top: -20px;
                     & > h4.mega-block-title {
                         text-transform: lowercase;
                         color: #000;
@@ -102,7 +124,6 @@
         
         li.mega-menu-item {
             font-family: Open Sans;
-            
             &.mega-toggle-on > a {
                 background: #fff;
                 color: #000;
@@ -110,10 +131,10 @@
             }
             
             a {
-                color: #1a1a1a;
+                color: #000;
                 &:hover {
                     background: #fff;
-                    color: #000;
+                    color: #AB9443;                    
                 }
             }
             & > a {
