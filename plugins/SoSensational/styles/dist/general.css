@@ -59,3 +59,7 @@
 .blackbar h2 > span, .whitebar h2 > span {
   font-size: 3rem; }
 
+/* line 77, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.fadebox {
+  margin-bottom: 15px; }
+
