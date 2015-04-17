@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <div class="container">
-    <h2 class="pagetitle"><span>Competitions</span></h2>
+    <h1 class="pagetitle"><span>Competitions</span></h1>
     
     <?php 
         if ( function_exists('yoast_breadcrumb') ) {
