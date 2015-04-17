@@ -13,7 +13,7 @@ require_once('classes/walkers.php');
 require_once('inc/admin_list_tables.php');
 require_once('classes/tag-checklist.php');
 require_once('inc/widgets.php');
-               
+require_once('classes/class.api.php');               
 class WordPress_Affiliate_Shop {
 	private static $instance = null;
 	private $plugin_path;
@@ -109,24 +109,6 @@ class WordPress_Affiliate_Shop {
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
         
-        if( is_admin() ) {
-			ini_set("soap.wsdl_cache_enabled", 0);
-			// Constants for AWin
-			define('API_VERSION', 3);
-			define('API_USER_TYPE', 'affiliate'); // (affiliate || merchant)
-	
-			define('API_KEY', $this->option['awin'] );
-	
-			define('PS_WSDL', 'http://v'.API_VERSION.'.core.com.productserve.com/ProductServeService.wsdl');
-			define('PS_NAMESPACE', 'http://api.productserve.com/');
-			define('PS_SOAP_TRACE', false);	// turn OFF when finished testing
-			define('API_WSDL', PS_WSDL);
-			define('API_NAMESPACE', PS_NAMESPACE);
-			define('API_SOAP_TRACE', PS_SOAP_TRACE);
-			define('API', 'PS');
-			require_once('classes/class.ClientFactory.php');
-			
-		}
 		$this->run_plugin();
 		
 		//update_metadata('wp_aff_colours', 876, 'new_metadata', 'test');
@@ -971,8 +953,9 @@ class WordPress_Affiliate_Shop {
         }
         //print_var($data);
         unset( $_SESSION['products'] );
+		unset( $_SESSION['product_data'] );
         session_regenerate_id();
-        $url = add_query_arg( 'msg', 6, admin_url('admin.php?page=affiliate-shop' ) );
+        $url = add_query_arg( 'msg', 6, admin_url('admin.php?page=affiliate-shop/products' ) );
 
         wp_safe_redirect( $url );
     }
@@ -1157,6 +1140,7 @@ class WordPress_Affiliate_Shop {
         
         $url = add_query_arg( 'q', $_POST['q'], $_POST['_wp_http_referer'] );
         $url = add_query_arg( 'wp_aff_merch', $_POST['wp_aff_merch'], $url );
+		$url = add_query_arg( 'api', $_POST['wp_aff_api'], $url );
         if ( ! isset ( $_POST['_wp_http_referer'] ) )
             die( 'Missing target.' );
 
@@ -1252,7 +1236,8 @@ class WordPress_Affiliate_Shop {
     ?>
     <h2>Affiliate Shop <a href="<?php print admin_url('admin.php?page=affiliate-shop/add-products&action=manual'); ?>" class="add-new-h2">Add Product Manually</a></h2>
     <h3>Add Products from API</h3>
-                <form method="POST" id="wp_aff_add_cat" class="searchtable" action="<?php echo admin_url('admin-post.php'); ?>">
+                <form method="POST" id="wp_aff_add_cat" class=" searchtable" action="<?php echo admin_url('admin-post.php'); ?>">
+                    
                         <table class="form-table" >
                             <tr>
                                 <th>Search Query</th>
@@ -1263,31 +1248,29 @@ class WordPress_Affiliate_Shop {
                             
                                 <th>Affiliate</th>
                                 <td>
-                                    <select name="wp_aff_aff">
-                                        <option selected>Affiliate Window</option>
+                                    <select name="wp_aff_api">
+                                        <option <?php echo ( isset( $_REQUEST['api'] ) && $_REQUEST['api'] == 'all' ? 'selected' : '' ); ?> value="all" selected>All</option>
+                                        <option <?php echo ( isset( $_REQUEST['api'] ) && $_REQUEST['api'] == 'awin' ? 'selected' : '' ); ?> value="awin">Affiliate Window</option>
+                                        <option <?php echo ( isset( $_REQUEST['api'] ) && $_REQUEST['api'] == 'linkshare' ? 'selected' : '' ); ?> value="linkshare">Linkshare</option>
                                     </select>
                                 </td>
                             
                                 <th>Merchant</th>
                                 <td>
                                     <?php
-                                        $aParams9 = array('iMaxResult' => 1000);
-										$this->oClient = ClientFactory::getClient();
-                                        $merc_result = $this->oClient->call('getMerchantList', $aParams9);
-            $i =1;
+            							$i =1;
+										$api = new wpAffAPI();
                                     ?>
                                     <select name="wp_aff_merch">
                                         <option selected value="0">All Merchants</option>
                                         <?php
-                                        foreach($merc_result->oMerchant AS $merchant) {
-                                            echo '<option value="'.$merchant->iId.'">'.$i.': '.$merchant->sName.'</option>'; 
-                                            $i++;
-                                        }
+											$api->get_merchants( ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' ) );
                                         ?>
                                     </select>
                                 </td>
                             </tr>
                         </table>
+                      
                         <input type="hidden" value="wp_aff_product_search" name="action" />
                         <?php wp_nonce_field( 'wp_aff_product_search', '_wpnonce', FALSE ); ?>
                         <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
@@ -1298,32 +1281,27 @@ class WordPress_Affiliate_Shop {
             
                 <div id="wp_aff_prod_list">
                     <?php
-                        if(isset($_GET['q']) && $_GET['q'] != '' || isset($_GET['paged'])) {
+                        
+						
+						if(isset($_GET['q']) && $_GET['q'] != '' || isset($_GET['paged'])) {
                             
-                            if( $_GET['wp_aff_merch'] == 0 ) {
-                                $aParams7 = array("sQuery"	=> $_GET['q'], "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription'));
-                            } else {
-                                $oRefineBy = new stdClass();
-                                $oRefineBy->iId = 3;
-                                $oRefineBy->sName = '';
-
-                                $oRefineByDefinition = new stdClass();
-                                $oRefineByDefinition->sId = $_GET['wp_aff_merch'];
-                                $oRefineByDefinition->sName = '';
-
-                                $oRefineBy->oRefineByDefinition = $oRefineByDefinition;
-                                
-                                $aParams7 = array("sQuery"	=> $_GET['q'], "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription'), "oActiveRefineByGroup"	=>	$oRefineBy);
-                            }
-
+							$curr_api = ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' );
+							
+							$table_data = $api->search( $_GET['q'], $curr_api, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
                             
-                            $ListProductSearch = new ListProductSearch($aParams7);
-                                        $ListProductSearch->prepare_items();
+                            $ListProductSearch = new ListProductSearch( $table_data );
+                            $ListProductSearch->prepare_items();
                         }
-                            ?>
                             
-                            <div id="productSelects">
-                                <h4>Selected Products</h4>
+						//print_var($_SESSION['product_data']);
+							?>
+                            
+                            
+                    <div class="container">
+                    <div class="right_box">
+                        <div class="wp-box">
+                            <h3>Selected Products <a class="button-primary next_step" href="<?php echo admin_url('admin.php?page='.$_REQUEST['page'].(isset($_REQUEST['wp_aff_categories']) ? '&wp_aff_categories='.$_REQUEST['wp_aff_categories'] : '').'&step=2'); ; ?>">Next Step</a></h3>
+                            <div class="inside">
                                 <?php
                                         
                                         //echo $ListProductSearch->current_action();
@@ -1350,25 +1328,59 @@ class WordPress_Affiliate_Shop {
                                             }
                                         }
                                         
-                                if( isset( $_SESSION['products'] ) && is_array($_SESSION['products']) && !empty( $_SESSION['products'] )) {
+                                if( isset( $_SESSION['products'] ) && is_array($_SESSION['products']) && !empty( $_SESSION['products'] ) ) {
+									
                                     //print_r($_SESSION['products']);
                             
                                         $products = array_unique( $_SESSION['products'] );
+										$i =0;
                                         foreach( $products AS $key=>$value ) {
-                                            echo '<a href="';
-                                            echo admin_url('admin.php?page='.$_REQUEST['page'].'&q='.$_REQUEST['q'].'&wp_aff_merch='.$_REQUEST['wp_aff_merch'].'&action=remove-product&product='.$key); 
-                                            echo '" class="productButton button" rel="'.$key.'">'.$value.' <span class="fa fa-times-circle"></span></a>';   
+                                            $curr_api = ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' );
+											if( isset( $_REQUEST['q'] ) && !isset( $_REQUEST['wp_aff_merch'] ) ) {
+												$url = 'admin.php?page='.$_REQUEST['page'].'&q='.$_REQUEST['q'].'&action=remove-product&product='.$key.'&api='.$curr_api;
+											} elseif( isset( $_REQUEST['q'] ) && isset( $_REQUEST['wp_aff_merch'] ) ) {
+												$url = 'admin.php?page='.$_REQUEST['page'].'&q='.$_REQUEST['q'].'&wp_aff_merch='.$_REQUEST['wp_aff_merch'].'&action=remove-product&product='.$key.'&api='.$curr_api;
+											} else {
+												$url = 'admin.php?page='.$_REQUEST['page'].'&action=remove-product&product='.$key.'&api='.$curr_api;
+											}
+											
+											echo '<table '.( $i % 2  ? 'class="alt"' : '' ).'>
+													<tr>
+														<td rowspan="2">
+															<img src="'.$_SESSION['product_data']['ID-'.$value]['img'].'" width="75" height="75">	
+														</td>
+														<td>'.stripslashes( substr ( $_SESSION['product_data']['ID-'.$value]['title'], 0, 40 ) ).'...</td>
+													</tr>
+													<tr>
+														<td>'.$_SESSION['product_data']['ID-'.$value]['brand'].'</td>
+													</tr>
+													<tr>
+														<td><a class="button-secondary" href="'.admin_url( $url ).'">Remove</a></td>
+														<td>&pound;'.$_SESSION['product_data']['ID-'.$value]['price'].'</td>
+													</tr>
+												   </table>';
+												   $i++;
                                         }
+								} else {
+									echo '<p>You have selected no products yet.</p>';	
+								}
                                 ?>
-                                <div><a href="<?php echo admin_url('admin.php?page='.$_REQUEST['page'].(isset($_REQUEST['wp_aff_categories']) ? '&wp_aff_categories='.$_REQUEST['wp_aff_categories'] : '').'&step=2'); ; ?>" class="button button-primary">Next Step</a> <a class="button" href="<?php echo @admin_url('admin.php?page='.$_REQUEST['page'].'&q='.$_REQUEST['q'].'&wp_aff_merch='.$_REQUEST['wp_aff_merch'].'&action=clear-products'); ?>">Clear all</a></div>
-                                
-                                
                             </div>
-                            
-                    <?php }  else {?>
-                        <p>No products currently selected.</p>
-                    <?php } ?>
-                    <hr>
+                            <div class="actions">
+                            	<?php
+									if( isset( $_REQUEST['q'] ) && !isset( $_REQUEST['wp_aff_merch'] ) ) {
+										$url = 'admin.php?page='.$_REQUEST['page'].'&q='.$_REQUEST['q'].'&action=clear-products&api='.$curr_api;
+									} elseif( isset( $_REQUEST['q'] ) && isset( $_REQUEST['wp_aff_merch'] ) ) {
+										$url = 'admin.php?page='.$_REQUEST['page'].'&q='.$_REQUEST['q'].'&wp_aff_merch='.$_REQUEST['wp_aff_merch'].'&action=clear-products&api='.$curr_api;
+									} else {
+										$url = 'admin.php?page='.$_REQUEST['page'].'&action=clear-products&api='.$curr_api;
+									}
+								?>
+                                <a class="button-secondary" href="<?php echo admin_url( $url ); ?>">Clear All</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="left_box">
                     <?php if(isset($_GET['q']) && $_GET['q'] != '' || isset($_GET['paged'])) { ?>
                             <form id="product-table" method="get">
                                 <!-- For plugins, we also need to ensure that the form posts back to our current page -->
@@ -1386,7 +1398,7 @@ class WordPress_Affiliate_Shop {
                             
                     <?php }  ?>
                 </div>
-        
+        </div></div>
     <?php } elseif( isset( $_REQUEST['step'] ) && $_REQUEST['step'] == 2) { 
             if( isset( $_REQUEST['action'] ) && 'remove-product'=== $_REQUEST['action'] ) {
                 if(isset($_GET['product'])) {
@@ -1450,64 +1462,48 @@ class WordPress_Affiliate_Shop {
                   </div>
                    <?php 
 				   		
-						if( !empty( $products ) ) {
-                        foreach( $products AS $key=>$value ) {
-                                $proda[] = $key;
-                            }
-						$prods = array_chunk( $proda, 5 );
-						//print_var( $prods );
-                        $aParams5 = array('iProductId'	=> $proda, 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'iCategoryId', 'bHotPick', 'sSpecification', 'sPromotion', 'sModel') ); 
-						//print_var($aParams5);
-						$this->oClient = ClientFactory::getClient();
-                        $productArray= $this->oClient->call('getProduct', $aParams5);
-                        //echo '<pre>'.print_r($productArray, true).'</pre>';
+						if( !empty( $_SESSION['products'] ) ) {
                     ?>
                    <?php 
-                        //print_var($aParams5);
-                        if( !is_array( $productArray->oProduct ) ) {
+                        if( !is_array( $_SESSION['products'] ) ) {
                             $test = $productArray->oProduct;
-                            $productArray->oProduct = array( $productArray->oProduct );
+                            $_SESSION['product_data'] = (array) $_SESSION['product_data'];
                         }
                             $i = 0;
-							//print_var( $productArray );
-                            foreach( $productArray->oProduct AS $product ) { 
+							$api = new wpAffAPI();
+							$brands = $api->linkshare_merchants();
+                            foreach( $products AS $id ) { 
+								$product = $_SESSION['product_data']['ID-'.$id];
                    ?>
-                   <?php // echo '<pre>'.print_r($producta, true).'</pre>'; ?>
-                   <div class="postbox" id="product-<?php echo $product->iId; ?>">
-                       <?php
-                            $aParams8 = array('iMerchantId'	=> $product->iMerchantId);
-                            $merch = $this->oClient->call('getMerchant', $aParams8);
-							//$url = add_query_arg( array( 'action' => 'remove-product', 'product' => $product->iId ), $_SERVER['REQUEST_URI'] );
-                        ?>
-<h3 class=" "><span><?php echo ucwords(($product->sName)); ?> (ID:<?php echo $product->iId; ?>)<br>Brand: <?php echo ucwords($merch->oMerchant->sName); ?><br><a class="button" target="_blank" href="<?php echo $product->sAwDeepLink; ?>">Visit URL</a></span> <a href="#" class="delete button button-secondary remove-product" rel="<?php echo $product->iId; ?>">Remove Product</a></h3>
+                   <div class="postbox" id="product-<?php echo $product['ID']; ?>">
+<h3 class=" "><span><?php echo ucwords( stripslashes( ($product['title']) )); ?> (ID:<?php echo $product['ID']; ?>)<br>Brand: <?php echo ucwords($brand); ?><br><a class="button" target="_blank" href="<?php echo $product['link']; ?>">Visit URL</a></span> <a href="#" class="delete button button-secondary remove-product" rel="<?php echo $product['ID']; ?>">Remove Product</a></h3>
 <div class="inside">
-                <input type="hidden" value="<?php echo $product->sAwDeepLink; ?>" name="product_link[<?php echo $i; ?>]">
+                <input type="hidden" value="<?php echo $product['link']; ?>" name="product_link[<?php echo $i; ?>]">
                 <input type="hidden" value="<?php echo $product->iId; ?>" name="product_id[<?php echo $i; ?>]">
-                <input type="hidden" value="0" id="product-skip-<?php echo $product->iId; ?>" name="product_skip[<?php echo $i; ?>]">
-                
-                <input type="hidden" value="<?php echo ucwords($merch->oMerchant->sName); ?>" name="product_brand[<?php echo $i; ?>]">
+                <input type="hidden" value="0" id="product-skip-<?php echo $product['ID']; ?>" name="product_skip[<?php echo $i; ?>]">
+                <?php
+					
+					//print_var($brands);
+					$brand = $brands['ID-'.$product['brand']]['name'];
+				?>
+                <input type="hidden" value="<?php echo ucwords($brand); ?>" name="product_brand[<?php echo $i; ?>]">
                <table class="widefat productList" >
                    <tbody>
                    <tr>
                     <th width="200"></th><th colspan="2">Product Name</th><th>Price</th><th></th>
                    </tr>
                    <tr>
-                        <td rowspan="6"><img style="width: 175px; height: auto;" src="<?php echo $product->sAwImageUrl; ?>"><input type="hidden" value="<?php echo $product->sAwImageUrl; ?>" name="product_image[<?php echo $i; ?>]" </td>
+                        <td rowspan="6"><img style="width: 175px; height: auto;" src="<?php echo $product['img']; ?>"><input type="hidden" value="<?php echo $product['img']; ?>" name="product_image[<?php echo $i; ?>]" </td>
                    
                         <td colspan="2">
-                            <input class="large-text" type="text" name="product_name[<?php echo $i; ?>]" placeholder="" value="<?php echo $product->sName; ?>" id="">
+                            <input class="large-text" type="text" name="product_name[<?php echo $i; ?>]" placeholder="" value="<?php echo ucwords( stripslashes( ($product['title']) )); ?>" id="">
                         </td> 
                        <td>
-                            <input class="large-text" type="text" name="product_price[<?php echo $i; ?>]" placeholder="" value="<?php echo number_format($product->fPrice, 2); ?>" id="">
+                            <input class="large-text" type="text" name="product_price[<?php echo $i; ?>]" placeholder="" value="<?php echo number_format($product['price'], 2); ?>" id="">
                         </td> 
                         
                        
                     </tr>
-                       <?php if(isset($product->sSpecification)) { ?>
-                   <tr>
-                        <td colspan="3">Merchant specification: <?php echo $product->sSpecification; ?></td>
-                   </tr>
-                <?php } ?>
                    <tr>
                         <td width="33%">
                            <div style="">
@@ -1535,7 +1531,7 @@ class WordPress_Affiliate_Shop {
                    <tr>
                         <td colspan="3">
                             
-                            <textarea class="large-text" rows="3" type="text" name="product_desc[<?php echo $i; ?>]" placeholder=""><?php echo $product->sDescription; ?></textarea>
+                            <textarea class="large-text" rows="3" type="text" name="product_desc[<?php echo $i; ?>]" placeholder=""><?php echo stripslashes( ($product['desc']) ); ?></textarea>
                        </td>
                        
                     </tr>
