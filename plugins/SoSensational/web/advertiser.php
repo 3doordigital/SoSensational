@@ -42,7 +42,8 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
     
 <div class="ss_description_single">
        <div class="ss_description_single_left"><?php echo $meta['ss_advertiser_co_desc'][0];?></div>
-       <div class="ss_description_single_right">
+
+       <div class="ss_description_single_right clearfix">
         <a class="visit_site_ss" target="_blank" href="<?php echo 'http://' . $strippedAdvertiserLink; ?>">Visit <?php echo $advertiser->post_title;?></a>
        </div>
        <div class="ss_clear"></div>

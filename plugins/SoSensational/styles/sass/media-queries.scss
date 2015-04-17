@@ -19,7 +19,7 @@
     }    
     
     #breadcrumbs {
-        margin-bottom: 4rem;
+        margin-bottom: 2rem;
         &, & span {
             font-size: 0.96rem;
         }
@@ -28,14 +28,21 @@
         }
     }        
     
-    .ss_conpany_info_right_wrapper .visit_site_ss,
-    .ss_description_single_right .visit_site_ss {
-        font-size: 1.28rem;
+    .ss_conpany_info_right_wrapper,
+    .ss_description_single_right {
+        float: none;
+        width: 100%;
+        .visit_site_ss {
+            font-size: 1.28rem;
+            padding: 1.84rem 0 1.84rem 0;
+            margin-top: 20px;
+        }
     }    
     
     .backToBB,
     .ss_description_single_left {
         font-size: 1.28rem;
+        width: 100%;
     }     
     
     #footer p,
