@@ -192,7 +192,6 @@ get_header();
                         </div>
                     <?php
 					$n = 0;
-					print_var($query);
                     foreach($query->posts AS $post) {
                         if($i == 0) {
                             echo '<div class="row">';
@@ -240,7 +239,6 @@ get_header();
                                   </div>';
                         $i++;
 						$n++;
-						echo $n.' :: '.$query->post_count;
                         if($i == 3 || $n == $query->post_count) {
 							
                             echo '</div>';
