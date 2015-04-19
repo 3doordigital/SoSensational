@@ -191,7 +191,7 @@ get_header();
                             </div>
                         </div>
                     <?php
-					
+					$n = 0;
                     foreach($query->posts AS $post) {
                         if($i == 0) {
                             echo '<div class="row">';
@@ -238,8 +238,9 @@ get_header();
                                         </div>
                                   </div>';
                         $i++;
-						echo $i.' :: '.$query->found_posts;
-                        if($i == 3 || $i == $query->found_posts) {
+						$n++;
+						echo $n.' :: '.$query->found_posts;
+                        if($i == 3 || $n == $query->found_posts) {
 							
                             echo '</div>';
                             $i = 0;
