@@ -1260,11 +1260,16 @@ class WordPress_Affiliate_Shop {
                                     <?php
             							$i =1;
 										$api = new wpAffAPI();
+										if( isset( $_REQUEST['wp_aff_merch'] ) ) {
+											$merch = $_REQUEST['wp_aff_merch'];
+										} else {
+											$merch = NULL;
+										}
                                     ?>
                                     <select name="wp_aff_merch">
                                         <option selected value="0">All Merchants</option>
                                         <?php
-											$api->get_merchants( ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' ) );
+											$api->get_merchants( ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' ), $merch );
                                         ?>
                                     </select>
                                 </td>
@@ -1287,7 +1292,7 @@ class WordPress_Affiliate_Shop {
                             
 							$curr_api = ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' );
 							
-							$table_data = $api->search( $_GET['q'], $curr_api, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
+							$table_data = $api->search( $_GET['q'], $curr_api, $merch, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
                             
                             $ListProductSearch = new ListProductSearch( $table_data );
                             $ListProductSearch->prepare_items();
@@ -1471,12 +1476,12 @@ class WordPress_Affiliate_Shop {
                         }
                             $i = 0;
 							$api = new wpAffAPI();
-							$brands = $api->linkshare_merchants();
+							//$brands = $api->linkshare_merchants();
                             foreach( $products AS $id ) { 
 								$product = $_SESSION['product_data']['ID-'.$id];
                    ?>
                    <div class="postbox" id="product-<?php echo $product['ID']; ?>">
-<h3 class=" "><span><?php echo ucwords( stripslashes( ($product['title']) )); ?> (ID:<?php echo $product['ID']; ?>)<br>Brand: <?php echo ucwords($brand); ?><br><a class="button" target="_blank" href="<?php echo $product['link']; ?>">Visit URL</a></span> <a href="#" class="delete button button-secondary remove-product" rel="<?php echo $product['ID']; ?>">Remove Product</a></h3>
+<h3 class=" "><span><?php echo ucwords( stripslashes( ($product['title']) )); ?> (ID:<?php echo $product['ID']; ?>)<br>Brand: <?php echo ucwords($product['brand']); ?><br><a class="button" target="_blank" href="<?php echo $product['link']; ?>">Visit URL</a></span> <a href="#" class="delete button button-secondary remove-product" rel="<?php echo $product['ID']; ?>">Remove Product</a></h3>
 <div class="inside">
                 <input type="hidden" value="<?php echo $product['link']; ?>" name="product_link[<?php echo $i; ?>]">
                 <input type="hidden" value="<?php echo $product->iId; ?>" name="product_id[<?php echo $i; ?>]">
@@ -1484,9 +1489,9 @@ class WordPress_Affiliate_Shop {
                 <?php
 					
 					//print_var($brands);
-					$brand = $brands['ID-'.$product['brand']]['name'];
+					//$brand = $brands['ID-'.$product['brand']]['name'];
 				?>
-                <input type="hidden" value="<?php echo ucwords($brand); ?>" name="product_brand[<?php echo $i; ?>]">
+                <input type="hidden" value="<?php echo ucwords($product['brand']); ?>" name="product_brand[<?php echo $i; ?>]">
                <table class="widefat productList" >
                    <tbody>
                    <tr>

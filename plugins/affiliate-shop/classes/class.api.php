@@ -21,7 +21,7 @@
 			
 		}
 		
-		public function search( $term = '', $api, $depth = 25, $page = 1, $sortby = 'title', $sort = 'asc') {
+		public function search( $term = '', $api, $merchant = NULL,  $depth = 25, $page = 1, $sortby = 'title', $sort = 'asc') {
 			
 			$temp = array();
 			
@@ -29,11 +29,11 @@
 			$this->sort = $sort;
 			
 			if( $api == 'awin' || $api == 'all' ) {
-				$temp[] = $this->awin_search( $term, $depth, $page, $sortby, $sort );
+				$temp[] = $this->awin_search( $term, $merchant, $depth, $page, $sortby, $sort );
 			}
 			
 			if( $api == 'linkshare' || $api == 'all' ) {
-				$temp[] = $this->linkshare_search( $term, $depth, $page, $sortby, $sort );
+				$temp[] = $this->linkshare_search( $term, $merchant, $depth, $page, $sortby, $sort );
 			}
 
 			$output = array();	
@@ -61,7 +61,7 @@
 			
 		}
 		
-		private function awin_search( $term, $depth, $page, $sortby, $sort ) {
+		private function awin_search( $term, $merchant, $depth, $page, $sortby, $sort ) {
 			
 			if( $sortby == 'title' && $sort == 'asc' ) {
 				$_sort = 'az';
@@ -75,7 +75,23 @@
 			
 			$offset = $depth * ( $page - 1);
 			if( $page < ( 1000 / $depth ) ) {
-						
+			if( $merchant == NULL ) {
+				$params = array("sQuery" => $term, "sSort" => $_sort, "iLimit" => $depth, "iOffset" => $offset, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ));
+				
+			} else {
+				$oRefineBy = new stdClass();
+				$oRefineBy->iId = 3;
+				$oRefineBy->sName = '';
+				
+				$oRefineByDefinition = new stdClass();
+				$oRefineByDefinition->sId = $_GET['wp_aff_merch'];
+				$oRefineByDefinition->sName = '';
+				
+				$oRefineBy->oRefineByDefinition = $oRefineByDefinition;
+				
+				$params = array("sQuery" => $term, "sSort" => $_sort, "iLimit" => $depth, "iOffset" => $offset, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ), "oActiveRefineByGroup"	=>	$oRefineBy);
+			}
+					
 				$params = array("sQuery" => $term, "sSort" => $_sort, "iLimit" => $depth, "iOffset" => $offset, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ));
 				
 				$client = ClientFactory::getClient();
@@ -111,7 +127,7 @@
 			}
 		}
 		
-		private function linkshare_search( $term, $depth, $page, $sortby, $sort  ) {
+		private function linkshare_search( $term, $merchant, $depth, $page, $sortby, $sort  ) {
 			
 			switch ( $sortby ) {
 				case 'title' :
@@ -127,8 +143,12 @@
 			$url = 'http://productsearch.linksynergy.com/productsearch';
 			$token = "4bee73f0e12eb04b83e7c5d01a5b8e4a7ccf0e1fbdeec4f171a2e5ca4fe2a568"; //Change this to your token
 			$resturl = $url."?"."token=".$token."&"."keyword=".$term."&max=".$depth."&pagenumber=".$page;
-			//$resturl .= "&sort=".$_sortby."&sorttype=".$sort;
+			if( $merchant != NULL && $merchant != 0 ) {
+				$resturl .= '&mid='.$merchant;
+			}
 			
+			$resturl .= "&sort=".$_sortby."&sorttype=".$sort;
+			//echo $resturl;
 			$SafeQuery = urlencode($resturl);
 			$xml = simplexml_load_file($SafeQuery);
 
@@ -140,27 +160,30 @@
 				} else {
 					$totalCount = $xml->TotalMatches;
 				}
+				$brands = $this->linkshare_merchants();
+				
 				$array['total']['linkshare'] = $totalCount;
 				foreach ($xml->item as $item) {
 					$price = (array) $item->price;
 					$id = (array) $item->linkid;
+					$brand = $brands['ID-'.$item->mid]['name'];
 					$array['items']['ID-'.$id[0]] = array(
 						'ID'        => addslashes($item->linkid),
 						'aff'     	=> 'linkshare',    
 						'title'     => addslashes( trim( ucwords( strtolower( $item->productname ) ) ) ),
-						'brand'     => addslashes($item->mid),
-						'img'       => addslashes($item->imageurl),
-						'desc'      => addslashes($item->description->short),
+						'brand'     => addslashes( $brand ),
+						'img'       => addslashes( $item->imageurl ),
+						'desc'      => addslashes( $item->description->short ),
 						'price'     => number_format( $price[0], 2),
 						'rrp'       => '',
-						'link'      => addslashes($item->linkurl)	
+						'link'      => addslashes( $item->linkurl )	
 					);
 				}
 			}
 			return $array;
 		}
 		
-		public function get_merchants( $api ) {
+		public function get_merchants( $api, $merchant ) {
 			
 			$temp = array();
 			
@@ -168,11 +191,11 @@
 			$this->sort = 'asc';
 			
 			if( $api == 'awin' || $api == 'all' ) {
-				$temp[] = $this->awin_merchants( );
+				$temp[] = $this->awin_merchants( $merchant );
 			}
 			
 			if( $api == 'linkshare' || $api == 'all' ) {
-				$temp[] = $this->linkshare_merchants( );
+				$temp[] = $this->linkshare_merchants( $merchant );
 			}
 
 			$output = array();	
@@ -185,7 +208,7 @@
 			uasort( $output, array( $this, 'usort_reorder' ) );
 			$echo =  '';
 			foreach( $output as $item ) {
-				$echo .= '<option value="'.$item['ID'].'">'.$item['name'].'</option>';
+				$echo .= '<option '.( $merchant == $item['ID'] ? ' selected ' : '' ).'value="'.$item['ID'].'">'.$item['name'].'</option>';
 			}
 			
 			echo $echo;
