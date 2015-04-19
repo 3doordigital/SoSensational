@@ -239,6 +239,7 @@ get_header();
                                   </div>';
                         $i++;
                         if($i == 3 || $i == $query->found_posts) {
+							echo $i.' :: '.$query->found_posts;
                             echo '</div>';
                             $i = 0;
                         }
