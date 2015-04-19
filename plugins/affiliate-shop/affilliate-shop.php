@@ -924,7 +924,11 @@ class WordPress_Affiliate_Shop {
                 $brand = $term_id['term_id'];
             } else {
                 $term = wp_insert_term( $_POST['product_brand'][$i], 'wp_aff_brands' );
-                $brand = $term['term_id'];
+                if( !is_wp_error( $term ) ) {
+					$brand = $term['term_id'];
+				} else {
+					$brand = '';
+				}
             }
             //echo $_POST['product_brand'][$i].' :: '.$brand;
             $my_post = array(
