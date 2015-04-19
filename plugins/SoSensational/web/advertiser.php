@@ -42,7 +42,8 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
     
 <div class="ss_description_single">
        <div class="ss_description_single_left"><?php echo $meta['ss_advertiser_co_desc'][0];?></div>
-       <div class="ss_description_single_right">
+
+       <div class="ss_description_single_right clearfix">
         <a class="visit_site_ss" target="_blank" href="<?php echo 'http://' . $strippedAdvertiserLink; ?>">Visit <?php echo $advertiser->post_title;?></a>
        </div>
        <div class="ss_clear"></div>
@@ -78,90 +79,90 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
 </div><!--end flexslider -->
 <div class="ss_clear"></div>
 
+<div class="row">
+    <div class="ss_company_info_left col-md-16">
+        <!-- wpautop() - a Wordpress formatting function from formatting.php. Adds 
+        paragraphs automatically, e.g. in a text widget---------------------------->
+        <div class="ss_description_company"><?php echo $desc = wpautop($meta['ss_advertiser_desc'][0]); ?>
 
-<div class="ss_company_info_left">
-    <!-- wpautop() - a Wordpress formatting function from formatting.php. Adds 
-    paragraphs automatically, e.g. in a text widget---------------------------->
-    <div class="ss_description_company"><?php echo $desc = wpautop($meta['ss_advertiser_desc'][0]); ?>
- 	          
-              </div>
-              <div class="image_description_single">
-              <?php 
-              		if (!empty($meta['ss_image_video'][0])) {
-               ?>          <img src="<?php echo $meta['ss_image_video'][0];?>" />
-               
-			 <?php } elseif (!empty($meta['ss_image_video_text'][0])) {                              
-                            echo $meta['ss_image_video_text'][0];
-			 } ?>               
-              </div>
+                  </div>
+                  <div class="image_description_single">
+                  <?php 
+                            if (!empty($meta['ss_image_video'][0])) {
+                   ?>          <img src="<?php echo $meta['ss_image_video'][0];?>" />
 
-              <a href="/brands-and-boutiques/" class="backToBB">Return to Brands & Boutiques</a>
+                             <?php } elseif (!empty($meta['ss_image_video_text'][0])) {                              
+                                echo $meta['ss_image_video_text'][0];
+                             } ?>               
+                  </div>
 
-</div><!--company info left -->
-<div class="ss_conpany_info_right_wrapper">
-<div class="ss_company_info_right">
-	
-        <img src="<?php echo $meta['ss_logo'][0];?>" />
-        <div class="emailWeb">
-            <?php 
-            if ( ! empty($meta['ss_advertiser_email'][0])) {
-            ?>
-            Email:
-            <a href="mailto:<?php echo $meta['ss_advertiser_email'][0];?>">
-                <?php echo $meta['ss_advertiser_email'][0];?>
-            </a>
-            <?php
-            }
-            ?>
-        </div>
-        <div class="emailWeb">
-            <?php 
-            if ( ! empty($meta['ss_advertiser_website'][0])) {                
-                /**
-                 * Display only the domain name
-                 */
-                $parsedUrl = parse_url($meta['ss_advertiser_website'][0]);
-                $domainName = isset($parsedUrl['host']) ? $parsedUrl['host'] : $parsedUrl['path'];                
-            ?>            
-                Website: 
-                <a href="<?php echo 'http://' . $strippedAdvertiserLink;?>" target="_blank">
-                    <?php echo preg_replace('/^www\./' ,'', $domainName);?>
+                  <a href="/brands-and-boutiques/" class="backToBB">Return to Brands & Boutiques</a>
+
+    </div><!--company info left -->
+    <div class="ss_conpany_info_right_wrapper col-md-8">
+    <div class="ss_company_info_right">
+
+            <img src="<?php echo $meta['ss_logo'][0];?>" />
+            <div class="emailWeb">
+                <?php 
+                if ( ! empty($meta['ss_advertiser_email'][0])) {
+                ?>
+                Email:
+                <a href="mailto:<?php echo $meta['ss_advertiser_email'][0];?>">
+                    <?php echo $meta['ss_advertiser_email'][0];?>
                 </a>
-            <?php
-            }
+                <?php
+                }
+                ?>
+            </div>
+            <div class="emailWeb">
+                <?php 
+                if ( ! empty($meta['ss_advertiser_website'][0])) {                
+                    /**
+                     * Display only the domain name
+                     */
+                    $parsedUrl = parse_url($meta['ss_advertiser_website'][0]);
+                    $domainName = isset($parsedUrl['host']) ? $parsedUrl['host'] : $parsedUrl['path'];                
+                ?>            
+                    Website: 
+                    <a href="<?php echo 'http://' . $strippedAdvertiserLink;?>" target="_blank">
+                        <?php echo preg_replace('/^www\./' ,'', $domainName);?>
+                    </a>
+                <?php
+                }
+                ?>
+            </div>
+
+            <input style="display: none;" id="geocomplete" class="googleMapInput" type="text" value="<?php echo $meta['ss_advertiser_address'][0];?>" /> 
+
+
+            <?php 
+            /**
+             * Display map only if the address parameter is present
+             */
+            if ( ! empty($meta['ss_advertiser_address'][0])) {
+                echo '<div class="map_canvas"></div>';
+            } 
             ?>
-        </div>
-    
-        <input style="display: none;" id="geocomplete" class="googleMapInput" type="text" value="<?php echo $meta['ss_advertiser_address'][0];?>" /> 
-        
-        
-        <?php 
-        /**
-         * Display map only if the address parameter is present
-         */
-        if ( ! empty($meta['ss_advertiser_address'][0])) {
-            echo '<div class="map_canvas"></div>';
-        } 
-        ?>
-        
-        <?php $facebookUrl = $meta['ss_advertiser_facebook'][0];?>
-        <?php $googleUrl = $meta['ss_advertiser_google'][0];?>
-        <?php $pinterestUrl = $meta['ss_advertiser_pinterest'][0];?>
-        <?php $twitterUrl = $meta['ss_advertiser_twitter'][0];?>
-        <?php $instagramUrl = $meta['ss_advertiser_instragram'][0];?>
 
-         <div class="ss_social_icons">
-         	<?php if($facebookUrl != '' && $facebookUrl !== 'http://'){ ?><a href="<?php echo $facebookUrl; ?>" target="_blank" class="ss_social_icon facebook"><i class="fa fa-facebook-square"></i></a><?php } ?>
-         	<?php if($pinterestUrl != '' && $pinterestUrl !== 'http://'){ ?><a href="<?php echo $pinterestUrl; ?>" target="_blank" class="ss_social_icon pinterest"><i class="fa fa-pinterest-square"></i></a><?php } ?>
-         	<?php if($googleUrl != '' && $googleUrl !== 'http://'){ ?><a href="<?php echo $googleUrl;?>" target="_blank" class="ss_social_icon gplus"><i class="fa fa-google-plus-square"></i></a><?php } ?>
-         	<?php if($twitterUrl != '' && $twitterUrl !== 'http://'){ ?><a href="<?php echo $twitterUrl;?>" target="_blank" class="ss_social_icon twitter"><i class="fa fa-twitter-square"></i></a><?php } ?>
-         	<?php if($instagramUrl != '' && $instagramUrl !== 'http://'){ ?><a href="<?php echo $instagramUrl;?>" target="_blank" class="ss_social_icon instagram"><i class="fa fa-instagram"></i></a><?php } ?>
-         </div>
+            <?php $facebookUrl = $meta['ss_advertiser_facebook'][0];?>
+            <?php $googleUrl = $meta['ss_advertiser_google'][0];?>
+            <?php $pinterestUrl = $meta['ss_advertiser_pinterest'][0];?>
+            <?php $twitterUrl = $meta['ss_advertiser_twitter'][0];?>
+            <?php $instagramUrl = $meta['ss_advertiser_instragram'][0];?>
 
+             <div class="ss_social_icons">
+                    <?php if($facebookUrl != '' && $facebookUrl !== 'http://'){ ?><a href="<?php echo $facebookUrl; ?>" target="_blank" class="ss_social_icon facebook"><i class="fa fa-facebook-square"></i></a><?php } ?>
+                    <?php if($pinterestUrl != '' && $pinterestUrl !== 'http://'){ ?><a href="<?php echo $pinterestUrl; ?>" target="_blank" class="ss_social_icon pinterest"><i class="fa fa-pinterest-square"></i></a><?php } ?>
+                    <?php if($googleUrl != '' && $googleUrl !== 'http://'){ ?><a href="<?php echo $googleUrl;?>" target="_blank" class="ss_social_icon gplus"><i class="fa fa-google-plus-square"></i></a><?php } ?>
+                    <?php if($twitterUrl != '' && $twitterUrl !== 'http://'){ ?><a href="<?php echo $twitterUrl;?>" target="_blank" class="ss_social_icon twitter"><i class="fa fa-twitter-square"></i></a><?php } ?>
+                    <?php if($instagramUrl != '' && $instagramUrl !== 'http://'){ ?><a href="<?php echo $instagramUrl;?>" target="_blank" class="ss_social_icon instagram"><i class="fa fa-instagram"></i></a><?php } ?>
+             </div>
+
+    </div>
+     <a class="visit_site_ss" target="_blank" href="<?php echo 'http://' . $strippedAdvertiserLink; ?>">Visit <?php echo $advertiser->post_title;?></a>
+    </div>
 </div>
- <a class="visit_site_ss" target="_blank" href="<?php echo 'http://' . $strippedAdvertiserLink; ?>">Visit <?php echo $advertiser->post_title;?></a>
-</div>
-
 
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -181,8 +182,6 @@ $categories=$wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} wptt
         }
     });
     </script>
-
-<link rel="stylesheet" href="<?php echo SOSENSATIONAL_URL?>/flexslider.css" type="text/css">
 
 <script src="<?php echo SOSENSATIONAL_URL?>/jquery.flexslider.js"></script>
 <script>

@@ -1,162 +1,55 @@
 /*------------------------------------------------------------------------------
-                            Max Mega Menu Custom Styles
+                            Font Sizes
 ------------------------------------------------------------------------------*/
-#mega-menu-wrap-primary {
-    
-    background: none;
-    
-    #mega-menu-primary { 
-               
-        li.mega-menu-item-has-children {
-            & > a:after {
-                margin-left: 2px;
-            } 
-        }
-        
-        a {
-            & > span.mm-purple {
-                color: #6A1CB0;
-                font: {
-                    family: inherit;
-                }                    
-            }
-        }
-        
-        ul {            
-            & > li {
-                & > a {
-                    span {
-                        font: {
-                            weight: bold;       
-                            family: inherit;
-                        }             
-                        
-                        &:before {
-                            content: " ";
-                            display: block;
-                            margin-top: 23px;
-                        }                                                                          
-                    }
-                    span.mm-title {
-                        padding-bottom: 6px;
-                        border-bottom: 2px solid #a0862a;
-                        &:after {
-                            content: " ";
-                            display: block;
-                            border-bottom: 2px solid #eee;
-                            position: relative;
-                            width: 150px;
-                            margin-top: 2px;
-                            margin-bottom: 9px;
-                            z-index: -1;             
-                        }
-                        &:before {
-                            content: " ";
-                            display: block;
-                            margin-top: 23px;
-                        }
-                    }               
-                }
-            }            
-        }            
 
-        
-        
-        & > li.mega-menu-item > a {
-            line-height: 28px;
-        }
-        form {
-            button {
-                background: #000;
-            }            
-        }
-        input {
-            max-width: 89%;
-            float: left;
-        }
-        li {
-            margin-bottom: 5px;                      
-        }
-        
-        & > li.mega-menu-item.mega-item-align-right:first-child {
-            margin-left: 20px;
-            background-color: #f3f3f3;
-            border-radius: 3px;
-            border: solid 1px #e0e0e0;
-            box-shadow: none;  
-            height: 30px;
-            a {
-                &:after {
-                    content: none;
-                }
-            }                
-        }
-        
-        & > li.mega-menu-megamenu {
-            & > ul.mega-sub-menu {
-                & > li.mega-menu-item {   
-                    margin-top: -20px;
-                    & > h4.mega-block-title {
-                        text-transform: lowercase;
-                        color: #000;
-                        border-bottom: 2px solid #a0862a;
-                        padding-bottom: 15px;
-                        margin-bottom: 10px;
+/*------------------------------Advertsiser Page------------------------------*/
+.page h1 {
+    font-size: 3.8rem; // 38px
+}
 
-                        &:after {
-                            content:" ";
-                            display: block;
-                            border-bottom: 2px solid #eee;
-                            position: absolute;
-                            width: 150px;
-                            margin-top: 15px;
-                            z-index: -1;
-
-                        }
-                        
-                        &:first-letter {
-                            text-transform: uppercase;
-                        }
-                    }
-                }
-            }
-        }
-        
-        li.mega-menu-item {
-            font-family: Open Sans;
-            &.mega-toggle-on > a {
-                background: #fff;
-                color: #000;
-                font-size: 14px;
-            }
-            
-            a {
-                color: #000;
-                &:hover {
-                    background: #fff;
-                    color: #AB9443;                    
-                }
-            }
-            & > a {
-                text-transform: uppercase;
-            }   
-            
-            & > h4.mega-block-title {
-                text-transform: lowercase;
-            }
-        }
-        li.mega-menu-megamenu {
-            ul.mega-sub-menu {
-                background: #fff;   
-                border: 1px solid #a0862a;
-                border-top: 1px solid #eee;
-            } 
-        } 
-        
+#breadcrumbs {
+    margin-bottom: 5rem;
+    &, & span {        
+        font-size: 1.2rem; // 12px
     }
-} 
+    a {
+        font-size: 1.2rem; // 12px
+    }
+}
+
+.backToBB,
+.ss_description_single_left {
+    font-size: 1.6rem; // 16px
+    line-height: 2.8rem; // 28px
+}
 
 
+.ss_description_company p {
+    font-size: 1.4rem; // 14px
+    line-height: 2.8rem // 28px
+}
+.ss_conpany_info_right_wrapper .visit_site_ss,
+.ss_description_single_right .visit_site_ss {
+    padding: 2.3rem 0 2.3rem 0;
+    font-size: 1.6rem; // 16px
+}
+
+.ss_company_info_right {
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+#footer h2 {
+    font-size: 2.2rem;
+}
+
+#footer {
+    .nav > li > a {
+        font-size: 1.3rem;
+    }
+}
 
 /* Advertsier.php flexslider carousel with products */
 .button_ss {
@@ -164,5 +57,24 @@
         text-decoration: underline;
         color: #fff;
     }
+}
+
+#footer {
+    input {
+        font-size: 1.4rem;
+    }
+}
+
+/*-----------------------Brands and Boutiques Categories ---------------------*/
+
+.blackbar, 
+.whitebar {
+    h2 > span {
+        font-size: 3rem;
+    }
+}
+
+.fadebox {
+    margin-bottom: 15px;
 }
 

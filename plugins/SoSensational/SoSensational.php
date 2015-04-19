@@ -215,10 +215,10 @@ function edit_advertiser_page_template($page_template) {
 }
 
 function ss_rewrite_rule() {
-    
+
     add_rewrite_rule(
         'style-advice-blog/ss_category/([^/]*)/?$', 'index.php?pagename=brands-and-boutiques&ss_cat=$matches[1]', 'top'
-    );    
+    );
 
     add_rewrite_rule(
         'blog/ss_category/([^/]*)/?$', 'index.php?pagename=brands-and-boutiques&ss_cat=$matches[1]', 'top'
@@ -332,7 +332,6 @@ function pbd_alp_init() {
     wp_enqueue_script('tagsinput-scripts', plugin_dir_url(__FILE__) . 'js/tagsinput/bootstrap-tagsinput.min.js', array('bootstrap-js'), '130215', false);
     wp_localize_script('custom-scripts', 'AjaxObject', array('ss_ajax_url' => admin_url('admin-ajax.php')));
     wp_enqueue_script('flexslider-js', plugin_dir_url(__FILE__) . 'js/flexslider/jquery.flexslider.js', array('jquery'), 19032015, false);
-    wp_enqueue_style('flexslider-styles', plugins_url('SoSensational/js/flexslider/flexslider.css'));
     wp_enqueue_style('tags-input', plugins_url('SoSensational/js/tagsinput/bootstrap-tagsinput.css'));
 }
 
