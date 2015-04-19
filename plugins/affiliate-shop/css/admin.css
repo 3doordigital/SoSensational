@@ -75,3 +75,21 @@
 .column-stickers a.active i {
 	color: #0074a2;	
 }
+.container {
+    margin-right: 300px;
+}
+.left_box {
+    float: left;
+    width: 100%;
+}
+.right_box {
+    float: right;
+    width: 281px;
+    margin-right: -300px;
+	margin-top: 40px;
+}
+.next_step {
+	float: right;
+	position: relative;
+	top: -4px;
+}
