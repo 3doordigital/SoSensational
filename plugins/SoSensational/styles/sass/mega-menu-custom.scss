@@ -4,13 +4,20 @@
 #mega-menu-wrap-primary {
     
     background: none;
-    
+      
     .mega-menu-toggle {
         background: none;
+        line-height: 35px;
         
-        &:before,
+        &:before {
+            background-color: #222;
+            padding: 0 10px;
+            border: 1px solid #222;
+            border-radius: 5px;
+        }
         &:after {
             color: #000;
+            content: none;
         }
     }
     

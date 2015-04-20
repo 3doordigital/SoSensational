@@ -9,7 +9,12 @@
     
 
 @media (min-width: 768px) and (max-width: 991px) {
-      
+    
+    .ss_company_info_right {
+        img {
+            max-width: 70%;
+        }
+    }        
     
 }
 
@@ -87,9 +92,23 @@
     
     #footer {
         input {
-            font-size: 1.12rem;
+
         }
     }       
+    
+    #topbar {
+        .blog-masthead {
+            span {
+                font-size: 1.12rem;
+            }
+        }
+    }  
+    
+    .ss_company_info_right {
+        img {
+            max-width: 70%;
+        }
+    }    
     
     /*---------------------Brands and Boutiques Categories -------------------*/
     
@@ -97,7 +116,32 @@
     .blackbar.ss_blackbar {
         height: 49px;
     }
-    
- 
-    
+         
 }
+
+/*------------------------------------------------------------------------------
+                            Menu toggle breakpoints
+------------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 800px) {
+  #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-flyout.mega-align-bottom-right li.mega-menu-item-has-children > a:after {
+    content: '\f140';
+    float: right;
+  }
+}
+@media only screen and (max-width: 800px) {
+  #mega-menu-wrap-primary .mega-menu-toggle {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #mega-menu-wrap-primary .mega-menu-toggle ~ #mega-menu-primary {
+    display: none;
+  }
+  #mega-menu-wrap-primary .mega-menu-toggle.mega-menu-open ~ #mega-menu-primary {
+    display: block;
+  }
+}
+
+/*-----------------------//Menu toggle breakpoints----------------------------*/

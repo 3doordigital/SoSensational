@@ -1,7 +1,7 @@
 /*------------------------------------------------------------------------------
                             Font Sizes
 ------------------------------------------------------------------------------*/
-/*------------------------------Advertsiser Page------------------------------*/
+/*----------------------Advertsiser Page, Header, Footer----------------------*/
 /* line 6, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .page h1 {
   font-size: 3.8rem; }
@@ -54,12 +54,16 @@
 #footer input {
   font-size: 1.4rem; }
 
+/* line 70, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+#topbar .blog-masthead span {
+  font-size: 1.4rem; }
+
 /*-----------------------Brands and Boutiques Categories ---------------------*/
-/* line 72, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 80, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .blackbar h2 > span, .whitebar h2 > span {
   font-size: 3rem; }
 
-/* line 77, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 85, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .fadebox {
   margin-bottom: 15px; }
 

@@ -2,7 +2,7 @@
                             Font Sizes
 ------------------------------------------------------------------------------*/
 
-/*------------------------------Advertsiser Page------------------------------*/
+/*----------------------Advertsiser Page, Header, Footer----------------------*/
 .page h1 {
     font-size: 3.8rem; // 38px
 }
@@ -62,6 +62,14 @@
 #footer {
     input {
         font-size: 1.4rem;
+    }
+}
+
+#topbar {
+    .blog-masthead {
+        span {
+            font-size: 1.4rem;
+        }
     }
 }
 
