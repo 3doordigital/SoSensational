@@ -48,19 +48,19 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
 <div class="ss_clear"></div>
 <div class="flexslider">
     <ul class="slides">
-<?php foreach ($products as $prod): ?> 
+        <?php foreach ($products as $prod): ?> 
             <li class="ss_product_slide"> 
-            <?php $product_meta = get_post_meta($prod->ID); ?>
+                <?php $product_meta = get_post_meta($prod->ID); ?>
                 <a href="<?php echo!isset($product_meta) ? '' : $product_meta['ss_product_link'][0]; ?>" target="_blank">
                     <div class="imageHolderSlide">
-                <?php $image_deets = isset($product_meta['ss_product_image'][0]) ? $product_meta['ss_product_image'][0] : get_template_directory_uri() . "/images/upload-artwork.jpg"; ?>
-    <?php $image = bfi_thumb($image_deets, $product_params); ?>
+                        <?php $image_deets = isset($product_meta['ss_product_image'][0]) ? $product_meta['ss_product_image'][0] : get_template_directory_uri() . "/images/upload-artwork.jpg"; ?>
+                        <?php $image = bfi_thumb($image_deets, $product_params); ?>
                         <img src="<?php echo $image; ?>"/>
                     </div>
                 </a>
                 <div class="product_info_slide"> 
                     <div class="leftProduct_info_slide">
-    <?php $title = !isset($product_meta) ? '' : get_the_title($prod->ID); ?> 
+                        <?php $title = !isset($product_meta) ? '' : get_the_title($prod->ID); ?> 
                         <span class="titleProductInfoSlide"><?php echo substr($title, 0, 30) . '...'; ?></span>
                         <span class="subtitleProductInfoSlide"><?php echo $advertiser->post_title; ?></span>
                     </div>
@@ -71,7 +71,7 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
                     <div class="ss_clear"></div>
                 </div>
             </li>  
-<?php endforeach; ?>
+        <?php endforeach; ?>
     </ul>
 </div><!--end flexslider -->
 <div class="ss_clear"></div>
@@ -84,11 +84,11 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
 
         </div>
         <div class="image_description_single">
-<?php
-if (!empty($meta['ss_image_video'][0])) {
-    ?>          <img src="<?php echo $meta['ss_image_video'][0]; ?>" />
-
             <?php
+            if (!empty($meta['ss_image_video'][0])) {
+                ?>          <img src="<?php echo $meta['ss_image_video'][0]; ?>" />
+
+                <?php
             } elseif (!empty($meta['ss_image_video_text'][0])) {
                 echo $meta['ss_image_video_text'][0];
             }
@@ -185,19 +185,65 @@ if (!empty($meta['ss_image_video'][0])) {
 
 <script src="<?php echo SOSENSATIONAL_URL ?>/jquery.flexslider.js"></script>
 <script>
-     $(window).ready(function () {
-         $('.flexslider').flexslider({
-             animation: "slide",
-             animationLoop: false,
-             controlNav: false,
-             itemWidth: 265,
-             itemMargin: 20,
-             prevText: " ",
-             nextText: " ",
-             slideshow: false,
-             start: function () {
-                 $('.slides').show();
-             }
-         });
-     });
+    
+    var arguments = {};
+
+    function jqUpdateSize() {
+        var width = jQuery(window).width();
+        return width;
+    }
+    
+    function attachSlider(arguments) {
+        $('.flexslider').flexslider(arguments);
+    }
+    
+    function getDesktopSliderSettings() {
+        return arguments = {
+            animation: "slide",
+            animationLoop: false,
+            controlNav: false,
+            itemWidth: 265,
+            itemMargin: 20,
+            prevText: " ",
+            nextText: " ",
+            slideshow: false,
+            start: function () {
+                $('.slides').show();
+            }            
+        };
+    }
+ 
+    
+    function getMobileSliderSettings() {
+        return arguments = {
+            animation: "slide",
+            start: function () {
+                $('.slides').show();
+            }
+        };                
+    }
+ 
+
+    $(window).ready(function () {
+
+        if (jqUpdateSize() >= 768) {
+            arguments = getDesktopSliderSettings();
+        } else {
+            arguments = getMobileSliderSettings();
+        }
+        
+        $('.flexslider').flexslider(arguments);
+        
+    });
+
+    $(window).resize(function () {
+        if (jqUpdateSize() >= 768) {
+            arguments = getDesktopSliderSettings();
+        } else {
+            arguments = getMobileSliderSettings();
+        }
+        
+        $('.flexslider').flexslider(arguments);
+        
+    });
 </script>
