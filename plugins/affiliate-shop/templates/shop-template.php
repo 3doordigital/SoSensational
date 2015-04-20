@@ -191,7 +191,7 @@ get_header();
                             </div>
                         </div>
                     <?php
-					
+					$n = 0;
                     foreach($query->posts AS $post) {
                         if($i == 0) {
                             echo '<div class="row">';
@@ -224,7 +224,7 @@ get_header();
                                             <div class="row product-info">
                                                 <div class="prod_title col-md-17">
                                                     <h3><a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'">'.get_snippet($post->post_title,4).'...</a></h3>
-                                                    <h4>'.$post->post_date.' '. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
+                                                    <h4>'. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
                                                 </div>
                                                 <div class="prod_price col-md-7">
                                                     <div class="price">
@@ -238,7 +238,9 @@ get_header();
                                         </div>
                                   </div>';
                         $i++;
-                        if($i == 3 || $i == $query->found_posts) {
+						$n++;
+                        if($i == 3 || $n == $query->post_count) {
+							
                             echo '</div>';
                             $i = 0;
                         }

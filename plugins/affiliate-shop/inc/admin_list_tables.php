@@ -1129,9 +1129,9 @@ class ListProductSearch extends WP_List_Table {
 
     var $example_data;
     var $total;
-function __construct( $params ){
+function __construct( $data ){
 
-    $this->params = $params;
+    $this->data = $data;
     global $status, $page;
     //Set parent defaults
     parent::__construct( array(
@@ -1190,7 +1190,7 @@ function column_default($item, $column_name){
                                 
         //Return the title contents
         return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
-            /*$1%s*/ $item['title'],
+            /*$1%s*/ stripslashes( $item['title'] ),
             /*$2%s*/ $item['ID'],
             /*$3%s*/ $this->row_actions($actions)
         );
@@ -1236,6 +1236,9 @@ function column_aff($item) {
     if($item['aff'] == 'awin') {
         return '<img src="'.str_replace( 'inc/', '', plugin_dir_url( __FILE__ ) ).'img/awin.png" style="max-width: 50%; height: auto;" />';
     }
+	if($item['aff'] == 'linkshare') {
+        return '<img src="'.str_replace( 'inc/', '', plugin_dir_url( __FILE__ ) ).'img/linkshare.jpg" style="max-width: 50%; height: auto;" />';
+    }
 }
 function get_columns(){
     $columns = array(
@@ -1274,7 +1277,7 @@ function process_bulk_action() {
     
 function prepare_items() {
     global $wpdb; //This is used only if making any database queries
-
+	$data = $this->data['items'];
     $per_page = 50;
 
     $columns = $this->get_columns();
@@ -1284,13 +1287,15 @@ function prepare_items() {
     $this->_column_headers = array($columns, $hidden, $sortable);
 
     $this->process_bulk_action();
-    $this->params["iLimit"] = $per_page;
-    if( $this->get_pagenum() > 1 ) {
+    
+	if( $this->get_pagenum() > 1 ) {
         $pageNum = $this->get_pagenum() - 1;
         $offset = $pageNum * $per_page;
     } else {
         $offset = 0;   
     }
+	
+	/*
     $this->params["iOffset"] = $offset;
     if( isset ( $_REQUEST['orderby'] ) ) {
         if( $_REQUEST['orderby'] == 'price' && $_REQUEST['order'] == 'asc' ) {
@@ -1330,8 +1335,13 @@ function prepare_items() {
                 'price'     => number_format($product->fPrice, 2),
                 'link'      => addslashes($product->sAwDeepLink)
             );
-    }
-    $data = $array;
+    }*/
+    
+	if( !isset( $_SESSION['product_data'] ) ) {
+		$_SESSION['product_data'] = $data;
+	} else {
+		$_SESSION['product_data'] = array_merge( $_SESSION['product_data'], $data );
+	}
     /*function usort_reorder($a,$b){
         $orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'title'; //If no sort, default to title
         $order = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'asc'; //If no order, default to asc
@@ -1342,7 +1352,7 @@ function prepare_items() {
     */
     $current_page = $this->get_pagenum();
 
-    $total_items = $totalCount;
+    $total_items = $this->data['total']['total'];
 
     //$data = array_slice($data,(($current_page-1)*$per_page),$per_page);
 
