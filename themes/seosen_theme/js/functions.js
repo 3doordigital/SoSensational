@@ -25,8 +25,6 @@ jQuery(document).ready( function($) {
 		$('#homenewsletter input').removeClass('newshover');
 	});
     
-    $('[data-toggle="tooltip"]').tooltip();
-    
     $('.shareme').sharrre({
       share: {
         facebook: true,
