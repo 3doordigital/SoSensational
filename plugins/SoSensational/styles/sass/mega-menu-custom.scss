@@ -171,3 +171,26 @@
         
     }
 } 
+
+// Force hiding of children items in a mobile menu dropdown on hover, hide the caret
+
+@media (max-width: 767px) {
+    #mega-menu-wrap-primary {
+        #mega-menu-primary {
+            li.mega-menu-flyout.mega-menu-item-has-children.mega-toggle-on,
+            li.mega-menu-flyout li.mega-menu-item-has-children.mega-toggle-on,
+            & > li.mega-menu-item-has-children.mega-toggle-on,
+            & > li.mega-menu-item-has-children {
+                & > a:after {
+                    content: none !important;
+                }
+            }
+            li.mega-menu-megamenu {
+                ul.mega-sub-menu {
+                    display: none !important;
+                }       
+            }
+        }
+    }      
+    
+}
