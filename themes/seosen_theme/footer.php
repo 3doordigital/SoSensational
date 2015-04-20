@@ -9,19 +9,31 @@
         </div>
         <div class="col-md-4 col-md-offset-1">
             <h2>Menu</h2>
-            <?php
-            if (function_exists('wp_nav_menu')) {
-                wp_nav_menu(array(
-                    'menu' => 'footer',
-                    'theme_location' => 'footer',
-                    'container' => 'div',
-                    'container_class' => '',
-                    'menu_class' => 'nav ',
-                    )
-                );
-            }
-            ?>
-
+            <nav class="navbar-default">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-footer">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>            
+                <?php
+                if (function_exists('wp_nav_menu')) {
+                    wp_nav_menu(array(
+                        'menu' => 'footer',
+                        'theme_location' => 'footer',
+                        'container' => 'div',
+                        'container_class' => 'collapse navbar-collapse',
+                        'container_id' => 'bs-navbar-collapse-footer',
+                        'menu_class' => 'nav navbar-nav',
+                        'fallback_cb' => 'wp_bootstrap_navwalker::fallback',
+                        'walker' => new wp_bootstrap_navwalker()
+                        )
+                    );
+                }
+                ?>            
+            </nav>
         </div>
         <div class="col-md-9 col-md-offset-1">
             <div class="row">
@@ -29,7 +41,7 @@
                     <div id="footer-newsletter">
                         <h2>Join Our Newsletter</h2>
                         <form class="newsform_send">
-                            <input type="email" name="email" placeholder="Your email address" /> <button type="submit">Join Now</button>
+                            <input type="email" name="email" placeholder="Your email address" /> <button class="join-now" type="submit">Join Now</button>
                         </form>
                     </div>
                 </div>

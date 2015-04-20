@@ -605,7 +605,7 @@ section h1 span {
 	border: solid 1px #aaaaaa;	
 	width: 75%;
 }
-#footer button {
+#footer button.join-now {
 	width: 23%;
 	color: #a0862a;		
 	background-color: #fff;

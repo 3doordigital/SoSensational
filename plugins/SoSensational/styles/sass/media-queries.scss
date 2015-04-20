@@ -69,13 +69,13 @@
         text-align: center;
     }
     
-    #footer {
+/*    #footer {
         .nav > li {
             display: list-item;
             float: left;
             margin-right: 15px;
         }
-    }
+    }*/
     
     .fadebox {
         img {
@@ -107,6 +107,17 @@
     .ss_company_info_right {
         img {
             max-width: 70%;
+        }
+    }    
+    
+    .backToBB {
+        display: none;
+    }
+    
+    .backToBB {
+        &.lower {
+            margin-top: 30px;
+            display: block;
         }
     }    
     
