@@ -46,34 +46,36 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
     <div class="ss_clear"></div>
 </div>
 <div class="ss_clear"></div>
-<div class="flexslider">
-    <ul class="slides">
-        <?php foreach ($products as $prod): ?> 
-            <li class="ss_product_slide"> 
-                <?php $product_meta = get_post_meta($prod->ID); ?>
-                <a href="<?php echo!isset($product_meta) ? '' : $product_meta['ss_product_link'][0]; ?>" target="_blank">
-                    <div class="imageHolderSlide">
-                        <?php $image_deets = isset($product_meta['ss_product_image'][0]) ? $product_meta['ss_product_image'][0] : get_template_directory_uri() . "/images/upload-artwork.jpg"; ?>
-                        <?php $image = bfi_thumb($image_deets, $product_params); ?>
-                        <img src="<?php echo $image; ?>"/>
+<div class="slexslider-container">
+    <div class="flexslider">
+        <ul class="slides">
+            <?php foreach ($products as $prod): ?> 
+                <li class="ss_product_slide"> 
+                    <?php $product_meta = get_post_meta($prod->ID); ?>
+                    <a href="<?php echo!isset($product_meta) ? '' : $product_meta['ss_product_link'][0]; ?>" target="_blank">
+                        <div class="imageHolderSlide">
+                            <?php $image_deets = isset($product_meta['ss_product_image'][0]) ? $product_meta['ss_product_image'][0] : get_template_directory_uri() . "/images/upload-artwork.jpg"; ?>
+                            <?php $image = bfi_thumb($image_deets, $product_params); ?>
+                            <img src="<?php echo $image; ?>"/>
+                        </div>
+                    </a>
+                    <div class="product_info_slide"> 
+                        <div class="leftProduct_info_slide">
+                            <?php $title = !isset($product_meta) ? '' : get_the_title($prod->ID); ?> 
+                            <span class="titleProductInfoSlide"><?php echo substr($title, 0, 30) . '...'; ?></span>
+                            <span class="subtitleProductInfoSlide"><?php echo $advertiser->post_title; ?></span>
+                        </div>
+                        <div class="rightProduct_info_slide">
+                            <div class="amount2">&pound;<?php echo!isset($product_meta) ? '' : $product_meta['ss_product_price'][0]; ?></div>
+                            <a href="<?php echo!isset($product_meta) ? '' : $product_meta['ss_product_link'][0]; ?>" target="_blank" class="button_ss">Buy Now</a>
+                        </div>
+                        <div class="ss_clear"></div>
                     </div>
-                </a>
-                <div class="product_info_slide"> 
-                    <div class="leftProduct_info_slide">
-                        <?php $title = !isset($product_meta) ? '' : get_the_title($prod->ID); ?> 
-                        <span class="titleProductInfoSlide"><?php echo substr($title, 0, 30) . '...'; ?></span>
-                        <span class="subtitleProductInfoSlide"><?php echo $advertiser->post_title; ?></span>
-                    </div>
-                    <div class="rightProduct_info_slide">
-                        <div class="amount2">&pound;<?php echo!isset($product_meta) ? '' : $product_meta['ss_product_price'][0]; ?></div>
-                        <a href="<?php echo!isset($product_meta) ? '' : $product_meta['ss_product_link'][0]; ?>" target="_blank" class="button_ss">Buy Now</a>
-                    </div>
-                    <div class="ss_clear"></div>
-                </div>
-            </li>  
-        <?php endforeach; ?>
-    </ul>
-</div><!--end flexslider -->
+                </li>  
+            <?php endforeach; ?>
+        </ul>
+    </div><!--// .flexslider -->
+</div><!--// .flexslider-contaner -->
 <div class="ss_clear"></div>
 
 <div class="row">
@@ -186,8 +188,10 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
 <script src="<?php echo SOSENSATIONAL_URL ?>/jquery.flexslider.js"></script>
 <script>
     
-    var arguments = {};
-
+    var sliderMobile;
+    var arguments;
+    var dynamicSliderClass;
+    
     function jqUpdateSize() {
         var width = jQuery(window).width();
         return width;
@@ -217,33 +221,44 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
     function getMobileSliderSettings() {
         return arguments = {
             animation: "slide",
+            prevText: " ",
+            nextText: " ",    
+            controlNav: false,   
+            itemMargin: 0,
             start: function () {
                 $('.slides').show();
             }
         };                
     }
  
-
     $(window).ready(function () {
-
-        if (jqUpdateSize() >= 768) {
-            arguments = getDesktopSliderSettings();
-        } else {
+        if (jqUpdateSize() < 768) {
             arguments = getMobileSliderSettings();
+            sliderMobile = true;
+            dynamicSliderClass = 'mobile';
+        } else {
+            arguments = getDesktopSliderSettings();
+            sliderMobile = false;
         }
-        
-        $('.flexslider').flexslider(arguments);
-        
+        $('.flexslider').flexslider(arguments).addClass(dynamicSliderClass);      
     });
 
     $(window).resize(function () {
-        if (jqUpdateSize() >= 768) {
+        var clonedSliderDOM = $('.flexslider').clone();       
+        if (jqUpdateSize() < 768 && sliderMobile === false) { 
+            arguments = getMobileSliderSettings();                        
+            clonedSliderDOM.flexslider(arguments);
+            $('.flexslider').replaceWith(clonedSliderDOM);
+            $('.flexslider').addClass(dynamicSliderClass);
+            sliderMobile = true;
+        } else if (jqUpdateSize() >= 768 && sliderMobile === true) {
             arguments = getDesktopSliderSettings();
-        } else {
-            arguments = getMobileSliderSettings();
-        }
+            clonedSliderDOM.flexslider(arguments);
+            $('.flexslider').replaceWith(clonedSliderDOM);
+            $('.flexslider').removeClass('mobile');
+            sliderMobile = false;
+        } 
         
-        $('.flexslider').flexslider(arguments);
         
     });
 </script>
