@@ -11,7 +11,10 @@ gulp.task('sass', function() {
                 sourceMap: 'sass',
                 outputStyle: 'nested'
             }))
-            .pipe(gulp.dest('plugins/SoSensational/styles/dist/'));
+            .pipe(gulp.dest('plugins/SoSensational/styles/dist/'))
+            .pipe(rename({suffix: '.min'}))
+            .pipe(minifyCSS())
+            .pipe(gulp.dest('plugins/SoSensational/styles/dist/min/'));
 });
 
 gulp.task('minify-css', ['sass'], function() {
@@ -29,5 +32,5 @@ gulp.task('rename', ['minify-css'], function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('plugins/SoSensational/styles/sass/*.scss', ['sass', 'minify-css']);
+    gulp.watch('plugins/SoSensational/styles/sass/*.scss', ['sass']);
 });
