@@ -118,5 +118,19 @@
     .slides > li {
         margin: 0;        
     }
+}
 
+// Make the embedded iframe with a video responsive, always display at 16:9 ratio
+.image_description_single {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+    iframe {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
