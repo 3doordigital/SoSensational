@@ -95,3 +95,7 @@
     display: block; } }
 
 /*-----------------------//Menu toggle breakpoints----------------------------*/
+/* line 161, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+.front-tiles img {
+  width: 100% !important; }
+

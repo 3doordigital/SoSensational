@@ -204,7 +204,7 @@ add_filter('page_template', 'edit_advertiser_page_template');
 add_action('ss_css', 'load_ss_css');
 
 function load_ss_css() {
-    wp_enqueue_style('SoSensationalCSS', plugins_url('SoSensational/sosensational.css'));
+    
 }
 
 function edit_advertiser_page_template($page_template) {
