@@ -19,6 +19,11 @@
 }
 
 @media (max-width: 767px) {
+    
+/*------------------------------------------------------------------------------
+                   Advertiser Profile Page, Footer, Header
+------------------------------------------------------------------------------*/
+
     .page h1 {
         font-size: 3.04rem;
     }    
@@ -67,15 +72,7 @@
     #subfoot {
         text-align: center;
     }
-    
-/*    #footer {
-        .nav > li {
-            display: list-item;
-            float: left;
-            margin-right: 15px;
-        }
-    }*/
-    
+       
     .fadebox {
         img {
             max-height: 9999px;
@@ -91,7 +88,6 @@
     
     #footer {
         input {
-
         }
     }       
     
@@ -120,11 +116,30 @@
         }
     }    
     
-    /*---------------------Brands and Boutiques Categories -------------------*/
+/*------------------------------------------------------------------------------
+                        Brands and Boutiques Categories
+------------------------------------------------------------------------------*/
     
     .whitebar.ss_whitebar, 
     .blackbar.ss_blackbar {
         height: 49px;
+    }
+    
+/*------------------------------------------------------------------------------
+                                    Front Page
+------------------------------------------------------------------------------*/
+
+    .front-tiles img {
+        width: 100% !important;
+    }    
+    
+    #homenewsletter {
+        input,
+        button {
+            font-size: inherit;
+            padding: 0 20px;
+            line-height: 40px;
+        }
     }
          
 }
@@ -144,7 +159,6 @@
     display: block;
   }
 }
-
 @media only screen and (max-width: 800px) {
   #mega-menu-wrap-primary .mega-menu-toggle ~ #mega-menu-primary {
     display: none;
@@ -152,12 +166,4 @@
   #mega-menu-wrap-primary .mega-menu-toggle.mega-menu-open ~ #mega-menu-primary {
     display: block;
   }
-}
-
-/*-----------------------//Menu toggle breakpoints----------------------------*/
-
-// Front page
-
-.front-tiles img {
-    width: 100% !important;
 }
