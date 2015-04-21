@@ -1298,15 +1298,6 @@ a img.aligncenter {
 }
 
 
-@media screen and (max-width: 990px) {
-	#infiniteScroll .ss_advertisers_cats {
-		width: 80%;
-		margin-left:  auto;
-		margin-right: auto;
-		margin-bottom: 20px;
-	}
-}
-
 .form-buttons-group {
     position: relative;
 }

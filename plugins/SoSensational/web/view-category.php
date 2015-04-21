@@ -37,34 +37,37 @@ if (!empty($ss_cat_id)):
     WHERE wptt.taxonomy='ss_category' ", OBJECT);
     ?>
     <div class="row">
-    <?php
-    $categoriesWithPriority = sortCategoriesByPriority($categories);
+        <?php
+        $categoriesWithPriority = sortCategoriesByPriority($categories);
 
-    $counterCategories = 1;
-    $counterColor = 1;
-    foreach ($categoriesWithPriority as $category):
-        /* moramo linkat kategorije s pageom za tu kategoriju, tamo ce se ispisivat butici i brendovi. 
-          samo stavis link na taj page i dodas ?ss_cat_id=$category->term_id
-         */
-        if ($category->parent == $category_id):
-            ?>
+        $counterCategories = 1;
+        $counterColor = 1;
+        foreach ($categoriesWithPriority as $category):
+            /* moramo linkat kategorije s pageom za tu kategoriju, tamo ce se ispisivat butici i brendovi. 
+              samo stavis link na taj page i dodas ?ss_cat_id=$category->term_id
+             */
+            if ($category->parent == $category_id):
+                ?>
 
                 <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn" style="visibility: visible;">
-                <?php
-                $children = get_term_children($category->term_id, get_query_var('taxonomy')); // get children 
-                $term_meta = get_option("taxonomy_$category->term_id");
-                ?>
+                    <?php
+                    $children = get_term_children($category->term_id, get_query_var('taxonomy')); // get children 
+                    $term_meta = get_option("taxonomy_$category->term_id");
+                    ?>
                     <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $ss_cat . '/' . $category->slug . '/'; ?>" class="aHolderImgSS">
                         <img  src="<?php echo $term_meta['ss_cat_image']; ?>" class="img-responsive" />
-                        <div class="<?php if ($counterColor % 2): echo 'whitebar ss_whitebar';
-            else: echo 'blackbar ss_blackbar';
-            endif; ?>" style="display:block">
+                        <div class="<?php
+                        if ($counterColor % 2): echo 'whitebar ss_whitebar';
+                        else: echo 'blackbar ss_blackbar';
+                        endif;
+                        ?>" style="display:block">
                             <h2><span> <?php echo $category->name; ?></span></h2>
                         </div>
                     </a>
                 </div>
                 <?php
             endif;
+            $counterColor++;
         endforeach;
         ?>
 
@@ -76,7 +79,6 @@ if (!empty($ss_cat_id)):
 
 
 
-<div class="row margintop">
     <?php
 //$post_type = array('brands','boutiques');
 
@@ -138,15 +140,15 @@ if (!empty($ss_cat_id)):
             <div class="ss_clear"></div> 
         </div>
         <div id="infiniteScroll" class="infiniteScroll">
-    <?php
-    $my_query = new WP_Query($args);
+            <?php
+            $my_query = new WP_Query($args);
 
-    $counterColor = 1;
-    $counterRows = 1;
-    $max = $my_query->max_num_pages;
-    // Add some parameters for the JS.
-    $p_num = (isset($_GET['p_num']) ? $_GET['p_num'] : 2);
-    ?>
+            $counterColor = 1;
+            $counterRows = 1;
+            $max = $my_query->max_num_pages;
+            // Add some parameters for the JS.
+            $p_num = (isset($_GET['p_num']) ? $_GET['p_num'] : 2);
+            ?>
             <script type='text/javascript'>
                 /* <![CDATA[ */
                 var pbd_alp = {"startPage": "1", "maxPages": "<?php echo $max; ?>", "nextLink": "<?php echo $_SERVER['REQUEST_URI'] ?>?p_num=<?php echo $p_num; ?>"};
@@ -155,52 +157,56 @@ if (!empty($ss_cat_id)):
             <?php
             while ($my_query->have_posts()) : $my_query->the_post();
                 ?>
-                <div class="post col-md-8 ss_border fadebox ss_advertisers_cats showme animated fadeIn <?php if ($counterRows == 3) {
+                <div class="post col-md-8 col-sm-12 fadebox ss_advertisers_cats showme animated fadeIn <?php
+                if ($counterRows == 3) {
                     echo 'breakRowClass';
-                } ?>" style="visibility: visible;">
-                <?php
-                $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$my_query->post->post_author}' ", OBJECT);
-                $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
-                ?>
+                }
+                ?>" style="visibility: visible;">
+                    <div class="advertiser-block-wrapper">
+                        <?php
+                        $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$my_query->post->post_author}' ", OBJECT);
+                        $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
+                        ?>
 
-                    <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $post_name; ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>" class="aHolderImgSS">
+                        <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $post_name; ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>" class="aHolderImgSS">
 
-                    <?php $image = bfi_thumb(get_post_meta(get_the_ID(), 'ss_advertisers_cats_image', true), $cat_params); ?>
+                            <?php $image = bfi_thumb(get_post_meta(get_the_ID(), 'ss_advertisers_cats_image', true), $cat_params); ?>
 
-                        <img src="<?php echo $image; ?>" class="img-responsive" />   
+                            <img src="<?php echo $image; ?>" class="img-responsive" />   
 
-        <?php if ($counterColor % 2): echo '<div class="whitebar ss_whitebar" style="display: block;">';
-        else: echo '<div class="blackbar ss_blackbar" style="display: block;">';
-        endif; ?> 
-                        <h2><span> <?php the_title(); ?></span></h2>              
-                </div>
-                </a>
-                <div class="ss_clear"></div>
-                <div class="ss_advertisers_cats_description">
-        <?php
-        $description = get_post_meta(get_the_ID(), 'ss_advertisers_cats_description', true);
-        $description = strip_tags($description);
+                            <?php
+                            if ($counterColor % 2): echo '<div class="whitebar ss_whitebar" style="display: block;">';
+                            else: echo '<div class="blackbar ss_blackbar" style="display: block;">';
+                            endif;
+                            ?> 
+                            <h2><span> <?php the_title(); ?></span></h2>     
+                    </div>
+                    </a>
+                    <div class="ss_clear"></div>
+                    <div class="ss_advertisers_cats_description">
+                        <?php
+                        $description = get_post_meta(get_the_ID(), 'ss_advertisers_cats_description', true);
+                        $description = strip_tags($description);
+                        echo truncateDescription($description, $post_name);
+                        ?>
 
-        echo truncateDescription($description, $post_name);
-        ?>
 
+                    </div>
 
-                </div>
-
-                <a class="button_ss large_ss" target="_blank" href="<?php echo get_post_meta(get_the_ID(), 'ss_advertisers_cats_link', true); ?>">Visit Website</a>
-
+                    <a class="button_ss large_ss" target="_blank" href="<?php echo get_post_meta(get_the_ID(), 'ss_advertisers_cats_link', true); ?>">Visit Website</a>
+                </div> <!--// #advertiser-block-wrapper -->
             </div>
 
-        <?php
-        $counterColor++;
-        $counterRows++;
-        if ($counterRows == 4) {
-            $counterRows = 1;
-        }
-    endwhile;
-    ?>
+            <?php
+            $counterColor++;
+            $counterRows++;
+            if ($counterRows == 4) {
+                $counterRows = 1;
+            }
+        endwhile;
+        ?>
 
-    </div>
+ 
     <div class="ss_clear"></div>
     <?php wp_pagenavi(array('query' => $my_query)); ?>
     <?php wp_reset_postdata(); ?>
@@ -236,9 +242,9 @@ $posts2 = get_posts($args2);
 $i = 1;
 foreach ($posts2 as $featured):
     ?>
-    <div class="col-md-8 fadebox showme animated fadeIn" style="visibility: visible;">
+    <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn" style="visibility: visible;">
         <a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
-    <?php echo get_the_title($featured); ?>
+            <?php echo get_the_title($featured); ?>
             <img class="ss_category_img" src="<?php echo get_post_meta(get_the_ID(), 'ss_logo', true); ?>" />   
         </a>
     </div>
@@ -255,11 +261,11 @@ endforeach;
 <div class="container">
     <div class="row">
         <div class="advertisers-carousel featured">            
-<?php
-if (isset($mainSsCategory)) {
-    displayFeaturedAdvertisers($mainSsCategory);
-}
-?>
+            <?php
+            if (isset($mainSsCategory)) {
+                displayFeaturedAdvertisers($mainSsCategory);
+            }
+            ?>
         </div>
     </div>
 </div>
