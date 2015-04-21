@@ -43,19 +43,20 @@ if (function_exists('yoast_breadcrumb')) {
 
                 <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $category->slug . '/' . $redirectSlug; ?>" class="aHolderImgSS">
                     <img src="<?php echo $image; ?>" class="img-responsive" />   
-        <?php
-        if ($counterColor % 2) {
-            echo '<div class="whitebar  ss_whitebar" style="display: block;">';
-        } else {
-            echo '<div class="blackbar ss_blackbar" style="display: block;">';
-        }
-        ?> 
+                    <?php
+                    if ($counterColor % 2) {
+                        echo '<div class="whitebar  ss_whitebar" style="display: block;">';
+                    } else {
+                        echo '<div class="blackbar ss_blackbar" style="display: block;">';
+                    }
+                    ?> 
                     <h2><span> <?php echo $category->name; ?></span></h2>
                 </a>
             </div>            
         </div>
         <?php
     endif;
+    $counterColor++;
 endforeach;
 ?>
 

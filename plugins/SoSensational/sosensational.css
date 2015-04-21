@@ -77,11 +77,11 @@ body {
 	overflow: hidden;
 }
 
-.ss_advertisers_cats  {
+/*.ss_advertisers_cats  {
 	margin-bottom: 1%;
 	width: 32.6%;
 	margin-right: 1%;
-}
+}*/
 
 .ss_advertisers_cats.breakRowClass  {
 	margin-right: 0px;
@@ -360,7 +360,6 @@ body {
 
 .ss_border{
 	border: solid 1px #bbb;
-	padding: 0px;
 }
 
 .description_ss {
