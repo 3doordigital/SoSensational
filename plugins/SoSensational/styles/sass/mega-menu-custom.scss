@@ -5,7 +5,7 @@
     
     background: none;
       
-    .mega-menu-toggle {
+    .mega-menu-toggle {  
         background: none;
         line-height: 35px;
         
@@ -19,10 +19,14 @@
             color: #000;
             content: none;
         }
+    }    
+    
+    .mega-menu-toggle.mega-menu-open ~ #mega-menu-primary {
+        float: none;
     }
     
     #mega-menu-primary { 
-               
+        float: right;
         li.mega-menu-item-has-children {
             & > a:after {
                 margin-left: 2px;
@@ -94,7 +98,7 @@
             margin-bottom: 5px;                      
         }
         
-        & > li.mega-menu-item.mega-item-align-right:first-child {
+        & > li.mega-menu-item:last-child {
             margin-left: 20px;
             background-color: #f3f3f3;
             border-radius: 3px;

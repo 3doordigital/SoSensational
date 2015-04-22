@@ -17,6 +17,12 @@ function addProductsCustomColumn($columns)
     ));
 }
 
+/**
+ * Add the name of the Brand/Boutique to the 'Brand/Boutique' column for each product
+ * 
+ * @param string $column The name of the column to populate
+ * @param WP_Post $postId Current post in the post listing page (a given row in the table)
+ */
 function processBBColumn($column, $postId)
 {
     $postAuthor = get_post_field('post_author', $postId);
