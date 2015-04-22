@@ -115,7 +115,10 @@
         & > li.mega-menu-megamenu {
             & > ul.mega-sub-menu {
                 & > li.mega-menu-item {   
-                    margin-top: -20px;
+                        margin-top: -20px;
+                        &:last-child {
+                            margin-top: 0;
+                        }                    
                     & > h4.mega-block-title {
                         text-transform: lowercase;
                         color: #000;
@@ -132,8 +135,7 @@
                             margin-top: 15px;
                             z-index: -1;
 
-                        }
-                        
+                        }                        
                         &:first-letter {
                             text-transform: uppercase;
                         }
