@@ -135,6 +135,7 @@ class RelatedCarousel
         $args = array(
             'post_type' => array('advertisers_cats'),
             'posts_per_page' => -1,
+            'orderby' =>  'rand',
             'tax_query' => array(
                 array(
                     'taxonomy'  =>  'ss_category',
