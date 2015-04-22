@@ -32,71 +32,74 @@
             if (have_posts()) : while (have_posts()) : the_post();
                     ?>
 
-                            <?php if ($i == 1) { ?>
+                    <?php if ($i == 1) { ?>
                         <div class="row">
                             <div class="col-md-24">
                                 <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-                                    <?php sosen_post_meta(); ?>
-                                    <?php
-                                    if (has_post_thumbnail()) { // check if the post has a Post Thumbnail assigned to it.
-                                        ?>
-                                    <a href="<?php the_permalink(); ?>">
-                                    <?php
-                                    the_post_thumbnail('blog-large', array('class' => 'img-responsive'));
+                                <?php sosen_post_meta(); ?>
+                                <?php
+                                if (has_post_thumbnail()) { // check if the post has a Post Thumbnail assigned to it.
                                     ?>
+                                    <a href="<?php the_permalink(); ?>">
+                                        <?php
+                                        the_post_thumbnail('blog-large', array('class' => 'img-responsive'));
+                                        ?>
                                     </a>
                                     <?php
                                 }
                                 ?>
 
-                        <?php
-                        the_excerpt_max_charlength(340);
-                        ?>
+                                <?php
+                                the_excerpt_max_charlength(340);
+                                ?>
                             </div>
                         </div>
-        <?php } else { ?>
-            <?php if ($x == 0) { ?>
+                    <?php } else { ?>
+                        <?php if ($x == 0) { ?>
                             <div class="row">
-                                <?php } ?>
-                            <div class="col-md-12 blog-small">
+                            <?php } ?>
+                            <div class="col-sm-12 blog-small">
 
                                 <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-                                    <?php sosen_post_meta(); ?>
-                                    <?php
-                                    if (has_post_thumbnail()) { // check if the post has a Post Thumbnail assigned to it.
-                                        ?>
-                                    <a href="<?php the_permalink(); ?>">
-                                    <?php
-                                    the_post_thumbnail('blog-small', array('class' => 'img-responsive'));
+                                <?php sosen_post_meta(); ?>
+                                <?php
+                                if (has_post_thumbnail()) { // check if the post has a Post Thumbnail assigned to it.
                                     ?>
+                                    <a href="<?php the_permalink(); ?>">
+                                        <?php
+                                        the_post_thumbnail('blog-small', array('class' => 'img-responsive'));
+                                        ?>
                                     </a>
                                     <?php
                                 }
                                 ?>
 
-                            <?php
-                            the_excerpt_max_charlength(170);
-                            ?>
+                                <?php
+                                the_excerpt_max_charlength(170);
+                                ?>
                             </div>   
-                        <?php if ($x == 1 || $wp_query->post_count == $i) { ?>
+                            <?php if ($x == 1 || $wp_query->post_count == $i) { ?>
                             </div>
 
                         <?php } ?>
-                        <?php if ($x == 1) {
+                        <?php
+                        if ($x == 1) {
                             $x = 0;
                         } else {
                             $x++;
-                        } ?>
-                    <?php
+                        }
+                        ?>
+                        <?php
                     }
                     $i++;
                     ?>
-    <?php endwhile; ?>
+                <?php endwhile; ?>
     <?php wp_pagenavi(); ?>
 <?php endif; ?>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-7">
+
+        <div class="col-md-7 col-sm-offset-1">
+            <div class="clearfix"></div>
 <?php dynamic_sidebar('blog_sidebar'); ?> 
         </div>
     </div>
