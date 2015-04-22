@@ -25,7 +25,7 @@
         </div>        
         <div class="col-md-9 col-md-pull-15">
             <div class="row">
-                <div class="col-xs-24 imgbox fadebox">
+                <div class="col-xs-24 col-sm-12 col-md-24 imgbox fadebox">
                     <a href="<?php echo $seosen_options['home_image_1_link']; ?>">
                         <?php echo wp_get_attachment_image($seosen_options['home_image_1']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
                         <div class="row">
@@ -38,9 +38,8 @@
                         </div>
                     </a>
                 </div>
-            </div>
-            <div class="row paddtop">
-                <div class="col-xs-24 imgbox fadebox">
+
+                <div class="col-xs-24 col-sm-12 col-md-24 imgbox fadebox">
                     <a href="<?php echo $seosen_options['home_image_2_link']; ?>">
                         <?php echo wp_get_attachment_image($seosen_options['home_image_2']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
                         <div class="row">
@@ -61,11 +60,9 @@
     <?php $i = 0;
     foreach ($seosen_options['home_cats'] as $cat) { ?>
         <?php
-        if ($i == 0 || $i == 3) {
-            echo '<div class="row margintop">';
-        }
+
         ?>
-        <div class="col-md-8 fadebox">
+        <div class="col-md-8 col-sm-12 fadebox">
             <a href="<?php echo $cat['url']; ?>">
     <?php echo wp_get_attachment_image($cat['attachment_id'], 'home_cat', false, array('class' => 'img-responsive')); ?>
                 <div class="<?php echo ($i == 0 || $i == 2 || $i == 4 ? 'whitebar' : 'blackbar'); ?>">
@@ -74,9 +71,7 @@
             </a>
         </div>
         <?php
-        if ($i == 2 || $i == 5) {
-            echo '</div>';
-        }
+
         ?>
     <?php $i ++;
 } ?>
@@ -85,10 +80,10 @@
 </div>
 <section class="container brands front-tiles">
     <h1><span>Featured Brands</span></h1>
-    <div class="row margintop">
-<?php $i = 0;
+
+<?php $i = 1;
 foreach ($seosen_options['feat_brands'] as $brand) { ?>
-            <div class="col-md-8 fadebox brand">
+            <div class="col-md-8 col-sm-12 fadebox brand <?php if ($i%3 === 0) : ?> hidden-sm <?php endif ?>">
                 <a href="<?php echo $brand['url']; ?>">
             <?php echo wp_get_attachment_image($brand['attachment_id'], 'home_brand', false, array('class' => 'img-responsive')); ?>
                     <div class="<?php echo ($i == 1 ? 'whitebar' : 'blackbar'); ?>">
