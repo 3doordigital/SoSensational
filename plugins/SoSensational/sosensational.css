@@ -482,6 +482,8 @@ button:disabled {
 /* Style the delet icon present next to items on /view-products/ */
 i.ajax-delete {
     color: #7F0000;
+    line-height: 100px;
+    margin-left: 20px;
 }
 
 i.ajax-delete:hover {
