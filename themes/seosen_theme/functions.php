@@ -198,7 +198,7 @@ function sosen_related_posts($cat, $post_id) {
     $posts_array = get_posts($args);
     foreach ($posts_array AS $post) {
         setup_postdata($post);
-        $output .= '<div class="col-md-6">';
+        $output .= '<div class="col-md-6 col-sm-12">';
         $output .= '<div class="related-image">';
         $output .= get_the_post_thumbnail($post->ID, 'blog-related', array('class' => 'img-responsive'));
         $output .= '</div>';
