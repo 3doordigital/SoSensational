@@ -205,7 +205,108 @@ jQuery(document).ready(function($) {
            }           
         });        
     });
-    
+});
 
 
+/*------------------------------------------------------------------------------
+ Dynamic Flexslider on advertiser profile page - adapts to the viewport size
+ -----------------------------------------------------------------------------*/ 
+var sliderMode;
+var arguments;
+
+function jqUpdateSize() {
+    var width = jQuery(window).width();
+    return width;
+}
+
+function attachSlider(arguments) {
+    $('.flexslider').flexslider(arguments);
+}
+
+function getDesktopSliderSettings() {
+    return arguments = {
+        animation: "slide",
+        animationLoop: false,
+        controlNav: false,
+        itemWidth: 265,
+        itemMargin: 20,
+        prevText: " ",
+        nextText: " ",
+        slideshow: false,
+        start: function () {
+            $('.slides').show();
+        }            
+    };
+}
+
+function getMobileSliderSettings() {
+    return arguments = {
+        animation: "slide",
+        prevText: " ",
+        nextText: " ",    
+        controlNav: false,   
+        itemMargin: 0,
+        start: function () {
+            $('.slides').show();
+        }
+    };                
+}
+
+function getTabletSliderSettings() {
+    return arguments = {
+        animation: "slide",
+        animationLoop: false,
+        controlNav: false,
+        itemWidth: 340,
+        itemMargin: 20,
+        prevText: " ",
+        nextText: " ",
+        slideshow: false,
+        start: function () {
+            $('.slides').show();
+        }            
+    };              
+}    
+
+function loadSlider(arguments, sliderMode) {       
+    var clonedSliderDOM = $('.flexslider').clone();  
+    clonedSliderDOM.flexslider(arguments);
+    console.log(clonedSliderDOM);
+    var oldSliderMode = function() {
+        var classes = clonedSliderDOM.attr('class').split(/\s+/);
+        return classes[1];
+    };
+    jQuery('.flexslider').replaceWith(clonedSliderDOM);
+    jQuery('.flexslider').removeClass(oldSliderMode);
+    jQuery('.flexslider').addClass(sliderMode);        
+}   
+
+jQuery(window).ready(function ($) {
+    if (jqUpdateSize() < 768) {
+        arguments = getMobileSliderSettings();
+        sliderMode = 'mobile';
+    } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
+        arguments = getTabletSliderSettings();
+        sliderMode = 'tablet';
+    } else {
+        arguments = getDesktopSliderSettings();
+        sliderMode = 'desktop';
+    }
+    $('.flexslider').flexslider(arguments).addClass(sliderMode);      
+});
+
+jQuery(window).resize(function () {  
+    if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
+        arguments = getMobileSliderSettings(); 
+        sliderMode = 'mobile';
+        loadSlider(arguments, sliderMode);
+    } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
+        arguments = getTabletSliderSettings();
+        sliderMode = 'tablet';
+        loadSlider(arguments, sliderMode);         
+    } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {          
+        arguments = getDesktopSliderSettings();
+        sliderMode = 'desktop';
+        loadSlider(arguments, sliderMode);
+    }                 
 });
