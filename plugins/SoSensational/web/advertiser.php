@@ -188,9 +188,8 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
 <script src="<?php echo SOSENSATIONAL_URL ?>/jquery.flexslider.js"></script>
 <script>
     
-    var sliderMobile;
+    var sliderMode;
     var arguments;
-    var dynamicSliderClass;
     
     function jqUpdateSize() {
         var width = jQuery(window).width();
@@ -216,8 +215,7 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
             }            
         };
     }
- 
-    
+     
     function getMobileSliderSettings() {
         return arguments = {
             animation: "slide",
@@ -230,35 +228,63 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
             }
         };                
     }
+    
+    function getTabletSliderSettings() {
+        return arguments = {
+            animation: "slide",
+            animationLoop: false,
+            controlNav: false,
+            itemWidth: 340,
+            itemMargin: 20,
+            prevText: " ",
+            nextText: " ",
+            slideshow: false,
+            start: function () {
+                $('.slides').show();
+            }            
+        };              
+    }    
+    
+    function loadSlider(arguments, sliderMode) {       
+        var clonedSliderDOM = $('.flexslider').clone();  
+        clonedSliderDOM.flexslider(arguments);
+        console.log(clonedSliderDOM);
+        var oldSliderMode = function() {
+            var classes = clonedSliderDOM.attr('class').split(/\s+/);
+            return classes[1];
+        };
+        $('.flexslider').replaceWith(clonedSliderDOM);
+        $('.flexslider').removeClass(oldSliderMode);
+        $('.flexslider').addClass(sliderMode);        
+    }   
  
     $(window).ready(function () {
         if (jqUpdateSize() < 768) {
             arguments = getMobileSliderSettings();
-            sliderMobile = true;
-            dynamicSliderClass = 'mobile';
+            sliderMode = 'mobile';
+        } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
+            arguments = getTabletSliderSettings();
+            sliderMode = 'tablet';
         } else {
             arguments = getDesktopSliderSettings();
-            sliderMobile = false;
+            sliderMode = 'desktop';
         }
-        $('.flexslider').flexslider(arguments).addClass(dynamicSliderClass);      
+        $('.flexslider').flexslider(arguments).addClass(sliderMode);      
     });
 
-    $(window).resize(function () {
-        var clonedSliderDOM = $('.flexslider').clone();       
-        if (jqUpdateSize() < 768 && sliderMobile === false) { 
-            arguments = getMobileSliderSettings();                        
-            clonedSliderDOM.flexslider(arguments);
-            $('.flexslider').replaceWith(clonedSliderDOM);
-            $('.flexslider').addClass(dynamicSliderClass);
-            sliderMobile = true;
-        } else if (jqUpdateSize() >= 768 && sliderMobile === true) {
+    $(window).resize(function () {  
+        if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
+            arguments = getMobileSliderSettings(); 
+            sliderMode = 'mobile';
+            loadSlider(arguments, sliderMode);
+        } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
+            arguments = getTabletSliderSettings();
+            sliderMode = 'tablet';
+            loadSlider(arguments, sliderMode);         
+        } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {          
             arguments = getDesktopSliderSettings();
-            clonedSliderDOM.flexslider(arguments);
-            $('.flexslider').replaceWith(clonedSliderDOM);
-            $('.flexslider').removeClass('mobile');
-            sliderMobile = false;
-        } 
-        
-        
+            sliderMode = 'desktop';
+            loadSlider(arguments, sliderMode);
+        }                 
     });
 </script>
