@@ -27,15 +27,26 @@
     
     #mega-menu-primary { 
         float: right;
-        
+        width: 100%;
+        text-align: right;
         // Flyouts
         & > li.mega-menu-flyout {
             & > ul.mega-sub-menu {
                 border: 1px solid #a0862a;
+                border-top: 1px solid #eee;
                 background: #fff;
                 li.mega-menu-item {
                     a {
                         background: #fff;
+                        color: #000;
+                        text-transform: lowercase;
+                        &:first-letter {
+                            text-transform: uppercase;
+                        }
+                        &:hover {
+                            color: #AB9443; 
+                            background: none;
+                        }
                     }
                 }
             }
