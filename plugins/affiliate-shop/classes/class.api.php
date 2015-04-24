@@ -75,7 +75,7 @@
 			
 			$offset = $depth * ( $page - 1);
 			if( $page < ( 1000 / $depth ) ) {
-			if( $merchant == NULL ) {
+			if( $merchant == NULL || $merchant == 0 ) {
 				$params = array("sQuery" => $term, "sSort" => $_sort, "iLimit" => $depth, "iOffset" => $offset, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ));
 				
 			} else {
@@ -84,43 +84,49 @@
 				$oRefineBy->sName = '';
 				
 				$oRefineByDefinition = new stdClass();
-				$oRefineByDefinition->sId = $_GET['wp_aff_merch'];
+				$oRefineByDefinition->sId = $merchant;
 				$oRefineByDefinition->sName = '';
 				
 				$oRefineBy->oRefineByDefinition = $oRefineByDefinition;
 				
-				$params = array("sQuery" => $term, "sSort" => $_sort, "iLimit" => $depth, "iOffset" => $offset, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ), "oActiveRefineByGroup"	=>	$oRefineBy);
+				$params = array("sQuery" => $term, "sSort" => $_sort, "iLimit" => $depth, "iOffset" => $offset, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ), "oActiveRefineByGroup"	=>	$oRefineBy );
+				
+				//$params = array("sQuery" => $term, "sSort" => $_sort, "iLimit" => $depth, "iOffset" => $offset, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ));
+				
 			}
 					
-				$params = array("sQuery" => $term, "sSort" => $_sort, "iLimit" => $depth, "iOffset" => $offset, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ));
+				
 				
 				$client = ClientFactory::getClient();
 				$response = $client->call('getProductList', $params);
+				$test = (array) $response;
 				
-				if($response->iTotalCount < 1000) {
-					$totalCount = $response->iTotalCount;
-				} else {
-					$totalCount = 1000;
-				}
-				
-				$array['total']['awin'] = $totalCount;
-				
-				foreach($response->oProduct AS $product) {
-					$merchparams = array('iMerchantId'	=> $product->iMerchantId);
-					$merch = $client->call('getMerchant', $merchparams);
-					//echo '<pre>'.print_r($merch, true).'</pre>';
-					$id = $product->iId;
-					$array['items']['ID-'.$id] = array(
-							'ID'        => addslashes($product->iId),
-							'aff'     => 'awin',    
-							'title'     => addslashes ( trim( ucwords( strtolower( $product->sName ) ) ) ),
-							'brand'     => addslashes($merch->oMerchant->sName),
-							'img'       => addslashes($product->sAwImageUrl),
-							'desc'      => addslashes($product->sDescription),
-							'price'     => number_format($product->fPrice, 2),
-							'rrp'       => number_format($product->fRrpPrice, 2),
-							'link'      => addslashes($product->sAwDeepLink)
-						);
+				if( !empty( $test ) ) {
+					if($response->iTotalCount < 1000) {
+						$totalCount = $response->iTotalCount;
+					} else {
+						$totalCount = 1000;
+					}
+					
+					$array['total']['awin'] = $totalCount;
+					
+					foreach($response->oProduct AS $product) {
+						$merchparams = array('iMerchantId'	=> $product->iMerchantId);
+						$merch = $client->call('getMerchant', $merchparams);
+						//echo '<pre>'.print_r($merch, true).'</pre>';
+						$id = $product->iId;
+						$array['items']['ID-'.$id] = array(
+								'ID'        => addslashes($product->iId),
+								'aff'     => 'awin',    
+								'title'     => addslashes ( trim( ucwords( strtolower( $product->sName ) ) ) ),
+								'brand'     => addslashes($merch->oMerchant->sName),
+								'img'       => addslashes($product->sAwImageUrl),
+								'desc'      => addslashes($product->sDescription),
+								'price'     => number_format($product->fPrice, 2),
+								'rrp'       => number_format($product->fRrpPrice, 2),
+								'link'      => addslashes($product->sAwDeepLink)
+							);
+					}
 				}
 				
 				return $array;
