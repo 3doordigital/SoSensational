@@ -128,12 +128,24 @@ jQuery(document).ready(function($) {
 	file_frame.open();
 	});
 	
-	$('.prod_filter').on('change', function(){
-		var val = $(this).val();
-		var type = $(this).attr('id');
-		if( val != '' ){
-			document.location.href = 'admin.php?page=affiliate-shop/products&prod_'+type+'='+val;    
-		}
+	$('.prod_filter').on('change', function( e ){
+		e.preventDefault();
+		var thislink = $(this);
+		var data = {
+			'action'	: 'admin_product_filter',
+			'val'		: thislink.val(),
+			'type' 		: thislink.attr('id'),
+			'referrer'	: document.location.href
+		};
+		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+		$.post(ajaxurl, data, function(response) {
+			console.log( response );
+			if( response.status == 1 ) {
+				var url = decodeURIComponent( response.url );
+				document.location.href = url; 
+			}
+		}, 'json');
+		
 	});
 	
 	$('.delete a').on( 'click', function(e) {
