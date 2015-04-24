@@ -794,7 +794,16 @@ class AllProductTable extends WP_List_Table {
     function column_default($item, $column_name){
         return $item[$column_name];
     }
-
+	
+	function column_price( $item ) {
+		if( $item['rrp'] <= $item['price'] ) {
+			$output = $item['price'];
+		} else {
+			$output = '(<strike>'.$item['rrp'].'</strike>) '.$item['price'];
+		}
+		return $output;
+	}
+	
     function column_title($item){
         
         //Build row actions
@@ -908,7 +917,7 @@ class AllProductTable extends WP_List_Table {
         ?>
         <div class="alignleft actions bulkactions">
         
-            <select name="prod_type_filter" class="prod_filter" data-type="type">
+            <select name="prod_type_filter" class="prod_filter" id="type">
                 <option <?php echo ( !isset( $_GET['prod_type'] ) || $_GET['prod_type'] == 0 ? ' selected ' : '' ); ?> value="0">All Products</option>
                 <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 1 ? ' selected ' : '' ); ?> value="1">Affiliate Feed Products</option>
                 <option <?php echo ( isset( $_GET['prod_type'] ) && $_GET['prod_type'] == 2 ? ' selected ' : '' ); ?> value="2">Manual Products</option>
@@ -1005,9 +1014,10 @@ class AllProductTable extends WP_List_Table {
 			'posts_per_page' => $per_page,
 			'paged' => $paged,
 			'orderby' => $orderby,
-			'order' => $order
+			'order' => $order,
+			'tax_query' => array( 'relation' => 'AND' ),
+			'meta_query' => array( 'relation' => 'AND' ),
         );
-		$args['meta_query'] = array();
 		if( isset( $_REQUEST['prod_type'] ) ) {
 			switch( $_REQUEST['prod_type'] ) {
 				case 1 :
@@ -1028,22 +1038,19 @@ class AllProductTable extends WP_List_Table {
 		}
 		
 		if( isset( $_REQUEST['prod_category'] ) ) {
-			$args['tax_query'] = array(
+			$args['tax_query'][] = 
 				array(
 					'taxonomy' => 'wp_aff_categories',
 					'field'    => 'term_id',
 					'terms'    => $_REQUEST['prod_category'],
-				)
 			);
 		}
 		
 		if( isset( $_REQUEST['prod_brand'] ) ) {
-			$args['tax_query'] = array(
-				array(
+			$args['tax_query'][] = array(
 					'taxonomy' => 'wp_aff_brands',
 					'field'    => 'term_id',
 					'terms'    => $_REQUEST['prod_brand'],
-				)
 			);
 		}
 		
@@ -1090,6 +1097,9 @@ class AllProductTable extends WP_List_Table {
                 'price' => $post_meta['wp_aff_product_price'][0],
                 'link' => $post_meta['wp_aff_product_link'][0],
             );
+			
+			$data[$i]['rrp'] = ( isset( $post_meta['wp_aff_product_rrp'] ) ? $post_meta['wp_aff_product_rrp'][0] : $post_meta['wp_aff_product_price'][0] ); 
+			
 			( isset( $post_meta['wp_aff_product_sale'] ) && $post_meta['wp_aff_product_sale'] == 1 ? $data[$i]['sale'] = 1 : $data[$i]['sale'] = 0 ); 
 			( isset( $post_meta['wp_aff_product_picks'] ) && $post_meta['wp_aff_product_picks'] == 1 ? $data[$i]['picks'] = 1 : $data[$i]['picks'] = 0 ); 
 			global $wp_aff;
