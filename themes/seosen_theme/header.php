@@ -23,7 +23,8 @@
                         <a href="#"><i class="fa fa-youtube"></i></a>
                     </div>
                 </div>
-            </div>    
+            </div>   
+            <div class="row">
             <nav class="navbar navbar-default container" role="navigation">
 
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -48,4 +49,5 @@
                 ?>
 
             </nav>
+            </div>
         </div>

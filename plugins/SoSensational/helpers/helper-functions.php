@@ -182,3 +182,26 @@ function sortShopCategories(&$shopCategories, $parent = 0)
     // You *could* sort the temp array here if you wanted.
     return $tmp_array;   
 }
+
+/**
+ * Check if the currently displayed category has and advertisers assigned to it.
+ * 
+ * Later, display the category on the listing page only if there are advertsiers
+ * assigned to it.
+ * 
+ * @param WP_Post $category Currently displayed category
+ * @return boolean
+ */
+function hasAdvertisers($category)
+{
+    $args = array(
+        'post_type' => array('brands', 'boutiques'),
+        'post_status'   =>  'publish',
+        'ss_category'   =>  $category->name,
+        'posts_per_page'    =>  1
+    );
+    if (get_posts($args)) {
+        return true;
+    }
+    return false;
+}
