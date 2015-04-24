@@ -229,7 +229,7 @@ get_header();
                                                 <div class="prod_price col-md-7">
                                                     <div class="price">
                                                         <div class="amount">&pound;'.
-                                                            number_format( $post_meta['wp_aff_product_price'][0], 2 ).
+                                                            $post_meta['wp_aff_product_price'][0].
                                                         '</div>
                                                         <a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" class="button">Shop Now</a>
                                                     </div>
