@@ -1508,7 +1508,7 @@ class WordPress_Affiliate_Shop {
                             <input class="large-text" type="text" name="product_name[<?php echo $i; ?>]" placeholder="" value="<?php echo ucwords( stripslashes( ($product['title']) )); ?>" id="">
                         </td> 
                        <td>
-                            <input class="large-text" type="text" name="product_price[<?php echo $i; ?>]" placeholder="" value="<?php echo number_format($product['price'], 2); ?>" id="">
+                            <input class="large-text" type="text" name="product_price[<?php echo $i; ?>]" placeholder="" value="<?php echo $product['price']; ?>" id="">
                         </td> 
                         
                        
