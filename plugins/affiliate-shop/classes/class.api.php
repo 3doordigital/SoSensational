@@ -170,7 +170,17 @@
 				
 				$array['total']['linkshare'] = $totalCount;
 				foreach ($xml->item as $item) {
-					$price = (array) $item->price;
+					$saleprice = (array) $item->saleprice;
+					$normalprice = (array) $item->price;
+					
+					if( isset( $saleprice[0] ) && $saleprice[0] != '' ) {
+						$rrp = $normalprice[0];
+						$price = $saleprice[0];	
+					} else {
+						$rrp = $normalprice[0];
+						$price = $normalprice[0];						
+					}
+					
 					$id = (array) $item->linkid;
 					$brand = $brands['ID-'.$item->mid]['name'];
 					$array['items']['ID-'.$id[0]] = array(
@@ -180,8 +190,8 @@
 						'brand'     => addslashes( $brand ),
 						'img'       => addslashes( $item->imageurl ),
 						'desc'      => addslashes( $item->description->short ),
-						'price'     => number_format( $price[0], 2),
-						'rrp'       => '',
+						'price'     => number_format( $price, 2),
+						'rrp'       => number_format( $rrp, 2 ),
 						'link'      => addslashes( $item->linkurl )	
 					);
 				}

@@ -1156,7 +1156,15 @@ function column_default($item, $column_name){
 }
 
 
-    
+    function column_price( $item ) {
+		if( $item['rrp'] <= $item['price'] ) {
+			$output = $item['price'];
+		} else {
+			$output = '(<strike>'.$item['rrp'].'</strike>) '.$item['price'];
+		}
+		return $output;
+	}
+	
     function column_title($item){
         
         //Build row actions
