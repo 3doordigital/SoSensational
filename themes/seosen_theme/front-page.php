@@ -32,7 +32,7 @@
                             <div class="col-xs-10 leftcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_1_text']; ?></h2>
                                 <p>
-                                    <a href="<?php echo $seosen_options['home_image_1_link']; ?>" class="btn btn-primary" role="button">Browse Collection</a>
+                                    <a href="<?php echo $seosen_options['home_image_1_link']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['home_image_1_button']; ?></a>
                                 </p>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                             <div class="col-xs-10 rightcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_2_text']; ?></h2>
                                 <p>
-                                    <a href="<?php echo $seosen_options['home_image_2_link']; ?>" class="btn btn-primary" role="button">Browse Collection</a>
+                                    <a href="<?php echo $seosen_options['home_image_2_link']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['home_image_2_button']; ?></a>
                                 </p>
                             </div>
                         </div>
