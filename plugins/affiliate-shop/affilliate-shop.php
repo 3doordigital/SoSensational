@@ -89,6 +89,8 @@ class WordPress_Affiliate_Shop {
 		
 		add_action( 'wp_ajax_ajax_update_sticker', array( $this, 'ajax_update_sticker' ) );
 		
+		add_action( 'wp_ajax_admin_product_filter', array( $this, 'admin_product_filter' ) );
+				
         add_action( 'wp_ajax_nopriv_change_faceted_category', array( $this, 'faceted_cat_ajax' ) );
         add_action( 'wp_ajax_change_faceted_category', array( $this, 'faceted_cat_ajax' ) );
 		
@@ -1508,7 +1510,7 @@ class WordPress_Affiliate_Shop {
                             <input class="large-text" type="text" name="product_name[<?php echo $i; ?>]" placeholder="" value="<?php echo ucwords( stripslashes( ($product['title']) )); ?>" id="">
                         </td> 
                        <td>
-                            <input class="large-text" type="text" name="product_price[<?php echo $i; ?>]" placeholder="" value="<?php echo number_format($product['price'], 2); ?>" id="">
+                            <input class="large-text" type="text" name="product_price[<?php echo $i; ?>]" placeholder="" value="<?php echo $product['price']; ?>" id="">
                         </td> 
                         
                        
@@ -2089,7 +2091,7 @@ class WordPress_Affiliate_Shop {
                         </tr>
                         <tr>
                             <th>Price</th>
-                            <td><input class="regular-text" type="number" step="any" min="0" name="product_price" placeholder="0.00" value="<?php echo number_format( $meta['wp_aff_product_price'][0], 2); ?>"><p class="description">&pound; sign not needed.</p></td>
+                            <td><input class="regular-text" type="number" step="any" min="0" name="product_price" placeholder="0.00" value="<?php echo $meta['wp_aff_product_price'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
                         </tr>
                         <tr>
                             <th>Description</th>
@@ -2182,6 +2184,18 @@ class WordPress_Affiliate_Shop {
 		}
 		echo json_encode((object)$output);
 		die;	
+	}
+	
+	function admin_product_filter() {
+		
+		$output = array( 'status' => 1 );
+		
+		$url = urldecode($_POST['referrer']);
+		
+		$output['url'] = add_query_arg( 'prod_'.$_POST['type'], $_POST['val'], $url );
+		$output['url'] = $output['url'];
+		echo json_encode( (object) $output );
+		die;
 	}
 	
     /**

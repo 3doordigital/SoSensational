@@ -264,6 +264,11 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
 						'title' => __('Top Left Upper Link', 'redux-framework-demo'), 
 					),
 					array(
+						'id'=>'home_image_1_button',
+						'type' => 'text',
+						'title' => __('Top Left Upper Button', 'redux-framework-demo'), 
+					),
+					array(
 						'id'       => 'home_image_2',
 						'type'     => 'media', 
 						'url'      => false,
@@ -278,6 +283,12 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
 						'id'=>'home_image_2_link',
 						'type' => 'text',
 						'title' => __('Top Left Lower Link', 'redux-framework-demo'), 
+						 
+					),
+					array(
+						'id'=>'home_image_2_button',
+						'type' => 'text',
+						'title' => __('Top Left Upper Button', 'redux-framework-demo'),
 					),
 					array(
 						'id'          => 'home_slider',
