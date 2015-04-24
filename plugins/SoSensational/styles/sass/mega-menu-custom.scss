@@ -27,7 +27,8 @@
     
     #mega-menu-primary { 
         float: right;
-        
+        width: 100%;
+        text-align: right;
         // Flyouts
         & > li.mega-menu-flyout {
             & > ul.mega-sub-menu {
