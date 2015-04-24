@@ -97,6 +97,8 @@ if (empty($mainChildren)):
         'showposts' => 12,
         'post_status' => 'publish',
         'author__in' => $users,
+        'orderby' => 'title',
+        'order' => 'ASC',
         'tax_query' => array(
             array(
                 'taxonomy' => 'ss_category',
@@ -148,6 +150,10 @@ if (empty($mainChildren)):
         </script>
         <?php
         while ($my_query->have_posts()) : $my_query->the_post();
+            $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} WHERE (post_type='brands' or post_type='boutiques') AND post_author='{$my_query->post->post_author}' AND post_status='publish'", OBJECT);
+            if (empty($advertiser)) {
+                continue;
+            }
             ?>
             <div class="post col-md-8 col-sm-12 fadebox ss_advertisers_cats showme animated fadeIn <?php
             if ($counterRows == 3) {
@@ -156,7 +162,6 @@ if (empty($mainChildren)):
             ?>" style="visibility: visible;">
                 <div class="advertiser-block-wrapper">
                     <?php
-                    $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$my_query->post->post_author}' ", OBJECT);
                     $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
                     ?>
 
