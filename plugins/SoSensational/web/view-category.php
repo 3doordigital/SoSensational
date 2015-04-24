@@ -18,8 +18,6 @@ if (!empty($ss_cat_id)):
                                     AND wpt.term_id='{$category_id}'", OBJECT);
     $mainChildren = get_term_children($category_id, get_query_var('taxonomy'));
 
-    $mainSsCategory = $category;
-
     $term_meta = get_option("taxonomy_$category_id");
     ?>
 
@@ -39,14 +37,10 @@ if (!empty($ss_cat_id)):
     <div class="row">
         <?php
         $categoriesWithPriority = sortCategoriesByPriority($categories);
-
         $counterCategories = 1;
         $counterColor = 1;
         foreach ($categoriesWithPriority as $category):
-            /* moramo linkat kategorije s pageom za tu kategoriju, tamo ce se ispisivat butici i brendovi. 
-              samo stavis link na taj page i dodas ?ss_cat_id=$category->term_id
-             */
-            if ($category->parent == $category_id):
+            if ($category->parent == $category_id && hasAdvertisers($category)):
                 ?>
 
                 <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn" style="visibility: visible;">
@@ -70,7 +64,6 @@ if (!empty($ss_cat_id)):
             $counterColor++;
         endforeach;
         ?>
-
         <div class="ss_clear" ></div>
     </div>
 
@@ -79,134 +72,133 @@ if (!empty($ss_cat_id)):
 
 
 
-    <?php
+<?php
 //$post_type = array('brands','boutiques');
 
-    $users = null;
-    $post_type = array('advertisers_cats');
-    if (isset($_GET['p_type'])) {
-        if ($_GET['p_type'] == "brands") {
-            $user_query = new WP_User_Query(array('role' => 'brand_role', 'fields' => 'ID'));
-        }
-        if ($_GET['p_type'] == "boutiques") {
-            $user_query = new WP_User_Query(array('role' => 'boutique_role', 'fields' => 'ID'));
-        }
-
-        $users = $user_query->get_results();
+$users = null;
+$post_type = array('advertisers_cats');
+if (isset($_GET['p_type'])) {
+    if ($_GET['p_type'] == "brands") {
+        $user_query = new WP_User_Query(array('role' => 'brand_role', 'fields' => 'ID'));
+    }
+    if ($_GET['p_type'] == "boutiques") {
+        $user_query = new WP_User_Query(array('role' => 'boutique_role', 'fields' => 'ID'));
     }
 
-    if (empty($mainChildren)):
+    $users = $user_query->get_results();
+}
+if (empty($mainChildren)):
 
-        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-        $args = array(
-            'post_type' => $post_type,
-            'post_per_page' => 12,
-            'showposts' => 12,
-            'post_status' => 'publish',
-            'author__in' => $users,
-            'tax_query' => array(
-                array(
-                    'taxonomy' => 'ss_category',
-                    'field' => 'id',
-                    'terms' => $category_id
-                )
-            ),
-            'paged' => $paged
-        );
+    $args = array(
+        'post_type' => $post_type,
+        'post_per_page' => 12,
+        'showposts' => 12,
+        'post_status' => 'publish',
+        'author__in' => $users,
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'ss_category',
+                'field' => 'id',
+                'terms' => $category_id
+            )
+        ),
+        'paged' => $paged
+    );
 
-        $term_meta = get_term_by("id", $category_id, "ss_category");
-        ?>     
-        <h1><span><?php echo $term_meta->name; ?></span></h1>
+    $term_meta = get_term_by("id", $category_id, "ss_category");
+    ?>     
+    <h1><span><?php echo $term_meta->name; ?></span></h1>
+    <?php
+    if (function_exists('yoast_breadcrumb')) {
+        yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
+    }
+    ?>
+
+    <?php if (function_exists('breadcrumb_trail')) breadcrumb_trail(); ?>             
+
+    <div class="category_ss_title_under">
+        <span class="left_ss"><?php echo $term_meta->description; ?> </span>
+        <p class="ss_description category_ss">
+
+            <b class="ss_trigger_dropdown">Brands & Boutiques</b>
+            <span class="dropdown_ss_bb">
+                <a class="showBBA" href="<?php echo $currentUriWithoutQuery; ?>">Show All</a>
+                <a class="showBBA" href="?p_type=brands">Just Brands</a>
+                <a class="showBBA" href="?p_type=boutiques">Just Boutiques</a>
+            </span>
+        </p>
+        <div class="ss_clear"></div> 
+    </div>
+    <div id="infiniteScroll" class="infiniteScroll">
         <?php
-        if (function_exists('yoast_breadcrumb')) {
-            yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
-        }
+        $my_query = new WP_Query($args);
+
+        $counterColor = 1;
+        $counterRows = 1;
+        $max = $my_query->max_num_pages;
+        // Add some parameters for the JS.
+        $p_num = (isset($_GET['p_num']) ? $_GET['p_num'] : 2);
         ?>
-
-        <?php if (function_exists('breadcrumb_trail')) breadcrumb_trail(); ?>             
-
-        <div class="category_ss_title_under">
-            <span class="left_ss"><?php echo $term_meta->description; ?> </span>
-            <p class="ss_description category_ss">
-
-                <b class="ss_trigger_dropdown">Brands & Boutiques</b>
-                <span class="dropdown_ss_bb">
-                    <a class="showBBA" href="<?php echo $currentUriWithoutQuery; ?>">Show All</a>
-                    <a class="showBBA" href="?p_type=brands">Just Brands</a>
-                    <a class="showBBA" href="?p_type=boutiques">Just Boutiques</a>
-                </span>
-            </p>
-            <div class="ss_clear"></div> 
-        </div>
-        <div id="infiniteScroll" class="infiniteScroll">
-            <?php
-            $my_query = new WP_Query($args);
-
-            $counterColor = 1;
-            $counterRows = 1;
-            $max = $my_query->max_num_pages;
-            // Add some parameters for the JS.
-            $p_num = (isset($_GET['p_num']) ? $_GET['p_num'] : 2);
+        <script type='text/javascript'>
+            /* <![CDATA[ */
+            var pbd_alp = {"startPage": "1", "maxPages": "<?php echo $max; ?>", "nextLink": "<?php echo $_SERVER['REQUEST_URI'] ?>?p_num=<?php echo $p_num; ?>"};
+                /* ]]> */
+        </script>
+        <?php
+        while ($my_query->have_posts()) : $my_query->the_post();
             ?>
-            <script type='text/javascript'>
-                /* <![CDATA[ */
-                var pbd_alp = {"startPage": "1", "maxPages": "<?php echo $max; ?>", "nextLink": "<?php echo $_SERVER['REQUEST_URI'] ?>?p_num=<?php echo $p_num; ?>"};
-                    /* ]]> */
-            </script>
-            <?php
-            while ($my_query->have_posts()) : $my_query->the_post();
-                ?>
-                <div class="post col-md-8 col-sm-12 fadebox ss_advertisers_cats showme animated fadeIn <?php
-                if ($counterRows == 3) {
-                    echo 'breakRowClass';
-                }
-                ?>" style="visibility: visible;">
-                    <div class="advertiser-block-wrapper">
-                        <?php
-                        $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$my_query->post->post_author}' ", OBJECT);
-                        $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
-                        ?>
-
-                        <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $post_name; ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>" class="aHolderImgSS">
-
-                            <?php $image = bfi_thumb(get_post_meta(get_the_ID(), 'ss_advertisers_cats_image', true), $cat_params); ?>
-
-                            <img src="<?php echo $image; ?>" class="img-responsive" />   
-
-                            <?php
-                            if ($counterColor % 2): echo '<div class="whitebar ss_whitebar" style="display: block;">';
-                            else: echo '<div class="blackbar ss_blackbar" style="display: block;">';
-                            endif;
-                            ?> 
-                            <h2><span> <?php the_title(); ?></span></h2>     
-                    </div>
-                    </a>
-                    <div class="ss_clear"></div>
-                    <div class="ss_advertisers_cats_description">
-                        <?php
-                        $description = get_post_meta(get_the_ID(), 'ss_advertisers_cats_description', true);
-                        $description = strip_tags($description);
-                        echo truncateDescription($description, $post_name);
-                        ?>
-
-
-                    </div>
-
-                    <a class="button_ss large_ss" target="_blank" href="<?php echo get_post_meta(get_the_ID(), 'ss_advertisers_cats_link', true); ?>">Visit Website</a>
-                </div> <!--// #advertiser-block-wrapper -->
-            </div>
-
-            <?php
-            $counterColor++;
-            $counterRows++;
-            if ($counterRows == 4) {
-                $counterRows = 1;
+            <div class="post col-md-8 col-sm-12 fadebox ss_advertisers_cats showme animated fadeIn <?php
+            if ($counterRows == 3) {
+                echo 'breakRowClass';
             }
-        endwhile;
-        ?>
+            ?>" style="visibility: visible;">
+                <div class="advertiser-block-wrapper">
+                    <?php
+                    $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$my_query->post->post_author}' ", OBJECT);
+                    $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
+                    ?>
 
- 
+                    <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $post_name; ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>" class="aHolderImgSS">
+
+                        <?php $image = bfi_thumb(get_post_meta(get_the_ID(), 'ss_advertisers_cats_image', true), $cat_params); ?>
+
+                        <img src="<?php echo $image; ?>" class="img-responsive" />   
+
+                        <?php
+                        if ($counterColor % 2): echo '<div class="whitebar ss_whitebar" style="display: block;">';
+                        else: echo '<div class="blackbar ss_blackbar" style="display: block;">';
+                        endif;
+                        ?> 
+                        <h2><span> <?php the_title(); ?></span></h2>     
+                </div>
+                </a>
+                <div class="ss_clear"></div>
+                <div class="ss_advertisers_cats_description">
+                    <?php
+                    $description = get_post_meta(get_the_ID(), 'ss_advertisers_cats_description', true);
+                    $description = strip_tags($description);
+                    echo truncateDescription($description, $post_name);
+                    ?>
+
+
+                </div>
+
+                <a class="button_ss large_ss" target="_blank" href="<?php echo get_post_meta(get_the_ID(), 'ss_advertisers_cats_link', true); ?>">Visit Website</a>
+            </div> <!--// #advertiser-block-wrapper -->
+        </div>
+
+        <?php
+        $counterColor++;
+        $counterRows++;
+        if ($counterRows == 4) {
+            $counterRows = 1;
+        }
+    endwhile;
+    ?>
+
+
     <div class="ss_clear"></div>
     <?php wp_pagenavi(array('query' => $my_query)); ?>
     <?php wp_reset_postdata(); ?>

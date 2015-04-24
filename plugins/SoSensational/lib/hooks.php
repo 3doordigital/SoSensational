@@ -1,7 +1,39 @@
 <?php
+/**
+ * Custom hooks for the SoSensational Plugin
+ * 
+ * @author Lukasz Tarasiewicz <lukasz.tarasiewicz@polcode.net>
+ * @data April 2015
+ */
 
 add_filter('manage_products_posts_columns', 'addProductsCustomColumn');
 add_action('manage_products_posts_custom_column', 'processBBColumn', 10, 2);
+add_filter('lost_password', 'ssPreventPasswordReset', 10, 2);
+add_filter('login_message', 'ssAddContactAdminMessage');
+
+
+/**
+ * If a user wanted to reset her password, a message to contact a representative is displayed.
+ * 
+ * @param string $message
+ * @return string
+ */
+function ssAddContactAdminMessage($message)
+{
+    if(isset($_GET['h'])) {
+        $message = '<div id="login_error"><p>Please contact your SoSensational representative to request a new password.</p></div>';
+    }    
+    return $message;
+}
+
+/**
+ * 'Lost your password' button redirects to the login page. Password reset is disabled.
+ */
+function ssPreventPasswordReset()
+{
+    $redirectUrl = esc_url(add_query_arg('h', 'p', wp_login_url()));
+    wp_redirect($redirectUrl);
+}
 
 
 /**
