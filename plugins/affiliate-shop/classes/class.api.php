@@ -224,7 +224,7 @@
 			uasort( $output, array( $this, 'usort_reorder' ) );
 			$echo =  '';
 			foreach( $output as $item ) {
-				$echo .= '<option '.( $merchant == $item['ID'] ? ' selected ' : '' ).'value="'.$item['ID'].'">'.$item['name'].'</option>';
+				$echo .= '<option '.( $merchant == $item['ID'] ? ' selected ' : '' ).'value="'.$item['ID'].'">'.$item['name'].' ('.$item['aff'].')</option>';
 			}
 			
 			echo $echo;
@@ -244,7 +244,7 @@
 				$array['ID-'.$item->iId] = array (
 					'ID'	=> $item->iId,
 					'name'	=> $item->sName,
-					'api'	=> 'awin'
+					'aff'	=> 'awin'
 				);	
 			}
 			
