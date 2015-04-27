@@ -443,7 +443,7 @@ class WordPress_Affiliate_Shop {
             'rewrite'           => array( 'slug' => 'aff-brands', 'with_front' => false ),
         );
 
-        register_taxonomy( 'wp_aff_categories', array( 'wp_aff_products' ), $args );
+       register_taxonomy( 'wp_aff_categories', array( 'wp_aff_products' ), $args );
        register_taxonomy( 'wp_aff_colours', array( 'wp_aff_products' ), $args2 );
        register_taxonomy( 'wp_aff_sizes', array( 'wp_aff_products' ), $args3 );
        register_taxonomy( 'wp_aff_brands', array( 'wp_aff_products' ), $args4 );
@@ -955,6 +955,7 @@ class WordPress_Affiliate_Shop {
 				//add_post_meta($insID, 'wp_aff_product_brand', , true);
 				add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'][$i], true);
 				add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'][$i], true);
+				add_post_meta($insID, 'wp_aff_product_aff', $_POST['product_aff'][$i], true);
 			}
         }
         //print_var($data);
@@ -1490,6 +1491,7 @@ class WordPress_Affiliate_Shop {
 <h3 class=" "><span><?php echo ucwords( stripslashes( ($product['title']) )); ?> (ID:<?php echo $product['ID']; ?>)<br>Brand: <?php echo ucwords($product['brand']); ?><br><a class="button" target="_blank" href="<?php echo $product['link']; ?>">Visit URL</a></span> <a href="#" class="delete button button-secondary remove-product" rel="<?php echo $product['ID']; ?>">Remove Product</a></h3>
 <div class="inside">
                 <input type="hidden" value="<?php echo $product['link']; ?>" name="product_link[<?php echo $i; ?>]">
+                <input type="hidden" value="<?php echo $product['aff']; ?>" name="product_aff[<?php echo $i; ?>]">
                 <input type="hidden" value="<?php echo $product->iId; ?>" name="product_id[<?php echo $i; ?>]">
                 <input type="hidden" value="0" id="product-skip-<?php echo $product['ID']; ?>" name="product_skip[<?php echo $i; ?>]">
                 <?php
