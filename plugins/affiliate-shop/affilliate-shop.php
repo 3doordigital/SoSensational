@@ -66,7 +66,7 @@ class WordPress_Affiliate_Shop {
         add_action( 'admin_post_wp_aff_add_category', array ( $this, 'wp_aff_add_category' ) );
         add_action( 'admin_post_wp_aff_edit_category', array ( $this, 'wp_aff_edit_category' ) );
         add_action( 'admin_post_wp_aff_product_search', array ( $this, 'wp_aff_product_search' ) );
-        add_action( 'admin_post_wp_aff_add_products', array ( $this, 'wp_aff_add_products' ) );
+        add_action( 'admin_post_', array ( $this, '' ) );
 		add_action( 'admin_post_wp_aff_edit_colours', array ( $this, 'wp_aff_edit_colours' ) );
 		
 		add_action( 'admin_post_wp_aff_add_man_product', array ( $this, 'wp_aff_add_man_product' ) );
@@ -858,7 +858,7 @@ class WordPress_Affiliate_Shop {
         die();
     }
     public function wp_aff_add_products() {
-        if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_add_products' ) )
+        if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], '' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
         
        
@@ -1422,9 +1422,9 @@ class WordPress_Affiliate_Shop {
                                 $products = array_unique( $_SESSION['products'] );
                                 
                             ?> 
-           <form method="POST" id="wp_aff_add_products" class="searchtable" action="<?php echo admin_url('admin-post.php'); ?>">
-               <input type="hidden" value="wp_aff_add_products" name="action" />
-                <?php wp_nonce_field( 'wp_aff_add_products', '_wpnonce', FALSE ); ?>
+           <form method="POST" id="" class="searchtable" action="<?php echo admin_url('admin-post.php'); ?>">
+               <input type="hidden" value="" name="action" />
+                <?php wp_nonce_field( '', '_wpnonce', FALSE ); ?>
                 <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
                 <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
               <div id="poststuff">
@@ -2019,6 +2019,8 @@ class WordPress_Affiliate_Shop {
 			$brand = $_POST['brand'];	
 		}
 		
+		$insID = $_POST['post_id'];
+		
 		$my_post = array(
 			  'ID'			  => $_POST['post_id'],
               'post_title'    => $_POST['product_name'],
@@ -2035,11 +2037,12 @@ class WordPress_Affiliate_Shop {
             // Insert the post into the database
          print_var($my_post);  
             
-		$insID = wp_update_post( $my_post );   
-		update_post_meta($insID, 'wp_aff_product_link', $_POST['product_url'], true);
-		update_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'], true);
-		update_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'], true);
-		update_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'], true);
+		wp_update_post( $my_post );
+		   
+		update_post_meta($insID, 'wp_aff_product_link', $_POST['product_url']);
+		update_post_meta($insID, 'wp_aff_product_price', $_POST['product_price']);
+		update_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc']);
+		update_post_meta($insID, 'wp_aff_product_image', $_POST['product_image']);
 		$url = add_query_arg( 'msg', 1, $_POST['_wp_http_referer'] );
 		wp_safe_redirect( $url );
 	}
