@@ -61,6 +61,7 @@ if (!empty($ss_cat_id)):
                 </div>
                 <?php
                 $counterColor++;
+                
             endif;            
         endforeach;
         ?>
