@@ -60,8 +60,9 @@ if (!empty($ss_cat_id)):
                     </a>
                 </div>
                 <?php
-            endif;
-            $counterColor++;
+                $counterColor++;
+                
+            endif;            
         endforeach;
         ?>
         <div class="ss_clear" ></div>
