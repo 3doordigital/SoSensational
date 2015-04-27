@@ -265,7 +265,7 @@ class WordPress_Affiliate_Shop {
 		add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
         add_rewrite_rule('^shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
         add_rewrite_rule('^shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
-        add_rewrite_rule('^category/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]', 'top');
+        add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]', 'top');
 		
 		
     }
@@ -395,7 +395,7 @@ class WordPress_Affiliate_Shop {
             'show_ui'           => true,
             'show_admin_column' => true,
             'query_var'         => true,
-            'rewrite'           => array( 'slug' => 'category', 'with_front' => false ),
+            'rewrite'           => array( 'slug' => 'shop', 'with_front' => false ),
         );
         
         $labels2 = array(
