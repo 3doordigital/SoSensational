@@ -2019,6 +2019,8 @@ class WordPress_Affiliate_Shop {
 			$brand = $_POST['brand'];	
 		}
 		
+		$insID = $_POST['post_id'];
+		
 		$my_post = array(
 			  'ID'			  => $_POST['post_id'],
               'post_title'    => $_POST['product_name'],
@@ -2035,7 +2037,8 @@ class WordPress_Affiliate_Shop {
             // Insert the post into the database
          print_var($my_post);  
             
-		$insID = wp_update_post( $my_post );   
+		wp_update_post( $my_post );
+		   
 		update_post_meta($insID, 'wp_aff_product_link', $_POST['product_url']);
 		update_post_meta($insID, 'wp_aff_product_price', $_POST['product_price']);
 		update_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc']);
