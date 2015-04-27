@@ -42,8 +42,7 @@ if (!empty($ss_cat_id)):
         foreach ($categoriesWithPriority as $category):
             if ($category->parent == $category_id && hasAdvertisers($category)):
                 ?>
-
-                <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn" style="visibility: visible;">
+                <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn category-picture-tile" style="visibility: visible;">
                     <?php
                     $children = get_term_children($category->term_id, get_query_var('taxonomy')); // get children 
                     $term_meta = get_option("taxonomy_$category->term_id");
@@ -60,8 +59,7 @@ if (!empty($ss_cat_id)):
                     </a>
                 </div>
                 <?php
-                $counterColor++;
-                
+                $counterColor++;                
             endif;            
         endforeach;
         ?>
