@@ -1,5 +1,9 @@
 @media (min-width: 1200px) {
-
+    .category-picture-tile {
+        img {
+            height: 242px;
+        }
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
