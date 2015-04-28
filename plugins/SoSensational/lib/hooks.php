@@ -11,7 +11,6 @@ add_action('manage_products_posts_custom_column', 'processBBColumn', 10, 2);
 add_filter('lost_password', 'ssPreventPasswordReset', 10, 2);
 add_filter('login_message', 'ssAddContactAdminMessage');
 
-
 /**
  * If a user wanted to reset her password, a message to contact a representative is displayed.
  * 
