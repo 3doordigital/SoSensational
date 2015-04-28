@@ -2096,7 +2096,7 @@ class WordPress_Affiliate_Shop {
 	public function products() { ?>
 		<div class="wrap">
         	<h2>Affiliate Shop</h2>
-        	<?php if( !isset( $_REQUEST['action'] ) || ( !isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) ) { ?>
+        	<?php if( !isset( $_REQUEST['action'] ) || ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) ) { ?>
                 <h3>Products</h3>
                 <?php
                     $ProductTable = new AllProductTable();
