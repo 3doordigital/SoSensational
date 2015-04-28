@@ -66,7 +66,7 @@ class WordPress_Affiliate_Shop {
         add_action( 'admin_post_wp_aff_add_category', array ( $this, 'wp_aff_add_category' ) );
         add_action( 'admin_post_wp_aff_edit_category', array ( $this, 'wp_aff_edit_category' ) );
         add_action( 'admin_post_wp_aff_product_search', array ( $this, 'wp_aff_product_search' ) );
-        add_action( 'admin_post_', array ( $this, '' ) );
+        add_action( 'admin_post_wp_aff_add_products', array ( $this, 'wp_aff_add_products' ) );
 		add_action( 'admin_post_wp_aff_edit_colours', array ( $this, 'wp_aff_edit_colours' ) );
 		
 		add_action( 'admin_post_wp_aff_add_man_product', array ( $this, 'wp_aff_add_man_product' ) );
@@ -858,11 +858,11 @@ class WordPress_Affiliate_Shop {
         die();
     }
     public function wp_aff_add_products() {
-        if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], '' ) )
+        if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_add_products' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
         
        
-        
+        //var_export( $_POST, true );
                 
         $count = count( $_POST['product_image'] );
         
@@ -1422,9 +1422,9 @@ class WordPress_Affiliate_Shop {
                                 $products = array_unique( $_SESSION['products'] );
                                 
                             ?> 
-           <form method="POST" id="" class="searchtable" action="<?php echo admin_url('admin-post.php'); ?>">
-               <input type="hidden" value="" name="action" />
-                <?php wp_nonce_field( '', '_wpnonce', FALSE ); ?>
+           <form method="POST" id="wp_aff_add_products" class="searchtable" action="<?php echo admin_url('admin-post.php'); ?>">
+               <input type="hidden" value="wp_aff_add_products" name="action" />
+                <?php wp_nonce_field( 'wp_aff_add_products', '_wpnonce', FALSE ); ?>
                 <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
                 <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
               <div id="poststuff">
