@@ -197,7 +197,7 @@ function sosensational_custom_taxonomy() {
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'ss_category' ),
+        'rewrite'           => array( 'slug' => 'brands-and-boutiques', 'with_front' => false ),
     );
         register_taxonomy( 'ss_category', array('brands'), $args );
 
