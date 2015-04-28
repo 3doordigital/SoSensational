@@ -165,4 +165,57 @@ jQuery(document).ready(function($) {
 			}	
 		}
 	});
+	
+	function update_product( id, aff) {
+		
+		id = typeof id !== 'undefined' ? id : null;
+		aff = typeof aff !== 'undefined' ? aff : null;
+		
+		var ajax_update_product = {
+			'action'	: 'ajax_update_product',
+			'id'		: id,
+			'aff'		: aff
+		};
+		
+		$.post(ajaxurl, ajax_update_product, function(response) {
+			console.log( response );
+			if( response.status == 1 ) {
+				return true;	
+			} else {
+				return false;	
+			}
+		});
+		
+	}
+	
+	$('.manual_update').click( function(e) {
+		e.preventDefault();
+		$(this).html('<i class="fa fa-circle-o-notch fa-spin"></i>').attr( 'disabled', 'disabled' );
+		$('#submit').attr( 'disabled', 'disabled' );
+		$('.prod_update_row').show();
+		
+		var ajax_update_get_count_data = {
+			'action'	: 'ajax_update_get_count'
+		};
+		var total;
+		var ids;
+		
+		$.post(ajaxurl, ajax_update_get_count_data, function(response) {
+			if( response.status == 1 ) {
+				total = response.total;
+				ids = response.ids;
+				
+				var per_query = 100 / total;
+		
+				$.each( ids, function ( i, item ) {
+					percent = per_query * i;
+					update_product( ids[i].prod_id, null );
+					$('#update_progress').css( 'width', percent+'%' );	
+				});
+				
+			}
+		}, 'json');
+				
+	});
+	
 });
