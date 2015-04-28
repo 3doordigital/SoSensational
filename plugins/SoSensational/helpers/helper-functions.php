@@ -197,7 +197,7 @@ function hasAdvertisers($category)
     $args = array(
         'post_type' => array('brands', 'boutiques'),
         'post_status'   =>  'publish',
-        'ss_category'   =>  $category->name,
+        'ss_category'   =>  $category->slug,
         'posts_per_page'    =>  1
     );
     if (get_posts($args)) {
