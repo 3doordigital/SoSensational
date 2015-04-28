@@ -250,7 +250,11 @@ $attachments = get_posts( array(
 
 <br />
 <div class="input-group">
-  <span class="input-group-addon input-width" id="basic-addon1">Video Embed Code:</span>
+  <span class="input-group-addon input-width">Image URL:</span>
+    <input type="text" name="sosensational_options[promo_image_link]" id="advertiser_website" value="<?php echo isset($meta['ss_promo_image_link'][0]) ? $meta['ss_promo_image_link'][0] : $meta['ss_advertiser_website'][0];?>" class="form-control" aria-describedby="basic-addon1" />	
+</div>
+<div class="input-group">
+  <span class="input-group-addon input-width">Video Embed Code:</span>
 	<textarea onchange="disableVideoBoxes()" name="sosensational_options[image_video_text]" id="image_video_text"  class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_image_video_text'][0]) ? $meta['ss_image_video_text'][0] : "";?></textarea>
 </div>
 </div>
