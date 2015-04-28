@@ -205,3 +205,19 @@ function hasAdvertisers($category)
     }
     return false;
 }
+
+/**
+ * Pull the existing query and add a custom post type.
+ * 
+ * Fixes the menu on the competitions page
+ * 
+ * @global string $queryString
+ * @source https://wordpress.org/support/topic/wp-nav-menu-dissapears-in-category-pages-1?replies=15#post-1859168
+ */
+function fixMenuOnCompetitionsPage()
+{
+    global $queryString;                    
+    parse_str($queryString, $args);                    
+    $args['post_type'] = array('wp_comp_man');
+    query_posts( $args );     
+}
