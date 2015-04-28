@@ -759,6 +759,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     text-shadow: none;
     padding: 6px 0px;
     width: auto;
+	border-radius: 4px;
 }
 .sidebox ul {
     padding: 0;
