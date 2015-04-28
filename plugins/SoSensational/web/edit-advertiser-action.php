@@ -7,7 +7,6 @@ $options = get_option( 'ss_settings' );
 $error_code = "";
 $isAjaxPreview = false;
 
-
 /**
  * Determine if the current request is an AJAX request for preview
  * This is a double check on two global arrays
@@ -106,7 +105,10 @@ function upload_user_file( $file = array() ) {
     }
                        
     
-    foreach($_POST['sosensational_options'] as $key => $value) {	
+    foreach($_POST['sosensational_options'] as $key => $value) {
+        if ($key == 'promo_image_link' && ! $value) {
+            $value = $_POST['sosensational_options']['advertiser_website'];
+        }
         update_post_meta( $post_id, 'ss_'.$key, $value );
         if ($key == "advertiser_co_name") {
                 $my_post = array(
@@ -116,7 +118,7 @@ function upload_user_file( $file = array() ) {
                 );
             // Update the post into the database
             wp_update_post( $my_post ); 
-        }			 
+        }	
     }
     
     if ($_POST['post_type'] === 'boutiques' || $_POST['post_type'] === 'brands') {

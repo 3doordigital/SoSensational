@@ -254,7 +254,6 @@ class WPSEO_Breadcrumbs {
 	 */
 	private function get_post_ancestors() {
 		$ancestors = array();
-
 		if ( isset( $this->post->ancestors ) ) {
 			if ( is_array( $this->post->ancestors ) ) {
 				$ancestors = array_values( $this->post->ancestors );
@@ -271,7 +270,6 @@ class WPSEO_Breadcrumbs {
 		 * @api array $ancestors Ancestors
 		 */
 		$ancestors = apply_filters( 'wp_seo_get_bc_ancestors', $ancestors );
-
 		if ( ! is_array( $ancestors ) ) {
 			trigger_error( 'The return value for the "wp_seo_get_bc_ancestors" filter should be an array.', E_USER_WARNING );
 			$ancestors = (array) $ancestors;
@@ -370,6 +368,7 @@ class WPSEO_Breadcrumbs {
 		 * @api array $crumbs The crumbs array
 		 */
 		$this->crumbs = apply_filters( 'wpseo_breadcrumb_links', $this->crumbs );
+        
 
 		$this->crumb_count = count( $this->crumbs );
 	}
