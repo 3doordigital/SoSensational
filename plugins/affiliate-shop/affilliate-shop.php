@@ -99,7 +99,10 @@ class WordPress_Affiliate_Shop {
         
 		add_action( 'wp_ajax_nopriv_sort_shop', array( $this, 'sort_shop' ) );
         add_action( 'wp_ajax_sort_shop', array( $this, 'sort_shop' ) );
-        
+		
+		add_action( 'wp_ajax_ajax_update_get_count', array( $this, 'ajax_update_get_count' ) );
+		add_action( 'wp_ajax_ajax_update_product', array( $this, 'ajax_update_product' ) );
+		
         add_action( 'widgets_init', array( $this, 'register_widgets' ) );
         
         add_action( 'template_redirect', array( $this, 'term_group_redirect' ) );
@@ -1574,13 +1577,14 @@ class WordPress_Affiliate_Shop {
     public function settings_page() { 
             $redirect = urlencode( remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ) );
             $redirect = urlencode( $_SERVER['REQUEST_URI'] );
+			$option = $this->get_option();
         ?>
         <div class="wrap">
             <h2>Settings</h2>
             <h2 class="nav-tab-wrapper">
             	<a class="nav-tab <?php echo ( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 0 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 0, $_SERVER['REQUEST_URI'] ); ?>">General Settings</a>
                 <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 1 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 1, $_SERVER['REQUEST_URI'] ); ?>">Options Faceted Nav</a>
-                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 2 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 2, $_SERVER['REQUEST_URI'] ); ?>">API Settings</a>
+                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 2 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 2, $_SERVER['REQUEST_URI'] ); ?>">Update Products</a>
             </h2>
             <form method="POST" id="wp_aff_prod_search" action="<?php echo admin_url('admin-post.php'); ?>">
             <?php if( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 0 ) { ?>
@@ -1619,7 +1623,6 @@ class WordPress_Affiliate_Shop {
                 
             
             <?php } elseif( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 1 ) { 
-				$option = $this->get_option();
 			?>
             	<table class="form-table" >
                     <tr>
@@ -1659,6 +1662,34 @@ class WordPress_Affiliate_Shop {
                         </td>
                     </tr>
                </table>
+            <?php } elseif( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 2 ) { ?>
+            	<h2>Update Products</h2>
+                <p>Occasionally products need to have their attributes, such as price or availability updated to match that of the merchant. You can schedule that update below, or run a manual update.</p>
+                <p><strong>Please note that this will use API credits.</strong></p>
+                <table class="form-table">
+                	<tr>
+                    	<th>Update frequency</th>
+                        <td>
+                        	<select name="<?php echo $this->option_name; ?>[product_update][frequency]" value="<?php echo ( isset( $option['product_update']['frequency'] ) ? $option['product_update']['frequency'] : '' ); ?>" id="<?php echo $this->option_name; ?>[product_update][frequency]">
+                            	<option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 0, true ); ?> value="0">Manual</option>
+                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 1, true ); ?> value="1">Daily</option>
+                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 2, true ); ?> value="2">Weekly</option>
+                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 3, true ); ?> value="3">Monthly</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                    	<th>Manual Update</th>
+                        <td><a href="<?php echo $_SERVER['REQUEST_URI']; ?>" class="button button-secondary manual_update">Run Manual Update</a>
+                    </tr>
+                    <tr class="prod_update_row">
+                    	<th>Update Progress</th>
+                        <td>
+                        	<div id="update_progress"></div>
+                        </td>
+                    </tr>
+                </table>
+            
             <?php } ?>
             	<?php submit_button( 'Save' ); ?>
                 <input type="hidden" value="wp_aff_save_api" name="action" />
@@ -1746,6 +1777,21 @@ class WordPress_Affiliate_Shop {
     <div class="wrap">
         <h2>Affiliate Shop</h2>
         <?php if(!isset($_GET['action']) || $_GET['action'] == 'delete'): ?>
+        
+        <?php 
+			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_REQUEST['product'] ) ) {
+				$products = array();
+				if( !is_array( $_REQUEST['product'] ) ) {
+					$products[] = $_REQUEST['product'];
+				} else {
+					$products = $_REQUEST['product'];
+				}
+				foreach( $products as $product ) { 
+					wp_trash_post( $product );
+				}
+				wp_redirect( $_REQUEST['_wp_http_referer'] );
+			}
+		?>
         
         <?php
             $CategoryTable = new WP_Terms_List_Tables(array('taxonomy' => 'wp_aff_categories'));
@@ -2050,7 +2096,7 @@ class WordPress_Affiliate_Shop {
 	public function products() { ?>
 		<div class="wrap">
         	<h2>Affiliate Shop</h2>
-        	<?php if( !isset( $_REQUEST['action'] ) || $_REQUEST['action'] == 'delete' ) { ?>
+        	<?php if( !isset( $_REQUEST['action'] ) || ( !isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) ) { ?>
                 <h3>Products</h3>
                 <?php
                     $ProductTable = new AllProductTable();
@@ -2201,6 +2247,53 @@ class WordPress_Affiliate_Shop {
 		$output['url'] = $output['url'];
 		echo json_encode( (object) $output );
 		die;
+	}
+	
+	function ajax_update_get_count() {
+		$output = array();
+		
+		$qry_args = array(
+			'post_status' => 'publish', 
+			'post_type' => 'wp_aff_products', 
+			'posts_per_page' => -1, 
+		);
+
+		if( $posts = get_posts( $qry_args ) ) {
+			$output['status'] = 1;	
+			foreach( $posts as $post ) {
+				$prod_id = get_post_meta( $post->ID, 'wp_aff_product_id', true );
+				$output['ids'][] = array(
+					'id' => $post->ID,
+					'prod_id' => $prod_id
+				);
+			}
+		} else {
+			$output['status'] = 0;	
+		}
+		
+		$count_posts = wp_count_posts( 'wp_aff_products' );
+		$output['total'] = $count_posts->publish; //
+		
+		$output = json_encode( (object) $output );
+		echo $output; 	
+		die;
+	}
+	
+	function ajax_update_product() {
+		$output = array();
+		
+		$api = new wpAffAPI();
+		$data = $api->update_product( $_POST['id'] ) ;
+		if( $data ) {
+			$output['status'] = 1;	
+		} else {
+			$output['status'] = 0;	
+		}
+		print_var($data);
+		$output = json_encode( (object) $output );
+		echo $output; 	
+		die;
+		
 	}
 	
     /**
