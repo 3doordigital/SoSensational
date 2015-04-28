@@ -73,13 +73,7 @@
                         font: {
                             weight: bold;       
                             family: inherit;
-                        }             
-                        
-                        &:before {
-                            content: " ";
-                            display: block;
-                            margin-top: 23px;
-                        }                                                                          
+                        }                                                                                                    
                     }
                     span.mm-title {
                         padding-bottom: 6px;
@@ -99,7 +93,18 @@
                             display: block;
                             margin-top: 23px;
                         }
-                    }               
+                    } 
+                    span.mm-button {
+                        display: inline-block;
+                        background: #47CB72;
+                        width: 70%;
+                        height: 35px;
+                        line-height: 35px;
+                        border-radius: 5px;
+                        text-align: center;
+                        text-transform: uppercase;
+                        color: #fff;
+                    }
                 }
             }            
         }            
