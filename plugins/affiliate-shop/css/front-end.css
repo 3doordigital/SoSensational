@@ -16,6 +16,9 @@
     overflow: auto;
     
 }
+.wp_aff_categories {
+	max-height: 300px;
+}
 .shop_side .btn-default {
     box-shadow: none;
     background: none;
