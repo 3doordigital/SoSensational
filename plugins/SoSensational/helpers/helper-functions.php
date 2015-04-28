@@ -211,13 +211,13 @@ function hasAdvertisers($category)
  * 
  * Fixes the menu on the competitions page
  * 
- * @global string $queryString
+ * @global string $query_string
  * @source https://wordpress.org/support/topic/wp-nav-menu-dissapears-in-category-pages-1?replies=15#post-1859168
  */
 function fixMenuOnCompetitionsPage()
 {
-    global $queryString;                    
-    parse_str($queryString, $args);                    
+    global $query_string;    
+    parse_str($query_string, $args);              
     $args['post_type'] = array('wp_comp_man');
     query_posts( $args );     
 }
