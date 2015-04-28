@@ -273,6 +273,74 @@
 			
 		}
 		
+		public function update_product( $id, $aff = null ) {
+			//if( !isset( $aff ) || $aff == null || $aff == '' ) {
+				$data = $this->update_awin_product( $id );
+			/*	if( $data['status'] == 0 ) {
+					//$data = $this->update_linkshare_product( $id );	
+				}
+			} else {
+				switch( $aff ) {
+					case 'awin' :
+						$data = $this->update_awin_product( $id );
+						break;
+					case 'linkshare' :
+						//$data = $this->update_linkshare_product( $id );
+						break;	
+				}
+			}
+			*/
+			
+			print_var($data);
+			// Do something with $data
+			
+			
+		}
+		
+		private function update_awin_product( $id ) {
+			
+			$params = array( 'iProductId'	=> array( $id ), 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ) );
+			
+			print_var($params);
+			$client = ClientFactory::getClient();
+			print_var($client);
+			$response = $client->call('getProduct', $params);
+			print_var($response);
+			$data = array();
+			
+			$test = (array) $response;
+				
+			if( !empty( $test ) ) {
+				$data['status'] = 1;
+				foreach($response->oProduct AS $product) {
+					$merchparams = array('iMerchantId'	=> $product->iMerchantId);
+					$merch = $client->call('getMerchant', $merchparams);
+					//echo '<pre>'.print_r($merch, true).'</pre>';
+					$id = $product->iId;
+					$data['item'] = array(
+							'ID'        => addslashes($product->iId),
+							'aff'     => 'awin',    
+							'title'     => addslashes ( trim( ucwords( strtolower( $product->sName ) ) ) ),
+							'brand'     => addslashes($merch->oMerchant->sName),
+							'img'       => addslashes($product->sAwImageUrl),
+							'desc'      => addslashes($product->sDescription),
+							'price'     => number_format($product->fPrice, 2),
+							'rrp'       => number_format($product->fRrpPrice, 2),
+							'link'      => addslashes($product->sAwDeepLink)
+						);
+				}
+			} else {
+				$data['status'] = 0;
+			}
+			
+			return $data;
+			
+		}
+		
+		private function update_linkshare_product( $id ) {
+			
+		}
+		
 		private function usort_reorder( $a, $b ){
 			$orderby = ( !empty( $this->sortby ) ) ? $this->sortby : 'title'; //If no sort, default to title
 			$order = ( !empty( $this->sort ) ) ? $this->sort : 'asc'; //If no order, default to asc

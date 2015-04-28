@@ -93,3 +93,12 @@
 	position: relative;
 	top: -4px;
 }
+.prod_update_row {
+	display: none;
+}
+#update_progress {
+	display:inline-block;
+	width: 0%;
+	background-color: #298cba;
+	height: 30px;
+}

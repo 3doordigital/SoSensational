@@ -597,8 +597,8 @@ class ProductTable extends WP_List_Table {
         global $status, $page;
         //Set parent defaults
         parent::__construct( array(
-            'singular'  => 'category',     //singular name of the listed records
-            'plural'    => 'categories',    //plural name of the listed records
+            'singular'  => 'product',     //singular name of the listed records
+            'plural'    => 'products',    //plural name of the listed records
             'ajax'      => false        //does this table support ajax?
         ) );
         
@@ -718,8 +718,15 @@ class ProductTable extends WP_List_Table {
             $sizes = wp_get_post_terms( $post->ID, 'wp_aff_sizes' );
             $brands = wp_get_post_terms( $post->ID, 'wp_aff_brands' );
             
+			$sizes = (array) $sizes;
+			$colours = (array) $colours;
+			$brands = (array) $brands;
+			
             $prod_data = array();
-            
+            $prod_data['colours'] = array();
+			$prod_data['sizes'] = array();
+			$prod_data['brands'] = array();
+			
             foreach( $colours AS $colour ) {
                 $prod_data['colours'][] = $colour->name;
             }
