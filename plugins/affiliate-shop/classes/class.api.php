@@ -333,11 +333,11 @@
 			$out = '';
 			if( !empty( $data['item'] ) ) {
 				foreach( $data['item'] as $item ) {
-				/*update_post_meta($id, 'wp_aff_product_id', $item['ID']);
+				update_post_meta($id, 'wp_aff_product_id', $item['ID']);
 				update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
 				update_post_meta($id, 'wp_aff_product_price', $item['price']);
 				update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
-				update_post_meta($id, 'wp_aff_product_merch', ( array ) $item['merch'][0]);*/
+				update_post_meta($id, 'wp_aff_product_merch', ( array ) $item['merch'][0]);
 				
 					$out .= '<tr>
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
