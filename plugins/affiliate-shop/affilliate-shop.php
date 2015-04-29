@@ -2317,7 +2317,7 @@ class WordPress_Affiliate_Shop {
 		$output = array();
 		
 		$api = new wpAffAPI();
-		$data = @$api->update_product( $_POST['id'], $_POST['prod_id'], null, $_POST['title'], $_POST['merch'] ) ;
+		$data = $api->update_product( $_POST['id'], $_POST['prod_id'], null, $_POST['title'], $_POST['merch'] ) ;
 		if( $data ) {
 			$output['status'] = 1;	
 		} else {
