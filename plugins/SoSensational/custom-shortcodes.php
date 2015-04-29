@@ -189,6 +189,7 @@ function wordpress_title($old_title) {
 
 function wpse_100012_override_yoast_breadcrumb_trail($breadcrumb) {
     global $post;
+
     if (preg_match('/brands-and-boutiques\/([^\/]*)\/?([^\/]*)\/?([^\/]*)\/?$/', $_SERVER["REQUEST_URI"], $match)) {
         
     }
