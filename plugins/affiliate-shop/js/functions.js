@@ -166,15 +166,17 @@ jQuery(document).ready(function($) {
 		}
 	});
 	
-	function update_product( id, aff) {
+	function update_product( id, aff, title ) {
 		
 		id = typeof id !== 'undefined' ? id : null;
 		aff = typeof aff !== 'undefined' ? aff : null;
+		title = typeof title !== 'undefined' ? title : null;
 		
 		var ajax_update_product = {
 			'action'	: 'ajax_update_product',
 			'id'		: id,
-			'aff'		: aff
+			'aff'		: aff,
+			'title'		: title
 		};
 		
 		$.post(ajaxurl, ajax_update_product, function(response) {
@@ -209,7 +211,7 @@ jQuery(document).ready(function($) {
 		
 				$.each( ids, function ( i, item ) {
 					percent = per_query * i;
-					update_product( ids[i].prod_id, null );
+					update_product( ids[i].prod_id, null, ids[i].title );
 					$('#update_progress').css( 'width', percent+'%' );	
 				});
 				

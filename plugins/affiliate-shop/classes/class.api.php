@@ -21,12 +21,32 @@
 			
 		}
 		
+		private function get_all_products() {
+			
+			$args = array(
+				'post_type' => 'wp_aff_products',
+				'posts_per_page' => -1, 
+				'post_status' => 'publish'
+			 );
+			$postslist = get_posts( $args );
+			
+			$posts = array();
+			
+			foreach( $postslist as $post ) {
+				$meta = get_post_meta( $post->ID, 'wp_aff_product_id', true );
+				$posts[] = $meta;
+			}
+			return $posts;
+		}
+		
 		public function search( $term = '', $api, $merchant = NULL,  $depth = 25, $page = 1, $sortby = 'title', $sort = 'asc') {
 			
 			$temp = array();
 			
 			$this->sortby = $sortby;
 			$this->sort = $sort;
+			
+			$this->all_products = $this->get_all_products();
 			
 			if( $api == 'awin' || $api == 'all' ) {
 				$temp[] = $this->awin_search( $term, $merchant, $depth, $page, $sortby, $sort );
@@ -49,6 +69,7 @@
 					$output['total'] =  array_replace( $output['total'], $input['total'] );;
 				}
 			}
+			
 			
 			
 			uasort( $output['items'], array( $this, 'usort_reorder' ) );
@@ -113,8 +134,16 @@
 					foreach($response->oProduct AS $product) {
 						$merchparams = array('iMerchantId'	=> $product->iMerchantId);
 						$merch = $client->call('getMerchant', $merchparams);
-						//echo '<pre>'.print_r($merch, true).'</pre>';
+						
 						$id = $product->iId;
+
+						if( in_array( $id, $this->all_products ) ) {
+							$exists = 1;
+						} else {
+							$exists = 0;
+						}
+						//echo '<pre>'.print_r($merch, true).'</pre>';
+						
 						$array['items']['ID-'.$id] = array(
 								'ID'        => addslashes($product->iId),
 								'aff'     => 'awin',    
@@ -124,7 +153,8 @@
 								'desc'      => addslashes($product->sDescription),
 								'price'     => number_format($product->fPrice, 2),
 								'rrp'       => number_format($product->fRrpPrice, 2),
-								'link'      => addslashes($product->sAwDeepLink)
+								'link'      => addslashes($product->sAwDeepLink),
+								'exists'	=> $exists
 							);
 					}
 				}
@@ -180,8 +210,13 @@
 						$rrp = $normalprice[0];
 						$price = $normalprice[0];						
 					}
-					
 					$id = (array) $item->linkid;
+					if( in_array( $id, $this->all_products ) ) {
+						$exists = 1;
+					} else {
+						$exists = 0;
+					}
+					
 					$brand = $brands['ID-'.$item->mid]['name'];
 					$array['items']['ID-'.$id[0]] = array(
 						'ID'        => addslashes($item->linkid),
@@ -192,7 +227,8 @@
 						'desc'      => addslashes( $item->description->short ),
 						'price'     => number_format( $price, 2),
 						'rrp'       => number_format( $rrp, 2 ),
-						'link'      => addslashes( $item->linkurl )	
+						'link'      => addslashes( $item->linkurl )	,
+						'exists'	=> $exists
 					);
 				}
 			}
@@ -273,9 +309,9 @@
 			
 		}
 		
-		public function update_product( $id, $aff = null ) {
+		public function update_product( $id = null, $aff = null, $title = null ) {
 			//if( !isset( $aff ) || $aff == null || $aff == '' ) {
-				$data = $this->update_awin_product( $id );
+				$data = $this->update_awin_product( $id, $title );
 			/*	if( $data['status'] == 0 ) {
 					//$data = $this->update_linkshare_product( $id );	
 				}
@@ -297,14 +333,29 @@
 			
 		}
 		
-		private function update_awin_product( $id ) {
-			
-			$params = array( 'iProductId'	=> array( $id ), 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ) );
+		private function update_awin_product( $id, $title ) {
+			echo 'Search: '.$title;
+			/*$params = array( 'iProductId'	=> array( $id ), 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ) );
 			
 			print_var($params);
 			$client = ClientFactory::getClient();
 			print_var($client);
 			$response = $client->call('getProduct', $params);
+			*/
+			/*$oRefineBy = new stdClass();
+				$oRefineBy->iId = 3;
+				$oRefineBy->sName = '';
+				
+				$oRefineByDefinition = new stdClass();
+				$oRefineByDefinition->sId = $merchant;
+				$oRefineByDefinition->sName = '';
+				
+				$oRefineBy->oRefineByDefinition = $oRefineByDefinition;
+				*/
+				$params = array("sQuery" => $title, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ));
+				$client = ClientFactory::getClient();
+				$response = $client->call('getProductList', $params);
+				
 			print_var($response);
 			$data = array();
 			

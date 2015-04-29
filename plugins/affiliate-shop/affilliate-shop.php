@@ -351,7 +351,10 @@ class WordPress_Affiliate_Shop {
     }
     public function register_post_type() {
         
-        session_start();
+        if(!isset($_SESSION)) 
+		{ 
+			session_start(); 
+		}
         
         $labels = array(
             'name'               => _x( 'WP Affiliate Shop Products', 'post type general name', 'your-plugin-textdomain' ),
@@ -361,8 +364,8 @@ class WordPress_Affiliate_Shop {
             'labels'             => $labels,
             'public'             => true,
             'publicly_queryable' => false,
-            'show_ui'            => false,
-            'show_in_menu'       => false,
+            'show_ui'            => true,
+            'show_in_menu'       => true,
             'query_var'          => true,
             'rewrite'            => array( 'slug' => 'products' ),
             'capability_type'    => 'post',
@@ -1499,7 +1502,7 @@ class WordPress_Affiliate_Shop {
 <div class="inside">
                 <input type="hidden" value="<?php echo $product['link']; ?>" name="product_link[<?php echo $i; ?>]">
                 <input type="hidden" value="<?php echo $product['aff']; ?>" name="product_aff[<?php echo $i; ?>]">
-                <input type="hidden" value="<?php echo $product->iId; ?>" name="product_id[<?php echo $i; ?>]">
+                <input type="hidden" value="<?php echo $product['ID']; ?>" name="product_id[<?php echo $i; ?>]">
                 <input type="hidden" value="0" id="product-skip-<?php echo $product['ID']; ?>" name="product_skip[<?php echo $i; ?>]">
                 <?php
 					
@@ -2261,16 +2264,21 @@ class WordPress_Affiliate_Shop {
 		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
-			'posts_per_page' => -1, 
+			'posts_per_page' => 10,
+			'orderby' => 'post_date',
+			'order' => 'DESC' 
 		);
 
 		if( $posts = get_posts( $qry_args ) ) {
 			$output['status'] = 1;	
 			foreach( $posts as $post ) {
 				$prod_id = get_post_meta( $post->ID, 'wp_aff_product_id', true );
+				$brand = wp_get_post_terms( $post->ID, 'wp_aff_brands' );
 				$output['ids'][] = array(
 					'id' => $post->ID,
-					'prod_id' => $prod_id
+					'title' => $post->post_title,
+					'prod_id' => $prod_id,
+					'merch' => $brand[0]->name
 				);
 			}
 		} else {
@@ -2289,7 +2297,7 @@ class WordPress_Affiliate_Shop {
 		$output = array();
 		
 		$api = new wpAffAPI();
-		$data = $api->update_product( $_POST['id'] ) ;
+		$data = $api->update_product( $_POST['id'], null, $_POST['title'] ) ;
 		if( $data ) {
 			$output['status'] = 1;	
 		} else {
