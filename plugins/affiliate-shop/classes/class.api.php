@@ -390,9 +390,9 @@
 				$oRefineByDefinition->sName = '';
 				
 				$oRefineBy->oRefineByDefinition = $oRefineByDefinition;
-				$title = str_replace( array( '-', '*', ',' ), '', $title );
-				//$title = htmlspecialchars( $title );
-				//$title = $title[0];
+				$title = str_replace( array( '-', '*', ',', '%5C', '%27' ), '', $title );
+				$title = explode( "'", $title );
+				$title = $title[0];
 				$params = array("sQuery" => stripslashes($title), "iLimit" => 1, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ),  "oActiveRefineByGroup"	=>	$oRefineBy);
 				//print_var($params);
 				$client = ClientFactory::getClient();
