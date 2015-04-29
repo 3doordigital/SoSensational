@@ -332,22 +332,31 @@
 			*/
 			print_var($data);
 			$out = '';
-			foreach( $data['item'] as $item ) {
-			/*update_post_meta($id, 'wp_aff_product_id', $item['ID']);
-			update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
-			update_post_meta($id, 'wp_aff_product_price', $item['price']);
-			update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
-			update_post_meta($id, 'wp_aff_product_merch', ( array ) $item['merch'][0]);*/
-			
+			if( !empty( $data['item'] ) ) {
+				foreach( $data['item'] as $item ) {
+				/*update_post_meta($id, 'wp_aff_product_id', $item['ID']);
+				update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
+				update_post_meta($id, 'wp_aff_product_price', $item['price']);
+				update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
+				update_post_meta($id, 'wp_aff_product_merch', ( array ) $item['merch'][0]);*/
+				
+					$out .= '<tr>
+								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
+								<td>'.$title.'</td>
+								<td>'.$item['ID'].'</td>
+								<td>'.$item['title'].'</td>
+								<td>'.$item['aff'].'</td>
+								<td>Updated!</td>
+							 </tr>';
+				// Do something with $data
+				}
+			} else {
 				$out .= '<tr>
-							<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
-							<td>'.$title.'</td>
-							<td>'.$item['ID'].'</td>
-							<td>'.$item['title'].'</td>
-							<td>'.$item['aff'].'</td>
-							<td>Updated!</td>
-						 </tr>';
-			// Do something with $data
+								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
+								<td>'.$title.'</td>
+								<td>'.$item['ID'].'</td>
+								<td colspan="3">No data found</td>
+							 </tr>';	
 			}
 			return $out;
 			
@@ -428,8 +437,8 @@
 				}
 				
 			} else {
-				$data['item'] = $test;
-				//$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
+				//$data['item'] = $test;
+				$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
 				//$data['status'] = 0;
 				//print_var($data);
 			}
