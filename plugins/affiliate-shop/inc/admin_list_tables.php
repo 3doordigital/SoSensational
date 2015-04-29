@@ -1259,10 +1259,11 @@ function column_cb($item){
         $checked = '';
     }
     return sprintf(
-        '<input type="checkbox" name="%1$s[]" value="%2$s" %3$s />',
+        '<input type="checkbox" name="%1$s[]" value="%2$s" %3$s /> %4$s',
         /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
         /*$2%s*/ $item['ID'],                //The value of the checkbox should be the record's id
-        /*$3$s*/ $checked
+        /*$3$s*/ $checked,
+		$item['exists']
     );
 }
 function column_aff($item) {
@@ -1327,67 +1328,16 @@ function prepare_items() {
     } else {
         $offset = 0;   
     }
-	
-	/*
-    $this->params["iOffset"] = $offset;
-    if( isset ( $_REQUEST['orderby'] ) ) {
-        if( $_REQUEST['orderby'] == 'price' && $_REQUEST['order'] == 'asc' ) {
-            $this->params["sSort"] = 'lo';
-        }elseif( $_REQUEST['orderby'] == 'price' && $_REQUEST['order'] == 'desc' ) {
-            $this->params["sSort"] = 'hi';
-        } elseif( $_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'asc' ) {
-            $this->params["sSort"] = 'az';
-        } elseif( $_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'desc' ) {
-            $this->params["sSort"] = 'za';
-        }
-    } else {
-        $this->params["sSort"] = 'relevancy';
-    }
-    //print_var($this->params);
-    $this->oClient = ClientFactory::getClient();
-    $oResponse = $this->oClient->call('getProductList', $this->params);
-    //print_var($oResponse);
-    if($oResponse->iTotalCount < 1000) {
-        $totalCount = $oResponse->iTotalCount;
-    } else {
-        $totalCount = 1000;
-    }
-    $array = array();
-    foreach($oResponse->oProduct AS $product) {
-        
-        $aParams8 = array('iMerchantId'	=> $product->iMerchantId);
-        $merch = $this->oClient->call('getMerchant', $aParams8);
-        //echo '<pre>'.print_r($merch, true).'</pre>';
-        $array[] = array(
-                'ID'        => addslashes($product->iId),
-                'aff'     => 'awin',    
-                'title'     => addslashes($product->sName),
-                'brand'     => addslashes($merch->oMerchant->sName),
-                'img'       => addslashes($product->sAwImageUrl),
-                'desc'      => addslashes($product->sDescription),
-                'price'     => number_format($product->fPrice, 2),
-                'link'      => addslashes($product->sAwDeepLink)
-            );
-    }*/
-    
+	    
 	if( !isset( $_SESSION['product_data'] ) ) {
 		$_SESSION['product_data'] = $data;
 	} else {
 		$_SESSION['product_data'] = array_merge( $_SESSION['product_data'], $data );
 	}
-    /*function usort_reorder($a,$b){
-        $orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'title'; //If no sort, default to title
-        $order = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'asc'; //If no order, default to asc
-        $result = strcmp($a[$orderby], $b[$orderby]); //Determine sort order
-        return ($order==='asc') ? $result : -$result; //Send final sort direction to usort
-    }
-    usort($data, 'usort_reorder');
-    */
+    
     $current_page = $this->get_pagenum();
 
     $total_items = $this->data['total']['total'];
-
-    //$data = array_slice($data,(($current_page-1)*$per_page),$per_page);
 
     $this->items = $data;
 
