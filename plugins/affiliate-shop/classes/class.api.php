@@ -371,6 +371,7 @@
 			$response = $client->call('getProduct', $params);
 			*/
 			$lsmerch = $merch;
+			$lstitle = $title;
 			$merchants = $this->awin_merchants();
 			foreach( $merchants as $merchant ) {
 				//echo $merch.' :: '.$merchant['name'] ;
@@ -431,13 +432,13 @@
 							'merch' 	=> $merchid
 						);
 					} else {
-						$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
+						$data['item'] = $this->update_linkshare_product( $id, $lstitle, $lsmerch );
 					}
 				}
 				
 			} else {
 				//$data['item'] = $test;
-				$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
+				$data['item'] = $this->update_linkshare_product( $id, $lstitle, $lsmerch );
 				//$data['status'] = 0;
 				//print_var($data);
 			}
@@ -448,7 +449,7 @@
 		
 		private function update_linkshare_product( $id, $title, $merch ) {
 			$title = str_replace( array( '-', '*', ',', '%5C', '%27', "'" ), '', $title );
-			$title=urlencode($title);
+			//$title=urlencode($title);
 			
 			$url = 'http://productsearch.linksynergy.com/productsearch';
 			$token = "4bee73f0e12eb04b83e7c5d01a5b8e4a7ccf0e1fbdeec4f171a2e5ca4fe2a568"; //Change this to your token
