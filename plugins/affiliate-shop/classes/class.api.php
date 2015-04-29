@@ -464,7 +464,7 @@
 			if( $merchid != NULL && $merchid != 0 ) {
 				//$resturl .= '&mid='.$merchid;
 			}
-						//echo $resturl;
+						echo $resturl;
 			$SafeQuery = urlencode($resturl);
 			$xml = simplexml_load_file($SafeQuery);
 			//print_var( $xml );
