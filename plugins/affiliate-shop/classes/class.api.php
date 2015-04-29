@@ -331,13 +331,14 @@
 			}
 			*/
 			print_var($data);
+			$out = '';
 			foreach( $data['item'] as $item ) {
 			/*update_post_meta($id, 'wp_aff_product_id', $item['ID']);
 			update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
 			update_post_meta($id, 'wp_aff_product_price', $item['price']);
 			update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
 			update_post_meta($id, 'wp_aff_product_merch', ( array ) $item['merch'][0]);*/
-			$out = '';
+			
 				$out .= '<tr>
 							<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 							<td>'.$title.'</td>
@@ -425,6 +426,7 @@
 						$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
 					}
 				}
+				$data['item'] = $products;
 			} else {
 				$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
 				//$data['status'] = 0;
