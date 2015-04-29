@@ -239,6 +239,9 @@ function ss_rewrite_rule() {
     add_rewrite_rule(
         'store/([^/]*)/?$', 'index.php?pagename=store&ss_advertiser=$matches[1]', 'top'
     );
+    add_rewrite_rule(
+        'brands-and-boutiques/([^/]*)/?([^/]*)/?([^/]*)/?$', 'index.php?pagename=brands-and-boutiques&ss_cat=$matches[3]', 'top'
+    );    
 }
 
 add_action('init', 'ss_rewrite_rule');
