@@ -86,7 +86,7 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
         </div>
         <div class="image_description_single">                       
             <?php if (!empty($meta['ss_image_video'][0])) { ?>
-                    <a href="<?php echo $meta['ss_promo_image_link'][0]; ?>"><img src="<?php echo $meta['ss_image_video'][0]; ?>" /></a>                
+                    <a href="<?php echo $x = isset($meta['ss_promo_image_link'][0]) ? $meta['ss_promo_image_link'][0] : $meta['ss_advertiser_website'][0]; ?>"><img src="<?php echo $meta['ss_image_video'][0]; ?>" /></a>                
             <?php } elseif (!empty($meta['ss_image_video_text'][0])) {
                 echo $meta['ss_image_video_text'][0];
             }
