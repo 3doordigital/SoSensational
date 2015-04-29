@@ -217,7 +217,12 @@ function hasAdvertisers($category)
 function fixMenuOnCompetitionsPage()
 {
     global $query_string;    
-    parse_str($query_string, $args);              
-    $args['post_type'] = array('wp_comp_man');
-    query_posts( $args );     
+    parse_str($query_string, $args);           
+    if ($args['post_type'] === 'wp_comp_man') {
+        $args['post_type'] = array('wp_comp_man');
+        query_posts( $args );    
+        return true;
+    }
+    return false;
+
 }
