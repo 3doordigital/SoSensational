@@ -33,7 +33,8 @@
                 </div>
 
                 <?php
-                if (function_exists('wp_nav_menu')) {                    
+                if (function_exists('wp_nav_menu')) {   
+                    global $query_string;
                     fixMenuOnCompetitionsPage();    
                     wp_nav_menu(array(
                         'menu' => 'primary',
