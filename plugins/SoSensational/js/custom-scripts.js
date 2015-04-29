@@ -172,13 +172,19 @@ jQuery(document).ready(function($) {
      -------------------------------------------------------------------------*/
     var str = $('#breadcrumbs span > a');
     var urls = [];
+    var mainCategory;
     str.each(function(index) {
         var url = $(this).attr('href');
         urls.push(url);      
         if (urls.length === 3) {
             var slug = urls[2].slice(7);            
-            $(this).attr('href', urls[1] + slug);            
+            $(this).attr('href', urls[1] + slug);  
+            mainCategory = $(this).attr('href');
         }         
+        if (urls.length === 4) {
+            var slug = urls[3].slice(7);    
+            $(this).attr('href', mainCategory + '/' + slug);                 
+        }
     });
     
     /*--------------------------------------------------------------------------

@@ -19,7 +19,7 @@ function sosensational_custom_post_type() {
     );
    $argsBrands = array( 
         'labels' => $labelsBrands,
-        'hierarchical' => false,
+        'hierarchical' => true,
         'description' => 'Brands',
         'supports' => array('title', 'page-attributes'),
         'taxonomies' => array('ss_category'),
