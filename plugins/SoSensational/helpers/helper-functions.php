@@ -218,7 +218,7 @@ function fixMenuOnCompetitionsPage()
 {
     global $query_string;    
     parse_str($query_string, $args);           
-    if ($args['post_type'] === 'wp_comp_man') {
+    if (isset($args['post_type']) && $args['post_type'] === 'wp_comp_man') {
         $args['post_type'] = array('wp_comp_man');
         query_posts( $args );    
         return true;
