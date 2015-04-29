@@ -226,3 +226,8 @@
 	width: 90px;
 	padding: 5px 0;	
 }
+.sale_price {
+	color: red;
+	font-size: 10px;	
+	font-family: 'Open Sans', sans-serif;
+}
