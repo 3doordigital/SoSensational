@@ -1694,7 +1694,7 @@ class WordPress_Affiliate_Shop {
                     <tr class="prod_update_row">
                     	<th>Update Progress</th>
                         <td>
-                        	<div id="update_progress"></div>
+                        	<span class="update_percent">0%</span><div id="update_progress"></div>
                         </td>
                     </tr>
                 </table>
