@@ -162,7 +162,7 @@ function sosensational_custom_post_type() {
         'query_var' => true,
         'can_export' => true,
          'rewrite' => array(
-			'slug' => 'brands-boutiques',
+			'slug' => 'brands-and-boutiques',
 			'with_front'=> false,
 		),
         'capability_type' => 'post',
