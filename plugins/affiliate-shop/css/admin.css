@@ -7,6 +7,19 @@
 .tags .column-view {
 	text-align: right;
 }
+#tableout {
+	display: none;
+	border-collapse: collapse;
+	width: 70%;
+}
+#tableout tbody {
+	height: 300px;
+	overflow: auto;
+}
+#tableout th, #tableout td {
+	border: solid 1px #ccc;
+	padding: 10px;
+}
 .wp-core-ui .button.productButton span {
     color: red;   
 }

@@ -235,7 +235,7 @@
 			return $array;
 		}
 		
-		public function get_merchants( $api, $merchant ) {
+		public function get_merchants( $api, $merchant, $array = false ) {
 			
 			$temp = array();
 			
@@ -258,13 +258,17 @@
 			
 			
 			uasort( $output, array( $this, 'usort_reorder' ) );
-			$echo =  '';
-			foreach( $output as $item ) {
-				$echo .= '<option '.( $merchant == $item['ID'] ? ' selected ' : '' ).'value="'.$item['ID'].'">'.$item['name'].' ('.$item['aff'].')</option>';
+			if( $array == false ) {
+				$echo =  '';
+				foreach( $output as $item ) {
+					$echo .= '<option '.( $merchant == $item['ID'] ? ' selected ' : '' ).'value="'.$item['ID'].'">'.$item['name'].' ('.$item['aff'].')</option>';
+				}
+				
+				echo $echo;
+			} else {
+				return $output;	
 			}
-			
-			echo $echo;
-					
+						
 		}
 		
 		private function awin_merchants() {
@@ -309,9 +313,9 @@
 			
 		}
 		
-		public function update_product( $id = null, $aff = null, $title = null ) {
+		public function update_product( $id = null, $prod_id = null, $aff = null, $title = null, $merch = null ) {
 			//if( !isset( $aff ) || $aff == null || $aff == '' ) {
-				$data = $this->update_awin_product( $id, $title );
+				$data = $this->update_awin_product( $prod_id, $title, $merch );
 			/*	if( $data['status'] == 0 ) {
 					//$data = $this->update_linkshare_product( $id );	
 				}
@@ -326,15 +330,32 @@
 				}
 			}
 			*/
-			
-			print_var($data);
+			//print_var($data);
+			$item = $data['item'][0];
+			foreach( $data['item'] as $item ) {
+			update_post_meta($id, 'wp_aff_product_id', $item['ID']);
+			update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
+			update_post_meta($id, 'wp_aff_product_price', $item['price']);
+			update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
+			update_post_meta($id, 'wp_aff_product_merch', ( array ) $item['merch'][0]);
+				//print_var($item);
+				$out .= '<tr>
+							<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
+							<td>'.$title.'</td>
+							<td>'.$item['ID'].'</td>
+							<td>'.$item['title'].'</td>
+							<td>'.$item['aff'].'</td>
+							<td>Updated!</td>
+						 </tr>';
 			// Do something with $data
+			}
+			return $out;
 			
 			
 		}
 		
-		private function update_awin_product( $id, $title ) {
-			echo 'Search: '.$title;
+		private function update_awin_product( $id, $title, $merch ) {
+			//echo 'Search: '.$title;
 			/*$params = array( 'iProductId'	=> array( $id ), 'iAdult' => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ) );
 			
 			print_var($params);
@@ -342,33 +363,54 @@
 			print_var($client);
 			$response = $client->call('getProduct', $params);
 			*/
-			/*$oRefineBy = new stdClass();
+			$lsmerch = $merch;
+			$merchants = $this->awin_merchants();
+			foreach( $merchants as $merchant ) {
+				//echo $merch.' :: '.$merchant['name'] ;
+				if( strtolower( $merch ) == strtolower( $merchant['name'] ) ) {
+					$merchid = $merchant['ID'];
+				} else {
+					$merchid = '';
+				}
+			}
+			//echo $merch.'('.$merchid.')';
+			$oRefineBy = new stdClass();
 				$oRefineBy->iId = 3;
 				$oRefineBy->sName = '';
 				
 				$oRefineByDefinition = new stdClass();
-				$oRefineByDefinition->sId = $merchant;
+				$oRefineByDefinition->sId = $merchid;
 				$oRefineByDefinition->sName = '';
 				
 				$oRefineBy->oRefineByDefinition = $oRefineByDefinition;
-				*/
-				$params = array("sQuery" => $title, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ));
+				$title = explode( "'", $title );
+				$title = $title[0];
+				$params = array("sQuery" => stripslashes($title), "iLimit" => 1, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ),  "oActiveRefineByGroup"	=>	$oRefineBy);
+				//print_var($params);
 				$client = ClientFactory::getClient();
 				$response = $client->call('getProductList', $params);
 				
-			print_var($response);
+			//print_var($response);
 			$data = array();
 			
 			$test = (array) $response;
 				
 			if( !empty( $test ) ) {
 				$data['status'] = 1;
-				foreach($response->oProduct AS $product) {
+				if( is_array( $response->oProduct ) ) {
+					$products = $response->oProduct;
+				} else {
+					$products[] = $response->oProduct;	
+				}
+				foreach($products AS $product) {
 					$merchparams = array('iMerchantId'	=> $product->iMerchantId);
 					$merch = $client->call('getMerchant', $merchparams);
 					//echo '<pre>'.print_r($merch, true).'</pre>';
 					$id = $product->iId;
-					$data['item'] = array(
+					
+					if( substr( strtolower( $title ), 0, 5 ) == substr( strtolower( $product->sName  ), 0, 5 ) ) {
+					
+					$data['item'][] = array(
 							'ID'        => addslashes($product->iId),
 							'aff'     => 'awin',    
 							'title'     => addslashes ( trim( ucwords( strtolower( $product->sName ) ) ) ),
@@ -377,19 +419,90 @@
 							'desc'      => addslashes($product->sDescription),
 							'price'     => number_format($product->fPrice, 2),
 							'rrp'       => number_format($product->fRrpPrice, 2),
-							'link'      => addslashes($product->sAwDeepLink)
+							'link'      => addslashes($product->sAwDeepLink),
+							'merch' 	=> $merchid
 						);
+					} else {
+						$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
+					}
 				}
 			} else {
-				$data['status'] = 0;
+				$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
+				//$data['status'] = 0;
+				//print_var($data);
 			}
 			
 			return $data;
 			
 		}
 		
-		private function update_linkshare_product( $id ) {
+		private function update_linkshare_product( $id, $title, $merch ) {
+			$url = 'http://productsearch.linksynergy.com/productsearch';
+			$token = "4bee73f0e12eb04b83e7c5d01a5b8e4a7ccf0e1fbdeec4f171a2e5ca4fe2a568"; //Change this to your token
+			$resturl = $url."?"."token=".$token."&"."exact=".$title."&max=1";
 			
+			$brands = $this->linkshare_merchants();
+			
+			foreach( $brands as $brand ) {
+				//echo $merch.' :: '.$merchant['name'] ;
+				if( strtolower( $merch ) == strtolower( $brand['name'] ) ) {
+					$merchid = $brand['ID'];
+				} else {
+					$merchid = '';
+				}
+			}
+			
+			if( $merchid != NULL && $merchid != 0 ) {
+				//$resturl .= '&mid='.$merchid;
+			}
+						//echo $resturl;
+			$SafeQuery = urlencode($resturl);
+			$xml = simplexml_load_file($SafeQuery);
+			//print_var( $xml );
+			if ( $xml ) {
+				$array = array();
+				
+				if( $xml->TotalMatches == -1 ) {
+					$totalCount = 4000;
+				} else {
+					$totalCount = $xml->TotalMatches;
+				}
+				
+				foreach ($xml->item as $item) {
+					$saleprice = (array) $item->saleprice;
+					$normalprice = (array) $item->price;
+					
+					if( isset( $saleprice[0] ) && $saleprice[0] != '' ) {
+						$rrp = $normalprice[0];
+						$price = $saleprice[0];	
+					} else {
+						$rrp = $normalprice[0];
+						$price = $normalprice[0];						
+					}
+					$id = (array) $item->linkid;
+					if( in_array( $id, $this->all_products ) ) {
+						$exists = 1;
+					} else {
+						$exists = 0;
+					}
+					
+					$brand = $brands['ID-'.$item->mid]['name'];
+					$array['ID-'.$id[0]] = array(
+						'ID'        => addslashes($item->linkid),
+						'aff'     	=> 'linkshare',    
+						'title'     => addslashes( trim( ucwords( strtolower( $item->productname ) ) ) ),
+						'brand'     => addslashes( $brand ),
+						'img'       => addslashes( $item->imageurl ),
+						'desc'      => addslashes( $item->description->short ),
+						'price'     => number_format( $price, 2),
+						'rrp'       => number_format( $rrp, 2 ),
+						'link'      => addslashes( $item->linkurl )	,
+						'exists'	=> $exists,
+						'merch' 	=> $item->mid
+					);
+				}
+			}
+			return $array;
 		}
 		
 		private function usort_reorder( $a, $b ){
