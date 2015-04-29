@@ -470,7 +470,7 @@
 						//echo $resturl. ' :::::::::::: '. $merch .' :::::::::::::::::';
 			$SafeQuery = urlencode($resturl);
 			$xml = simplexml_load_file($SafeQuery);
-			//print_var( $xml );
+			print_var( $xml );
 			if ( $xml ) {
 				$array = array();
 				
