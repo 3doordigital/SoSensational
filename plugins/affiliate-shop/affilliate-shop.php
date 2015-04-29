@@ -1694,7 +1694,7 @@ class WordPress_Affiliate_Shop {
                     <tr class="prod_update_row">
                     	<th>Update Progress</th>
                         <td>
-                        	<div id="update_progress"></div>
+                        	<span class="update_percent">0%</span><div id="update_progress"></div>
                         </td>
                     </tr>
                 </table>
@@ -2271,7 +2271,7 @@ class WordPress_Affiliate_Shop {
 		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
-			'posts_per_page' => 500,
+			'posts_per_page' => 5,
 			'orderby' => 'post_date',
 			'order' => 'DESC' ,
 			'meta_query' => array(
@@ -2317,7 +2317,7 @@ class WordPress_Affiliate_Shop {
 		$output = array();
 		
 		$api = new wpAffAPI();
-		$data = @$api->update_product( $_POST['id'], $_POST['prod_id'], null, $_POST['title'], $_POST['merch'] ) ;
+		$data = $api->update_product( $_POST['id'], $_POST['prod_id'], null, $_POST['title'], $_POST['merch'] ) ;
 		if( $data ) {
 			$output['status'] = 1;	
 		} else {
