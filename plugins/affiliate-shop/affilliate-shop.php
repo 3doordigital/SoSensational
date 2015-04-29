@@ -1698,7 +1698,14 @@ class WordPress_Affiliate_Shop {
                         </td>
                     </tr>
                 </table>
-            
+            	<table id="tableout">
+                	<tr><th>Post ID</th><th>Old Title</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th></th></tr>
+                    <tbody>
+                    
+                    </tbody>
+                </table>
+                
+                </div>
             <?php } ?>
             	<?php submit_button( 'Save' ); ?>
                 <input type="hidden" value="wp_aff_save_api" name="action" />
@@ -2264,12 +2271,25 @@ class WordPress_Affiliate_Shop {
 		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
-			'posts_per_page' => 10,
+			'posts_per_page' => 100,
 			'orderby' => 'post_date',
-			'order' => 'DESC' 
+			'order' => 'DESC' ,
+			'meta_query' => array(
+				'relation' => 'OR',
+				array(
+				 'key' => 'wp_aff_product_id',
+				 'compare' => 'NOT EXISTS' // this should work...
+				),
+				array(
+				 'key' => 'wp_aff_product_id',
+				 'value' => '^([0-9]+)$',
+				 'compare' => 'NOT REGEXP' // this should work...
+				),
+			)
 		);
 
 		if( $posts = get_posts( $qry_args ) ) {
+
 			$output['status'] = 1;	
 			foreach( $posts as $post ) {
 				$prod_id = get_post_meta( $post->ID, 'wp_aff_product_id', true );
@@ -2297,14 +2317,14 @@ class WordPress_Affiliate_Shop {
 		$output = array();
 		
 		$api = new wpAffAPI();
-		$data = $api->update_product( $_POST['id'], null, $_POST['title'] ) ;
+		$data = @$api->update_product( $_POST['id'], $_POST['prod_id'], null, $_POST['title'], $_POST['merch'] ) ;
 		if( $data ) {
 			$output['status'] = 1;	
 		} else {
 			$output['status'] = 0;	
 		}
-		print_var($data);
-		$output = json_encode( (object) $output );
+		$output['html'] = $data;
+		$output = json_encode( $output );
 		echo $output; 	
 		die;
 		

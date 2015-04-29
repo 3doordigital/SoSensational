@@ -166,27 +166,27 @@ jQuery(document).ready(function($) {
 		}
 	});
 	
-	function update_product( id, aff, title ) {
+	function update_product( id, prod_id, aff, title, merch, counter, percent ) {
 		
 		id = typeof id !== 'undefined' ? id : null;
 		aff = typeof aff !== 'undefined' ? aff : null;
 		title = typeof title !== 'undefined' ? title : null;
+		merch = typeof merch !== 'undefined' ? merch : null;
 		
 		var ajax_update_product = {
 			'action'	: 'ajax_update_product',
 			'id'		: id,
+			'prod_id'	: prod_id,
 			'aff'		: aff,
-			'title'		: title
+			'title'		: title,
+			'merch' 	: merch
 		};
 		
 		$.post(ajaxurl, ajax_update_product, function(response) {
 			console.log( response );
-			if( response.status == 1 ) {
-				return true;	
-			} else {
-				return false;	
-			}
-		});
+			$('#tableout tbody').append( counter+ ' '+response.html );
+			$('#update_progress').css( 'width', percent+'%' );
+		}, 'json' );
 		
 	}
 	
@@ -195,24 +195,27 @@ jQuery(document).ready(function($) {
 		$(this).html('<i class="fa fa-circle-o-notch fa-spin"></i>').attr( 'disabled', 'disabled' );
 		$('#submit').attr( 'disabled', 'disabled' );
 		$('.prod_update_row').show();
+		$('#tableout').show();
 		
 		var ajax_update_get_count_data = {
 			'action'	: 'ajax_update_get_count'
 		};
 		var total;
 		var ids;
-		
+		var counter = 0;
 		$.post(ajaxurl, ajax_update_get_count_data, function(response) {
+			
 			if( response.status == 1 ) {
 				total = response.total;
 				ids = response.ids;
-				
+				console.log( 'Total posts: '+response.total );
 				var per_query = 100 / total;
 		
 				$.each( ids, function ( i, item ) {
 					percent = per_query * i;
-					update_product( ids[i].prod_id, null, ids[i].title );
-					$('#update_progress').css( 'width', percent+'%' );	
+					update_product( ids[i].id, ids[i].prod_id, null, ids[i].title, ids[i].merch, counter, percent );
+						
+					counter ++
 				});
 				
 			}
