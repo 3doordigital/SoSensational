@@ -4,6 +4,9 @@
     margin-bottom: 10px;
     
 }
+.tags .column-view {
+	text-align: right;
+}
 .wp-core-ui .button.productButton span {
     color: red;   
 }

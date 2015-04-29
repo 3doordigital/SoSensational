@@ -132,7 +132,8 @@ class WP_Terms_List_Tables extends WP_List_Table {
 			'name'        => _x( 'Name', 'term name' ),
 			'slug'        => __( 'Slug' ),
 			'alias'		  => __( 'Alias of' ),
-            'posts'       => _x( 'Products', 'Number/count of items' )
+            'posts'       => _x( 'Products', 'Number/count of items' ),
+			'view'       => __( '', '' )
 		);
 
 		return $columns;
@@ -376,6 +377,13 @@ class WP_Terms_List_Tables extends WP_List_Table {
 		}
 		
 	}
+	
+	public function column_view( $tag ) {
+		//print_var( $tag );	
+		
+		return '<a href="/shop/'.$tag->slug.'/" target="_blank" class="button button-secondary">View Category</a>';
+	}
+	
 	/**
 	 * @param object $tag
 	 * @return string
@@ -835,21 +843,21 @@ class AllProductTable extends WP_List_Table {
     }
 	function column_stickers( $item ) {
 		if( $item['sale'] == 1 ) {
-			$output = '<a href="" class="active ajax_sticker" data-item="'.$item['ID'].'" data-action="sale"><i class="fa fa-shopping-cart fa-fw fa-lg"></i></a> ';
+			$output = '<a href="#" class="active" data-item="'.$item['ID'].'" data-action="sale"><i class="fa fa-shopping-cart fa-fw fa-lg"></i></a> ';
 		} else {
-			$output = '<a href="" class="ajax_sticker" data-item="'.$item['ID'].'" data-action="sale"><i class="fa fa-shopping-cart fa-fw fa-lg"></i></a> ';	
+			$output = '<a href="#" class="" data-item="'.$item['ID'].'" data-action="sale"><i class="fa fa-shopping-cart fa-fw fa-lg"></i></a> ';	
 		}
 		
 		if( $item['picks'] == 1 ) {
-			$output .= '<a href="" class="active ajax_sticker" data-item="'.$item['ID'].'" data-action="picks"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
+			$output .= '<a href="#" class="active ajax_sticker" data-item="'.$item['ID'].'" data-action="picks"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
 		} else {
-			$output .= '<a href="" class="ajax_sticker" data-item="'.$item['ID'].'" data-action="picks"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
+			$output .= '<a href="#" class="ajax_sticker" data-item="'.$item['ID'].'" data-action="picks"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
 		}
 		
 		if( $item['new'] == 1 ) {
-			$output .= '<a href="" class="active ajax_sticker" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+			$output .= '<a href="#" class="active" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
 		} else {
-			$output .= '<a href="" class="ajax_sticker" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+			$output .= '<a href="#" class="" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
 		}
 		
 		return $output;
@@ -1107,7 +1115,7 @@ class AllProductTable extends WP_List_Table {
 			
 			$data[$i]['rrp'] = ( isset( $post_meta['wp_aff_product_rrp'] ) ? $post_meta['wp_aff_product_rrp'][0] : $post_meta['wp_aff_product_price'][0] ); 
 			
-			( isset( $post_meta['wp_aff_product_sale'] ) && $post_meta['wp_aff_product_sale'] == 1 ? $data[$i]['sale'] = 1 : $data[$i]['sale'] = 0 ); 
+			( isset( $data[$i]['rrp'] ) && ( $data[$i]['price'] < $data[$i]['rrp'] )  ? $data[$i]['sale'] = 1 : $data[$i]['sale'] = 0 ); 
 			( isset( $post_meta['wp_aff_product_picks'] ) && $post_meta['wp_aff_product_picks'] == 1 ? $data[$i]['picks'] = 1 : $data[$i]['picks'] = 0 ); 
 			global $wp_aff;
 			$options = $wp_aff->get_option();
