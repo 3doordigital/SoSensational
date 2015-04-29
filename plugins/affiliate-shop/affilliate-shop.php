@@ -1699,7 +1699,7 @@ class WordPress_Affiliate_Shop {
                     </tr>
                 </table>
             	<table id="tableout">
-                	<tr><th>Post ID</th><th>Old Title</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th></th></tr>
+                	<tr><th>Post ID</th><th>Old Title</th><th>Merchant</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th></th></tr>
                     <tbody>
                     
                     </tbody>
