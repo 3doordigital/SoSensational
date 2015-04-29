@@ -391,6 +391,7 @@
 				
 				$oRefineBy->oRefineByDefinition = $oRefineByDefinition;
 				$title = explode( "'", $title );
+				$title = explode( "-", $title );
 				$title = $title[0];
 				$params = array("sQuery" => stripslashes($title), "iLimit" => 1, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ),  "oActiveRefineByGroup"	=>	$oRefineBy);
 				//print_var($params);
