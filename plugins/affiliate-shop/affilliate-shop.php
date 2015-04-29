@@ -520,6 +520,8 @@ class WordPress_Affiliate_Shop {
 									'inclusive' => true,
 								),
 							);
+							$args['orderby'] = 'post_date';
+							$args['order'] = 'DESC';
 						} elseif( $wp_query->query_vars['shop-option'] == 'sale' ) {
 							$args['meta_query']['relation'] = 'AND';
 							$args['meta_query'][] = array(
@@ -601,6 +603,8 @@ class WordPress_Affiliate_Shop {
 																'inclusive' => true,
 															),
 														);
+														$args['orderby'] = 'post_date';
+														$args['order'] = 'DESC';
 														break;
 													case 'top-picks' :
 														$args['meta_query']['relation'] = 'AND';
@@ -663,14 +667,13 @@ class WordPress_Affiliate_Shop {
 						
 							break;
 						case 'new' :
-							$args['orderby']	= 'date';
+							$args['orderby']	= 'post_date';
             				$args['order'] 		= 'DESC';
 							break;	
 					}
 				} else {
-					$args['meta_key'] 	= 'wp_aff_product_price';
-					$args['orderby']	= 'meta_value_num';
-            		$args['order'] 		= 'ASC';
+					$args['orderby']	= 'post_date';
+            		$args['order'] 		= 'DESC';
 				}
 				return $args;
 	}
@@ -955,6 +958,7 @@ class WordPress_Affiliate_Shop {
 				add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'][$i], true);
 				add_post_meta($insID, 'wp_aff_product_link', $_POST['product_link'][$i], true);
 				add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'][$i], true);
+				add_post_meta($insID, 'wp_aff_product_rrp', $_POST['product_rrp'][$i], true);
 				//add_post_meta($insID, 'wp_aff_product_brand', , true);
 				add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'][$i], true);
 				add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'][$i], true);
@@ -1506,18 +1510,20 @@ class WordPress_Affiliate_Shop {
                <table class="widefat productList" >
                    <tbody>
                    <tr>
-                    <th width="200"></th><th colspan="2">Product Name</th><th>Price</th><th></th>
+                    <th width="200"></th><th>Product Name</th><th>Price</th><th>RRP</th>
                    </tr>
                    <tr>
                         <td rowspan="6"><img style="width: 175px; height: auto;" src="<?php echo $product['img']; ?>"><input type="hidden" value="<?php echo $product['img']; ?>" name="product_image[<?php echo $i; ?>]" </td>
                    
-                        <td colspan="2">
+                        <td>
                             <input class="large-text" type="text" name="product_name[<?php echo $i; ?>]" placeholder="" value="<?php echo ucwords( stripslashes( ($product['title']) )); ?>" id="">
                         </td> 
                        <td>
                             <input class="large-text" type="text" name="product_price[<?php echo $i; ?>]" placeholder="" value="<?php echo $product['price']; ?>" id="">
                         </td> 
-                        
+                        <td>
+                            <input class="large-text" type="text" name="product_rrp[<?php echo $i; ?>]" placeholder="" value="<?php echo $product['rrp']; ?>" id="">
+                        </td> 
                        
                     </tr>
                    <tr>
@@ -2295,7 +2301,20 @@ class WordPress_Affiliate_Shop {
 		die;
 		
 	}
-	
+	public function product_price() {
+		global $post;
+		
+		$price = get_post_meta( $post->ID, 'wp_aff_product_price', true );
+		$rrp = get_post_meta( $post->ID, 'wp_aff_product_rrp', true );
+				
+		if( isset( $rrp ) && ( $price < $rrp ) ) {
+			$percent = 100 - ( ( $price / $rrp ) * 100 );
+			echo '<div class="sale_price">save '.number_format( $percent, 0 ).'%</div> &pound;'.$price;
+			echo '<div class="sale_price">was &pound;'.$rrp.'</div> &pound;'.$price;
+		} else {
+			echo '&pound;'.$price;	
+		}
+	}
     /**
      * Place code for your plugin's functionality here.
      */

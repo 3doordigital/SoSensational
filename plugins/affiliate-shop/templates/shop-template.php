@@ -184,7 +184,8 @@ get_header();
                             </div>
                             <div class="col-md-7">
                                 <select class="form-control" id="shop_sort">
-                                    <option value="priceasc" <?php echo( !isset( $_REQUEST['sortby'] ) || $_REQUEST['sortby'] == 'priceasc' ? ' selected ' : '' ); ?>>Sort by Price: Low to High</option>
+                                    <option value="new" <?php echo( !isset( $_REQUEST['new'] ) || $_REQUEST['sortby'] == 'new' ? ' selected ' : '' ); ?>>Newest In</option>
+                                    <option value="priceasc" <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'priceasc' ? ' selected ' : '' ); ?>>Sort by Price: Low to High</option>
                                     <option value="pricedesc" <?php echo( isset( $_REQUEST['sortby'] ) && $_REQUEST['sortby'] == 'pricedesc' ? ' selected ' : '' ); ?>>Sort by Price: High to Low</option>
                                     
                                 </select>
@@ -198,11 +199,15 @@ get_header();
                         }
                         $post_meta = get_post_meta($post->ID);
                         $brand = wp_get_post_terms($post->ID, 'wp_aff_brands');
+						$price = get_post_meta( $post->ID, 'wp_aff_product_price', true );
+						$rrp = get_post_meta( $post->ID, 'wp_aff_product_rrp', true );
+				
+		
                         //print_var($post_meta);
 						//print_var($brand);
                             echo '
                             <div class="col-md-8 product">';
-							if( isset( $post_meta['wp_aff_product_sale'][0] ) && $post_meta['wp_aff_product_sale'][0] == 1 ) {
+							if( isset( $rrp ) && ( $price < $rrp ) ) {
 								echo '<div class="product-sale"><span class="sr-only">Sale!</span></div>';
 							} else {
 								if( isset( $post_meta['wp_aff_product_picks'][0] ) && $post_meta['wp_aff_product_picks'][0] == 1 ) {
@@ -228,9 +233,11 @@ get_header();
                                                 </div>
                                                 <div class="prod_price col-md-7">
                                                     <div class="price">
-                                                        <div class="amount">&pound;'.
-                                                            $post_meta['wp_aff_product_price'][0].
-                                                        '</div>
+                                                        <div class="amount">';
+                                                        
+														$wp_aff->product_price();
+                                                        
+														echo '</div>
                                                         <a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" class="button">Shop Now</a>
                                                     </div>
                                                 </div>
