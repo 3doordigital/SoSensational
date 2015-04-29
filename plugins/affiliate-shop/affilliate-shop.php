@@ -264,7 +264,7 @@ class WordPress_Affiliate_Shop {
         
         add_rewrite_rule('^shop/new-in/?$','index.php?page_id=37&shop-option=new');
 		add_rewrite_rule('^shop/sale/?$','index.php?page_id=37&shop-option=sale');
-		add_rewrite_rule('^shop/top-picks/?$','index.php?page_id=37&shop-option=picks');
+		add_rewrite_rule('^shop/our-picks/?$','index.php?page_id=37&shop-option=picks');
 		add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
         add_rewrite_rule('^shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
         add_rewrite_rule('^shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
@@ -609,7 +609,7 @@ class WordPress_Affiliate_Shop {
 														$args['orderby'] = 'post_date';
 														$args['order'] = 'DESC';
 														break;
-													case 'top-picks' :
+													case 'our-picks' :
 														$args['meta_query']['relation'] = 'AND';
 														$args['meta_query'][] = array(
 															'key' => 'wp_aff_product_picks',
@@ -802,7 +802,7 @@ class WordPress_Affiliate_Shop {
             die( 'Invalid nonce. ' . var_export( $_POST, true ) );
 		
 		$url = preg_replace( '#page/([0-9]+)/#', '', $_REQUEST['_wp_http_referer'] );	
-		$url = str_replace( array( 'top-picks/', 'sale/', 'new/' ), '', $url );
+		$url = str_replace( array( 'our-picks/', 'sale/', 'new/' ), '', $url );
 		if( isset( $_POST['wp_aff_new_in'] ) ) {
 			if( $_POST['wp_aff_new_in'] == 2 ) {
 				$args[] = 'new';
@@ -819,9 +819,9 @@ class WordPress_Affiliate_Shop {
 		} 
 		if( isset( $_POST['wp_aff_toppicks'] ) ) {
 			if( $_POST['wp_aff_toppicks'] == 2 ) {
-				$args[] = 'top-picks';
+				$args[] = 'our-picks';
 			} else {
-				$url = '/shop/top-picks/';		
+				$url = '/shop/our-picks/';		
 			}
 		}
 		
