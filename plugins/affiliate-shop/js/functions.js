@@ -183,7 +183,7 @@ jQuery(document).ready(function($) {
 		};
 		
 		$.post(ajaxurl, ajax_update_product, function(response) {
-			console.log( response );
+			//console.log( response );
 			$('#tableout tbody').append( counter+ ' '+response.html );
 			var full_percent = percent.toFixed(1);
 			$('.update_percent').html( full_percent+'%' );
