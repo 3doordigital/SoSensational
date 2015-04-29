@@ -2308,8 +2308,7 @@ class WordPress_Affiliate_Shop {
 		$rrp = get_post_meta( $post->ID, 'wp_aff_product_rrp', true );
 				
 		if( isset( $rrp ) && ( $price < $rrp ) ) {
-			$percent = 100 - ( ( $price / $rrp ) * 100 );
-			echo '<div class="sale_price">save '.number_format( $percent, 0 ).'%</div> &pound;'.$price;
+			
 			echo '<div class="sale_price">was &pound;'.$rrp.'</div> &pound;'.$price;
 		} else {
 			echo '&pound;'.$price;	
