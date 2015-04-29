@@ -426,9 +426,10 @@
 						$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
 					}
 				}
-				$data['item'] = $products;
+				
 			} else {
-				$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
+				$data['item'] = $test;
+				//$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
 				//$data['status'] = 0;
 				//print_var($data);
 			}
