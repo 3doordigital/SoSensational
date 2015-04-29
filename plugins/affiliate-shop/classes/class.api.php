@@ -446,6 +446,9 @@
 		}
 		
 		private function update_linkshare_product( $id, $title, $merch ) {
+			
+			$title=urlencode($title);
+			
 			$url = 'http://productsearch.linksynergy.com/productsearch';
 			$token = "4bee73f0e12eb04b83e7c5d01a5b8e4a7ccf0e1fbdeec4f171a2e5ca4fe2a568"; //Change this to your token
 			$resturl = $url."?"."token=".$token."&"."exact=".$title."&max=1";
