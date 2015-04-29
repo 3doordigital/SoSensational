@@ -337,7 +337,7 @@
 				update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
 				update_post_meta($id, 'wp_aff_product_price', $item['price']);
 				update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
-				update_post_meta($id, 'wp_aff_product_merch', ( array ) $item['merch'][0]);
+				update_post_meta($id, 'wp_aff_product_merch', ( $item['aff'] == 'linkshare' ? ( array ) $item['merch'][0] : $item['merch'] ) );
 				
 					$out .= '<tr>
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
@@ -390,8 +390,8 @@
 				$oRefineByDefinition->sName = '';
 				
 				$oRefineBy->oRefineByDefinition = $oRefineByDefinition;
+				$title = str_replace( array( '-', '*', ',' ), '', $title );
 				$title = explode( "'", $title );
-				$title = explode( "-", $title[0] );
 				$title = $title[0];
 				$params = array("sQuery" => stripslashes($title), "iLimit" => 1, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ),  "oActiveRefineByGroup"	=>	$oRefineBy);
 				//print_var($params);
@@ -471,7 +471,7 @@
 						//echo $resturl. ' :::::::::::: '. $merch .' :::::::::::::::::';
 			$SafeQuery = urlencode($resturl);
 			$xml = simplexml_load_file($SafeQuery);
-			print_var( $xml );
+			//print_var( $xml );
 			if ( $xml ) {
 				$array = array();
 				
