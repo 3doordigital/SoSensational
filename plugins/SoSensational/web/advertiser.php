@@ -7,7 +7,6 @@ $postID = get_the_ID();
 $postID = $advertiser_id;
 $advertiser = get_post($postID);
 $meta = get_post_meta($postID);
-
 $product_params = array('width' => 265, 'height' => 350, 'crop' => false);
 // IB commented
 //$products=$wpdb->get_results( "SELECT * FROM {$wpdb->posts} WHERE post_parent = '{$advertiser->ID}' and post_type='products'", OBJECT);
@@ -87,7 +86,7 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
         </div>
         <div class="image_description_single">                       
             <?php if (!empty($meta['ss_image_video'][0])) { ?>
-                    <a href="<?php echo $meta['ss_promo_image_link'][0]; ?>"><img src="<?php echo $meta['ss_image_video'][0]; ?>" /></a>                
+                    <a href="<?php echo $x = isset($meta['ss_promo_image_link'][0]) ? $meta['ss_promo_image_link'][0] : $meta['ss_advertiser_website'][0]; ?>"><img src="<?php echo $meta['ss_image_video'][0]; ?>" /></a>                
             <?php } elseif (!empty($meta['ss_image_video_text'][0])) {
                 echo $meta['ss_image_video_text'][0];
             }

@@ -8,7 +8,6 @@ global $wpdb;
 $category_id = isset($ss_sub_cat_id) ? $ss_sub_cat_id : "";
 
 if (!empty($ss_cat_id)):
-
     $category_id = preg_replace('/[^-a-zA-Z0-9_]/', '', $ss_cat_id);
 
     $category = $wpdb->get_results("SELECT * FROM {$wpdb->term_taxonomy} wptt 
@@ -86,8 +85,8 @@ if (isset($_GET['p_type'])) {
 
     $users = $user_query->get_results();
 }
-if (empty($mainChildren)):
 
+if (empty($mainChildren)):
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
     $args = array(
@@ -109,6 +108,7 @@ if (empty($mainChildren)):
     );
 
     $term_meta = get_term_by("id", $category_id, "ss_category");
+
     ?>     
     <h1><span><?php echo $term_meta->name; ?></span></h1>
     <?php
@@ -163,8 +163,8 @@ if (empty($mainChildren)):
                     <?php
                     $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
                     ?>
-
-                    <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $post_name; ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>" class="aHolderImgSS">
+                    
+                    <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $ss_cat . '/' . $term_meta->slug . '/' . $post_name; ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>" class="aHolderImgSS">
 
                         <?php $image = bfi_thumb(get_post_meta(get_the_ID(), 'ss_advertisers_cats_image', true), $cat_params); ?>
 
