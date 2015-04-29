@@ -469,10 +469,10 @@
 			if( $merchid != NULL && $merchid != 0 ) {
 				//$resturl .= '&mid='.$merchid;
 			}
-						echo $resturl. ' :::::::::::: '. $merch .' :::::::::::::::::';
+						//echo $resturl. ' :::::::::::: '. $merch .' :::::::::::::::::';
 			$SafeQuery = urlencode($resturl);
 			$xml = simplexml_load_file($SafeQuery);
-			print_var( $xml );
+			//print_var( $xml );
 			if ( $xml ) {
 				$array = array();
 				
