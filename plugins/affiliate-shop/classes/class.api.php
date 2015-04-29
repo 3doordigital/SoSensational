@@ -450,7 +450,8 @@
 		}
 		
 		private function update_linkshare_product( $id, $title, $merch ) {
-			$title = str_replace( array( '-', '*', ',', '%5C', '%27', "'", '\\' ), '', $title );
+			$title = trim( str_replace( array( '-', '*', ',', '%5C', '%27', "'", '\\', '/' ), '', $title ) );
+			
 			//$title=urlencode($title);
 			
 			$url = 'http://productsearch.linksynergy.com/productsearch';

@@ -1673,6 +1673,8 @@ class WordPress_Affiliate_Shop {
                </table>
             <?php } elseif( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 2 ) { ?>
             	<h2>Update Products</h2>
+                
+                
                 <p>Occasionally products need to have their attributes, such as price or availability updated to match that of the merchant. You can schedule that update below, or run a manual update.</p>
                 <p><strong>Please note that this will use API credits.</strong></p>
                 <table class="form-table">
@@ -1689,7 +1691,7 @@ class WordPress_Affiliate_Shop {
                     </tr>
                     <tr>
                     	<th>Manual Update</th>
-                        <td><a href="<?php echo $_SERVER['REQUEST_URI']; ?>" class="button button-secondary manual_update">Run Manual Update</a>
+                        <td><a href="<?php echo $_SERVER['REQUEST_URI']; ?>" class="button button-secondary manual_update">Run Manual Update</a></td>
                     </tr>
                     <tr class="prod_update_row">
                     	<th>Update Progress</th>
@@ -1705,14 +1707,15 @@ class WordPress_Affiliate_Shop {
                     </tbody>
                 </table>
                 
-                </div>
+                
             <?php } ?>
             	<?php submit_button( 'Save' ); ?>
                 <input type="hidden" value="wp_aff_save_api" name="action" />
                 <?php wp_nonce_field( 'wp_aff_save_api', $this->option_name . '_nonce', FALSE ); ?>
                 <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
             </form>
-        </div>
+            </div>
+        
     <?php } 
     public function addons_page() { ?>
         <div class="wrap">
