@@ -338,7 +338,7 @@
 			update_post_meta($id, 'wp_aff_product_price', $item['price']);
 			update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
 			update_post_meta($id, 'wp_aff_product_merch', ( array ) $item['merch'][0]);*/
-				//print_var($item);
+				print_var($item);
 				$out .= '<tr>
 							<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 							<td>'.$title.'</td>
