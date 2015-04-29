@@ -55,8 +55,9 @@ if (function_exists('yoast_breadcrumb')) {
             </div>            
         </div>
         <?php
+        $counterColor++;
     endif;
-    $counterColor++;
+    
 endforeach;
 ?>
 
