@@ -2305,8 +2305,8 @@ class WordPress_Affiliate_Shop {
 			$output['status'] = 0;	
 		}
 		
-		$count_posts = wp_count_posts( 'wp_aff_products' );
-		$output['total'] = $count_posts->publish; //
+		//$count_posts = wp_count_posts( 'wp_aff_products' );
+		$output['total'] = count( $posts  ); //
 		
 		$output = json_encode( (object) $output );
 		echo $output; 	
