@@ -168,12 +168,12 @@
     border: none;
     text-align: left;
     font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     text-transform: uppercase;
 }
 #product_filter a {
     font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     text-transform: uppercase;
 }
 #product_count, #count_select {
