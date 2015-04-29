@@ -1222,10 +1222,11 @@ function column_default($item, $column_name){
         }
                                 
         //Return the title contents
-        return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
+        return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s %4$s',
             /*$1%s*/ stripslashes( $item['title'] ),
             /*$2%s*/ $item['ID'],
-            /*$3%s*/ $this->row_actions($actions)
+            /*$3%s*/ $this->row_actions($actions),
+			/*$3$s*/ ( $item['exists'] == 1 ? '<div class="prod_exist">Already Added</div>' : '' )
         );
     }
 
@@ -1259,11 +1260,10 @@ function column_cb($item){
         $checked = '';
     }
     return sprintf(
-        '<input type="checkbox" name="%1$s[]" value="%2$s" %3$s /> %4$s',
+        '<input type="checkbox" name="%1$s[]" value="%2$s" %3$s />',
         /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
         /*$2%s*/ $item['ID'],                //The value of the checkbox should be the record's id
-        /*$3$s*/ $checked,
-		$item['exists']
+        /*$3$s*/ $checked
     );
 }
 function column_aff($item) {
