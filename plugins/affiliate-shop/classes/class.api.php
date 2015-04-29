@@ -330,7 +330,6 @@
 				}
 			}
 			*/
-			print_var($data);
 			$out = '';
 			if( !empty( $data['item'] ) ) {
 				foreach( $data['item'] as $item ) {
@@ -354,8 +353,7 @@
 				$out .= '<tr>
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 								<td>'.$title.'</td>
-								<td>'.$item['ID'].'</td>
-								<td colspan="3">No data found</td>
+								<td colspan="4">No data found</td>
 							 </tr>';	
 			}
 			return $out;
