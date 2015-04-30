@@ -191,6 +191,6 @@ class tim_ad_block extends WP_Widget {
     add_action( 'widgets_init', function(){
 		 register_widget( 'tim_newsletter_widget' );
 		 register_widget( 'tim_ad_block' );
-		 register_widget( 'tim_TLC_block' );
+		 register_widget( 'tim_TLC_widget' );
 	});
 	
