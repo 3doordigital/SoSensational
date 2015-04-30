@@ -7,7 +7,7 @@
             <p>The winner will be notified by email.</p>
         </div>
         <div class="pop-up-return">
-        	<a class="btn btn-primary">Return to Competitions</a>
+        	<a href="/competitions/" class="btn btn-primary">Return to Competitions</a>
         </div>
     </div>
 </div>
