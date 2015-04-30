@@ -413,7 +413,15 @@ class WP_Terms_List_Tables extends WP_List_Table {
 
 		$qe_data = get_term( $tag->term_id, $taxonomy, OBJECT, 'edit' );
 		
-        $editurl = sprintf('admin.php?page=%1$s&action=%2$s&%3$s=%4$s', 'affiliate-shop', 'edit', $taxonomy, $tag->term_id);
+		if( $taxonomy == 'wp_aff_colours' ) {
+			$urlend = '/colours';
+		} elseif( $taxonomy == 'wp_aff_sizes' ) {
+			$urlend = '/sizes';
+		} else {
+			$urlend = '';
+		}
+		
+        $editurl = sprintf('admin.php?page=%1$s&action=%2$s&%3$s=%4$s', 'affiliate-shop'.$urlend, 'edit', $taxonomy, $tag->term_id);
         $edit_link = esc_url( admin_url( $editurl ) );
         
         $viewurl = sprintf('admin.php?page=%1$s&action=%2$s&%3$s=%4$s', 'affiliate-shop', 'view', $taxonomy, $tag->term_id);

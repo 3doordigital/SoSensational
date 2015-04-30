@@ -42,7 +42,7 @@ class aff_category_widget extends WP_Widget {
 		$arg = array( 
 			'depth' => 0, 
 			'taxonomy' => 'wp_aff_categories', 
-			'hide_empty' => 1, 
+			'hide_empty' => 0, 
 			'walker' => $walker, 
 			'title_li' => '', 
 			'orderby' => 'name', 

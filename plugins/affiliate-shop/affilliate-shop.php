@@ -67,7 +67,12 @@ class WordPress_Affiliate_Shop {
         add_action( 'admin_post_wp_aff_edit_category', array ( $this, 'wp_aff_edit_category' ) );
         add_action( 'admin_post_wp_aff_product_search', array ( $this, 'wp_aff_product_search' ) );
         add_action( 'admin_post_wp_aff_add_products', array ( $this, 'wp_aff_add_products' ) );
+		
+		add_action( 'admin_post_wp_aff_add_colours', array ( $this, 'wp_aff_add_colours' ) );
 		add_action( 'admin_post_wp_aff_edit_colours', array ( $this, 'wp_aff_edit_colours' ) );
+		
+		add_action( 'admin_post_wp_aff_add_sizes', array ( $this, 'wp_aff_add_sizes' ) );
+		add_action( 'admin_post_wp_aff_edit_sizes', array ( $this, 'wp_aff_edit_sizes' ) );
 		
 		add_action( 'admin_post_wp_aff_add_man_product', array ( $this, 'wp_aff_add_man_product' ) );
 		add_action( 'admin_post_wp_aff_edit_man_product', array ( $this, 'wp_aff_edit_man_product' ) );
@@ -111,12 +116,41 @@ class WordPress_Affiliate_Shop {
         
         add_action( 'wp_logout', array( $this, 'wp_logout' ) );
         
+		add_filter( 'wp_title', array( $this, 'some_callback' ), 100, 2 );
+
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
         
 		$this->run_plugin();
 		
 		//update_metadata('wp_aff_colours', 876, 'new_metadata', 'test');
+	}
+	
+	function some_callback( $title, $sep ){
+		global $wp_query;
+		//print_var( $wp_query );
+		
+		if( get_query_var( 'shop-cat' ) != '' ) {
+			$term = get_query_var( 'shop-cat' );
+			$tax = 'wp_aff_categories';
+		} elseif( get_query_var( 'shop-brand' ) != '' ) {
+			$term = get_query_var( 'shop-brand' );
+			$tax = 'wp_aff_brands';
+		}
+		
+		if( $wp_query->query['page_id'] == 37 ) {
+			$cat = get_term_by( 'name', $term , $tax );
+			//print_var($cat);
+			$title = $cat->name;
+			if( $cat->parent != 0 ) {
+				$cat2 = get_term_by( 'id', $cat->parent , $tax );
+				$title .= ' | '.$cat2->name;
+			}
+			$title .= ' | Shop | '.get_bloginfo( 'name' );
+		}
+		
+		return $title;
+		
 	}
 	
 	public function get_option() {
@@ -243,6 +277,7 @@ class WordPress_Affiliate_Shop {
 		add_action( "load-$this->add_products", array ( $this, 'parse_message' ) );
 		add_action( "load-$this->brands", array ( $this, 'parse_message' ) );
 		add_action( "load-$this->colours", array ( $this, 'parse_message' ) );
+		add_action( "load-$this->sizes", array ( $this, 'parse_message' ) );
         add_action( "load-$this->main_page", array ( $this, 'parse_message' ) );
 		add_action( "load-$this->products", array ( $this, 'parse_message' ) );
 	}
@@ -264,7 +299,7 @@ class WordPress_Affiliate_Shop {
         
         add_rewrite_rule('^shop/new-in/?$','index.php?page_id=37&shop-option=new');
 		add_rewrite_rule('^shop/sale/?$','index.php?page_id=37&shop-option=sale');
-		add_rewrite_rule('^shop/top-picks/?$','index.php?page_id=37&shop-option=picks');
+		add_rewrite_rule('^shop/our-picks/?$','index.php?page_id=37&shop-option=picks');
 		add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
         add_rewrite_rule('^shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
         add_rewrite_rule('^shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
@@ -335,6 +370,10 @@ class WordPress_Affiliate_Shop {
                 break;
 			case 8 :
                 $this->msg_text = 'Colour Updated!';
+                $this->msg_class = 'updated';
+                break;
+			case 9 :
+                $this->msg_text = 'Size Updated!';
                 $this->msg_class = 'updated';
                 break;
 			
@@ -609,7 +648,7 @@ class WordPress_Affiliate_Shop {
 														$args['orderby'] = 'post_date';
 														$args['order'] = 'DESC';
 														break;
-													case 'top-picks' :
+													case 'our-picks' :
 														$args['meta_query']['relation'] = 'AND';
 														$args['meta_query'][] = array(
 															'key' => 'wp_aff_product_picks',
@@ -802,7 +841,7 @@ class WordPress_Affiliate_Shop {
             die( 'Invalid nonce. ' . var_export( $_POST, true ) );
 		
 		$url = preg_replace( '#page/([0-9]+)/#', '', $_REQUEST['_wp_http_referer'] );	
-		$url = str_replace( array( 'top-picks/', 'sale/', 'new/' ), '', $url );
+		$url = str_replace( array( 'our-picks/', 'sale/', 'new/' ), '', $url );
 		if( isset( $_POST['wp_aff_new_in'] ) ) {
 			if( $_POST['wp_aff_new_in'] == 2 ) {
 				$args[] = 'new';
@@ -819,9 +858,9 @@ class WordPress_Affiliate_Shop {
 		} 
 		if( isset( $_POST['wp_aff_toppicks'] ) ) {
 			if( $_POST['wp_aff_toppicks'] == 2 ) {
-				$args[] = 'top-picks';
+				$args[] = 'our-picks';
 			} else {
-				$url = '/shop/top-picks/';		
+				$url = '/shop/our-picks/';		
 			}
 		}
 		
@@ -1061,6 +1100,74 @@ class WordPress_Affiliate_Shop {
         wp_safe_redirect( $url );
         exit;
     }
+	
+	public function wp_aff_add_colours() {
+        if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_add_colours' ) )
+            die( 'Invalid nonce.' . var_export( $_POST, true ) );
+
+            $term = array();
+            $term['name']   = sanitize_text_field( $_POST['wp_term_name'] );
+            $term['slug']   = sanitize_text_field( $_POST['wp_term_slug'] );
+            $term['colour'] = sanitize_text_field( $_POST['wp_term_colour'] );
+			$term['css'] 	= sanitize_text_field( $_POST['wp_term_colour_css'] );
+            
+            $termarray = wp_insert_term( 
+							$term['name'], 
+							'wp_aff_colours', 
+							$args = array( 
+								'slug' => $term['slug'], 
+							) 
+						);
+			
+            if(is_wp_error($termarray)) {
+                $msg = 2; 
+                $url = add_query_arg( 'msg', $msg, urldecode( $_POST['_wp_http_referer'] ) );
+            } else {
+				update_metadata( 'wp_aff_colours', $termarray['term_id'], 'colour_code', $term['colour'] );
+				update_metadata( 'wp_aff_colours', $termarray['term_id'], 'colour_code_css', $term['css'] );
+                $msg = 8;
+                $url = add_query_arg( 'msg', $msg, admin_url('admin.php?page=affiliate-shop/colours' ) );
+            }
+        if ( ! isset ( $_POST['_wp_http_referer'] ) )
+            die( 'Missing target.' );
+
+        //print_var($term);
+        wp_safe_redirect( $url );
+        exit;
+    }
+	
+	public function wp_aff_add_sizes() {
+        if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_add_sizes' ) )
+            die( 'Invalid nonce.' . var_export( $_POST, true ) );
+
+            $term = array();
+            $term['name']   = sanitize_text_field( $_POST['wp_term_name'] );
+            $term['slug']   = sanitize_text_field( $_POST['wp_term_slug'] );
+   
+            
+            $termarray = wp_insert_term( 
+							$term['name'], 
+							'wp_aff_sizes', 
+							$args = array( 
+								'slug' => $term['slug'], 
+							) 
+						);
+			
+            if(is_wp_error($termarray)) {
+                $msg = 2; 
+                $url = add_query_arg( 'msg', $msg, urldecode( $_POST['_wp_http_referer'] ) );
+            } else {
+                $msg = 9;
+                $url = add_query_arg( 'msg', $msg, admin_url('admin.php?page=affiliate-shop/sizes' ) );
+            }
+        if ( ! isset ( $_POST['_wp_http_referer'] ) )
+            die( 'Missing target.' );
+
+        //print_var($term);
+        wp_safe_redirect( $url );
+        exit;
+    }
+	
     public function wp_aff_edit_colours() {
         if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_edit_colours' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
@@ -1097,6 +1204,8 @@ class WordPress_Affiliate_Shop {
         wp_safe_redirect( $url );
         exit;
     }
+	
+	
     public function wp_aff_edit_category() {
         if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_edit_category' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
@@ -1762,30 +1871,145 @@ class WordPress_Affiliate_Shop {
     ?>
     <div class="wrap">
         <h2>Affiliate Shop</h2>
-        <h3>Shop Colours <a href="<?php print admin_url('admin.php?page=affiliate-shop&action=add-colours'); ?>" class="add-new-h2">Add Colour</a></h3>
-        <form id="category-table" method="get">
-            <!-- For plugins, we also need to ensure that the form posts back to our current page -->
-            <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
-            <!-- Now we can render the completed list table -->
-            <?php $CategoryTable->display() ?>
-        </form>
+        <?php if( !isset( $_REQUEST['action'] ) || $_REQUEST['action'] == 'delete' ) { ?>
+            <h3>Shop Colours <a href="<?php print admin_url('admin.php?page=affiliate-shop/colours&action=add-colours'); ?>" class="add-new-h2">Add Colour</a></h3>
+            <form id="category-table" method="get">
+                <!-- For plugins, we also need to ensure that the form posts back to our current page -->
+                <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+                <!-- Now we can render the completed list table -->
+                <?php $CategoryTable->display() ?>
+            </form>
+        <?php } elseif( $_GET['action'] == 'add-colours' ) { ?>
+				<h3>Add Shop Colour</h3>
+            	<form method="POST" id="wp_aff_add_cat" action="<?php echo admin_url('admin-post.php'); ?>">
+                	<table class="form-table" >
+                        <tr class="form-field">
+                            <th>Colour Name</th>
+                            <td>
+                                <input type="hidden" value="" name="wp_term_id">
+                                <input class="regular-text" type="text" name="wp_term_name" placeholder="Category Name" value="">
+                                <p class="description">The name is how it appears on your site.</p>
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>Colour Slug</th>
+                            <td>
+                                <input class="regular-text" type="text" name="wp_term_slug" placeholder="Category Slug" value="">
+                                <p class="description">The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.</p>
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>Colour</th>
+                            <td>
+                                <input class="regular-text" type="color" name="wp_term_colour" value="" style="width: 50px; height: 50px;">
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>Or Use Custom CSS?</th>
+                            <td>
+                                <textarea rows="10" class="regular-text" name="wp_term_colour_css"></textarea>
+                                <p class="description">Use <a target="_blank" href="http://www.colorzilla.com/gradient-editor/">Gradient Generator</a> and copy and paste the code.</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="hidden" value="wp_aff_add_colours" name="action" />
+                    <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
+                    <?php wp_nonce_field( 'wp_aff_add_colours', '_wpnonce', FALSE ); ?>
+                    <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
+                    <?php submit_button( 'Add Colour' ); ?>
+                </form>
+			<?php } elseif( $_GET['action'] == 'edit' && isset( $_GET['wp_aff_colours'] ) ) {?>
+            <?php 
+				$term = get_term( $_GET['wp_aff_colours'], 'wp_aff_colours', 'OBJECT' ); 
+				$colour_code = get_metadata('wp_aff_colours', $term->term_id, 'colour_code', true);
+				$colour_code_css = get_metadata('wp_aff_colours', $term->term_id, 'colour_code_css', true);
+			?>	
+                <h3>Edit Shop Colour</h3>
+            	<form method="POST" id="wp_aff_add_cat" action="<?php echo admin_url('admin-post.php'); ?>">
+                	<table class="form-table" >
+                        <tr class="form-field">
+                            <th>Colour Name</th>
+                            <td>
+                                <input type="hidden" value="<?php echo $term->term_id; ?>" name="wp_term_id">
+                                <input class="regular-text" type="text" name="wp_term_name" placeholder="Category Name" value="<?php echo $term->name; ?>">
+                                <p class="description">The name is how it appears on your site.</p>
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>Colour Slug</th>
+                            <td>
+                                <input class="regular-text" type="text" name="wp_term_slug" placeholder="Category Slug" value="<?php echo $term->slug; ?>">
+                                <p class="description">The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.</p>
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>Colour</th>
+                            <td>
+                                <input class="regular-text" type="color" name="wp_term_colour" value="<?php echo $colour_code; ?>" style="width: 50px; height: 50px;">
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>Or Use Custom CSS?</th>
+                            <td>
+                                <textarea rows="10" class="regular-text" name="wp_term_colour_css"><?php echo $colour_code_css; ?></textarea>
+                                <p class="description">Use <a target="_blank" href="http://www.colorzilla.com/gradient-editor/">Gradient Generator</a> and copy and paste the code.</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="hidden" value="wp_aff_edit_colours" name="action" />
+                    <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
+                    <?php wp_nonce_field( 'wp_aff_edit_colours', '_wpnonce', FALSE ); ?>
+                    <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
+                    <?php submit_button( 'Edit Colour' ); ?>
+                </form>
+               <?php } ?>
     </div>
     <?php    
     }
 	
 	public function sizes_page() {
-        $CategoryTable = new WP_Terms_List_Tables( array( 'taxonomy' =>  'wp_aff_sizes' ) );
-        $CategoryTable->prepare_items();
+        
     ?>
     <div class="wrap">
         <h2>Affiliate Shop</h2>
-        <h3>Shop Sizes <a href="<?php print admin_url('admin.php?page=affiliate-shop&action=add-size'); ?>" class="add-new-h2">Add Size</a></h3>
-        <form id="category-table" method="get">
-            <!-- For plugins, we also need to ensure that the form posts back to our current page -->
-            <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
-            <!-- Now we can render the completed list table -->
-            <?php $CategoryTable->display() ?>
-        </form>
+        <?php if( !isset( $_REQUEST['action'] ) || $_REQUEST['action'] == 'delete' ) { 
+			$CategoryTable = new WP_Terms_List_Tables( array( 'taxonomy' =>  'wp_aff_sizes' ) );
+        	$CategoryTable->prepare_items();
+		?>
+            <h3>Shop Sizes <a href="<?php print admin_url('admin.php?page=affiliate-shop/sizes&action=add-sizes'); ?>" class="add-new-h2">Add Size</a></h3>
+            <form id="category-table" method="get">
+                <!-- For plugins, we also need to ensure that the form posts back to our current page -->
+                <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+                <!-- Now we can render the completed list table -->
+                <?php $CategoryTable->display() ?>
+            </form>
+        <?php } elseif( $_GET['action'] == 'add-sizes' ) { ?>
+        	<h3>Add Shop Size</h3>
+            	<form method="POST" id="wp_aff_add_cat" action="<?php echo admin_url('admin-post.php'); ?>">
+                	<table class="form-table" >
+                        <tr class="form-field">
+                            <th>Size Name</th>
+                            <td>
+                                <input type="hidden" value="" name="wp_term_id">
+                                <input class="regular-text" type="text" name="wp_term_name" placeholder="Category Name" value="">
+                                <p class="description">The name is how it appears on your site.</p>
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>Size Slug</th>
+                            <td>
+                                <input class="regular-text" type="text" name="wp_term_slug" placeholder="Category Slug" value="">
+                                <p class="description">The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="hidden" value="wp_aff_add_sizes" name="action" />
+                    <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
+                    <?php wp_nonce_field( 'wp_aff_add_sizes', '_wpnonce', FALSE ); ?>
+                    <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
+                    <?php submit_button( 'Add Size' ); ?>
+                </form>
+        <?php } ?>
     </div>
     <?php    
     }
@@ -1907,50 +2131,7 @@ class WordPress_Affiliate_Shop {
                     <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
                     <?php submit_button( 'Add Category' ); ?>
                 </form>
-            <?php elseif( $_GET['action'] == 'edit' && isset( $_GET['wp_aff_colours'] ) ) : ?>
-            <?php 
-				$term = get_term( $_GET['wp_aff_colours'], 'wp_aff_colours', 'OBJECT' ); 
-				$colour_code = get_metadata('wp_aff_colours', $term->term_id, 'colour_code', true);
-				$colour_code_css = get_metadata('wp_aff_colours', $term->term_id, 'colour_code_css', true);
-			?>	
-                <h3>Edit Shop Colour</h3>
-            	<form method="POST" id="wp_aff_add_cat" action="<?php echo admin_url('admin-post.php'); ?>">
-                	<table class="form-table" >
-                        <tr class="form-field">
-                            <th>Colour Name</th>
-                            <td>
-                                <input type="hidden" value="<?php echo $term->term_id; ?>" name="wp_term_id">
-                                <input class="regular-text" type="text" name="wp_term_name" placeholder="Category Name" value="<?php echo $term->name; ?>">
-                                <p class="description">The name is how it appears on your site.</p>
-                            </td>
-                        </tr>
-                        <tr class="form-field">
-                            <th>Colour Slug</th>
-                            <td>
-                                <input class="regular-text" type="text" name="wp_term_slug" placeholder="Category Slug" value="<?php echo $term->slug; ?>">
-                                <p class="description">The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.</p>
-                            </td>
-                        </tr>
-                        <tr class="form-field">
-                            <th>Colour</th>
-                            <td>
-                                <input class="regular-text" type="color" name="wp_term_colour" value="<?php echo $colour_code; ?>" style="width: 50px; height: 50px;">
-                            </td>
-                        </tr>
-                        <tr class="form-field">
-                            <th>Or Use Custom CSS?</th>
-                            <td>
-                                <textarea rows="10" class="regular-text" name="wp_term_colour_css"><?php echo $colour_code_css; ?></textarea>
-                                <p class="description">Use <a target="_blank" href="http://www.colorzilla.com/gradient-editor/">Gradient Generator</a> and copy and paste the code.</p>
-                            </td>
-                        </tr>
-                    </table>
-                    <input type="hidden" value="wp_aff_edit_colours" name="action" />
-                    <?php $redirect =  remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ); ?>
-                    <?php wp_nonce_field( 'wp_aff_edit_colours', '_wpnonce', FALSE ); ?>
-                    <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
-                    <?php submit_button( 'Edit Colour' ); ?>
-                </form>
+            
             <?php elseif( $_GET['action'] == 'edit' && isset( $_GET['wp_aff_categories'] ) ) : ?>
                 <?php 
 					$term = get_term( $_GET['wp_aff_categories'], 'wp_aff_categories', 'OBJECT' ); 
