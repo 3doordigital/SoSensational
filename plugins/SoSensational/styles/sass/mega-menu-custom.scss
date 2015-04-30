@@ -8,6 +8,7 @@
     .mega-menu-toggle {  
         background: none;
         line-height: 35px;
+        margin-bottom: 15px;
         
         &:before {
             background-color: #222;
@@ -25,10 +26,15 @@
         float: none;
     }
     
+    .mega-menu-toggle.mega-menu-open:before {
+        content: "\f333";
+    }
+    
     #mega-menu-primary { 
         float: right;
         width: 100%;
         text-align: right;
+
         // Flyouts
         & > li.mega-menu-flyout {
             & > ul.mega-sub-menu {
@@ -202,16 +208,18 @@
                 background: #fff;   
                 border: 1px solid #a0862a;
                 border-top: 1px solid #eee;
+                display: none !important
             } 
         }         
     }          
 } 
 
-// Force hiding of children items in a mobile menu dropdown on hover, hide the caret
+// Force hiding of children items in a mobile menu dropdown on hover, hide the caret, and searchbox
 
 @media (max-width: 767px) {
     #mega-menu-wrap-primary {
         #mega-menu-primary {
+            .mega-menu-flyout.mega-toggle-on,
             li.mega-menu-flyout.mega-menu-item-has-children.mega-toggle-on,
             li.mega-menu-flyout li.mega-menu-item-has-children.mega-toggle-on,
             & > li.mega-menu-item-has-children.mega-toggle-on,
@@ -220,12 +228,15 @@
                     content: none !important;
                 }
             }
+            li.mega-menu-flyout,
             li.mega-menu-megamenu {
                 ul.mega-sub-menu {
                     display: none !important;
                 }       
             }
+            & > li.mega-menu-item:last-child {
+                display: none;
+            }
         }
     }      
-    
 }
