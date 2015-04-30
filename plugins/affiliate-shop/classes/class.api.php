@@ -367,7 +367,7 @@
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 								<td>'.$title.'</td>
 								<td>'.$merch.'</td>
-								<td colspan="4">No data found</td>
+								<td colspan="4">No data found. Post Trashed!</td>
 							 </tr>';	
 			}
 			return $out;
