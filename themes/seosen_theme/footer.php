@@ -8,7 +8,7 @@
             <p>Think of SoSensational as a fashion and beauty shopping mall for grown up women - everything you need in one place. Find big, well-known brands and familiar names. Discover smaller boutiques new to you. All the clothing has been thoughtfully edited for grown up women so you can shop for the woman you are - and find style advice and tips on how to wear it.</p>
         </div>
         <div class="col-md-4 col-md-offset-1">
-            <h2 class="footer-menu-heading">Menu</h2>
+            
             <nav class="navbar-default">
                 <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-footer">
@@ -17,6 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
+                  <h2 class="footer-menu-heading">Menu</h2>
                 </div>            
                 <?php
                 if (function_exists('wp_nav_menu')) {

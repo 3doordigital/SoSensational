@@ -211,6 +211,10 @@ jQuery(document).ready(function($) {
            }           
         });        
     });
+    
+  $('li.mega-menu-megamenu.mega-menu-item-has-children > a, li.mega-menu-flyout.mega-menu-item-has-children > a, li.mega-menu-flyout li.mega-menu-item-has-children > a').off('click'); 
+    
+    
 });
 
 
