@@ -204,8 +204,7 @@ jQuery(document).ready(function($) {
 			//console.log( response );
 			$('#tableout tbody').append( counter+ ' '+response.html );
 			var full_percent = percent.toFixed(1);
-			$('.update_percent').html( full_percent+'%' );
-			$('.total_update').html(' of '+total+' products.');
+			$('.update_percent').html( full_percent+'% of '+total+' products.' );
 			$('#update_progress').css( 'width', percent+'%' );
 			if( counter == last ) {
 				$('#submit').removeAttr( 'disabled' );	
