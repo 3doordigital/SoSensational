@@ -2478,7 +2478,7 @@ class WordPress_Affiliate_Shop {
 		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
-			'posts_per_page' => 10,
+			'posts_per_page' => -1,
 			'orderby' => 'post_date',
 			'order' => 'DESC' ,
 		);
