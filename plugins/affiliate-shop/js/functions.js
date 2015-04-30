@@ -211,6 +211,7 @@ jQuery(document).ready(function($) {
 				total = response.total;
 				ids = response.ids;
 				console.log( 'Total posts: '+response.total );
+				$('.total_update').html(' of '+response.total+' products.');
 				var per_query = 100 / total;
 		
 				$.each( ids, function ( i, item ) {
