@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <div class="container">
-    <h1>Hot Deals &amp; Sensational Offers</h1>
+    <h1><span>Hot Deals &amp; Sensational Offers</span></h1>
     <?php
     if (function_exists('yoast_breadcrumb')) {
         yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
