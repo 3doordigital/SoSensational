@@ -166,7 +166,7 @@ jQuery(document).ready(function($) {
 		}
 	});
 	
-	function update_product( id, prod_id, aff, title, merch, counter, percent ) {
+	function update_product( id, prod_id, aff, title, merch, counter, percent, last ) {
 		
 		id = typeof id !== 'undefined' ? id : null;
 		aff = typeof aff !== 'undefined' ? aff : null;
@@ -188,6 +188,10 @@ jQuery(document).ready(function($) {
 			var full_percent = percent.toFixed(1);
 			$('.update_percent').html( full_percent+'%' );
 			$('#update_progress').css( 'width', percent+'%' );
+			if( counter == last ) {
+				$('#submit').removeAttr( 'disabled' );	
+				$('.manual_update').html('Manual Update').removeAttr( 'disabled' );	
+			}
 		}, 'json' );
 		
 	}
@@ -217,11 +221,7 @@ jQuery(document).ready(function($) {
 				console.log( last );
 				$.each( ids, function ( i, item ) {
 					percent = per_query * i;
-					update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent );
-					if( i == last ) {
-						$('#submit').removeAttr( 'disabled' );	
-						$('.manual_update').html('Manual Update').removeAttr( 'disabled' );	
-					}
+					update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent, last );
 					counter ++
 				});
 				
