@@ -213,7 +213,8 @@ jQuery(document).ready(function($) {
 				console.log( 'Total posts: '+response.total );
 				$('.total_update').html(' of '+response.total+' products.');
 				var per_query = 100 / total;
-		
+				var last = response.total - 1;
+				console.log( last );
 				$.each( ids, function ( i, item ) {
 					percent = per_query * i;
 					//update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent );
