@@ -2453,7 +2453,7 @@ class WordPress_Affiliate_Shop {
 	public function ajax_update_get_count() {
 		$output = array();
 		
-		/* 
+		 
 			#### No IDs check ####
 		$qry_args = array(
 			'post_status' => 'publish', 
@@ -2474,14 +2474,14 @@ class WordPress_Affiliate_Shop {
 				),
 			)
 		);
-		*/
-		$qry_args = array(
+		
+		/*$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
 			'posts_per_page' => -1,
 			'orderby' => 'post_date',
 			'order' => 'DESC' ,
-		);
+		);*/
 		if( $posts = get_posts( $qry_args ) ) {
 
 			$output['status'] = 1;	
