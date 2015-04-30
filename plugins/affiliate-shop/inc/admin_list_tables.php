@@ -845,7 +845,7 @@ class AllProductTable extends WP_List_Table {
     }
     function column_img($item) {
        return sprintf(
-            '<img src="%1$s" style="max-height: 75px; width: auto;" />',
+            '<img src="%1$s" style="max-height: 90px; width: auto;" />',
             /*$1%s*/ $item['img']  //Let's simply repurpose the table's singular label ("movie")
         ); 
     }
@@ -1241,7 +1241,7 @@ function column_default($item, $column_name){
 
 function column_img($item) {
    return sprintf(
-        '<img src="%1$s" style="max-height: 75px; width: auto;" />',
+        '<img src="%1$s" style="max-height: 90px; width: auto;" />',
         /*$1%s*/ $item['img']  //Let's simply repurpose the table's singular label ("movie")
     ); 
 }
