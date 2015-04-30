@@ -1,3 +1,21 @@
+
+jQuery(function($) {
+        $.xhrPool = [];
+        $.xhrPool.abortAll = function() {
+            $(this).each(function(i, jqXHR) {   //  cycle through list of recorded connection
+                jqXHR.abort();  //  aborts connection
+                $.xhrPool.splice(i, 1); //  removes from list by index
+            });
+        }
+        $.ajaxSetup({
+            beforeSend: function(jqXHR) { $.xhrPool.push(jqXHR); }, //  annd connection to list
+            complete: function(jqXHR) {
+                var i = $.xhrPool.indexOf(jqXHR);   //  get index for current connection completed
+                if (i > -1) $.xhrPool.splice(i, 1); //  removes from list by index
+            }
+        });
+    })
+
 jQuery(document).ready(function($) {
     
 	$('.drop_cats').live( 'click' , function( e ) {
@@ -195,10 +213,15 @@ jQuery(document).ready(function($) {
 		}, 'json' );
 		
 	}
-	
-	$('.manual_update').click( function(e) {
+	$('.stop_update').live( 'click', function(e) {
 		e.preventDefault();
-		$(this).html('<i class="fa fa-circle-o-notch fa-spin"></i>').attr( 'disabled', 'disabled' );
+		$.xhrPool.abortAll();
+		$('.stop_update').html('Manual Update').removeClass('stop_update').addClass('manual_update');
+		$('#submit').removeAttr( 'disabled' );	
+	});
+	$('.manual_update').live( 'click',  function(e) {
+		e.preventDefault();
+		$(this).html('Stop Update <i class="fa fa-circle-o-notch fa-spin"></i>').removeClass('manual_update').addClass('stop_update');
 		$('#submit').attr( 'disabled', 'disabled' );
 		$('.prod_update_row').show();
 		$('#tableout').show();
