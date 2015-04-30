@@ -138,7 +138,7 @@ class WordPress_Affiliate_Shop {
 			$tax = 'wp_aff_brands';
 		}
 		
-		if( $wp_query->query['page_id'] == 37 ) {
+		if( is_page() && $wp_query->query['page_id'] == 37 ) {
 			$cat = get_term_by( 'name', $term , $tax );
 			//print_var($cat);
 			$title = $cat->name;
