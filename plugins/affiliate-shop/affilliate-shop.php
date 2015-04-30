@@ -1786,6 +1786,7 @@ class WordPress_Affiliate_Shop {
                 
                 <p>Occasionally products need to have their attributes, such as price or availability updated to match that of the merchant. You can schedule that update below, or run a manual update.</p>
                 <p><strong>Please note that this will use API credits.</strong></p>
+                <?php //print_var( $this->ajax_update_get_count() ); ?>
                 <table class="form-table">
                 	<tr>
                     	<th>Update frequency</th>
@@ -2449,9 +2450,11 @@ class WordPress_Affiliate_Shop {
 		die;
 	}
 	
-	function ajax_update_get_count() {
+	public function ajax_update_get_count() {
 		$output = array();
 		
+		/* 
+			#### No IDs check ####
 		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
@@ -2471,18 +2474,27 @@ class WordPress_Affiliate_Shop {
 				),
 			)
 		);
-
+		*/
+		$qry_args = array(
+			'post_status' => 'publish', 
+			'post_type' => 'wp_aff_products', 
+			'posts_per_page' => -1,
+			'orderby' => 'post_date',
+			'order' => 'DESC' ,
+		);
 		if( $posts = get_posts( $qry_args ) ) {
 
 			$output['status'] = 1;	
 			foreach( $posts as $post ) {
 				$prod_id = get_post_meta( $post->ID, 'wp_aff_product_id', true );
+				$aff = get_post_meta( $post->ID, 'wp_aff_product_aff', true );
 				$brand = wp_get_post_terms( $post->ID, 'wp_aff_brands' );
 				$output['ids'][] = array(
 					'id' => $post->ID,
 					'title' => $post->post_title,
 					'prod_id' => $prod_id,
-					'merch' => $brand[0]->name
+					'merch' => $brand[0]->name,
+					'aff'	=> $aff
 				);
 			}
 		} else {
@@ -2501,7 +2513,7 @@ class WordPress_Affiliate_Shop {
 		$output = array();
 		
 		$api = new wpAffAPI();
-		$data = $api->update_product( $_POST['id'], $_POST['prod_id'], null, $_POST['title'], $_POST['merch'] ) ;
+		$data = $api->update_product( $_POST['id'], $_POST['prod_id'], $_POST['aff'], $_POST['title'], $_POST['merch'] ) ;
 		if( $data ) {
 			$output['status'] = 1;	
 		} else {
