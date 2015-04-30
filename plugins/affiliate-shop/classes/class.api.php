@@ -362,6 +362,7 @@
 				// Do something with $data
 				}
 			} else {
+				wp_trash_post( $id  );
 				$out .= '<tr>
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 								<td>'.$title.'</td>

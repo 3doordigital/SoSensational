@@ -2455,7 +2455,7 @@ class WordPress_Affiliate_Shop {
 		
 		 
 			#### No IDs check ####
-		$qry_args = array(
+		/*$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
 			'posts_per_page' => -1,
@@ -2473,15 +2473,15 @@ class WordPress_Affiliate_Shop {
 				 'compare' => 'NOT REGEXP' // this should work...
 				),
 			)
-		);
+		);*/
 		
-		/*$qry_args = array(
+		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
 			'posts_per_page' => -1,
 			'orderby' => 'post_date',
 			'order' => 'DESC' ,
-		);*/
+		);
 		if( $posts = get_posts( $qry_args ) ) {
 
 			$output['status'] = 1;	
