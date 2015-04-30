@@ -330,24 +330,33 @@
 				}
 			}
 			*/
-			//print_var($data);
-			$item = $data['item'][0];
-			foreach( $data['item'] as $item ) {
-			/*update_post_meta($id, 'wp_aff_product_id', $item['ID']);
-			update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
-			update_post_meta($id, 'wp_aff_product_price', $item['price']);
-			update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
-			update_post_meta($id, 'wp_aff_product_merch', ( array ) $item['merch'][0]);*/
-				print_var($item);
+			$out = '';
+			if( !empty( $data['item'] ) ) {
+				foreach( $data['item'] as $item ) {
+				update_post_meta($id, 'wp_aff_product_id', $item['ID']);
+				update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
+				update_post_meta($id, 'wp_aff_product_price', $item['price']);
+				update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
+				update_post_meta($id, 'wp_aff_product_merch', ( $item['aff'] == 'linkshare' ? ( array ) $item['merch'][0] : $item['merch'] ) );
+				
+					$out .= '<tr>
+								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
+								<td>'.$title.'</td>
+								<td>'.$merch.'</td>
+								<td>'.$item['ID'].'</td>
+								<td>'.$item['title'].'</td>
+								<td>'.$item['aff'].'</td>
+								<td>Updated!</td>
+							 </tr>';
+				// Do something with $data
+				}
+			} else {
 				$out .= '<tr>
-							<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
-							<td>'.$title.'</td>
-							<td>'.$item['ID'].'</td>
-							<td>'.$item['title'].'</td>
-							<td>'.$item['aff'].'</td>
-							<td>Updated!</td>
-						 </tr>';
-			// Do something with $data
+								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
+								<td>'.$title.'</td>
+								<td>'.$merch.'</td>
+								<td colspan="4">No data found</td>
+							 </tr>';	
 			}
 			return $out;
 			
@@ -364,6 +373,7 @@
 			$response = $client->call('getProduct', $params);
 			*/
 			$lsmerch = $merch;
+			$lstitle = $title;
 			$merchants = $this->awin_merchants();
 			foreach( $merchants as $merchant ) {
 				//echo $merch.' :: '.$merchant['name'] ;
@@ -383,6 +393,7 @@
 				$oRefineByDefinition->sName = '';
 				
 				$oRefineBy->oRefineByDefinition = $oRefineByDefinition;
+				$title = str_replace( array( '-', '*', ',', '%5C', '%27' ), '', $title );
 				$title = explode( "'", $title );
 				$title = $title[0];
 				$params = array("sQuery" => stripslashes($title), "iLimit" => 1, "bAdult" => false, 'sColumnToReturn' => array('sAwImageUrl', 'sMerchantImageUrl', 'sBrand', 'sDescription', 'fRrpPrice' ),  "oActiveRefineByGroup"	=>	$oRefineBy);
@@ -423,11 +434,13 @@
 							'merch' 	=> $merchid
 						);
 					} else {
-						$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
+						$data['item'] = $this->update_linkshare_product( $id, $lstitle, $lsmerch );
 					}
 				}
+				
 			} else {
-				$data['item'] = $this->update_linkshare_product( $id, $title, $lsmerch );
+				//$data['item'] = $test;
+				$data['item'] = $this->update_linkshare_product( $id, $lstitle, $lsmerch );
 				//$data['status'] = 0;
 				//print_var($data);
 			}
@@ -437,6 +450,10 @@
 		}
 		
 		private function update_linkshare_product( $id, $title, $merch ) {
+			$title = trim( str_replace( array( '-', '*', ',', '%5C', '%27', "'", '\\', '/' ), '', $title ) );
+			
+			//$title=urlencode($title);
+			
 			$url = 'http://productsearch.linksynergy.com/productsearch';
 			$token = "4bee73f0e12eb04b83e7c5d01a5b8e4a7ccf0e1fbdeec4f171a2e5ca4fe2a568"; //Change this to your token
 			$resturl = $url."?"."token=".$token."&"."exact=".$title."&max=1";
@@ -455,7 +472,7 @@
 			if( $merchid != NULL && $merchid != 0 ) {
 				//$resturl .= '&mid='.$merchid;
 			}
-						//echo $resturl;
+						//echo $resturl. ' :::::::::::: '. $merch .' :::::::::::::::::';
 			$SafeQuery = urlencode($resturl);
 			$xml = simplexml_load_file($SafeQuery);
 			//print_var( $xml );

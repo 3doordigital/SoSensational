@@ -42,7 +42,7 @@ class aff_category_widget extends WP_Widget {
 		$arg = array( 
 			'depth' => 0, 
 			'taxonomy' => 'wp_aff_categories', 
-			'hide_empty' => 1, 
+			'hide_empty' => 0, 
 			'walker' => $walker, 
 			'title_li' => '', 
 			'orderby' => 'name', 
@@ -532,7 +532,7 @@ class aff_sale_widget extends WP_Widget {
 			echo '1';
 		}
 		echo '" ';
-		echo 'name="wp_aff_toppicks"> <i class="fa fa-heart fa-fw"></i> Top Picks</label></p>';
+		echo 'name="wp_aff_toppicks"> <i class="fa fa-heart fa-fw"></i> Our Picks</label></p>';
 		
 		echo '<input type="hidden" name="action" value="wp_aff_sale_filter">';
 		wp_nonce_field( 'wp_aff_sale_filter', '_wpnonce', true );
