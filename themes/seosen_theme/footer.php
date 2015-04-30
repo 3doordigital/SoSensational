@@ -8,7 +8,7 @@
             <p>The shopping and style guide for grown up women, where you can buy daywear, posh frocks, wedding and mother-of-the-bride outfits, petites clothing, pluz size clothing and accessories.</p>
         </div>
         <div class="col-md-4 col-md-offset-1">
-            <h2>Menu</h2>
+            <h2 class="footer-menu-heading">Menu</h2>
             <nav class="navbar-default">
                 <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-footer">
