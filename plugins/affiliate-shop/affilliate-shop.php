@@ -2478,7 +2478,7 @@ class WordPress_Affiliate_Shop {
 		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
-			'posts_per_page' => -1,
+			'posts_per_page' => 10,
 			'orderby' => 'post_date',
 			'order' => 'DESC' ,
 		);
@@ -2486,9 +2486,25 @@ class WordPress_Affiliate_Shop {
 
 			$output['status'] = 1;	
 			foreach( $posts as $post ) {
-				$prod_id = get_post_meta( $post->ID, 'wp_aff_product_id', true );
-				$aff = get_post_meta( $post->ID, 'wp_aff_product_aff', true );
+				//$prod_id = get_post_meta( $post->ID, 'wp_aff_product_id', true );
+				//$aff = get_post_meta( $post->ID, 'wp_aff_product_aff', true );
+				
+				$meta = get_post_meta( $post->ID );
+				
+				if( isset( $meta['wp_aff_product_id'] ) ) {
+					$prod_id = $meta['wp_aff_product_id'][0];
+				} else {
+					$prod_id = '';
+				}
+				
+				if( isset( $meta['wp_aff_product_aff'] ) ) {
+					$aff = $meta['wp_aff_product_aff'][0];
+				} else {
+					$aff = '';
+				}
+				
 				$brand = wp_get_post_terms( $post->ID, 'wp_aff_brands' );
+				
 				$output['ids'][] = array(
 					'id' => $post->ID,
 					'title' => $post->post_title,
@@ -2496,6 +2512,7 @@ class WordPress_Affiliate_Shop {
 					'merch' => $brand[0]->name,
 					'aff'	=> $aff
 				);
+				
 			}
 		} else {
 			$output['status'] = 0;	

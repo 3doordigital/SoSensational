@@ -1,3 +1,21 @@
+
+jQuery(function($) {
+        $.xhrPool = [];
+        $.xhrPool.abortAll = function() {
+            $(this).each(function(i, jqXHR) {   //  cycle through list of recorded connection
+                jqXHR.abort();  //  aborts connection
+                $.xhrPool.splice(i, 1); //  removes from list by index
+            });
+        }
+        $.ajaxSetup({
+            beforeSend: function(jqXHR) { $.xhrPool.push(jqXHR); }, //  annd connection to list
+            complete: function(jqXHR) {
+                var i = $.xhrPool.indexOf(jqXHR);   //  get index for current connection completed
+                if (i > -1) $.xhrPool.splice(i, 1); //  removes from list by index
+            }
+        });
+    })
+
 jQuery(document).ready(function($) {
     
 	$('.drop_cats').live( 'click' , function( e ) {
@@ -166,7 +184,7 @@ jQuery(document).ready(function($) {
 		}
 	});
 	
-	function update_product( id, prod_id, aff, title, merch, counter, percent, last ) {
+	function update_product( id, prod_id, aff, title, merch, counter, percent, last, total ) {
 		
 		id = typeof id !== 'undefined' ? id : null;
 		aff = typeof aff !== 'undefined' ? aff : null;
@@ -187,6 +205,7 @@ jQuery(document).ready(function($) {
 			$('#tableout tbody').append( counter+ ' '+response.html );
 			var full_percent = percent.toFixed(1);
 			$('.update_percent').html( full_percent+'%' );
+			$('.total_update').html(' of '+total+' products.');
 			$('#update_progress').css( 'width', percent+'%' );
 			if( counter == last ) {
 				$('#submit').removeAttr( 'disabled' );	
@@ -195,10 +214,15 @@ jQuery(document).ready(function($) {
 		}, 'json' );
 		
 	}
-	
-	$('.manual_update').click( function(e) {
+	$('.stop_update').live( 'click', function(e) {
 		e.preventDefault();
-		$(this).html('<i class="fa fa-circle-o-notch fa-spin"></i>').attr( 'disabled', 'disabled' );
+		$.xhrPool.abortAll();
+		$('.stop_update').html('Manual Update').removeClass('stop_update').addClass('manual_update');
+		$('#submit').removeAttr( 'disabled' );	
+	});
+	$('.manual_update').live( 'click',  function(e) {
+		e.preventDefault();
+		$(this).html('Stop Update <i class="fa fa-circle-o-notch fa-spin"></i>').removeClass('manual_update').addClass('stop_update');
 		$('#submit').attr( 'disabled', 'disabled' );
 		$('.prod_update_row').show();
 		$('#tableout').show();
@@ -221,7 +245,7 @@ jQuery(document).ready(function($) {
 				console.log( last );
 				$.each( ids, function ( i, item ) {
 					percent = per_query * i;
-					update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent, last );
+					update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent, last, total );
 					counter ++
 				});
 				
