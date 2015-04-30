@@ -1625,7 +1625,7 @@ class WordPress_Affiliate_Shop {
                     <th width="200"></th><th>Product Name</th><th>Price</th><th>RRP</th>
                    </tr>
                    <tr>
-                        <td rowspan="6"><img style="width: 175px; height: auto;" src="<?php echo $product['img']; ?>"><input type="hidden" value="<?php echo $product['img']; ?>" name="product_image[<?php echo $i; ?>]" </td>
+                        <td rowspan="6"><img style="width: 275px; height: auto;" src="<?php echo $product['img']; ?>"><input type="hidden" value="<?php echo $product['img']; ?>" name="product_image[<?php echo $i; ?>]" </td>
                    
                         <td>
                             <input class="large-text" type="text" name="product_name[<?php echo $i; ?>]" placeholder="" value="<?php echo ucwords( stripslashes( ($product['title']) )); ?>" id="">
