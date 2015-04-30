@@ -242,9 +242,6 @@ function ss_rewrite_rule() {
     add_rewrite_rule(
         'brands-and-boutiques/([^/]*)/?([^/]*)/?([^/]*)/?$', 'index.php?pagename=brands-and-boutiques&ss_cat=$matches[3]', 'top'
     );    
-    add_rewrite_rule(
-        'blog/([^/]*)/?([^/]*)/?$', 'index.php?category_name=$matches[2]', 'top'
-    );       
 }
 
 add_action('init', 'ss_rewrite_rule');
