@@ -217,8 +217,11 @@ jQuery(document).ready(function($) {
 				console.log( last );
 				$.each( ids, function ( i, item ) {
 					percent = per_query * i;
-					//update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent );
-						
+					update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent );
+					if( i == last ) {
+						$('#submit').removeAttr( 'disabled' );	
+						$('.manual_update').html('Manual Update').removeAttr( 'disabled' );	
+					}
 					counter ++
 				});
 				
