@@ -94,7 +94,7 @@
             <?php echo $args['before_title']; ?><?php echo $instance['title']; ?><?php echo $args['after_title']; ?>
             
             <?php 
-				$args = array(
+				$arg = array(
 					'orderby'            => 'name',
 					'order'              => 'ASC',
 					'style'              => 'list',
@@ -103,7 +103,7 @@
 					'taxonomy'           => 'category',
 				);
 				
-				wp_list_categories( $args ) ; 
+				wp_list_categories( $arg ) ; 
 				
 			?>
                        
