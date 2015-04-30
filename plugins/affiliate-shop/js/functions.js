@@ -215,7 +215,7 @@ jQuery(document).ready(function($) {
 		
 				$.each( ids, function ( i, item ) {
 					percent = per_query * i;
-					update_product( ids[i].id, ids[i].prod_id, null, ids[i].title, ids[i].merch, counter, percent );
+					update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent );
 						
 					counter ++
 				});
