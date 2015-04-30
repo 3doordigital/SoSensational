@@ -119,3 +119,11 @@ h2.footer-menu-heading {
 .btn {
   white-space: normal; }
 
+/*-----------------------------------Hot Deals--------------------------------*/
+/* line 153, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.deal-block {
+  border: 1px solid #000;
+  margin-bottom: 15px;
+  text-align: center;
+  min-height: 400px; }
+
