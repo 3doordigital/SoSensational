@@ -184,7 +184,7 @@ jQuery(document).ready(function($) {
 		}
 	});
 	
-	function update_product( id, prod_id, aff, title, merch, counter, percent, last ) {
+	function update_product( id, prod_id, aff, title, merch, counter, percent, last, total ) {
 		
 		id = typeof id !== 'undefined' ? id : null;
 		aff = typeof aff !== 'undefined' ? aff : null;
@@ -205,6 +205,7 @@ jQuery(document).ready(function($) {
 			$('#tableout tbody').append( counter+ ' '+response.html );
 			var full_percent = percent.toFixed(1);
 			$('.update_percent').html( full_percent+'%' );
+			$('.total_update').html(' of '+total+' products.');
 			$('#update_progress').css( 'width', percent+'%' );
 			if( counter == last ) {
 				$('#submit').removeAttr( 'disabled' );	
@@ -244,7 +245,7 @@ jQuery(document).ready(function($) {
 				console.log( last );
 				$.each( ids, function ( i, item ) {
 					percent = per_query * i;
-					update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent, last );
+					update_product( ids[i].id, ids[i].prod_id, ids[i].aff, ids[i].title, ids[i].merch, counter, percent, last, total );
 					counter ++
 				});
 				
