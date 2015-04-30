@@ -126,7 +126,7 @@ foreach ($seosen_options['feat_brands'] as $brand) { ?>
             <div class="col-md-12 <?php echo ($i == 2 || $i == 4 ? 'last' : ''); ?>">
                 <div class="row">
                     <div class="col-xs-12 col-md-11">
-        <?php the_post_thumbnail('home-thumb', array('class' => 'img-responsive')); ?>
+        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail('home-thumb', array('class' => 'img-responsive')); ?></a>
                     </div>
                     <div class="col-xs-12 col-md-13">
                         <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
