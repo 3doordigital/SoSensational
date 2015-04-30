@@ -91,11 +91,16 @@
         }
     }
 }
+h2.footer-menu-heading {
+    float: left;
+}
 
 #footer button.navbar-toggle  {
     background-color: #A0862A;
     border: 1px solid #fff;
     border-radius: 5px;
+    float: left;
+    margin: 10px 0 0 10px;   
 }
 
 /*-----------------------Brands and Boutiques Categories ---------------------*/
