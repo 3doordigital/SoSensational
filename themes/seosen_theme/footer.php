@@ -98,13 +98,27 @@
             </div>
         </div>
     </div>
+    <hr/>
 </section>
-<div class="container">
-    <hr>
-</div>
 <div id="subfoot" class="container">
-    &copy; Copyright 3 Door Digital
-<?php $page_id = $wp_query->get_queried_object_id(); ?>
+    <div class="row">
+        <span>&copy; Copyright 3 Door Digital</span>
+        <?php
+        if (function_exists('wp_nav_menu')) {
+            wp_nav_menu(array(
+                'menu' => 'sub-footer',
+                'theme_location' => 'sub-footer',
+                'container' => 'nav',
+                'container_class' => '',
+                'container_id' => '',
+                'menu_class' => 'sub-footer-menu clearfix',
+                'fallback_cb' => 'wp_bootstrap_navwalker::fallback',
+                'walker' => new wp_bootstrap_navwalker()
+                )
+            );
+        }
+        ?>                
+    </div>         
 </div>
 <?php wp_footer(); ?>
 </body>
