@@ -181,6 +181,8 @@ class aff_price_widget extends WP_Widget {
 		$arg = $wp_aff->shop_args( true );
 		$arg['meta_query'] = null;
 		
+		unset( $arg['meta_query'] );
+		
 		$arg['meta_key'] = 'wp_aff_product_price';
 		$arg['meta_type']  = 'DECIMAL';
 		$arg['orderby']	= 'meta_value_num';
