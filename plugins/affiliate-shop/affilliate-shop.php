@@ -692,12 +692,14 @@ class WordPress_Affiliate_Shop {
 					switch ( $_REQUEST['sortby'] ) {
 						case 'priceasc' :
 							$args['meta_key'] 	= 'wp_aff_product_price';
-							$args['orderby']	= 'meta_value_num';
+							$args['meta_type']  = 'DECIMAL';
+							$args['orderby']	= 'meta_value';
             				$args['order'] 		= 'ASC';
 							break;
 						case 'pricedesc' :
 							$args['meta_key'] 	= 'wp_aff_product_price';
-							$args['orderby']	= 'meta_value_num';
+							$args['meta_type']  = 'DECIMAL';
+							$args['orderby']	= 'meta_value';
             				$args['order'] 		= 'DESC';
 							break;
 						case 'sale' :
