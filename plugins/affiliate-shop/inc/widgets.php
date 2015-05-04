@@ -292,10 +292,10 @@ class aff_colour_widget extends WP_Widget {
 		echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_colour_filter" method="POST">';
 		
 		global $wp_aff;
-        $fn_include = $wp_aff->get_product_terms('wp_aff_colours');
+        //$fn_include = $wp_aff->get_product_terms('wp_aff_colours');
 		
 		$arg =  array(
-			'include' => $fn_include,
+			//'include' => $fn_include,
             'show_count' => 0,
             'hierarchical' => 0,
             'taxonomy' => 'wp_aff_colours',
@@ -393,9 +393,9 @@ class aff_size_widget extends WP_Widget {
 		echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_size_filter" method="POST">';
 		
 		global $wp_aff;
-        $fn_include = $wp_aff->get_product_terms('wp_aff_sizes');
+        //$fn_include = $wp_aff->get_product_terms('wp_aff_sizes');
 		$arg = array(
-			'include' => $fn_include,
+			//'include' => $fn_include,
             'show_count' => 0,
             'hierarchical' => 0,
             'taxonomy' => 'wp_aff_sizes',
