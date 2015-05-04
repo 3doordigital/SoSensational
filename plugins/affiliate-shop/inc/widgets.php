@@ -182,10 +182,12 @@ class aff_price_widget extends WP_Widget {
 		$arg['meta_query'] = null;
 		
 		$arg['meta_key'] = 'wp_aff_product_price';
-		$args['meta_type']  = 'DECIMAL';
-		$args['orderby']	= 'meta_value_num';
-		$args['order'] 		= 'DESC';
-		$args['posts_per_page'] = 1;
+		$arg['meta_type']  = 'DECIMAL';
+		$arg['orderby']	= 'meta_value_num';
+		$arg['order'] 		= 'DESC';
+		$arg['posts_per_page'] = 1;
+		
+		
 		
 		$maxquery = new WP_Query( $arg );
 		
@@ -194,7 +196,7 @@ class aff_price_widget extends WP_Widget {
 		$maxprice = get_post_meta( $maxquery->posts[0]->ID, 'wp_aff_product_price', true );
 		$range['max'] = $maxprice;
 		
-		$args['order'] 		= 'ASC';
+		$arg['order'] 		= 'ASC';
 		
 		$minquery = new WP_Query( $arg );
 		$minprice = get_post_meta( $minquery->posts[0]->ID, 'wp_aff_product_price', true );
