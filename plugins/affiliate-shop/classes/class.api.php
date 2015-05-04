@@ -337,10 +337,20 @@
 				}
 			}
 			
+			if( isset( $id ) && $id != '' && $id != null ) {
+				$oldprice = get_post_meta( $id, 'wp_aff_product_price', true );
+				$newprice = str_replace( ',', '', $oldprice );	
+				update_post_meta( $id, 'wp_aff_product_price', $newprice );
+				
+				$oldrrp = get_post_meta( $id, 'wp_aff_product_rrp', true );
+				$newrrp = str_replace( ',', '', $oldrrp );	
+				update_post_meta( $id, 'wp_aff_product_price', $newrrp );
+			}
+			
 			$out = '';
 			if( !empty( $data['item'] ) ) {
 				foreach( $data['item'] as $item ) {
-				if( $item['price'] == '' && $item['rrp'] != '' ) {
+				if( ( $item['price'] == '' || $item['price'] == 0 || $item['price'] == '0.00' ) && $item['rrp'] != '' ) {
 					update_post_meta($id, 'wp_aff_product_price', $item['rrp']);
 				} else {
 					update_post_meta($id, 'wp_aff_product_price', $item['price']);

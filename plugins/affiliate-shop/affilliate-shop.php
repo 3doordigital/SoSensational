@@ -748,7 +748,7 @@ class WordPress_Affiliate_Shop {
 	}
 	
 	public function wp_aff_size_filter() {
-		print_var( $_POST );
+		//print_var( $_POST );
 		if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_size_filter' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
 		$sizes = array();
@@ -1307,6 +1307,10 @@ class WordPress_Affiliate_Shop {
                 	<th>Price</th>
                     <td><input class="regular-text" type="number" min="0" step="any" name="product_price" placeholder="0.00" value=""><p class="description">&pound; sign not needed.</p></td>
                 </tr>
+                <tr>
+                            <th>RRP</th>
+                            <td><input class="regular-text" type="number" step="any" min="0" name="product_rrp" placeholder="0.00" value="<?php echo $meta['wp_aff_product_rrp'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
+                        </tr>
                 <tr>
                 	<th>Description</th>
                     <td>
@@ -2288,6 +2292,7 @@ class WordPress_Affiliate_Shop {
 		   
 		update_post_meta($insID, 'wp_aff_product_link', $_POST['product_url']);
 		update_post_meta($insID, 'wp_aff_product_price', $_POST['product_price']);
+		update_post_meta($insID, 'wp_aff_product_rrp', $_POST['product_rrp']);
 		update_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc']);
 		update_post_meta($insID, 'wp_aff_product_image', $_POST['product_image']);
 		$url = add_query_arg( 'msg', 1, $_POST['_wp_http_referer'] );
@@ -2314,6 +2319,7 @@ class WordPress_Affiliate_Shop {
 				$ID = $_REQUEST['product'];
 				$meta = get_post_meta( $ID );
 				$brands = wp_get_post_terms( $ID, 'wp_aff_brands' );
+				print_var($meta);
 			?>
             	<h3>Edit Product</h3>
                 <form method="POST" id="wp_add_prod_manual" action="<?php echo admin_url('admin-post.php'); ?>">
@@ -2343,7 +2349,11 @@ class WordPress_Affiliate_Shop {
                         </tr>
                         <tr>
                             <th>Price</th>
-                            <td><input class="regular-text" type="number" step="any" min="0" name="product_price" placeholder="0.00" value="<?php echo $meta['wp_aff_product_price'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
+                            <td><input class="regular-text" type="text" name="product_price" placeholder="0.00" value="<?php echo $meta['wp_aff_product_price'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
+                        </tr>
+                        <tr>
+                            <th>RRP</th>
+                            <td><input class="regular-text" type="text" name="product_rrp" placeholder="0.00" value="<?php echo $meta['wp_aff_product_rrp'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
                         </tr>
                         <tr>
                             <th>Description</th>
