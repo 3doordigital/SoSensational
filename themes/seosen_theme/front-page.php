@@ -86,7 +86,7 @@ foreach ($seosen_options['feat_brands'] as $brand) { ?>
             <div class="col-md-8 col-sm-12 fadebox brand <?php if ($i%3 === 0) : ?> hidden-sm <?php endif ?>">
                 <a href="<?php echo $brand['url']; ?>">
             <?php echo wp_get_attachment_image($brand['attachment_id'], 'home_brand', false, array('class' => 'img-responsive')); ?>
-                    <div class="<?php echo ($i == 1 ? 'whitebar' : 'blackbar'); ?>">
+                    <div class="<?php echo ($i % 2 ? 'whitebar' : 'blackbar'); ?>">
                         <h2><?php echo $brand['title']; ?></h2>
                     </div>
                 </a>
