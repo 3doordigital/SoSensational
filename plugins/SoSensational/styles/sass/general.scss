@@ -149,7 +149,6 @@ h2.footer-menu-heading {
 }
 
 /*-----------------------------------Hot Deals--------------------------------*/
-
 .deal-block {
     border: 1px solid #000;
     margin-bottom: 15px;
@@ -158,7 +157,6 @@ h2.footer-menu-heading {
 }
 
 // Header - masthead
-
 .blog-masthead {
     span {
         text-decoration: underline; 
@@ -166,7 +164,6 @@ h2.footer-menu-heading {
 }
 
 // Pagination
-
 ul.pagination-centered {
     width: 100%;
     text-align: center;
@@ -174,4 +171,38 @@ ul.pagination-centered {
     li {
         display: inline-block;
     }        
+}
+
+// Sub-footer menu
+
+    ul.sub-footer-menu {
+        width: auto;
+        display: block;
+        li {
+            list-style: none;
+            padding: 0 20px; 
+            border-right: 1px solid #eee;
+            float: left;
+            &:last-child {
+                border: none;
+            }
+            a {
+                font-family: 'Open Sans', sans-serif;
+                text-transform: lowercase;
+                font-weight: 300;
+                font-size: 13px;  
+                color: #333; 
+                display: inline-block;
+                &:first-letter {
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+
+#subfoot span {
+    float: left;
+    padding: 0 20px 0 7.5px;
+    display: block;
+    border-right: 1px solid #eee;
 }

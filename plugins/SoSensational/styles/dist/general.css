@@ -120,22 +120,54 @@ h2.footer-menu-heading {
   white-space: normal; }
 
 /*-----------------------------------Hot Deals--------------------------------*/
-/* line 153, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 152, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .deal-block {
   border: 1px solid #000;
   margin-bottom: 15px;
   text-align: center;
   min-height: 400px; }
 
-/* line 163, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 161, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .blog-masthead span {
   text-decoration: underline; }
 
-/* line 170, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 167, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 ul.pagination-centered {
   width: 100%;
   text-align: center; }
-  /* line 174, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  /* line 171, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
   ul.pagination-centered li {
     display: inline-block; }
+
+/* line 178, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+ul.sub-footer-menu {
+  width: auto;
+  display: block; }
+  /* line 181, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  ul.sub-footer-menu li {
+    list-style: none;
+    padding: 0 20px;
+    border-right: 1px solid #eee;
+    float: left; }
+    /* line 186, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+    ul.sub-footer-menu li:last-child {
+      border: none; }
+    /* line 189, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+    ul.sub-footer-menu li a {
+      font-family: 'Open Sans', sans-serif;
+      text-transform: lowercase;
+      font-weight: 300;
+      font-size: 13px;
+      color: #333;
+      display: inline-block; }
+      /* line 196, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+      ul.sub-footer-menu li a:first-letter {
+        text-transform: uppercase; }
+
+/* line 203, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+#subfoot span {
+  float: left;
+  padding: 0 20px 0 7.5px;
+  display: block;
+  border-right: 1px solid #eee; }
 
