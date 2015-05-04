@@ -150,9 +150,9 @@ if (empty($mainChildren)):
         <?php
         while ($my_query->have_posts()) : $my_query->the_post();
             $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} WHERE (post_type='brands' or post_type='boutiques') AND post_author='{$my_query->post->post_author}' AND post_status='publish'", OBJECT);
-            if (empty($advertiser)) {
-                continue;
-            }
+//            if (empty($advertiser)) {
+//                continue;
+//            }
             ?>
             <div class="post col-md-8 col-sm-12 fadebox ss_advertisers_cats showme animated fadeIn <?php
             if ($counterRows == 3) {
