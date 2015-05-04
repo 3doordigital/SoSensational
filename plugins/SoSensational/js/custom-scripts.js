@@ -75,10 +75,12 @@ jQuery(document).ready(function($) {
     var tagsInputField = $("#post_tags");
     var tagsLimit = 5;
            
-    tagsInputField.tagsinput({
-       maxTags: tagsLimit,
-       trimValue: true
-    });
+    if (tagsInputField.length) {
+        tagsInputField.tagsinput({
+           maxTags: tagsLimit,
+           trimValue: true
+        });        
+    }
     
     /*-------------------------------------------------------------------------- 
        Make the single input placeholder wider so that text does not slide under
@@ -211,6 +213,10 @@ jQuery(document).ready(function($) {
            }           
         });        
     });
+    
+    /*--------------------------------------------------------------------------
+     Max Mege Menu - make parent elements clickable on mobile devices
+     -------------------------------------------------------------------------*/     
     
   $('li.mega-menu-megamenu.mega-menu-item-has-children > a, li.mega-menu-flyout.mega-menu-item-has-children > a, li.mega-menu-flyout li.mega-menu-item-has-children > a').off('click'); 
     
