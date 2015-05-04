@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-md-24">
                     <div id="footer-newsletter">
-                        <h2>Join Our Newsletter</h2>
+                        <h2>Join Our Community</h2>
                         <form class="newsform_send">
                             <input type="email" name="email" placeholder="Your email address" /> <button class="join-now" type="submit">Join Now</button>
                         </form>
