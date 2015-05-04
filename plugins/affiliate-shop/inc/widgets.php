@@ -36,7 +36,7 @@ class aff_category_widget extends WP_Widget {
         echo '<div class="wp_aff_categories"><ul>';
 		
 		global $wp_aff;
-        $fn_include = $wp_aff->get_product_terms('wp_aff_categories');
+        //$fn_include = $wp_aff->get_product_terms('wp_aff_categories');
 		
 		$walker = new Faceted_Category_Walker;
 		$arg = array( 
