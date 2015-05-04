@@ -349,14 +349,15 @@
 					$out .= '<tr>
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 								<td>'.$title;
-					if( isset( $id ) && $id != '' && $id != null ){
-						$out .= ' ('.$id.')';
+					if( isset( $prod_id ) && $prod_id != '' && $prod_id != null ){
+						$out .= ' ('.$prod_id.')';
 					}
 					$out .= '</td>
 								<td>'.$merch.'</td>
 								<td>'.$item['ID'].'</td>
 								<td>'.$item['title'].'</td>
 								<td>'.$item['aff'].'</td>
+								<td>'.$item['foundby'].'</td>
 								<td>Updated!</td>
 							 </tr>';
 				// Do something with $data
@@ -367,7 +368,7 @@
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 								<td>'.$title.'</td>
 								<td>'.$merch.'</td>
-								<td colspan="4">No data found. Post Trashed!</td>
+								<td colspan="5">No data found. Post Trashed!</td>
 							 </tr>';	
 			}
 			return $out;
@@ -392,8 +393,12 @@
 			
 				$client = ClientFactory::getClient();
 				$response = $client->call('getProduct', $params);
+				
+				$foundby = 'ID';
+				
 			} elseif( isset( $title ) ) {
-			
+				
+				$foundby = 'title';
 				
 				//echo $merch.'('.$merchid.')';
 				$oRefineBy = new stdClass();
@@ -447,7 +452,8 @@
 								'price'     => number_format($product->fPrice, 2),
 								'rrp'       => number_format($product->fRrpPrice, 2),
 								'link'      => addslashes($product->sAwDeepLink),
-								'merch' 	=> $merchid
+								'merch' 	=> $merchid,
+								'foundby'	=> $foundby
 							);
 							return $data;
 					} else {
@@ -515,7 +521,7 @@
 					$items[0] = $xml->item;
 				}
 				foreach ( $items as $item) {
-					
+					$foundby = 'title';
 					$saleprice = (string) $item->saleprice;
 					$normalprice = (string) $item->price;
 					
@@ -546,7 +552,8 @@
 							'price'     => number_format( $price, 2),
 							'rrp'       => number_format( $rrp, 2 ),
 							'link'      => addslashes( $item->linkurl )	,
-							'merch' 	=> $mid
+							'merch' 	=> $mid,
+							'foundby'	=> $foundby
 						);
 				}
 			} else {
