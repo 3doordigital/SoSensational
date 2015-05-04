@@ -12,7 +12,7 @@
         <div class="container" id="topbar">
             <div class="row">
                 <div class="blog-masthead">
-                    <div class="col-xs-24 col-md-16"><span>SHOPPING, STYLE AND BEAUTY FOR GROWN UP WOMEN</span></div>                
+                    <div class="col-xs-24 col-md-16"><span>THE fashion & beauty shop for grown up women</span></div>                
                     <div class="col-md-8 text-right hidden-xs">
                         <a href="#"><i class="fa fa-facebook"></i></a>
                         <a href="#"><i class="fa fa-instagram"></i></a>
