@@ -149,8 +149,8 @@
 								'brand'     => addslashes($merch->oMerchant->sName),
 								'img'       => addslashes($product->sAwImageUrl),
 								'desc'      => addslashes($product->sDescription),
-								'price'     => number_format($product->fPrice, 2),
-								'rrp'       => number_format($product->fRrpPrice, 2),
+								'price'     => number_format($product->fPrice, 2, '.', '' ),
+								'rrp'       => number_format($product->fRrpPrice, 2, '.', '' ),
 								'link'      => addslashes($product->sAwDeepLink),
 								'exists'	=> $exists
 							);
@@ -223,8 +223,8 @@
 						'brand'     => addslashes( $brand ),
 						'img'       => addslashes( $item->imageurl ),
 						'desc'      => addslashes( $item->description->short ),
-						'price'     => number_format( $price, 2),
-						'rrp'       => number_format( $rrp, 2 ),
+						'price'     => number_format( $price, 2, '.', '' ),
+						'rrp'       => number_format( $rrp, 2, '.', ''  ),
 						'link'      => addslashes( $item->linkurl )	,
 						'exists'	=> $exists
 					);
@@ -340,9 +340,13 @@
 			$out = '';
 			if( !empty( $data['item'] ) ) {
 				foreach( $data['item'] as $item ) {
+				if( $item['price'] == '' && $item['rrp'] != '' ) {
+					update_post_meta($id, 'wp_aff_product_price', $item['rrp']);
+				} else {
+					update_post_meta($id, 'wp_aff_product_price', $item['price']);
+				}
 				update_post_meta($id, 'wp_aff_product_id', $item['ID']);
 				update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
-				update_post_meta($id, 'wp_aff_product_price', $item['price']);
 				update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
 				update_post_meta($id, 'wp_aff_product_merch', ( $item['aff'] == 'linkshare' ? ( array ) $item['merch'][0] : $item['merch'] ) );
 				
@@ -363,7 +367,7 @@
 				// Do something with $data
 				}
 			} else {
-				wp_trash_post( $id  );
+				//wp_trash_post( $id  );
 				$out .= '<tr>
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 								<td>'.$title.'</td>
@@ -449,8 +453,8 @@
 								'brand'     => addslashes($merch->oMerchant->sName),
 								'img'       => addslashes($product->sAwImageUrl),
 								'desc'      => addslashes($product->sDescription),
-								'price'     => number_format($product->fPrice, 2),
-								'rrp'       => number_format($product->fRrpPrice, 2),
+								'price'     => number_format($product->fPrice, 2, '.', '' ),
+								'rrp'       => number_format($product->fRrpPrice, 2, '.', '' ),
 								'link'      => addslashes($product->sAwDeepLink),
 								'merch' 	=> $merchid,
 								'foundby'	=> $foundby
@@ -549,8 +553,8 @@
 							'brand'     => addslashes( $brand ),
 							'img'       => addslashes( $item->imageurl ),
 							'desc'      => addslashes( $item->description->short ),
-							'price'     => number_format( $price, 2),
-							'rrp'       => number_format( $rrp, 2 ),
+							'price'     => number_format( $price, 2, '.', '' ),
+							'rrp'       => number_format( $rrp, 2, '.', ''  ),
 							'link'      => addslashes( $item->linkurl )	,
 							'merch' 	=> $mid,
 							'foundby'	=> $foundby
