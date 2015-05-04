@@ -344,7 +344,7 @@
 				
 				$oldrrp = get_post_meta( $id, 'wp_aff_product_rrp', true );
 				$newrrp = str_replace( ',', '', $oldrrp );	
-				update_post_meta( $id, 'wp_aff_product_price', $newrrp );
+				update_post_meta( $id, 'wp_aff_product_rrp', $newrrp );
 			}
 			
 			$out = '';
