@@ -970,7 +970,7 @@ li.dropdown:hover > ul.dropdown-menu {
     -webkit-border-radius: 5px 5px 0 0;
     border-radius: 5px 5px 0 0;
 }
-#topcats li a:hover, #topcats li.current-post-parent a, #topcats li.current-menu-item a {
+#topcats li a:hover, #topcats li.current-post-ancestor a, #topcats li.current-menu-item a {
     text-decoration: none;
     background-color: #a0862a;
 }
