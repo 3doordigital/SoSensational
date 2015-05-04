@@ -191,13 +191,13 @@ class aff_price_widget extends WP_Widget {
 		
 		$range = array();
 		
-		$maxprice = get_post_meta( $maxquery[0]->ID, 'wp_aff_product_price', true );
+		$maxprice = get_post_meta( $maxquery->posts[0]->ID, 'wp_aff_product_price', true );
 		$range['max'] = $maxprice;
 		
 		$args['order'] 		= 'ASC';
 		
 		$minquery = new WP_Query( $arg );
-		$minprice = get_post_meta( $minquery[0]->ID, 'wp_aff_product_price', true );
+		$minprice = get_post_meta( $minquery->posts[0]->ID, 'wp_aff_product_price', true );
 		
 		$range['min'] = $minprice;
 		
