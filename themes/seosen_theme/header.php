@@ -10,7 +10,6 @@
     </head>
     <body <?php body_class(); ?>>
         <div class="container" id="topbar">
-            <?php global $query_string; var_dump($query_string); ?>
             <div class="row">
                 <div class="blog-masthead">
                     <div class="col-xs-24 col-md-16"><span>SHOPPING, STYLE AND BEAUTY FOR GROWN UP WOMEN</span></div>                
