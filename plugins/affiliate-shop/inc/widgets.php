@@ -187,7 +187,7 @@ class aff_price_widget extends WP_Widget {
 		$arg['order'] 		= 'DESC';
 		$arg['posts_per_page'] = 1;
 		
-		
+		print_var( $arg );
 		
 		$maxquery = new WP_Query( $arg );
 		
