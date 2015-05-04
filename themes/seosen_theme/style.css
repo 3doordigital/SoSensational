@@ -645,6 +645,7 @@ section h1 span {
 	color: #a0862a;
 	padding-right: 5px;
 }
+#subfoot span, 
 #subfoot {
 	font-family: 'Open Sans', sans-serif;	
 	text-transform: uppercase;
@@ -910,7 +911,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
     font-size: 14px; 
-	line-height: 1.8em;
 }
 .blog #content li, .archive #content li, .single #content li {
 	margin-bottom: 10px;
@@ -970,7 +970,7 @@ li.dropdown:hover > ul.dropdown-menu {
     -webkit-border-radius: 5px 5px 0 0;
     border-radius: 5px 5px 0 0;
 }
-#topcats li a:hover, #topcats li.current-post-parent a, #topcats li.current-menu-item a {
+#topcats li a:hover, #topcats li.current-post-ancestor a, #topcats li.current-menu-item a {
     text-decoration: none;
     background-color: #a0862a;
 }

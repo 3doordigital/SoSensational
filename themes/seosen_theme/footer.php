@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-9">
             <h2>Welcome to SoSensational</h2>
-            <p>The shopping and style guide for grown up women, where you can buy daywear, posh frocks, wedding and mother-of-the-bride outfits, petites clothing, pluz size clothing and accessories.</p>
+            <p>Think of SoSensational as a fashion and beauty shopping mall for grown up women - everything you need in one place. Find big, well-known brands and familiar names. Discover smaller boutiques new to you. All the clothing has been thoughtfully edited for grown up women so you can shop for the woman you are - and find style advice and tips on how to wear it.</p>
         </div>
         <div class="col-md-4 col-md-offset-1">
             
@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-md-24">
                     <div id="footer-newsletter">
-                        <h2>Join Our Newsletter</h2>
+                        <h2>Join Our Community</h2>
                         <form class="newsform_send">
                             <input type="email" name="email" placeholder="Your email address" /> <button class="join-now" type="submit">Join Now</button>
                         </form>
@@ -98,13 +98,27 @@
             </div>
         </div>
     </div>
+    <hr/>
 </section>
-<div class="container">
-    <hr>
-</div>
 <div id="subfoot" class="container">
-    &copy; Copyright 3 Door Digital
-<?php $page_id = $wp_query->get_queried_object_id(); ?>
+    <div class="row">
+        <span>&copy; Copyright 3 Door Digital</span>
+        <?php
+        if (function_exists('wp_nav_menu')) {
+            wp_nav_menu(array(
+                'menu' => 'sub-footer',
+                'theme_location' => 'sub-footer',
+                'container' => 'nav',
+                'container_class' => '',
+                'container_id' => '',
+                'menu_class' => 'sub-footer-menu clearfix',
+                'fallback_cb' => 'wp_bootstrap_navwalker::fallback',
+                'walker' => new wp_bootstrap_navwalker()
+                )
+            );
+        }
+        ?>                
+    </div>         
 </div>
 <?php wp_footer(); ?>
 </body>

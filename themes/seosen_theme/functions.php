@@ -11,6 +11,7 @@ function registerMenus() {
         'primary' => __('Primary Menu', 'sosen'),
         'blog' => __('Blog Top Menu', 'sosen'),
         'footer' => __('Footer Menu', 'sosen'),
+        'sub-footer' => __('Sub-footer Menu', 'sosen')
     ));
 }
 
