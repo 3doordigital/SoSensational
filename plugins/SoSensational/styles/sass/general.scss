@@ -157,8 +157,21 @@ h2.footer-menu-heading {
     min-height: 400px;
 }
 
+// Header - masthead
+
 .blog-masthead {
     span {
         text-decoration: underline; 
-    }
+    }    
+}
+
+// Pagination
+
+ul.pagination-centered {
+    width: 100%;
+    text-align: center;
+    
+    li {
+        display: inline-block;
+    }        
 }
