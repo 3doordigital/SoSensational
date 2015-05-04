@@ -2319,7 +2319,7 @@ class WordPress_Affiliate_Shop {
 				$ID = $_REQUEST['product'];
 				$meta = get_post_meta( $ID );
 				$brands = wp_get_post_terms( $ID, 'wp_aff_brands' );
-				print_var($meta);
+				//print_var($meta);
 			?>
             	<h3>Edit Product</h3>
                 <form method="POST" id="wp_add_prod_manual" action="<?php echo admin_url('admin-post.php'); ?>">
