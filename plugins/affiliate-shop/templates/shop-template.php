@@ -227,11 +227,15 @@ get_header();
                                                 <a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'"><img src="'.$post_meta['wp_aff_product_image'][0].'"></a>
                                             </div>
                                             <div class="row product-info">
-                                                <div class="prod_title col-md-17">
+                                                <div class="prod_title col-md-16">
                                                     <h3><a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'">'.get_snippet($post->post_title,4).'...</a></h3>
                                                     <h4>'. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
-                                                </div>
-                                                <div class="prod_price col-md-7">
+							';
+                            if ( current_user_can('edit_posts') ) {
+							 	echo '<a href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&product='.$post->ID.'">(edit)</a>';
+							}
+							echo '           </div>
+                                                <div class="prod_price col-md-8">
                                                     <div class="price">
                                                         <div class="amount">';
                                                         

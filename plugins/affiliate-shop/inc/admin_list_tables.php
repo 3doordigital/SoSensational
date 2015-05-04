@@ -627,13 +627,14 @@ class ProductTable extends WP_List_Table {
     function column_title($item){
         
         //Build row actions
+		
         $actions = array(
-            'edit'      => sprintf('<a href="?page=%s&action=%s&product=%s">Edit</a>',$_REQUEST['page'],'edit',$item['ID']),
+            'edit'      => sprintf('<a href="?page=affiliate-shop/products&action=%s&product=%s">Edit</a>','edit',$item['ID']),
             'delete'    => sprintf('<a href="?page=%s&action=%s&product=%s">Delete</a>',$_REQUEST['page'],'delete',$item['ID']),
         );
         
         //Return the title contents
-        return sprintf('<strong><a href="?page=%3$s&action=edit&product=%1$s">%2$s</a></strong>%4$s',
+        return sprintf('<strong><a href="?page=affiliate-shop/products&action=edit&product=%1$s">%2$s</a></strong>%4$s',
             /*$1%s*/ $item['ID'],
             /*$2%s*/ $item['title'],
                      $_REQUEST['page'],
