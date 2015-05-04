@@ -185,12 +185,15 @@ class aff_price_widget extends WP_Widget {
 		
 		foreach( $prods->posts as $prod ) {
 			$price = get_post_meta( $prod->ID, 'wp_aff_product_price', true );
+			$price = str_replace( ',', '', $price );
 			$prices[] = $price;
 		}
 		
 		$prices = array_unique( $prices );
-		
+		$prices = array_filter( $prices );
 		sort( $prices, SORT_NUMERIC );
+		
+		//print_var( $prices );
 		if( isset( $prices[0] ) ) {
 			$range = array(
 					'min' 	=> number_format( $prices[0], 0, '.', '' ),
@@ -209,7 +212,7 @@ class aff_price_widget extends WP_Widget {
 			$range['start'] = $range['min'];
 			$range['end'] 	= $range['max'];
 		}
-		
+		//print_var( $range );
 		?>
     
     

@@ -140,7 +140,7 @@ class WordPress_Affiliate_Shop {
 		
 		if( is_page() && $wp_query->query['page_id'] == 37 ) {
 			$cat = get_term_by( 'name', $term , $tax );
-			//print_var($cat);
+			print_var($cat);
 			$title = $cat->name;
 			if( $cat->parent != 0 ) {
 				$cat2 = get_term_by( 'id', $cat->parent , $tax );
@@ -1811,7 +1811,7 @@ class WordPress_Affiliate_Shop {
                     </tr>
                 </table>
             	<table id="tableout">
-                	<tr><th>Post ID</th><th>Old Title</th><th>Merchant</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th></th></tr>
+                	<tr><th>Post ID</th><th>Old Title</th><th>Merchant</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th>Found By</th><th>Action</th></tr>
                     <tbody>
                     
                     </tbody>
