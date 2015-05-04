@@ -189,7 +189,6 @@ class aff_price_widget extends WP_Widget {
 		$arg['order'] 		= 'DESC';
 		$arg['posts_per_page'] = 1;
 		
-		print_var( $arg );
 		
 		$maxquery = new WP_Query( $arg );
 		
@@ -205,33 +204,7 @@ class aff_price_widget extends WP_Widget {
 		
 		$range['min'] = number_format( $minprice, 0, '.', '' );
 		
-		/*//$prods = new WP_Query( $arg );
-		$prices = array();
 		
-		
-		
-		foreach( $prods->posts as $prod ) {
-			$price = get_post_meta( $prod->ID, 'wp_aff_product_price', true );
-			$price = str_replace( ',', '', $price );
-			$prices[] = $price;
-		}
-		
-		$prices = array_unique( $prices );
-		$prices = array_filter( $prices );
-		sort( $prices, SORT_NUMERIC );
-		
-		//print_var( $prices );
-		if( isset( $prices[0] ) ) {
-			$range = array(
-					'min' 	=> number_format( $prices[0], 0, '.', '' ),
-					'max'	=> number_format( end($prices), 0, '.', '' )
-				);
-		} else {
-			$range = array(
-					'min' 	=> 0,
-					'max'	=> 0
-				);
-		}*/
 		if( isset( $_REQUEST['price-min'] ) && isset( $_REQUEST['price-max'] ) ) {
 			$range['start'] =  number_format( $_REQUEST['price-min'], 0, '.', '' );
 			$range['end'] 	=  number_format( $_REQUEST['price-max'], 0, '.', '' );
@@ -239,7 +212,6 @@ class aff_price_widget extends WP_Widget {
 			$range['start'] = $range['min'];
 			$range['end'] 	= $range['max'];
 		}
-		//print_var( $range );
 		?>
     
     
