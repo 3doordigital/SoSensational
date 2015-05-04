@@ -693,7 +693,7 @@ class WordPress_Affiliate_Shop {
 						case 'priceasc' :
 							$args['meta_key'] 	= 'wp_aff_product_price';
 							$args['meta_type']  = 'DECIMAL';
-							$args['orderby']	= 'meta_value';
+							$args['orderby']	= 'meta_value_num';
             				$args['order'] 		= 'ASC';
 							break;
 						case 'pricedesc' :
