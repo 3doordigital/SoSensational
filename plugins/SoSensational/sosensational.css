@@ -473,7 +473,6 @@ button:disabled {
 .pagination-centered {
     float: none;
     display: block;
-    width: 200px;
     margin: 0 auto;
     margin-top: 35px;
 }
