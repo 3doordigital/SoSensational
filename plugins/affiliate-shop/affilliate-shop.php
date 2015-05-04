@@ -651,7 +651,6 @@ class WordPress_Affiliate_Shop {
 														$args['meta_query'][] = array(
 															'key' => 'wp_aff_product_picks',
 															'value'   => 1,
-															'type'    => 'DECIMAL',
 															'compare' => '=',
 														);
 														break;
@@ -660,7 +659,6 @@ class WordPress_Affiliate_Shop {
 														$args['meta_query'][] = array(
 															'key' => 'wp_aff_product_sale',
 															'value'   => 1,
-															'type'    => 'DECIMAL',
 															'compare' => '=',
 														);	
 														break;	
@@ -699,7 +697,7 @@ class WordPress_Affiliate_Shop {
 						case 'pricedesc' :
 							$args['meta_key'] 	= 'wp_aff_product_price';
 							$args['meta_type']  = 'DECIMAL';
-							$args['orderby']	= 'meta_value';
+							$args['orderby']	= 'meta_value_num';
             				$args['order'] 		= 'DESC';
 							break;
 						case 'sale' :
