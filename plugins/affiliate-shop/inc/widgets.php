@@ -180,8 +180,31 @@ class aff_price_widget extends WP_Widget {
 		global $wp_aff;
 		$arg = $wp_aff->shop_args( true );
 		$arg['meta_query'] = null;
-		$prods = new WP_Query( $arg );
+		
+		$arg['meta_key'] = 'wp_aff_product_price';
+		$args['meta_type']  = 'DECIMAL';
+		$args['orderby']	= 'meta_value_num';
+		$args['order'] 		= 'DESC';
+		$args['posts_per_page'] = 1;
+		
+		$maxquery = new WP_Query( $arg );
+		
+		$range = array();
+		
+		$maxprice = get_post_meta( $maxquery[0]->ID, 'wp_aff_product_price', true );
+		$range['max'] = $maxprice;
+		
+		$args['order'] 		= 'ASC';
+		
+		$minquery = new WP_Query( $arg );
+		$minprice = get_post_meta( $minquery[0]->ID, 'wp_aff_product_price', true );
+		
+		$range['min'] = $minprice;
+		
+		/*//$prods = new WP_Query( $arg );
 		$prices = array();
+		
+		
 		
 		foreach( $prods->posts as $prod ) {
 			$price = get_post_meta( $prod->ID, 'wp_aff_product_price', true );
@@ -204,7 +227,7 @@ class aff_price_widget extends WP_Widget {
 					'min' 	=> 0,
 					'max'	=> 0
 				);
-		}
+		}*/
 		if( isset( $_REQUEST['price-min'] ) && isset( $_REQUEST['price-max'] ) ) {
 			$range['start'] =  number_format( $_REQUEST['price-min'], 0, '.', '' );
 			$range['end'] 	=  number_format( $_REQUEST['price-max'], 0, '.', '' );
