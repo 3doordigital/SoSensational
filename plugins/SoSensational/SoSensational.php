@@ -217,6 +217,13 @@ function edit_advertiser_page_template($page_template) {
 }
 
 function ss_rewrite_rule() {
+    
+    /**
+     * Remove the following add_reqrite_rule() to get rid of the redirect from Petite to Petite Fashion
+     */
+    add_rewrite_rule(
+        'brands-and-boutiques/petite/?$', 'index.php?pagename=brands-and-boutiques&ss_cat=petite&ss_sub_cat=petite-fashion', 'top'
+    );       
 
     add_rewrite_rule(
         'style-advice-blog/ss_category/([^/]*)/?$', 'index.php?pagename=brands-and-boutiques&ss_cat=$matches[1]', 'top'
@@ -241,7 +248,8 @@ function ss_rewrite_rule() {
     );
     add_rewrite_rule(
         'brands-and-boutiques/([^/]*)/?([^/]*)/?([^/]*)/?$', 'index.php?pagename=brands-and-boutiques&ss_cat=$matches[3]', 'top'
-    );    
+    );        
+     
 }
 
 add_action('init', 'ss_rewrite_rule');
