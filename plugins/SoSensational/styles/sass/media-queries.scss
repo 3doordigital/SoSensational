@@ -49,6 +49,11 @@
         display: none;
     }
     
+    // Sub-footer Menu   
+    #menu-sub-footer-menu {
+        display: none;
+    }    
+    
 }
 
 @media (max-width: 767px) {
@@ -215,6 +220,10 @@
         }
     }    
     
+    // Sub-footer Menu   
+    #menu-sub-footer-menu {
+        display: none;
+    }
     
 }
 
