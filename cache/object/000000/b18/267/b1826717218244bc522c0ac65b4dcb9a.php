@@ -1,0 +1,1 @@
+¢µHU<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":9:{s:7:"term_id";s:3:"850";s:4:"name";s:13:"Mature Brides";s:4:"slug";s:13:"mature-brides";s:10:"term_group";s:4:"1120";s:16:"term_taxonomy_id";s:3:"851";s:8:"taxonomy";s:17:"wp_aff_categories";s:11:"description";s:0:"";s:6:"parent";s:3:"612";s:5:"count";s:2:"13";}}
