@@ -347,10 +347,10 @@
 				update_post_meta( $id, 'wp_aff_product_rrp', $newrrp );
 				
 				if( $newprice < $newrrp ) {
-					add_post_meta( $id, 'wp_aff_product_sale', 1 );	
+					update_post_meta( $id, 'wp_aff_product_sale', 1 );	
 					$sale = 1;
 				} else {
-					add_post_meta( $id, 'wp_aff_product_sale', 0 );	
+					update_post_meta( $id, 'wp_aff_product_sale', 0 );	
 					$sale = 0;
 				}
 			}
