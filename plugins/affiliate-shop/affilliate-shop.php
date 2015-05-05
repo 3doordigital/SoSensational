@@ -836,7 +836,7 @@ class WordPress_Affiliate_Shop {
 			$url = add_query_arg( 'brand', $brands, $url );
 		}
 		$url = str_replace( '%2C', ',', $url);
-		wp_safe_redirect( $url );
+		//wp_safe_redirect( $url );
 	}
 	
 	public function sort_shop() {
