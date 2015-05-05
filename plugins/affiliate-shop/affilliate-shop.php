@@ -994,7 +994,12 @@ class WordPress_Affiliate_Shop {
             // Insert the post into the database
             
             if( $_POST['product_skip'][$i] == 0 ) {
-				$insID = wp_insert_post( $my_post );   
+				$insID = wp_insert_post( $my_post );  
+				
+				if( ( $_POST['product_price'] != '' || $_POST['product_price'] != null || $_POST['product_price'] != '0' || $_POST['product_price'] != '0.00' ) && $_POST['product_price'] < $_POST['product_rrp'] ) {
+					add_post_meta( $insID, 'wp_aff_product_sale', 1 );	
+				}
+				 
 				add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'][$i], true);
 				add_post_meta($insID, 'wp_aff_product_link', $_POST['product_link'][$i], true);
 				add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'][$i], true);
