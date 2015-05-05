@@ -837,7 +837,7 @@ class WordPress_Affiliate_Shop {
 		}
 		$url = str_replace( '%2C', ',', $url);
 		echo $url;
-		//wp_safe_redirect( $url );
+		wp_safe_redirect( $url );
 	}
 	
 	public function sort_shop() {
