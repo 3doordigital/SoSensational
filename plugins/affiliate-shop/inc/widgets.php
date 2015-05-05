@@ -22,7 +22,7 @@ class aff_category_widget extends WP_Widget {
         global $wp_query;
         echo $args['before_widget'];
         if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . '<i class="fa fa-level-down navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></i>' . $args['after_title'];
         }
         if( isset( $wp_query->query_vars['shop-cat'] ) ) {
             $term = get_term_by( 'slug', $wp_query->query_vars['shop-cat'], 'wp_aff_categories' );
@@ -33,26 +33,30 @@ class aff_category_widget extends WP_Widget {
 		} else {
             $cat_id = 0;
         }
-        echo '<div class="wp_aff_categories"><ul>';
-		
-		global $wp_aff;
-        //$fn_include = $wp_aff->get_product_terms('wp_aff_categories');
-		
-		$walker = new Faceted_Category_Walker;
-		$arg = array( 
-			'depth' => 0, 
-			'taxonomy' => 'wp_aff_categories', 
-			'hide_empty' => 0, 
-			'walker' => $walker, 
-			'title_li' => '', 
-			'orderby' => 'name', 
-			'hierarchical' => 1, 
-			'current_category' => $cat_id,
-		);
-		
-        wp_list_categories( $arg );
-		
-        echo '</ul></div>';
+        echo '<div class="wp_aff_categories navbar navbar-default">';                
+            echo '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
+                echo '<ul class="nav navbar-nav">';
+
+                global $wp_aff;
+                $fn_include = $wp_aff->get_product_terms('wp_aff_categories');
+
+                $walker = new Faceted_Category_Walker;
+                $arg = array( 
+                    'depth' => 0, 
+                    'taxonomy' => 'wp_aff_categories', 
+                    'hide_empty' => 0, 
+                    'walker' => $walker, 
+                    'title_li' => '', 
+                    'orderby' => 'name', 
+                    'hierarchical' => 1, 
+                    'current_category' => $cat_id,
+                );
+
+                wp_list_categories( $arg );
+
+                echo '</ul>'; // .nav .navbar-nav
+            echo '</div>'; // .collapse .navbar-collapse
+        echo '</div>'; // .wp_aff_categories .navbar .navabr-default
         echo $args['after_widget'];
     }
 
