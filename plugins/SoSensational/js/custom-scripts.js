@@ -215,11 +215,19 @@ jQuery(document).ready(function($) {
     });
     
     /*--------------------------------------------------------------------------
-     Max Mege Menu - make parent elements clickable on mobile devices
+     Max Mega Menu - make parent elements clickable on mobile devices
      -------------------------------------------------------------------------*/     
     
-  $('li.mega-menu-megamenu.mega-menu-item-has-children > a, li.mega-menu-flyout.mega-menu-item-has-children > a, li.mega-menu-flyout li.mega-menu-item-has-children > a').off('click'); 
+    $('li.mega-menu-megamenu.mega-menu-item-has-children > a, li.mega-menu-flyout.mega-menu-item-has-children > a, li.mega-menu-flyout li.mega-menu-item-has-children > a').off('click');     
     
+    //Shop controls toggle
+    
+    var toggleButton = $('#shop-controls-toggle');
+    if (toggleButton.length) {
+        toggleButton.on('click', function() {
+            $('.shop_side').toggleClass('hidden-xs');
+        });
+    }
     
 });
 
