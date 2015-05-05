@@ -21,6 +21,12 @@
         yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
     }
     ?>
+    <div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+    <?php if(function_exists('bcn_display'))
+    {
+        bcn_display();
+    }?>
+</div>
 </div>
 <div class="container">
     <div class="row">
