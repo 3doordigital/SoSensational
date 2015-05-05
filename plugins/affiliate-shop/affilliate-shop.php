@@ -567,7 +567,6 @@ class WordPress_Affiliate_Shop {
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_sale',
 										'value'   => 1,
-										'type'    => 'DECIMAL',
 										'compare' => '=',
 									);	
 						} elseif( $wp_query->query_vars['shop-option'] == 'picks' ) { 
@@ -575,7 +574,6 @@ class WordPress_Affiliate_Shop {
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_picks',
 										'value'   => 1,
-										'type'    => 'DECIMAL',
 										'compare' => '=',
 									);
 						}
