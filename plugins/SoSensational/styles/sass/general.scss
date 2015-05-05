@@ -182,35 +182,53 @@ ul.pagination-centered {
 }
 
 // Sub-footer menu
-
-    ul.sub-footer-menu {
-        width: auto;
-        display: block;
-        li {
-            list-style: none;
-            padding: 0 20px; 
-            border-right: 1px solid #eee;
-            float: left;
-            &:last-child {
-                border: none;
-            }
-            a {
-                font-family: 'Open Sans', sans-serif;
-                text-transform: lowercase;
-                font-weight: 300;
-                font-size: 13px;  
-                color: #333; 
-                display: inline-block;
-                &:first-letter {
-                    text-transform: uppercase;
-                }
+ul.sub-footer-menu {
+    width: auto;
+    display: block;
+    li {
+        list-style: none;
+        padding: 0 20px; 
+        border-right: 1px solid #eee;
+        float: left;
+        &:last-child {
+            border: none;
+        }
+        a {
+            font-family: 'Open Sans', sans-serif;
+            text-transform: lowercase;
+            font-weight: 300;
+            font-size: 13px;  
+            color: #333; 
+            display: inline-block;
+            &:first-letter {
+                text-transform: uppercase;
             }
         }
     }
+}
 
 #subfoot span {
     float: left;
     padding: 0 20px 0 7.5px;
     display: block;
     border-right: 1px solid #eee;
+}
+
+// Shop Filters
+
+.wp_aff_categories.navbar {
+    min-height: 0;
+    max-height: 1000px;
+}
+
+.shop_side > h3 {
+    display: inline-block;
+}
+
+.shop_side > h3 > span > i {
+    position: relative;
+    top: -10px;
+    &:hover {
+        cursor: pointer;
+    }
 }
