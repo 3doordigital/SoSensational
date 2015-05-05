@@ -295,14 +295,14 @@ class WordPress_Affiliate_Shop {
         add_rewrite_tag('%shop-brand%', '([^&]+)');
 		add_rewrite_tag('%shop-option%', '([^&]+)');
         
-        add_rewrite_rule('^shop/new-in/?$','index.php?page_id=37&shop-option=new');
-		add_rewrite_rule('^shop/sale/?$','index.php?page_id=37&shop-option=sale');
-		add_rewrite_rule('^shop/our-picks/?$','index.php?page_id=37&shop-option=picks');
+        
 		add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
         add_rewrite_rule('^shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
         add_rewrite_rule('^shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
         add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]', 'top');
-		
+		add_rewrite_rule('^shop/new-in/?$','index.php?page_id=37&shop-option=new');
+		add_rewrite_rule('^shop/sale/?$','index.php?page_id=37&shop-option=sale');
+		add_rewrite_rule('^shop/our-picks/?$','index.php?page_id=37&shop-option=picks');
 		
     }
     
