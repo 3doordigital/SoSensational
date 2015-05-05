@@ -1721,6 +1721,14 @@ class WordPress_Affiliate_Shop {
                         </td>
                     </tr>
                     <tr>
+                        <th>Linkshare API Key</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[linkshare]" value="<?php echo ( isset( $this->option['linkshare'] ) ? $this->option['linkshare'] : '' ); ?>" id="<?php echo $this->option_name; ?>[linkshare]">
+                            
+                            <p class="description">Please enter your Affiliate Window product search API key.</p>
+                        </td>
+                    </tr>
+                    <tr>
                         <th>Shop Page</th>
                         <td>
                             <?php 
