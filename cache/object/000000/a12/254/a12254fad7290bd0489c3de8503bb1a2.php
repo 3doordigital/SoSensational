@@ -1,4 +1,4 @@
-¢µHU<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:11850;s:11:"post_author";s:1:"3";s:9:"post_date";s:19:"2015-05-04 15:21:54";s:13:"post_date_gmt";s:19:"2015-05-04 15:21:54";s:12:"post_content";s:3818:"<strong>What are cookies</strong>
+ÊøHU<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:11850;s:11:"post_author";s:1:"3";s:9:"post_date";s:19:"2015-05-04 15:21:54";s:13:"post_date_gmt";s:19:"2015-05-04 15:21:54";s:12:"post_content";s:3818:"<strong>What are cookies</strong>
 
 Cookies are tiny text files stored on your computer when you visit certain web pages. They cannot harm your computer.
 
