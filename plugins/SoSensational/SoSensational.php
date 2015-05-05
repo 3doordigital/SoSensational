@@ -93,12 +93,12 @@ function brand_boutique_no_admin_access() {
      * Amend the conditional so that the redirect does not take place when executing
      * a call to admin-ajax.php. Otherwise, ajax calls would fail.
      */
-    if ((current_user_can('brand_role') || current_user_can('boutique_role')) && (!defined('DOING_AJAX') || !DOING_AJAX )) {
+    if (((current_user_can('brand_role') || current_user_can('boutique_role')) && (!defined('DOING_AJAX') || !DOING_AJAX )) && $_SERVER['REQUEST_URI'] != '/wp-admin/admin-post.php' ) {
         exit(wp_redirect(SITE_URL . '/ss_directory/'));
     }
 }
 
-//add_action('admin_init', 'brand_boutique_no_admin_access', 100);
+add_action('admin_init', 'brand_boutique_no_admin_access', 100);
 
 function CopyFile($filename) {
 
