@@ -348,6 +348,10 @@
 				
 				if( $newprice < $newrrp ) {
 					add_post_meta( $id, 'wp_aff_product_sale', 1 );	
+					$sale = 1;
+				} else {
+					add_post_meta( $id, 'wp_aff_product_sale', 0 );	
+					$sale = 0;
 				}
 			}
 			
@@ -378,7 +382,8 @@
 								<td>'.$item['title'].'</td>
 								<td>'.$item['aff'].'</td>
 								<td>'.$item['foundby'].'</td>
-								<td>Updated!</td>
+								<td><i class="fa fa-check"></i></td>
+								'.( $sale == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' ).'
 							 </tr>';
 				// Do something with $data
 				}
@@ -388,7 +393,12 @@
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 								<td>'.$title.'</td>
 								<td>'.$merch.'</td>
-								<td colspan="5">No data found. Post Trashed!</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><i class="fa fa-close"></i></td>
+								'.( $sale == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' ).'
 							 </tr>';	
 			}
 			return $out;
