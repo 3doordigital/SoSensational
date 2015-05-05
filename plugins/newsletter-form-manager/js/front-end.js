@@ -4,7 +4,7 @@ jQuery(document).ready(function( $ ) {
 		var data2 = $(this).serializeArray();
 		console.log(data2);
 		e.preventDefault();
-		//var email = data2[0].value;
+		var email = data2[0].value;
 		var data = {
             action: 'wp_news_man_form_submit',
             email: email
