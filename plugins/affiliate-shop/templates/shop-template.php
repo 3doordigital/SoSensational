@@ -92,7 +92,7 @@ get_header();
         </div>
         <div class="col-md-19 col-md-offset-1">
             <?php
-                $terms = get_terms('wp_aff_categories', array( 'orderby' => 'term_group', 'order'=>'DESC' ));
+                //$terms = get_terms('wp_aff_categories', array( 'orderby' => 'term_group', 'order'=>'DESC' ));
                 //var_dump($terms);
                 //print_var($wp_query->query_vars);
                 if( isset( $wp_query->query_vars['shop-cat'] ) ) {
