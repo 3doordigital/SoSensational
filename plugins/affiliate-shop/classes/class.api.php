@@ -175,7 +175,7 @@
 			}
 			
 			$url = 'http://productsearch.linksynergy.com/productsearch';
-			$token = "4bee73f0e12eb04b83e7c5d01a5b8e4a7ccf0e1fbdeec4f171a2e5ca4fe2a568"; //Change this to your token
+			$token = $this->option['linkshare']; //Change this to your token
 			$resturl = $url."?"."token=".$token."&"."keyword=".$term."&max=".$depth."&pagenumber=".$page;
 			if( $merchant != NULL && $merchant != 0 ) {
 				$resturl .= '&mid='.$merchant;
@@ -293,7 +293,7 @@
 		public function linkshare_merchants() {
 			
 			$url = 'http://findadvertisers.linksynergy.com/merchantsearch';
-			$token = "4bee73f0e12eb04b83e7c5d01a5b8e4a7ccf0e1fbdeec4f171a2e5ca4fe2a568"; //Change this to your token
+			$token = $this->option['linkshare']; //Change this to your token
 			$resturl = $url."?"."token=".$token;
 			$SafeQuery = urlencode($resturl);
 			$xml = simplexml_load_file($SafeQuery);
@@ -322,29 +322,49 @@
 			
 			if( !isset( $aff ) || $aff == null || $aff == '' ) {
 				
-				$data = $this->update_awin_product( $prod_id, $title, $merch );		
+				//$data = $this->update_awin_product( $prod_id, $title, $merch );		
 				if( $data['status'] == 0 ) {
-					$data = $this->update_linkshare_product( $prod_id, $title, $merch );		
+					//$data = $this->update_linkshare_product( $prod_id, $title, $merch );		
 				}
 			} else {
 				switch( $aff ) {
 					case 'awin' :
-						$data = $this->update_awin_product( $prod_id, $title, $merch );
+						//$data = $this->update_awin_product( $prod_id, $title, $merch );
 						break;
 					case 'linkshare' :
-						$data = $this->update_linkshare_product( $prod_id, $title, $merch );
+						//$data = $this->update_linkshare_product( $prod_id, $title, $merch );
 						break;	
+				}
+			}
+			
+			if( isset( $id ) && $id != '' && $id != null ) {
+				$oldprice = get_post_meta( $id, 'wp_aff_product_price', true );
+				$newprice = str_replace( ',', '', $oldprice );	
+				update_post_meta( $id, 'wp_aff_product_price', $newprice );
+				
+				$oldrrp = get_post_meta( $id, 'wp_aff_product_rrp', true );
+				$newrrp = str_replace( ',', '', $oldrrp );	
+				update_post_meta( $id, 'wp_aff_product_rrp', $newrrp );
+				
+				if( $newprice < $newrrp ) {
+					add_post_meta( $id, 'wp_aff_product_sale', 1 );	
+					$sale = 1;
+				} else {
+					add_post_meta( $id, 'wp_aff_product_sale', 0 );	
+					$sale = 0;
 				}
 			}
 			
 			$out = '';
 			if( !empty( $data['item'] ) ) {
 				foreach( $data['item'] as $item ) {
-				if( $item['price'] == '' && $item['rrp'] != '' ) {
+				if( ( $item['price'] == '' || $item['price'] == 0 || $item['price'] == '0.00' ) && $item['rrp'] != '' ) {
 					update_post_meta($id, 'wp_aff_product_price', $item['rrp']);
 				} else {
 					update_post_meta($id, 'wp_aff_product_price', $item['price']);
 				}
+				
+				
 				update_post_meta($id, 'wp_aff_product_id', $item['ID']);
 				update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
 				update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
@@ -362,7 +382,8 @@
 								<td>'.$item['title'].'</td>
 								<td>'.$item['aff'].'</td>
 								<td>'.$item['foundby'].'</td>
-								<td>Updated!</td>
+								<td><i class="fa fa-check"></i></td>
+								<td>'.( $sale == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' ).'</td>
 							 </tr>';
 				// Do something with $data
 				}
@@ -372,7 +393,12 @@
 								<td><a href="/wp-admin/post.php?post='.$id.'&action=edit">Post ID: '.$id.'</a></td>
 								<td>'.$title.'</td>
 								<td>'.$merch.'</td>
-								<td colspan="5">No data found. Post Trashed!</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><i class="fa fa-close"></i></td>
+								<td>'.( $sale == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' ).'</td>
 							 </tr>';	
 			}
 			return $out;
@@ -485,7 +511,7 @@
 			//$title=urlencode($title);
 			
 			$url = 'http://productsearch.linksynergy.com/productsearch';
-			$token = "4bee73f0e12eb04b83e7c5d01a5b8e4a7ccf0e1fbdeec4f171a2e5ca4fe2a568"; //Change this to your token
+			$token = $this->option['linkshare']; //Change this to your token
 			$resturl = $url."?"."token=".$token."&"."exact=".$title."&max=1";
 			
 			$brands = $this->linkshare_merchants();

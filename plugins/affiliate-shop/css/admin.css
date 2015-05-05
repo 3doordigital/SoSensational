@@ -125,5 +125,28 @@
 	display:inline-block;
 	width: 0%;
 	background-color: #298cba;
-	height: 30px;
+	height: 18px;
+}
+#update_cont {
+	display:inline-block;
+	padding: 2px; 
+	border: 1px solid #ddd;
+	background-color: #fff;
+	width: 300px;
+	height: 18px;
+	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	-webkit-transition: .05s border-color ease-in-out;
+    transition: .05s border-color ease-in-out;
+}
+.prod_update_row td {
+	position: relative;
+}
+.update_percent {
+	position:absolute;
+	left: 150px;
+	top: 33%;
+	font-weight: bold;
+	font-size: 14px;
+	color: #333;
 }

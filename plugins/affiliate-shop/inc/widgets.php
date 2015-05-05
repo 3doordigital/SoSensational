@@ -184,31 +184,31 @@ class aff_price_widget extends WP_Widget {
 		global $wp_aff;
 		$arg = $wp_aff->shop_args( true );
 		$arg['meta_query'] = null;
-		$prods = new WP_Query( $arg );
-		$prices = array();
 		
-		foreach( $prods->posts as $prod ) {
-			$price = get_post_meta( $prod->ID, 'wp_aff_product_price', true );
-			$price = str_replace( ',', '', $price );
-			$prices[] = $price;
-		}
+		unset( $arg['meta_query'] );
 		
-		$prices = array_unique( $prices );
-		$prices = array_filter( $prices );
-		sort( $prices, SORT_NUMERIC );
+		$arg['meta_key'] = 'wp_aff_product_price';
+		$arg['meta_type']  = 'DECIMAL';
+		$arg['orderby']	= 'meta_value_num';
+		$arg['order'] 		= 'DESC';
+		$arg['posts_per_page'] = 1;
 		
-		//print_var( $prices );
-		if( isset( $prices[0] ) ) {
-			$range = array(
-					'min' 	=> number_format( $prices[0], 0, '.', '' ),
-					'max'	=> number_format( end($prices), 0, '.', '' )
-				);
-		} else {
-			$range = array(
-					'min' 	=> 0,
-					'max'	=> 0
-				);
-		}
+		
+		$maxquery = new WP_Query( $arg );
+		
+		$range = array();
+		
+		$maxprice = get_post_meta( $maxquery->posts[0]->ID, 'wp_aff_product_price', true );
+		$range['max'] = number_format( $maxprice, 0, '.', '' );
+		
+		$arg['order'] 		= 'ASC';
+		
+		$minquery = new WP_Query( $arg );
+		$minprice = get_post_meta( $minquery->posts[0]->ID, 'wp_aff_product_price', true );
+		
+		$range['min'] = number_format( $minprice, 0, '.', '' );
+		
+		
 		if( isset( $_REQUEST['price-min'] ) && isset( $_REQUEST['price-max'] ) ) {
 			$range['start'] =  number_format( $_REQUEST['price-min'], 0, '.', '' );
 			$range['end'] 	=  number_format( $_REQUEST['price-max'], 0, '.', '' );
@@ -216,7 +216,6 @@ class aff_price_widget extends WP_Widget {
 			$range['start'] = $range['min'];
 			$range['end'] 	= $range['max'];
 		}
-		//print_var( $range );
 		?>
     
     
@@ -296,10 +295,10 @@ class aff_colour_widget extends WP_Widget {
 		echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_colour_filter" method="POST">';
 		
 		global $wp_aff;
-        $fn_include = $wp_aff->get_product_terms('wp_aff_colours');
+        //$fn_include = $wp_aff->get_product_terms('wp_aff_colours');
 		
 		$arg =  array(
-			'include' => $fn_include,
+			//'include' => $fn_include,
             'show_count' => 0,
             'hierarchical' => 0,
             'taxonomy' => 'wp_aff_colours',
@@ -397,9 +396,9 @@ class aff_size_widget extends WP_Widget {
 		echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_size_filter" method="POST">';
 		
 		global $wp_aff;
-        $fn_include = $wp_aff->get_product_terms('wp_aff_sizes');
+        //$fn_include = $wp_aff->get_product_terms('wp_aff_sizes');
 		$arg = array(
-			'include' => $fn_include,
+			//'include' => $fn_include,
             'show_count' => 0,
             'hierarchical' => 0,
             'taxonomy' => 'wp_aff_sizes',
@@ -527,7 +526,7 @@ class aff_sale_widget extends WP_Widget {
 		echo 'name="wp_aff_sale"> <i class="fa fa-shopping-cart fa-fw"></i> Sale</label></p>';
 		
 		echo '<p class="checkbox"><label><input type="checkbox" ';
-		if( ( isset( $wp_query->query_vars['shop-option'] ) && $wp_query->query_vars['shop-option'] == 'picks' ) || isset( $opt['picks'] ) ){
+		if( ( isset( $wp_query->query_vars['shop-option'] ) && $wp_query->query_vars['shop-option'] == 'our-picks' ) || isset( $opt['our-picks'] ) ){
 			echo ' checked ';
 		} else {
 			echo ''; 

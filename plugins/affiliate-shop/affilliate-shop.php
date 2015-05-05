@@ -248,7 +248,7 @@ class WordPress_Affiliate_Shop {
      * Enqueue and register Admin CSS files here.
      */
     public function admin_register_styles() {
-        wp_enqueue_style( 'wp_aff_style', $this->plugin_url . 'css/admin.css' );
+        wp_enqueue_style( 'wp_aff_style', $this->plugin_url . 'css/admin.css', array(), '1.0.1' );
         wp_enqueue_style( 'fa', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' );
 	}
      /**
@@ -291,17 +291,18 @@ class WordPress_Affiliate_Shop {
     }
     
     public function custom_rewrite_rule() {
-        add_rewrite_tag('%shop-cat%', '([^&]+)');
+        add_rewrite_tag('%shop-option%', '([^&]+)');
+		add_rewrite_tag('%shop-cat%', '([^&]+)');
         add_rewrite_tag('%shop-brand%', '([^&]+)');
-		add_rewrite_tag('%shop-option%', '([^&]+)');
+		
         
-        add_rewrite_rule('^shop/new-in/?$','index.php?page_id=37&shop-option=new');
-		add_rewrite_rule('^shop/sale/?$','index.php?page_id=37&shop-option=sale');
-		add_rewrite_rule('^shop/our-picks/?$','index.php?page_id=37&shop-option=picks');
-		add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
-        add_rewrite_rule('^shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
-        add_rewrite_rule('^shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
-        add_rewrite_rule('^shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]', 'top');
+        add_rewrite_rule('shop/new-in/?$','index.php?page_id=37&shop-option=new', 'top');
+		add_rewrite_rule('shop/sale/?$','index.php?page_id=37&shop-option=sale', 'top');
+		add_rewrite_rule('shop/our-picks/?$','index.php?page_id=37&shop-option=picks', 'top');
+		add_rewrite_rule('shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
+        add_rewrite_rule('shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
+        add_rewrite_rule('shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
+        add_rewrite_rule('shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]', 'top');
 		
 		
     }
@@ -567,7 +568,6 @@ class WordPress_Affiliate_Shop {
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_sale',
 										'value'   => 1,
-										'type'    => 'numeric',
 										'compare' => '=',
 									);	
 						} elseif( $wp_query->query_vars['shop-option'] == 'picks' ) { 
@@ -575,7 +575,6 @@ class WordPress_Affiliate_Shop {
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_picks',
 										'value'   => 1,
-										'type'    => 'numeric',
 										'compare' => '=',
 									);
 						}
@@ -651,7 +650,6 @@ class WordPress_Affiliate_Shop {
 														$args['meta_query'][] = array(
 															'key' => 'wp_aff_product_picks',
 															'value'   => 1,
-															'type'    => 'numeric',
 															'compare' => '=',
 														);
 														break;
@@ -660,7 +658,6 @@ class WordPress_Affiliate_Shop {
 														$args['meta_query'][] = array(
 															'key' => 'wp_aff_product_sale',
 															'value'   => 1,
-															'type'    => 'numeric',
 															'compare' => '=',
 														);	
 														break;	
@@ -693,13 +690,13 @@ class WordPress_Affiliate_Shop {
 						case 'priceasc' :
 							$args['meta_key'] 	= 'wp_aff_product_price';
 							$args['meta_type']  = 'DECIMAL';
-							$args['orderby']	= 'meta_value';
+							$args['orderby']	= 'meta_value_num';
             				$args['order'] 		= 'ASC';
 							break;
 						case 'pricedesc' :
 							$args['meta_key'] 	= 'wp_aff_product_price';
 							$args['meta_type']  = 'DECIMAL';
-							$args['orderby']	= 'meta_value';
+							$args['orderby']	= 'meta_value_num';
             				$args['order'] 		= 'DESC';
 							break;
 						case 'sale' :
@@ -717,6 +714,7 @@ class WordPress_Affiliate_Shop {
 					$args['orderby']	= 'post_date';
             		$args['order'] 		= 'DESC';
 				}
+				//print_var( $args );
 				return $args;
 	}
 	
@@ -748,7 +746,7 @@ class WordPress_Affiliate_Shop {
 	}
 	
 	public function wp_aff_size_filter() {
-		print_var( $_POST );
+		//print_var( $_POST );
 		if ( ! wp_verify_nonce( $_POST[ '_wpnonce' ], 'wp_aff_size_filter' ) )
             die( 'Invalid nonce.' . var_export( $_POST, true ) );
 		$sizes = array();
@@ -996,7 +994,12 @@ class WordPress_Affiliate_Shop {
             // Insert the post into the database
             
             if( $_POST['product_skip'][$i] == 0 ) {
-				$insID = wp_insert_post( $my_post );   
+				$insID = wp_insert_post( $my_post );  
+				
+				if( ( $_POST['product_price'] != '' || $_POST['product_price'] != null || $_POST['product_price'] != '0' || $_POST['product_price'] != '0.00' ) && $_POST['product_price'] < $_POST['product_rrp'] ) {
+					add_post_meta( $insID, 'wp_aff_product_sale', 1 );	
+				}
+				 
 				add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'][$i], true);
 				add_post_meta($insID, 'wp_aff_product_link', $_POST['product_link'][$i], true);
 				add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'][$i], true);
@@ -1307,6 +1310,10 @@ class WordPress_Affiliate_Shop {
                 	<th>Price</th>
                     <td><input class="regular-text" type="number" min="0" step="any" name="product_price" placeholder="0.00" value=""><p class="description">&pound; sign not needed.</p></td>
                 </tr>
+                <tr>
+                            <th>RRP</th>
+                            <td><input class="regular-text" type="number" step="any" min="0" name="product_rrp" placeholder="0.00" value="<?php echo $meta['wp_aff_product_rrp'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
+                        </tr>
                 <tr>
                 	<th>Description</th>
                     <td>
@@ -1716,6 +1723,14 @@ class WordPress_Affiliate_Shop {
                         </td>
                     </tr>
                     <tr>
+                        <th>Linkshare API Key</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[linkshare]" value="<?php echo ( isset( $this->option['linkshare'] ) ? $this->option['linkshare'] : '' ); ?>" id="<?php echo $this->option_name; ?>[linkshare]">
+                            
+                            <p class="description">Please enter your Affiliate Window product search API key.</p>
+                        </td>
+                    </tr>
+                    <tr>
                         <th>Shop Page</th>
                         <td>
                             <?php 
@@ -1806,12 +1821,12 @@ class WordPress_Affiliate_Shop {
                     <tr class="prod_update_row">
                     	<th>Update Progress</th>
                         <td>
-                        	<span class="update_percent">0% <span class="total_update"></span> </span><div id="update_progress"></div>
+                        	<span class="update_percent">0% <span class="total_update"></span> </span> <div id="update_cont"><div id="update_progress"></div></div>
                         </td>
                     </tr>
                 </table>
             	<table id="tableout">
-                	<tr><th>Post ID</th><th>Old Title</th><th>Merchant</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th>Found By</th><th>Action</th></tr>
+                	<tr><th>Post ID</th><th>Old Title</th><th>Merchant</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th>Found By</th><th>Updated?</th><th>Sale</th></tr>
                     <tbody>
                     
                     </tbody>
@@ -2288,6 +2303,7 @@ class WordPress_Affiliate_Shop {
 		   
 		update_post_meta($insID, 'wp_aff_product_link', $_POST['product_url']);
 		update_post_meta($insID, 'wp_aff_product_price', $_POST['product_price']);
+		update_post_meta($insID, 'wp_aff_product_rrp', $_POST['product_rrp']);
 		update_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc']);
 		update_post_meta($insID, 'wp_aff_product_image', $_POST['product_image']);
 		$url = add_query_arg( 'msg', 1, $_POST['_wp_http_referer'] );
@@ -2314,6 +2330,7 @@ class WordPress_Affiliate_Shop {
 				$ID = $_REQUEST['product'];
 				$meta = get_post_meta( $ID );
 				$brands = wp_get_post_terms( $ID, 'wp_aff_brands' );
+				//print_var($meta);
 			?>
             	<h3>Edit Product</h3>
                 <form method="POST" id="wp_add_prod_manual" action="<?php echo admin_url('admin-post.php'); ?>">
@@ -2343,7 +2360,11 @@ class WordPress_Affiliate_Shop {
                         </tr>
                         <tr>
                             <th>Price</th>
-                            <td><input class="regular-text" type="number" step="any" min="0" name="product_price" placeholder="0.00" value="<?php echo $meta['wp_aff_product_price'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
+                            <td><input class="regular-text" type="text" name="product_price" placeholder="0.00" value="<?php echo $meta['wp_aff_product_price'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
+                        </tr>
+                        <tr>
+                            <th>RRP</th>
+                            <td><input class="regular-text" type="text" name="product_rrp" placeholder="0.00" value="<?php echo $meta['wp_aff_product_rrp'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
                         </tr>
                         <tr>
                             <th>Description</th>
