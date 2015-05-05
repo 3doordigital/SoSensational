@@ -246,7 +246,6 @@ class WordPress_Competition_Manager {
 	
 	public function wp_footer() {
 		global $post;
-		echo get_post_type();
 		if( get_post_type() == 'wp_comp_man' && isset( $_REQUEST['msg'] ) ) { ?>
             	<a class="popup fancybox.ajax">Popup</a>
 				<?php if( $_REQUEST['msg'] == 1 ) { ?>
@@ -266,7 +265,6 @@ class WordPress_Competition_Manager {
                         }).trigger('click');
                     });
                     </script>
-                    <?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>
                  <?php } elseif( $_REQUEST['msg'] == 0) { ?>
                  	<script type="text/javascript">
                     jQuery(document).ready( function($) {
