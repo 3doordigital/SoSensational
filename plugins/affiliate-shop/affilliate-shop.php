@@ -248,7 +248,7 @@ class WordPress_Affiliate_Shop {
      * Enqueue and register Admin CSS files here.
      */
     public function admin_register_styles() {
-        wp_enqueue_style( 'wp_aff_style', $this->plugin_url . 'css/admin.css' );
+        wp_enqueue_style( 'wp_aff_style', $this->plugin_url . 'css/admin.css', array(), '1.0.1' );
         wp_enqueue_style( 'fa', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' );
 	}
      /**
@@ -1811,7 +1811,7 @@ class WordPress_Affiliate_Shop {
                     <tr class="prod_update_row">
                     	<th>Update Progress</th>
                         <td>
-                        	<span class="update_percent">0% <span class="total_update"></span> </span><div id="update_progress"></div>
+                        	<span class="update_percent">0% <span class="total_update"></span> </span> <div id="update_cont"><div id="update_progress"></div></div>
                         </td>
                     </tr>
                 </table>
