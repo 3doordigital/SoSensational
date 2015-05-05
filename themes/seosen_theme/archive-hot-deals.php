@@ -3,9 +3,15 @@
     <h1><span>Hot Deals &amp; Sensational Offers</span></h1>
     <?php
     if (function_exists('yoast_breadcrumb')) {
-        yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
+        //yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
     }
     ?>
+    <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+		<?php if(function_exists('bcn_display'))
+        {
+            bcn_display();
+        }?>
+    </div>
 </div>
 <div class="container">
     <div class="row">
