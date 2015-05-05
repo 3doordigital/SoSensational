@@ -4,6 +4,18 @@
             height: 242px;
         }
     }
+    
+    .navbar-default .navbar-nav.shop-filter > li {
+        width: 100%;
+        & > a {
+            text-transform: none;           
+            padding: 0;
+        }
+    }
+    
+    .shop-filter .children li a {
+        text-transform: none !important;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -229,6 +241,15 @@
     // Sub-footer Menu   
     #menu-sub-footer-menu {
         display: none;
+    }  
+    
+    // Shop Filters
+    .shop-filter .children {
+        display: none !important;
+    }    
+    
+    .shop-filter.nav > li {
+        border-bottom: 1px solid #C9BA86 !important;
     }
     
 }
