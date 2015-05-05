@@ -189,3 +189,8 @@ ul.sub-footer-menu {
   .shop_side > h3 > span > i:hover {
     cursor: pointer; }
 
+/* line 231, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+button#shop-controls-toggle {
+  margin: 0 auto;
+  width: 200px; }
+
