@@ -98,7 +98,7 @@ function brand_boutique_no_admin_access() {
     }
 }
 
-add_action('admin_init', 'brand_boutique_no_admin_access', 100);
+//add_action('admin_init', 'brand_boutique_no_admin_access', 100);
 
 function CopyFile($filename) {
 
