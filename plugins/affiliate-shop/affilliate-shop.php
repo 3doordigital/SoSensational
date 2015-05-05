@@ -1818,7 +1818,7 @@ class WordPress_Affiliate_Shop {
                     </tr>
                 </table>
             	<table id="tableout">
-                	<tr><th>Post ID</th><th>Old Title</th><th>Merchant</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th>Found By</th><th>Action</th></tr>
+                	<tr><th>Post ID</th><th>Old Title</th><th>Merchant</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th>Found By</th><th>Updated?</th><th>Sale</th></tr>
                     <tbody>
                     
                     </tbody>
