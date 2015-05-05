@@ -383,7 +383,7 @@
 								<td>'.$item['aff'].'</td>
 								<td>'.$item['foundby'].'</td>
 								<td><i class="fa fa-check"></i></td>
-								'.( $sale == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' ).'
+								<td>'.( $sale == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' ).'</td>
 							 </tr>';
 				// Do something with $data
 				}
@@ -398,7 +398,7 @@
 								<td></td>
 								<td></td>
 								<td><i class="fa fa-close"></i></td>
-								'.( $sale == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' ).'
+								<td>'.( $sale == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>' ).'</td>
 							 </tr>';	
 			}
 			return $out;
