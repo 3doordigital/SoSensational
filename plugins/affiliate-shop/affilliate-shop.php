@@ -49,7 +49,20 @@ class WordPress_Affiliate_Shop {
 		$this->plugin_url  = plugin_dir_url( __FILE__ );
         
         $this->option = get_option( $this->option_name );
-        
+		
+		if( $this->option == FALSE ) {
+			$array = array(
+				'new_days' => 14
+			);
+			update_option( $this->option_name, $array );
+		}
+		
+		if( !isset( $this->option['new_days'] ) ) {
+			$array = $this->get_option();
+			$array['new_days'] = 14;
+			update_option( $this->option_name, $array );
+		}
+		
 		load_plugin_textdomain( $this->text_domain, false, 'lang' );
         
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_register_scripts' ) );
