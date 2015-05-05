@@ -7,9 +7,9 @@ body {
 /* Change Width and Height of Logo Image + Add Custom Image File */
 .login h1 a {
   background-image: url(logo.png);
-  width: 213px;
-  height: 97px;
-  background-size: 213px 97px;
+  width: 232px;
+  height: 197px;
+  background-size: 232px 143px;
   float: left;
   margin-top: 100px;
 }
