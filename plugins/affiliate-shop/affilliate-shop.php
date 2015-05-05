@@ -714,7 +714,7 @@ class WordPress_Affiliate_Shop {
 					$args['orderby']	= 'post_date';
             		$args['order'] 		= 'DESC';
 				}
-				print_var( $args );
+				//print_var( $args );
 				return $args;
 	}
 	
