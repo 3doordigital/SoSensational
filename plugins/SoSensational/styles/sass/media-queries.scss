@@ -256,6 +256,12 @@
         margin: 10px 0;
     }
     
+    .wp_aff_brands.navbar,
+    .wp_aff_categories.navbar {
+        min-height: 0;
+        max-height: 1000px;
+    }    
+    
 }
 
 
