@@ -1305,3 +1305,9 @@ a.preview-anchor-text {
     bottom: 10px;
     margin-left: 10px;
 }
+
+#homenewsletter p {
+	font-size: 150%;
+	text-align:center;
+	  color: #a0862a;
+}
