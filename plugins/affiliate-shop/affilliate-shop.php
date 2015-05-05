@@ -580,7 +580,7 @@ class WordPress_Affiliate_Shop {
 							$args['meta_query']['relation'] = 'AND';
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_sale',
-										'value'   => 1,
+										'value'   => '1',
 										'compare' => '=',
 									);	
 						} elseif( $wp_query->query_vars['shop-option'] == 'picks' ) { 
