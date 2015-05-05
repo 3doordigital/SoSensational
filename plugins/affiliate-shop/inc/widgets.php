@@ -522,7 +522,7 @@ class aff_sale_widget extends WP_Widget {
 		echo 'name="wp_aff_sale"> <i class="fa fa-shopping-cart fa-fw"></i> Sale</label></p>';
 		
 		echo '<p class="checkbox"><label><input type="checkbox" ';
-		if( ( isset( $wp_query->query_vars['shop-option'] ) && $wp_query->query_vars['shop-option'] == 'picks' ) || isset( $opt['picks'] ) ){
+		if( ( isset( $wp_query->query_vars['shop-option'] ) && $wp_query->query_vars['shop-option'] == 'our-picks' ) || isset( $opt['our-picks'] ) ){
 			echo ' checked ';
 		} else {
 			echo ''; 

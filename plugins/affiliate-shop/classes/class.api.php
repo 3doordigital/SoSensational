@@ -322,17 +322,17 @@
 			
 			if( !isset( $aff ) || $aff == null || $aff == '' ) {
 				
-				$data = $this->update_awin_product( $prod_id, $title, $merch );		
+				//$data = $this->update_awin_product( $prod_id, $title, $merch );		
 				if( $data['status'] == 0 ) {
-					$data = $this->update_linkshare_product( $prod_id, $title, $merch );		
+					//$data = $this->update_linkshare_product( $prod_id, $title, $merch );		
 				}
 			} else {
 				switch( $aff ) {
 					case 'awin' :
-						$data = $this->update_awin_product( $prod_id, $title, $merch );
+						//$data = $this->update_awin_product( $prod_id, $title, $merch );
 						break;
 					case 'linkshare' :
-						$data = $this->update_linkshare_product( $prod_id, $title, $merch );
+						//$data = $this->update_linkshare_product( $prod_id, $title, $merch );
 						break;	
 				}
 			}
@@ -345,6 +345,10 @@
 				$oldrrp = get_post_meta( $id, 'wp_aff_product_rrp', true );
 				$newrrp = str_replace( ',', '', $oldrrp );	
 				update_post_meta( $id, 'wp_aff_product_rrp', $newrrp );
+				
+				if( $newprice < $newrrp ) {
+					add_post_meta( $id, 'wp_aff_product_sale', 1 );	
+				}
 			}
 			
 			$out = '';
@@ -355,6 +359,8 @@
 				} else {
 					update_post_meta($id, 'wp_aff_product_price', $item['price']);
 				}
+				
+				
 				update_post_meta($id, 'wp_aff_product_id', $item['ID']);
 				update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
 				update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
