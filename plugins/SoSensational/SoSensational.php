@@ -303,7 +303,7 @@ add_action('user_register', 'create_firstpost', 10, 1);
 function my_loginlogo() {
     echo '<style type="text/css">
     h1 a {
-      background-image: url(' . get_template_directory_uri() . '/images/logo.png) !important;
+      background-image: url(' . get_template_directory_uri() . '/images/SoSensational-Logo.gif) !important;
     }
   </style>';
 }
