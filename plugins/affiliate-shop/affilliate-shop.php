@@ -1834,7 +1834,7 @@ class WordPress_Affiliate_Shop {
                     <tr class="prod_update_row">
                     	<th>Update Progress</th>
                         <td>
-                        	<span class="update_percent">0% <span class="total_update"></span> </span> <div id="update_cont"><div id="update_progress"></div></div>
+                        	<span class="update_percent">0% </span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
                         </td>
                     </tr>
                 </table>

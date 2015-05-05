@@ -246,7 +246,7 @@ class WordPress_Competition_Manager {
 	
 	public function wp_footer() {
 		global $post;
-		if( get_post_type() == 'wp_comp_man' && isset( $_REQUEST['msg'] ) && is_archive() ) { ?>
+		if( get_post_type() == 'wp_comp_man' && isset( $_REQUEST['msg'] ) ) { ?>
             	<a class="popup fancybox.ajax">Popup</a>
 				<?php if( $_REQUEST['msg'] == 1 ) { ?>
 					<script type="text/javascript">
