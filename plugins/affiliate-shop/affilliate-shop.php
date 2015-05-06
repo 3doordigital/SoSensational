@@ -150,10 +150,9 @@ class WordPress_Affiliate_Shop {
 			$term = get_query_var( 'shop-brand' );
 			$tax = 'wp_aff_brands';
 		}
-		echo $term;
 		if( is_page() && $wp_query->query['page_id'] == 37 ) {
 			$cat = get_term_by( 'slug', $term , $tax );
-			print_var($cat);
+			
 			$title = $cat->name;
 			if( $cat->parent != 0 ) {
 				$cat2 = get_term_by( 'id', $cat->parent , $tax );
@@ -162,7 +161,7 @@ class WordPress_Affiliate_Shop {
 			$title .= ' | Shop | ';
 			
 			if( is_paged() ) {
-				$title = 'Page '.get_query_var('paged').' | ';	
+				$title .= 'Page '.get_query_var('paged').' | ';	
 			}
 			
 			$title .= get_bloginfo( 'name' );
