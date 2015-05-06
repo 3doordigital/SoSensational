@@ -29,7 +29,8 @@
             <div class="row">
                 <div class="col-xs-24 col-sm-12 col-md-24 imgbox fadebox">
                     <a href="<?php echo $seosen_options['home_image_1_link']; ?>">
-<?php echo wp_get_attachment_image($seosen_options['home_image_1']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
+						<?php echo wp_get_attachment_image($seosen_options['home_image_1']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
+                    </a>
                         <div class="row">
                             <div class="col-xs-10 leftcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_1_text']; ?></h2>
@@ -43,7 +44,8 @@
 
                 <div class="col-xs-24 col-sm-12 col-md-24 imgbox fadebox">
                     <a href="<?php echo $seosen_options['home_image_2_link']; ?>">
-<?php echo wp_get_attachment_image($seosen_options['home_image_2']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
+						<?php echo wp_get_attachment_image($seosen_options['home_image_2']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
+                    </a>
                         <div class="row">
                             <div class="col-xs-10 rightcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_2_text']; ?></h2>
