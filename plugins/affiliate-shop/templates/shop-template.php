@@ -115,9 +115,10 @@ get_header();
                 }
                 
             ?>
-            <?php if( $parent != 0 ) { ?>
             <div class="cat-intro">
+            <?php if( $parent != 0 ) { ?>
             <h1><?php echo $term->name; ?></h1>
+            
 				<?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
             <?php } 
 				if( isset( $wp_query->query_vars['shop-option']	) ) {
