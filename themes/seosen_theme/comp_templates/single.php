@@ -1,6 +1,7 @@
 <?php 
 	global $comp_manager;
 	$meta = get_post_meta(get_the_ID()); 
+	print_var( $meta );
 ?>
 <h4 class="wp_comp_intro">
 <?php
