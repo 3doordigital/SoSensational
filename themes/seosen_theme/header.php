@@ -15,13 +15,13 @@
                     <div class="blog-masthead">
                         <div class="col-xs-24 col-md-16"><span>THE</span> FASHION & BEAUTY SHOP FOR GROWN UP WOMEN</div>                
                         <div class="col-md-8 text-right hidden-xs">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                            <a href="#"><i class="fa fa-rss"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-youtube"></i></a>
+                            <a href="https://www.facebook.com/sosensational"><i class="fa fa-facebook"></i></a>
+                            <a href="https://instagram.com/_sosensational/"><i class="fa fa-instagram"></i></a>
+                            <a href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.sosensational.co.uk%2F"><i class="fa fa-stumbleupon"></i></a>
+                            <a href="http://pinterest.com/sosensational/"><i class="fa fa-pinterest"></i></a>
+                            <a href="/feed/"><i class="fa fa-rss"></i></a>
+                            <a href="https://twitter.com/_sosensational"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/channel/UCAveovGSdh3nxaNI3HYW7sg"><i class="fa fa-youtube"></i></a>
                         </div>
                     </div>
                 </div>
