@@ -158,10 +158,10 @@ function the_excerpt_max_charlength($charlength) {
 	global $post;
 	if( $post->post_excerpt != '' ) {
         $content = get_the_excerpt();
-		echo $content;
+		echo '<p>'.$content.'</p>';
     } else {
 	
-		$excerpt = strip_tags(get_the_excerpt());
+		$excerpt = strip_tags(get_the_content());
 		$charlength++;
 		echo '<p>';
 		if (mb_strlen($excerpt) > $charlength) {
