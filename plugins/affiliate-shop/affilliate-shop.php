@@ -1017,7 +1017,7 @@ class WordPress_Affiliate_Shop {
             if( $_POST['product_skip'][$i] == 0 ) {
 				$insID = wp_insert_post( $my_post );  
 				
-				if( ( $_POST['product_price'] != '' || $_POST['product_price'] != null || $_POST['product_price'] != '0' || $_POST['product_price'] != '0.00' ) && $_POST['product_price'] < $_POST['product_rrp'] ) {
+				if( ( $_POST['product_price'][$i] != '' || $_POST['product_price'][$i] != null || $_POST['product_price'][$i] != '0' || $_POST['product_price'][$i] != '0.00' ) && $_POST['product_price'][$i] < $_POST['product_rrp'][$i] ) {
 					add_post_meta( $insID, 'wp_aff_product_sale', 1 );	
 				} else {
 					add_post_meta( $insID, 'wp_aff_product_sale', 0 );	
