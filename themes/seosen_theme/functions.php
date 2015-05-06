@@ -155,7 +155,7 @@ function lm_dequeue_footer_styles() {
 }
 
 function the_excerpt_max_charlength($charlength) {
-	
+	global $post;
 	print_var( $post );
 	
     $excerpt = strip_tags(get_the_excerpt());
