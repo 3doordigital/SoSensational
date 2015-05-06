@@ -611,8 +611,14 @@ section h1 span {
 	font-size: 22px;	
 	margin-bottom: 18px;
 }
+#menu-footer li {
+	list-style-type: none;
+}
 #menu-footer li a {
 	text-transform: capitalize;
+}
+#menu-footer li a:before {
+	content: "> ";
 }
 #footer input {
 	padding: 3px 10px;
