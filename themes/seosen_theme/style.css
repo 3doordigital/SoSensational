@@ -975,6 +975,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
 li.dropdown:hover > ul.dropdown-menu {
     display: block;    
 }
+.pagetop {
+	position: relative;
+}
 .post_meta, .post_meta a {
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
@@ -993,7 +996,7 @@ li.dropdown:hover > ul.dropdown-menu {
     list-style-type: none;
     float: right;
     position: relative;
-    top: -44px;
+    top: -40px;
 }
 #topcats ul {
 	margin-bottom: 0 ;

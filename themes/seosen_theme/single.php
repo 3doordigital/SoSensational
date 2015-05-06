@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<div class="container">
+<div class="container pagetop">
     <h2 class="pagetitle"><span>Style Advice &amp; Blog</span></h2>
     <?php
     if (function_exists('wp_nav_menu')) {
