@@ -995,6 +995,9 @@ li.dropdown:hover > ul.dropdown-menu {
     position: relative;
     top: -44px;
 }
+#topcats ul {
+	margin-bottom: 0 ;
+}
 #topcats li {
     display: inline-block;
     
