@@ -42,7 +42,7 @@
                     <div id="footer-newsletter">
                         <h2>Join Our Community</h2>
                         <form class="newsform_send">
-                            <input type="email" name="email" placeholder="insert your email address" /> <button class="join-now" type="submit">Join Now</button>
+                            <input type="email" name="email" placeholder="insert your email address" /> <button class="join-now" type="submit">SIGN UP</button>
                         </form>
                     </div>
                 </div>
