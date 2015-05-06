@@ -141,7 +141,7 @@ class WordPress_Affiliate_Shop {
 	
 	function some_callback( $title, $sep ){
 		global $wp_query;
-		//print_var( $wp_query );
+		print_var( $wp_query );
 		
 		if( get_query_var( 'shop-cat' ) != '' ) {
 			$term = get_query_var( 'shop-cat' );
