@@ -1382,3 +1382,8 @@ a.preview-anchor-text {
 .su-button-center {
 	margin-top: 15px;
 }
+.nicescroll-rails>div {
+  width: 6px!important;
+  border-radius: 0px!important;
+  left: 1px!important;
+}
