@@ -236,7 +236,7 @@ get_header();
                                                     <h4>'. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
 							';
                             if ( current_user_can('edit_posts') ) {
-							 	echo '<a href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&product='.$post->ID.'">(edit)</a>';
+							 	echo '<a class="edit_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&product='.$post->ID.'">Edit</a>';
 							}
 							echo '           </div>
                                                 <div class="prod_price col-md-8">
