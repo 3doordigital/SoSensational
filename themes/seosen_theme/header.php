@@ -35,7 +35,7 @@
                 <?php
                 if (function_exists('wp_nav_menu')) {   
                     global $query_string;
-                    //fixMenuOnCompetitionsPage();    
+                    fixMenuOnCompetitionsPage();    
                     wp_nav_menu(array(
                         'menu' => 'primary',
                         'theme_location' => 'primary',
