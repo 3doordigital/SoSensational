@@ -198,15 +198,15 @@
 				
 				$array['total']['linkshare'] = $totalCount;
 				foreach ($xml->item as $item) {
-					$saleprice = (array) $item->saleprice;
-					$normalprice = (array) $item->price;
+					$saleprice = (string) $item->saleprice;
+					$normalprice = (string) $item->price;
 					
-					if( isset( $saleprice[0] ) && $saleprice[0] != '' ) {
-						$rrp = $normalprice[0];
-						$price = $saleprice[0];	
+					if( isset( $saleprice ) && $saleprice != '' ) {
+						$rrp = $normalprice;
+						$price = $saleprice;	
 					} else {
-						$rrp = $normalprice[0];
-						$price = $normalprice[0];						
+						$rrp = $normalprice;
+						$price = $normalprice;						
 					}
 					$id = (array) $item->linkid;
 					if( in_array( $id, $this->all_products ) ) {
@@ -322,17 +322,17 @@
 			
 			if( !isset( $aff ) || $aff == null || $aff == '' ) {
 				
-				//$data = $this->update_awin_product( $prod_id, $title, $merch );		
+				$data = $this->update_awin_product( $prod_id, $title, $merch );		
 				if( $data['status'] == 0 ) {
-					//$data = $this->update_linkshare_product( $prod_id, $title, $merch );		
+					$data = $this->update_linkshare_product( $prod_id, $title, $merch );		
 				}
 			} else {
 				switch( $aff ) {
 					case 'awin' :
-						//$data = $this->update_awin_product( $prod_id, $title, $merch );
+						$data = $this->update_awin_product( $prod_id, $title, $merch );
 						break;
 					case 'linkshare' :
-						//$data = $this->update_linkshare_product( $prod_id, $title, $merch );
+						$data = $this->update_linkshare_product( $prod_id, $title, $merch );
 						break;	
 				}
 			}

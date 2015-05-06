@@ -1012,6 +1012,8 @@ class WordPress_Affiliate_Shop {
 				
 				if( ( $_POST['product_price'] != '' || $_POST['product_price'] != null || $_POST['product_price'] != '0' || $_POST['product_price'] != '0.00' ) && $_POST['product_price'] < $_POST['product_rrp'] ) {
 					add_post_meta( $insID, 'wp_aff_product_sale', 1 );	
+				} else {
+					add_post_meta( $insID, 'wp_aff_product_sale', 0 );	
 				}
 				 
 				add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'][$i], true);
