@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<div class="container">
+<div class="container pagetop">
     <h1><span>Hot Deals &amp; Sensational Offers</span></h1>
     <?php
     if (function_exists('yoast_breadcrumb')) {

@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<div class="container">
+<div class="container pagetop">
     <div class="row">
         <h1><span>Style Advice &amp; Blog</span></h1>
         <?php
