@@ -129,7 +129,7 @@ get_header();
 							break;
 						case 'sale' :
 							echo '<h1>'.( isset( $option['faceted']['sale']['title'] ) ? $option['faceted']['sale']['title'] : 'Sale Items' ).'</h1>';
-							if( isset( $option['faceted']['shop']['intro'] ) ) echo wpautop(htmlspecialchars_decode( $option['faceted']['sale']['intro'] ));
+							if( isset( $option['faceted']['sale']['intro'] ) ) echo wpautop(htmlspecialchars_decode( $option['faceted']['sale']['intro'] ));
 							break;
 							
 						case 'picks' :
