@@ -1008,7 +1008,7 @@ li.dropdown:hover > ul.dropdown-menu {
 }
 #topcats li {
     display: inline-block;
-    
+    line-height: 1.1em;
     
 }
 #topcats>ul>li a {
