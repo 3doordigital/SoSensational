@@ -156,25 +156,29 @@ function lm_dequeue_footer_styles() {
 
 function the_excerpt_max_charlength($charlength) {
 	global $post;
-	print_var( $post );
-	
-    $excerpt = strip_tags(get_the_excerpt());
-    $charlength++;
-    echo '<p>';
-    if (mb_strlen($excerpt) > $charlength) {
-        $subex = mb_substr($excerpt, 0, $charlength - 5);
-        $exwords = explode(' ', $subex);
-        $excut = - ( mb_strlen($exwords[count($exwords) - 1]) );
-        if ($excut < 0) {
-            echo mb_substr($subex, 0, $excut);
-        } else {
-            echo $subex;
-        }
-        echo '...';
+	if( $post->post_excerpt ) {
+        $content = get_the_excerpt();
+		echo $content;
     } else {
-        echo $excerpt;
-    }
-    echo '</p>';
+	
+		$excerpt = strip_tags(get_the_excerpt());
+		$charlength++;
+		echo '<p>';
+		if (mb_strlen($excerpt) > $charlength) {
+			$subex = mb_substr($excerpt, 0, $charlength - 5);
+			$exwords = explode(' ', $subex);
+			$excut = - ( mb_strlen($exwords[count($exwords) - 1]) );
+			if ($excut < 0) {
+				echo mb_substr($subex, 0, $excut);
+			} else {
+				echo $subex;
+			}
+			echo '...';
+		} else {
+			echo $excerpt;
+		}
+		echo '</p>';
+	}
 }
 
 function sosen_post_meta() {
