@@ -22,12 +22,15 @@ p {
 #top {
 	padding: 5px 0;
 	border-bottom: 1px solid #ccc;
+	color: #a0862a;
+	font-size: 14px;
+	font-weight: 500;
 }
-#topbar a {
+#top a {
 	color: #000;
 	padding-right: 15px;
 }
-#topbar a:hover {
+#top a:hover {
 	color: #a0862a;
 	text-decoration: none;
 }
