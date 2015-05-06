@@ -584,6 +584,9 @@ section h1 span {
 	padding-right: 30px;
 	padding-top: 20px;
 }
+.carousel-indicators .active {
+	margin-right: 5px;
+}
 #homeblog>div>div.last {
 	padding-left: 30px;
 	padding-right: 15px;
