@@ -619,6 +619,8 @@ section h1 span {
 }
 #menu-footer li a:before {
 	content: "> ";
+	color: #a0862a;
+	padding-right: 5px;
 }
 #footer input {
 	padding: 3px 10px;
@@ -662,12 +664,12 @@ section h1 span {
 	background-color: transparent;
 	color: #a0862a;	
 }
-#footer .nav>li>a:before {
+<!--#footer .nav>li>a:before {
 	font: normal normal normal 14px/1 FontAwesome;
 	content: "\f054 ";
 	color: #a0862a;
 	padding-right: 5px;
-}
+}-->
 #subfoot span, 
 #subfoot {
 	font-family: 'Open Sans', sans-serif;	
