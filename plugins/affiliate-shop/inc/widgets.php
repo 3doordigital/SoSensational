@@ -38,7 +38,7 @@ class aff_category_widget extends WP_Widget {
                 echo '<ul class="nav navbar-nav shop-filter">';
 
                 global $wp_aff;
-                $fn_include = $wp_aff->get_product_terms('wp_aff_categories');
+                //$fn_include = $wp_aff->get_product_terms('wp_aff_categories');
 
                 $walker = new Faceted_Category_Walker;
                 $arg = array( 
@@ -114,14 +114,14 @@ class aff_brand_widget extends WP_Widget {
         }
 		
 		global $wp_aff;
-        $fn_include = $wp_aff->get_product_terms('wp_aff_brands');
+        //$fn_include = $wp_aff->get_product_terms('wp_aff_brands');
 		
         echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_brand_filter" method="POST">';
             echo '<div class="wp_aff_brands navbar navbar-default">';
                 echo '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">';
                     echo '<ul class="nav navbar-nav shop-filter">';
                         $walker = new Faceted_Brand_Walker;
-                        wp_list_categories( array( 'include' => $fn_include, 'depth' => 0, 'taxonomy' => 'wp_aff_brands', 'hide_empty' => 0, 'walker' => $walker, 'title_li' => '', 'orderby' => 'name', 'hierarchical' => 1 ) );
+                        wp_list_categories( array( 'depth' => 0, 'taxonomy' => 'wp_aff_brands', 'hide_empty' => 0, 'walker' => $walker, 'title_li' => '', 'orderby' => 'name', 'hierarchical' => 1 ) );
                     echo '</ul>';
                 echo '</div>';
             echo '</div>';
