@@ -333,7 +333,6 @@ class WordPress_Affiliate_Shop {
     }
     
     public function load_shop_template($template) {
-		echo get_the_ID();
          if( get_the_ID() == $this->option['shop_page'] || is_page( 'search' ) ) {
              if ( $overridden_template = locate_template( 'shop-template.php' ) ) {
                load_template( $overridden_template );
