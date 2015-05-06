@@ -1002,7 +1002,7 @@ li.dropdown:hover > ul.dropdown-menu {
     list-style-type: none;
     float: right;
       position: absolute;
-  top: 33px;
+  bottom: 49px;
   right: 7px;
 }
 #topcats ul {
