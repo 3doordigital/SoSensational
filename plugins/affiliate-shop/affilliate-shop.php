@@ -141,17 +141,19 @@ class WordPress_Affiliate_Shop {
 	
 	function some_callback( $title, $sep ){
 		global $wp_query;
-		print_var( $wp_query );
+		//print_var( $wp_query );
 		
-		if( get_query_var( 'shop-cat' ) != '' ) {
+		if( isset( get_query_var( 'shop-cat' ) ) && get_query_var( 'shop-cat' ) != '' ) {
 			$term = get_query_var( 'shop-cat' );
 			$tax = 'wp_aff_categories';
-		} elseif( get_query_var( 'shop-brand' ) != '' ) {
+		} elseif( isset( get_query_var( 'shop-brand' ) ) && get_query_var( 'shop-brand' ) != '' ) {
 			$term = get_query_var( 'shop-brand' );
 			$tax = 'wp_aff_brands';
 		}
+		echo $term;
 		if( is_page() && $wp_query->query['page_id'] == 37 ) {
 			$cat = get_term_by( 'slug', $term , $tax );
+			print_var($cat);
 			$title = $cat->name;
 			if( $cat->parent != 0 ) {
 				$cat2 = get_term_by( 'id', $cat->parent , $tax );
