@@ -1,4 +1,9 @@
 jQuery(document).ready( function($) {
+	
+	$('#mega-menu-item-5375').click( function(e) {
+		e.preventDefault();
+	});
+	
 	imagesLoaded( '.fadebox', function() {
 			   $('.fadebox').css('visibility', 'visible');
 			   jQuery('.fadebox').addClass("hideme").viewportChecker({
