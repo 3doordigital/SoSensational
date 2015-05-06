@@ -51,43 +51,49 @@
                 <div class="col-md-24 social">
                     <div id="social-icons">
                         <h2>Connect With Us</h2>
-                        <a href="#">
+                        <a href="https://www.facebook.com/sosensational">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
+                        <a href="https://twitter.com/_sosensational">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="https://instagram.com/_sosensational/">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
+                        <a href="http://pinterest.com/sosensational/">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-pinterest fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
+                        <a href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.sosensational.co.uk%2F">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-stumbleupon fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
+                        <a href="https://instagram.com/_sosensational/">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
+                        <a href="https://www.youtube.com/channel/UCAveovGSdh3nxaNI3HYW7sg">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
+                        <a href="/feed/">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
