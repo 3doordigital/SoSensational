@@ -81,12 +81,6 @@
                                 <i class="fa fa-stumbleupon fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="https://instagram.com/_sosensational/">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
                         <a href="https://www.youtube.com/channel/UCAveovGSdh3nxaNI3HYW7sg">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
