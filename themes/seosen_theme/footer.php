@@ -53,8 +53,8 @@
                         <h2>Connect With Us</h2>
                         <a href="#">
                             <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-3x"></i>
-                                <i class="fa fa-facebook fa-stack-2x fa-inverse"></i>
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
                         <a href="#">
