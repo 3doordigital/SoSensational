@@ -24,6 +24,6 @@
 </div>
 <ul class="comp_small_print">
 	<li>Please note that automated entries, bulk entries or third party entries will be disqualified</li>
-	<li>By entering this competition, you are consenting to receive information and newsletters from SoSensational. You can unsubscribe at any time.</li>
+	<li>By entering this competition, you are consenting to receive information and newsletters from SoSensational and the prize giving brand. You can unsubscribe at any time.</li>
 	<li>Competition hosting site <a href="http://www.theprizefinder.com/" target="_blank" rel="nofollow">ThePrizeFinder.com</a></li>
 </ul>
