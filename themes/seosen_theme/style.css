@@ -504,6 +504,7 @@ section h1 span {
 }
 #homenewsletter input {
 	padding: 10px 30px;
+	padding-top: 12px;
 	width: 66.3%;
 	font-size: 32px;
 	color: #000;
@@ -520,6 +521,7 @@ section h1 span {
 	background-color: #a0862a;
 	border: none;
 	padding: 18px;
+	padding-top: 20px;
 	font-size: 22px;
 	text-transform: uppercase;
 	color: #fff;
