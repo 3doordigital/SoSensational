@@ -143,10 +143,10 @@ class WordPress_Affiliate_Shop {
 		global $wp_query;
 		//print_var( $wp_query );
 		
-		if( isset( get_query_var( 'shop-cat' ) ) && get_query_var( 'shop-cat' ) != '' ) {
+		if( get_query_var( 'shop-cat' ) != '' ) {
 			$term = get_query_var( 'shop-cat' );
 			$tax = 'wp_aff_categories';
-		} elseif( isset( get_query_var( 'shop-brand' ) ) && get_query_var( 'shop-brand' ) != '' ) {
+		} elseif( get_query_var( 'shop-brand' ) != '' ) {
 			$term = get_query_var( 'shop-brand' );
 			$tax = 'wp_aff_brands';
 		}
