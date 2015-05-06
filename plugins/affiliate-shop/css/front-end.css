@@ -157,6 +157,14 @@
 	width: 60px;
 	height: 60px;
 }
+.prod_title {
+	position: relative;
+}
+.prod_title h4 {
+	position: absolute;
+	bottom: 5px;
+	left: 5px;	
+}
 .product-info, .products .prod_title {
     min-height: 85px;
 }
