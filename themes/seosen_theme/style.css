@@ -1389,3 +1389,6 @@ a.preview-anchor-text {
   border-radius: 0px!important;
   left: 1px!important;
 }
+.single-wp_comp_man .sidebar {
+	margin-top: -40px;
+}
