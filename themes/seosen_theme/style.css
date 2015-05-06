@@ -1312,6 +1312,6 @@ a.preview-anchor-text {
 	  color: #a0862a;
 }
 #mega-menu-item-5375 .textwidget {
-	font-size: 26px;
+	font-size: 26px!important;
 	color: #ddd;
 }
