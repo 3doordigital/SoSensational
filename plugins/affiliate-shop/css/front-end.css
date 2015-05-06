@@ -162,8 +162,8 @@
 }
 .prod_title h4 {
 	position: absolute;
-	bottom: 5px;
-	left: 5px;	
+	bottom: 10px;
+	left: 10px;	
 }
 .product-info, .products .prod_title {
     min-height: 85px;
