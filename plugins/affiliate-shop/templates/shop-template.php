@@ -116,8 +116,9 @@ get_header();
                 
             ?>
             <?php if( $parent != 0 ) { ?>
+            <div class="cat-intro">
             <h1><?php echo $term->name; ?></h1>
-            <?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
+				<?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
             <?php } 
 				if( isset( $wp_query->query_vars['shop-option']	) ) {
 					global $wp_aff;
@@ -139,6 +140,7 @@ get_header();
 					}
 				}
 			?>
+            </div>
             <div class="products">
                 <?php
                     global $wp_aff;
