@@ -1,1 +1,0 @@
-úµHU<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":9:{s:7:"term_id";s:4:"2588";s:4:"name";s:12:"Dress Length";s:4:"slug";s:17:"dress-length-plus";s:10:"term_group";s:1:"0";s:16:"term_taxonomy_id";s:4:"2589";s:8:"taxonomy";s:17:"wp_aff_categories";s:11:"description";s:0:"";s:6:"parent";s:3:"797";s:5:"count";s:3:"217";}}

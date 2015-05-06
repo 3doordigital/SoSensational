@@ -1,7 +1,0 @@
-ÒHU<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:2:"54";s:11:"post_author";s:1:"1";s:9:"post_date";s:19:"2014-12-02 11:35:20";s:13:"post_date_gmt";s:19:"2014-12-02 11:35:20";s:12:"post_content";s:600:"We all love our LBD for partywear; nothing beats a favourite LBD! But sometimes a little black dress seems too safe or just too familiar.
-
-When you want to give your LBD a new look or you want to make a statement, but red taffeta or purple sequins are too bold, the simplest and cleverest way to raise the glam quotient is with some gorgeous tights or hold ups.
-
-You could also switch work-day opaques for something blingy and beautiful to transform a work outfit into something fit for partying.
-
-Just add a pair of statement pumps, and a clutch and you will be party perfect for the festive season.";s:10:"post_title";s:19:"Glam up your LBD...";s:12:"post_excerpt";s:0:"";s:11:"post_status";s:7:"publish";s:14:"comment_status";s:4:"open";s:11:"ping_status";s:4:"open";s:13:"post_password";s:0:"";s:9:"post_name";s:8:"glam-lbd";s:7:"to_ping";s:0:"";s:6:"pinged";s:0:"";s:13:"post_modified";s:19:"2014-12-02 11:35:20";s:17:"post_modified_gmt";s:19:"2014-12-02 11:35:20";s:21:"post_content_filtered";s:0:"";s:11:"post_parent";s:1:"0";s:4:"guid";s:35:"http://sosen.3doordigital.com/?p=54";s:10:"menu_order";s:1:"0";s:9:"post_type";s:4:"post";s:14:"post_mime_type";s:0:"";s:13:"comment_count";s:1:"0";}}

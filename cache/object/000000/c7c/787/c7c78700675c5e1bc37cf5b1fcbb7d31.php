@@ -1,1 +1,0 @@
-ÉøHU<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":9:{s:7:"term_id";s:3:"856";s:4:"name";s:21:"Wedding Guest Outfits";s:4:"slug";s:21:"wedding-guest-outfits";s:10:"term_group";s:4:"1126";s:16:"term_taxonomy_id";s:3:"857";s:8:"taxonomy";s:17:"wp_aff_categories";s:11:"description";s:0:"";s:6:"parent";s:3:"612";s:5:"count";s:2:"22";}}

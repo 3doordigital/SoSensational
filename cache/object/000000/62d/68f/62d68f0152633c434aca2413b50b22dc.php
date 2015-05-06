@@ -1,2 +1,0 @@
-ÉøHU<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":9:{s:7:"term_id";s:3:"728";s:4:"name";s:23:"Scarves &amp; Pashminas";s:4:"slug";s:17:"scarves-pashminas";s:10:"term_group";s:1:"0";s:16:"term_taxonomy_id";s:3:"729";s:8:"taxonomy";s:17:"wp_aff_categories";s:11:"description";s:241:"&lt;h4&gt;See all the fabulous finishing touches - the leather belts, wallets, purses, pashminas, and scarves you need to accessorise your outfits...&lt;/h4&gt;
-Don't forget accessories allow you to wear your clothes differently every time!";s:6:"parent";s:3:"605";s:5:"count";s:1:"5";}}

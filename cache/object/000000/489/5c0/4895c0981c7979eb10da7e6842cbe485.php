@@ -1,1 +1,0 @@
-¶HU<?php exit; ?>a:1:{s:7:"content";a:4:{s:10:"_edit_last";a:1:{i:0;s:1:"3";}s:10:"_edit_lock";a:1:{i:0;s:14:"1430136947:119";}s:17:"_wp_page_template";a:1:{i:0;s:23:"wide-page-no-banner.php";}s:13:"dsq_thread_id";a:1:{i:0;s:0:"";}}}
