@@ -160,7 +160,7 @@ class WordPress_Affiliate_Shop {
 			$title .= ' | Shop | ';
 			
 			if( is_paged() ) {
-				$title = 'Page '.$_REQUEST['paged'].' ';	
+				$title = 'Page '.get_query_var('paged').' | ';	
 			}
 			
 			$title .= get_bloginfo( 'name' );
