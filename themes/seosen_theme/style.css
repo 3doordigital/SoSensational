@@ -519,13 +519,14 @@ section h1 span {
 #homenewsletter button {
 	background-color: #a0862a;
 	border: none;
-	padding: 16px;
-	font-size: 25px;
+	padding: 18px;
+	font-size: 22px;
 	text-transform: uppercase;
 	color: #fff;
 	text-align: center;
 	width: 33.7%;
 	position: relative;	
+	top: -3px;
 }
 #homenewsletter button:hover {
 	background-color: #cbab39;
