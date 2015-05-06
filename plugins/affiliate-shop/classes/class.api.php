@@ -322,17 +322,17 @@
 			
 			if( !isset( $aff ) || $aff == null || $aff == '' ) {
 				
-				$data = $this->update_awin_product( $prod_id, $title, $merch );		
+				//$data = $this->update_awin_product( $prod_id, $title, $merch );		
 				if( $data['status'] == 0 ) {
-					$data = $this->update_linkshare_product( $prod_id, $title, $merch );		
+					//$data = $this->update_linkshare_product( $prod_id, $title, $merch );		
 				}
 			} else {
 				switch( $aff ) {
 					case 'awin' :
-						$data = $this->update_awin_product( $prod_id, $title, $merch );
+						//$data = $this->update_awin_product( $prod_id, $title, $merch );
 						break;
 					case 'linkshare' :
-						$data = $this->update_linkshare_product( $prod_id, $title, $merch );
+						//$data = $this->update_linkshare_product( $prod_id, $title, $merch );
 						break;	
 				}
 			}
