@@ -9,21 +9,25 @@
         <?php wp_head(); ?>
     </head>
     <body <?php body_class(); ?>>
-        <div class="container" id="topbar">
-            <div class="row">
-                <div class="blog-masthead">
-                    <div class="col-xs-24 col-md-16"><span>THE</span> FASHION & BEAUTY SHOP FOR GROWN UP WOMEN</div>                
-                    <div class="col-md-8 text-right hidden-xs">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                        <a href="#"><i class="fa fa-pinterest"></i></a>
-                        <a href="#"><i class="fa fa-rss"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-youtube"></i></a>
+    	<div id="top">
+        	<div class="container">
+            	<div class="row">
+                    <div class="blog-masthead">
+                        <div class="col-xs-24 col-md-16"><span>THE</span> FASHION & BEAUTY SHOP FOR GROWN UP WOMEN</div>                
+                        <div class="col-md-8 text-right hidden-xs">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a href="#"><i class="fa fa-rss"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-youtube"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>   
+            </div>
+        </div>
+        <div class="container" id="topbar">
             <div class="row">
             <nav class="navbar navbar-default container" role="navigation">
 

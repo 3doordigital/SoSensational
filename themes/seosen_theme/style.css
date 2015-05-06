@@ -19,6 +19,10 @@ p {
 	font-size: 14px;
 	font-weight: 500;
 }
+#top {
+	padding: 5px 0;
+	border-bottom: 1px solid #ccc;
+}
 #topbar a {
 	color: #000;
 	padding-right: 15px;
