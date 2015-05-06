@@ -156,7 +156,7 @@ function lm_dequeue_footer_styles() {
 
 function the_excerpt_max_charlength($charlength) {
 	global $post;
-	if( $post->post_excerpt == '' ) {
+	if( $post->post_excerpt != '' ) {
         $content = get_the_excerpt();
 		echo $content;
     } else {
