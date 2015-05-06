@@ -696,6 +696,10 @@ section h1 span {
 
 #footer-newsletter input::-webkit-input-placeholder {  color: #999; }
 
+#footer #social-icons {
+	margin-top: 30px;
+}
+
 /* =Price Filter Widget
 	-------------------------------------------------------------- */
 .price_slider {
