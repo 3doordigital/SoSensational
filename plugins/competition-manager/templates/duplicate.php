@@ -1,6 +1,6 @@
 <?php
-	//define('WP_USE_THEMES', false);
-	//require($_SERVER['DOCUMENT_ROOT'].'/wp-blog-header.php');
+	define('WP_USE_THEMES', false);
+	require($_SERVER['DOCUMENT_ROOT'].'/wp-blog-header.php');
 ?>
 <div class="duplicate-inner">
 	<h1>Oops!</h1>
