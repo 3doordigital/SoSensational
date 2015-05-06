@@ -8,7 +8,7 @@
         } 
     ?>
 </div>
-<div class="container">
+<div class="container comps">
     <div class="row">
         <div class="col-md-16" id="content">
             
