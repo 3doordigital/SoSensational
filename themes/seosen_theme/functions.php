@@ -155,7 +155,10 @@ function lm_dequeue_footer_styles() {
 }
 
 function the_excerpt_max_charlength($charlength) {
-    $excerpt = strip_tags(get_the_content());
+	
+	
+	
+    $excerpt = strip_tags(get_the_excerpt());
     $charlength++;
     echo '<p>';
     if (mb_strlen($excerpt) > $charlength) {
