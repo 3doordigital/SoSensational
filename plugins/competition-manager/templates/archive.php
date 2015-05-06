@@ -37,7 +37,7 @@
                         ?>
                         
                         <?php
-                            the_excerpt_max_charlength(340);
+                            the_excerpt_max_charlength(340, true);
                         ?>
                     </div>
                 </div>

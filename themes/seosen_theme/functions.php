@@ -154,7 +154,7 @@ function lm_dequeue_footer_styles() {
     wp_dequeue_style('yarppRelatedCss');
 }
 
-function the_excerpt_max_charlength($charlength) {
+function the_excerpt_max_charlength($charlength, $comp = false) {
 	global $post;
 	if( $post->post_excerpt != '' ) {
         $content = get_the_excerpt();
@@ -177,6 +177,7 @@ function the_excerpt_max_charlength($charlength) {
 		} else {
 			echo $excerpt;
 		}
+		if( $comp ) { echo ' <a href="'.get_permalink( $post->ID ).'">Enter Now</a>'; }
 		echo '</p>';
 	}
 }
