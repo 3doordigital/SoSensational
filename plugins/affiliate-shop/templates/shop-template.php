@@ -122,6 +122,7 @@ get_header();
 				if( isset( $wp_query->query_vars['shop-option']	) ) {
 					global $wp_aff;
 					$option = $wp_aff->get_option();
+					print_var($option);
 					switch ( $wp_query->query_vars['shop-option'] ) {
 						case 'new' :
 							echo '<h1>'.( isset( $option['faceted']['newin']['title'] ) ? $option['faceted']['newin']['title'] : 'New In' ).'</h1>';
