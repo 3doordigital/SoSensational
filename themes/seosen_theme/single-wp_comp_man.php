@@ -19,7 +19,7 @@
             <?php the_content(); ?>
         </div>
         <div class="col-md-1"></div>
-        <div class="col-md-7">
+        <div class="col-md-7 sidebar">
             <?php dynamic_sidebar( 'page_sidebar' ); ?> 
         </div>
     </div>
