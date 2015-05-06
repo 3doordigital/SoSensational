@@ -314,7 +314,7 @@ class WordPress_Affiliate_Shop {
 		add_rewrite_rule('shop/our-picks/?$','index.php?page_id=37&shop-option=picks', 'top');
 		add_rewrite_rule('shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
         add_rewrite_rule('shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
-        add_rewrite_rule('shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
+        add_rewrite_rule('shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]', 'top' );
         add_rewrite_rule('shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]', 'top');
 		
 		
@@ -333,6 +333,7 @@ class WordPress_Affiliate_Shop {
     }
     
     public function load_shop_template($template) {
+		echo get_the_ID();
          if( get_the_ID() == $this->option['shop_page'] || is_page( 'search' ) ) {
              if ( $overridden_template = locate_template( 'shop-template.php' ) ) {
                load_template( $overridden_template );
@@ -1837,7 +1838,7 @@ class WordPress_Affiliate_Shop {
                     <tr class="prod_update_row">
                     	<th>Update Progress</th>
                         <td>
-                        	<span class="update_percent">0% </span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
+                        	<span class="update_percent">0%</span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
                         </td>
                     </tr>
                 </table>
