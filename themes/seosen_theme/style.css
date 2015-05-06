@@ -1373,7 +1373,8 @@ a.preview-anchor-text {
 	font-size: 26px!important;
 	color: #ddd;
 }
-.comp_small_print {
+.comp_small_print li {
+	font-size: 12px;
 }
 .show_comp {
 	margin: 30px 0;
