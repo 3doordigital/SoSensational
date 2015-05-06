@@ -601,6 +601,9 @@ section h1 span {
 	padding-left: 15px;
 	padding-right: 15px;	
 }
+#homeblog .wp-post-image {
+	margin-bottom: 0;
+}
 #footer h2 {
 	font-size: 22px;	
 }
