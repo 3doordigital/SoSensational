@@ -474,7 +474,8 @@ button:disabled {
     float: none;
     display: block;
     margin: 0 auto;
-    margin-top: 35px;
+    margin-top: 40px;
+	margin-bottom: 25px;
 }
 
 
