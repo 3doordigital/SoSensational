@@ -157,7 +157,13 @@ class WordPress_Affiliate_Shop {
 				$cat2 = get_term_by( 'id', $cat->parent , $tax );
 				$title .= ' | '.$cat2->name;
 			}
-			$title .= ' | Shop | '.get_bloginfo( 'name' );
+			$title .= ' | Shop | ';
+			
+			if( is_paged() ) {
+				$title = 'Page '.$_REQUEST['paged'].' ';	
+			}
+			
+			$title .= get_bloginfo( 'name' );
 		}
 		
 		return $title;
