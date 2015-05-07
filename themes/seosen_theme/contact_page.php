@@ -26,8 +26,7 @@ Template Name: Contact Us
 
         </div>
         <div class="col-md-9" id="content">
-            <?php the_content(); ?>
-
+            <?php echo do_shortcode('[contact-form-7 id="12481" title="Contact form 1"]'); ?>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-7">
