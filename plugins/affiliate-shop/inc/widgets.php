@@ -292,7 +292,8 @@ class aff_colour_widget extends WP_Widget {
      * @param array $instance
      */
     public function widget( $args, $instance ) {
-        global $wp_query;
+		ini_set( 'error_reporting', E_ALL );
+        //global $wp_query;
         echo $args['before_widget'];
         if ( ! empty( $instance['title'] ) ) {
             echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
@@ -310,7 +311,7 @@ class aff_colour_widget extends WP_Widget {
 			'name' => 'wp_aff_colours',
 			'hide_empty' => 0,
         );
-		
+		print_var( $arg );
 		if( isset( $_REQUEST['colour'] ) ) 
 			$arg['selected'] = $_REQUEST['colour'];
 		
