@@ -130,7 +130,8 @@ class WordPress_Affiliate_Shop {
         add_action( 'wp_logout', array( $this, 'wp_logout' ) );
         
 		add_filter( 'wp_title', array( $this, 'some_callback' ), 100, 2 );
-
+		add_filter( 'wpseo_canonical', array( $this, 'canonical' ) );
+		
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
         
@@ -169,6 +170,9 @@ class WordPress_Affiliate_Shop {
 		
 		return $title;
 		
+	}
+	function canonical( $data ) {
+		echo $data;
 	}
 	
 	public function get_option() {
