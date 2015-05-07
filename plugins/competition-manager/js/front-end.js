@@ -11,8 +11,8 @@ jQuery(document).ready( function($) {
 		var data = $( this ).serialize();
 		console.log( data );
 		$('#submit_answer').html('Submitting...').prop('disabled', true);
-		var resp = $('input[name=g-recaptcha-response]').val();
-		$.post( 'https://www.google.com/recaptcha/api/siteverify', { secret: '6LdFgwYTAAAAAAnuF0OV3TBHNIdhWQVHRfjj80Wf', response : resp }, function( result ) {
+		var resp = $('#g-recaptcha-response').val();
+		$.post( 'https://www.google.com/recaptcha/api/siteverify', 'secret=6LdFgwYTAAAAAAnuF0OV3TBHNIdhWQVHRfjj80Wf&response='+resp , function( result ) {
 			console.log( result );
 		});
 		
