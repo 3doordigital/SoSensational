@@ -18,10 +18,14 @@ jQuery(document).ready( function($) {
 				console.log(data);
 				 if( data.status == 1 ) {
 					 //$('#comp_form').html('<p>Thank you for your entry.</p>'); 
-					 //window.location.assign( data.redirect );
+					 window.location.assign( data.redirect );
 				 } else if( data.status == 0 ) {
 					 //$('#comp_form').html('<p>You have already entered this competition. Please check back later for other chances to win.</p>'); 
+					 window.location.assign( data.redirect );
+				 } else if( data.status == 3 ) {
+					 //$('#comp_form').html('<p>You have already entered this competition. Please check back later for other chances to win.</p>'); 
 					 //window.location.assign( data.redirect );
+					 $('#submit_answer').html('Enter Now').prop('disabled', false).before('<p>Captcha failed, please try again.</p>');
 				 }
 			}, 'json' );
 		}
