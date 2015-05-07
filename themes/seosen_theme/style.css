@@ -962,6 +962,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     font-size: 14px; 
 	line-height: 1.8em;
 }
+.pagination li {
+	line-height: 1em;
+}
 .blog .blog-small p {
 	font-size: 13px;	
 }
