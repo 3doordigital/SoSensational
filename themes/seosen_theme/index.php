@@ -1,6 +1,5 @@
 <?php get_header(); ?>
 <div class="container pagetop">
-    <div class="row">
         <h1><span>Style Advice &amp; Blog</span></h1>
         <?php
         if (function_exists('wp_nav_menu')) {
@@ -27,7 +26,6 @@
         {
             bcn_display();
         }?>
-    </div>
     </div>
 </div>
 <div class="container">
