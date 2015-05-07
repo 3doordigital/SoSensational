@@ -478,7 +478,8 @@ button:disabled {
 	margin-bottom: 25px;
 }
 .blog .pagination-centered {
-	margin-top: 10px;	
+	margin-top: 10px;
+	margin-bottom: 15px;	
 }
 
 /* Style the delet icon present next to items on /view-products/ */
