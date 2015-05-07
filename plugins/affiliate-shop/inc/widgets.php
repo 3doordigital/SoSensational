@@ -313,9 +313,7 @@ class aff_colour_widget extends WP_Widget {
 		
 		if( isset( $_REQUEST['colour'] ) ) 
 			$arg['selected'] = $_REQUEST['colour'];
-		print_var( $arg );
 		$colours = get_categories( $arg );
-		print_var( $colours );
 		foreach( $colours as $colour ) {
 			$colour_code = get_metadata('wp_aff_colours', $colour->term_id, 'colour_code', true);
 			$colour_code_css = get_metadata('wp_aff_colours', $colour->term_id, 'colour_code_css', true);
@@ -408,7 +406,6 @@ class aff_size_widget extends WP_Widget {
             'show_count' => 0,
             'hierarchical' => 0,
             'taxonomy' => 'wp_aff_sizes',
-			'name' => 'wp_aff_sizes',
             'class' => 'form-control wp_aff_sizes_select',
             'show_option_none' => 'All Sizes'
         );
