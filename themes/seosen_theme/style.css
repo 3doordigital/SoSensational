@@ -697,7 +697,7 @@ section h1 span {
 	width: 15px;
 }
 
-#footer-newsletter input::-webkit-input-placeholder {  color: #999; }
+#footer-newsletter input::-webkit-input-placeholder, #homenewsletter input::-webkit-input-placeholder {  color: #999; }
 
 #footer #social-icons {
 	margin-top: 60px;
