@@ -1392,6 +1392,9 @@ a.preview-anchor-text {
 .single-wp_comp_man .sidebar {
 	margin-top: -16px;
 }
+.side_advert {
+	padding: 30px 0;
+}
 .side_advert img {
 	width: 100%;
 	height: auto;
