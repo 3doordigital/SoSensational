@@ -30,7 +30,7 @@
 </div>
 <div class="container blog">
     <div class="row">
-        <div class="col-md-16" id="content">
+        <div class="col-md-16" id="">
             <h1 class="cattitle"><?php single_cat_title('', true); ?></h1>
             <?php
             $i = 1;
