@@ -639,6 +639,8 @@ section h1 span {
 	padding: 3px;
 	padding-top: 4px;
 	line-height:normal;
+	top: 1px;
+  	position: relative;
 }
 #footer button:hover {
 	color: #fff;		
