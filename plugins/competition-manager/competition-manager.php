@@ -813,7 +813,7 @@ class WordPress_Competition_Manager {
 				$prefix = mt_rand();
 				$image = $captcha_instance->generate_image( $prefix, $word );
 				
-				echo '<img src="'.$image.'">';
+				echo '<img src="/wp-content/uploads/wpcf7_captcha/'.$image.'">';
 				
 				echo '<a target="_blank" href="/competition-terms-conditions/">Terms &amp; Conditions</a>';
 				
