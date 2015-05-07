@@ -164,7 +164,7 @@ if (empty($mainChildren)):
                     $post_name = isset($advertiser[0]->post_name) ? $advertiser[0]->post_name : null;
                     ?>
                     
-                    <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $ss_cat . '/' . $term_meta->slug . '/' . $post_name; ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>" class="aHolderImgSS">
+                    <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $post_name; ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>" class="aHolderImgSS">
 
                         <?php $image = bfi_thumb(get_post_meta(get_the_ID(), 'ss_advertisers_cats_image', true), $cat_params); ?>
 
