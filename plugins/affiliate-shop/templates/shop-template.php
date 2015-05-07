@@ -9,7 +9,7 @@ get_header();
         You Are Here:
 		<span prefix="v: http://rdf.data-vocabulary.org/#">
 			<span typeof="v:Breadcrumb">
-                <a href="http://sosen.3doordigital.com" rel="v:url" property="v:title">Home</a>
+                <a href="/" rel="v:url" property="v:title">Home</a>
             </span> / 
             <?php if( !isset( $wp_query->query_vars['shop-cat'] ) ) { ?>
             

@@ -12,9 +12,9 @@
 </div>
 
 <span class="large_font">Here you can edit the details of your profile page as well as upload and change products and the categories you are listed in.</span>
-<h3 style="padding-left: 30px;"><strong>Step 1:</strong> <a title="Edit Advertiser" href="http://sosen.3doordigital.com/edit-advertiser/">Edit Your Profile</a></h3>
+<h3 style="padding-left: 30px;"><strong>Step 1:</strong> <a title="Edit Advertiser" href="/edit-advertiser/">Edit Your Profile</a></h3>
 &nbsp;
-<h3 style="padding-left: 30px;"><strong>Step 2:</strong> <a title="View Products" href="http://sosen.3doordigital.com/view-products/">Edit Your Products</a></h3>
+<h3 style="padding-left: 30px;"><strong>Step 2:</strong> <a title="View Products" href="/view-products/">Edit Your Products</a></h3>
 &nbsp;
-<h3 style="padding-left: 30px;"><b><strong>Step 3:</strong> </b><a title="Show Advertisers Cats" href="http://sosen.3doordigital.com/show-advertisers-cats/">Edit Category Information</a></h3>
+<h3 style="padding-left: 30px;"><b><strong>Step 3:</strong> </b><a title="Show Advertisers Cats" href="/show-advertisers-cats/">Edit Category Information</a></h3>
 &nbsp;
