@@ -934,7 +934,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
 .blog .blog-small h2, .archive .blog-small h2, .single .blog-small h2, .blog h2, .srchive h2, .single h2 {
 	font-size: 24px;
 }
-.blog #content h2, .blog #content h3, .blog #content h4, .blog #content h5, .archive #content h2, .archive #content h3, .archive #content h4, .archive #content h5, .single #content h2, .single #content h3, .single #content h4, .single #content h5 {
+.blog #content h2, .blog #content h3, .blog #content h4, .blog #content h5, .archive #content h2, .archive #content h3, .archive #content h4, .archive #content h5, .single #content h2, .single #content h3, .single #content h4, .single #content h5, .page #content h2, .page #content h3, .page #content h4, .page #content h5 {
 	line-height: 1.4em;
 	padding: 0;
     margin: 0;
