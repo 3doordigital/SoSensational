@@ -156,7 +156,7 @@ class WordPress_Affiliate_Shop {
 			$title = $cat->name;
 			if( $cat->parent != 0 ) {
 				$cat2 = get_term_by( 'id', $cat->parent , $tax );
-				$title .= ' | '.$cat2->name;
+				$title .= ' - '.$cat2->name;
 			}
 			$title .= ' for Women | ';
 			
