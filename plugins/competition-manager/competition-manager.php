@@ -808,13 +808,7 @@ class WordPress_Competition_Manager {
 				echo '<input type="hidden" name="competition-id" value="'.get_the_ID().'">';
 				echo '<input type="hidden" name="action" value="wp_comp_man_add_entry">';
 				
-				$captcha_instance = new ReallySimpleCaptcha();
-				$word = $captcha_instance->generate_random_word();
-				$prefix = mt_rand();
-				$image = $captcha_instance->generate_image( $prefix, $word );
-				
-				echo '<img src="/wp-content/uploads/wpcf7_captcha/'.$image.'">';
-				
+				echo '<div class="g-recaptcha" data-sitekey="6LdFgwYTAAAAANpxHyMNhLCjqNII56duND8kOPiE"></div>';
 				echo '<a target="_blank" href="/competition-terms-conditions/">Terms &amp; Conditions</a>';
 				
 				echo'<p><button type="submit" class="btn btn-primary" id="submit_answer">Submit Answer</button></p>';
@@ -830,6 +824,34 @@ class WordPress_Competition_Manager {
     public function add_comp_entry() {
         //print_var($_POST);
 		$return = array();
+		
+		$params = array();
+		$params['secret'] = '6LdFgwYTAAAAAAnuF0OV3TBHNIdhWQVHRfjj80Wf'; // Secret key
+		if (!empty($_POST) && isset($_POST['g-recaptcha-response'])) {
+			$params['response'] = urlencode($_POST['g-recaptcha-response']);
+		}
+		$params['remoteip'] = $_SERVER['REMOTE_ADDR'];
+	
+		$params_string = http_build_query($params);
+		$requestURL = 'https://www.google.com/recaptcha/api/siteverify?' . $params_string;
+	
+		// Get cURL resource
+		$curl = curl_init();
+	
+		// Set some options
+		curl_setopt_array($curl, array(
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_URL => $requestURL,
+		));
+	
+		// Send the request
+		$response = curl_exec($curl);
+		// Close request to clear up some resources
+		curl_close($curl);
+	
+		$response = @json_decode($response, true);
+	
+		if ($response["success"] == true) {
 		
 		$args = array(
 			'post_type'		=> 'wp_comp_entries',
@@ -920,6 +942,14 @@ class WordPress_Competition_Manager {
 					var_dump($result->response);
 					echo '</pre>';
 			}
+		}
+		} else {
+			$return = array(
+					'status' 	=> 0,
+					'message'	=> 'Captcha failed.',
+					'redirect'	=> site_url('competitions/?msg=0&comp='.$_POST['competition-id']),
+					'comp'		=> $_POST['competition-id']
+				);
 		}
 		echo json_encode( $return );
 		die();
