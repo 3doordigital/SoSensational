@@ -1260,6 +1260,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	text-align:left!important;
 	font-family: 'Open Sans', sans-serif!important;
 }
+#wpfront-notification-bar {
+	font-family: 'Open Sans', sans-serif!important;
+}
 /* =WordPress Core
 -------------------------------------------------------------- */
 .alignnone {
