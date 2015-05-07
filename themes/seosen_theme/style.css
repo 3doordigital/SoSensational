@@ -1011,9 +1011,7 @@ li.dropdown:hover > ul.dropdown-menu {
 	padding-top: 0;
 	margin-top: -15px;
 }
-.archive .post_meta {
-	margin-top: -30px;
-}
+
 .single .post_meta {
 	margin-top: 0;
 }
