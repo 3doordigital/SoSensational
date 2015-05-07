@@ -28,7 +28,7 @@
         }?>
     </div>
 </div>
-<div class="container">
+<div class="container blog">
     <div class="row">
         <div class="col-md-16" id="content">
             <h1 class="cattitle"><?php single_cat_title('', true); ?></h1>
