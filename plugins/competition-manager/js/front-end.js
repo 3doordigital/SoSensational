@@ -8,14 +8,16 @@ jQuery(document).ready( function($) {
     $('#comp_form').submit( function( event ) {
         event.preventDefault();
 		var errors = 0;
+		var data = $( this ).serialize();
+		console.log( data );
 		$('#submit_answer').html('Submitting...').prop('disabled', true);
 		var resp = $('input[name=g-recaptcha-response]').val();
-		$.post( 'https://www.google.com/recaptcha/api/siteverify', { secret: '6LdFgwYTAAAAAAnuF0OV3TBHNIdhWQVHRfjj80Wf', response : resp }, function( data ) {
-			console.log( data );
+		$.post( 'https://www.google.com/recaptcha/api/siteverify', { secret: '6LdFgwYTAAAAAAnuF0OV3TBHNIdhWQVHRfjj80Wf', response : resp }, function( result ) {
+			console.log( result );
 		});
 		
 		if( errors == 0 ) {
-			var data = $( this ).serialize();
+			
 			$.post( ajax_object.ajax_url, data, function( data ) {
 				console.log(data);
 				 if( data.status == 1 ) {
