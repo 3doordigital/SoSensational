@@ -4,7 +4,7 @@
   Plugin URI: 
   Description: Create a shop on your WordPress site using the most popular Affiliate networks.
   Version: 0.1b
-  Author: Dan Taylor
+  Author: Dan Taylor +[W.mtMUzAZy
   Author URI: http://www.tailoredmarketing.co.uk
   License: GPL V3
  */
