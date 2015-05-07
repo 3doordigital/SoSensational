@@ -811,7 +811,7 @@ class WordPress_Competition_Manager {
 				$captcha_instance = new ReallySimpleCaptcha();
 				$word = $captcha_instance->generate_random_word();
 				$prefix = mt_rand();
-				$captcha_instance->generate_image( $prefix, $word );
+				echo $captcha_instance->generate_image( $prefix, $word );
 				
 				
 				echo '<a target="_blank" href="/competition-terms-conditions/">Terms &amp; Conditions</a>';
