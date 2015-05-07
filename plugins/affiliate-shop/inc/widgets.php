@@ -311,10 +311,10 @@ class aff_colour_widget extends WP_Widget {
 			'name' => 'wp_aff_colours',
 			'hide_empty' => 0,
         );
-		print_var( $arg );
+		
 		if( isset( $_REQUEST['colour'] ) ) 
 			$arg['selected'] = $_REQUEST['colour'];
-		
+		print_var( $arg );
 		$colours = get_categories( $arg );
 		print_var( $colours );
 		foreach( $colours as $colour ) {
@@ -415,7 +415,7 @@ class aff_size_widget extends WP_Widget {
         );
 		
 		$sizes = get_categories( $arg );
-		if( $fn_include != 'none' ) {
+		//if( $fn_include != 'none' ) {
 			foreach( $sizes as $size ) {
 				$checked = 0;
 				if( isset( $_REQUEST['size'] ) ) {
@@ -431,9 +431,9 @@ class aff_size_widget extends WP_Widget {
 				echo '<input type="checkbox" '.( $checked > 0 ? 'checked' : '' ).' data-id="'.$size->term_id.'" name="wp_aff_sizes[]" class="hide_check" value="'.$size->term_id.'">';
 				echo '</div>';
 			}
-		} else {
-			echo '<p>No sizes available with the current filters</p>';
-		}
+		//} else {
+		//	echo '<p>No sizes available with the current filters</p>';
+		//}
 		echo '<input type="hidden" name="action" value="wp_aff_size_filter">';
 		wp_nonce_field( 'wp_aff_size_filter', '_wpnonce', true );
 		echo '</form>';
