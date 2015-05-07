@@ -9,6 +9,10 @@ jQuery(document).ready( function($) {
         event.preventDefault();
 		var errors = 0;
 		$('#submit_answer').html('Submitting...').prop('disabled', true);
+		var resp = $('input[name=g-recaptcha-response]').val();
+		$.post( 'https://www.google.com/recaptcha/api/siteverify', { secret: '6LdFgwYTAAAAAAnuF0OV3TBHNIdhWQVHRfjj80Wf', response : resp }, function( data ) {
+			console.log( data );
+		});
 		
 		if( errors == 0 ) {
 			var data = $( this ).serialize();
@@ -16,10 +20,10 @@ jQuery(document).ready( function($) {
 				console.log(data);
 				 if( data.status == 1 ) {
 					 //$('#comp_form').html('<p>Thank you for your entry.</p>'); 
-					 window.location.assign( data.redirect );
+					 //window.location.assign( data.redirect );
 				 } else if( data.status == 0 ) {
 					 //$('#comp_form').html('<p>You have already entered this competition. Please check back later for other chances to win.</p>'); 
-					 window.location.assign( data.redirect );
+					 //window.location.assign( data.redirect );
 				 }
 			}, 'json' );
 		}
