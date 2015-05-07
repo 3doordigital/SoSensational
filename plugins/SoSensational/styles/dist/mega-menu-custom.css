@@ -39,7 +39,7 @@
       #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-flyout > ul.mega-sub-menu li.mega-menu-item a {
         background: #fff;
         color: #000;
-        text-transform: lowercase; }
+         }
         /* line 49, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/mega-menu-custom.scss */
         #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-flyout > ul.mega-sub-menu li.mega-menu-item a:first-letter {
           text-transform: uppercase; }
