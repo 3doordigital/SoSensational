@@ -999,6 +999,7 @@ li.dropdown:hover > ul.dropdown-menu {
 .post_meta {
     padding: 15px 0;
 	padding-top: 0;
+	margin-top: -15px;
 }
 .blog-small {
     margin-bottom: 15px;
