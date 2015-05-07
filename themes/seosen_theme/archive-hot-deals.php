@@ -76,7 +76,7 @@
                 ?>
             </div>
         </div>
-        <div class="col-md-3 col-md-offset-2 hidden-sm hidden-xs">
+        <div class="col-md-4 col-md-offset-1 hidden-sm hidden-xs">
             <?php dynamic_sidebar('deals_sidebar'); ?>
         </div>
     </div>
