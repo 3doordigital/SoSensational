@@ -21,11 +21,11 @@ Template Name: Contact Us
 <div class="container">
 
     <div class="row">
-        <div class="col-md-9" id="content">
+        <div class="col-md-7" id="content">
             <?php the_content(); ?>
 
         </div>
-        <div class="col-md-7" id="content">
+        <div class="col-md-9" id="content">
             <?php the_content(); ?>
 
         </div>
