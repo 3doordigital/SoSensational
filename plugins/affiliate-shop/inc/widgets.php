@@ -308,7 +308,6 @@ class aff_colour_widget extends WP_Widget {
             'show_count' => 0,
             'hierarchical' => 0,
             'taxonomy' => 'wp_aff_colours',
-			'name' => 'wp_aff_colours',
 			'hide_empty' => 0,
         );
 		
