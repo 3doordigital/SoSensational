@@ -308,13 +308,14 @@ class aff_colour_widget extends WP_Widget {
             'hierarchical' => 0,
             'taxonomy' => 'wp_aff_colours',
 			'name' => 'wp_aff_colours',
-			'hide_empty' => 1,
+			'hide_empty' => 0,
         );
 		
 		if( isset( $_REQUEST['colour'] ) ) 
 			$arg['selected'] = $_REQUEST['colour'];
 		
 		$colours = get_categories( $arg );
+		print_var( $colours );
 		foreach( $colours as $colour ) {
 			$colour_code = get_metadata('wp_aff_colours', $colour->term_id, 'colour_code', true);
 			$colour_code_css = get_metadata('wp_aff_colours', $colour->term_id, 'colour_code_css', true);
