@@ -807,6 +807,13 @@ class WordPress_Competition_Manager {
 				echo '<input type="hidden" name="competition" value="'.get_the_title().'">';
 				echo '<input type="hidden" name="competition-id" value="'.get_the_ID().'">';
 				echo '<input type="hidden" name="action" value="wp_comp_man_add_entry">';
+				
+				$captcha_instance = new ReallySimpleCaptcha();
+				$word = $captcha_instance->generate_random_word();
+				$prefix = mt_rand();
+				$captcha_instance->generate_image( $prefix, $word );
+				
+				
 				echo '<a target="_blank" href="/competition-terms-conditions/">Terms &amp; Conditions</a>';
 				
 				echo'<p><button type="submit" class="btn btn-primary" id="submit_answer">Submit Answer</button></p>';
