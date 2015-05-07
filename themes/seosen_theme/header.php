@@ -9,7 +9,7 @@
         <?php wp_head(); ?>
     </head>
     <body <?php body_class(); ?>>
-<?php echo $seosen_options['custom_html']; ?>
+<?php global $seosen_options; echo $seosen_options['custom_html']; ?>
     	<div id="top">
         	<div class="container">
             	<div class="row">
