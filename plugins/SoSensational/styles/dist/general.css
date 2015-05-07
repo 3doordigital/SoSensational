@@ -133,7 +133,9 @@ h2.footer-menu-heading {
   border: 1px solid #000;
   margin-bottom: 15px;
   text-align: center;
-  min-height: 400px; }
+  min-height: 400px; 
+  padding: 10px; 
+ }
 
 /* line 169, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .blog-masthead span {
