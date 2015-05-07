@@ -96,7 +96,7 @@
 </section>
 <div id="subfoot" class="container">
     <div class="row">
-        <span>&copy; Copyright 3 Door Digital</span>
+        <span>&copy; SoSensational <?php echo date( 'Y' ); ?></span>
         <?php
         if (function_exists('wp_nav_menu')) {
             wp_nav_menu(array(
