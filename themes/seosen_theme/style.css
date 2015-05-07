@@ -1417,3 +1417,6 @@ a.preview-anchor-text {
 	width: 100%;
 	height: auto;
 }
+#wpcf7-form p {
+	margin-bottom: 15px;
+}
