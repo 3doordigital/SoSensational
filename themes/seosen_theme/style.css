@@ -960,7 +960,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
 	font-family: 'Open Sans', sans-serif;
     font-weight: 400;
 }
-.blog p, .archive p, .single p, .blog p a, .archive p a, .single p a, .blog li a, .archive li a, .single li a, .blog p span, .archive p span, .single p span, .blog p i, .archive p i, .single p i, .blog p em, .archive p em, .single p em, .blog p strong, .archive p strong, .single p strong, .blog p a, .archive p a, .single p a, .blog label, .archive label, .single label, .single .form-control, .blog li, .archive li, .single li, .page p, .page li, .page strong, .page li a, .page p span, .page p i, .page p strong, .page p em, .page p b, .page p a, .page p i {
+.blog p, .archive p, .single p, .blog p a, .archive p a, .single p a, .blog li a, .archive li a, .single li a, .blog p span, .archive p span, .single p span, .blog p i, .archive p i, .single p i, .blog p em, .archive p em, .single p em, .blog p strong, .archive p strong, .single p strong, .blog p a, .archive p a, .single p a, .blog label, .archive label, .single label, .single .form-control, .blog li, .archive li, .single li, .page p, .page li, .page li a, .page p span, .page p i, .page p strong, .page p em, .page p b, .page p a, .page p i {
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
     font-size: 14px; 
