@@ -9,6 +9,9 @@
 /* line 10, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 #breadcrumbs {
   margin-bottom: 2rem; }
+.single-wp_comp_man #breadcrumbs {
+  margin-bottom: 4rem;	
+}
   /* line 12, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
   #breadcrumbs, #breadcrumbs span {
     font-size: 1.2rem; }
