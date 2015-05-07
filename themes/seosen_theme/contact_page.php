@@ -4,7 +4,7 @@ Template Name: Contact Us
 */
 ?>
 <?php get_header(); ?>
-<div class="container contact_page">
+<div class="container ">
     <h1><span><?php the_title(); ?></span></h1>
     <?php
     if (function_exists('yoast_breadcrumb')) {
@@ -18,7 +18,7 @@ Template Name: Contact Us
         }?>
     </div>
 </div>
-<div class="container">
+<div class="container contact_page">
 
     <div class="row">
         <div class="col-md-7" id="content">
