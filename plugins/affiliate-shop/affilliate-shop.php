@@ -158,7 +158,7 @@ class WordPress_Affiliate_Shop {
 				$cat2 = get_term_by( 'id', $cat->parent , $tax );
 				$title .= ' | '.$cat2->name;
 			}
-			$title .= ' | Shop | ';
+			$title .= ' for Women | ';
 			
 			if( is_paged() ) {
 				$title .= 'Page '.get_query_var('paged').' | ';	
