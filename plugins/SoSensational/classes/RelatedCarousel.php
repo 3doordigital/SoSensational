@@ -85,7 +85,7 @@ class RelatedCarousel
                                                                                     true 
                                                                                     ); 
             
-          if( isset($advertiserTmp[$this->dataForDisplay[$advertiserCategory->post_title]['advertiser'][0] ) )
+          if( isset($advertiserTmp[$this->dataForDisplay[$advertiserCategory->post_title]['advertiser'][0]] ) )
 		  {                                                                                                                              
             // Skip an iteration of the loop if the advertiser has already been displayed                                   
             if ( ! isset($advertiserTmp[$this->dataForDisplay[$advertiserCategory->post_title]['advertiser'][0]->post_title]) ) {
