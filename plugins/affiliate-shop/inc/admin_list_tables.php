@@ -1320,7 +1320,7 @@ function process_bulk_action() {
     
 function prepare_items() {
     global $wpdb; //This is used only if making any database queries
-	$data = $this->data['items'];
+	//$data = $this->data['items'];
     $per_page = 50;
 
     $columns = $this->get_columns();
