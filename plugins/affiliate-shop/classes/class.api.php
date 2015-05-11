@@ -51,7 +51,7 @@
 			}
 			
 			if( $api == 'linkshare' || $api == 'all' ) {
-				$temp[] = $this->linkshare_search( $term, $merchant, $depth, $page, $sortby, $sort );
+				//$temp[] = $this->linkshare_search( $term, $merchant, $depth, $page, $sortby, $sort );
 			}
 
 			$output = array();	
