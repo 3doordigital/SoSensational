@@ -75,8 +75,10 @@
 			foreach( $output['total'] as $value ) {
 				$output['total']['total'] = $output['total']['total'] + $value;
 			}
+			print_var ($output);
+			//return $output;
 			
-			return $output;
+			
 			
 		}
 		
