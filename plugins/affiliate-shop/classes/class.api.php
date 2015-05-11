@@ -216,7 +216,7 @@
 						$rrp = $normalprice;
 						$price = $normalprice;						
 					}
-					$id = (array) $item->linkid;
+					$id = (string) $item->linkid;
 					$allp_attr = array(
 							'post_type' => 'wp_aff_products',
 							'meta_key'	=> 'wp_aff_product_id',
