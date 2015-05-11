@@ -114,8 +114,8 @@ class WordPress_Competition_Manager {
 	
     function check_comp_date(  ) {
 		if( is_singular( 'wp_comp_man' ) && !is_admin() ) {
-			$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ) );
-			$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ) );
+			$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ).' 00:00:00' );
+			$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' 23:59:59' );
 			$cdate = strtotime( date("Y-m-d H:i:s") );
 			echo get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' :: '.date("Y-m-d H:i:s").' --- ';
 			if( $sdate > $cdate || $edate < $cdate) {
