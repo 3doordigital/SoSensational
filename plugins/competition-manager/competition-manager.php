@@ -119,8 +119,8 @@ class WordPress_Competition_Manager {
 			$cdate = strtotime( date("Y-m-d H:i:s") );
 			
 			if( $sdate > $cdate || $edate < $cdate) {
-				wp_redirect( home_url( '/competitions/' ) ); 
-				//echo $sdate.' : '.$edate.' : '.$cdate;
+				//wp_redirect( home_url( '/competitions/' ) ); 
+				echo $sdate.' : '.$edate.' : '.$cdate;
 				exit;
 			} 
 		}
