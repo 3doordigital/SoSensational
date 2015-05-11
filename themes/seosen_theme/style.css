@@ -827,7 +827,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     text-transform: uppercase;
 }   
 /* Blog */
-.blog h1, .archive h1, .single h1, .page h1, .single h2.pagetitle, .blog .pagetop h2 {
+.blog h1, .archive h1, .single h1, .page h1, .single h2.pagetitle, .pagetop h2 {
     font-size: 38px;
     text-align: left;
     border-bottom: solid 2px #eeeeee;
@@ -835,7 +835,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     background: none;
 	position: relative;
 }
-.blog h1 span, .archive h1 span, .single h1 span, .page h1 span, .blog .pagetop h2 span {
+.blog h1 span, .archive h1 span, .single h1 span, .page h1 span, .pagetop h2 span {
     text-align: left;
     border-bottom: solid 2px #a0862a;
     display: inline-block;
