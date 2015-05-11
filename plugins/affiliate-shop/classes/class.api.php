@@ -47,7 +47,7 @@
 			$this->all_products = $this->get_all_products();
 			
 			if( $api == 'awin' || $api == 'all' ) {
-				$temp[] = $this->awin_search( $term, $merchant, $depth, $page, $sortby, $sort );
+				//$temp[] = $this->awin_search( $term, $merchant, $depth, $page, $sortby, $sort );
 			}
 			
 			if( $api == 'linkshare' || $api == 'all' ) {
