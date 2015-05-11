@@ -135,7 +135,7 @@
 						
 						$id = $product->iId;
 
-						$allp_attr = array(
+						/*$allp_attr = array(
 							'post_type' => 'wp_aff_products',
 							'meta_key'	=> 'wp_aff_product_id',
 							'meta_value' => $id
@@ -147,7 +147,7 @@
 							$exists = 1;
 						} else {
 							$exists = 0;
-						}
+						}*/
 						//echo '<pre>'.print_r($merch, true).'</pre>';
 						
 						$array['items'][] = array(
@@ -200,7 +200,7 @@
 				if( $xml->TotalMatches == -1 ) {
 					$totalCount = 4000;
 				} else {
-					$totalCount = $xml->TotalMatches;
+					$totalCount = (int) $xml->TotalMatches;
 				}
 				$brands = $this->linkshare_merchants();
 				
@@ -217,7 +217,7 @@
 						$price = $normalprice;						
 					}
 					$id = (string) $item->linkid;
-					$allp_attr = array(
+					/*$allp_attr = array(
 							'post_type' => 'wp_aff_products',
 							'meta_key'	=> 'wp_aff_product_id',
 							'meta_value' => $id
@@ -229,7 +229,7 @@
 							$exists = 1;
 						} else {
 							$exists = 0;
-						}
+						}*/
 					
 					$brand = $brands['ID-'.$item->mid]['name'];
 					$array['items'][] = array(
