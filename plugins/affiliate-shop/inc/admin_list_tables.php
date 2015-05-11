@@ -1161,11 +1161,11 @@ class AllProductTable extends WP_List_Table {
 
 class ListProductSearch extends WP_List_Table {
 
-    var $example_data;
     var $total;
+	var $data;
 function __construct( $data ){
 
-    $this->data = $data;
+    $data = $data;
     global $status, $page;
     //Set parent defaults
     parent::__construct( array(
@@ -1320,7 +1320,7 @@ function process_bulk_action() {
     
 function prepare_items() {
 	//print_var( $this->data );
-	$data = $this->data['items'];
+	$data = $data['items'];
     $per_page = 50;
 
     $columns = $this->get_columns();
@@ -1349,6 +1349,7 @@ function prepare_items() {
         'total_pages' => ceil($total_items/$per_page)   //WE have to calculate the total number of pages
     ) );
 }
+
 }
 
 class AddOnsTable extends WP_List_Table {
