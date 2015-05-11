@@ -1461,7 +1461,6 @@ class WordPress_Affiliate_Shop {
 							$table_data = $api->search( $_GET['q'], $curr_api, $merch, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
                             $ListProductSearch = new ListProductSearch( $table_data );
                             $ListProductSearch->prepare_items();
-							print_var( $ListProductSearch );
                         }
                             
 						//print_var($_SESSION['product_data']);
