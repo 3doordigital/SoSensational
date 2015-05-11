@@ -833,6 +833,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     border-bottom: solid 2px #eeeeee;
     padding: 0;
     background: none;
+	position: relative;
 }
 .blog h1 span, .archive h1 span, .single h1 span, .page h1 span {
     text-align: left;
