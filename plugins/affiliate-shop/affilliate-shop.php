@@ -1458,9 +1458,9 @@ class WordPress_Affiliate_Shop {
                             
 							$curr_api = ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' );
 							
-							$table_data = $api->search( $_GET['q'], $curr_api, $merch, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
+							//$table_data = $api->search( $_GET['q'], $curr_api, $merch, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
                             
-                            //$ListProductSearch = new ListProductSearch( $table_data );
+                            $ListProductSearch = new ListProductSearch( $table_data );
                             $ListProductSearch->prepare_items();
                         }
                             
