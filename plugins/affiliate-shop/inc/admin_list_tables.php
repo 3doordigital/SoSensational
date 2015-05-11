@@ -1320,8 +1320,7 @@ function process_bulk_action() {
 }
     
 function prepare_items() {
-	print_var( $this->data );
-	die();
+	//print_var( $this->data );
 	$data = $this->data['items'];
     $per_page = 50;
 
