@@ -1330,7 +1330,7 @@ function prepare_items() {
     $this->_column_headers = array($columns, $hidden, $sortable);
 
     $this->process_bulk_action();
-	    
+	  
 	if( !isset( $_SESSION['product_data'] ) ) {
 		$_SESSION['product_data'] = $data;
 	} else {

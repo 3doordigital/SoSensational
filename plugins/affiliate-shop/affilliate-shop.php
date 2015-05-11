@@ -36,7 +36,7 @@ class WordPress_Affiliate_Shop {
 	 */
 	public function __construct() {
 		global $wpdb;
-		
+		session_start();
 		$this->type = 'wp_aff_colours';
 		$this->table_name = $wpdb->prefix . $this->type . 'meta';
 		
@@ -1486,7 +1486,7 @@ class WordPress_Affiliate_Shop {
                                                     }
                                                 }
                                             } else {
-                                                if( !@in_array( $_GET['product'], $_SESSION['products'] ) ) {
+                                                if( @!in_array( $_GET['product'], $_SESSION['products'] ) ) {
                                                      $_SESSION['products'][$_GET['product']] = $_GET['product']; 
                                                  }
                                             }    
