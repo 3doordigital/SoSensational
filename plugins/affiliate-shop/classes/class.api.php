@@ -136,12 +136,22 @@
 						$merch = $client->call('getMerchant', $merchparams);
 						
 						$id = $product->iId;
-
-						if( in_array( $id, $this->all_products ) ) {
+						
+						$allp_attr = array(
+							'post_type' => 'wp_aff_products',
+							'meta_key'	=> 'wp_aff_product_id',
+							'meta_value' => $id
+						);
+						
+						$appp_query = new WP_Query( $allp_attr );
+						
+						if( $appp_query->have_posts() ) {
 							$exists = 1;
 						} else {
 							$exists = 0;
 						}
+						
+						
 						//echo '<pre>'.print_r($merch, true).'</pre>';
 						
 						$array['items']['ID-'.$id] = array(
@@ -211,7 +221,17 @@
 						$price = $normalprice;						
 					}
 					$id = (array) $item->linkid;
-					if( in_array( $id, $this->all_products ) ) {
+					
+					
+					$allp_attr = array(
+						'post_type' => 'wp_aff_products',
+						'meta_key'	=> 'wp_aff_product_id',
+						'meta_value' => $id
+					);
+					
+					$appp_query = new WP_Query( $allp_attr );
+					
+					if( $appp_query->have_posts() ) {
 						$exists = 1;
 					} else {
 						$exists = 0;
