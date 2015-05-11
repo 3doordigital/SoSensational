@@ -292,7 +292,7 @@ class aff_colour_widget extends WP_Widget {
      * @param array $instance
      */
     public function widget( $args, $instance ) {
-		ini_set( 'error_reporting', E_ALL );
+		
         //global $wp_query;
         echo $args['before_widget'];
         if ( ! empty( $instance['title'] ) ) {
