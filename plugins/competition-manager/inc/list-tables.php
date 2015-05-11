@@ -141,12 +141,15 @@ class comp_list extends WP_List_Table {
         foreach($query->posts AS $post) {
             setup_postdata($post);
             $post_meta = get_post_meta($post->ID);
+			
+			$entries = wp_count_posts( 'wp_comp_entries' )->publish;
+			
             $data[$i] = array(
                 'ID' => $post->ID,
                 'title' => get_the_title($post->ID),
                 'sdate' => $post_meta['wp_comp_sdate'][0],
                 'edate' => $post_meta['wp_comp_edate'][0],
-                'entries' => $post_meta['wp_comp_entries'][0],
+                'entries' => $entries,
             );
             $i++;
         }
