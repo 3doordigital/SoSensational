@@ -1166,6 +1166,7 @@ class ListProductSearch extends WP_List_Table {
 function __construct( $data ){
 
     $this->data = $data;
+	print_var( $this->data );
     global $status, $page;
     //Set parent defaults
     parent::__construct( array(
@@ -1320,7 +1321,7 @@ function process_bulk_action() {
     
 function prepare_items() {
     global $wpdb; //This is used only if making any database queries
-	//$data = $this->data['items'];
+	$data = $this->data['items'];
     $per_page = 50;
 
     $columns = $this->get_columns();
@@ -1330,13 +1331,6 @@ function prepare_items() {
     $this->_column_headers = array($columns, $hidden, $sortable);
 
     $this->process_bulk_action();
-    
-	if( $this->get_pagenum() > 1 ) {
-        $pageNum = $this->get_pagenum() - 1;
-        $offset = $pageNum * $per_page;
-    } else {
-        $offset = 0;   
-    }
 	    
 	if( !isset( $_SESSION['product_data'] ) ) {
 		$_SESSION['product_data'] = $data;
