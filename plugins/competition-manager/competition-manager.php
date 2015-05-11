@@ -117,11 +117,10 @@ class WordPress_Competition_Manager {
 			$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ).' 00:00:00' );
 			$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' 23:59:59' );
 			$cdate = strtotime( date("Y-m-d H:i:s") );
-			echo get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' :: '.date("Y-m-d H:i:s").' --- ';
 			if( $sdate > $cdate || $edate < $cdate) {
-				//wp_redirect( home_url( '/competitions/' ) ); 
-				echo $sdate.' : '.$edate.' : '.$cdate;
-				//exit;
+				wp_redirect( home_url( '/competitions/' ) ); 
+				//echo $sdate.' : '.$edate.' : '.$cdate;
+			 	exit;
 			} 
 		}
 	}
