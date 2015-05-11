@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <div class="container pagetop">
-        <h1><span>Style Advice &amp; Blog</span></h1>
+        <h1><span>Style Advice &amp; Blog</span>
         <?php
         if (function_exists('wp_nav_menu')) {
             wp_nav_menu(array(
@@ -16,6 +16,7 @@
             );
         }
         ?>
+        </h1>
         <?php
         if (function_exists('yoast_breadcrumb')) {
             //yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
@@ -24,7 +25,7 @@
         <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
 		<?php if(function_exists('bcn_display'))
         {
-            bcn_display();
+            //bcn_display();
         }?>
     </div>
 </div>
