@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <div class="container pagetop">
-    <h2 class="pagetitle"><span>Style Advice &amp; Blog</span></h2>
+    <h2 class="pagetitle"><span>Style Advice &amp; Blog</span>
     <?php
     if (function_exists('wp_nav_menu')) {
         wp_nav_menu(array(
@@ -16,7 +16,7 @@
         );
     }
     ?>
-
+</h2>
     <?php
     if (function_exists('yoast_breadcrumb')) {
         //yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
