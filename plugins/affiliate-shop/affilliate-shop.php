@@ -2297,6 +2297,11 @@ class WordPress_Affiliate_Shop {
 		add_post_meta($insID, 'wp_aff_product_link', $_POST['product_url'], true);
 		add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'], true);
 		add_post_meta($insID, 'wp_aff_product_rrp', $_POST['product_rrp'], true);
+		if( $_POST['product_price'] < $_POST['product_rrp'] ) {
+			add_post_meta($insID, 'wp_aff_product_sale', 1, true);
+		} else {
+			add_post_meta($insID, 'wp_aff_product_sale', 0, true);
+		}
 		//add_post_meta($insID, 'wp_aff_product_brand', , true);
 		add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'], true);
 		add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'], true);
@@ -2338,6 +2343,11 @@ class WordPress_Affiliate_Shop {
 		update_post_meta($insID, 'wp_aff_product_link', $_POST['product_url']);
 		update_post_meta($insID, 'wp_aff_product_price', $_POST['product_price']);
 		update_post_meta($insID, 'wp_aff_product_rrp', $_POST['product_rrp']);
+		if( $_POST['product_price'] < $_POST['product_rrp'] ) {
+			update_post_meta($insID, 'wp_aff_product_sale', 1 );
+		} else {
+			update_post_meta($insID, 'wp_aff_product_sale', 0 );
+		}
 		update_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc']);
 		update_post_meta($insID, 'wp_aff_product_image', $_POST['product_image']);
 		$url = add_query_arg( 'msg', 1, $_POST['_wp_http_referer'] );
