@@ -150,7 +150,7 @@
 						}
 						//echo '<pre>'.print_r($merch, true).'</pre>';
 						
-						$array['items']['ID-'.$id] = array(
+						$array['items'][] = array(
 								'ID'        => addslashes($product->iId),
 								'aff'     => 'awin',    
 								'title'     => addslashes ( trim( ucwords( strtolower( $product->sName ) ) ) ),
@@ -232,7 +232,7 @@
 						}
 					
 					$brand = $brands['ID-'.$item->mid]['name'];
-					$array['items']['ID-'.$id[0]] = array(
+					$array['items'][] = array(
 						'ID'        => addslashes($item->linkid),
 						'aff'     	=> 'linkshare',    
 						'title'     => addslashes( trim( ucwords( strtolower( $item->productname ) ) ) ),
