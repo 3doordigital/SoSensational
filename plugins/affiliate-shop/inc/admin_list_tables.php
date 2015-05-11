@@ -1349,7 +1349,6 @@ function prepare_items() {
     $total_items = $this->data['total']['total'];
 
     $this->items = $data;
-	
 
     $this->set_pagination_args( array(
         'total_items' => $total_items,                  //WE have to calculate the total number of items

@@ -58,7 +58,7 @@
 			$output['items'] = array();
 			$output['total'] = array();	
 			$output['total']['total'] = '';
-
+			
 			foreach( $temp as $key=>$input ) {
 				if( isset( $input['items'] ) ) {
 					$output['items'] = array_replace( $output['items'], $input['items'] );
@@ -75,10 +75,8 @@
 			foreach( $output['total'] as $value ) {
 				$output['total']['total'] = $output['total']['total'] + $value;
 			}
-			//print_var ($output);
+			
 			return $output;
-			
-			
 			
 		}
 		
@@ -136,7 +134,7 @@
 						$merch = $client->call('getMerchant', $merchparams);
 						
 						$id = $product->iId;
-						
+
 						$allp_attr = array(
 							'post_type' => 'wp_aff_products',
 							'meta_key'	=> 'wp_aff_product_id',
@@ -150,8 +148,6 @@
 						} else {
 							$exists = 0;
 						}
-						
-						
 						//echo '<pre>'.print_r($merch, true).'</pre>';
 						
 						$array['items']['ID-'.$id] = array(
@@ -221,21 +217,19 @@
 						$price = $normalprice;						
 					}
 					$id = (array) $item->linkid;
-					
-					
 					$allp_attr = array(
-						'post_type' => 'wp_aff_products',
-						'meta_key'	=> 'wp_aff_product_id',
-						'meta_value' => $id
-					);
-					
-					$appp_query = new WP_Query( $allp_attr );
-					
-					if( $appp_query->have_posts() ) {
-						$exists = 1;
-					} else {
-						$exists = 0;
-					}
+							'post_type' => 'wp_aff_products',
+							'meta_key'	=> 'wp_aff_product_id',
+							'meta_value' => $id
+						);
+						
+						$appp_query = new WP_Query( $allp_attr );
+						
+						if( $appp_query->have_posts() ) {
+							$exists = 1;
+						} else {
+							$exists = 0;
+						}
 					
 					$brand = $brands['ID-'.$item->mid]['name'];
 					$array['items']['ID-'.$id[0]] = array(
