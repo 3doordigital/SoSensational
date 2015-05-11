@@ -1341,11 +1341,11 @@ class WordPress_Affiliate_Shop {
                 </tr>
                 <tr>
                 	<th>Price</th>
-                    <td><input class="regular-text" type="number" min="0" step="any" name="product_price" placeholder="0.00" value=""><p class="description">&pound; sign not needed.</p></td>
+                    <td><input class="regular-text" type="text" name="product_price" placeholder="0.00" value=""><p class="description">&pound; sign not needed.</p></td>
                 </tr>
                 <tr>
                             <th>RRP</th>
-                            <td><input class="regular-text" type="number" step="any" min="0" name="product_rrp" placeholder="0.00" value="<?php echo $meta['wp_aff_product_rrp'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
+                            <td><input class="regular-text" type="text" name="product_rrp" placeholder="0.00" value="<?php echo $meta['wp_aff_product_rrp'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
                         </tr>
                 <tr>
                 	<th>Description</th>
