@@ -994,6 +994,7 @@ class WordPress_Competition_Manager {
             'post_type'  => 'wp_comp_entries'
         );
         $entry_query = new WP_Query( $entry_args );
+		print_var( $entry_query );
         wp_reset_postdata();
         if( isset ( $meta['wp_comp_winner'][0] ) && $meta['wp_comp_winner'][0] != '' ) {
             $winners = json_decode( $meta['wp_comp_winner'][0] );
