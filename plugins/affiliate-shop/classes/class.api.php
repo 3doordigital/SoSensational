@@ -58,7 +58,7 @@
 			$output['items'] = array();
 			$output['total'] = array();	
 			$output['total']['total'] = '';
-			$output = $temp;
+
 			foreach( $temp as $key=>$input ) {
 				if( isset( $input['items'] ) ) {
 					$output['items'] = array_replace( $output['items'], $input['items'] );
