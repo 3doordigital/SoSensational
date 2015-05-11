@@ -2296,6 +2296,7 @@ class WordPress_Affiliate_Shop {
 		$insID = wp_insert_post( $my_post );   
 		add_post_meta($insID, 'wp_aff_product_link', $_POST['product_url'], true);
 		add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'], true);
+		add_post_meta($insID, 'wp_aff_product_rrp', $_POST['product_rrp'], true);
 		//add_post_meta($insID, 'wp_aff_product_brand', , true);
 		add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'], true);
 		add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'], true);
@@ -2447,7 +2448,7 @@ class WordPress_Affiliate_Shop {
                            </td>
                         </tr>
                     </table>
-                    <?php print_var( $meta ); ?>
+                    <?php //print_var( $meta ); ?>
                     <input type="hidden" value="wp_aff_edit_man_product" name="action" />
                     <input type="hidden" value="<?php echo $ID; ?>" name="post_id" />
                     <?php wp_nonce_field( 'wp_aff_edit_man_product', '_wpnonce', FALSE ); ?>
