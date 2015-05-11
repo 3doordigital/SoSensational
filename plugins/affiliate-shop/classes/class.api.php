@@ -47,24 +47,24 @@
 			$this->all_products = $this->get_all_products();
 			
 			if( $api == 'awin' || $api == 'all' ) {
-				//$temp[] = $this->awin_search( $term, $merchant, $depth, $page, $sortby, $sort );
+				$temp[] = $this->awin_search( $term, $merchant, $depth, $page, $sortby, $sort );
 			}
 			
 			if( $api == 'linkshare' || $api == 'all' ) {
-				//$temp[] = $this->linkshare_search( $term, $merchant, $depth, $page, $sortby, $sort );
+				$temp[] = $this->linkshare_search( $term, $merchant, $depth, $page, $sortby, $sort );
 			}
 
 			$output = array();	
 			$output['items'] = array();
 			$output['total'] = array();	
 			$output['total']['total'] = '';
-			
+			$output = $temp;
 			foreach( $temp as $key=>$input ) {
 				if( isset( $input['items'] ) ) {
-					$output['items'] = array_replace( $output['items'], $input['items'] );
+					//$output['items'] = array_replace( $output['items'], $input['items'] );
 				}
 				if( isset( $input['total'] ) ) {
-					$output['total'] =  array_replace( $output['total'], $input['total'] );;
+					//$output['total'] =  array_replace( $output['total'], $input['total'] );;
 				}
 			}
 			
