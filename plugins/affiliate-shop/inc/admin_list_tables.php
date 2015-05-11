@@ -1163,9 +1163,9 @@ class ListProductSearch extends WP_List_Table {
 
     var $total;
 	var $data;
-function __construct( $data ){
+function __construct( $data = array() ){
 
-    $data = $data;
+    $this->data = $data;
     global $status, $page;
     //Set parent defaults
     parent::__construct( array(
@@ -1320,7 +1320,7 @@ function process_bulk_action() {
     
 function prepare_items() {
 	//print_var( $this->data );
-	$data = $data['items'];
+	$data = $this->data['items'];
     $per_page = 50;
 
     $columns = $this->get_columns();
