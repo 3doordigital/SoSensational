@@ -1166,7 +1166,6 @@ class ListProductSearch extends WP_List_Table {
 function __construct( $data ){
 
     $this->data = $data;
-	print_var( $this->data );
     global $status, $page;
     //Set parent defaults
     parent::__construct( array(
