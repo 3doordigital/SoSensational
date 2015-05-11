@@ -158,7 +158,7 @@ class comp_list extends WP_List_Table {
                 'title' => get_the_title($post->ID),
                 'sdate' => $post_meta['wp_comp_sdate'][0],
                 'edate' => $post_meta['wp_comp_edate'][0],
-                'entries' => $entries,
+                'entries' => print_r( $query2, true ),
             );
             $i++;
         }
