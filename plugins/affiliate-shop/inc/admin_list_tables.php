@@ -1166,7 +1166,6 @@ class ListProductSearch extends WP_List_Table {
 function __construct( $data ){
 
     $this->data = $data;
-	print_var( $this->data );
     global $status, $page;
     //Set parent defaults
     parent::__construct( array(
@@ -1191,15 +1190,7 @@ function column_default($item, $column_name){
 }
 
 
-    function column_price( $item ) {
-		if( $item['rrp'] <= $item['price'] ) {
-			$output = $item['price'];
-		} else {
-			$output = '(<strike>'.$item['rrp'].'</strike>) '.$item['price'];
-		}
-		return $output;
-	}
-	
+    
     function column_title($item){
         
         //Build row actions
@@ -1232,18 +1223,17 @@ function column_default($item, $column_name){
         }
                                 
         //Return the title contents
-        return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s %4$s',
+        return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
             /*$1%s*/ stripslashes( $item['title'] ),
             /*$2%s*/ $item['ID'],
-            /*$3%s*/ $this->row_actions($actions),
-			/*$3$s*/ ( $item['exists'] == 1 ? '<div class="prod_exist">Already Added</div>' : '' )
+            /*$3%s*/ $this->row_actions($actions)
         );
     }
 
 
 function column_img($item) {
    return sprintf(
-        '<img src="%1$s" style="max-height: 90px; width: auto;" />',
+        '<img src="%1$s" style="max-height: 75px; width: auto;" />',
         /*$1%s*/ $item['img']  //Let's simply repurpose the table's singular label ("movie")
     ); 
 }
@@ -1331,16 +1321,74 @@ function prepare_items() {
     $this->_column_headers = array($columns, $hidden, $sortable);
 
     $this->process_bulk_action();
-	    
+    
+	if( $this->get_pagenum() > 1 ) {
+        $pageNum = $this->get_pagenum() - 1;
+        $offset = $pageNum * $per_page;
+    } else {
+        $offset = 0;   
+    }
+	
+	/*
+    $this->params["iOffset"] = $offset;
+    if( isset ( $_REQUEST['orderby'] ) ) {
+        if( $_REQUEST['orderby'] == 'price' && $_REQUEST['order'] == 'asc' ) {
+            $this->params["sSort"] = 'lo';
+        }elseif( $_REQUEST['orderby'] == 'price' && $_REQUEST['order'] == 'desc' ) {
+            $this->params["sSort"] = 'hi';
+        } elseif( $_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'asc' ) {
+            $this->params["sSort"] = 'az';
+        } elseif( $_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'desc' ) {
+            $this->params["sSort"] = 'za';
+        }
+    } else {
+        $this->params["sSort"] = 'relevancy';
+    }
+    //print_var($this->params);
+    $this->oClient = ClientFactory::getClient();
+    $oResponse = $this->oClient->call('getProductList', $this->params);
+    //print_var($oResponse);
+    if($oResponse->iTotalCount < 1000) {
+        $totalCount = $oResponse->iTotalCount;
+    } else {
+        $totalCount = 1000;
+    }
+    $array = array();
+    foreach($oResponse->oProduct AS $product) {
+        
+        $aParams8 = array('iMerchantId'	=> $product->iMerchantId);
+        $merch = $this->oClient->call('getMerchant', $aParams8);
+        //echo '<pre>'.print_r($merch, true).'</pre>';
+        $array[] = array(
+                'ID'        => addslashes($product->iId),
+                'aff'     => 'awin',    
+                'title'     => addslashes($product->sName),
+                'brand'     => addslashes($merch->oMerchant->sName),
+                'img'       => addslashes($product->sAwImageUrl),
+                'desc'      => addslashes($product->sDescription),
+                'price'     => number_format($product->fPrice, 2),
+                'link'      => addslashes($product->sAwDeepLink)
+            );
+    }*/
+    
 	if( !isset( $_SESSION['product_data'] ) ) {
 		$_SESSION['product_data'] = $data;
 	} else {
 		$_SESSION['product_data'] = array_merge( $_SESSION['product_data'], $data );
 	}
-    
+    /*function usort_reorder($a,$b){
+        $orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'title'; //If no sort, default to title
+        $order = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'asc'; //If no order, default to asc
+        $result = strcmp($a[$orderby], $b[$orderby]); //Determine sort order
+        return ($order==='asc') ? $result : -$result; //Send final sort direction to usort
+    }
+    usort($data, 'usort_reorder');
+    */
     $current_page = $this->get_pagenum();
 
     $total_items = $this->data['total']['total'];
+
+    //$data = array_slice($data,(($current_page-1)*$per_page),$per_page);
 
     $this->items = $data;
 
