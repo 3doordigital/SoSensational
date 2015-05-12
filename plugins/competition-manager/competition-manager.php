@@ -1138,7 +1138,7 @@ class WordPress_Competition_Manager {
             'meta_key'   => 'wp_comp_entry_competition-id',
             'meta_value' => $_REQUEST['comp'],
             'post_type'  => 'wp_comp_entries',
-			'posts_per_page' => -1
+			'posts_per_page' => -1,
             'orderby' => 'rand'
         );
         $the_query = new WP_Query( $args );
