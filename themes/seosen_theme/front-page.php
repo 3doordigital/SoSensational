@@ -142,7 +142,9 @@ foreach ($seosen_options['feat_brands'] as $brand) {
                     <div class="col-xs-12 col-md-13">
                         <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
                         <small><?php echo get_the_date('F d, Y'); ?></small>
-            <?php the_excerpt(); ?>
+                        <span class="hidden-portrait">
+                            <?php the_excerpt(); ?>
+                        </span>
                     </div>
                 </div>
             </div>
