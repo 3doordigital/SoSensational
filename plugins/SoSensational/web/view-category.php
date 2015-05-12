@@ -81,11 +81,24 @@ if (!empty($ss_cat_id)):
                 <span></span>
             </div>
             <?php 
+                $counterCategories = 1;
+                $counterColor = 1;
                 foreach ($featureds as $featured):
             ?>
                 <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn category-picture-tile" style="visibility: visible;">
+                <a href="<?php echo get_permalink($featured->ID); ?>" class="aHolderImgSS">
+                        <img  src="<?php echo get_post_meta($featured->ID, 'ss_image_video')[0]; ?>" class="img-responsive" />
+                        <div class="<?php
+                        if ($counterColor % 2): echo 'whitebar ss_whitebar';
+                        else: echo 'blackbar ss_blackbar';
+                        endif;
+                        ?>" style="display:block">
+                            <h2><span> <?php echo $featured->post_title; ?></span></h2>
+                        </div>
+                    </a>
                 </div>
             <?php 
+                $counterColor++; 
                 endforeach;
             ?>
         </div>
