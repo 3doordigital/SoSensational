@@ -1106,6 +1106,25 @@ class WordPress_Competition_Manager {
     
     public function export_entries() {
         $fields = $this->option['form_fields'];
+		$fields[] = array(
+			'field_name' => 'First Name',
+			'field_type' => 'text',
+			'field_req'  => 1,
+			'field_order'=> 0
+		);
+		$fields[] = array(
+			'field_name' => 'Last Name',
+			'field_type' => 'text',
+			'field_req'  => 1,
+			'field_order'=> 1
+		);
+		$fields[] = array(
+			'field_name' => 'Email',
+			'field_type' => 'text',
+			'field_tooltip' => 'By entering your email address, you consent to receiving newsletters from SoSensational and the prize giving brand. You may unsubscribe at any time.',
+			'field_req'  => 1,
+			'field_order'=> 2
+		);
         foreach( $fields as $key=>$row ) {
             $sort[$key] = $row['field_order'];
         }
@@ -1119,6 +1138,7 @@ class WordPress_Competition_Manager {
             'meta_key'   => 'wp_comp_entry_competition-id',
             'meta_value' => $_REQUEST['comp'],
             'post_type'  => 'wp_comp_entries',
+			'posts_per_page' => -1
             'orderby' => 'rand'
         );
         $the_query = new WP_Query( $args );
