@@ -10,7 +10,8 @@ jQuery(document).ready( function($) {
 	$('.top.page-scroll').click( function(e) {
 		e.preventDefault();
 		$('body,html').animate({
-				scrollTop: 0
+				scrollTop: 0,
+				easing: 'easeInOutCubic'
 			}, 800);
 	});
 	$('a').each(function() {
