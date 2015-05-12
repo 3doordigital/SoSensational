@@ -119,7 +119,7 @@ class WordPress_Competition_Manager {
 			$cdate = strtotime( date("Y-m-d H:i:s") );
 			if( $sdate > $cdate || $edate < $cdate) {
 				wp_redirect( home_url( '/competitions/' ) ); 
-				//echo $sdate.' : '.$edate.' : '.$cdate;
+				echo $sdate.' : '.$edate.' : '.$cdate;
 			 	exit;
 			} 
 		}
@@ -726,8 +726,8 @@ class WordPress_Competition_Manager {
     }
     
     public function frontend_form( $bootstrap = false, $cols = false ) {
-		$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ) );
-		$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ) );
+		$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ).' 00:00:00' );
+		$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' 23:59:59' );
 		$cdate = strtotime( date("Y-m-d H:i:s") );
 		
 		if( $sdate > $cdate ) {
