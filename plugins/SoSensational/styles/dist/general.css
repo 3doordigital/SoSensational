@@ -194,3 +194,26 @@ button#shop-controls-toggle {
   margin: 0 auto;
   width: 200px; }
 
+/*-----------------------------------featured brand--------------------------------*/
+/* line 238, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.featured-brand {
+  margin-top: 20px; }
+  /* line 241, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  .featured-brand .line span {
+    height: 1px;
+    width: 100%;
+    display: block;
+    background: #a0862a;
+    position: relative;
+    top: -3.2rem; }
+  /* line 250, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  .featured-brand .line h2 {
+    text-align: center;
+    background: #FFFFFF;
+    position: relative;
+    z-index: 10;
+    display: block;
+    margin: 0 auto !important;
+    width: 310px;
+    font-size: 3.8rem; }
+

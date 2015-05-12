@@ -32,6 +32,7 @@ if (!empty($ss_cat_id)):
     LEFT JOIN {$wpdb->terms} as wpt
     ON wpt.term_id=wptt.term_id
     WHERE wptt.taxonomy='ss_category' ", OBJECT);
+
     ?>
     <div class="row">
         <?php
@@ -64,6 +65,33 @@ if (!empty($ss_cat_id)):
         ?>
         <div class="ss_clear" ></div>
     </div>
+    <?php 
+        $var = '%"' . $category_id . '"%';
+        $featureds = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->posts} wpp
+                                    LEFT JOIN {$wpdb->postmeta} as wppm 
+                                    ON wpp.ID = wppm.post_id
+                                    WHERE wppm.meta_key = '_categories_featured'
+                                    AND wppm.meta_value LIKE %s", $var), OBJECT);
+        if(sizeof($featureds) > 0 ):
+    ?>
+        
+        <div class="featured-brand">
+            <div class="line">
+                <h2>Featured Brands</h2>
+                <span></span>
+            </div>
+            <?php 
+                foreach ($featureds as $featured):
+            ?>
+                <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn category-picture-tile" style="visibility: visible;">
+                </div>
+            <?php 
+                endforeach;
+            ?>
+        </div>
+
+    <?php endif; ?>
+    
 
 <?php endif; ?> 
 
