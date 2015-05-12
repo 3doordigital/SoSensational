@@ -205,6 +205,20 @@
         }
     }
 
+    #homeblog>div>div {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div>div.last {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div .col-md-12 .row {
+        width: 100%;
+    }
+
 /*------------------------------------------------------------------------------
                                     Blog main page
 ------------------------------------------------------------------------------*/
