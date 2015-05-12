@@ -19,12 +19,13 @@
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-       
+
     
 }    
     
 
 @media (min-width: 768px) and (max-width: 991px) {
+
     
     #breadcrumbs {
         margin-bottom: 20px;
@@ -69,6 +70,11 @@
 }
 
 @media (max-width: 767px) {
+
+    .carousel-indicators {
+        display: none;
+    }
+   
     
 /*------------------------------------------------------------------------------
                    Advertiser Profile Page, Footer, Header
