@@ -1,5 +1,19 @@
 jQuery(document).ready( function($) {
 	
+	$(document).scroll(function() {
+		if ( $(this).scrollTop() > 0 ) {
+			$('.top.page-scroll').fadeIn( 2000 )	
+		} else {
+			$('.top.page-scroll').fadeOut( 2000 )	
+		}
+	});
+	$('.top.page-scroll').click( function(e) {
+		e.preventDefault();
+		$('body,html').animate({
+				scrollTop: 0,
+				easing: 'easeInOutCubic'
+			}, 800);
+	});
 	$('a').each(function() {
 	   var a = new RegExp('/' + window.location.host + '/');
 	   if(!a.test(this.href)) {

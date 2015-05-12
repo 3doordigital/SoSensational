@@ -114,6 +114,7 @@
         ?>                
     </div>         
 </div>
+<a href="#top" class="btn btn-circle top page-scroll"><i class="fa fa-angle-double-up animated"></i></a>
 <?php wp_footer(); ?>
 </body>
 </html>
