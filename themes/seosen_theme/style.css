@@ -36,9 +36,9 @@ p {
 }
 .navbar-brand {
 	padding: 0;
-	  display: inline-block;
-  position: relative;
-  z-index: 99999;
+	display: inline-block;
+  	position: relative;
+  	z-index: 99999;
 }
 .navbar-right {
 	position: absolute;
