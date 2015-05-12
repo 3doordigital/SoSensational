@@ -205,6 +205,34 @@
         }
     }
 
+    #homeblog>div>div {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div>div.last {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div .col-md-12 .row {
+        width: 100%;
+    }
+
+    #homenewsletter .newsform_send {
+        input {
+            width: 100%;
+            border-right: solid 1px #eeeeee;
+            background: transparent;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    
+
 /*------------------------------------------------------------------------------
                                     Blog main page
 ------------------------------------------------------------------------------*/
@@ -273,6 +301,18 @@
     }
     
 }
+
+
+/*------------------------------------------------------------------------------
+                            Portrait only 
+------------------------------------------------------------------------------*/
+
+@media (max-width: 767px) and (orientation: portrait) {
+    #homeblog .hidden-portrait {
+        display: none;
+    }
+}
+
 
 
 

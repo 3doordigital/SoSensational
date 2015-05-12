@@ -7,12 +7,12 @@
 <h1><strong>Manage Your Listing</strong></h1>
 &nbsp;
 <div class="form-buttons-group clearfix">
-    <h3 class="pull-left">Welcome to your listing management area.</h3>
-    <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
+    <h3 class="pull-left" style="margin-bottom: 0;">Welcome to your listing management area.</h3>
+    <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>" style="padding-bottom: 5px;">Preview Your Listing</a>
 </div>
 
 <span class="large_font">Here you can edit the details of your profile page as well as upload and change products and the categories you are listed in.</span>
-<h3 style="padding-left: 30px;"><strong>Step 1:</strong> <a title="Edit Advertiser" href="/edit-advertiser/">Edit Your Profile</a></h3>
+<h3 style="padding-left: 30px; margin-top: 30px;"><strong>Step 1:</strong> <a title="Edit Advertiser" href="/edit-advertiser/">Edit Your Profile</a></h3>
 &nbsp;
 <h3 style="padding-left: 30px;"><strong>Step 2:</strong> <a title="View Products" href="/view-products/">Edit Your Products</a></h3>
 &nbsp;
