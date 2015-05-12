@@ -1438,3 +1438,17 @@ a.preview-anchor-text {
 .contact_page label {
 	font-size:16px;
 }
+.btn-circle {
+  width: 70px;
+  height: 70px;
+  margin-top: 15px;
+  padding: 7px 16px;
+  border: 2px solid #a0862a;
+  border-radius: 35px;
+  font-size: 40px;
+  color: #fff;
+  background: #cbab39;
+  -webkit-transition: background .3s ease-in-out;
+  -moz-transition: background .3s ease-in-out;
+  transition: background .3s ease-in-out;
+}
