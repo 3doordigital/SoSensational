@@ -292,8 +292,9 @@ function getTabletSliderSettings() {
     };              
 }    
 
-function loadSlider(arguments, sliderMode) {       
-    var clonedSliderDOM = $('.flexslider').clone();  
+function loadSlider(arguments, sliderMode) {     
+    // on mobile there was a problem with  
+    var clonedSliderDOM = jQuery('.flexslider').clone();  
     clonedSliderDOM.flexslider(arguments);
     console.log(clonedSliderDOM);
     var oldSliderMode = function() {
