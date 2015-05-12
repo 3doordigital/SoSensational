@@ -219,6 +219,18 @@
         width: 100%;
     }
 
+    #homenewsletter .newsform_send {
+        input {
+            width: 100%;
+            border-right: solid 1px #eeeeee;
+            background: transparent;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
     
 
 /*------------------------------------------------------------------------------
@@ -289,6 +301,11 @@
     }
     
 }
+
+
+/*------------------------------------------------------------------------------
+                            Portrait only 
+------------------------------------------------------------------------------*/
 
 @media (max-width: 767px) and (orientation: portrait) {
     #homeblog .hidden-portrait {
