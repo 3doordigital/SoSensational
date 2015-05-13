@@ -236,7 +236,7 @@ button#shop-controls-toggle {
 /*-----------------------------------featured brand--------------------------------*/
 
 .featured-brand {
-    margin-top: 20px;
+    margin-top: 40px;
     .line {
         span {
             height: 1px;
@@ -258,5 +258,9 @@ button#shop-controls-toggle {
             font-size: 3.8rem;
         }
 
+    }
+
+    .featued-list {
+        margin-top: 30px;
     }
 }

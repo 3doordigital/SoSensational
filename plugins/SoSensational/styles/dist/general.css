@@ -197,7 +197,7 @@ button#shop-controls-toggle {
 /*-----------------------------------featured brand--------------------------------*/
 /* line 238, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .featured-brand {
-  margin-top: 20px; }
+  margin-top: 40px; }
   /* line 241, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
   .featured-brand .line span {
     height: 1px;
@@ -216,4 +216,7 @@ button#shop-controls-toggle {
     margin: 0 auto !important;
     width: 310px;
     font-size: 3.8rem; }
+  /* line 263, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  .featured-brand .featued-list {
+    margin-top: 30px; }
 
