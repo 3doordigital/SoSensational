@@ -101,6 +101,12 @@
 
 @media (max-width: 767px) {
 
+    #mega-menu-wrap-primary .mega-menu-toggle + #mega-menu-primary li.mega-menu-item.mega-menu-item-11807 > ul.mega-sub-menu.visible {
+
+            display: block !important ;
+         
+    }
+
     .carousel-indicators {
         display: none;
     }
