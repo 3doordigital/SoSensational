@@ -38,7 +38,11 @@
     #breadcrumbs {
         margin-bottom: 20px;
     }    
-    
+
+    #mega-menu-wrap-primary .mega-menu-toggle ~ #mega-menu-primary {
+        width: 96%;
+        text-align: center;
+    }    
 /*------------------------------------------------------------------------------
                          Advertiser Profile Page
 ------------------------------------------------------------------------------*/     

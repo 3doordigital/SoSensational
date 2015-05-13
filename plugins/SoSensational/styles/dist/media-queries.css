@@ -25,204 +25,208 @@
   /* line 38, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #breadcrumbs {
     margin-bottom: 20px; }
+  /* line 42, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  #mega-menu-wrap-primary .mega-menu-toggle ~ #mega-menu-primary {
+    width: 96%;
+    text-align: center; }
   /*------------------------------------------------------------------------------
                          Advertiser Profile Page
 ------------------------------------------------------------------------------*/
-  /* line 47, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 51, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .ss_company_info_right img {
     max-width: 70%; }
   /*------------------------------------------------------------------------------
                                 Front Page
 ------------------------------------------------------------------------------*/
-  /* line 58, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 62, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homenewsletter input, #homenewsletter button {
     font-size: inherit;
     padding: 0 20px;
     line-height: 50px; }
-  /* line 65, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 69, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homeblog > div > div {
     padding-left: 15px;
     padding-right: 0px; }
-  /* line 70, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 74, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homeblog > div > div.last {
     padding-left: 15px;
     padding-right: 0px; }
-  /* line 75, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 79, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homeblog > div .col-md-12 .row {
     width: 100%; }
-  /* line 79, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 83, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #footer .navbar-header {
     float: none; }
   /*------------------------------------------------------------------------------
                                     Blog main page
 ------------------------------------------------------------------------------*/
-  /* line 87, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 91, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #topcats {
     display: none; }
-  /* line 92, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 96, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #menu-sub-footer-menu {
     display: none; } }
 
 @media (max-width: 767px) {
-  /* line 100, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 104, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .carousel-indicators {
     display: none; }
-  /* line 104, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 108, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .blog-masthead .col-xs-24 {
     text-align: center; }
-  /* line 108, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 112, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   img.aligncenter {
     max-width: 100%;
     height: auto; }
-  /* line 113, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 117, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   iframe {
     max-width: 100%; }
   /*------------------------------------------------------------------------------
                    Advertiser Profile Page, Footer, Header
 ------------------------------------------------------------------------------*/
-  /* line 122, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 126, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .page h1 {
     font-size: 3.04rem; }
-  /* line 126, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 130, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #breadcrumbs {
     margin-bottom: 2rem; }
-    /* line 128, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+    /* line 132, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
     #breadcrumbs, #breadcrumbs span {
       font-size: 1.08rem; }
-    /* line 131, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+    /* line 135, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
     #breadcrumbs a {
       font-size: 1.08rem; }
-  /* line 137, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 141, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .ss_conpany_info_right_wrapper, .ss_description_single_right {
     float: none;
     width: 100%; }
-    /* line 140, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+    /* line 144, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
     .ss_conpany_info_right_wrapper .visit_site_ss, .ss_description_single_right .visit_site_ss {
       padding: 1.84rem 0 1.84rem 0;
       margin-top: 20px; }
-  /* line 147, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 151, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .backToBB, .ss_description_single_left {
     font-size: 1.44rem;
     width: 100%; }
-  /* line 154, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 158, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #footer p, #footer .nav > li > a, .ss_description_company p {
     font-size: 1.44rem;
     line-height: 2.24rem; }
-  /* line 159, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 163, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #footer h2 {
     font-size: 1.98rem; }
-  /* line 163, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 167, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .flexslider {
     margin-bottom: 10px; }
-  /* line 167, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 171, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #subfoot {
     text-align: center; }
-  /* line 172, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 176, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .fadebox img {
     max-height: 9999px;
     width: 100%; }
-  /* line 180, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 184, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .blackbar h2 > span, .whitebar h2 > span {
     font-size: 2.4rem; }
-  /* line 192, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 196, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #topbar .blog-masthead span {
     font-size: 1.26rem; }
-  /* line 199, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 203, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .ss_company_info_right img {
     max-width: 70%; }
-  /* line 204, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 208, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .backToBB {
     display: none; }
-  /* line 209, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 213, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .backToBB.lower {
     margin-top: 30px;
     display: block; }
-  /* line 216, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 220, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .navbar-brand > img {
     margin-left: 7.5px; }
   /*------------------------------------------------------------------------------
                         Brands and Boutiques Categories
 ------------------------------------------------------------------------------*/
-  /* line 226, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 230, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .whitebar.ss_whitebar, .blackbar.ss_blackbar {
     height: 49px; }
   /*------------------------------------------------------------------------------
                                     Front Page
 ------------------------------------------------------------------------------*/
-  /* line 234, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 238, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .front-tiles img {
     width: 100% !important; }
-  /* line 240, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 244, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homenewsletter input, #homenewsletter button {
     font-size: inherit;
     padding: 0 20px;
     line-height: 40px; }
-  /* line 247, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 251, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homeblog > div > div {
     padding-left: 15px;
     padding-right: 0px; }
-  /* line 252, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 256, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homeblog > div > div.last {
     padding-left: 15px;
     padding-right: 0px; }
-  /* line 257, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 261, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homeblog > div .col-md-12 .row {
     width: 100%; }
-  /* line 262, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 266, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homenewsletter .newsform_send input {
     width: 100%;
     border-right: solid 1px #eeeeee;
     background: transparent; }
-  /* line 268, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 272, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homenewsletter .newsform_send button {
     width: 100%; }
-  /* line 273, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 277, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .bigimgbox h2 {
     font-size: 30px; }
   /*------------------------------------------------------------------------------
                                     Blog main page
 ------------------------------------------------------------------------------*/
-  /* line 283, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 287, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .wp-post-image {
     width: 100%; }
-  /* line 287, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 291, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #topcats {
     display: none; }
-  /* line 297, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 301, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single h2.pagetitle, .single #content h2.pagetitle, .archive #content h2.pagetitle, .archive h2.pagetitle, .blog h2.pagetitle {
     font-size: 3.04rem; }
-  /* line 301, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 305, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single h1 span, .single #content h1 span, .archive #content h1 span, .archive h1 span, .blog h1 span {
     font-size: 3.04rem; }
-  /* line 307, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 311, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single h2 a, .single #content h2 a, .archive #content h2 a, .archive h2 a, .blog h2 a {
     font-size: 1.98rem; }
-  /* line 312, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 316, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single #content h1, .single #content #content h1, .archive #content #content h1, .archive #content h1, .blog #content h1 {
     font-size: 1.98rem; }
-  /* line 319, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 323, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #menu-sub-footer-menu {
     display: none; }
-  /* line 324, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 328, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .shop-filter .children {
     display: none !important; }
-  /* line 328, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 332, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .shop-filter.nav > li {
     border-bottom: 1px solid #C9BA86 !important; }
-  /* line 332, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 336, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .shop_side > h3 {
     margin: 10px 0; }
-  /* line 337, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 341, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .wp_aff_brands.navbar, .wp_aff_categories.navbar {
     min-height: 0;
     max-height: 1000px; }
-  /* line 342, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 346, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .price > a {
     margin-bottom: 10px; }
-  /* line 349, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 353, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single-wp_comp_man .sidebox .newsletter_signup {
     display: none; }
-  /* line 355, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 359, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single-wp_comp_man .container.pagetop h1 span {
     text-align: center; } }
 
@@ -230,7 +234,7 @@
                             Portrait only 
 ------------------------------------------------------------------------------*/
 @media (max-width: 767px) and (orientation: portrait) {
-  /* line 369, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 373, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homeblog .hidden-portrait {
     display: none; } }
 
@@ -238,21 +242,21 @@
                             Menu toggle breakpoints
 ------------------------------------------------------------------------------*/
 @media only screen and (max-width: 800px) {
-  /* line 382, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 386, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-flyout.mega-align-bottom-right li.mega-menu-item-has-children > a:after {
     content: '\f140';
     float: right; } }
 
 @media only screen and (max-width: 800px) {
-  /* line 388, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 392, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle {
     display: block; } }
 
 @media only screen and (max-width: 800px) {
-  /* line 393, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 397, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle ~ #mega-menu-primary {
     display: none; }
-  /* line 396, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 400, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle.mega-menu-open ~ #mega-menu-primary {
     display: block; } }
 
