@@ -334,12 +334,14 @@ jQuery(window).resize(function () {
         sliderMode = 'desktop';
         loadSlider(arguments, sliderMode);
     }
-jQuery('body').on('click', '.mega-menu-item-11807', function(e){
+
+})
+
+jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
     var w = jQuery(window).width()
     if(w < 800) {
         e.preventDefault();
-        jQuery('this').parent().find('ul').toggle();
+        jQuery(jQuery(this).parent().find('ul')[0]).toggleClass('visible');
     }
-})
 
 });

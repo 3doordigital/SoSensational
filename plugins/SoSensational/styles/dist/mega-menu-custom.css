@@ -163,13 +163,10 @@
   /* line 226, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/mega-menu-custom.scss */
   #mega-menu-wrap-primary #mega-menu-primary .mega-menu-flyout.mega-toggle-on > a:after, #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-flyout.mega-menu-item-has-children.mega-toggle-on > a:after, #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-flyout li.mega-menu-item-has-children.mega-toggle-on > a:after, #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item-has-children.mega-toggle-on > a:after, #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item-has-children > a:after {
     content: none !important; }
-  /* line 232, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/mega-menu-custom.scss */
-  #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-megamenu.mega-menu-item-11807 ul.mega-sub-menu {
-    display: none; }
-  /* line 238, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/mega-menu-custom.scss */
+  /* line 233, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/mega-menu-custom.scss */
   #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-megamenu ul.mega-sub-menu {
     display: none !important; }
-  /* line 243, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/mega-menu-custom.scss */
+  /* line 238, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/mega-menu-custom.scss */
   #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-item:last-child {
     display: none; } }
 
