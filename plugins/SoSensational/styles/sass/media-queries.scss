@@ -324,6 +324,21 @@
     .price > a {
         margin-bottom: 10px;
     }
+
+
+    .single-wp_comp_man{
+        .sidebox {
+            .newsletter_signup {
+                display: none;
+            }
+        }
+
+        .container.pagetop {
+            h1 span{
+                text-align: center;
+            }
+        }
+    }
     
 }
 

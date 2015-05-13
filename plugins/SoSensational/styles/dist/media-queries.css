@@ -204,13 +204,19 @@
     max-height: 1000px; }
   /* line 324, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .price > a {
-    margin-bottom: 10px; } }
+    margin-bottom: 10px; }
+  /* line 331, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  .single-wp_comp_man .sidebox .newsletter_signup {
+    display: none; }
+  /* line 337, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  .single-wp_comp_man .container.pagetop h1 span {
+    text-align: center; } }
 
 /*------------------------------------------------------------------------------
                             Portrait only 
 ------------------------------------------------------------------------------*/
 @media (max-width: 767px) and (orientation: portrait) {
-  /* line 336, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 351, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homeblog .hidden-portrait {
     display: none; } }
 
@@ -218,21 +224,21 @@
                             Menu toggle breakpoints
 ------------------------------------------------------------------------------*/
 @media only screen and (max-width: 800px) {
-  /* line 349, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 364, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-flyout.mega-align-bottom-right li.mega-menu-item-has-children > a:after {
     content: '\f140';
     float: right; } }
 
 @media only screen and (max-width: 800px) {
-  /* line 355, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 370, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle {
     display: block; } }
 
 @media only screen and (max-width: 800px) {
-  /* line 360, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 375, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle ~ #mega-menu-primary {
     display: none; }
-  /* line 363, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 378, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle.mega-menu-open ~ #mega-menu-primary {
     display: block; } }
 
