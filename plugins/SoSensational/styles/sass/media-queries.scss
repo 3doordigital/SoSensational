@@ -60,7 +60,25 @@
             padding: 0 20px;
             line-height: 50px;
         }
-    }    
+    }   
+
+    #homeblog>div>div {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div>div.last {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div .col-md-12 .row {
+        width: 100%;
+    }
+
+    #footer .navbar-header {
+        float: none;
+    } 
     
 /*------------------------------------------------------------------------------
                                     Blog main page
