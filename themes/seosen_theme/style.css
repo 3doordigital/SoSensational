@@ -39,6 +39,7 @@ p {
 	display: inline-block;
   	position: relative;
   	z-index: 99999;
+	left: 45px;
 }
 .navbar-right {
 	position: absolute;
