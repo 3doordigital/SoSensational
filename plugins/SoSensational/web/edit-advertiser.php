@@ -32,7 +32,7 @@ if (!empty($success_code)) :
   switch($success_code)
         {
             case '1':
-				$display_message = "Details Updated Successfully";
+				$display_message = "Details Updated Successfully. Time to <a>edit your products</a>";
 			break;
 		}
 ?>
