@@ -71,7 +71,9 @@ if (!empty($ss_cat_id)):
                                     LEFT JOIN {$wpdb->postmeta} as wppm 
                                     ON wpp.ID = wppm.post_id
                                     WHERE wppm.meta_key = '_categories_featured'
-                                    AND wppm.meta_value LIKE %s", $var), OBJECT);
+                                    AND wppm.meta_value LIKE %s 
+                                    ORDER BY RAND()
+                                    LIMIT 3", $var), OBJECT);
         if(sizeof($featureds) > 0 ):
     ?>
         
@@ -87,7 +89,20 @@ if (!empty($ss_cat_id)):
             ?>
                 <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn category-picture-tile" style="visibility: visible;">
                 <a href="<?php echo get_permalink($featured->ID); ?>" class="aHolderImgSS">
-                        <img  src="<?php echo get_post_meta($featured->ID, 'ss_image_video')[0]; ?>" class="img-responsive" />
+                        <?php 
+                            $featured_child = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->posts} wpp
+                                                                                  LEFT JOIN {$wpdb->term_relationships} as wptr
+                                                                                  ON wptr.object_id = wpp.ID
+                                                                                  LEFT JOIN {$wpdb->term_taxonomy} as wptt
+                                                                                  ON wptr.term_taxonomy_id = wptt.term_taxonomy_id
+                                                                                  WHERE wpp.post_type = 'advertisers_cats'
+                                                                                  AND wpp.post_parent = ".$featured->ID."
+                                                                                  AND wptt.parent = ".$category_id."
+                                                                                  ORDER BY RAND()
+                                                                                  LIMIT 1
+                                                                                "), OBJECT);     
+                        ?>                        
+                        <img  src="<?php echo get_post_meta($featured_child[0]->ID, 'ss_advertisers_cats_image')[0]; ?>" class="img-responsive" />
                         <div class="<?php
                         if ($counterColor % 2): echo 'whitebar ss_whitebar';
                         else: echo 'blackbar ss_blackbar';
