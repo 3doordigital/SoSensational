@@ -338,6 +338,7 @@ jQuery('body').on('click', '.mega-menu-item-11807', function(e){
     var w = jQuery(window).width()
     if(w < 800) {
         e.preventDefault();
+        jQuery('this').parent().find('ul').toggle();
     }
 })
 
