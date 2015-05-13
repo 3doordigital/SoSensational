@@ -90,7 +90,7 @@ if (!empty($ss_cat_id)):
                 <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn category-picture-tile" style="visibility: visible;">
                 <a href="<?php echo get_permalink($featured->ID); ?>" class="aHolderImgSS">
                         <?php 
-                            $featured_child = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->posts} wpp
+                            $featured_child = $wpdb->get_results("SELECT * FROM {$wpdb->posts} wpp
                                                                                   LEFT JOIN {$wpdb->term_relationships} as wptr
                                                                                   ON wptr.object_id = wpp.ID
                                                                                   LEFT JOIN {$wpdb->term_taxonomy} as wptt
@@ -100,7 +100,7 @@ if (!empty($ss_cat_id)):
                                                                                   AND wptt.parent = ".$category_id."
                                                                                   ORDER BY RAND()
                                                                                   LIMIT 1
-                                                                                "), OBJECT);     
+                                                                                ", OBJECT);     
                         ?>                        
                         <img  src="<?php echo get_post_meta($featured_child[0]->ID, 'ss_advertisers_cats_image')[0]; ?>" class="img-responsive" />
                         <div class="<?php
