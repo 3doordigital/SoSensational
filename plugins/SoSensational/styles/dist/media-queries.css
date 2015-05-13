@@ -144,44 +144,47 @@
   /* line 229, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homenewsletter .newsform_send button {
     width: 100%; }
+  /* line 234, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  .bigimgbox h2 {
+    font-size: 30px; }
   /*------------------------------------------------------------------------------
                                     Blog main page
 ------------------------------------------------------------------------------*/
-  /* line 240, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 244, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .wp-post-image {
     width: 100%; }
-  /* line 244, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 248, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #topcats {
     display: none; }
-  /* line 254, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 258, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single h2.pagetitle, .single #content h2.pagetitle, .archive #content h2.pagetitle, .archive h2.pagetitle, .blog h2.pagetitle {
     font-size: 3.04rem; }
-  /* line 258, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 262, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single h1 span, .single #content h1 span, .archive #content h1 span, .archive h1 span, .blog h1 span {
     font-size: 3.04rem; }
-  /* line 264, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 268, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single h2 a, .single #content h2 a, .archive #content h2 a, .archive h2 a, .blog h2 a {
     font-size: 1.98rem; }
-  /* line 269, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 273, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .single #content h1, .single #content #content h1, .archive #content #content h1, .archive #content h1, .blog #content h1 {
     font-size: 1.98rem; }
-  /* line 276, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 280, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #menu-sub-footer-menu {
     display: none; }
-  /* line 281, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 285, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .shop-filter .children {
     display: none !important; }
-  /* line 285, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 289, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .shop-filter.nav > li {
     border-bottom: 1px solid #C9BA86 !important; }
-  /* line 289, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 293, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .shop_side > h3 {
     margin: 10px 0; }
-  /* line 294, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 298, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .wp_aff_brands.navbar, .wp_aff_categories.navbar {
     min-height: 0;
     max-height: 1000px; }
-  /* line 299, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 303, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .price > a {
     margin-bottom: 10px; } }
 
@@ -189,7 +192,7 @@
                             Portrait only 
 ------------------------------------------------------------------------------*/
 @media (max-width: 767px) and (orientation: portrait) {
-  /* line 311, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 315, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #homeblog .hidden-portrait {
     display: none; } }
 
@@ -197,21 +200,21 @@
                             Menu toggle breakpoints
 ------------------------------------------------------------------------------*/
 @media only screen and (max-width: 800px) {
-  /* line 324, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 328, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary #mega-menu-primary li.mega-menu-flyout.mega-align-bottom-right li.mega-menu-item-has-children > a:after {
     content: '\f140';
     float: right; } }
 
 @media only screen and (max-width: 800px) {
-  /* line 330, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 334, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle {
     display: block; } }
 
 @media only screen and (max-width: 800px) {
-  /* line 335, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 339, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle ~ #mega-menu-primary {
     display: none; }
-  /* line 338, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
+  /* line 342, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle.mega-menu-open ~ #mega-menu-primary {
     display: block; } }
 
