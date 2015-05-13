@@ -173,7 +173,7 @@ class WordPress_Affiliate_Shop {
 	}
 	function canonical( $data ) {
 		if( preg_match( '#(brands-and-boutiques|shop)#', $_SERVER['REQUEST_URI'] ) ) {
-			return 	get_bloginfo( 'url' ).$_SERVER['REQUEST_URI'];
+			return 	get_bloginfo( 'url' ).strtok($_SERVER["REQUEST_URI"],'?');
 		}
 	}
 	
