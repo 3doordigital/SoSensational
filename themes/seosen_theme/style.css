@@ -1463,5 +1463,5 @@ a.preview-anchor-text {
 	right: 30px;
 }
 #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-flyout > ul.mega-sub-menu li.mega-menu-item a {
-	text-transform: none;
+	text-transform: none!important;
 }
