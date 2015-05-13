@@ -333,5 +333,12 @@ jQuery(window).resize(function () {
         arguments = getDesktopSliderSettings();
         sliderMode = 'desktop';
         loadSlider(arguments, sliderMode);
-    }                 
+    }
+jQuery('body').on('click', '.mega-menu-item-11807', function(e){
+    var w = jQuery(window).width()
+    if(w < 800) {
+        e.preventDefault();
+    }
+})
+
 });

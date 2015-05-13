@@ -227,12 +227,19 @@
                     content: none !important;
                 }
             }
-            li.mega-menu-flyout,
+
+            li.mega-menu-megamenu.mega-menu-item-11807 {
+                ul.mega-sub-menu {
+                    display: none ;
+                }       
+            }
+            
             li.mega-menu-megamenu {
                 ul.mega-sub-menu {
                     display: none !important;
                 }       
             }
+
             & > li.mega-menu-item:last-child {
                 display: none;
             }
