@@ -6,6 +6,11 @@
 
 <h1><strong>Manage Your Listing</strong></h1>
 &nbsp;
+
+<?php if($_GET['adminmsg']== 's'):?>
+  <div class="alert alert-success" role="alert"><? echo get_option( 'listing_send_message' ); ?></div>
+<?php endif; ?>
+
 <div class="form-buttons-group clearfix">
     <h3 class="pull-left" style="margin-bottom: 0;">Welcome to your listing management area.</h3>
     <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>" style="padding-bottom: 5px;">Preview Your Listing</a>
@@ -18,3 +23,6 @@
 &nbsp;
 <h3 style="padding-left: 30px;"><b><strong>Step 3:</strong> </b><a title="Show Advertisers Cats" href="/show-advertisers-cats/">Edit Category Information</a></h3>
 &nbsp;
+<form action="<?php echo SOSENSATIONAL_URL?>/web/advertisers-cats-submit.php" method="POST" enctype="multipart/form-data" class="category-edit-block">
+  <button type="submit" class="button_ss_small" href="#" style="margin-left: 30px;">Submit for Review</button>
+</form>  

@@ -73,7 +73,24 @@ function show_select_for_cats($post_categories_available, $termId)
     <li class="previous"><a href="/ss_directory"><span aria-hidden="true">&larr;</span> Go Back To Main Menu </a></li>
   </ul>
 </nav>
+<?php if($_GET['adminmsg']== 's'):?>
+  <div class="alert alert-success" role="alert"><? echo get_option( 'step_3_text' ); ?></div>
 
+  <?php   
+    $topic = $user->user_login." saved category information";
+    $message = "<p>".$user->user_login." saved category information</p><p> Company type: "; 
+    $message .= $advertiser[0]->post_type. "</p><p> Company name: ".$advertiser[0]->post_title. "</p><p>";
+    $message .= "Edit company profile: <a href='".get_edit_post_link( $advertiser[0]->ID )."'>link</a></p>";
+
+
+    add_filter('wp_mail_content_type',create_function('', 'return "text/html"; '));
+
+    wp_mail( get_option( 'admin_notification_email' ), $topic, $message); 
+  ?>
+
+
+
+<?php endif; ?>
 
 <?php
 echo  '<div class="row">';
