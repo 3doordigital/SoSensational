@@ -2645,11 +2645,26 @@ class WordPress_Affiliate_Shop {
 		
 		foreach( $terms as $term ) {
 			print_var( $term );
+			$args = array (
+				'post_type' => 'wp_aff_products',
+				'posts_per_page' => 1,
+				'order_by' => 'post_date',
+				'order' => 'DESC',
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'wp_aff_categories',
+						'field' => 'ID',
+						'terms' => $term->ID
+					)
+				)
+			);
+			$cat_posts = get_posts( $args );
+			print_var( $cat_posts );
 			echo '<url>
-		<loc>'.site_url().'fashion-focus/accessories/</loc>
+		<loc>'.site_url().'/shop/category/'.$term->slug.'/</loc>
 		<lastmod>2015-05-12T09:37:51+00:00</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.2</priority>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
 	</url>';	
 		}
 		
