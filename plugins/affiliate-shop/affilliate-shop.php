@@ -2646,7 +2646,7 @@ class WordPress_Affiliate_Shop {
 		foreach( $terms as $term ) {
 			
 			echo '<url>
-		<loc>'.site_url().'/shop/category/'.$term->slug.'/</loc>
+		<loc>'.site_url().'/shop/'.$term->slug.'/</loc>
 		<lastmod>'.$this->get_last_post_date( $term ).'</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
