@@ -31,7 +31,7 @@
 </div>
 <div class="container blog">
     <div class="row">
-        <div class="col-md-16" id="">
+        <div class="col-sm-24 col-md-24 col-lg-16" id="">
             <h1 class="cattitle"><?php single_cat_title('', true); ?></h1>
             <?php
             $i = 1;
@@ -105,7 +105,7 @@
 <?php endif; ?>
         </div>
 
-        <div class="col-md-7 col-sm-offset-1">
+        <div class="col-lg-7 col-sm-offset-1 visible-lg">
             <div class="clearfix"></div>
 <?php dynamic_sidebar('blog_sidebar'); ?> 
         </div>
