@@ -2640,6 +2640,19 @@ class WordPress_Affiliate_Shop {
 		echo '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->plugin_url.'sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ';
+		
+		$terms = get_terms( 'wp_aff_categories' );
+		
+		foreach( $terms as $term ) {
+			print_var( $term );
+			echo '<url>
+		<loc>'.site_url().'fashion-focus/accessories/</loc>
+		<lastmod>2015-05-12T09:37:51+00:00</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.2</priority>
+	</url>';	
+		}
+		
 		echo '<url>
 		<loc>http://www.sosensational.co.uk/fashion-focus/accessories/</loc>
 		<lastmod>2015-05-12T09:37:51+00:00</lastmod>
