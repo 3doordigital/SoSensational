@@ -2658,6 +2658,7 @@ class WordPress_Affiliate_Shop {
 					)
 				)
 			);
+			print_var( $args );
 			$cat_posts = get_posts( $args );
 			print_var( $cat_posts );
 			echo '<url>
