@@ -320,8 +320,9 @@ class WordPress_Affiliate_Shop {
         add_rewrite_tag('%shop-option%', '([^&]+)');
 		add_rewrite_tag('%shop-cat%', '([^&]+)');
         add_rewrite_tag('%shop-brand%', '([^&]+)');
+		add_rewrite_tag('%shop-sitemap%', '([^&]+)');
 		
-        add_rewrite_rule('^shop\-category\-sitemap\.xml$', $this->get_plugin_url().'/sitemaps/category.php', 'top');
+        add_rewrite_rule('shop/sitemaps/([^/]+?).xml$', 'index.php?page_id=37&sitemap=$matches[1]', 'top');
         
 		add_rewrite_rule('shop/new-in/?$','index.php?page_id=37&shop-option=new', 'top');
 		add_rewrite_rule('shop/sale/?$','index.php?page_id=37&shop-option=sale', 'top');
