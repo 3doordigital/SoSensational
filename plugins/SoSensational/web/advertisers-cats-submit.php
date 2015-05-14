@@ -21,6 +21,7 @@
       $message .= "<p><a href='".get_edit_post_link( $product->ID )."'>".$product->post_title."</a></p>";
     };
   }
+  
 
   $topic = $user->user_login." submited listing";
 
