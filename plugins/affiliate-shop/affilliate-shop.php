@@ -2641,22 +2641,22 @@ class WordPress_Affiliate_Shop {
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ';
 		switch( $type ) {
-			case 'category' :
-				$this->sitemap_tax = 'wp_aff_categories';
+			case 'categories' :
+				$tax = 'wp_aff_categories';
 				break;
 			case 'brands' :
-				$this->sitemap_tax = 'wp_aff_brands';
+				$tax = 'wp_aff_brands';
 				break;
 		}
 		echo $type;
-		echo $this->sitemap_tax;
-		$terms = get_terms( $this->sitemap_tax );
+		echo $tax;
+		$terms = get_terms( $tax );
 		print_var( $terms );
 		foreach( $terms as $term ) {
 			
 			echo '<url>
 		<loc>'.site_url().'/shop/'.$term->slug.'/</loc>
-		<lastmod>'.$this->get_last_post_date( $term, $this->sitemap_tax ).'</lastmod>
+		<lastmod>'.$this->get_last_post_date( $term, $tax ).'</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>';	
