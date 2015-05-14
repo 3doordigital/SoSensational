@@ -2648,10 +2648,7 @@ class WordPress_Affiliate_Shop {
 				$tax = 'wp_aff_brands';
 				break;
 		}
-		echo $type;
-		echo $tax;
 		$terms = get_terms( $tax );
-		print_var( $terms );
 		foreach( $terms as $term ) {
 			
 			echo '<url>
