@@ -2640,13 +2640,17 @@ class WordPress_Affiliate_Shop {
 		echo '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->plugin_url.'sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ';
-		
-		$terms = get_terms( 'wp_aff_categories' );
+		if( $type == 'categories' ) {
+			$this->sitemap_tax = 'wp_aff_categories';
+		} elseif( $type == 'brands' ) {
+			$this->sitemap_tax = 'wp_aff_brands';
+		}
+		$terms = get_terms( $this->sitemap_tax );
 		
 		foreach( $terms as $term ) {
 			
 			echo '<url>
-		<loc>'.site_url().'/shop/'.$term->slug.'/</loc>
+		<loc>'.site_url().'/shop/'.( $this->sitemap_tax == 'brands' ? 'brands/' : '' ).$term->slug.'/</loc>
 		<lastmod>'.$this->get_last_post_date( $term ).'</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
@@ -2666,7 +2670,7 @@ class WordPress_Affiliate_Shop {
 			'order' => 'DESC',
 			'tax_query' => array(
 				array(
-					'taxonomy' => 'wp_aff_categories',
+					'taxonomy' => $this->sitemap_tax,
 					'field' => 'ID',
 					'terms' => $term->term_id
 				)
