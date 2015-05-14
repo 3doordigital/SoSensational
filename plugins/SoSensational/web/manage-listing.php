@@ -24,4 +24,4 @@
 <h3 style="padding-left: 30px;"><b><strong>Step 3:</strong> </b><a title="Show Advertisers Cats" href="/show-advertisers-cats/">Edit Category Information</a></h3>
 &nbsp;
 
-<a href="<?php echo SOSENSATIONAL_URL?>/web/advertisers-cats-submit.php" class="submit-listing">Submit your listing for aprov</a>
+<a href="<?php echo SOSENSATIONAL_URL?>/web/advertisers-cats-submit.php" class="submit-listing">Submit for Review</a>
