@@ -2628,7 +2628,7 @@ class WordPress_Affiliate_Shop {
 	function sitemaps() {
 		global $wp_query;
 		
-		$type = get_query_var( 'shop-sitemap' );
+		echo $type = get_query_var( 'shop-sitemap' );
 		
 		if( !empty( $type ) ) {
 			$this->sitemap_output( $type );
