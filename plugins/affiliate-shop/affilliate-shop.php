@@ -2638,8 +2638,26 @@ class WordPress_Affiliate_Shop {
 	function sitemap_output( $type ) {
 		echo '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="//www.sosensational.co.uk/main-sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-</urlset>';	
+';
+		echo '<url>
+		<loc>http://www.sosensational.co.uk/fashion-focus/accessories/</loc>
+		<lastmod>2015-05-12T09:37:51+00:00</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.2</priority>
+	</url>
+	<url>
+		<loc>http://www.sosensational.co.uk/hair-and-beauty/beauty/</loc>
+		<lastmod>2015-05-06T15:01:57+00:00</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.4</priority>
+	</url>
+	<url>
+		<loc>http://www.sosensational.co.uk/fashion-focus/fashion/</loc>
+		<lastmod>2015-05-14T08:39:44+00:00</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>';
+		echo '</urlset>';	
 	}
 	
     /**
