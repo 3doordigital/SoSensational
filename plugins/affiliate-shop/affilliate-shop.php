@@ -2655,7 +2655,7 @@ class WordPress_Affiliate_Shop {
 			
 			echo '<url>
 		<loc>'.site_url().'/shop/'.$term->slug.'/</loc>
-		<lastmod>'.$this->get_last_post_date( $term ).'</lastmod>
+		<lastmod>'.$this->get_last_post_date( $term, $this->sitemap_tax ).'</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>';	
@@ -2666,7 +2666,7 @@ class WordPress_Affiliate_Shop {
 		</urlset>';	
 	}
 	
-	function get_last_post_date( $term ) {
+	function get_last_post_date( $term, $tax ) {
 		$args = array (
 			'post_type' => 'wp_aff_products',
 			'posts_per_page' => 1,
@@ -2674,7 +2674,7 @@ class WordPress_Affiliate_Shop {
 			'order' => 'DESC',
 			'tax_query' => array(
 				array(
-					'taxonomy' => $this->sitemap_tax,
+					'taxonomy' => $tax,
 					'field' => 'ID',
 					'terms' => $term->term_id
 				)
