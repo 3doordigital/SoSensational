@@ -215,7 +215,7 @@ jQuery(document).ready(function($) {
     });
 
 
-    $('.ajax-preview').on('mouseover', function(e) {
+    $.each($('.ajax-preview'), function(key, val) {
         var formData =  $('#advertiser-edit-form').serializeArray();
         var _this = $(this);
         
