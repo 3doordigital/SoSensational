@@ -2644,50 +2644,40 @@ class WordPress_Affiliate_Shop {
 		$terms = get_terms( 'wp_aff_categories' );
 		
 		foreach( $terms as $term ) {
-			print_var( $term );
-			$args = array (
-				'post_type' => 'wp_aff_products',
-				'posts_per_page' => 1,
-				'order_by' => 'post_date',
-				'order' => 'DESC',
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'wp_aff_categories',
-						'field' => 'ID',
-						'terms' => $term->term_id
-					)
-				)
-			);
-			print_var( $args );
-			$cat_posts = get_posts( $args );
-			print_var( $cat_posts );
+			
 			echo '<url>
 		<loc>'.site_url().'/shop/category/'.$term->slug.'/</loc>
-		<lastmod>2015-05-12T09:37:51+00:00</lastmod>
+		<lastmod>'.get_last_post_date( $term ).'</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>';	
 		}
 		
-		echo '<url>
-		<loc>http://www.sosensational.co.uk/fashion-focus/accessories/</loc>
-		<lastmod>2015-05-12T09:37:51+00:00</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.2</priority>
-	</url>
-	<url>
-		<loc>http://www.sosensational.co.uk/hair-and-beauty/beauty/</loc>
-		<lastmod>2015-05-06T15:01:57+00:00</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.4</priority>
-	</url>
-	<url>
-		<loc>http://www.sosensational.co.uk/fashion-focus/fashion/</loc>
-		<lastmod>2015-05-14T08:39:44+00:00</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.6</priority>
-	</url>';
-		echo '</urlset>';	
+		
+		echo '
+		</urlset>';	
+	}
+	
+	function get_last_post_date( $term ) {
+		$args = array (
+			'post_type' => 'wp_aff_products',
+			'posts_per_page' => 1,
+			'order_by' => 'post_date',
+			'order' => 'DESC',
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'wp_aff_categories',
+					'field' => 'ID',
+					'terms' => $term->term_id
+				)
+			)
+		);
+		$cat_posts = get_posts( $args );
+		if( isset( $cat_posts[0] ) ) {
+			return $cat_posts[0]->post_date;
+		} else {
+			return '';
+		}
 	}
 	
     /**
