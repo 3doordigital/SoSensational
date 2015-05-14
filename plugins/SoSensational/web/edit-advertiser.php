@@ -32,8 +32,9 @@ if (!empty($success_code)) :
   switch($success_code)
         {
             case '1':
-				$display_message = 'Details Updated Successfully. Click to go to <a href="/view-products/">Step 2: Edit Your Products</a> or <a href"/ss_directory/">Preview your listing</a> so far';
-			break;
+				$display_message = get_option( 'step_1_text' );
+        		
+      break;
 		}
 ?>
 

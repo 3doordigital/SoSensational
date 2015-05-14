@@ -4,7 +4,7 @@
     </ul>
 </nav>
 
-<?php echo displaySystemNotice(); ?>
+<?php echo displaySystemNoticeForSteps(); ?>
 
 <?php
 do_action('ss_css');

@@ -13,6 +13,31 @@
  * 
  * @return string
  */
+function displaySystemNoticeForSteps()
+{
+    $actionStatus = isset($_GET['adminmsg']) ? $_GET['adminmsg'] : '';
+    
+    if ( empty($actionStatus) ) {
+        return;
+    }
+    
+    if ( $actionStatus === 's' ) {
+        $displayMessage =  get_option( 'step_2_text' );
+        $alertClass = 'success';
+    } elseif ( $actionStatus === 'f' )         {
+        $displayMessage =  get_option( 'step_2_error_text' );
+        $alertClass = 'warning';
+        
+    } elseif ($actionStatus === 'd') {
+        $displayMessage =  get_option( 'step_2_delete_text' );
+        $alertClass = 'success';        
+    }
+        
+    return "<div class='alert alert-$alertClass' role='alert'>$displayMessage</div>";    
+}
+
+
+
 function displaySystemNotice()
 {
     $actionStatus = isset($_GET['adminmsg']) ? $_GET['adminmsg'] : '';
@@ -33,9 +58,10 @@ function displaySystemNotice()
         $alertClass = 'success';        
     }
         
-    return "<div class='alert alert-$alertClass' role='alert'>$displayMessage</div>";
-    
+    return "<div class='alert alert-$alertClass' role='alert'>$displayMessage</div>";    
 }
+
+
 
 /**
  * A function that checks checkboxes by comparing the current value to the values
