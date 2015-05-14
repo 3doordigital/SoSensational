@@ -2628,11 +2628,20 @@ class WordPress_Affiliate_Shop {
 	function sitemaps() {
 		global $wp_query;
 		
-		if( get_query_var( 'shop-sitemap' ) != '' ) {
-			
+		$type = get_query_var( 'shop-sitemap' );
+		
+		if( !empty( $type ) ) {
+			$this->sitemap_output( $type );
 			die();	
 		}
 		
+	}
+	
+	function sitemap_output( $type ) {
+		echo '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="//www.sosensational.co.uk/main-sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+		echo '</urlset>';	
 	}
 	
     /**
