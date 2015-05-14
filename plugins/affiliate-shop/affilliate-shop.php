@@ -74,7 +74,7 @@ class WordPress_Affiliate_Shop {
         add_action( 'init', array( $this, 'register_taxonomies' ) );
         add_action( 'init', array( $this, 'custom_rewrite_rule' ) );
 		
-		add_action( 'init', array( $this, 'sitemaps' ) );
+		add_action( 'template_redirect', array( $this, 'sitemaps' ) );
 		
         add_action( 'admin_menu', array( $this, 'create_menu' ) );
 		        
@@ -2627,9 +2627,9 @@ class WordPress_Affiliate_Shop {
 	
 	function sitemaps() {
 		global $wp_query;
-		//print_var( $_GET );
-		//echo get_query_var( 'shop-sitemap' );
-		//die();	
+		print_var( $wp_query );
+		echo get_query_var( 'shop-sitemap' );
+		die();	
 	}
 	
     /**
