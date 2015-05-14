@@ -2629,6 +2629,7 @@ class WordPress_Affiliate_Shop {
 		global $wp_query;
 		
 		if( get_query_var( 'shop-sitemap' ) != '' ) {
+			header('Content-Type: application/xml; charset=utf-8');
 			$this->sitemap_output( $type );
 			die();	
 		}
