@@ -394,7 +394,7 @@ function eg_settings_api_init() {
     // settings, put it in our new section
     add_settings_field(
         'step_1_text',
-        'Step 1 text:',
+        'Step 1 success text:',
         'step_1_callback_function',
         'reading',
         'eg_setting_section'
@@ -427,7 +427,7 @@ function eg_settings_api_init() {
 
     add_settings_field(
         'step_3_text',
-        'Step 3 text:',
+        'Step 3 success text:',
         'step_3_callback_function',
         'reading',
         'eg_setting_section'

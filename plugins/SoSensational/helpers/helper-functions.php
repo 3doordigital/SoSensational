@@ -182,11 +182,13 @@ function removeCategoryPostOnCategoryUnselect($post_id, $add_cats)
     }    
     
     
-    foreach($publishedCategoriesWithTerms as $publishedCategoryWithTerm) {
-        if ( ! in_array($publishedCategoryWithTerm->term_id, $add_cats)) {
-            wp_delete_post($publishedCategoryWithTerm->ID);
-        }
-    }    
+    if(isset($publishedCategoriesWithTerms)) {
+        foreach($publishedCategoriesWithTerms as $publishedCategoryWithTerm) {
+            if ( ! in_array($publishedCategoryWithTerm->term_id, $add_cats)) {
+                wp_delete_post($publishedCategoryWithTerm->ID);
+            }
+        }   
+    } 
 }
 
 /**
