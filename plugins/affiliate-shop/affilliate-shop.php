@@ -73,6 +73,9 @@ class WordPress_Affiliate_Shop {
         add_action( 'init', array( $this, 'register_post_type' ) );
         add_action( 'init', array( $this, 'register_taxonomies' ) );
         add_action( 'init', array( $this, 'custom_rewrite_rule' ) );
+		
+		add_action( 'init', array( $this, 'sitemaps' ) );
+		
         add_action( 'admin_menu', array( $this, 'create_menu' ) );
 		        
         add_action( 'admin_post_wp_aff_save_api', array ( $this, 'wp_aff_update_settings' ) );
@@ -2621,6 +2624,13 @@ class WordPress_Affiliate_Shop {
 			echo '&pound;'.$price;	
 		}
 	}
+	
+	function sitemaps() {
+		global $wp_query;
+		echo get_query_var( 'shop-sitemap' );
+		die();	
+	}
+	
     /**
      * Place code for your plugin's functionality here.
      */
