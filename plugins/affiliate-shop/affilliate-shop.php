@@ -2648,8 +2648,9 @@ class WordPress_Affiliate_Shop {
 				$this->sitemap_tax = 'wp_aff_brands';
 				break;
 		}
+		echo $type;
 		$terms = get_terms( $this->sitemap_tax );
-		
+		print_var( $terms );
 		foreach( $terms as $term ) {
 			
 			echo '<url>
