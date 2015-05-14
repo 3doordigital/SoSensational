@@ -213,6 +213,25 @@ jQuery(document).ready(function($) {
            }           
         });        
     });
+
+
+    $('.ajax-preview').on('mouseover', function(e) {
+        var formData =  $('#advertiser-edit-form').serializeArray();
+        var _this = $(this);
+        
+        /* Pass another key/value pair for a later AJAX check in the script */
+        formData.push({name: 'ajaxPreview', value: true});
+        
+        $.ajax({
+           type: 'post' ,
+           url: "../wp-content/plugins/SoSensational/web/edit-advertiser-action.php",
+           data: formData,
+           success: function(data, status, jqXHR) {
+                previewURL = data;
+                _this.attr('href', previewURL);        
+           }           
+        });        
+    });
     
     /*--------------------------------------------------------------------------
      Max Mega Menu - make parent elements clickable on mobile devices
