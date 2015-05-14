@@ -2654,7 +2654,7 @@ class WordPress_Affiliate_Shop {
 					array(
 						'taxonomy' => 'wp_aff_categories',
 						'field' => 'ID',
-						'terms' => $term->ID
+						'terms' => $term->term_id
 					)
 				)
 			);
