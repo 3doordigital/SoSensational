@@ -23,5 +23,6 @@
 &nbsp;
 <h3 style="padding-left: 30px;"><b><strong>Step 3:</strong> </b><a title="Show Advertisers Cats" href="/show-advertisers-cats/">Edit Category Information</a></h3>
 &nbsp;
-
-<a href="<?php echo SOSENSATIONAL_URL?>/web/advertisers-cats-submit.php" class="submit-listing">Submit for Review</a>
+<form action="<?php echo SOSENSATIONAL_URL?>/web/advertisers-cats-submit.php" method="POST" enctype="multipart/form-data" class="category-edit-block">
+  <button type="submit" class="button_ss_small" href="#" style="margin-left: 30px;">Submit for Review</button>
+</form>  
