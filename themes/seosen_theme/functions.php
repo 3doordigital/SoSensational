@@ -385,7 +385,7 @@ function eg_settings_api_init() {
     // fields to it
     add_settings_section(
         'eg_setting_section',
-        'ss_directory settings',
+        'User listing (ss_directory)',
         'eg_setting_section_callback_function',
         'reading'
     );
@@ -440,6 +440,14 @@ function eg_settings_api_init() {
         'reading',
         'eg_setting_section'
     );
+
+    add_settings_field(
+        'listing_send_message',
+        'Notification after sending listing for aprov:',
+        'sending_listing_callback_function',
+        'reading',
+        'eg_setting_section'
+    );
     
     // Register our setting so that $_POST handling is done for us and
     // our callback function just has to echo the <input>
@@ -449,6 +457,7 @@ function eg_settings_api_init() {
     register_setting( 'reading', 'step_2_delete_text' );
     register_setting( 'reading', 'step_3_text' );
     register_setting( 'reading', 'admin_notification_email' );
+    register_setting( 'reading', 'listing_send_message' );
  } // eg_settings_api_init()
  
  add_action( 'admin_init', 'eg_settings_api_init' );
@@ -475,4 +484,8 @@ function eg_settings_api_init() {
 
   function notification_email_callback_function() {
     echo '<textarea name="admin_notification_email" id="admin_notification_email" style="width: 400px; min-height: 100px;">'.get_option( 'admin_notification_email' ).'</textarea>';
+ }
+
+ function sending_listing_callback_function() {
+    echo '<textarea name="listing_send_message" id="listing_send_message" style="width: 400px; min-height: 100px;">'.get_option( 'listing_send_message' ).'</textarea>';
  }

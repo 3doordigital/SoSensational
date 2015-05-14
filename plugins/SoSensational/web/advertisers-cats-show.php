@@ -73,7 +73,9 @@ function show_select_for_cats($post_categories_available, $termId)
     <li class="previous"><a href="/ss_directory"><span aria-hidden="true">&larr;</span> Go Back To Main Menu </a></li>
   </ul>
 </nav>
-
+<?php if($_GET['adminmsg']== 's'):?>
+  <div class="alert alert-success" role="alert"><? echo get_option( 'step_3_text' ); ?></div>
+<?php endif; ?>
 
 <?php
 echo  '<div class="row">';

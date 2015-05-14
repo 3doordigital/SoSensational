@@ -639,7 +639,7 @@ section h1 span {
 	border: solid 1px #aaaaaa;	
 	width: 75%;
 }
-#footer button.join-now {
+#footer button.join-now, .submit-listing {
 	width: 23%;
 	color: #a0862a;		
 	background-color: #fff;
@@ -650,6 +650,11 @@ section h1 span {
 	top: 1px;
   	position: relative;
 }
+
+.submit-listing {
+  margin-left: 20px;
+}
+
 #footer button:hover {
 	color: #fff;		
 	background-color: #a0862a;
