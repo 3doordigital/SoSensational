@@ -443,7 +443,7 @@ function eg_settings_api_init() {
 
     add_settings_field(
         'listing_send_message',
-        'Notification after sending listing for aprov:',
+        'Notification after sending listing for aproval:',
         'sending_listing_callback_function',
         'reading',
         'eg_setting_section'
