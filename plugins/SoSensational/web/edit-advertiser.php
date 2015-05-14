@@ -32,7 +32,7 @@ if (!empty($success_code)) :
   switch($success_code)
         {
             case '1':
-				$display_message = "Details Updated Successfully. Time to <a>edit your products</a>";
+				$display_message = 'Details Updated Successfully. Click to go to <a href="/view-products/">Step 2: Edit Your Products</a> or <a href"/ss_directory/">Preview your listing</a> so far';
 			break;
 		}
 ?>
