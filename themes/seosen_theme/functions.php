@@ -462,6 +462,10 @@ function eg_settings_api_init() {
  
  add_action( 'admin_init', 'eg_settings_api_init' );
 
+ function eg_setting_section_callback_function(){
+
+ }
+
  function step_1_callback_function() {
     echo '<textarea name="step_1_text" id="step_1_text" style="width: 400px; min-height: 100px;">'.get_option( 'step_1_text' ).'</textarea>';
  }
