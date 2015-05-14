@@ -13,7 +13,7 @@
  * 
  * @return string
  */
-function displaySystemNoticeForSteps()
+function displaySystemNoticeForSteps($user, $advertiser)
 {
     $actionStatus = isset($_GET['adminmsg']) ? $_GET['adminmsg'] : '';
     
@@ -24,13 +24,42 @@ function displaySystemNoticeForSteps()
     if ( $actionStatus === 's' ) {
         $displayMessage =  get_option( 'step_2_text' );
         $alertClass = 'success';
+        global $wpdb;
+        $pending_products = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where post_type='products' and post_status='pending' and post_author='{$user->ID}' ", OBJECT );
+
+
+        $topic = $user->user_login." saved products";
+        $message = "<p>".$user->user_login." saved products</p><p> Company type: "; 
+        $message .= $advertiser[0]->post_type. "</p><p> Company name: ".$advertiser[0]->post_title. "</p><p>";
+        $message .= "Edit company profile: <a href='".get_edit_post_link( $advertiser[0]->ID )."'>link</a></p>";
+        $message .= "<p>User pending product:</p>";
+          foreach ($pending_products as $product) {
+            $message .= "<p><a href='".get_edit_post_link( $product->ID )."'>".$product->post_title."</a></p>";
+          };
+
+
+        add_filter('wp_mail_content_type',create_function('', 'return "text/html"; '));
+
+        wp_mail( get_option( 'admin_notification_email' ), $topic, $message);     
+
+
     } elseif ( $actionStatus === 'f' )         {
         $displayMessage =  get_option( 'step_2_error_text' );
         $alertClass = 'warning';
         
     } elseif ($actionStatus === 'd') {
         $displayMessage =  get_option( 'step_2_delete_text' );
-        $alertClass = 'success';        
+        $alertClass = 'success';      
+
+        $topic = $user->user_login." deleted products";
+        $message = "<p>".$user->user_login." deleted products</p><p> Company type: "; 
+        $message .= $advertiser[0]->post_type. "</p><p> Company name: ".$advertiser[0]->post_title. "</p><p>";
+        $message .= "Edit company profile: <a href='".get_edit_post_link( $advertiser[0]->ID )."'>link</a></p>";
+
+
+        add_filter('wp_mail_content_type',create_function('', 'return "text/html"; '));
+
+        wp_mail( get_option( 'admin_notification_email' ), $topic, $message);    
     }
         
     return "<div class='alert alert-$alertClass' role='alert'>$displayMessage</div>";    
