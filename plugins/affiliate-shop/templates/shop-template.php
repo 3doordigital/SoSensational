@@ -277,7 +277,7 @@ get_header();
                  */
                 if ( isset($term) ) {
                     $children = get_term_children($term->term_id, "wp_aff_categories");
-                    if ( empty($children) ) {
+                    if ( empty($children) && $term->parent != NULL) {
                         $term = get_term($term->parent, "wp_aff_categories");
                     }       
                     displayRelatedAdvertisersCarousel($term);                     
