@@ -2627,10 +2627,9 @@ class WordPress_Affiliate_Shop {
 	
 	function sitemaps() {
 		global $wp_query;
-		
-		if( get_query_var( 'shop-sitemap' ) != '' ) {
+		$type = get_query_var( 'shop-sitemap' );
+		if( $type != '' ) {
 			header('Content-Type: application/xml; charset=utf-8');
-			echo $type;
 			$this->sitemap_output( $type );
 			die();	
 		}
@@ -2641,20 +2640,20 @@ class WordPress_Affiliate_Shop {
 		echo '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->plugin_url.'sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ';
-		if( $type == 'categories' ) {
-			$this->sitemap_tax = 'wp_aff_categories';
-		} elseif( $type == 'brands' ) {
-			$this->sitemap_tax = 'wp_aff_brands';
+		switch( $type ) {
+			case 'category' :
+				$this->sitemap_tax = 'wp_aff_categories';
+				break;
+			case 'brands' :
+				$this->sitemap_tax = 'wp_aff_brands';
+				break;
 		}
-		echo $type;
-		echo $this->sitemap_tax;
-		
 		$terms = get_terms( $this->sitemap_tax );
-		print_var( $terms );
+		
 		foreach( $terms as $term ) {
 			
 			echo '<url>
-		<loc>'.site_url().'/shop/'.( $this->sitemap_tax == 'brands' ? 'brands/' : '' ).$term->slug.'/</loc>
+		<loc>'.site_url().'/shop/'.$term->slug.'/</loc>
 		<lastmod>'.$this->get_last_post_date( $term ).'</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
