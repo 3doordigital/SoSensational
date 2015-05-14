@@ -2645,6 +2645,9 @@ class WordPress_Affiliate_Shop {
 		} elseif( $type == 'brands' ) {
 			$this->sitemap_tax = 'wp_aff_brands';
 		}
+		echo $type;
+		echo  $this->sitemap_tax;
+		
 		$terms = get_terms( $this->sitemap_tax );
 		print_var( $terms );
 		foreach( $terms as $term ) {
