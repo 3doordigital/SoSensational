@@ -2674,7 +2674,7 @@ class WordPress_Affiliate_Shop {
 		);
 		$cat_posts = get_posts( $args );
 		if( isset( $cat_posts[0] ) ) {
-			return $cat_posts[0]->post_date;
+			return date( 'c', strtotime( $cat_posts[0]->post_date ) );
 		} else {
 			return '';
 		}
