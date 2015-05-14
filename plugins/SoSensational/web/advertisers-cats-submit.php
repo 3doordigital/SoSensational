@@ -12,7 +12,7 @@
 
   // var_dump($advertiser[0]->post_type);
 
-  $message = "<p>User with login ". $user->user_login . " submited listing for aprov. </p><p> Company type: "; 
+  $message = "<p>User with login ". $user->user_login . " submited listing for aproval:. </p><p> Company type: "; 
   $message .= $advertiser[0]->post_type. "</p><p> Company name: ".$advertiser[0]->post_title. "</p><p>";
   $message .= "Edit company profile: <a href='".get_edit_post_link( $advertiser[0]->ID )."'>link</a></p></br>";
   if(isset($pending_products)) {
@@ -21,6 +21,7 @@
       $message .= "<p><a href='".get_edit_post_link( $product->ID )."'>".$product->post_title."</a></p>";
     };
   }
+  
 
   $topic = $user->user_login." submited listing";
 

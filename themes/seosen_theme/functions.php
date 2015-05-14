@@ -443,7 +443,7 @@ function eg_settings_api_init() {
 
     add_settings_field(
         'listing_send_message',
-        'Notification after sending listing for aprov:',
+        'Notification after sending listing for aproval:',
         'sending_listing_callback_function',
         'reading',
         'eg_setting_section'
@@ -493,3 +493,41 @@ function eg_settings_api_init() {
  function sending_listing_callback_function() {
     echo '<textarea name="listing_send_message" id="listing_send_message" style="width: 400px; min-height: 100px;">'.get_option( 'listing_send_message' ).'</textarea>';
  }
+
+
+
+ function delete_activity_images( $args ) {
+    // This function is designed to delete images added by
+    // BuddyPress Activity Plus (BPAP), so we first check for the constant
+    // which defines the path to uploaded images.
+    // If its not there, assume we use the default value
+    if (!defined('BPFB_BASE_IMAGE_DIR')) {
+        define('BPFB_BASE_IMAGE_DIR', $wp_upload_dir['basedir'] . '/bpfb/', true);
+    }
+
+    // Get the contents of the activity we are about to delete
+    global $wpdb;
+    $content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM ".$wpdb->prefix."bp_activity WHERE id = %d;", $args['id'] ) );
+    if ($content != '') {
+        // Look for the shortcode surrounding image filenames uploaded the BPAP
+        $matches = array();
+        preg_match('/\[bpfb_images\](.*?)\[\/bpfb_images\]/s', $content, $matches);
+
+        // If there are any images, delete each one and its thumbnail
+        if ($matches) {
+            foreach ($matches as $match) {
+                $images = array();
+                $images = explode('\n', trim(strip_tags($match)));
+                if (!empty($images)) {
+                    foreach ($images as $image) {
+                        unlink(BPFB_BASE_IMAGE_DIR.$image);
+                        $image_fn = substr($image, 0, strrpos($image, '.'));
+                        $image_ext = substr($image, strrpos($image, '.') + 1);
+                        unlink(BPFB_BASE_IMAGE_DIR.$image_fn.'-bpfbt.'.$image_ext);
+                    }
+                }
+            }
+        }
+    }
+}
+add_action( 'bp_before_activity_delete', 'delete_activity_images');

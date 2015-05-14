@@ -31,7 +31,7 @@
 </div>
 <div class="container blog">
     <div class="row">
-        <div class="col-md-16" id="content">
+        <div class="col-sm-24 col-md-24 col-lg-16" id="content">
 <?php
 if (have_posts()) : while (have_posts()) : the_post();
         ?>
@@ -61,8 +61,8 @@ if (have_posts()) : while (have_posts()) : the_post();
                 <?php comments_template(); ?>
             <?php endif; ?>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-7 sidebar">
+        <div class="col-md-1 visible-lg"></div>
+        <div class="col-lg-7 col-sm-offset-1 visible-lg">
 <?php dynamic_sidebar('blog_sidebar'); ?> 
         </div>
     </div>
