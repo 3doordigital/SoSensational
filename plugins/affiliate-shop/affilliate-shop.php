@@ -2649,6 +2649,7 @@ class WordPress_Affiliate_Shop {
 				break;
 		}
 		echo $type;
+		echo $this->sitemap_tax;
 		$terms = get_terms( $this->sitemap_tax );
 		print_var( $terms );
 		foreach( $terms as $term ) {
