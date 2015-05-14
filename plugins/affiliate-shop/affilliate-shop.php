@@ -2647,7 +2647,7 @@ class WordPress_Affiliate_Shop {
 			
 			echo '<url>
 		<loc>'.site_url().'/shop/category/'.$term->slug.'/</loc>
-		<lastmod>'.get_last_post_date( $term ).'</lastmod>
+		<lastmod>'.$this->get_last_post_date( $term ).'</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>';	
