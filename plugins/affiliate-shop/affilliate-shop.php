@@ -2630,6 +2630,7 @@ class WordPress_Affiliate_Shop {
 		
 		if( get_query_var( 'shop-sitemap' ) != '' ) {
 			header('Content-Type: application/xml; charset=utf-8');
+			echo $type;
 			$this->sitemap_output( $type );
 			die();	
 		}
@@ -2646,7 +2647,7 @@ class WordPress_Affiliate_Shop {
 			$this->sitemap_tax = 'wp_aff_brands';
 		}
 		echo $type;
-		echo  $this->sitemap_tax;
+		echo $this->sitemap_tax;
 		
 		$terms = get_terms( $this->sitemap_tax );
 		print_var( $terms );
