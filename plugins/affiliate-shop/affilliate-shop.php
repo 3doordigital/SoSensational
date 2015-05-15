@@ -73,6 +73,9 @@ class WordPress_Affiliate_Shop {
         add_action( 'init', array( $this, 'register_post_type' ) );
         add_action( 'init', array( $this, 'register_taxonomies' ) );
         add_action( 'init', array( $this, 'custom_rewrite_rule' ) );
+		
+		add_action( 'template_redirect', array( $this, 'sitemaps' ) );
+		
         add_action( 'admin_menu', array( $this, 'create_menu' ) );
 		        
         add_action( 'admin_post_wp_aff_save_api', array ( $this, 'wp_aff_update_settings' ) );
@@ -322,7 +325,7 @@ class WordPress_Affiliate_Shop {
         add_rewrite_tag('%shop-brand%', '([^&]+)');
 		add_rewrite_tag('%shop-sitemap%', '([^&]+)');
 		
-        add_rewrite_rule('shop/sitemaps/([^/]+?).xml$', 'index.php?page_id=37&sitemap=$matches[1]', 'top');
+        add_rewrite_rule('shop/sitemaps/([^/]+?)$', 'index.php?shop-sitemap=$matches[1]', 'top');
         
 		add_rewrite_rule('shop/new-in/?$','index.php?page_id=37&shop-option=new', 'top');
 		add_rewrite_rule('shop/sale/?$','index.php?page_id=37&shop-option=sale', 'top');
@@ -2621,6 +2624,68 @@ class WordPress_Affiliate_Shop {
 			echo '&pound;'.$price;	
 		}
 	}
+	
+	function sitemaps() {
+		global $wp_query;
+		$type = get_query_var( 'shop-sitemap' );
+		if( $type != '' ) {
+			header('Content-Type: application/xml; charset=utf-8');
+			$this->sitemap_output( $type );
+			die();	
+		}
+		
+	}
+	
+	function sitemap_output( $type ) {
+		echo '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->plugin_url.'sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+';
+		switch( $type ) {
+			case 'categories' :
+				$tax = 'wp_aff_categories';
+				break;
+			case 'brands' :
+				$tax = 'wp_aff_brands';
+				break;
+		}
+		$terms = get_terms( $tax );
+		foreach( $terms as $term ) {
+			
+			echo '<url>
+		<loc>'.site_url().'/shop/'.( $type == 'brands' ? 'brand/' : '' ).$term->slug.'/</loc>
+		<lastmod>'.$this->get_last_post_date( $term, $tax ).'</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>';	
+		}
+		
+		
+		echo '
+		</urlset>';	
+	}
+	
+	function get_last_post_date( $term, $tax ) {
+		$args = array (
+			'post_type' => 'wp_aff_products',
+			'posts_per_page' => 1,
+			'order_by' => 'post_date',
+			'order' => 'DESC',
+			'tax_query' => array(
+				array(
+					'taxonomy' => $tax,
+					'field' => 'ID',
+					'terms' => $term->term_id
+				)
+			)
+		);
+		$cat_posts = get_posts( $args );
+		if( isset( $cat_posts[0] ) ) {
+			return date( 'c', strtotime( $cat_posts[0]->post_date ) );
+		} else {
+			return '';
+		}
+	}
+	
     /**
      * Place code for your plugin's functionality here.
      */
