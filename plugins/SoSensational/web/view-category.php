@@ -116,7 +116,7 @@ if (!empty($ss_cat_id)):
                     foreach ($featureds as $featured):
                 ?>
                     <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn category-picture-tile" style="visibility: visible;">
-                    <a href="<?php echo get_permalink($featured->ID); ?>" class="aHolderImgSS">
+                    <a href="<?php echo get_permalink($featured->ID); ?>?featured=true" class="aHolderImgSS">
                             <?php 
                                 $featured_child = $wpdb->get_results("SELECT * FROM {$wpdb->posts} wpp
                                                                                       LEFT JOIN {$wpdb->term_relationships} as wptr
