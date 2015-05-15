@@ -30,6 +30,13 @@ if (function_exists('yoast_breadcrumb')) {
 }
 ?>
 
+<div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+        <?php if(function_exists('bcn_display'))
+        {
+            bcn_display();
+        }?>
+    </div>
+
 <?php
 $advertiserLink = isset($meta['ss_affiliate_advertiser_link'][0]) && !empty($meta['ss_affiliate_advertiser_link'][0]) ? $meta['ss_affiliate_advertiser_link'][0] : $meta['ss_advertiser_website'][0];
 $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);

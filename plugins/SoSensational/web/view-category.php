@@ -26,6 +26,12 @@ if (!empty($ss_cat_id)):
         yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
     }
     ?>
+    <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+        <?php if(function_exists('bcn_display'))
+        {
+            bcn_display(false, true, false);
+        }?>
+    </div>
 
     <?php
     $categories = $wpdb->get_results("SELECT * FROM {$wpdb->term_taxonomy} wptt 
@@ -174,6 +180,13 @@ if (empty($mainChildren)):
         yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
     }
     ?>
+
+    <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+        <?php if(function_exists('bcn_display'))
+        {
+            bcn_display(false, true, false);
+        }?>
+    </div>
 
     <?php if (function_exists('breadcrumb_trail')) breadcrumb_trail(); ?>             
 
