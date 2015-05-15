@@ -108,7 +108,7 @@ foreach ($seosen_options['feat_brands'] as $brand) {
 <section id="homenewsletter" class="container">
     <div class="col-md-24">
         <form role="form" class="newsform_send">
-            <input type="email" required name="email" placeholder="Join the SoSensational Community" /><button type="submit">Sign Up Now</button>
+            <input type="email" required name="email" placeholder="Join the SoSensational Community" oninvalid="setCustomValidity('Please insert your email address')" /><button type="submit">Sign Up Now</button>
         </form>
     </div>
 </section>

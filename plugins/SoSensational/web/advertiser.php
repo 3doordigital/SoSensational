@@ -52,7 +52,7 @@ if (function_exists('yoast_breadcrumb')) {
                 echo " / ";
             }
 
-            if(isset($_SESSION['b2']) && $_GET['featured']!=true){
+            if(isset($_SESSION['b2']) && $_GET['featured'] != true){
                 echo $_SESSION['b2']; 
                 echo " / ";
             }
