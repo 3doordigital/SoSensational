@@ -29,8 +29,29 @@ if (!empty($ss_cat_id)):
     <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
         <?php if(function_exists('bcn_display'))
         {
-            bcn_display(false, true, false);
+            $bred = bcn_display(true);
+            $bred_array = explode(" / ", $bred);
+            foreach ($bred_array as $key => $value) {
+                if($key == sizeof($bred_array)-1) {
+                    ?>
+                    <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to SoSensational." href="/brands-and-boutiques" class="home">BRANDS & BOUTIQUES</a></span>
+                    <?php
+                    echo " / ";
+                } else {
+                    echo $value;
+                    echo " / ";
+                }
+            }
+
+            //add url to session
+
+            $_SESSION['b1'] = '<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to '.$category[0]->name.'" href="'.$_SERVER[REQUEST_URI].'" class="home">'.$category[0]->name.'</a></span>';
+
+        ?>
+             <span typeof="v:Breadcrumb"><span property="v:title"><?php echo $category[0]->name; ?></span></span>
+        <?php
         }?>
+
     </div>
 
     <?php
@@ -184,8 +205,32 @@ if (empty($mainChildren)):
     <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
         <?php if(function_exists('bcn_display'))
         {
-            bcn_display(false, true, false);
-        }?>
+            $bred = bcn_display(true);
+            $bred_array = explode(" / ", $bred);
+            foreach ($bred_array as $key => $value) {
+                if($key == sizeof($bred_array)-1) {
+                    ?>
+                    <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to SoSensational." href="/brands-and-boutiques" class="home">BRANDS & BOUTIQUES</a></span>
+                    <?php
+                    echo " / ";
+                } else {
+                    echo $value;
+                    echo " / ";
+                }
+            }
+
+            if(isset($_SESSION['b1'])){
+                echo $_SESSION['b1']; 
+                echo " / ";
+            }
+
+            ?>
+             <span typeof="v:Breadcrumb"><span property="v:title"><?php echo $term_meta->name; ?></span></span>
+            <?php
+            //add url to session           
+        }
+        ?>
+
     </div>
 
     <?php if (function_exists('breadcrumb_trail')) breadcrumb_trail(); ?>             
