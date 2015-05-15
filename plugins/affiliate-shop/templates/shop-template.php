@@ -5,7 +5,7 @@ get_header();
 <div class="container">
     <h1><span><?php the_title(); ?></span></h1>
     
-   <!-- <div id="breadcrumbs">
+    <div id="breadcrumbs">
         You Are Here:
 		<span prefix="v: http://rdf.data-vocabulary.org/#">
 			<span typeof="v:Breadcrumb">
