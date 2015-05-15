@@ -33,8 +33,36 @@ if (function_exists('yoast_breadcrumb')) {
 <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
         <?php if(function_exists('bcn_display'))
         {
-            bcn_display();
-        }?>
+            $bred = bcn_display(true);
+            $bred_array = explode(" / ", $bred);
+            foreach ($bred_array as $key => $value) {
+                if($key == sizeof($bred_array)-1) {
+                    ?>
+                    <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to SoSensational." href="/brands-and-boutiques" class="home">BRANDS & BOUTIQUES</a></span>
+                    <?php
+                    echo " / ";
+                } else {
+                    echo $value;
+                    echo " / ";
+                }
+            }
+
+            if(isset($_SESSION['b1'])){
+                echo $_SESSION['b1']; 
+                echo " / ";
+            }
+
+            if(isset($_SESSION['b2'])){
+                echo $_SESSION['b2']; 
+                echo " / ";
+            }
+
+            ?>
+             <span typeof="v:Breadcrumb"><span property="v:title"><?php echo $advertiser->post_title; ?></span></span>
+            <?php
+            //add url to session          
+        }
+        ?>
     </div>
 
 <?php

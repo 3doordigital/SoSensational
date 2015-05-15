@@ -227,7 +227,8 @@ if (empty($mainChildren)):
             ?>
              <span typeof="v:Breadcrumb"><span property="v:title"><?php echo $term_meta->name; ?></span></span>
             <?php
-            //add url to session           
+            //add url to session          
+            $_SESSION['b2'] = '<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to '.$term_meta->name.'" href="'.$_SERVER[REQUEST_URI].'" class="home">'.$term_meta->name.'</a></span>'; 
         }
         ?>
 
