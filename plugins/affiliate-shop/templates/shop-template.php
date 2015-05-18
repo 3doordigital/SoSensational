@@ -121,6 +121,7 @@ get_header();
             
 				<?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
             <?php } else {
+				$option = $wp_aff->get_option();
 				echo '<h1>'.( isset( $option['faceted']['home']['title'] ) ? $option['faceted']['home']['title'] : 'Shop' ).'</h1>';
 							if( isset( $option['faceted']['home']['intro'] ) ) echo wpautop(htmlspecialchars_decode( $option['faceted']['home']['intro'] ));
 			}
