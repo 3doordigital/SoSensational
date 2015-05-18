@@ -1797,6 +1797,18 @@ class WordPress_Affiliate_Shop {
             <?php } elseif( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 1 ) { 
 			?>
             	<table class="form-table" >
+                	<tr>
+                        <th>Shop Home Title</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][title]" value="<?php echo ( isset( $option['faceted']['home']['title'] ) ? $option['faceted']['home']['title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][home][title]">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Shop Home Intro</th>
+                        <td>
+                        	<?php wp_editor( ( isset( $option['faceted']['home']['intro'] ) ? $option['faceted']['home']['intro'] : '' ), 'home_intro', array( 'textarea_name' => $this->option_name.'[faceted][home][intro]', 'textarea_rows' => 5 ) ); ?>
+                        </td>
+                    </tr>
                     <tr>
                         <th>New In Title</th>
                         <td>

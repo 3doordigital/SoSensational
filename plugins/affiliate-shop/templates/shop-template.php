@@ -120,7 +120,9 @@ get_header();
             <h1><?php echo $term->name; ?></h1>
             
 				<?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
-            <?php } 
+            <?php } else {
+				echo '<h1>Home</h2>';
+			}?>
 				if( isset( $wp_query->query_vars['shop-option']	) ) {
 					global $wp_aff;
 					$option = $wp_aff->get_option();
