@@ -238,6 +238,7 @@ get_header();
 							';
                             if ( current_user_can('edit_posts') ) {
 							 	echo '<a class="edit_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&product='.$post->ID.'">Edit</a>';
+								echo '<a class="del_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=delete&product='.$post->ID.'">Delete</a>';
 							}
 							echo '           </div>
                                                 <div class="prod_price col-md-8">

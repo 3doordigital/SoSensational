@@ -176,6 +176,17 @@
 	font-size: 11px;
 	font-family: 'Open Sans', sans-serif;
 }
+.prod_title .del_link {
+	background-color: #A80406;
+	color: #fff;
+	display: inline-block;
+	padding: 3px 7px;	
+	position: absolute;
+	top: -22px;
+	right: -0px;
+	font-size: 11px;
+	font-family: 'Open Sans', sans-serif;
+}
 .product-info, .products .prod_title {
     min-height: 85px;
 }

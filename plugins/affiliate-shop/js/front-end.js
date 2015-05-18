@@ -111,4 +111,15 @@ jQuery(document).ready(function ($) {
             $('#wp_aff_size_filter').submit();
         });
     }
+	
+	
+	$('.del_link').on( 'click', function(e) {
+		//e.preventDefault();
+		if( confirm( 'Are you sure, this action cannot be undone?' ) ) {
+			return;
+		} else {
+			return false;	
+		}
+	});
+	
 });
