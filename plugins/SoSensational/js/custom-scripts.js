@@ -318,7 +318,6 @@ function loadSlider(arguments, sliderMode) {
     // on mobile there was a problem with  
     var clonedSliderDOM = jQuery('.flexslider').clone();  
     clonedSliderDOM.flexslider(arguments);
-    console.log(clonedSliderDOM);
     var oldSliderMode = function() {
         var classes = clonedSliderDOM.attr('class').split(/\s+/);
         return classes[1];
@@ -328,42 +327,46 @@ function loadSlider(arguments, sliderMode) {
     jQuery('.flexslider').addClass(sliderMode);        
 }   
 
-jQuery(window).ready(function ($) {
-    if (jqUpdateSize() < 768) {
-        arguments = getMobileSliderSettings();
-        sliderMode = 'mobile';
-    } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
-        arguments = getTabletSliderSettings();
-        sliderMode = 'tablet';
-    } else {
-        arguments = getDesktopSliderSettings();
-        sliderMode = 'desktop';
-    }
-    $('.flexslider').flexslider(arguments).addClass(sliderMode);      
-});
+if (jQuery('.flexslider-container.advertiser-profile').length) {
 
-jQuery(window).resize(function () {  
-    if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
-        arguments = getMobileSliderSettings(); 
-        sliderMode = 'mobile';
-        loadSlider(arguments, sliderMode);
-    } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
-        arguments = getTabletSliderSettings();
-        sliderMode = 'tablet';
-        loadSlider(arguments, sliderMode);         
-    } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {          
-        arguments = getDesktopSliderSettings();
-        sliderMode = 'desktop';
-        loadSlider(arguments, sliderMode);
-    }
+    jQuery(window).ready(function ($) {
+        if (jqUpdateSize() < 768) {
+            arguments = getMobileSliderSettings();
+            sliderMode = 'mobile';
+        } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
+            arguments = getTabletSliderSettings();
+            sliderMode = 'tablet';
+        } else {
+            arguments = getDesktopSliderSettings();
+            sliderMode = 'desktop';
+        }
+        $('.flexslider').flexslider(arguments).addClass(sliderMode);      
+    });
 
-})
+    jQuery(window).resize(function () {  
+        if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
+            arguments = getMobileSliderSettings(); 
+            sliderMode = 'mobile';
+            loadSlider(arguments, sliderMode);
+        } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
+            arguments = getTabletSliderSettings();
+            sliderMode = 'tablet';
+            loadSlider(arguments, sliderMode);         
+        } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {          
+            arguments = getDesktopSliderSettings();
+            sliderMode = 'desktop';
+            loadSlider(arguments, sliderMode);
+        }
 
-jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
-    var w = jQuery(window).width()
-    if(w < 800) {
-        e.preventDefault();
-        jQuery(jQuery(this).parent().find('ul')[0]).toggleClass('visible');
-    }
+    });
 
-});
+    jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
+        var w = jQuery(window).width()
+        if(w < 800) {
+            e.preventDefault();
+            jQuery(jQuery(this).parent().find('ul')[0]).toggleClass('visible');
+        }
+
+    });
+
+}

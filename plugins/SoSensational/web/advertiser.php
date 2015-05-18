@@ -80,7 +80,7 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
     <div class="ss_clear"></div>
 </div>
 <div class="ss_clear"></div>
-<div class="flexslider-container">
+<div class="flexslider-container advertiser-profile">
     <div class="flexslider">
         <ul class="slides">
             <?php foreach ($products as $prod): ?> 
