@@ -185,7 +185,7 @@ class WordPress_Affiliate_Shop {
 		
 		if( $_SERVER['REQUEST_URI'] == '/shop/' ) {
 			$option = $this->get_option();
-			$title = ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' ); 
+			$desc = ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' ); 
 		}
 		
 		return $desc;
