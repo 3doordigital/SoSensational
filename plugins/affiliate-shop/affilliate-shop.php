@@ -2087,7 +2087,11 @@ class WordPress_Affiliate_Shop {
 				foreach( $products as $product ) { 
 					wp_trash_post( $product );
 				}
-				wp_redirect( $_REQUEST['_wp_http_referer'] );
+				if( isset( $_REQUEST['referrer'] ) ) {
+					wp_redirect( $_REQUEST['referrer'] );
+				} else {
+					wp_redirect( $_REQUEST['_wp_http_referer'] );
+				}
 			}
 		?>
         
