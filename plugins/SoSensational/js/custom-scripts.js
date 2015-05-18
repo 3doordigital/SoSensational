@@ -135,25 +135,7 @@ jQuery(document).ready(function($) {
             }               
         });
     });  
-    
-    /*--------------------------------------------------------------------------
-      Attaching a flexslider to 'related advertisers' module on the shop page.
-     -------------------------------------------------------------------------*/
-    
-    $('.advertisers-carousel > .flexslider').flexslider({
-        animation: 'slide',
-        itemWidth: 365,
-        itemMargin: 15,
-        controlNav: false,
-        prevText: "",
-        nextText: "",
-        animationLoop: true,
-        slideshow: false,
-        start: function() {
-            $('.slides').show();
-        }        
-    });
-    
+     
     /*--------------------------------------------------------------------------
      Enable submit button in a form that changed on categories edit page.
      -------------------------------------------------------------------------*/     
@@ -325,7 +307,7 @@ function getDesktopSliderSettingsB() {
         nextText: " ",
         slideshow: false,
         start: function () {
-            $('.slides').show();
+            jQuery('.slides').show();
         }            
     };
 }
@@ -338,7 +320,7 @@ function getMobileSliderSettingsB() {
         controlNav: false,   
         itemMargin: 0,
         start: function () {
-            $('.slides').show();
+            jQuery('.slides').show();
         }
     };                
 }
@@ -409,20 +391,22 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
 }    
 
 // Dynamic flexslider - featured and related sliders (category and shop pages)
-if (jQuery('.advertisers-carousel').length) {
+
 
     jQuery(window).ready(function ($) {
-        if (jqUpdateSize() < 768) {
-            arguments = getMobileSliderSettingsB();
-            sliderMode = 'mobile';
-        } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
-            arguments = getTabletSliderSettingsB();
-            sliderMode = 'tablet';
-        } else {
-            arguments = getDesktopSliderSettingsB();
-            sliderMode = 'desktop';
+        if (jQuery('.advertisers-carousel').length) {
+            if (jqUpdateSize() < 768) {
+                arguments = getMobileSliderSettingsB();
+                sliderMode = 'mobile';
+            } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
+                arguments = getTabletSliderSettingsB();
+                sliderMode = 'tablet';
+            } else {
+                arguments = getDesktopSliderSettingsB();
+                sliderMode = 'desktop';
+            }
+            $('.flexslider').flexslider(arguments).addClass(sliderMode);    
         }
-        $('.flexslider').flexslider(arguments).addClass(sliderMode);      
     });
 
     jQuery(window).resize(function () {  
@@ -441,7 +425,6 @@ if (jQuery('.advertisers-carousel').length) {
         }
     });
     
-} 
 
 jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
     var w = jQuery(window).width();
