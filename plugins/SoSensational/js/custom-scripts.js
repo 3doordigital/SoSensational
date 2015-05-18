@@ -300,7 +300,7 @@ function getDesktopSliderSettingsB() {
         animationLoop: false,
         controlNav: false,
         itemWidth: 365,
-        itemMargin: 40,
+        itemMargin: 15,
         prevText: " ",
         nextText: " ",
         slideshow: false,
@@ -389,7 +389,6 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
 }    
 
 // Dynamic flexslider - featured and related sliders (category and shop pages)
-
 
     jQuery(window).ready(function ($) {
         if (jQuery('.advertisers-carousel').length) {
