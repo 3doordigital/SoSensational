@@ -134,6 +134,7 @@ class WordPress_Affiliate_Shop {
         
 		add_filter( 'wp_title', array( $this, 'some_callback' ), 100, 2 );
 		add_filter( 'wpseo_canonical', array( $this, 'canonical' ) );
+		add_filter( 'wpseo_metadesc', array( $this, 'description' ) );
 		
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
@@ -179,6 +180,18 @@ class WordPress_Affiliate_Shop {
 		return $title;
 		
 	}
+	
+	function description( $desc ) {
+		
+		if( $_SERVER['REQUEST_URI'] == '/shop/' ) {
+			$option = $this->get_option();
+			$title = ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' ); 
+		}
+		
+		return $desc;
+		
+	}
+	
 	function canonical( $data ) {
 		if( preg_match( '#(brands-and-boutiques|shop)#', $_SERVER['REQUEST_URI'] ) ) {
 			return 	get_bloginfo( 'url' ).strtok($_SERVER["REQUEST_URI"],'?');
@@ -1806,6 +1819,12 @@ class WordPress_Affiliate_Shop {
                         <th>Shop Home Meta Title</th>
                         <td>
                             <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][meta_title]" value="<?php echo ( isset( $option['faceted']['home']['meta_title'] ) ? $option['faceted']['home']['meta_title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][home][meta_title]">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Shop Home Meta Description</th>
+                        <td>
+                            <textarea class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][meta_desc]"  id="<?php echo $this->option_name; ?>[faceted][home][meta_desc]">><?php echo ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' ); ?></textarea>
                         </td>
                     </tr>
                     <tr>
