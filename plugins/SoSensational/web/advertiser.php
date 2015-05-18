@@ -30,6 +30,41 @@ if (function_exists('yoast_breadcrumb')) {
 }
 ?>
 
+<div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+        <?php if(function_exists('bcn_display'))
+        {
+            $bred = bcn_display(true);
+            $bred_array = explode(" / ", $bred);
+            foreach ($bred_array as $key => $value) {
+                if($key == sizeof($bred_array)-1) {
+                    ?>
+                    <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to SoSensational." href="/brands-and-boutiques" class="home">BRANDS & BOUTIQUES</a></span>
+                    <?php
+                    echo " / ";
+                } else {
+                    echo $value;
+                    echo " / ";
+                }
+            }
+
+            if(isset($_SESSION['b1'])){
+                echo $_SESSION['b1']; 
+                echo " / ";
+            }
+
+            if(isset($_SESSION['b2']) && $_GET['featured'] != true){
+                echo $_SESSION['b2']; 
+                echo " / ";
+            }
+
+            ?>
+             <span typeof="v:Breadcrumb"><span property="v:title"><?php echo $advertiser->post_title; ?></span></span>
+            <?php
+            //add url to session          
+        }
+        ?>
+    </div>
+
 <?php
 $advertiserLink = isset($meta['ss_affiliate_advertiser_link'][0]) && !empty($meta['ss_affiliate_advertiser_link'][0]) ? $meta['ss_affiliate_advertiser_link'][0] : $meta['ss_advertiser_website'][0];
 $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
@@ -45,7 +80,7 @@ $strippedAdvertiserLink = preg_replace('|http://|', '', $advertiserLink);
     <div class="ss_clear"></div>
 </div>
 <div class="ss_clear"></div>
-<div class="flexslider-container">
+<div class="flexslider-container advertiser-profile">
     <div class="flexslider">
         <ul class="slides">
             <?php foreach ($products as $prod): ?> 

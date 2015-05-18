@@ -826,6 +826,9 @@ class WordPress_Affiliate_Shop {
 		
 		$url = add_query_arg( 'colour', $colours, $url );
 		$url = str_replace( '%2C', ',', $url);
+        
+
+        
 		wp_safe_redirect( $url );
 	}
 	
@@ -1239,7 +1242,7 @@ class WordPress_Affiliate_Shop {
             }
         if ( ! isset ( $_POST['_wp_http_referer'] ) )
             die( 'Missing target.' );
-
+        
         //print_var($term);
         wp_safe_redirect( $url );
         exit;
