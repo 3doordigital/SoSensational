@@ -135,25 +135,7 @@ jQuery(document).ready(function($) {
             }               
         });
     });  
-    
-    /*--------------------------------------------------------------------------
-      Attaching a flexslider to 'related advertisers' module on the shop page.
-     -------------------------------------------------------------------------*/
-    
-    $('.advertisers-carousel > .flexslider').flexslider({
-        animation: 'slide',
-        itemWidth: 365,
-        itemMargin: 15,
-        controlNav: false,
-        prevText: "",
-        nextText: "",
-        animationLoop: true,
-        slideshow: false,
-        start: function() {
-            $('.slides').show();
-        }        
-    });
-    
+     
     /*--------------------------------------------------------------------------
      Enable submit button in a form that changed on categories edit page.
      -------------------------------------------------------------------------*/     
@@ -176,21 +158,19 @@ jQuery(document).ready(function($) {
     var urls = [];
     var mainCategory;
 
-    // was not working correct
-
-    // str.each(function(index) {
-    //     var url = $(this).attr('href');
-    //     urls.push(url);      
-    //     if (urls.length === 3) {
-    //         var slug = urls[2].slice(7);            
-    //         $(this).attr('href', urls[1] + slug);  
-    //         mainCategory = $(this).attr('href');
-    //     }         
-    //     if (urls.length === 4) {
-    //         var slug = urls[3].slice(7);    
-    //         $(this).attr('href', mainCategory + '/' + slug);                 
-    //     }
-    // });
+     str.each(function(index) {
+         var url = $(this).attr('href');
+         urls.push(url);      
+         if (urls.length === 3) {
+             var slug = urls[2].slice(7);            
+             $(this).attr('href', urls[1] + slug);  
+             mainCategory = $(this).attr('href');
+         }         
+         if (urls.length === 4) {
+             var slug = urls[3].slice(7);    
+             $(this).attr('href', mainCategory + '/' + slug);                 
+         }
+     });
     
     /*--------------------------------------------------------------------------
      Preview functionality on advertiser edit page
@@ -255,7 +235,7 @@ jQuery(document).ready(function($) {
 
 
 /*------------------------------------------------------------------------------
- Dynamic Flexslider on advertiser profile page - adapts to the viewport size
+ Dynamic Flexslider - adapts to the viewport size
  -----------------------------------------------------------------------------*/ 
 var sliderMode;
 var arguments;
@@ -266,7 +246,7 @@ function jqUpdateSize() {
 }
 
 function attachSlider(arguments) {
-    $('.flexslider').flexslider(arguments);
+    jQuery('.flexslider').flexslider(arguments);
 }
 
 function getDesktopSliderSettings() {
@@ -280,7 +260,7 @@ function getDesktopSliderSettings() {
         nextText: " ",
         slideshow: false,
         start: function () {
-            $('.slides').show();
+            jQuery('.slides').show();
         }            
     };
 }
@@ -293,7 +273,7 @@ function getMobileSliderSettings() {
         controlNav: false,   
         itemMargin: 0,
         start: function () {
-            $('.slides').show();
+            jQuery('.slides').show();
         }
     };                
 }
@@ -309,10 +289,55 @@ function getTabletSliderSettings() {
         nextText: " ",
         slideshow: false,
         start: function () {
-            $('.slides').show();
+            jQuery('.slides').show();
         }            
     };              
-}    
+}   
+// Featured and related sliders
+function getDesktopSliderSettingsB() {
+    return arguments = {
+        animation: "slide",
+        animationLoop: false,
+        controlNav: false,
+        itemWidth: 365,
+        itemMargin: 40,
+        prevText: " ",
+        nextText: " ",
+        slideshow: false,
+        start: function () {
+            jQuery('.slides').show();
+        }            
+    };
+}
+
+function getMobileSliderSettingsB() {
+    return arguments = {
+        animation: "slide",
+        prevText: " ",
+        nextText: " ",    
+        controlNav: false,   
+        itemMargin: 0,
+        start: function () {
+            jQuery('.slides').show();
+        }
+    };                
+}
+
+function getTabletSliderSettingsB() {
+    return arguments = {
+        animation: "slide",
+        animationLoop: false,
+        controlNav: false,
+        itemWidth: 355,
+        itemMargin: 15,
+        prevText: " ",
+        nextText: " ",
+        slideshow: false,
+        start: function () {
+            jQuery('.slides').show();
+        }            
+    };              
+} 
 
 function loadSlider(arguments, sliderMode) {     
     // on mobile there was a problem with  
@@ -327,6 +352,8 @@ function loadSlider(arguments, sliderMode) {
     jQuery('.flexslider').addClass(sliderMode);        
 }   
 
+
+// Dynamic flexslider - advertiser profile page
 if (jQuery('.flexslider-container.advertiser-profile').length) {
 
     jQuery(window).ready(function ($) {
@@ -357,16 +384,52 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
             sliderMode = 'desktop';
             loadSlider(arguments, sliderMode);
         }
-
     });
+    
+}    
 
-    jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
-        var w = jQuery(window).width()
-        if(w < 800) {
-            e.preventDefault();
-            jQuery(jQuery(this).parent().find('ul')[0]).toggleClass('visible');
+// Dynamic flexslider - featured and related sliders (category and shop pages)
+
+
+    jQuery(window).ready(function ($) {
+        if (jQuery('.advertisers-carousel').length) {
+            if (jqUpdateSize() < 768) {
+                arguments = getMobileSliderSettingsB();
+                sliderMode = 'mobile';
+            } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
+                arguments = getTabletSliderSettingsB();
+                sliderMode = 'tablet';
+            } else {
+                arguments = getDesktopSliderSettingsB();
+                sliderMode = 'desktop';
+            }
+            $('.flexslider').flexslider(arguments).addClass(sliderMode);    
         }
-
     });
 
-}
+    jQuery(window).resize(function () {  
+        if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
+            arguments = getMobileSliderSettingsB(); 
+            sliderMode = 'mobile';
+            loadSlider(arguments, sliderMode);
+        } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
+            arguments = getTabletSliderSettingsB();
+            sliderMode = 'tablet';
+            loadSlider(arguments, sliderMode);         
+        } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {          
+            arguments = getDesktopSliderSettingsB();
+            sliderMode = 'desktop';
+            loadSlider(arguments, sliderMode);
+        }
+    });
+    
+
+jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
+    var w = jQuery(window).width();
+    if(w < 800) {
+        e.preventDefault();
+        jQuery(jQuery(this).parent().find('ul')[0]).toggleClass('visible');
+    }
+
+});
+
