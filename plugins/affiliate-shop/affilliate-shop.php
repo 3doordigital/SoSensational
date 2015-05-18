@@ -2368,6 +2368,24 @@ class WordPress_Affiliate_Shop {
 		<div class="wrap">
         	<h2>Affiliate Shop</h2>
         	<?php if( !isset( $_REQUEST['action'] ) || ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) ) { ?>
+            <?php 
+			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_GET['product'] ) ) {
+					$products = array();
+					if( !is_array( $_GET['product'] ) ) {
+						$products[] = $_GET['product'];
+					} else {
+						$products = $_GET['product'];
+					}
+					foreach( $products as $product ) { 
+						wp_trash_post( $product );
+					}
+					if( isset( $_GET['referrer'] ) ) {
+						wp_redirect( $_GET['referrer'] );
+					} else {
+						wp_redirect( $_GET['_wp_http_referer'] );
+					}
+				}
+			?>
                 <h3>Products</h3>
                 <?php
                     $ProductTable = new AllProductTable();
