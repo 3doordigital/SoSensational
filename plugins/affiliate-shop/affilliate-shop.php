@@ -173,7 +173,7 @@ class WordPress_Affiliate_Shop {
 			$title .= get_bloginfo( 'name' );
 		} elseif( $_SERVER['REQUEST_URI'] == '/shop/' ) {
 			$option = $this->get_option();
-			$title = ( isset( $option['faceted']['sale']['meta_title'] ) ? $option['faceted']['sale']['meta_title'] : '' ); 
+			$title = ( isset( $option['faceted']['sale']['meta_title'] ) ? $option['faceted']['sale']['meta_title'] : 'Shop for Women | '.get_bloginfo( 'name' ) ); 
 		}
 		
 		return $title;
