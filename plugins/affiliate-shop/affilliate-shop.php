@@ -146,7 +146,7 @@ class WordPress_Affiliate_Shop {
 	function some_callback( $title, $sep ){
 		global $wp_query;
 		//print_var( $wp_query );
-		
+		$shopcat = 0;
 		if( get_query_var( 'shop-cat' ) != '' ) {
 			$term = get_query_var( 'shop-cat' );
 			$tax = 'wp_aff_categories';
@@ -171,7 +171,7 @@ class WordPress_Affiliate_Shop {
 			}
 			
 			$title .= get_bloginfo( 'name' );
-		} else {
+		} elseif( $_SERVER['REQUEST_URI'] == '/shop/' ) {
 			$option = $this->get_option();
 			$title = ( isset( $option['faceted']['sale']['meta_title'] ) ? $option['faceted']['sale']['meta_title'] : '' ); 
 		}
