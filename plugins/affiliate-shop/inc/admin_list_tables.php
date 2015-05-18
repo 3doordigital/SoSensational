@@ -1161,9 +1161,9 @@ class AllProductTable extends WP_List_Table {
 
 class ListProductSearch extends WP_List_Table {
 
-    var $example_data;
     var $total;
-function __construct( $data ){
+	var $data;
+function __construct( $data = array() ){
 
     $this->data = $data;
     global $status, $page;
@@ -1319,7 +1319,7 @@ function process_bulk_action() {
 }
     
 function prepare_items() {
-    global $wpdb; //This is used only if making any database queries
+	//print_var( $this->data );
 	$data = $this->data['items'];
     $per_page = 50;
 
@@ -1330,14 +1330,7 @@ function prepare_items() {
     $this->_column_headers = array($columns, $hidden, $sortable);
 
     $this->process_bulk_action();
-    
-	if( $this->get_pagenum() > 1 ) {
-        $pageNum = $this->get_pagenum() - 1;
-        $offset = $pageNum * $per_page;
-    } else {
-        $offset = 0;   
-    }
-	    
+	  
 	if( !isset( $_SESSION['product_data'] ) ) {
 		$_SESSION['product_data'] = $data;
 	} else {
@@ -1356,6 +1349,7 @@ function prepare_items() {
         'total_pages' => ceil($total_items/$per_page)   //WE have to calculate the total number of pages
     ) );
 }
+
 }
 
 class AddOnsTable extends WP_List_Table {

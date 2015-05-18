@@ -19,17 +19,30 @@
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-       
+
+    .carousel-indicators {
+        display: none;
+    }
+
     
 }    
     
 
 @media (min-width: 768px) and (max-width: 991px) {
+
+    .carousel-indicators {
+        display: none;
+    }
+
     
     #breadcrumbs {
         margin-bottom: 20px;
     }    
-    
+
+    #mega-menu-wrap-primary .mega-menu-toggle ~ #mega-menu-primary {
+        width: 96%;
+        text-align: center;
+    }    
 /*------------------------------------------------------------------------------
                          Advertiser Profile Page
 ------------------------------------------------------------------------------*/     
@@ -51,7 +64,25 @@
             padding: 0 20px;
             line-height: 50px;
         }
-    }    
+    }   
+
+    #homeblog>div>div {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div>div.last {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div .col-md-12 .row {
+        width: 100%;
+    }
+
+    #footer .navbar-header {
+        float: none;
+    } 
     
 /*------------------------------------------------------------------------------
                                     Blog main page
@@ -69,6 +100,30 @@
 }
 
 @media (max-width: 767px) {
+
+    #mega-menu-wrap-primary .mega-menu-toggle + #mega-menu-primary li.mega-menu-item.mega-menu-item-11807 > ul.mega-sub-menu.visible {
+
+            display: block !important ;
+         
+    }
+
+    .carousel-indicators {
+        display: none;
+    }
+
+    .blog-masthead .col-xs-24 {
+        text-align: center;
+    }
+
+    img.aligncenter {
+        max-width: 100%;
+        height: auto;
+    }
+
+    iframe {
+        max-width: 100%;
+    }
+   
     
 /*------------------------------------------------------------------------------
                    Advertiser Profile Page, Footer, Header
@@ -199,6 +254,38 @@
         }
     }
 
+    #homeblog>div>div {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div>div.last {
+        padding-left: 15px;
+        padding-right: 0px;
+    }
+
+    #homeblog>div .col-md-12 .row {
+        width: 100%;
+    }
+
+    #homenewsletter .newsform_send {
+        input {
+            width: 100%;
+            border-right: solid 1px #eeeeee;
+            background: transparent;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .bigimgbox h2 {
+        font-size: 30px;
+    }
+
+    
+
 /*------------------------------------------------------------------------------
                                     Blog main page
 ------------------------------------------------------------------------------*/
@@ -265,8 +352,35 @@
     .price > a {
         margin-bottom: 10px;
     }
+
+
+    .single-wp_comp_man{
+        .sidebox {
+            .newsletter_signup {
+                display: none;
+            }
+        }
+
+        .container.pagetop {
+            h1 span{
+                text-align: center;
+            }
+        }
+    }
     
 }
+
+
+/*------------------------------------------------------------------------------
+                            Portrait only 
+------------------------------------------------------------------------------*/
+
+@media (max-width: 767px) and (orientation: portrait) {
+    #homeblog .hidden-portrait {
+        display: none;
+    }
+}
+
 
 
 

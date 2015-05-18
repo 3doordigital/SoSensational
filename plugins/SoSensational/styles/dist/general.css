@@ -2,80 +2,80 @@
                             Font Sizes
 ------------------------------------------------------------------------------*/
 /*----------------------Advertsiser Page, Header, Footer----------------------*/
-/* line 6, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 6, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .page h1 {
   font-size: 3.8rem; }
 
-/* line 10, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 10, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 #breadcrumbs {
   margin-bottom: 5rem; }
-  /* line 12, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  /* line 12, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
   #breadcrumbs, #breadcrumbs span {
     font-size: 1.2rem; }
-  /* line 15, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  /* line 15, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
   #breadcrumbs a {
     font-size: 1.2rem; }
 
-/* line 21, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 21, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .backToBB, .ss_description_single_left {
   font-size: 1.6rem;
   line-height: 2.8rem; }
 
-/* line 27, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 27, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .ss_description_company p {
   font-size: 1.4rem;
   line-height: 2.8rem; }
 
-/* line 32, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 32, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .ss_conpany_info_right_wrapper .visit_site_ss, .ss_description_single_right .visit_site_ss {
   padding: 2.3rem 0 2.3rem 0;
   font-size: 1.6rem; }
 
-/* line 38, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 38, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .ss_company_info_right img {
   display: block;
   margin: 0 auto; }
 
-/* line 44, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 44, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 #footer h2 {
   font-size: 2.2rem; }
 
-/* line 49, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 49, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 #footer .nav > li > a {
   font-size: 1.3rem; }
 
 /* Advertsier.php flexslider carousel with products */
-/* line 56, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 56, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .button_ss:hover {
   text-decoration: underline;
   color: #fff; }
 
-/* line 63, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 63, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 #footer input {
   font-size: 1.4rem; }
 
-/* line 70, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 70, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 #topbar .blog-masthead span {
   font-size: 1.4rem; }
 
-/* line 77, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 77, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .backToBB.lower {
   margin-top: 30px;
   display: none; }
 
-/* line 83, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 83, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 #menu-footer {
   margin: 0; }
 
-/* line 89, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 89, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #fff; }
 
-/* line 94, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 94, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 h2.footer-menu-heading {
   float: left; }
 
-/* line 98, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 98, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 #footer button.navbar-toggle {
   background-color: #A0862A;
   border: 1px solid #fff;
@@ -83,36 +83,36 @@ h2.footer-menu-heading {
   float: left;
   margin: 10px 10px 0 0; }
 
-/* line 108, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 108, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .navbar-brand > img {
   max-width: 140px;
   margin-top: 10px; }
 
 /*-----------------------Brands and Boutiques Categories ---------------------*/
-/* line 118, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 118, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .blackbar h2 > span, .whitebar h2 > span {
   font-size: 3rem; }
 
-/* line 123, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 123, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .fadebox {
   margin-bottom: 15px; }
 
-/* line 127, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 127, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .advertiser-block-wrapper {
   border: solid 1px #bbb; }
 
 /*-----------------Flexslider on the advertiser profile page------------------*/
-/* line 135, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 135, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .flexslider.mobile .slides > li {
   margin: 0; }
 
-/* line 141, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 141, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .image_description_single {
   position: relative;
   padding-bottom: 56.25%;
   padding-top: 25px;
   height: 0; }
-  /* line 146, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  /* line 146, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
   .image_description_single iframe {
     width: 100%;
     height: 100%;
@@ -120,44 +120,44 @@ h2.footer-menu-heading {
     top: 0;
     left: 0; }
 
-/* line 155, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 155, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .btn {
   white-space: normal; }
 
 /*-----------------------------------Hot Deals--------------------------------*/
-/* line 160, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 160, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .deal-block {
   border: 1px solid #000;
   margin-bottom: 15px;
   text-align: center;
   min-height: 400px; }
 
-/* line 169, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 169, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .blog-masthead span {
   text-decoration: underline; }
 
-/* line 175, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 175, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 ul.pagination-centered {
   width: 100%;
   text-align: center; }
-  /* line 179, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  /* line 179, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
   ul.pagination-centered li {
     display: inline-block; }
 
-/* line 185, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 185, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 ul.sub-footer-menu {
   width: auto;
   display: block; }
-  /* line 188, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  /* line 188, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
   ul.sub-footer-menu li {
     list-style: none;
     padding: 0 20px;
     border-right: 1px solid #eee;
     float: left; }
-    /* line 193, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+    /* line 193, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
     ul.sub-footer-menu li:last-child {
       border: none; }
-    /* line 196, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+    /* line 196, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
     ul.sub-footer-menu li a {
       font-family: 'Open Sans', sans-serif;
       text-transform: lowercase;
@@ -165,32 +165,58 @@ ul.sub-footer-menu {
       font-size: 13px;
       color: #333;
       display: inline-block; }
-      /* line 203, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+      /* line 203, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
       ul.sub-footer-menu li a:first-letter {
         text-transform: uppercase; }
 
-/* line 210, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 210, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 #subfoot span {
   float: left;
   padding: 0 20px 0 7.5px;
   display: block;
   border-right: 1px solid #eee; }
 
-/* line 218, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 218, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .shop_side > h3 {
   display: inline-block;
   height: 15px; }
 
-/* line 223, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 223, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .shop_side > h3 > span > i {
   position: relative;
   top: -10px; }
-  /* line 226, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  /* line 226, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
   .shop_side > h3 > span > i:hover {
     cursor: pointer; }
 
-/* line 231, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 231, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
 button#shop-controls-toggle {
   margin: 0 auto;
   width: 200px; }
+
+/*-----------------------------------featured brand--------------------------------*/
+/* line 238, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.featured-brand {
+  margin-top: 40px; }
+  /* line 241, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  .featured-brand .line span {
+    height: 1px;
+    width: 100%;
+    display: block;
+    background: #a0862a;
+    position: relative;
+    top: -3.2rem; }
+  /* line 250, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  .featured-brand .line h2 {
+    text-align: center;
+    background: #FFFFFF;
+    position: relative;
+    z-index: 10;
+    display: block;
+    margin: 0 auto !important;
+    width: 310px;
+    font-size: 3.8rem; }
+  /* line 263, /Applications/MAMP/htdocs/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  .featured-brand .featued-list {
+    margin-top: 30px; }
 

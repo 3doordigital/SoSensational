@@ -141,12 +141,24 @@ class comp_list extends WP_List_Table {
         foreach($query->posts AS $post) {
             setup_postdata($post);
             $post_meta = get_post_meta($post->ID);
+			
+			$args2 = array(
+				'post_type' => 'wp_comp_entries',
+				'meta_query' => array(
+					'key'       => 'wp_comp_entry_competition-id',
+					'value'     => $post->ID,
+					'compare'   => '=',
+					'type'      => 'CHAR',
+				)
+			);
+			$query2 = new WP_Query( $args2 );
+			print_var( $query2 );
             $data[$i] = array(
                 'ID' => $post->ID,
                 'title' => get_the_title($post->ID),
                 'sdate' => $post_meta['wp_comp_sdate'][0],
                 'edate' => $post_meta['wp_comp_edate'][0],
-                'entries' => $post_meta['wp_comp_entries'][0],
+                'entries' => print_r( $query2, true ),
             );
             $i++;
         }

@@ -4,7 +4,7 @@
     </ul>
 </nav>
 
-<?php echo displaySystemNotice(); ?>
+
 
 <?php
 do_action('ss_css');
@@ -33,7 +33,10 @@ $args = array(
     'post_status' => array('publish', 'pending', 'draft'),
     'author' => $user->ID
 );
-?> <ul class="nav nav-pills nav-stacked"> 
+?> 
+
+<?php echo displaySystemNoticeForSteps($user, $advertiser); ?>
+<ul class="nav nav-pills nav-stacked"> 
 <?php
 $my_query = new WP_Query($args);
 $num_of_products = null;

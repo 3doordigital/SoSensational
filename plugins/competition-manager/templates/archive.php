@@ -8,10 +8,10 @@
         } 
     ?>
 </div>
-<div class="container">
+<div class="container comps">
     <div class="row">
         <div class="col-md-16" id="content">
-            <h1 class="cattitle">Competitions</h1>
+            
             <?php
                 $i = 1;
                 $x = 0;
@@ -37,7 +37,7 @@
                         ?>
                         
                         <?php
-                            the_excerpt_max_charlength(340);
+                            the_excerpt_max_charlength(340, true);
                         ?>
                     </div>
                 </div>

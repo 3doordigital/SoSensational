@@ -38,7 +38,7 @@ class aff_category_widget extends WP_Widget {
                 echo '<ul class="nav navbar-nav shop-filter">';
 
                 global $wp_aff;
-                $fn_include = $wp_aff->get_product_terms('wp_aff_categories');
+                //$fn_include = $wp_aff->get_product_terms('wp_aff_categories');
 
                 $walker = new Faceted_Category_Walker;
                 $arg = array( 
@@ -114,14 +114,14 @@ class aff_brand_widget extends WP_Widget {
         }
 		
 		global $wp_aff;
-        $fn_include = $wp_aff->get_product_terms('wp_aff_brands');
+        //$fn_include = $wp_aff->get_product_terms('wp_aff_brands');
 		
         echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_brand_filter" method="POST">';
             echo '<div class="wp_aff_brands navbar navbar-default">';
                 echo '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">';
                     echo '<ul class="nav navbar-nav shop-filter">';
                         $walker = new Faceted_Brand_Walker;
-                        wp_list_categories( array( 'include' => $fn_include, 'depth' => 0, 'taxonomy' => 'wp_aff_brands', 'hide_empty' => 0, 'walker' => $walker, 'title_li' => '', 'orderby' => 'name', 'hierarchical' => 1 ) );
+                        wp_list_categories( array( 'depth' => 0, 'taxonomy' => 'wp_aff_brands', 'hide_empty' => 0, 'walker' => $walker, 'title_li' => '', 'orderby' => 'name', 'hierarchical' => 1 ) );
                     echo '</ul>';
                 echo '</div>';
             echo '</div>';
@@ -292,7 +292,8 @@ class aff_colour_widget extends WP_Widget {
      * @param array $instance
      */
     public function widget( $args, $instance ) {
-        global $wp_query;
+		
+        //global $wp_query;
         echo $args['before_widget'];
         if ( ! empty( $instance['title'] ) ) {
             echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
@@ -307,13 +308,11 @@ class aff_colour_widget extends WP_Widget {
             'show_count' => 0,
             'hierarchical' => 0,
             'taxonomy' => 'wp_aff_colours',
-			'name' => 'wp_aff_colours',
-			'hide_empty' => 1,
+			'hide_empty' => 0,
         );
 		
 		if( isset( $_REQUEST['colour'] ) ) 
 			$arg['selected'] = $_REQUEST['colour'];
-		
 		$colours = get_categories( $arg );
 		foreach( $colours as $colour ) {
 			$colour_code = get_metadata('wp_aff_colours', $colour->term_id, 'colour_code', true);
@@ -407,13 +406,12 @@ class aff_size_widget extends WP_Widget {
             'show_count' => 0,
             'hierarchical' => 0,
             'taxonomy' => 'wp_aff_sizes',
-			'name' => 'wp_aff_sizes',
             'class' => 'form-control wp_aff_sizes_select',
             'show_option_none' => 'All Sizes'
         );
 		
 		$sizes = get_categories( $arg );
-		if( $fn_include != 'none' ) {
+		//if( $fn_include != 'none' ) {
 			foreach( $sizes as $size ) {
 				$checked = 0;
 				if( isset( $_REQUEST['size'] ) ) {
@@ -429,9 +427,9 @@ class aff_size_widget extends WP_Widget {
 				echo '<input type="checkbox" '.( $checked > 0 ? 'checked' : '' ).' data-id="'.$size->term_id.'" name="wp_aff_sizes[]" class="hide_check" value="'.$size->term_id.'">';
 				echo '</div>';
 			}
-		} else {
-			echo '<p>No sizes available with the current filters</p>';
-		}
+		//} else {
+		//	echo '<p>No sizes available with the current filters</p>';
+		//}
 		echo '<input type="hidden" name="action" value="wp_aff_size_filter">';
 		wp_nonce_field( 'wp_aff_size_filter', '_wpnonce', true );
 		echo '</form>';

@@ -1,6 +1,6 @@
 <?php get_header(); ?>
-<div class="container">
-    <h2 class="pagetitle"><span>Style Advice &amp; Blog</span></h2>
+<div class="container pagetop">
+    <h2 class="pagetitle"><span>Style Advice &amp; Blog</span>
     <?php
     if (function_exists('wp_nav_menu')) {
         wp_nav_menu(array(
@@ -16,16 +16,22 @@
         );
     }
     ?>
-
+</h2>
     <?php
     if (function_exists('yoast_breadcrumb')) {
-        yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
+        //yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
     }
     ?>
+    <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+		<?php if(function_exists('bcn_display'))
+        {
+            bcn_display();
+        }?>
+    </div>
 </div>
-<div class="container">
+<div class="container blog">
     <div class="row">
-        <div class="col-md-16" id="content">
+        <div class="col-sm-24 col-md-24 col-lg-16" id="content">
 <?php
 if (have_posts()) : while (have_posts()) : the_post();
         ?>
@@ -55,8 +61,8 @@ if (have_posts()) : while (have_posts()) : the_post();
                 <?php comments_template(); ?>
             <?php endif; ?>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-7">
+        <div class="col-md-1 visible-lg"></div>
+        <div class="col-lg-7 col-sm-offset-1 visible-lg">
 <?php dynamic_sidebar('blog_sidebar'); ?> 
         </div>
     </div>

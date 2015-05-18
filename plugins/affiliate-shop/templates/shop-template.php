@@ -9,7 +9,7 @@ get_header();
         You Are Here:
 		<span prefix="v: http://rdf.data-vocabulary.org/#">
 			<span typeof="v:Breadcrumb">
-                <a href="http://sosen.3doordigital.com" rel="v:url" property="v:title">Home</a>
+                <a href="/" rel="v:url" property="v:title">Home</a>
             </span> / 
             <?php if( !isset( $wp_query->query_vars['shop-cat'] ) ) { ?>
             
@@ -115,9 +115,11 @@ get_header();
                 }
                 
             ?>
+            <div class="cat-intro">
             <?php if( $parent != 0 ) { ?>
             <h1><?php echo $term->name; ?></h1>
-            <?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
+            
+				<?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
             <?php } 
 				if( isset( $wp_query->query_vars['shop-option']	) ) {
 					global $wp_aff;
@@ -129,7 +131,7 @@ get_header();
 							break;
 						case 'sale' :
 							echo '<h1>'.( isset( $option['faceted']['sale']['title'] ) ? $option['faceted']['sale']['title'] : 'Sale Items' ).'</h1>';
-							if( isset( $option['faceted']['shop']['intro'] ) ) echo wpautop(htmlspecialchars_decode( $option['faceted']['sale']['intro'] ));
+							if( isset( $option['faceted']['sale']['intro'] ) ) echo wpautop(htmlspecialchars_decode( $option['faceted']['sale']['intro'] ));
 							break;
 							
 						case 'picks' :
@@ -139,6 +141,7 @@ get_header();
 					}
 				}
 			?>
+            </div>
             <div class="products">
                 <?php
                     global $wp_aff;
@@ -234,7 +237,7 @@ get_header();
                                                     <h4>'. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
 							';
                             if ( current_user_can('edit_posts') ) {
-							 	echo '<a href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&product='.$post->ID.'">(edit)</a>';
+							 	echo '<a class="edit_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&product='.$post->ID.'">Edit</a>';
 							}
 							echo '           </div>
                                                 <div class="prod_price col-md-8">
@@ -274,7 +277,7 @@ get_header();
                  */
                 if ( isset($term) ) {
                     $children = get_term_children($term->term_id, "wp_aff_categories");
-                    if ( empty($children) ) {
+                    if ( empty($children) && $term->parent != NULL) {
                         $term = get_term($term->parent, "wp_aff_categories");
                     }       
                     displayRelatedAdvertisersCarousel($term);                     

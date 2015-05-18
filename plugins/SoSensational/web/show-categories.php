@@ -14,6 +14,12 @@ if (function_exists('yoast_breadcrumb')) {
     yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
 }
 ?>
+<div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+        <?php if(function_exists('bcn_display'))
+        {            
+            bcn_display();
+        }?>
+    </div>
 
 <div class="row margintop">
     <?php

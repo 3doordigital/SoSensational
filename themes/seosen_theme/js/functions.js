@@ -1,4 +1,34 @@
 jQuery(document).ready( function($) {
+	
+	$(document).scroll(function() {
+		if ( $(this).scrollTop() > 0 ) {
+			$('.top.page-scroll').fadeIn( 2000 )	
+		} else {
+			$('.top.page-scroll').fadeOut( 2000 )	
+		}
+	});
+	$('.top.page-scroll').click( function(e) {
+		e.preventDefault();
+		$('body,html').animate({
+				scrollTop: 0,
+				easing: 'easeInOutCubic'
+			}, 800);
+	});
+	$('a').each(function() {
+	   var a = new RegExp('/' + window.location.host + '/');
+	   if(!a.test(this.href)) {
+		   $(this).click(function(event) {
+			   event.preventDefault();
+			   event.stopPropagation();
+			   window.open(this.href, '_blank');
+		   });
+	   }
+	});
+	
+	$('#mega-menu-item-5375').click( function(e) {
+		e.preventDefault();
+	});
+	
 	imagesLoaded( '.fadebox', function() {
 			   $('.fadebox').css('visibility', 'visible');
 			   jQuery('.fadebox').addClass("hideme").viewportChecker({

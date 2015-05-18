@@ -4,7 +4,7 @@
   Plugin URI: 
   Description: Create a shop on your WordPress site using the most popular Affiliate networks.
   Version: 0.1b
-  Author: Dan Taylor
+  Author: Dan Taylor +[W.mtMUzAZy
   Author URI: http://www.tailoredmarketing.co.uk
   License: GPL V3
  */
@@ -36,7 +36,7 @@ class WordPress_Affiliate_Shop {
 	 */
 	public function __construct() {
 		global $wpdb;
-		
+		session_start();
 		$this->type = 'wp_aff_colours';
 		$this->table_name = $wpdb->prefix . $this->type . 'meta';
 		
@@ -73,6 +73,9 @@ class WordPress_Affiliate_Shop {
         add_action( 'init', array( $this, 'register_post_type' ) );
         add_action( 'init', array( $this, 'register_taxonomies' ) );
         add_action( 'init', array( $this, 'custom_rewrite_rule' ) );
+		
+		add_action( 'template_redirect', array( $this, 'sitemaps' ) );
+		
         add_action( 'admin_menu', array( $this, 'create_menu' ) );
 		        
         add_action( 'admin_post_wp_aff_save_api', array ( $this, 'wp_aff_update_settings' ) );
@@ -130,7 +133,8 @@ class WordPress_Affiliate_Shop {
         add_action( 'wp_logout', array( $this, 'wp_logout' ) );
         
 		add_filter( 'wp_title', array( $this, 'some_callback' ), 100, 2 );
-
+		add_filter( 'wpseo_canonical', array( $this, 'canonical' ) );
+		
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
         
@@ -152,16 +156,28 @@ class WordPress_Affiliate_Shop {
 		}
 		if( is_page() && $wp_query->query['page_id'] == 37 ) {
 			$cat = get_term_by( 'slug', $term , $tax );
+			
 			$title = $cat->name;
 			if( $cat->parent != 0 ) {
 				$cat2 = get_term_by( 'id', $cat->parent , $tax );
-				$title .= ' | '.$cat2->name;
+				$title .= ' - '.$cat2->name;
 			}
-			$title .= ' | Shop | '.get_bloginfo( 'name' );
+			$title .= ' for Women | ';
+			
+			if( is_paged() ) {
+				$title .= 'Page '.get_query_var('paged').' | ';	
+			}
+			
+			$title .= get_bloginfo( 'name' );
 		}
 		
 		return $title;
 		
+	}
+	function canonical( $data ) {
+		if( preg_match( '#(brands-and-boutiques|shop)#', $_SERVER['REQUEST_URI'] ) ) {
+			return 	get_bloginfo( 'url' ).strtok($_SERVER["REQUEST_URI"],'?');
+		}
 	}
 	
 	public function get_option() {
@@ -307,14 +323,19 @@ class WordPress_Affiliate_Shop {
         add_rewrite_tag('%shop-option%', '([^&]+)');
 		add_rewrite_tag('%shop-cat%', '([^&]+)');
         add_rewrite_tag('%shop-brand%', '([^&]+)');
+		add_rewrite_tag('%shop-sitemap%', '([^&]+)');
 		
+        add_rewrite_rule('shop/sitemaps/([^/]+?)$', 'index.php?shop-sitemap=$matches[1]', 'top');
         
-        add_rewrite_rule('shop/new-in/?$','index.php?page_id=37&shop-option=new', 'top');
+		add_rewrite_rule('shop/new-in/?$','index.php?page_id=37&shop-option=new', 'top');
 		add_rewrite_rule('shop/sale/?$','index.php?page_id=37&shop-option=sale', 'top');
 		add_rewrite_rule('shop/our-picks/?$','index.php?page_id=37&shop-option=picks', 'top');
+		add_rewrite_rule('shop/new-in/page/?([0-9]+)/?$','index.php?page_id=37&shop-option=new&paged=$matches[1]', 'top');
+		add_rewrite_rule('shop/sale/page/?([0-9]+)/?$','index.php?page_id=37&shop-option=sale&paged=$matches[1]', 'top');
+		add_rewrite_rule('shop/our-picks/page/?([0-9]+)/?$','index.php?page_id=37&shop-option=picks&paged=$matches[1]', 'top');
 		add_rewrite_rule('shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]');
         add_rewrite_rule('shop/brand/([^/]+)/?$','index.php?page_id=37&shop-brand=$matches[1]');
-        add_rewrite_rule('shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]');
+        add_rewrite_rule('shop/([^/]+)/page/?([0-9]+)/?$','index.php?page_id=37&shop-cat=$matches[1]&paged=$matches[2]', 'top' );
         add_rewrite_rule('shop/([^/]+)/?$','index.php?page_id=37&shop-cat=$matches[1]', 'top');
 		
 		
@@ -415,8 +436,8 @@ class WordPress_Affiliate_Shop {
             'labels'             => $labels,
             'public'             => true,
             'publicly_queryable' => false,
-            'show_ui'            => true,
-            'show_in_menu'       => true,
+            'show_ui'            => false,
+            'show_in_menu'       => false,
             'query_var'          => true,
             'rewrite'            => array( 'slug' => 'products' ),
             'capability_type'    => 'post',
@@ -580,7 +601,7 @@ class WordPress_Affiliate_Shop {
 							$args['meta_query']['relation'] = 'AND';
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_sale',
-										'value'   => 1,
+										'value'   => '1',
 										'compare' => '=',
 									);	
 						} elseif( $wp_query->query_vars['shop-option'] == 'picks' ) { 
@@ -839,6 +860,7 @@ class WordPress_Affiliate_Shop {
 			$url = add_query_arg( 'brand', $brands, $url );
 		}
 		$url = str_replace( '%2C', ',', $url);
+		echo $url;
 		wp_safe_redirect( $url );
 	}
 	
@@ -1012,8 +1034,10 @@ class WordPress_Affiliate_Shop {
             if( $_POST['product_skip'][$i] == 0 ) {
 				$insID = wp_insert_post( $my_post );  
 				
-				if( ( $_POST['product_price'] != '' || $_POST['product_price'] != null || $_POST['product_price'] != '0' || $_POST['product_price'] != '0.00' ) && $_POST['product_price'] < $_POST['product_rrp'] ) {
+				if( ( $_POST['product_price'][$i] != '' || $_POST['product_price'][$i] != null || $_POST['product_price'][$i] != '0' || $_POST['product_price'][$i] != '0.00' ) && $_POST['product_price'][$i] < $_POST['product_rrp'][$i] ) {
 					add_post_meta( $insID, 'wp_aff_product_sale', 1 );	
+				} else {
+					add_post_meta( $insID, 'wp_aff_product_sale', 0 );	
 				}
 				 
 				add_post_meta($insID, 'wp_aff_product_id', $_POST['product_id'][$i], true);
@@ -1324,11 +1348,11 @@ class WordPress_Affiliate_Shop {
                 </tr>
                 <tr>
                 	<th>Price</th>
-                    <td><input class="regular-text" type="number" min="0" step="any" name="product_price" placeholder="0.00" value=""><p class="description">&pound; sign not needed.</p></td>
+                    <td><input class="regular-text" type="text" name="product_price" placeholder="0.00" value=""><p class="description">&pound; sign not needed.</p></td>
                 </tr>
                 <tr>
                             <th>RRP</th>
-                            <td><input class="regular-text" type="number" step="any" min="0" name="product_rrp" placeholder="0.00" value="<?php echo $meta['wp_aff_product_rrp'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
+                            <td><input class="regular-text" type="text" name="product_rrp" placeholder="0.00" value="<?php echo $meta['wp_aff_product_rrp'][0]; ?>"><p class="description">&pound; sign not needed.</p></td>
                         </tr>
                 <tr>
                 	<th>Description</th>
@@ -1442,7 +1466,6 @@ class WordPress_Affiliate_Shop {
 							$curr_api = ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' );
 							
 							$table_data = $api->search( $_GET['q'], $curr_api, $merch, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
-                            
                             $ListProductSearch = new ListProductSearch( $table_data );
                             $ListProductSearch->prepare_items();
                         }
@@ -1470,7 +1493,7 @@ class WordPress_Affiliate_Shop {
                                                     }
                                                 }
                                             } else {
-                                                if( !@in_array( $_GET['product'], $_SESSION['products'] ) ) {
+                                                if( @!in_array( $_GET['product'], $_SESSION['products'] ) ) {
                                                      $_SESSION['products'][$_GET['product']] = $_GET['product']; 
                                                  }
                                             }    
@@ -1837,7 +1860,7 @@ class WordPress_Affiliate_Shop {
                     <tr class="prod_update_row">
                     	<th>Update Progress</th>
                         <td>
-                        	<span class="update_percent">0% <span class="total_update"></span> </span> <div id="update_cont"><div id="update_progress"></div></div>
+                        	<span class="update_percent">0%</span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
                         </td>
                     </tr>
                 </table>
@@ -2279,6 +2302,12 @@ class WordPress_Affiliate_Shop {
 		$insID = wp_insert_post( $my_post );   
 		add_post_meta($insID, 'wp_aff_product_link', $_POST['product_url'], true);
 		add_post_meta($insID, 'wp_aff_product_price', $_POST['product_price'], true);
+		add_post_meta($insID, 'wp_aff_product_rrp', $_POST['product_rrp'], true);
+		if( $_POST['product_price'] < $_POST['product_rrp'] ) {
+			add_post_meta($insID, 'wp_aff_product_sale', 1, true);
+		} else {
+			add_post_meta($insID, 'wp_aff_product_sale', 0, true);
+		}
 		//add_post_meta($insID, 'wp_aff_product_brand', , true);
 		add_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc'], true);
 		add_post_meta($insID, 'wp_aff_product_image', $_POST['product_image'], true);
@@ -2320,6 +2349,11 @@ class WordPress_Affiliate_Shop {
 		update_post_meta($insID, 'wp_aff_product_link', $_POST['product_url']);
 		update_post_meta($insID, 'wp_aff_product_price', $_POST['product_price']);
 		update_post_meta($insID, 'wp_aff_product_rrp', $_POST['product_rrp']);
+		if( $_POST['product_price'] < $_POST['product_rrp'] ) {
+			update_post_meta($insID, 'wp_aff_product_sale', 1 );
+		} else {
+			update_post_meta($insID, 'wp_aff_product_sale', 0 );
+		}
 		update_post_meta($insID, 'wp_aff_product_desc', $_POST['product_desc']);
 		update_post_meta($insID, 'wp_aff_product_image', $_POST['product_image']);
 		$url = add_query_arg( 'msg', 1, $_POST['_wp_http_referer'] );
@@ -2430,6 +2464,7 @@ class WordPress_Affiliate_Shop {
                            </td>
                         </tr>
                     </table>
+                    <?php //print_var( $meta ); ?>
                     <input type="hidden" value="wp_aff_edit_man_product" name="action" />
                     <input type="hidden" value="<?php echo $ID; ?>" name="post_id" />
                     <?php wp_nonce_field( 'wp_aff_edit_man_product', '_wpnonce', FALSE ); ?>
@@ -2592,6 +2627,68 @@ class WordPress_Affiliate_Shop {
 			echo '&pound;'.$price;	
 		}
 	}
+	
+	function sitemaps() {
+		global $wp_query;
+		$type = get_query_var( 'shop-sitemap' );
+		if( $type != '' ) {
+			header('Content-Type: application/xml; charset=utf-8');
+			$this->sitemap_output( $type );
+			die();	
+		}
+		
+	}
+	
+	function sitemap_output( $type ) {
+		echo '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->plugin_url.'sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+';
+		switch( $type ) {
+			case 'categories' :
+				$tax = 'wp_aff_categories';
+				break;
+			case 'brands' :
+				$tax = 'wp_aff_brands';
+				break;
+		}
+		$terms = get_terms( $tax );
+		foreach( $terms as $term ) {
+			
+			echo '<url>
+		<loc>'.site_url().'/shop/'.( $type == 'brands' ? 'brand/' : '' ).$term->slug.'/</loc>
+		<lastmod>'.$this->get_last_post_date( $term, $tax ).'</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>';	
+		}
+		
+		
+		echo '
+		</urlset>';	
+	}
+	
+	function get_last_post_date( $term, $tax ) {
+		$args = array (
+			'post_type' => 'wp_aff_products',
+			'posts_per_page' => 1,
+			'order_by' => 'post_date',
+			'order' => 'DESC',
+			'tax_query' => array(
+				array(
+					'taxonomy' => $tax,
+					'field' => 'ID',
+					'terms' => $term->term_id
+				)
+			)
+		);
+		$cat_posts = get_posts( $args );
+		if( isset( $cat_posts[0] ) ) {
+			return date( 'c', strtotime( $cat_posts[0]->post_date ) );
+		} else {
+			return '';
+		}
+	}
+	
     /**
      * Place code for your plugin's functionality here.
      */

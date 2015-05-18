@@ -42,7 +42,7 @@
                     <div id="footer-newsletter">
                         <h2>Join Our Community</h2>
                         <form class="newsform_send">
-                            <input type="email" name="email" placeholder="Your email address" /> <button class="join-now" type="submit">Join Now</button>
+                            <input type="email" name="email" placeholder="insert your email address" /> <button class="join-now" type="submit">SIGN UP</button>
                         </form>
                     </div>
                 </div>
@@ -51,46 +51,40 @@
                 <div class="col-md-24 social">
                     <div id="social-icons">
                         <h2>Connect With Us</h2>
-                        <a href="#">
+                        <a href="https://www.facebook.com/sosensational">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
+                        <a href="https://twitter.com/_sosensational">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="https://instagram.com/_sosensational/">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
+                        <a href="http://pinterest.com/sosensational/">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-pinterest fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
+                        <a href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.sosensational.co.uk%2F">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-stumbleupon fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                        <a href="#">
+                        <a href="https://www.youtube.com/channel/UCAveovGSdh3nxaNI3HYW7sg">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                        <a href="#">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
                     </div>
@@ -102,7 +96,7 @@
 </section>
 <div id="subfoot" class="container">
     <div class="row">
-        <span>&copy; Copyright 3 Door Digital</span>
+        <span>&copy; SoSensational <?php echo date( 'Y' ); ?></span>
         <?php
         if (function_exists('wp_nav_menu')) {
             wp_nav_menu(array(
@@ -120,6 +114,7 @@
         ?>                
     </div>         
 </div>
+<a href="#top" class="btn btn-circle top page-scroll"><i class="fa fa-angle-double-up animated"></i></a>
 <?php wp_footer(); ?>
 </body>
 </html>

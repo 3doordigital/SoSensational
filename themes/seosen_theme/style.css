@@ -19,16 +19,27 @@ p {
 	font-size: 14px;
 	font-weight: 500;
 }
-#topbar a {
+#top {
+	padding: 5px 0;
+	border-bottom: 1px solid #eee;
+	color: #a0862a;
+	font-size: 14px;
+	font-weight: 500;
+}
+#top a {
 	color: #000;
 	padding-right: 15px;
 }
-#topbar a:hover {
+#top a:hover {
 	color: #a0862a;
 	text-decoration: none;
 }
 .navbar-brand {
 	padding: 0;
+	display: inline-block;
+  	position: relative;
+  	z-index: 99999;
+	left: 45px;
 }
 .navbar-right {
 	position: absolute;
@@ -133,7 +144,11 @@ p {
 
 .aHolderImgSS {
 	display: block;
-	min-height: 100px;
+	min-height: 100px;  
+}
+
+.aHolderImgSS img {
+  width: 100%;
 }
 
 
@@ -494,12 +509,13 @@ section h1 span {
     position: relative;
     z-index: 5;
   }
-  
+
 #homenewsletter {
 	padding: 30px 0 0 0;
 }
 #homenewsletter input {
 	padding: 10px 30px;
+	padding-top: 12px;
 	width: 66.3%;
 	font-size: 32px;
 	color: #000;
@@ -515,13 +531,16 @@ section h1 span {
 #homenewsletter button {
 	background-color: #a0862a;
 	border: none;
-	padding: 16px;
-	font-size: 25px;
+	padding: 19px;
+	padding-top: 22px;
+	font-size: 22px;
 	text-transform: uppercase;
 	color: #fff;
 	text-align: center;
 	width: 33.7%;
 	position: relative;	
+	top: -3px;
+	line-height: normal;
 }
 #homenewsletter button:hover {
 	background-color: #cbab39;
@@ -554,7 +573,7 @@ section h1 span {
 	padding: 0;
 	margin: 0;
 	line-height: 0.6em;
-	margin-top: 5px;
+	margin-top: 7px;
 }
 #homeblog h2 a {
 	font-family: 'Open Sans', sans-serif;
@@ -575,7 +594,10 @@ section h1 span {
 #homeblog>div>div {
 	padding-left: 15px;
 	padding-right: 30px;
-	padding-top: 30px;
+	padding-top: 20px;
+}
+.carousel-indicators .active {
+	margin-right: 5px;
 }
 #homeblog>div>div.last {
 	padding-left: 30px;
@@ -594,21 +616,67 @@ section h1 span {
 	padding-left: 15px;
 	padding-right: 15px;	
 }
+#homeblog .wp-post-image {
+	margin-bottom: 0;
+}
 #footer h2 {
 	font-size: 22px;	
+	margin-bottom: 18px;
+}
+#menu-footer li {
+	list-style-type: none;
+}
+#menu-footer li a {
+	text-transform: capitalize;
+}
+#menu-footer li a:before {
+	content: "> ";
+	color: #a0862a;
+	padding-right: 5px;
 }
 #footer input {
 	padding: 3px 10px;
 	border: solid 1px #aaaaaa;	
 	width: 75%;
 }
-#footer button.join-now {
+#footer button.join-now{
 	width: 23%;
 	color: #a0862a;		
 	background-color: #fff;
 	border: solid 1px #a0862a;
-	padding: 3px ;
+	padding: 4px;
+	padding-top: 5px;
+	line-height:normal;
+	top: 1px;
+  	position: relative;
 }
+
+.submit-listing {
+  display: inline-block;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  padding: 9px 10px 5px; 
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  margin-left: 20px;
+  background: #6b20b1;
+  background: -moz-linear-gradient(top, #6b20b1 0%, #6b20b1 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6b20b1), color-stop(100%,#6b20b1));
+  background: -webkit-linear-gradient(top, #6b20b1 0%,#6b20b1 100%);
+  background: -o-linear-gradient(top, #6b20b1 0%,#6b20b1 100%);
+  background: -ms-linear-gradient(top, #6b20b1 0%,#6b20b1 100%);
+  background: linear-gradient(to bottom, #6b20b1 0%, #6b20b1 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6b20b1', endColorstr='#6b20b1',GradientType=0 );
+  color: #ffffff;
+}
+
 #footer button:hover {
 	color: #fff;		
 	background-color: #a0862a;
@@ -639,16 +707,15 @@ section h1 span {
 	background-color: transparent;
 	color: #a0862a;	
 }
-#footer .nav>li>a:before {
+/*#footer .nav>li>a:before {
 	font: normal normal normal 14px/1 FontAwesome;
 	content: "\f054 ";
 	color: #a0862a;
 	padding-right: 5px;
-}
+}*/
 #subfoot span, 
 #subfoot {
 	font-family: 'Open Sans', sans-serif;	
-	text-transform: uppercase;
 	font-weight: 300;
 	font-size: 13px;
 	padding-bottom: 30px;
@@ -669,7 +736,12 @@ section h1 span {
 	width: 15px;
 }
 
+#footer-newsletter input::-webkit-input-placeholder, #homenewsletter input::-webkit-input-placeholder {  color: #999; }
 
+#footer #social-icons {
+	margin-top: 60px;
+	font-size: 19px;
+}
 
 /* =Price Filter Widget
 	-------------------------------------------------------------- */
@@ -712,7 +784,7 @@ section h1 span {
     padding: 10px;
 }
 .products .prod_price {
-    padding-top: 6px;
+    padding-top: 12px;
 }
 .products .prod_title h3 a, .products .prod_title h3 {
     font-size: 13px;
@@ -755,7 +827,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     color: #fff;
     text-transform: uppercase;
     font-family: 'Open Sans', sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     display: block;
     text-shadow: none;
     padding: 6px 0px;
@@ -787,14 +859,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     text-transform: uppercase;
 }   
 /* Blog */
-.blog h1, .archive h1, .single h1, .page h1, .single h2.pagetitle {
+.blog h1, .archive h1, .single h1, .page h1, .single h2.pagetitle, .pagetop h2 {
     font-size: 38px;
     text-align: left;
     border-bottom: solid 2px #eeeeee;
     padding: 0;
     background: none;
+	position: relative;
 }
-.blog h1 span, .archive h1 span, .single h1 span, .page h1 span {
+.blog h1 span, .archive h1 span, .single h1 span, .page h1 span, .pagetop h2 span {
     text-align: left;
     border-bottom: solid 2px #a0862a;
     display: inline-block;
@@ -804,6 +877,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     position: relative;
     z-index: 5;
     margin-top: 15px;
+}
+.brands h1 {
+	  border-bottom: solid 2px #a0862a;
+  text-align: center;
+  position: relative;
+  top: -43px;
+}
+.brands h1 span {
+	background-color: #fff;
+  border-bottom: none;
+  position: relative;
+  top: 30px;
+  display: inline-block;
+  padding: 10px;
 }
 .archive h1.cattitle  {
     border-bottom: 1px solid #000;
@@ -839,6 +926,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
     border-bottom: solid 2px #eeeeee;
     padding: 0;
     background: none;
+	margin: 0;
     margin-bottom: 15px!important;
 }
 .sidebox h3 span {
@@ -882,11 +970,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
 .blog .blog-small h2, .archive .blog-small h2, .single .blog-small h2, .blog h2, .srchive h2, .single h2 {
 	font-size: 24px;
 }
-.blog #content h2, .archive #content h2, .single #content h2 {
-    padding: 0;
+.blog #content h2, .blog #content h3, .blog #content h4, .blog #content h5, .archive #content h2, .archive #content h3, .archive #content h4, .archive #content h5, .single #content h2, .single #content h3, .single #content h4, .single #content h5, .page #content h2, .page #content h3, .page #content h4, .page #content h5 {
+	line-height: 1.4em;
+	padding: 0;
     margin: 0;
 	margin-bottom: 20px;
-	line-height: 1.1em;
+}
+.page #content .blackbar h2, .page #content .whitebar h2 {
+	margin-top: 10px;
+	margin-bottom: 10px;	
 }
 .blog #content h2 a, .blog h2 a, .archive #content h2 a, .single #content h2 a, .single #content h1 {
     font-family: 'Open Sans', sans-serif;
@@ -905,18 +997,25 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
 .blog .blog-small h2 a, .archive .blog-small h2 a, .single .blog-small h2 a {
     font-size: 18px;
 	font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
+    font-weight: 400;
 }
-.blog p, .archive p, .single p, .blog p a, .archive p a, .single p a, .blog li a, .archive li a, .single li a, .blog p span, .archive p span, .single p span, .blog p i, .archive p i, .single p i, .blog p em, .archive p em, .single p em, .blog p strong, .archive p strong, .single p strong, .blog p a, .archive p a, .single p a, .blog label, .archive label, .single label, .single .form-control, .blog li, .archive li, .single li {
+.blog p, .archive p, .single p, .blog p a, .archive p a, .single p a, .blog li a, .archive li a, .single li a, .blog p span, .archive p span, .single p span, .blog p i, .archive p i, .single p i, .blog p em, .archive p em, .single p em, .blog p strong, .archive p strong, .single p strong, .blog p a, .archive p a, .single p a, .blog label, .archive label, .single label, .single .form-control, .blog li, .archive li, .single li, .page #content p, .page #content li, .page #content li a, .page #content p span, .page #content p i, .page #content p strong, .page #content p em, .page #content p b, .page #content p a, .page #content p i {
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
     font-size: 14px; 
+	line-height: 1.8em;
+}
+.pagination li, .pagination li a {
+	line-height: 20px!important;
+}
+.blog .blog-small p {
+	font-size: 13px;	
 }
 .blog #content li, .archive #content li, .single #content li {
 	margin-bottom: 10px;
 }
 .wp-post-image {
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 }
 #wp_comp_form h4 {
     font-family: 'Open Sans', sans-serif;
@@ -931,6 +1030,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#935dc3', end
 li.dropdown:hover > ul.dropdown-menu {
     display: block;    
 }
+.pagetop {
+	position: relative;
+}
 .post_meta, .post_meta a {
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
@@ -938,22 +1040,31 @@ li.dropdown:hover > ul.dropdown-menu {
     color: #000;
 }
 .post_meta {
-    padding: 10px 0;
+    padding: 15px 0;
 	padding-top: 0;
+	margin-top: -15px;
+}
+
+.single .post_meta {
+	margin-top: 0;
 }
 .blog-small {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 #topcats {
     list-style-type: none;
     float: right;
-    position: relative;
-    top: -44px;
+      position: absolute;
+  bottom: 0px;
+  right: 7px;
+}
+#topcats ul {
+	margin-bottom: 0 ;
 }
 #topcats li {
     display: inline-block;
-    
+    margin-right: -7px;
     
 }
 #topcats>ul>li a {
@@ -969,6 +1080,7 @@ li.dropdown:hover > ul.dropdown-menu {
     padding: 5px 0;
     -webkit-border-radius: 5px 5px 0 0;
     border-radius: 5px 5px 0 0;
+	line-height: 1.4em!important;
 }
 #topcats li a:hover, #topcats li.current-post-ancestor a, #topcats li.current-menu-item a {
     text-decoration: none;
@@ -1188,6 +1300,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	text-align:left!important;
 	font-family: 'Open Sans', sans-serif!important;
 }
+#wpfront-notification-bar.wpfront-fixed, #wpfront-notification-bar div.wpfront-message, #wpfront-notification-bar a.wpfront-button {
+	font-size: 13px;
+	font-family: 'Open Sans', sans-serif!important;
+}
 /* =WordPress Core
 -------------------------------------------------------------- */
 .alignnone {
@@ -1304,4 +1420,76 @@ a.preview-anchor-text {
     position: absolute;
     bottom: 10px;
     margin-left: 10px;
+}
+
+#homenewsletter p {
+	font-size: 150%;
+	text-align:center;
+	  color: #a0862a;
+}
+#mega-menu-item-5375 .textwidget {
+	font-family: DidotLT-Roman!important;
+	font-size: 26px!important;
+	color: #ddd;
+}
+.comp_small_print li {
+	font-size: 12px;
+}
+.show_comp {
+	margin: 30px 0;
+}
+
+.su-button-center {
+	margin-top: 15px;
+}
+.nicescroll-rails>div {
+  width: 6px!important;
+  border-radius: 0px!important;
+  left: 1px!important;
+}
+.single-wp_comp_man .sidebar {
+	margin-top: -16px;
+}
+.side_advert {
+	padding-top: 30px;
+}
+.post-type-archive-hot-deals .side_advert {
+	padding-top: 0px;
+	padding-bottom: 30px;
+}
+.side_advert img {
+	width: 100%;
+	height: auto;
+}
+.wpcf7-form p {
+	margin-bottom: 30px;
+}
+.contact_page {
+	margin-top: 30px;
+}
+.contact_page label {
+	font-size:16px;
+}
+.btn-circle {
+	width: 70px;
+	height: 70px;
+	margin-top: 15px;
+	padding: 7px 16px;
+	border: 2px solid #a0862a;
+	border-radius: 35px;
+	font-size: 40px;
+	color: #fff;
+	background: #cbab39;
+	-webkit-transition: background .3s ease-in-out;
+	-moz-transition: background .3s ease-in-out;
+	transition: background .3s ease-in-out;
+}
+.top.page-scroll {
+	display: none;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+}
+#mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-flyout > ul.mega-sub-menu li.mega-menu-item a, ul.sub-footer-menu li a {
+	text-transform: none!important;
 }

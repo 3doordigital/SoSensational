@@ -91,4 +91,4 @@ function upload_user_file( $file = array() ) {
    }        
   
   
-wp_redirect(SITE_URL.'/show-advertisers-cats/');
+wp_redirect(SITE_URL.'/show-advertisers-cats/?adminmsg=s');

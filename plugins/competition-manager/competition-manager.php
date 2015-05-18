@@ -114,14 +114,13 @@ class WordPress_Competition_Manager {
 	
     function check_comp_date(  ) {
 		if( is_singular( 'wp_comp_man' ) && !is_admin() ) {
-			$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ) );
-			$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ) );
+			$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ).' 00:00:00' );
+			$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' 23:59:59' );
 			$cdate = strtotime( date("Y-m-d H:i:s") );
-			
 			if( $sdate > $cdate || $edate < $cdate) {
-				//wp_redirect( home_url( '/competitions/' ) ); 
+				wp_redirect( home_url( '/competitions/' ) ); 
 				echo $sdate.' : '.$edate.' : '.$cdate;
-				//exit;
+			 	exit;
 			} 
 		}
 	}
@@ -246,7 +245,7 @@ class WordPress_Competition_Manager {
 	
 	public function wp_footer() {
 		global $post;
-		if( get_post_type() == 'wp_comp_man' && isset( $_REQUEST['msg'] ) && is_archive() ) { ?>
+		if( get_post_type() == 'wp_comp_man' && isset( $_REQUEST['msg'] ) ) { ?>
             	<a class="popup fancybox.ajax">Popup</a>
 				<?php if( $_REQUEST['msg'] == 1 ) { ?>
 					<script type="text/javascript">
@@ -265,7 +264,6 @@ class WordPress_Competition_Manager {
                         }).trigger('click');
                     });
                     </script>
-                    <?php echo plugin_dir_url( __FILE__ ); ?>templates/thank-you.php?date=<?php echo $this->get_comp_date( $_REQUEST['comp'] ); ?>
                  <?php } elseif( $_REQUEST['msg'] == 0) { ?>
                  	<script type="text/javascript">
                     jQuery(document).ready( function($) {
@@ -728,8 +726,8 @@ class WordPress_Competition_Manager {
     }
     
     public function frontend_form( $bootstrap = false, $cols = false ) {
-		$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ) );
-		$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ) );
+		$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ).' 00:00:00' );
+		$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' 23:59:59' );
 		$cdate = strtotime( date("Y-m-d H:i:s") );
 		
 		if( $sdate > $cdate ) {
@@ -808,7 +806,10 @@ class WordPress_Competition_Manager {
 				echo '<input type="hidden" name="competition" value="'.get_the_title().'">';
 				echo '<input type="hidden" name="competition-id" value="'.get_the_ID().'">';
 				echo '<input type="hidden" name="action" value="wp_comp_man_add_entry">';
-				echo '<a href="/competition-terms-conditions/">Terms &amp; Conditions</a>';
+				
+				echo '<br><div class="g-recaptcha" data-sitekey="6LdFgwYTAAAAANpxHyMNhLCjqNII56duND8kOPiE"></div><br>';
+				echo '<a target="_blank" href="/competition-terms-conditions/">Terms &amp; Conditions</a>';
+				
 				echo'<p><button type="submit" class="btn btn-primary" id="submit_answer">Submit Answer</button></p>';
 				echo '</form>';
 				return ob_get_contents();
@@ -822,6 +823,34 @@ class WordPress_Competition_Manager {
     public function add_comp_entry() {
         //print_var($_POST);
 		$return = array();
+		
+		$params = array();
+		$params['secret'] = '6LdFgwYTAAAAAAnuF0OV3TBHNIdhWQVHRfjj80Wf'; // Secret key
+		if (!empty($_POST) && isset($_POST['g-recaptcha-response'])) {
+			$params['response'] = urlencode($_POST['g-recaptcha-response']);
+		}
+		$params['remoteip'] = $_SERVER['REMOTE_ADDR'];
+	
+		$params_string = http_build_query($params);
+		$requestURL = 'https://www.google.com/recaptcha/api/siteverify?' . $params_string;
+	
+		// Get cURL resource
+		$curl = curl_init();
+	
+		// Set some options
+		curl_setopt_array($curl, array(
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_URL => $requestURL,
+		));
+	
+		// Send the request
+		$response = curl_exec($curl);
+		// Close request to clear up some resources
+		curl_close($curl);
+	
+		$response = @json_decode($response, true);
+	
+		if ($response["success"] == true) {
 		
 		$args = array(
 			'post_type'		=> 'wp_comp_entries',
@@ -913,6 +942,14 @@ class WordPress_Competition_Manager {
 					echo '</pre>';
 			}
 		}
+		} else {
+			$return = array(
+					'status' 	=> 3,
+					'message'	=> 'Captcha failed.',
+					'redirect'	=> site_url('competitions/?msg=0&comp='.$_POST['competition-id']),
+					'comp'		=> $_POST['competition-id']
+				);
+		}
 		echo json_encode( $return );
 		die();
     }
@@ -956,6 +993,7 @@ class WordPress_Competition_Manager {
             'post_type'  => 'wp_comp_entries'
         );
         $entry_query = new WP_Query( $entry_args );
+		//print_var( $entry_query );
         wp_reset_postdata();
         if( isset ( $meta['wp_comp_winner'][0] ) && $meta['wp_comp_winner'][0] != '' ) {
             $winners = json_decode( $meta['wp_comp_winner'][0] );
@@ -982,7 +1020,7 @@ class WordPress_Competition_Manager {
                     break;
             }
             echo '</td></tr>';
-            echo '<tr><th>Entries</th><td>'. $entry_query->post_count.'</td></tr>';
+            echo '<tr><th>Entries</th><td>'. $entry_query->found_posts.'</td></tr>';
             echo '<tr><th>Answer</th><td>'. $meta['wp_comp_answer'][0].'</td></tr>';
             echo '</table>';
         }
@@ -1068,6 +1106,25 @@ class WordPress_Competition_Manager {
     
     public function export_entries() {
         $fields = $this->option['form_fields'];
+		$fields[] = array(
+			'field_name' => 'First Name',
+			'field_type' => 'text',
+			'field_req'  => 1,
+			'field_order'=> 0
+		);
+		$fields[] = array(
+			'field_name' => 'Last Name',
+			'field_type' => 'text',
+			'field_req'  => 1,
+			'field_order'=> 1
+		);
+		$fields[] = array(
+			'field_name' => 'Email',
+			'field_type' => 'text',
+			'field_tooltip' => 'By entering your email address, you consent to receiving newsletters from SoSensational and the prize giving brand. You may unsubscribe at any time.',
+			'field_req'  => 1,
+			'field_order'=> 2
+		);
         foreach( $fields as $key=>$row ) {
             $sort[$key] = $row['field_order'];
         }
@@ -1081,6 +1138,7 @@ class WordPress_Competition_Manager {
             'meta_key'   => 'wp_comp_entry_competition-id',
             'meta_value' => $_REQUEST['comp'],
             'post_type'  => 'wp_comp_entries',
+			'posts_per_page' => -1,
             'orderby' => 'rand'
         );
         $the_query = new WP_Query( $args );

@@ -119,3 +119,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6c20b1', end
 .toppost {
 	margin-bottom: 30px;
 }
+.comps .toppost {
+	 margin-top: 35px;
+}

@@ -175,19 +175,22 @@ jQuery(document).ready(function($) {
     var str = $('#breadcrumbs span > a');
     var urls = [];
     var mainCategory;
-    str.each(function(index) {
-        var url = $(this).attr('href');
-        urls.push(url);      
-        if (urls.length === 3) {
-            var slug = urls[2].slice(7);            
-            $(this).attr('href', urls[1] + slug);  
-            mainCategory = $(this).attr('href');
-        }         
-        if (urls.length === 4) {
-            var slug = urls[3].slice(7);    
-            $(this).attr('href', mainCategory + '/' + slug);                 
-        }
-    });
+
+    // was not working correct
+
+    // str.each(function(index) {
+    //     var url = $(this).attr('href');
+    //     urls.push(url);      
+    //     if (urls.length === 3) {
+    //         var slug = urls[2].slice(7);            
+    //         $(this).attr('href', urls[1] + slug);  
+    //         mainCategory = $(this).attr('href');
+    //     }         
+    //     if (urls.length === 4) {
+    //         var slug = urls[3].slice(7);    
+    //         $(this).attr('href', mainCategory + '/' + slug);                 
+    //     }
+    // });
     
     /*--------------------------------------------------------------------------
      Preview functionality on advertiser edit page
@@ -210,6 +213,25 @@ jQuery(document).ready(function($) {
            success: function(data, status, jqXHR) {
                 previewURL = data;
                 $('#ajax-preview').attr('href', previewURL);        
+           }           
+        });        
+    });
+
+
+    $.each($('.ajax-preview'), function(key, val) {
+        var formData =  $('#advertiser-edit-form').serializeArray();
+        var _this = $(this);
+        
+        /* Pass another key/value pair for a later AJAX check in the script */
+        formData.push({name: 'ajaxPreview', value: true});
+        
+        $.ajax({
+           type: 'post' ,
+           url: "../wp-content/plugins/SoSensational/web/edit-advertiser-action.php",
+           data: formData,
+           success: function(data, status, jqXHR) {
+                previewURL = data;
+                _this.attr('href', previewURL);        
            }           
         });        
     });
@@ -292,8 +314,9 @@ function getTabletSliderSettings() {
     };              
 }    
 
-function loadSlider(arguments, sliderMode) {       
-    var clonedSliderDOM = $('.flexslider').clone();  
+function loadSlider(arguments, sliderMode) {     
+    // on mobile there was a problem with  
+    var clonedSliderDOM = jQuery('.flexslider').clone();  
     clonedSliderDOM.flexslider(arguments);
     console.log(clonedSliderDOM);
     var oldSliderMode = function() {
@@ -332,5 +355,15 @@ jQuery(window).resize(function () {
         arguments = getDesktopSliderSettings();
         sliderMode = 'desktop';
         loadSlider(arguments, sliderMode);
-    }                 
+    }
+
+})
+
+jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
+    var w = jQuery(window).width()
+    if(w < 800) {
+        e.preventDefault();
+        jQuery(jQuery(this).parent().find('ul')[0]).toggleClass('visible');
+    }
+
 });

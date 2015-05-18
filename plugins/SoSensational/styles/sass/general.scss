@@ -232,3 +232,35 @@ button#shop-controls-toggle {
     margin: 0 auto;
     width: 200px;
 }
+
+/*-----------------------------------featured brand--------------------------------*/
+
+.featured-brand {
+    margin-top: 40px;
+    .line {
+        span {
+            height: 1px;
+            width: 100%;
+            display: block;
+            background: #a0862a;
+            position: relative;
+            top: -3.2rem;
+        }
+
+        h2 {
+            text-align: center;
+            background: #FFFFFF;
+            position: relative;
+            z-index: 10;
+            display: block;
+            margin: 0 auto !important;
+            width: 310px;
+            font-size: 3.8rem;
+        }
+
+    }
+
+    .featued-list {
+        margin-top: 30px;
+    }
+}

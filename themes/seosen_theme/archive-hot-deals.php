@@ -1,11 +1,17 @@
 <?php get_header(); ?>
-<div class="container">
+<div class="container pagetop">
     <h1><span>Hot Deals &amp; Sensational Offers</span></h1>
     <?php
     if (function_exists('yoast_breadcrumb')) {
-        yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
+        //yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
     }
     ?>
+    <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+		<?php if(function_exists('bcn_display'))
+        {
+            bcn_display();
+        }?>
+    </div>
 </div>
 <div class="container">
     <div class="row">
@@ -70,7 +76,7 @@
                 ?>
             </div>
         </div>
-        <div class="col-md-3 col-md-offset-2 hidden-sm hidden-xs">
+        <div class="col-md-4 col-md-offset-1 hidden-sm hidden-xs">
             <?php dynamic_sidebar('deals_sidebar'); ?>
         </div>
     </div>

@@ -158,7 +158,9 @@ class tim_ad_block extends WP_Widget {
 		 */
 		public function widget( $args, $instance ) {
 			echo $args['before_widget'];
+			echo '<div class="side_advert">';
 			echo $instance['advert']; 
+			echo '</div>';
 			echo $args['after_widget'];
 		}
 	

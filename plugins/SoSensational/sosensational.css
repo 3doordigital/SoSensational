@@ -290,7 +290,7 @@ body {
 	padding-top: 15px
 }
 
-.button_ss {
+.page #content li .button_ss {
 	background: rgb(147,93,195);
 	background: -moz-linear-gradient(top, rgba(147,93,195,1) 0%, rgba(108,32,177,1) 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(147,93,195,1)), color-stop(100%,rgba(108,32,177,1)));
@@ -309,6 +309,7 @@ body {
 	padding: 6px 0px;
 	width: 90%;
 	margin: auto;
+	line-height: normal;
 }
 
 .large_ss
@@ -474,9 +475,13 @@ button:disabled {
     float: none;
     display: block;
     margin: 0 auto;
-    margin-top: 35px;
+    margin-top: 40px;
+	margin-bottom: 25px;
 }
-
+.blog .pagination-centered {
+	margin-top: 10px;
+	margin-bottom: 15px;	
+}
 
 /* Style the delet icon present next to items on /view-products/ */
 i.ajax-delete {
@@ -534,4 +539,5 @@ a.preview-anchor-text {
     position: absolute;
     bottom: 0;
     margin-left: 5px;
+	  padding-bottom: 23px;
 }

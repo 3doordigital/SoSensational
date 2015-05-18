@@ -32,8 +32,21 @@ if (!empty($success_code)) :
   switch($success_code)
         {
             case '1':
-				$display_message = "Details Updated Successfully";
-			break;
+				$display_message = get_option( 'step_1_text' );
+
+        $advertiser = $wpdb->get_results( "SELECT DISTINCT * FROM {$wpdb->posts} where (post_type='brands' or post_type='boutiques') and post_author='{$user->ID}' ", OBJECT );
+  
+        $topic = $user->user_login." saved profile";
+        $message = "<p>".$user->user_login." saved profile</p><p> Company type: "; 
+        $message .= $advertiser[0]->post_type. "</p><p> Company name: ".$advertiser[0]->post_title. "</p><p>";
+        $message .= "Edit company profile: <a href='".get_edit_post_link( $advertiser[0]->ID )."'>link</a></p>";
+
+
+        add_filter('wp_mail_content_type',create_function('', 'return "text/html"; '));
+
+        wp_mail( get_option( 'admin_notification_email' ), $topic, $message); 
+        		
+      break;
 		}
 ?>
 
@@ -318,7 +331,7 @@ $attachments = get_posts( array(
     </p>
         <div class="form-buttons-group clearfix">
             <button type="submit" name="update" class="button_ss_small btn pull-left">Update Your Details</button>
-            <a  name="preview" id="ajax-preview" class="preview-anchor-text" target="_blank">Preview Your Listing</a>
+            <a  name="preview" id="ajax-preview" class="preview-anchor-text" target="_blank" style="bottom: -27px;">Preview Your Listing</a>
         </div>
     </form>
     <br /><br />

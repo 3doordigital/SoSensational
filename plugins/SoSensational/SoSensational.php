@@ -93,7 +93,7 @@ function brand_boutique_no_admin_access() {
      * Amend the conditional so that the redirect does not take place when executing
      * a call to admin-ajax.php. Otherwise, ajax calls would fail.
      */
-    if ((current_user_can('brand_role') || current_user_can('boutique_role')) && (!defined('DOING_AJAX') || !DOING_AJAX )) {
+    if (((current_user_can('brand_role') || current_user_can('boutique_role')) && (!defined('DOING_AJAX') || !DOING_AJAX )) && $_SERVER['REQUEST_URI'] != '/wp-admin/admin-post.php' ) {
         exit(wp_redirect(SITE_URL . '/ss_directory/'));
     }
 }
@@ -303,7 +303,7 @@ add_action('user_register', 'create_firstpost', 10, 1);
 function my_loginlogo() {
     echo '<style type="text/css">
     h1 a {
-      background-image: url(' . get_template_directory_uri() . '/images/SoSensational-Logo.gif) !important;
+      background-image: url(' . get_template_directory_uri() . '/images/logo-new.png) !important;
     }
   </style>';
 }

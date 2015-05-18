@@ -1,7 +1,6 @@
 <?php get_header(); ?>
-<div class="container">
-    <div class="row">
-        <h1><span>Style Advice &amp; Blog</span></h1>
+<div class="container pagetop">
+        <h1><span>Style Advice &amp; Blog</span>
         <?php
         if (function_exists('wp_nav_menu')) {
             wp_nav_menu(array(
@@ -17,16 +16,22 @@
             );
         }
         ?>
+        </h1>
         <?php
         if (function_exists('yoast_breadcrumb')) {
-            yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
+            //yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
         }
         ?>
+        <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+		<?php if(function_exists('bcn_display'))
+        {
+            bcn_display();
+        }?>
     </div>
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-16 ">
+        <div class="col-sm-24 col-md-24 col-lg-16">
             <?php
             $i = 1;
             $x = 0;
@@ -98,7 +103,7 @@
                 <?php wp_pagenavi(); ?>
             <?php endif; ?>
         </div>
-        <div class="col-md-7 col-sm-offset-1">
+        <div class="col-lg-7 col-sm-offset-1 visible-lg">
             <div class="clearfix"></div>
             <?php dynamic_sidebar('blog_sidebar'); ?> 
         </div>

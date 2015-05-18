@@ -44,7 +44,7 @@
 			$this->sortby = $sortby;
 			$this->sort = $sort;
 			
-			$this->all_products = $this->get_all_products();
+			//$this->all_products = $this->get_all_products();
 			
 			if( $api == 'awin' || $api == 'all' ) {
 				$temp[] = $this->awin_search( $term, $merchant, $depth, $page, $sortby, $sort );
@@ -135,11 +135,19 @@
 						
 						$id = $product->iId;
 
-						if( in_array( $id, $this->all_products ) ) {
+						/*$allp_attr = array(
+							'post_type' => 'wp_aff_products',
+							'meta_key'	=> 'wp_aff_product_id',
+							'meta_value' => $id
+						);
+						
+						$appp_query = new WP_Query( $allp_attr );
+						
+						if( $appp_query->have_posts() ) {
 							$exists = 1;
 						} else {
 							$exists = 0;
-						}
+						}*/
 						//echo '<pre>'.print_r($merch, true).'</pre>';
 						
 						$array['items']['ID-'.$id] = array(
@@ -192,31 +200,39 @@
 				if( $xml->TotalMatches == -1 ) {
 					$totalCount = 4000;
 				} else {
-					$totalCount = $xml->TotalMatches;
+					$totalCount = (int) $xml->TotalMatches;
 				}
 				$brands = $this->linkshare_merchants();
 				
 				$array['total']['linkshare'] = $totalCount;
 				foreach ($xml->item as $item) {
-					$saleprice = (array) $item->saleprice;
-					$normalprice = (array) $item->price;
+					$saleprice = (string) $item->saleprice;
+					$normalprice = (string) $item->price;
 					
-					if( isset( $saleprice[0] ) && $saleprice[0] != '' ) {
-						$rrp = $normalprice[0];
-						$price = $saleprice[0];	
+					if( isset( $saleprice ) && $saleprice != '' ) {
+						$rrp = $normalprice;
+						$price = $saleprice;	
 					} else {
-						$rrp = $normalprice[0];
-						$price = $normalprice[0];						
+						$rrp = $normalprice;
+						$price = $normalprice;						
 					}
-					$id = (array) $item->linkid;
-					if( in_array( $id, $this->all_products ) ) {
-						$exists = 1;
-					} else {
-						$exists = 0;
-					}
+					$id = (string) $item->linkid;
+					/*$allp_attr = array(
+							'post_type' => 'wp_aff_products',
+							'meta_key'	=> 'wp_aff_product_id',
+							'meta_value' => $id
+						);
+						
+						$appp_query = new WP_Query( $allp_attr );
+						
+						if( $appp_query->have_posts() ) {
+							$exists = 1;
+						} else {
+							$exists = 0;
+						}*/
 					
 					$brand = $brands['ID-'.$item->mid]['name'];
-					$array['items']['ID-'.$id[0]] = array(
+					$array['items']['ID-'.$id] = array(
 						'ID'        => addslashes($item->linkid),
 						'aff'     	=> 'linkshare',    
 						'title'     => addslashes( trim( ucwords( strtolower( $item->productname ) ) ) ),
@@ -347,10 +363,10 @@
 				update_post_meta( $id, 'wp_aff_product_rrp', $newrrp );
 				
 				if( $newprice < $newrrp ) {
-					add_post_meta( $id, 'wp_aff_product_sale', 1 );	
+					update_post_meta( $id, 'wp_aff_product_sale', 1 );	
 					$sale = 1;
 				} else {
-					add_post_meta( $id, 'wp_aff_product_sale', 0 );	
+					update_post_meta( $id, 'wp_aff_product_sale', 0 );	
 					$sale = 0;
 				}
 			}

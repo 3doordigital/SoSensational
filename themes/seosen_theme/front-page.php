@@ -3,6 +3,11 @@
     <div class="row">
         <div class="col-md-15 col-md-push-9 imgbox bigimgbox fadebox">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+  </ol>
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <?php $i = 0;
@@ -29,7 +34,8 @@
             <div class="row">
                 <div class="col-xs-24 col-sm-12 col-md-24 imgbox fadebox">
                     <a href="<?php echo $seosen_options['home_image_1_link']; ?>">
-<?php echo wp_get_attachment_image($seosen_options['home_image_1']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
+						<?php echo wp_get_attachment_image($seosen_options['home_image_1']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
+                    </a>
                         <div class="row">
                             <div class="col-xs-10 leftcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_1_text']; ?></h2>
@@ -43,7 +49,8 @@
 
                 <div class="col-xs-24 col-sm-12 col-md-24 imgbox fadebox">
                     <a href="<?php echo $seosen_options['home_image_2_link']; ?>">
-<?php echo wp_get_attachment_image($seosen_options['home_image_2']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
+						<?php echo wp_get_attachment_image($seosen_options['home_image_2']['id'], 'home_top_small', false, array('class' => 'img-responsive')); ?>
+                    </a>
                         <div class="row">
                             <div class="col-xs-10 rightcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_2_text']; ?></h2>
@@ -89,7 +96,7 @@ foreach ($seosen_options['feat_brands'] as $brand) {
         <div class="col-md-8 col-sm-12 fadebox brand <?php if ($i % 3 === 0) : ?> hidden-sm <?php endif ?>">
             <a href="<?php echo $brand['url']; ?>">
     <?php echo wp_get_attachment_image($brand['attachment_id'], 'home_brand', false, array('class' => 'img-responsive')); ?>
-                <div class="<?php echo ($i % 2 ? 'whitebar' : 'blackbar'); ?>">
+                <div class="blackbar">
                     <h2><?php echo $brand['title']; ?></h2>
                 </div>
             </a>
@@ -101,7 +108,7 @@ foreach ($seosen_options['feat_brands'] as $brand) {
 <section id="homenewsletter" class="container">
     <div class="col-md-24">
         <form role="form" class="newsform_send">
-            <input type="email" placeholder="Join the SoSensational Community" /><button type="submit">Sign Up Now</button>
+            <input type="email" required name="email" placeholder="Join the SoSensational Community" oninvalid="setCustomValidity('Please insert your email address')" /><button type="submit">Sign Up Now</button>
         </form>
     </div>
 </section>
@@ -135,7 +142,9 @@ foreach ($seosen_options['feat_brands'] as $brand) {
                     <div class="col-xs-12 col-md-13">
                         <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
                         <small><?php echo get_the_date('F d, Y'); ?></small>
-            <?php the_excerpt(); ?>
+                        <span class="hidden-portrait">
+                            <?php the_excerpt(); ?>
+                        </span>
                     </div>
                 </div>
             </div>
