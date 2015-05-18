@@ -16,6 +16,8 @@ if (!empty($ss_cat_id)):
                                     WHERE wptt.taxonomy='ss_category' 
                                     AND wpt.term_id='{$category_id}'", OBJECT);
     $mainChildren = get_term_children($category_id, get_query_var('taxonomy'));
+    
+    $mainSsCategory = $category;
 
     $term_meta = get_option("taxonomy_$category_id");
     ?>
@@ -26,40 +28,12 @@ if (!empty($ss_cat_id)):
         yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
     }
     ?>
-    <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
-        <?php if(function_exists('bcn_display'))
-        {
-            $bred = bcn_display(true);
-            $bred_array = explode(" / ", $bred);
-            foreach ($bred_array as $key => $value) {
-                if($key == sizeof($bred_array)-1) {
-                    ?>
-                    <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to SoSensational." href="/brands-and-boutiques" class="home">BRANDS & BOUTIQUES</a></span>
-                    <?php
-                    echo " / ";
-                } else {
-                    echo $value;
-                    echo " / ";
-                }
-            }
-
-            //add url to session
-
-            $_SESSION['b1'] = '<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to '.$category[0]->name.'" href="'.$_SERVER[REQUEST_URI].'" class="home">'.$category[0]->name.'</a></span>';
-
-        ?>
-             <span typeof="v:Breadcrumb"><span property="v:title"><?php echo $category[0]->name; ?></span></span>
-        <?php
-        }?>
-
-    </div>
 
     <?php
     $categories = $wpdb->get_results("SELECT * FROM {$wpdb->term_taxonomy} wptt 
     LEFT JOIN {$wpdb->terms} as wpt
     ON wpt.term_id=wptt.term_id
     WHERE wptt.taxonomy='ss_category' ", OBJECT);
-
     ?>
     <div class="row">
         <?php
@@ -92,63 +66,6 @@ if (!empty($ss_cat_id)):
         ?>
         <div class="ss_clear" ></div>
     </div>
-    <?php 
-        $var = '%"' . $category_id . '"%';
-        $featureds = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->posts} wpp
-                                    LEFT JOIN {$wpdb->postmeta} as wppm 
-                                    ON wpp.ID = wppm.post_id
-                                    WHERE wppm.meta_key = '_categories_featured'
-                                    AND wppm.meta_value LIKE %s 
-                                    ORDER BY RAND()
-                                    LIMIT 3", $var), OBJECT);
-        if(sizeof($featureds) > 0 ):
-    ?>
-        
-        <div class="featured-brand row">
-            <div class="line">
-                <h2>Featured Brands</h2>
-                <span></span>
-            </div>
-            <div class="featued-list">
-                <?php 
-                    $counterCategories = 1;
-                    $counterColor = 1;
-                    foreach ($featureds as $featured):
-                ?>
-                    <div class="col-md-8 col-sm-12 fadebox showme animated fadeIn category-picture-tile" style="visibility: visible;">
-                    <a href="<?php echo get_permalink($featured->ID); ?>?featured=true" class="aHolderImgSS">
-                            <?php 
-                                $featured_child = $wpdb->get_results("SELECT * FROM {$wpdb->posts} wpp
-                                                                                      LEFT JOIN {$wpdb->term_relationships} as wptr
-                                                                                      ON wptr.object_id = wpp.ID
-                                                                                      LEFT JOIN {$wpdb->term_taxonomy} as wptt
-                                                                                      ON wptr.term_taxonomy_id = wptt.term_taxonomy_id
-                                                                                      WHERE wpp.post_type = 'advertisers_cats'
-                                                                                      AND wpp.post_parent = ".$featured->ID."
-                                                                                      AND wptt.parent = ".$category_id."
-                                                                                      ORDER BY RAND()
-                                                                                      LIMIT 1
-                                                                                    ", OBJECT);     
-                            ?>                        
-                            <img  src="<?php echo get_post_meta($featured_child[0]->ID, 'ss_advertisers_cats_image')[0]; ?>" class="img-responsive" />
-                            <div class="<?php
-                            if ($counterColor % 2): echo 'whitebar ss_whitebar';
-                            else: echo 'blackbar ss_blackbar';
-                            endif;
-                            ?>" style="display:block">
-                                <h2><span> <?php echo $featured->post_title; ?></span></h2>
-                            </div>
-                        </a>
-                    </div>
-                <?php 
-                    $counterColor++; 
-                    endforeach;
-                ?>
-            </div>    
-        </div>
-
-    <?php endif; ?>
-    
 
 <?php endif; ?> 
 
@@ -201,38 +118,6 @@ if (empty($mainChildren)):
         yoast_breadcrumb('<div id="breadcrumbs">', '</div>');
     }
     ?>
-
-    <div id="breadcrumbs" class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
-        <?php if(function_exists('bcn_display'))
-        {
-            $bred = bcn_display(true);
-            $bred_array = explode(" / ", $bred);
-            foreach ($bred_array as $key => $value) {
-                if($key == sizeof($bred_array)-1) {
-                    ?>
-                    <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to SoSensational." href="/brands-and-boutiques" class="home">BRANDS & BOUTIQUES</a></span>
-                    <?php
-                    echo " / ";
-                } else {
-                    echo $value;
-                    echo " / ";
-                }
-            }
-
-            if(isset($_SESSION['b1'])){
-                echo $_SESSION['b1']; 
-                echo " / ";
-            }
-
-            ?>
-             <span typeof="v:Breadcrumb"><span property="v:title"><?php echo $term_meta->name; ?></span></span>
-            <?php
-            //add url to session          
-            $_SESSION['b2'] = '<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to '.$term_meta->name.'" href="'.$_SERVER[REQUEST_URI].'" class="home">'.$term_meta->name.'</a></span>'; 
-        }
-        ?>
-
-    </div>
 
     <?php if (function_exists('breadcrumb_trail')) breadcrumb_trail(); ?>             
 
