@@ -248,7 +248,7 @@ function jqUpdateSize() {
 }
 
 function attachSlider(arguments) {
-    $('.flexslider').flexslider(arguments);
+    jQuery('.flexslider').flexslider(arguments);
 }
 
 function getDesktopSliderSettings() {
@@ -262,7 +262,7 @@ function getDesktopSliderSettings() {
         nextText: " ",
         slideshow: false,
         start: function () {
-            $('.slides').show();
+            jQuery('.slides').show();
         }            
     };
 }
@@ -275,7 +275,7 @@ function getMobileSliderSettings() {
         controlNav: false,   
         itemMargin: 0,
         start: function () {
-            $('.slides').show();
+            jQuery('.slides').show();
         }
     };                
 }
@@ -291,7 +291,7 @@ function getTabletSliderSettings() {
         nextText: " ",
         slideshow: false,
         start: function () {
-            $('.slides').show();
+            jQuery('.slides').show();
         }            
     };              
 }   
@@ -330,13 +330,13 @@ function getTabletSliderSettingsB() {
         animation: "slide",
         animationLoop: false,
         controlNav: false,
-        itemWidth: 375,
+        itemWidth: 355,
         itemMargin: 15,
         prevText: " ",
         nextText: " ",
         slideshow: false,
         start: function () {
-            $('.slides').show();
+            jQuery('.slides').show();
         }            
     };              
 } 
