@@ -237,7 +237,7 @@ get_header();
                                                     <h4>'. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
 							';
                             if ( current_user_can('edit_posts') ) {
-							 	echo '<a class="edit_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&product='.$post->ID.'">Edit</a>';
+							 	echo '<a class="edit_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&referrer='.$_SERVER['REQUEST_URI'].'&product='.$post->ID.'">Edit</a>';
 								echo '<a class="del_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=delete&referrer='.$_SERVER['REQUEST_URI'].'&product='.$post->ID.'">Delete</a>';
 							}
 							echo '           </div>
