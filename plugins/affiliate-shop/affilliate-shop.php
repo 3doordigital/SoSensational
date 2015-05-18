@@ -1824,7 +1824,7 @@ class WordPress_Affiliate_Shop {
                     <tr>
                         <th>Shop Home Meta Description</th>
                         <td>
-                            <textarea class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][meta_desc]"  id="<?php echo $this->option_name; ?>[faceted][home][meta_desc]">><?php echo ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' ); ?></textarea>
+                            <textarea class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][meta_desc]"  id="<?php echo $this->option_name; ?>[faceted][home][meta_desc]"><?php echo ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' ); ?></textarea>
                         </td>
                     </tr>
                     <tr>
