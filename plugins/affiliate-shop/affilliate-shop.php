@@ -1747,7 +1747,7 @@ class WordPress_Affiliate_Shop {
             <h2>Settings</h2>
             <h2 class="nav-tab-wrapper">
             	<a class="nav-tab <?php echo ( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 0 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 0, $_SERVER['REQUEST_URI'] ); ?>">General Settings</a>
-                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 1 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 1, $_SERVER['REQUEST_URI'] ); ?>">Options Faceted Nav</a>
+                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 1 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 1, $_SERVER['REQUEST_URI'] ); ?>">Titles and Desc's</a>
                 <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 2 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 2, $_SERVER['REQUEST_URI'] ); ?>">Update Products</a>
             </h2>
             <form method="POST" id="wp_aff_prod_search" action="<?php echo admin_url('admin-post.php'); ?>">
