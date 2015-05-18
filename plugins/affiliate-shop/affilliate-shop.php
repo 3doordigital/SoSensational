@@ -150,11 +150,13 @@ class WordPress_Affiliate_Shop {
 		if( get_query_var( 'shop-cat' ) != '' ) {
 			$term = get_query_var( 'shop-cat' );
 			$tax = 'wp_aff_categories';
+			$shopcat = 1;
 		} elseif( get_query_var( 'shop-brand' ) != '' ) {
 			$term = get_query_var( 'shop-brand' );
 			$tax = 'wp_aff_brands';
+			$shopcat = 1;
 		}
-		if( is_page() && $wp_query->query['page_id'] == 37 ) {
+		if( $shopcat == 1 && is_page() && $wp_query->query['page_id'] == 37 ) {
 			$cat = get_term_by( 'slug', $term , $tax );
 			
 			$title = $cat->name;
@@ -169,6 +171,9 @@ class WordPress_Affiliate_Shop {
 			}
 			
 			$title .= get_bloginfo( 'name' );
+		} else {
+			$option = $this->get_option();
+			$title = ( isset( $option['faceted']['sale']['meta_title'] ) ? $option['faceted']['sale']['meta_title'] : '' ); 
 		}
 		
 		return $title;
@@ -1798,6 +1803,12 @@ class WordPress_Affiliate_Shop {
 			?>
             	<table class="form-table" >
                 	<tr>
+                        <th>Shop Home Meta Title</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][meta_title]" value="<?php echo ( isset( $option['faceted']['home']['meta_title'] ) ? $option['faceted']['home']['meta_title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][home][meta_title]">
+                        </td>
+                    </tr>
+                    <tr>
                         <th>Shop Home Title</th>
                         <td>
                             <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][title]" value="<?php echo ( isset( $option['faceted']['home']['title'] ) ? $option['faceted']['home']['title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][home][title]">
