@@ -892,6 +892,7 @@ class AllProductTable extends WP_List_Table {
             'img'     => 'Image',
             'title'     => 'Title',
 			'stickers'	=> '',
+			'cats'		=> 'Categories',
             'brands'     => 'Brand',
             'colours'     => 'Colours',
             'sizes'     => 'Sizes',
@@ -1091,6 +1092,7 @@ class AllProductTable extends WP_List_Table {
             $colours = wp_get_post_terms( $post->ID, 'wp_aff_colours' );
             $sizes = wp_get_post_terms( $post->ID, 'wp_aff_sizes' );
             $brands = wp_get_post_terms( $post->ID, 'wp_aff_brands' );
+			$cats = wp_get_post_terms( $post->ID, 'wp_aff_categories' );
             
             $prod_data = array();
             
@@ -1103,10 +1105,14 @@ class AllProductTable extends WP_List_Table {
             foreach( $brands AS $brand ) {
                 $prod_data['brands'][] = $brand->name;
             }
+			foreach( $cats AS $cat ) {
+                $prod_data['cats'][] = $cat->name;
+            }
             //print_var($prod_data);
             $colours = @implode( ', ', $prod_data['colours']);
             $sizes = @implode( ', ', $prod_data['sizes']);
             $brands = @implode( ', ', $prod_data['brands']);
+			$cats = @implode( ', ', $prod_data['cats']);
             
 						
             //print_var($post_meta);
@@ -1118,6 +1124,7 @@ class AllProductTable extends WP_List_Table {
                 'colours' => $colours,
                 'sizes' => $sizes,
                 'brands' => $brands,
+				'cats' => $cats,
                 'price' => $post_meta['wp_aff_product_price'][0],
                 'link' => $post_meta['wp_aff_product_link'][0],
             );
