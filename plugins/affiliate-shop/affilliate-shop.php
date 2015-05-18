@@ -2077,20 +2077,20 @@ class WordPress_Affiliate_Shop {
         <?php if(!isset($_GET['action']) || $_GET['action'] == 'delete'): ?>
         
         <?php 
-			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_REQUEST['product'] ) ) {
+			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_GET['product'] ) ) {
 				$products = array();
-				if( !is_array( $_REQUEST['product'] ) ) {
-					$products[] = $_REQUEST['product'];
+				if( !is_array( $_GET['product'] ) ) {
+					$products[] = $_GET['product'];
 				} else {
-					$products = $_REQUEST['product'];
+					$products = $_GET['product'];
 				}
 				foreach( $products as $product ) { 
 					wp_trash_post( $product );
 				}
-				if( isset( $_REQUEST['referrer'] ) ) {
-					wp_redirect( $_REQUEST['referrer'] );
+				if( isset( $_GET['referrer'] ) ) {
+					wp_redirect( $_GET['referrer'] );
 				} else {
-					wp_redirect( $_REQUEST['_wp_http_referer'] );
+					wp_redirect( $_GET['_wp_http_referer'] );
 				}
 			}
 		?>
