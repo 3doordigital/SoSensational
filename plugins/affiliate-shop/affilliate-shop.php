@@ -2658,7 +2658,7 @@ class WordPress_Affiliate_Shop {
 		<loc>'.site_url().'/shop/'.( $type == 'brands' ? 'brand/' : '' ).$term->slug.'/</loc>
 		<lastmod>'.$this->get_last_post_date( $term, $tax ).'</lastmod>
 		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
+		<priority>0.9</priority>
 	</url>';	
 		}
 		
