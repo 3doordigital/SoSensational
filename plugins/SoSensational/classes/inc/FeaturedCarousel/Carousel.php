@@ -13,7 +13,7 @@ class Carousel
         $this->dataForDisplay = $dataForDisplay;
         
     }
-    
+     
     public function display()
     {
         

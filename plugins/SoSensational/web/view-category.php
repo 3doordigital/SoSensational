@@ -29,7 +29,7 @@ if (!empty($ss_cat_id)):
     }
     ?>
 
-    <?php
+    <?php 
     $categories = $wpdb->get_results("SELECT * FROM {$wpdb->term_taxonomy} wptt 
     LEFT JOIN {$wpdb->terms} as wpt
     ON wpt.term_id=wptt.term_id
