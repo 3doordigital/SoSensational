@@ -174,6 +174,7 @@ jQuery(document).ready(function($) {
 			return false;	
 		}
 	});
+	
 	$('#doaction').on( 'click', function(e) {
 		if( $('#bulk-action-selector-top').val() == 'delete' ) {
 			if( confirm( 'Are you sure?' ) ) {

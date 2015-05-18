@@ -173,6 +173,19 @@
 	position: absolute;
 	top: -22px;
 	left: -0px;
+	width: 60px;
+	font-size: 11px;
+	font-family: 'Open Sans', sans-serif;
+}
+.prod_title .del_link {
+	background-color: #A80406;
+	color: #fff;
+	display: inline-block;
+	padding: 3px 7px;	
+	position: absolute;
+	top: -22px;
+	left: 60px;
+	width: 60px;
 	font-size: 11px;
 	font-family: 'Open Sans', sans-serif;
 }

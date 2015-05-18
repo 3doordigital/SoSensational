@@ -1797,6 +1797,18 @@ class WordPress_Affiliate_Shop {
             <?php } elseif( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 1 ) { 
 			?>
             	<table class="form-table" >
+                	<tr>
+                        <th>Shop Home Title</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][title]" value="<?php echo ( isset( $option['faceted']['home']['title'] ) ? $option['faceted']['home']['title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][home][title]">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Shop Home Intro</th>
+                        <td>
+                        	<?php wp_editor( ( isset( $option['faceted']['home']['intro'] ) ? $option['faceted']['home']['intro'] : '' ), 'home_intro', array( 'textarea_name' => $this->option_name.'[faceted][home][intro]', 'textarea_rows' => 5 ) ); ?>
+                        </td>
+                    </tr>
                     <tr>
                         <th>New In Title</th>
                         <td>
@@ -2077,17 +2089,21 @@ class WordPress_Affiliate_Shop {
         <?php if(!isset($_GET['action']) || $_GET['action'] == 'delete'): ?>
         
         <?php 
-			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_REQUEST['product'] ) ) {
+			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_GET['product'] ) ) {
 				$products = array();
-				if( !is_array( $_REQUEST['product'] ) ) {
-					$products[] = $_REQUEST['product'];
+				if( !is_array( $_GET['product'] ) ) {
+					$products[] = $_GET['product'];
 				} else {
-					$products = $_REQUEST['product'];
+					$products = $_GET['product'];
 				}
 				foreach( $products as $product ) { 
 					wp_trash_post( $product );
 				}
-				wp_redirect( $_REQUEST['_wp_http_referer'] );
+				if( isset( $_GET['referrer'] ) ) {
+					wp_redirect( $_GET['referrer'] );
+				} else {
+					wp_redirect( $_GET['_wp_http_referer'] );
+				}
 			}
 		?>
         
@@ -2364,6 +2380,24 @@ class WordPress_Affiliate_Shop {
 		<div class="wrap">
         	<h2>Affiliate Shop</h2>
         	<?php if( !isset( $_REQUEST['action'] ) || ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) ) { ?>
+            <?php 
+			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_GET['product'] ) ) {
+					$products = array();
+					if( !is_array( $_GET['product'] ) ) {
+						$products[] = $_GET['product'];
+					} else {
+						$products = $_GET['product'];
+					}
+					foreach( $products as $product ) { 
+						wp_trash_post( $product );
+					}
+					if( isset( $_GET['referrer'] ) ) {
+						wp_redirect( $_GET['referrer'] );
+					} else {
+						wp_redirect( $_GET['_wp_http_referer'] );
+					}
+				}
+			?>
                 <h3>Products</h3>
                 <?php
                     $ProductTable = new AllProductTable();
