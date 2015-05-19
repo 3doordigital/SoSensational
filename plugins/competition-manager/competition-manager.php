@@ -1205,8 +1205,9 @@ class WordPress_Competition_Manager {
 			 } else {
 			   load_template( dirname( __FILE__ ) . '/templates/archive.php' );
 			 }
-		 } 
-			 //return $template;
+		 } else {
+			 return $template;
+		 }
     }
 	
     private function run_plugin() {
