@@ -1188,7 +1188,7 @@ class WordPress_Competition_Manager {
     
 	public function load_shop_template($template) {
 		global $post;
-		if ($post->post_type == "wp_comp_man" && is_single() ) {
+		/*if ($post->post_type == "wp_comp_man" && is_single() ) {
 			$meta = get_post_meta( $post->ID );
 			//print_var( $meta );
 			if( isset( $meta['wp_comp_facebook']) && $meta['wp_comp_facebook'][0] == '1' ) {
@@ -1198,7 +1198,8 @@ class WordPress_Competition_Manager {
 					load_template ( $this->plugin_path . '/templates/facebook.php' );
 				}
 			} 
-		} elseif( is_post_type_archive( 'wp_comp_man' ) ) {
+		} elseif( is_post_type_archive( 'wp_comp_man' ) ) {*/
+			if( is_post_type_archive( 'wp_comp_man' ) ) { // comment this line out when Facebook https goes live.
 			 if ( $overridden_template = locate_template( 'comp-archive.php' ) ) {
 			   load_template( $overridden_template );
 			 } else {
