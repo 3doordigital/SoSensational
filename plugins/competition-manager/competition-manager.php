@@ -1177,7 +1177,7 @@ class WordPress_Competition_Manager {
 		global $post;
 		if ($post->post_type == "wp_comp_man" && is_single() ) {
 			$meta = get_post_meta( $post->ID );
-			print_var( $meta );
+			//print_var( $meta );
 			if( isset( $meta['wp_comp_facebook']) && $meta['wp_comp_facebook'][0] == '1' ) {
 				if($overridden_template = locate_template( get_stylesheet_directory(). '/comp_templates/facebook.php' ) ) {
 					load_template( $overridden_template );
@@ -1192,7 +1192,7 @@ class WordPress_Competition_Manager {
 			   load_template( dirname( __FILE__ ) . '/templates/archive.php' );
 			 }
 		 } 
-			 return $template;
+			 //return $template;
     }
 	
     private function run_plugin() {
