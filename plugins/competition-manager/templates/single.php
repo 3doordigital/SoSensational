@@ -11,7 +11,7 @@
 		}
 	?>
 </h4>
-<?php if( !isset( $meta['wp_comp_needq'] ) || $meta['wp_comp_needq'][0] == 1 ) { ?>	
+<?php if( !isset( $meta['wp_comp_needq'] ) || ( isset( $meta['wp_comp_needq'] ) && $meta['wp_comp_needq'][0] == 1 ) ) { ?>	
     <p class="wp_comp_question">Q: <?php echo $meta['wp_comp_question'][0]; ?></p>
 <?php } ?>
 <p class="center"><strong><?php $meta['wp_comp_rules'][0]; ?></strong></p>
