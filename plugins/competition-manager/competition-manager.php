@@ -227,11 +227,11 @@ class WordPress_Competition_Manager {
             	<th>Need Question?</th>
                 <td>
                 	  <p><label>
-                	    <input type="radio" name="wp_comp_needq" value="1" id="wp_comp_needq_0">
+                	    <input type="radio" <?php if( isset( $meta['wp_comp_needq'][0] ) ) { checked($meta['wp_comp_needq'][0], 1); } else { echo 'checked'; } ?> name="wp_comp_needq" value="1" id="wp_comp_needq_0">
                 	    Yes</label></p>
                 	  
                 	  <p><label>
-                	    <input type="radio" name="wp_comp_needq" value="0" id="wp_comp_needq_1">
+                	    <input type="radio" <?php if( isset( $meta['wp_comp_needq'][0] ) ) { checked($meta['wp_comp_needq'][0], 0); }  ?> name="wp_comp_needq" value="0" id="wp_comp_needq_1">
                 	    No</label>
                 	  </p>
            	    </td>
