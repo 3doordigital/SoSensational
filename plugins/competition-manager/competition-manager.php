@@ -745,6 +745,10 @@ class WordPress_Competition_Manager {
     public function frontend_form( $bootstrap = false, $cols = false ) {
 		$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ).' 00:00:00' );
 		$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' 23:59:59' );
+		$needq = get_post_meta( get_the_ID(), 'wp_comp_needq', true );
+		
+		if( $needq == '' ) $needq = 0;
+		
 		$cdate = strtotime( date("Y-m-d H:i:s") );
 		
 		if( $sdate > $cdate ) {
@@ -779,8 +783,10 @@ class WordPress_Competition_Manager {
 				$i = 1;
 				$count = count( $fields );
 				echo '<form id="comp_form" method="post">';
-				echo '<h4>Your Answer *</h4>
-				<p><textarea class="form-control" required name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
+				if( $needq == 0 ) {
+					echo '<h4>Your Answer *</h4>
+					<p><textarea class="form-control" required name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
+				}
 				foreach( $fields as $key=>$row ) {
 					$sort[$key] = $row['field_order'];
 				}
