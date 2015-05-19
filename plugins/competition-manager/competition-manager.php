@@ -226,14 +226,14 @@ class WordPress_Competition_Manager {
             <tr>
             	<th>Need Question?</th>
                 <td>
-                	  <label>
+                	  <p><label>
                 	    <input type="radio" name="wp_comp_needq" value="1" id="wp_comp_needq_0">
-                	    Yes</label>
-                	  <br>
-                	  <label>
+                	    Yes</label></p>
+                	  
+                	  <p><label>
                 	    <input type="radio" name="wp_comp_needq" value="0" id="wp_comp_needq_1">
                 	    No</label>
-                	  <br>
+                	  </p>
            	    </td>
             </tr>
         	<tr>
