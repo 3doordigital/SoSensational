@@ -120,7 +120,7 @@ get_header();
             <h1><?php echo $term->name; ?></h1>
             
 				<?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
-            <?php } else {
+            <?php } elseif( $_SERVER['REQUEST_URI'] == '/shop/' ) {
 				global $wp_aff;
 				$option = $wp_aff->get_option();
 				echo '<h1>'.( isset( $option['faceted']['home']['title'] ) ? $option['faceted']['home']['title'] : 'Shop' ).'</h1>';
