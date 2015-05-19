@@ -58,4 +58,8 @@
 
             </nav>
             </div>
+<?php
+    global $query_string;
+    echo $query_string;
+?>
         </div>        

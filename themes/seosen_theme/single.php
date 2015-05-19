@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php get_header();?>
 <div class="container pagetop">
     <h2 class="pagetitle"><span>Style Advice &amp; Blog</span>
     <?php
