@@ -8,11 +8,7 @@ Template Name: Wide Page No Banner
 <div class="container">
     <div class="row">
         <div class="col-md-24" id="content">
-            <?php the_content(); 
-            $c = the_content();
-            var_dump($c);
-            
-            ?>
+            <?php the_content(); ?>
         </div>
     </div>
 </div>
