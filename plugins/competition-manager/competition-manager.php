@@ -433,11 +433,12 @@ class WordPress_Competition_Manager {
 		
 		if ($post->post_type == "wp_comp_man" && is_single() ) {
 			$contents = $content;
-			if(file_exists(get_stylesheet_directory(). '/comp_templates/single.php')) {
-				$contents .= $this->get_include_contents(get_stylesheet_directory(). '/comp_templates/single.php');
-			} elseif(file_exists($this->plugin_path. '/templates/single.php')) {
-                $contents .= $this->get_include_contents( $this->plugin_path . '/templates/single.php' );
-			} 
+			
+				if(file_exists(get_stylesheet_directory(). '/comp_templates/single.php')) {
+					$contents .= $this->get_include_contents(get_stylesheet_directory(). '/comp_templates/single.php');
+				} elseif(file_exists($this->plugin_path. '/templates/single.php')) {
+					$contents .= $this->get_include_contents( $this->plugin_path . '/templates/single.php' );
+				} 
 			return $contents;
 		} else {
 			return $content;	
@@ -1173,7 +1174,17 @@ class WordPress_Competition_Manager {
     }
     
 	public function load_shop_template($template) {
-         if( is_post_type_archive( 'wp_comp_man' ) ) {
+		global $post;
+		if ($post->post_type == "wp_comp_man" && is_single() ) {
+			$meta = get_post_meta( $post->ID );
+			if( isset( $meta['wp_comp_facebook']) && $meta['wp_comp_facebook'] == '1' ) {
+				if(file_exists(get_stylesheet_directory(). '/comp_templates/facebook.php')) {
+					$contents .= $this->get_include_contents(get_stylesheet_directory(). '/comp_templates/facebook.php');
+				} elseif(file_exists($this->plugin_path. '/templates/facebook.php')) {
+					$contents .= $this->get_include_contents( $this->plugin_path . '/templates/facebook.php' );
+				}
+			}
+		} elseif( is_post_type_archive( 'wp_comp_man' ) ) {
              if ( $overridden_template = locate_template( 'comp-archive.php' ) ) {
                load_template( $overridden_template );
              } else {
