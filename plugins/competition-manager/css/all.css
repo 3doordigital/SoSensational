@@ -125,3 +125,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6c20b1', end
 .facebook-comp {
 	padding: 30px;
 }
+.facebook-comp #wpfront-notification-bar-spacer {
+	display: none!important;
+}
