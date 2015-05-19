@@ -335,6 +335,9 @@ class WordPress_Competition_Manager {
 		if ( isset( $_REQUEST['wp_comp_type'] ) ) {
 			update_post_meta( $post_id, 'wp_comp_type', sanitize_text_field( $_REQUEST['wp_comp_type'] ) );
 		}
+		if ( isset( $_REQUEST['wp_comp_needq'] ) ) {
+			update_post_meta( $post_id, 'wp_comp_needq', sanitize_text_field( $_REQUEST['wp_comp_needq'] ) );
+		}
 		if( isset( $_REQUEST['wp_comp_type'] ) && $_REQUEST['wp_comp_type'] == 2 && $_REQUEST['wp_comp_type_text'] != '' ) {
 			update_post_meta( $post_id, 'wp_comp_type_text', sanitize_text_field( $_REQUEST['wp_comp_type_text'] ) );
 		} elseif( isset( $_REQUEST['wp_comp_type'] ) && $_REQUEST['wp_comp_type'] == 1 ) {
