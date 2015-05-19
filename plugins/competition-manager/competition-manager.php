@@ -223,6 +223,19 @@ class WordPress_Competition_Manager {
                     <p><input type="radio" <?php if( isset( $meta['wp_comp_type'][0] ) ) { checked($meta['wp_comp_type'][0], 2); }  ?> name="wp_comp_type" value="2"> <input type="text" name="wp_comp_type_text" class="comp-type-text" placeholder="Or type your own" value="<?php if( isset( $meta['wp_comp_type'][0] ) && $meta['wp_comp_type'][0] ==2 ) { echo $meta['wp_comp_type_text'][0]; } ?>">
                 </td>
             </tr>
+            <tr>
+            	<th>Need Question?</th>
+                <td>
+                	  <label>
+                	    <input type="radio" name="wp_comp_needq" value="1" id="wp_comp_needq_0">
+                	    Yes</label>
+                	  <br>
+                	  <label>
+                	    <input type="radio" name="wp_comp_needq" value="0" id="wp_comp_needq_1">
+                	    No</label>
+                	  <br>
+           	    </td>
+            </tr>
         	<tr>
             	<th>Question</th>
                 <td><input type="text" name="wp_comp_question" class="large-text" value="<?php echo ( isset( $meta['wp_comp_question'][0] ) ? $meta['wp_comp_question'][0] : '' ); ?>"></td>
