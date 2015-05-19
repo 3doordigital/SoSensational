@@ -1177,11 +1177,12 @@ class WordPress_Competition_Manager {
 		global $post;
 		if ($post->post_type == "wp_comp_man" && is_single() ) {
 			$meta = get_post_meta( $post->ID );
+			print_va( $meta );
 			if( isset( $meta['wp_comp_facebook']) && $meta['wp_comp_facebook'] == '1' ) {
-				if(file_exists(get_stylesheet_directory(). '/comp_templates/facebook.php')) {
-					$contents .= $this->get_include_contents(get_stylesheet_directory(). '/comp_templates/facebook.php');
-				} elseif(file_exists($this->plugin_path. '/templates/facebook.php')) {
-					$contents .= $this->get_include_contents( $this->plugin_path . '/templates/facebook.php' );
+				if($overridden_template = locate_template( get_stylesheet_directory(). '/comp_templates/facebook.php' ) ) {
+					load_template( $overridden_template );
+				} elseif( file_exists($this->plugin_path. '/templates/facebook.php' ) ) {
+					load_template ( $this->plugin_path . '/templates/facebook.php' );
 				}
 			}
 		} elseif( is_post_type_archive( 'wp_comp_man' ) ) {
