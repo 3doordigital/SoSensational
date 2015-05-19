@@ -747,7 +747,7 @@ class WordPress_Competition_Manager {
 		$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' 23:59:59' );
 		$needq = get_post_meta( get_the_ID(), 'wp_comp_needq', true );
 		echo $needq;
-		if( $needq == '' ) $needq = 0;
+		if( $needq == '' ) $needq = 1;
 		
 		$cdate = strtotime( date("Y-m-d H:i:s") );
 		
@@ -783,7 +783,7 @@ class WordPress_Competition_Manager {
 				$i = 1;
 				$count = count( $fields );
 				echo '<form id="comp_form" method="post">';
-				if( $needq == 0 ) {
+				if( $needq != 0 ) {
 					echo '<h4>Your Answer *</h4>
 					<p><textarea class="form-control" required name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
 				}
