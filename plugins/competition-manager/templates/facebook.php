@@ -2,7 +2,7 @@
 	global $comp_manager;
 	$meta = get_post_meta(get_the_ID()); 
 ?>
-<h4 class="wp_comp_intro">
+<h4 class="wp_comp_intro">aaa
 	<?php
 		if( isset( $meta['wp_comp_type'][0] ) && $meta['wp_comp_type'][0] == 1 ) {
 			echo 'To be in with a chance to win this amazing prize, simply tell us:';	
