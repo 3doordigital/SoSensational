@@ -1,4 +1,5 @@
 <?php 
+	get_header();
 	global $comp_manager;
 	$meta = get_post_meta(get_the_ID()); 
 ?>
@@ -20,4 +21,5 @@
         $comp_manager->frontend_form();
     ?>
 </div>
-        
+       
+<?php get_footer(); ?> 
