@@ -746,7 +746,6 @@ class WordPress_Competition_Manager {
 		$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ).' 00:00:00' );
 		$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' 23:59:59' );
 		$needq = get_post_meta( get_the_ID(), 'wp_comp_needq', true );
-		echo $needq;
 		if( $needq == '' ) $needq = 1;
 		
 		$cdate = strtotime( date("Y-m-d H:i:s") );
