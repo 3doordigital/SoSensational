@@ -11,7 +11,9 @@
 	}
 ?>
 </h4>
-<p class="wp_comp_question">Q: <?php echo $meta['wp_comp_question'][0]; ?></p>
+<?php if( !isset( $meta['wp_comp_needq'] ) || ( isset( $meta['wp_comp_needq'] ) && $meta['wp_comp_needq'][0] == 1 ) ) { ?>	
+    <p class="wp_comp_question">Q: <?php echo $meta['wp_comp_question'][0]; ?></p>
+<?php } ?>
 <p class="center"><strong><?php echo $meta['wp_comp_rules'][0]; ?></strong></p>
 <p class="center"><?php printf('This competition begins on %s and ends at midnight on %s', date( 'jS F Y', strtotime( $meta['wp_comp_sdate'][0] ) ), date( 'jS F Y', strtotime( $meta['wp_comp_edate'][0] ) ) ) ; ?></p>
 
