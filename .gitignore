@@ -7,4 +7,5 @@ upgrade/*
 uploads/*
 node_modules
 README.md
+error_log
 
