@@ -283,3 +283,10 @@ function fixMenuOnCompetitionsPage()
     return false;
 
 }
+
+function return_404() {
+	status_header(404);
+	nocache_headers();
+	include( get_404_template() );
+	exit;
+}

@@ -4,6 +4,8 @@ jQuery(document).ready( function($) {
         $(this).hide();
         $('#wp_comp_form').show(); 
     });
+	
+	$('[data-toggle="tooltip"]').tooltip();
     
 	$('[data-toggle="tooltip"]').tooltip();
 	
