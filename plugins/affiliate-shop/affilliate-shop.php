@@ -1,11 +1,11 @@
 <?php
 /*
-  Plugin Name: WordPress Aflliate Shop
+  Plugin Name: WordPress Affiliate Shop
   Plugin URI: 
   Description: Create a shop on your WordPress site using the most popular Affiliate networks.
   Version: 0.1b
-  Author: Dan Taylor +[W.mtMUzAZy
-  Author URI: http://www.tailoredmarketing.co.uk
+  Author: Dan Taylor
+  Author URI: http://www.3doordigital.com
   License: GPL V3
  */
 require_once('inc/base_functions.php');

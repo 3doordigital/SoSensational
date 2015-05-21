@@ -5,6 +5,8 @@ jQuery(document).ready( function($) {
         $('#wp_comp_form').show(); 
     });
     
+	$('[data-toggle="tooltip"]').tooltip();
+	
     $('#comp_form').submit( function( event ) {
         event.preventDefault();
 		var errors = 0;
