@@ -6,9 +6,7 @@ jQuery(document).ready( function($) {
     });
 	
 	$('[data-toggle="tooltip"]').tooltip();
-    
-	$('[data-toggle="tooltip"]').tooltip();
-	
+    	
     $('#comp_form').submit( function( event ) {
         event.preventDefault();
 		var errors = 0;
