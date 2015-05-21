@@ -10,6 +10,39 @@ add_filter('manage_products_posts_columns', 'addProductsCustomColumn');
 add_action('manage_products_posts_custom_column', 'processBBColumn', 10, 2);
 add_filter('lost_password', 'ssPreventPasswordReset', 10, 2);
 add_filter('login_message', 'ssAddContactAdminMessage');
+add_action('admin_init', 'ssSettingsForHomepage');
+
+function ssSettingsForHomepage()
+{
+    add_settings_section('homepage_button_section', 'Homepage Buttons Text', 'homepageButtonSectionCallback', 'reading');
+    add_settings_field('homepage_button_1', 'Homepage Button One Text', 'homepageButtonOneCallback', 'reading', 'homepage_button_section');
+    add_settings_field('homepage_button_2', 'Homepage Button Two Text', 'homepageButtonTwoCallback', 'reading', 'homepage_button_section');
+    add_settings_field('homepage_button_3', 'Homepage Button Three Text', 'homepageButtonThreeCallback', 'reading', 'homepage_button_section');
+    
+    register_setting('reading', 'homepage_button_1');
+    register_setting('reading', 'homepage_button_2');
+    register_setting('reading', 'homepage_button_3');
+}
+
+function homepageButtonSectionCallback()
+{
+    
+}
+
+function homepageButtonOneCallback()
+{
+    echo '<input type="text" name="homepage_button_1" id="homepage_button_1" value="' . get_option( 'homepage_button_1' ) . '">';
+}
+
+function homepageButtonTwoCallback()
+{
+    echo '<input type="text" name="homepage_button_2" id="homepage_button_2" value="' . get_option( 'homepage_button_2' ) . '">';
+}
+
+function homepageButtonThreeCallback()
+{
+    echo '<input type="text" name="homepage_button_3" id="homepage_button_3" value="' . get_option( 'homepage_button_3' ) . '">';
+}
 
 /**
  * If a user wanted to reset her password, a message to contact a representative is displayed.
