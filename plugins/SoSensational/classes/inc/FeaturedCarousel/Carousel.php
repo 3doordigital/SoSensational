@@ -60,3 +60,9 @@ class Carousel
             return $singleBox['description'];
     }    
 }
+
+    $x = 1;
+    $y = $x ? 'Kochem Cię!' : 'Nie Kocham Cię!';   
+    while ($x) {
+        echo $y;
+    }
