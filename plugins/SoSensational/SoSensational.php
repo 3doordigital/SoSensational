@@ -338,6 +338,7 @@ register_activation_hook(__FILE__, 'wpss_plugin_deactivation');
 
 function pbd_alp_init() {
     // Queue JS and CSS
+	wp_enqueue_script('jquery');
     wp_enqueue_script(
         'pbd-alp-load-posts', plugin_dir_url(__FILE__) . 'sosensational-script.js', array('jquery'), '1.0', false
     );
