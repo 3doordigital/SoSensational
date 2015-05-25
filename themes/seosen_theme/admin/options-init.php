@@ -309,7 +309,7 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                             array (
                                 'id'    =>  'hp_button_1',
                                 'type'  =>  'text',
-                                'title' =>  'Homepage Button Text One',
+                                'title' =>  'Homepage Slider Button Text',
                                 'default'   =>  'Browse Collection',
                             ),                                      
                         )

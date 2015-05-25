@@ -19,7 +19,7 @@
                                 <div class="col-xs-10 rightcover blackback">
                                     <h2><?php echo $slide['title']; ?></h2>
                                     <p>
-                                        <a href="<?php echo $slide['url']; ?>" class="btn btn-primary" role="button"><?php $seosen_options['hp_button_one']; ?></a>
+                                        <a href="<?php echo $slide['url']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['hp_button_one']; ?></a>
                                     </p>
                                 </div>
                             </div>
