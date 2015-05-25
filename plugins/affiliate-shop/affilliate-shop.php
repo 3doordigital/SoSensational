@@ -73,6 +73,9 @@ class WordPress_Affiliate_Shop {
         add_action( 'init', array( $this, 'register_post_type' ) );
         add_action( 'init', array( $this, 'register_taxonomies' ) );
         add_action( 'init', array( $this, 'custom_rewrite_rule' ) );
+		
+		add_action( 'template_redirect', array( $this, 'sitemaps' ) );
+		
         add_action( 'admin_menu', array( $this, 'create_menu' ) );
 		        
         add_action( 'admin_post_wp_aff_save_api', array ( $this, 'wp_aff_update_settings' ) );
@@ -131,6 +134,7 @@ class WordPress_Affiliate_Shop {
         
 		add_filter( 'wp_title', array( $this, 'some_callback' ), 100, 2 );
 		add_filter( 'wpseo_canonical', array( $this, 'canonical' ) );
+		add_filter( 'wpseo_metadesc', array( $this, 'description' ) );
 		
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
@@ -143,15 +147,17 @@ class WordPress_Affiliate_Shop {
 	function some_callback( $title, $sep ){
 		global $wp_query;
 		//print_var( $wp_query );
-		
+		$shopcat = 0;
 		if( get_query_var( 'shop-cat' ) != '' ) {
 			$term = get_query_var( 'shop-cat' );
 			$tax = 'wp_aff_categories';
+			$shopcat = 1;
 		} elseif( get_query_var( 'shop-brand' ) != '' ) {
 			$term = get_query_var( 'shop-brand' );
 			$tax = 'wp_aff_brands';
+			$shopcat = 1;
 		}
-		if( is_page() && $wp_query->query['page_id'] == 37 ) {
+		if( $shopcat == 1 && is_page() && $wp_query->query['page_id'] == 37 ) {
 			$cat = get_term_by( 'slug', $term , $tax );
 			
 			$title = $cat->name;
@@ -166,14 +172,29 @@ class WordPress_Affiliate_Shop {
 			}
 			
 			$title .= get_bloginfo( 'name' );
+		} elseif( $_SERVER['REQUEST_URI'] == '/shop/' ) {
+			$option = $this->get_option();
+			$title = ( isset( $option['faceted']['home']['meta_title'] ) ? $option['faceted']['home']['meta_title'] : 'Shop for Women | '.get_bloginfo( 'name' ) ); 
 		}
 		
 		return $title;
 		
 	}
+	
+	function description( $desc ) {
+		
+		if( $_SERVER['REQUEST_URI'] == '/shop/' ) {
+			$option = $this->get_option();
+			$desc = ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' ); 
+		}
+		
+		return $desc;
+		
+	}
+	
 	function canonical( $data ) {
 		if( preg_match( '#(brands-and-boutiques|shop)#', $_SERVER['REQUEST_URI'] ) ) {
-			return 	get_bloginfo( 'url' ).$_SERVER['REQUEST_URI'];
+			return 	get_bloginfo( 'url' ).strtok($_SERVER["REQUEST_URI"],'?');
 		}
 	}
 	
@@ -320,8 +341,9 @@ class WordPress_Affiliate_Shop {
         add_rewrite_tag('%shop-option%', '([^&]+)');
 		add_rewrite_tag('%shop-cat%', '([^&]+)');
         add_rewrite_tag('%shop-brand%', '([^&]+)');
+		add_rewrite_tag('%shop-sitemap%', '([^&]+)');
 		
-        
+        add_rewrite_rule('shop/sitemaps/([^/]+?)$', 'index.php?shop-sitemap=$matches[1]', 'top');
         
 		add_rewrite_rule('shop/new-in/?$','index.php?page_id=37&shop-option=new', 'top');
 		add_rewrite_rule('shop/sale/?$','index.php?page_id=37&shop-option=sale', 'top');
@@ -822,6 +844,9 @@ class WordPress_Affiliate_Shop {
 		
 		$url = add_query_arg( 'colour', $colours, $url );
 		$url = str_replace( '%2C', ',', $url);
+        
+
+        
 		wp_safe_redirect( $url );
 	}
 	
@@ -1235,7 +1260,7 @@ class WordPress_Affiliate_Shop {
             }
         if ( ! isset ( $_POST['_wp_http_referer'] ) )
             die( 'Missing target.' );
-
+        
         //print_var($term);
         wp_safe_redirect( $url );
         exit;
@@ -1740,7 +1765,7 @@ class WordPress_Affiliate_Shop {
             <h2>Settings</h2>
             <h2 class="nav-tab-wrapper">
             	<a class="nav-tab <?php echo ( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 0 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 0, $_SERVER['REQUEST_URI'] ); ?>">General Settings</a>
-                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 1 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 1, $_SERVER['REQUEST_URI'] ); ?>">Options Faceted Nav</a>
+                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 1 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 1, $_SERVER['REQUEST_URI'] ); ?>">Titles and Desc's</a>
                 <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 2 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 2, $_SERVER['REQUEST_URI'] ); ?>">Update Products</a>
             </h2>
             <form method="POST" id="wp_aff_prod_search" action="<?php echo admin_url('admin-post.php'); ?>">
@@ -1790,6 +1815,30 @@ class WordPress_Affiliate_Shop {
             <?php } elseif( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 1 ) { 
 			?>
             	<table class="form-table" >
+                	<tr>
+                        <th>Shop Home Meta Title</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][meta_title]" value="<?php echo ( isset( $option['faceted']['home']['meta_title'] ) ? $option['faceted']['home']['meta_title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][home][meta_title]">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Shop Home Meta Description</th>
+                        <td>
+                            <textarea class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][meta_desc]"  id="<?php echo $this->option_name; ?>[faceted][home][meta_desc]"><?php echo ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' ); ?></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Shop Home Title</th>
+                        <td>
+                            <input class="regular-text" type="text" name="<?php echo $this->option_name; ?>[faceted][home][title]" value="<?php echo ( isset( $option['faceted']['home']['title'] ) ? $option['faceted']['home']['title'] : '' ); ?>" id="<?php echo $this->option_name; ?>[faceted][home][title]">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Shop Home Intro</th>
+                        <td>
+                        	<?php wp_editor( ( isset( $option['faceted']['home']['intro'] ) ? $option['faceted']['home']['intro'] : '' ), 'home_intro', array( 'textarea_name' => $this->option_name.'[faceted][home][intro]', 'textarea_rows' => 5 ) ); ?>
+                        </td>
+                    </tr>
                     <tr>
                         <th>New In Title</th>
                         <td>
@@ -2070,17 +2119,21 @@ class WordPress_Affiliate_Shop {
         <?php if(!isset($_GET['action']) || $_GET['action'] == 'delete'): ?>
         
         <?php 
-			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_REQUEST['product'] ) ) {
+			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_GET['product'] ) ) {
 				$products = array();
-				if( !is_array( $_REQUEST['product'] ) ) {
-					$products[] = $_REQUEST['product'];
+				if( !is_array( $_GET['product'] ) ) {
+					$products[] = $_GET['product'];
 				} else {
-					$products = $_REQUEST['product'];
+					$products = $_GET['product'];
 				}
 				foreach( $products as $product ) { 
 					wp_trash_post( $product );
 				}
-				wp_redirect( $_REQUEST['_wp_http_referer'] );
+				if( isset( $_GET['referrer'] ) ) {
+					wp_redirect( $_GET['referrer'] );
+				} else {
+					wp_redirect( $_GET['_wp_http_referer'] );
+				}
 			}
 		?>
         
@@ -2357,6 +2410,24 @@ class WordPress_Affiliate_Shop {
 		<div class="wrap">
         	<h2>Affiliate Shop</h2>
         	<?php if( !isset( $_REQUEST['action'] ) || ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) ) { ?>
+            <?php 
+			if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset( $_GET['product'] ) ) {
+					$products = array();
+					if( !is_array( $_GET['product'] ) ) {
+						$products[] = $_GET['product'];
+					} else {
+						$products = $_GET['product'];
+					}
+					foreach( $products as $product ) { 
+						wp_trash_post( $product );
+					}
+					if( isset( $_GET['referrer'] ) ) {
+						wp_redirect( $_GET['referrer'] );
+					} else {
+						wp_redirect( $_GET['_wp_http_referer'] );
+					}
+				}
+			?>
                 <h3>Products</h3>
                 <?php
                     $ProductTable = new AllProductTable();
@@ -2620,6 +2691,68 @@ class WordPress_Affiliate_Shop {
 			echo '&pound;'.$price;	
 		}
 	}
+	
+	function sitemaps() {
+		global $wp_query;
+		$type = get_query_var( 'shop-sitemap' );
+		if( $type != '' ) {
+			header('Content-Type: application/xml; charset=utf-8');
+			$this->sitemap_output( $type );
+			die();	
+		}
+		
+	}
+	
+	function sitemap_output( $type ) {
+		echo '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->plugin_url.'sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+';
+		switch( $type ) {
+			case 'categories' :
+				$tax = 'wp_aff_categories';
+				break;
+			case 'brands' :
+				$tax = 'wp_aff_brands';
+				break;
+		}
+		$terms = get_terms( $tax );
+		foreach( $terms as $term ) {
+			
+			echo '<url>
+		<loc>'.site_url().'/shop/'.( $type == 'brands' ? 'brand/' : '' ).$term->slug.'/</loc>
+		<lastmod>'.$this->get_last_post_date( $term, $tax ).'</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.9</priority>
+	</url>';	
+		}
+		
+		
+		echo '
+		</urlset>';	
+	}
+	
+	function get_last_post_date( $term, $tax ) {
+		$args = array (
+			'post_type' => 'wp_aff_products',
+			'posts_per_page' => 1,
+			'order_by' => 'post_date',
+			'order' => 'DESC',
+			'tax_query' => array(
+				array(
+					'taxonomy' => $tax,
+					'field' => 'ID',
+					'terms' => $term->term_id
+				)
+			)
+		);
+		$cat_posts = get_posts( $args );
+		if( isset( $cat_posts[0] ) ) {
+			return date( 'c', strtotime( $cat_posts[0]->post_date ) );
+		} else {
+			return '';
+		}
+	}
+	
     /**
      * Place code for your plugin's functionality here.
      */

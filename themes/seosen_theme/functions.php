@@ -375,3 +375,159 @@ function ST4_columns_content_only_movies($column_name, $post_ID) {
 // function editBreadcrumbLinks($breadcrumbs) {
 // 	var_dump($breadcrumbs);
 // }
+
+
+
+/*--------------- new field in setings ----------------------*/
+
+function eg_settings_api_init() {
+    // Add the section to reading settings so we can add our
+    // fields to it
+    add_settings_section(
+        'eg_setting_section',
+        'User listing (ss_directory)',
+        'eg_setting_section_callback_function',
+        'reading'
+    );
+    
+    // Add the field with the names and function to use for our new
+    // settings, put it in our new section
+    add_settings_field(
+        'step_1_text',
+        'Step 1 success text:',
+        'step_1_callback_function',
+        'reading',
+        'eg_setting_section'
+    );
+
+    add_settings_field(
+        'step_2_text',
+        'Step 2 success text:',
+        'step_2_callback_function',
+        'reading',
+        'eg_setting_section'
+    );
+
+    add_settings_field(
+        'step_2_error_text',
+        'Step 2 error text:',
+        'step_2_error_callback_function',
+        'reading',
+        'eg_setting_section'
+    );
+
+    add_settings_field(
+        'step_2_delete_text',
+        'Step 2 delete text:',
+        'step_2_delete_callback_function',
+        'reading',
+        'eg_setting_section'
+    );
+
+
+    add_settings_field(
+        'step_3_text',
+        'Step 3 success text:',
+        'step_3_callback_function',
+        'reading',
+        'eg_setting_section'
+    );
+
+    add_settings_field(
+        'admin_notification_email',
+        'Notification email:',
+        'notification_email_callback_function',
+        'reading',
+        'eg_setting_section'
+    );
+
+    add_settings_field(
+        'listing_send_message',
+        'Notification after sending listing for aproval:',
+        'sending_listing_callback_function',
+        'reading',
+        'eg_setting_section'
+    );
+    
+    // Register our setting so that $_POST handling is done for us and
+    // our callback function just has to echo the <input>
+    register_setting( 'reading', 'step_1_text' );
+    register_setting( 'reading', 'step_2_text' );
+    register_setting( 'reading', 'step_2_error_text' );
+    register_setting( 'reading', 'step_2_delete_text' );
+    register_setting( 'reading', 'step_3_text' );
+    register_setting( 'reading', 'admin_notification_email' );
+    register_setting( 'reading', 'listing_send_message' );
+ } // eg_settings_api_init()
+ 
+ add_action( 'admin_init', 'eg_settings_api_init' );
+
+ function eg_setting_section_callback_function(){
+
+ }
+
+ function step_1_callback_function() {
+    echo '<textarea name="step_1_text" id="step_1_text" style="width: 400px; min-height: 100px;">'.get_option( 'step_1_text' ).'</textarea>';
+ }
+
+  function step_2_callback_function() {
+    echo '<textarea name="step_2_text" id="step_2_text" style="width: 400px; min-height: 100px;">'.get_option( 'step_2_text' ).'</textarea>';
+ }
+
+  function step_2_error_callback_function() {
+    echo '<textarea name="step_2_error_text" id="step_2_error_text" style="width: 400px; min-height: 100px;">'.get_option( 'step_2_error_text' ).'</textarea>';
+ }
+
+  function step_2_delete_callback_function() {
+    echo '<textarea name="step_2_delete_text" id="step_2_delete_text" style="width: 400px; min-height: 100px;">'.get_option( 'step_2_delete_text' ).'</textarea>';
+ }
+
+  function step_3_callback_function() {
+    echo '<textarea name="step_3_text" id="step_3_text" style="width: 400px; min-height: 100px;">'.get_option( 'step_3_text' ).'</textarea>';
+ }
+
+  function notification_email_callback_function() {
+    echo '<textarea name="admin_notification_email" id="admin_notification_email" style="width: 400px; min-height: 100px;">'.get_option( 'admin_notification_email' ).'</textarea>';
+ }
+
+ function sending_listing_callback_function() {
+    echo '<textarea name="listing_send_message" id="listing_send_message" style="width: 400px; min-height: 100px;">'.get_option( 'listing_send_message' ).'</textarea>';
+ }
+
+
+
+ function delete_activity_images( $args ) {
+    // This function is designed to delete images added by
+    // BuddyPress Activity Plus (BPAP), so we first check for the constant
+    // which defines the path to uploaded images.
+    // If its not there, assume we use the default value
+    if (!defined('BPFB_BASE_IMAGE_DIR')) {
+        define('BPFB_BASE_IMAGE_DIR', $wp_upload_dir['basedir'] . '/bpfb/', true);
+    }
+
+    // Get the contents of the activity we are about to delete
+    global $wpdb;
+    $content = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM ".$wpdb->prefix."bp_activity WHERE id = %d;", $args['id'] ) );
+    if ($content != '') {
+        // Look for the shortcode surrounding image filenames uploaded the BPAP
+        $matches = array();
+        preg_match('/\[bpfb_images\](.*?)\[\/bpfb_images\]/s', $content, $matches);
+
+        // If there are any images, delete each one and its thumbnail
+        if ($matches) {
+            foreach ($matches as $match) {
+                $images = array();
+                $images = explode('\n', trim(strip_tags($match)));
+                if (!empty($images)) {
+                    foreach ($images as $image) {
+                        unlink(BPFB_BASE_IMAGE_DIR.$image);
+                        $image_fn = substr($image, 0, strrpos($image, '.'));
+                        $image_ext = substr($image, strrpos($image, '.') + 1);
+                        unlink(BPFB_BASE_IMAGE_DIR.$image_fn.'-bpfbt.'.$image_ext);
+                    }
+                }
+            }
+        }
+    }
+}
+add_action( 'bp_before_activity_delete', 'delete_activity_images');

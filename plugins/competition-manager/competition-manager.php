@@ -223,6 +223,19 @@ class WordPress_Competition_Manager {
                     <p><input type="radio" <?php if( isset( $meta['wp_comp_type'][0] ) ) { checked($meta['wp_comp_type'][0], 2); }  ?> name="wp_comp_type" value="2"> <input type="text" name="wp_comp_type_text" class="comp-type-text" placeholder="Or type your own" value="<?php if( isset( $meta['wp_comp_type'][0] ) && $meta['wp_comp_type'][0] ==2 ) { echo $meta['wp_comp_type_text'][0]; } ?>">
                 </td>
             </tr>
+            <tr>
+            	<th>Need Question?</th>
+                <td>
+                	  <p><label>
+                	    <input type="radio" <?php if( isset( $meta['wp_comp_needq'][0] ) ) { checked($meta['wp_comp_needq'][0], 1); } else { echo 'checked'; } ?> name="wp_comp_needq" value="1" id="wp_comp_needq_0">
+                	    Yes</label></p>
+                	  
+                	  <p><label>
+                	    <input type="radio" <?php if( isset( $meta['wp_comp_needq'][0] ) ) { checked($meta['wp_comp_needq'][0], 0); }  ?> name="wp_comp_needq" value="0" id="wp_comp_needq_1">
+                	    No</label>
+                	  </p>
+           	    </td>
+            </tr>
         	<tr>
             	<th>Question</th>
                 <td><input type="text" name="wp_comp_question" class="large-text" value="<?php echo ( isset( $meta['wp_comp_question'][0] ) ? $meta['wp_comp_question'][0] : '' ); ?>"></td>
@@ -321,6 +334,9 @@ class WordPress_Competition_Manager {
 		}
 		if ( isset( $_REQUEST['wp_comp_type'] ) ) {
 			update_post_meta( $post_id, 'wp_comp_type', sanitize_text_field( $_REQUEST['wp_comp_type'] ) );
+		}
+		if ( isset( $_REQUEST['wp_comp_needq'] ) ) {
+			update_post_meta( $post_id, 'wp_comp_needq', sanitize_text_field( $_REQUEST['wp_comp_needq'] ) );
 		}
 		if( isset( $_REQUEST['wp_comp_type'] ) && $_REQUEST['wp_comp_type'] == 2 && $_REQUEST['wp_comp_type_text'] != '' ) {
 			update_post_meta( $post_id, 'wp_comp_type_text', sanitize_text_field( $_REQUEST['wp_comp_type_text'] ) );
@@ -433,11 +449,12 @@ class WordPress_Competition_Manager {
 		
 		if ($post->post_type == "wp_comp_man" && is_single() ) {
 			$contents = $content;
-			if(file_exists(get_stylesheet_directory(). '/comp_templates/single.php')) {
-				$contents .= $this->get_include_contents(get_stylesheet_directory(). '/comp_templates/single.php');
-			} elseif(file_exists($this->plugin_path. '/templates/single.php')) {
-                $contents .= $this->get_include_contents( $this->plugin_path . '/templates/single.php' );
-			} 
+			
+				if(file_exists(get_stylesheet_directory(). '/comp_templates/single.php')) {
+					$contents .= $this->get_include_contents(get_stylesheet_directory(). '/comp_templates/single.php');
+				} elseif(file_exists($this->plugin_path. '/templates/single.php')) {
+					$contents .= $this->get_include_contents( $this->plugin_path . '/templates/single.php' );
+				} 
 			return $contents;
 		} else {
 			return $content;	
@@ -728,6 +745,9 @@ class WordPress_Competition_Manager {
     public function frontend_form( $bootstrap = false, $cols = false ) {
 		$sdate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_sdate', true ).' 00:00:00' );
 		$edate = strtotime( get_post_meta( get_the_ID(), 'wp_comp_edate', true ).' 23:59:59' );
+		$needq = get_post_meta( get_the_ID(), 'wp_comp_needq', true );
+		if( $needq == '' ) $needq = 1;
+		
 		$cdate = strtotime( date("Y-m-d H:i:s") );
 		
 		if( $sdate > $cdate ) {
@@ -762,8 +782,10 @@ class WordPress_Competition_Manager {
 				$i = 1;
 				$count = count( $fields );
 				echo '<form id="comp_form" method="post">';
-				echo '<h4>Your Answer *</h4>
-				<p><textarea class="form-control" required name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
+				if( $needq != 0 ) {
+					echo '<h4>Your Answer *</h4>
+					<p><textarea class="form-control" required name="wp_comp_answer" class="wp_comp_answer"></textarea></p>';
+				}
 				foreach( $fields as $key=>$row ) {
 					$sort[$key] = $row['field_order'];
 				}
@@ -1173,15 +1195,27 @@ class WordPress_Competition_Manager {
     }
     
 	public function load_shop_template($template) {
-         if( is_post_type_archive( 'wp_comp_man' ) ) {
-             if ( $overridden_template = locate_template( 'comp-archive.php' ) ) {
-               load_template( $overridden_template );
-             } else {
-               load_template( dirname( __FILE__ ) . '/templates/archive.php' );
-             }
-         } else {
-             return $template;
-         }
+		global $post;
+		/*if ($post->post_type == "wp_comp_man" && is_single() ) {
+			$meta = get_post_meta( $post->ID );
+			//print_var( $meta );
+			if( isset( $meta['wp_comp_facebook']) && $meta['wp_comp_facebook'][0] == '1' ) {
+				if($overridden_template = locate_template( get_stylesheet_directory(). '/comp_templates/facebook.php' ) ) {
+					load_template( $overridden_template );
+				} elseif( file_exists($this->plugin_path. '/templates/facebook.php' ) ) {
+					load_template ( $this->plugin_path . '/templates/facebook.php' );
+				}
+			} 
+		} elseif( is_post_type_archive( 'wp_comp_man' ) ) {*/
+			if( is_post_type_archive( 'wp_comp_man' ) ) { // comment this line out when Facebook https goes live.
+			 if ( $overridden_template = locate_template( 'comp-archive.php' ) ) {
+			   load_template( $overridden_template );
+			 } else {
+			   load_template( dirname( __FILE__ ) . '/templates/archive.php' );
+			 }
+		 } else {
+			 return $template;
+		 }
     }
 	
     private function run_plugin() {

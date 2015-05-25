@@ -10,20 +10,19 @@ function ss_directory() {
     $ss_advertiser = isset($wp_query->query_vars['ss_advertiser']) ? $wp_query->query_vars['ss_advertiser'] : "";
 
 
-    if (($ss_cat == "") && ($ss_sub_cat == "")) {
+    if (($ss_cat == "") && ($ss_sub_cat == "")) {        
         ob_start();
         include (SOSENSATIONAL_DIR . '/web/show-categories.php');
         $content = ob_get_clean();
         echo $content;
     } elseif (($ss_cat != "") && ($ss_sub_cat == "")) {
-
         $tax_term = get_term_by("slug", $ss_cat, 'ss_category', OBJECT);
 
         if (!empty($tax_term)) {
             $ss_cat_id = $tax_term->term_id;
             ob_start();
             include (SOSENSATIONAL_DIR . '/web/view-category.php');
-            $content = ob_get_clean();
+            $content = ob_get_clean();            
             echo $content;
         } else {
             // This might be an advertiser.. So we shall do a check using the ss_cat as the ID
@@ -44,15 +43,12 @@ function ss_directory() {
                 $content = ob_get_clean();
                 echo $content;
             } else {
-                echo "Sorry no advertiser found or category... ";
+                return_404();
             }
         }
     } elseif (($ss_cat != "") && ($ss_sub_cat != "")) {
-        //	echo $ss_sub_cat;
+
         $tax_term = get_term_by("slug", $ss_sub_cat, 'ss_category', OBJECT);
-        //	print_r($tax_term);
-
-
         if (!empty($tax_term)) {
             $ss_sub_cat_id = $tax_term->term_id;
             //$ss_cat_id  = $ss_sub_cat_id;
@@ -60,6 +56,8 @@ function ss_directory() {
             include (SOSENSATIONAL_DIR . '/web/view-category.php');
             $content = ob_get_clean();
             echo $content;
+        } else {
+                return_404();
         }
     }
 }

@@ -35,7 +35,7 @@
 
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/"><img class="img-responsive" src="<?php bloginfo('stylesheet_directory'); ?>/images/SoSensational-Logo.gif"  alt=""/></a>
+                    <a class="navbar-brand" href="/"><img class="img-responsive" src="<?php bloginfo('stylesheet_directory'); ?>/images/logo-new.png"  alt=""/></a>
                 </div>
 
                 <?php
@@ -55,7 +55,6 @@
                     );
                 }
                 ?>
-
             </nav>
             </div>
         </div>        

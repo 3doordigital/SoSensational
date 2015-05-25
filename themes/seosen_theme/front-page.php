@@ -19,7 +19,7 @@
                                 <div class="col-xs-10 rightcover blackback">
                                     <h2><?php echo $slide['title']; ?></h2>
                                     <p>
-                                        <a href="<?php echo $slide['url']; ?>" class="btn btn-primary" role="button">Browse Collection</a>
+                                        <a href="<?php echo $slide['url']; ?>" class="btn btn-primary" role="button"><?php echo get_option('homepage_button_1', 'Browse Collection') ?></a>
                                     </p>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                             <div class="col-xs-10 leftcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_1_text']; ?></h2>
                                 <p>
-                                    <a href="<?php echo $seosen_options['home_image_1_link']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['home_image_1_button']; ?></a>
+                                    <a href="<?php echo $seosen_options['home_image_1_link']; ?>" class="btn btn-primary" role="button"><?php echo get_option('homepage_button_2', 'Browse Collection') ?></a>
                                 </p>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                             <div class="col-xs-10 rightcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_2_text']; ?></h2>
                                 <p>
-                                    <a href="<?php echo $seosen_options['home_image_2_link']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['home_image_2_button']; ?></a>
+                                    <a href="<?php echo $seosen_options['home_image_2_link']; ?>" class="btn btn-primary" role="button"><?php echo get_option('homepage_button_3', 'Browse Collection') ?></a>
                                 </p>
                             </div>
                         </div>
@@ -108,7 +108,7 @@ foreach ($seosen_options['feat_brands'] as $brand) {
 <section id="homenewsletter" class="container">
     <div class="col-md-24">
         <form role="form" class="newsform_send">
-            <input type="email" required name="email" placeholder="Join the SoSensational Community" /><button type="submit">Sign Up Now</button>
+            <input type="email" required name="email" placeholder="Join the SoSensational Community" oninvalid="setCustomValidity('Please insert your email address')" /><button type="submit">Sign Up Now</button>
         </form>
     </div>
 </section>

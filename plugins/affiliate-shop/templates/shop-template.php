@@ -5,7 +5,7 @@ get_header();
 <div class="container">
     <h1><span><?php the_title(); ?></span></h1>
     
-   <!-- <div id="breadcrumbs">
+    <div id="breadcrumbs">
         You Are Here:
 		<span prefix="v: http://rdf.data-vocabulary.org/#">
 			<span typeof="v:Breadcrumb">
@@ -120,7 +120,12 @@ get_header();
             <h1><?php echo $term->name; ?></h1>
             
 				<?php echo wpautop(htmlspecialchars_decode($term->description)); ?>
-            <?php } 
+            <?php } elseif( $_SERVER['REQUEST_URI'] == '/shop/' ) {
+				global $wp_aff;
+				$option = $wp_aff->get_option();
+				echo '<h1>'.( isset( $option['faceted']['home']['title'] ) ? $option['faceted']['home']['title'] : 'Shop' ).'</h1>';
+							if( isset( $option['faceted']['home']['intro'] ) ) echo wpautop(htmlspecialchars_decode( $option['faceted']['home']['intro'] ));
+			}
 				if( isset( $wp_query->query_vars['shop-option']	) ) {
 					global $wp_aff;
 					$option = $wp_aff->get_option();
@@ -237,7 +242,8 @@ get_header();
                                                     <h4>'. ( isset( $brand[0]->name ) ? $brand[0]->name : '' ).'</h4>
 							';
                             if ( current_user_can('edit_posts') ) {
-							 	echo '<a class="edit_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&product='.$post->ID.'">Edit</a>';
+							 	echo '<a class="edit_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=edit&referrer='.$_SERVER['REQUEST_URI'].'&product='.$post->ID.'">Edit</a>';
+								echo '<a class="del_link" href="/wp-admin/admin.php?page=affiliate-shop/products&action=delete&referrer='.$_SERVER['REQUEST_URI'].'&product='.$post->ID.'">Delete</a>';
 							}
 							echo '           </div>
                                                 <div class="prod_price col-md-8">
@@ -277,7 +283,7 @@ get_header();
                  */
                 if ( isset($term) ) {
                     $children = get_term_children($term->term_id, "wp_aff_categories");
-                    if ( empty($children) ) {
+                    if ( empty($children) && $term->parent != NULL) {
                         $term = get_term($term->parent, "wp_aff_categories");
                     }       
                     displayRelatedAdvertisersCarousel($term);                     

@@ -16,6 +16,10 @@
     .shop-filter .children li a {
         text-transform: none !important;
     }
+    
+    .advertiser-block-wrapper {
+        height: 400px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -23,7 +27,9 @@
     .carousel-indicators {
         display: none;
     }
-
+    .advertiser-block-wrapper {
+        height: 400px;
+    }
     
 }    
     
@@ -42,6 +48,10 @@
     #mega-menu-wrap-primary .mega-menu-toggle ~ #mega-menu-primary {
         width: 96%;
         text-align: center;
+    }
+    
+    .advertiser-block-wrapper {
+        height: 400px;
     }    
 /*------------------------------------------------------------------------------
                          Advertiser Profile Page
@@ -100,6 +110,12 @@
 }
 
 @media (max-width: 767px) {
+
+    #mega-menu-wrap-primary .mega-menu-toggle + #mega-menu-primary li.mega-menu-item.mega-menu-item-11807 > ul.mega-sub-menu.visible {
+
+            display: block !important ;
+         
+    }
 
     .carousel-indicators {
         display: none;
@@ -230,6 +246,7 @@
     .blackbar.ss_blackbar {
         height: 49px;
     }
+
     
 /*------------------------------------------------------------------------------
                                     Front Page

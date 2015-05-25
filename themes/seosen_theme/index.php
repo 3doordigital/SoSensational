@@ -31,7 +31,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-16 ">
+        <div class="col-sm-24 col-md-24 col-lg-16">
             <?php
             $i = 1;
             $x = 0;
@@ -103,7 +103,7 @@
                 <?php wp_pagenavi(); ?>
             <?php endif; ?>
         </div>
-        <div class="col-md-7 col-sm-offset-1">
+        <div class="col-lg-7 col-sm-offset-1 visible-lg">
             <div class="clearfix"></div>
             <?php dynamic_sidebar('blog_sidebar'); ?> 
         </div>
