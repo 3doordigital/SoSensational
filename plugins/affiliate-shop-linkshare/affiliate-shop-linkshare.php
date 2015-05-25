@@ -170,6 +170,50 @@ class WordPress_Affiliate_Shop_Linkshare {
 			return $array;
 			
 		}
+		
+		public function feed_data( $merchant ) {
+			$local_file = 'download/local.xml.gz';
+			$server_file = $merchant.'_2476350_mp.xml.gz';
+			$contents = '';
+			$data = array();
+			
+			$conn_id = ftp_connect('aftp.linksynergy.com');
+			$login_result = ftp_login($conn_id, 'cyndylessing', 'zbrbZdyk');
+					
+			if (ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
+				
+				ftp_close($conn_id);
+				
+				$fp = gzopen( $local_file, "r");
+				while ($line = gzgets($fp,1024)) {
+					$contents .= $line;
+				}
+				gzclose($fp);
+				
+				$xml = simplexml_load_string( $contents );
+				foreach( $xml->product as $product ) {
+					$data[] = array(
+						'ID'        => (string) $product['product_id'],
+						'aff'     	=> 'linkshare',    
+						'title'     => addslashes ( trim( ucwords( strtolower( (string) $product['name'] ) ) ) ),
+						'brand'     => addslashes( trim( ucwords( strtolower( (string) $xml->header->merchantName ) ) ) ),
+						'img'       => addslashes( (string) $product->URL->productImage ),
+						'desc'      => addslashes( (string) $product->description->short ),
+						'price'     => number_format( (int) $product->price->sale, 2, '.', '' ),
+						'rrp'       => number_format( (int) $product->price->retail, 2, '.', '' ),
+						'link'      => addslashes( (string) $product->URL->product )
+					);
+				}
+				echo '<pre>'.print_r( $data, true ).'</pre>';
+			}
+		}
+		
+		public function update_feed() {
+			$merchants = $this->merchants();
+			foreach( $merchants as $merchant ) {
+				$this->feed_data( $merchant['ID'] );	
+			}	
+		}
 }
 register_activation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Linkshare', 'activation' ) );
 register_deactivation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Linkshare', 'deactivation' ) );

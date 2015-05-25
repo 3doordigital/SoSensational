@@ -229,6 +229,19 @@
 	public function main_page() { ?>
 		<div class="wrap">
 			<?php $this->page_title(); ?>
+            <h3>Feeds</h3>
+            
+    <?php
+	}
+	
+	/**
+	* The output for the settings page of the plugin
+	*
+	* @return echo to screen
+	*/ 
+	public function settings_page() { ?>
+		<div class="wrap">
+			<?php $this->page_title(); ?>
             <h3>Update Feed</h3>
             <form method="POST" action="<?php echo admin_url('admin-post.php'); ?>">                
                 <table class="form-table">
@@ -265,14 +278,7 @@
                 <?php wp_nonce_field( 'wp_man_save_feed', $this->option_name . '_nonce', TRUE ); ?>
             </form>
         </div>
-<?php }
-	
-	/**
-	* The output for the settings page of the plugin
-	*
-	* @return echo to screen
-	*/ 
-	public function settings_page() {
+<?php
 		
 	}
 	
