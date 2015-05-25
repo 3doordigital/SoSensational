@@ -302,6 +302,45 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
 						)
 					),
 					array(
+						'id'          => 'hp_button_one',
+						'type'        => 'text',
+						'title'       => 'Homepage Button Text One',
+                        'fields'      => array(
+                            array (
+                                'id'    =>  'hp_button_1',
+                                'type'  =>  'text',
+                                'title' =>  'Homepage Button Text One',
+                                'default'   =>  'Browse Collection',
+                            ),                                      
+                        )
+					),    
+					array(
+						'id'          => 'hp_button_two',
+						'type'        => 'text',
+						'title'       => 'Homepage Button Text Two',
+                        'fields'      => array(
+                            array (
+                                'id'    =>  'hp_button_2',
+                                'type'  =>  'text',
+                                'title' =>  'Homepage Button Text Two',
+                                'default'   =>  'Browse Collection',
+                            ),                                      
+                        )
+					),   
+					array(
+						'id'          => 'hp_button_three',
+						'type'        => 'text',
+						'title'       => 'Homepage Button Text Three',
+                        'fields'      => array(
+                            array (
+                                'id'    =>  'hp_button_3',
+                                'type'  =>  'text',
+                                'title' =>  'Homepage Button Text Three',
+                                'default'   =>  'Browse Collection',
+                            ),                                      
+                        )
+					),                       
+					array(
 						'id'     => 'home-top-end',
 						'type'   => 'section',
 						'indent' => false,
