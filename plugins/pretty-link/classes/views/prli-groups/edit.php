@@ -18,12 +18,12 @@ if(!defined('ABSPATH'))
 <table class="form-table">
   <tr class="form-field">
     <td width="75px" valign="top"><?php _e('Name:', 'pretty-link'); ?> </td>
-    <td><input type="text" name="name" value="<?php echo htmlspecialchars(stripslashes(((isset($_POST['name']) and $record == null)?$_POST['name']:$record->name))); ?>" size="75">
+    <td><input type="text" name="name" value="<?php echo esc_html(stripslashes(((isset($_POST['name']) and $record == null)?$_POST['name']:$record->name))); ?>" size="75">
       <br/><span class="setting-description"><?php _e("This is how you'll identify your Group.", 'pretty-link'); ?></span></td>
   </tr>
   <tr class="form-field">
     <td valign="top"><?php _e('Description:', 'pretty-link'); ?> </td>
-    <td><textarea style="height: 100px;" name="description"><?php echo ((isset($_POST['description']) and $record == null)?$_POST['description']:$record->description); ?></textarea>
+    <td><textarea style="height: 100px;" name="description"><?php echo esc_html((isset($_POST['description']) and $record == null)?$_POST['description']:$record->description); ?></textarea>
     <br/><span class="setting-description"><?php _e('A Description of this group.', 'pretty-link'); ?></span></td>
   </tr>
   <tr class="form-field" valign="top">
@@ -41,7 +41,7 @@ if(!defined('ABSPATH'))
             $link = $links[$i];
             ?>
             <tr style="line-height: 15px; font-size: 12px;<?php echo (($i%2)?' background-color: #efefef;':''); ?>">
-              <td style="min-width: 50%; width: 50%"><input type="checkbox" style="display:inline;width: 15px; padding: 0; margin: 0; float: left; text-align: left;" name="link[<?php echo $link->id; ?>]" <?php echo (((isset($_POST['link'][$link->id]) and $_POST['link'][$link->id] == 'on') or (empty($_POST) and $link->group_id == $record->id))?'checked="true"':''); ?>/><span>&nbsp;<?php echo htmlspecialchars(stripslashes($link->name)) . " <strong>(" . $link->slug . ")</strong>"; ?></span></td>
+              <td style="min-width: 50%; width: 50%"><input type="checkbox" style="display:inline;width: 15px; padding: 0; margin: 0; float: left; text-align: left;" name="link[<?php echo $link->id; ?>]" <?php echo (((isset($_POST['link'][$link->id]) and $_POST['link'][$link->id] == 'on') or (empty($_POST) and $link->group_id == $record->id))?'checked="true"':''); ?>/><span>&nbsp;<?php echo esc_html(stripslashes($link->name)) . " <strong>(" . $link->slug . ")</strong>"; ?></span></td>
               <td style="min-width: 50%; width: 50%"><?php echo htmlspecialchars(stripslashes($link->group_name)); ?></td>
             </tr>
             <?php
