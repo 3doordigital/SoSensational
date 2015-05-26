@@ -2,9 +2,9 @@
 Contributors: supercleanse
 Donate link: http://prettylinkpro.com
 Tags: links, link, url, urls, affiliate, affiliates, pretty, marketing, redirect, forward, plugin, twitter, tweet, rewrite, shorturl, hoplink, hop, shortlink, short, shorten, click, clicks, track, tracking, tiny, tinyurl, budurl, shrinking, domain, shrink, mask, masking, cloak, cloaking, slug, slugs, admin, administration, stats, statistics, stat, statistic, email, ajax, javascript, ui, csv, download, page, post, pages, posts, shortcode, seo, automation, widget, widgets, dashboard
-Requires at least: 3.4
-Tested up to: 3.5.1
-Stable tag: 1.6.4
+Requires at least: 3.9
+Tested up to: 4.2.2
+Stable tag: 1.6.6
 
 Shrink, beautify, track, manage and share any URL on or off of your WordPress website. Create links that look how you want using your own domain name!
 
@@ -66,6 +66,16 @@ http://blairwilliams.com/w7a
 
 == Changelog ==
 
+= 1.6.6 =
+* Two security fixes
+
+= 1.6.5 =
+* Fixed bug with some reports not showing
+* Fixed twitter auto-posting issue
+* Fixed scheduled posts not auto tweeting
+* Upgraded code to work with PHP 5.4+
+* Other minor bug fixes and code improvements
+
 = 1.6.4 =
 * i18n enhancements
 * Small fix to auto tweeting in pro
@@ -98,6 +108,9 @@ http://blairwilliams.com/w7a
 * *Fix* Fixed some potential security vulnerabilities
 
 == Upgrade Notice ==
+
+= 1.6.6 =
+* Two security fixes. Everyone should upgrade.
 
 = 1.6.4 =
 * This adds some security fixes. Everyone should upgrade.
