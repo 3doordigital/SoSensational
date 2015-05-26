@@ -221,6 +221,14 @@ function sosensational_taxonomy_add_new_meta_field($term) {
         $term_meta['ss_aff_categories'] = false;
     }    
     
+    if ( ! key_exists('seo-title', $term_meta) || $term_meta['seo-title'] === '') {
+        $term_meta['seo-title'] = '';
+    }  
+    
+    if ( ! key_exists('seo-description', $term_meta) || $term_meta['seo-description'] === '') {
+        $term_meta['seo-description'] = '';
+    }    
+    
     ?>
     <div class="form-field">
        <tr valign="top">
@@ -256,6 +264,19 @@ function sosensational_taxonomy_add_new_meta_field($term) {
                 ?>
             </td>
         </tr>
+        <!-- Custom fields to add seo title, description and canonical link to the Yoast SEO plugin -->
+        <tr valign="top">
+            <th scope="row">SEO Title</th>
+            <td>
+                <input type="text" size="40" name="term_meta[seo-title]" value="<?php echo $term_meta['seo-title']; ?>">
+            </td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">SEO Description</th>
+            <td>
+                <input type="text" size="40" name="term_meta[seo-description]" value="<?php echo $term_meta['seo-description']; ?>">
+            </td>
+        </tr>           
     </div>
 <?php
 }
