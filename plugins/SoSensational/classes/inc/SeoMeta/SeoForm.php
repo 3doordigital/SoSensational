@@ -40,7 +40,15 @@ class SeoForm
                         <td>
                             <input class="large-text ui-autocomplete-input" type="text" id="seo-description-field" name="seo-description" value="<?php echo isset($this->currentSeoData['seo-description']) ? $this->currentSeoData['seo-description'] : '' ?>"/>
                         </td>                            
-                    </tr>                    
+                    </tr>      
+                    <tr>
+                        <th scope="row">
+                            <label for="seo-canonical-field">SEO Canonical Link</label>
+                        </th>
+                        <td>
+                            <input class="large-text ui-autocomplete-input" type="text" id="seo-canonical-field" name="seo-canonical" value="<?php echo isset($this->currentSeoData['seo-canonical']) ? $this->currentSeoData['seo-canonical'] : '' ?>"/>
+                        </td>                            
+                    </tr>                        
                 </tbody>
             </table>
         <?php

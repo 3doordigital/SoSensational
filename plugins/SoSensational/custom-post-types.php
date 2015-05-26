@@ -229,6 +229,10 @@ function sosensational_taxonomy_add_new_meta_field($term) {
         $term_meta['seo-description'] = '';
     }    
     
+    if ( ! key_exists('seo-canonical', $term_meta) || $term_meta['seo-canonical'] === '') {
+        $term_meta['seo-canonical'] = '';
+    }        
+    
     ?>
     <div class="form-field">
        <tr valign="top">
@@ -276,7 +280,13 @@ function sosensational_taxonomy_add_new_meta_field($term) {
             <td>
                 <input type="text" size="40" name="term_meta[seo-description]" value="<?php echo $term_meta['seo-description']; ?>">
             </td>
-        </tr>           
+        </tr>    
+        <tr valign="top">
+            <th scope="row">SEO Canonical</th>
+            <td>
+                <input type="text" size="40" name="term_meta[seo-canonical]" value="<?php echo $term_meta['seo-canonical']; ?>">
+            </td>
+        </tr>         
     </div>
 <?php
 }

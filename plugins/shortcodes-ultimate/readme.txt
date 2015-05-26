@@ -109,14 +109,8 @@ Upgrade normally
 
 == Changelog ==
 
-= 4.9.7 =
-* Added: [document] is now compatible with https
-* Fixed: carousel items width calculation
-* Added: new attribute for [button title=""], [forum topic](https://wordpress.org/support/topic/how-add-title-tag-to-a-button)
-* Fixed: stripslashes for [button] content
-
 = 4.9.6 =
-* Fixed: Quick fix for disabled custom css since previous update
+* Fixed: Quick fix for disabled custom css since previous update, [forum topic](https://wordpress.org/support/topic/after-updating-the-plugin-does-not-work-arbitrary-css)
 
 = 4.9.5 =
 * Added: basic RTL support

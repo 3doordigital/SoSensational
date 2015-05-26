@@ -347,10 +347,6 @@
                     </label>
                 </div>
             </div>
-            <label>
-                <input type="checkbox" name="<?php echo $this->options->wp_emember_integration_name(); ?>" <?php echo $this->options->wp_emember_integration() ? 'checked' : ''; ?> />
-                <span><?php echo $this->__('Enable WP eMember integration.'); ?></span>
-            </label>
         </td>
     </tr>
 </table>

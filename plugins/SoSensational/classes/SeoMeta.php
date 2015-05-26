@@ -82,6 +82,7 @@ class SeoMeta
         
         $seoMetadata['seo-title'] = $_POST['seo-title'];    
         $seoMetadata['seo-description'] = $_POST['seo-description'];
+        $seoMetadata['seo-canonical'] = $_POST['seo-canonical'];
         
         update_post_meta($postId, '_seo_metadata', $seoMetadata);
         
