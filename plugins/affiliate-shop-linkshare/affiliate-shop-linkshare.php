@@ -172,7 +172,13 @@ class WordPress_Affiliate_Shop_Linkshare {
 		}
 		
 		public function feed_data( $merchant ) {
-			$local_file = 'download/local.xml.gz';
+			
+			$upload_dir = wp_upload_dir(); 
+			$user_dirname = $upload_dir['basedir'].'/feed-data';
+			if( ! file_exists( $user_dirname ) )
+				wp_mkdir_p( $user_dirname );
+	
+			$local_file = $user_dirname.'/local.xml.gz';
 			$server_file = $merchant.'_2476350_mp.xml.gz';
 			$contents = '';
 			$data = array();
@@ -192,27 +198,65 @@ class WordPress_Affiliate_Shop_Linkshare {
 				
 				$xml = simplexml_load_string( $contents );
 				foreach( $xml->product as $product ) {
+					if( isset( $product->price->sale ) && $product->price->sale < $product->price->retail ) {
+						$price = number_format( (int) $product->price->sale, 2, '.', '' );	
+						$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
+					} else {
+						$price = number_format( (int) $product->price->retail, 2, '.', '' );
+						$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
+					}
+					
 					$data[] = array(
 						'ID'        => (string) $product['product_id'],
 						'aff'     	=> 'linkshare',    
-						'title'     => addslashes ( trim( ucwords( strtolower( (string) $product['name'] ) ) ) ),
-						'brand'     => addslashes( trim( ucwords( strtolower( (string) $xml->header->merchantName ) ) ) ),
-						'img'       => addslashes( (string) $product->URL->productImage ),
-						'desc'      => addslashes( (string) $product->description->short ),
-						'price'     => number_format( (int) $product->price->sale, 2, '.', '' ),
-						'rrp'       => number_format( (int) $product->price->retail, 2, '.', '' ),
-						'link'      => addslashes( (string) $product->URL->product )
+						'title'     => trim( ucwords( strtolower( (string) $product['name'] ) ) ),
+						'brand'     => trim( ucwords( strtolower( (string) $xml->header->merchantName ) ) ),
+						'img'       => (string) $product->URL->productImage,
+						'desc'      => (string) $product->description->short,
+						'price'     => $price,
+						'rrp'       => $rrp,
+						'link'      => (string) $product->URL->product
 					);
 				}
-				echo '<pre>'.print_r( $data, true ).'</pre>';
+				//print_var( $data );
+				global $wpdb;
+				$out = array();
+				foreach( $data as $product ) {
+					//print_var($product);
+					$table_name = $wpdb->prefix . "feed_data";
+					$replace = $wpdb->replace( $table_name, array( 
+							'product_id' => $merchant.'_'.$product['ID'], 
+							'product_aff' => $product['aff'],
+							'product_title' => $product['title'],
+							'product_brand' => $product['brand'],
+							'product_image' => $product['img'],
+							'product_desc' => $product['desc'],
+							'product_price' => $product['price'],
+							'product_rrp' => $product['rrp'],
+							'product_link' => $product['link'], 
+						)
+					);
+					
+					switch ($replace) {
+						case false :
+							if( is_wp_error( $replace ) ) {
+								$out[] = $replace->get_error_message();
+							}
+							break;
+						case 1 :
+							$out[] = 'Inserted '.$product['ID'];
+							break;
+						default :
+							$out[] = 'Replaced '.$product['ID'];
+							break;	
+					}
+				}
+				return $out;
 			}
 		}
 		
-		public function update_feed() {
-			$merchants = $this->merchants();
-			foreach( $merchants as $merchant ) {
-				$this->feed_data( $merchant['ID'] );	
-			}	
+		public function update_feed( $ID ) {
+			return $this->feed_data( $ID );
 		}
 }
 register_activation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Linkshare', 'activation' ) );

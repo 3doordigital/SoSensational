@@ -25,6 +25,7 @@
     private $text_domain    = 'wpaffman';
     private $admin_icon     = 'dashicons-admin-generic';
     private $option_name    = 'wp_aff_man';
+	private $aff_option		= 'wp_aff_apis';
 	private $page_title 	= 'Affiliate Feed Manager';
 	public function __construct() {
 		
@@ -34,15 +35,17 @@
 		$this->plugin_path = plugin_dir_path( __FILE__ );
 		$this->plugin_url  = plugin_dir_url( __FILE__ );
         $this->option = get_option( $this->option_name );
-		
+		$this->aff_option = get_option( $this->aff_option );
 		// WP Hooks
 		load_plugin_textdomain( $this->text_domain, false, 'lang' );
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
 		
 		// Actions
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'admin_menu', array( $this, 'create_menu' ) );
-		
+		add_action( 'wp_ajax_get_api_merchants', array( $this, 'get_api_merchants' ) );
+		add_action( 'wp_ajax_update_merchant_feed', array( $this, 'update_merchant_feed' ) );
 		// Filters
 	}
 	
@@ -96,6 +99,10 @@
 	*/
 	public function get_plugin_path() {
 		return $this->plugin_path;
+	}
+	
+	public function admin_scripts() {
+		wp_enqueue_script( 'wp_aff_functions', $this->plugin_url . 'js/admin.js' );
 	}
 	
 	/**
@@ -267,19 +274,44 @@
                         </td>
                     </tr>
                 </table>
-                <table id="tableout">
-                    <tr><th>Post ID</th><th>Old Title</th><th>Merchant</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th>Found By</th><th>Updated?</th><th>Sale</th></tr>
-                    <tbody>
-                    
-                    </tbody>
-                </table>
                 <?php submit_button( 'Save' ); ?>
                 <input type="hidden" value="wp_man_save_feed" name="action" />
                 <?php wp_nonce_field( 'wp_man_save_feed', $this->option_name . '_nonce', TRUE ); ?>
             </form>
         </div>
+        <?php
+			print_var( $this->aff_option['apis'] );
+			
+			
+		?>
 <?php
 		
+	}
+	
+	public function get_api_merchants() {
+		if( count( $this->aff_option['apis'] ) > 0 ) {
+				foreach( $this->aff_option['apis'] as $affiliate ) {
+					$classname = $affiliate['class'];
+					$class = new $classname();
+					$temp[] = $class->merchants();
+				}
+				$output = array();
+				$output['items'] = array();
+				foreach( $temp as $key=>$input ) {
+					$output['items'] = array_replace( $output['items'], $input );
+				}
+				$output['total'] = count( $output['items'] );
+				$output['status'] = 1;
+				echo json_encode( $output );
+				die();
+			}
+	}
+	
+	public function update_merchant_feed( ) {
+		$classname = $this->aff_option['apis'][$_POST['aff']]['class'];
+		$class = new $classname();
+		echo json_encode( $class->update_feed( $_POST['ID'] ) );
+		die();
 	}
 	
  }
