@@ -37,6 +37,7 @@ require_once (dirname(__FILE__) . '/helpers/template-tags.php');
 require_once (dirname(__FILE__) . '/classes/FeaturedMeta.php');
 require_once (dirname(__FILE__) . '/classes/RelatedCarousel.php');
 require_once (dirname(__FILE__) . '/classes/FeaturedCarousel.php');
+require_once (dirname(__FILE__) . '/classes/SeoMeta.php');
 require_once (dirname(__FILE__) . '/lib/hooks.php');
 
 
@@ -338,6 +339,7 @@ register_activation_hook(__FILE__, 'wpss_plugin_deactivation');
 
 function pbd_alp_init() {
     // Queue JS and CSS
+	wp_enqueue_script('jquery');
     wp_enqueue_script(
         'pbd-alp-load-posts', plugin_dir_url(__FILE__) . 'sosensational-script.js', array('jquery'), '1.0', false
     );
@@ -373,3 +375,90 @@ function wpa54064_inspect_scripts() {
         echo $handle . ' | ';
     endforeach;
 }
+
+
+/**
+ * SEO title - filter provided by Yoast SEO Plugin
+ * 
+ * @param string $str SEO title provided be Yoast SEO Plugin
+ * @return string $str | $seoTitle SEO title for a fiven ss_category
+ */
+function addSeoTitleToSsCategory($str)
+{
+    global $query_string;
+    parse_str($query_string, $argumentsArray);
+    
+    if( ! key_exists('ss_sub_cat', $argumentsArray) && key_exists('ss_cat', $argumentsArray)) {
+        $currentTerm = get_term_by('slug', $argumentsArray['ss_cat'], 'ss_category');     
+    } elseif(key_exists('ss_sub_cat', $argumentsArray) && key_exists('ss_cat', $argumentsArray) ) {
+        $currentTerm = get_term_by('slug', $argumentsArray['ss_sub_cat'], 'ss_category');
+    } else {
+        return $str;
+    }
+    
+    $termId = $currentTerm->term_id;
+    
+    if ($termId) {
+        $termMeta = get_option("taxonomy_$termId");
+        $seoTitle = $termMeta['seo-title'];          
+    } else {
+        $args = array(
+            'post_type' =>  array('brands', 'boutiques'),
+            'name'    =>  $argumentsArray['ss_cat'],
+        );
+        $currentAdvertiser = get_posts($args);
+        
+        $currentSeoData = get_post_meta($currentAdvertiser[0]->ID, '_seo_metadata', true);
+        $seoTitle = $currentSeoData['seo-title'];
+    }
+  
+    return "$seoTitle";
+    
+   
+}
+
+add_filter('wpseo_title', 'addSeoTitleToSsCategory');
+
+/**
+ * SEO description - filter provided by Yoast SEO Plugin
+ * 
+ * @param string $desc SEO description provided be Yoast SEO Plugin
+ * @return string $desc | $seoDescription SEO description for a fiven ss_category
+ */
+function addSeoDescriptionToSsCategory($desc)
+{
+    global $query_string;
+    parse_str($query_string, $argumentsArray);
+    
+    if( ! key_exists('ss_sub_cat', $argumentsArray) && key_exists('ss_cat', $argumentsArray)) {
+        $currentTerm = get_term_by('slug', $argumentsArray['ss_cat'], 'ss_category');     
+    } elseif(key_exists('ss_sub_cat', $argumentsArray) && key_exists('ss_cat', $argumentsArray) ) {
+        $currentTerm = get_term_by('slug', $argumentsArray['ss_sub_cat'], 'ss_category');
+    } else {
+        return $desc;
+    }
+
+    $termId = $currentTerm->term_id;
+    
+    if($termId) {
+        $termMeta = get_option("taxonomy_$termId");
+        $seoDescription = $termMeta['seo-description'];         
+    } else {
+        $args = array(
+            'post_type' =>  array('brands', 'boutiques'),
+            'name'    =>  $argumentsArray['ss_cat'],
+        );
+        $currentAdvertiser = get_posts($args);
+        
+        $currentSeoData = get_post_meta($currentAdvertiser[0]->ID, '_seo_metadata', true);
+        $seoDescription = $currentSeoData['seo-description'];                
+    }
+    
+  
+    
+    return "$seoDescription";
+    
+   
+}
+
+add_filter('wpseo_metadesc', 'addSeoDescriptionToSsCategory');
