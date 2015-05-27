@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
 	
 	function update_merchant_feed( thisID, nextID, total ) {
 		console.log( thisID+' :: '+nextID+' :: '+total+' :: '+items[thisID].ID+' :: '+items[thisID].aff );
-		if( thisID < total ) {
+		if( thisID <= total ) {
 			var update_feed_data2 = {
 				'action'	: 'update_merchant_feed',
 				'ID'		: items[thisID].ID,
@@ -17,8 +17,13 @@ jQuery(document).ready(function($) {
 			};
 			$.post(ajaxurl, update_feed_data2, function(response) {
 				var nextFeed = nextID + 1;
-				var percent = loop * per_query;
-				var full_percent = percent.toFixed(1);
+				if( thisID == total ) {
+					var percent = 100;
+					var full_percent = 100;
+				} else {
+					var percent = loop * per_query;
+					var full_percent = percent.toFixed(1);
+				}
 				$('.update_percent').html( full_percent+'%' );
 				$('#update_progress').css( 'width', percent+'%' );
 				loop++;
