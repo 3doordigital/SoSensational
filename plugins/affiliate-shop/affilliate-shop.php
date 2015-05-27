@@ -193,10 +193,50 @@ class WordPress_Affiliate_Shop {
 	}
 	
 	function canonical( $data ) {
-		if( preg_match( '#(brands-and-boutiques|shop)#', $_SERVER['REQUEST_URI'] ) ) {
-			return 	get_bloginfo( 'url' ).strtok($_SERVER["REQUEST_URI"],'?');
-		}
+        
+        $currentUrl = get_bloginfo('url') . $_SERVER['REQUEST_URI'];
+        
+		if( preg_match( '#/shop/#', $_SERVER['REQUEST_URI'] ) ) {
+            
+			return get_bloginfo( 'url' ).strtok($_SERVER["REQUEST_URI"],'?');
+            
+		} elseif ( preg_match('#/brands-and-boutiques/#', $_SERVER['REQUEST_URI']) ) {
+            
+            global $query_string;
+            parse_str($query_string, $argumentsArray);
+
+            if( ! key_exists('ss_sub_cat', $argumentsArray) && key_exists('ss_cat', $argumentsArray)) {
+                $currentTerm = get_term_by('slug', $argumentsArray['ss_cat'], 'ss_category');     
+            } elseif(key_exists('ss_sub_cat', $argumentsArray) && key_exists('ss_cat', $argumentsArray) ) {
+                $currentTerm = get_term_by('slug', $argumentsArray['ss_sub_cat'], 'ss_category');
+            } else {
+                return $data = $currentUrl;
+            }
+
+            $termId = $currentTerm->term_id;
+
+            if($termId) {
+                $termMeta = get_option("taxonomy_$termId");
+                $seoCanonical = $termMeta['seo-canonical'];         
+            } else {
+                $args = array(
+                    'post_type' =>  array('brands', 'boutiques'),
+                    'name'    =>  $argumentsArray['ss_cat'],
+                );
+                $currentAdvertiser = get_posts($args);
+
+                $currentSeoData = get_post_meta($currentAdvertiser[0]->ID, '_seo_metadata', true);
+                $seoCanonical = $currentSeoData['seo-canonical'];                
+            }
+
+            return $canonical = $seoCanonical ? $seoCanonical : $currentUrl;            
+        }
+        
+        return $data = $currentUrl;
 	}
+    
+    
+    
 	
 	public function get_option() {
 		return $this->option;
