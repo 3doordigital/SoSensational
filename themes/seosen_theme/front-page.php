@@ -19,7 +19,7 @@
                                 <div class="col-xs-10 rightcover blackback">
                                     <h2><?php echo $slide['title']; ?></h2>
                                     <p>
-                                        <a href="<?php echo $slide['url']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['hp_button_one']; ?></a>
+                                        <a href="<?php echo $slide['url']; ?>" class="btn btn-primary" role="button"><?php echo $slide['description']; ?></a>
                                     </p>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                             <div class="col-xs-10 leftcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_1_text']; ?></h2>
                                 <p>
-                                    <a href="<?php echo $seosen_options['home_image_1_link']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['hp_button_two']; ?></a>
+                                    <a href="<?php echo $seosen_options['home_image_1_link']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['hp_button_one']; ?></a>
                                 </p>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                             <div class="col-xs-10 rightcover whiteback">
                                 <h2><?php echo $seosen_options['home_image_2_text']; ?></h2>
                                 <p>
-                                    <a href="<?php echo $seosen_options['home_image_2_link']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['hp_button_three']; ?></a>
+                                    <a href="<?php echo $seosen_options['home_image_2_link']; ?>" class="btn btn-primary" role="button"><?php echo $seosen_options['hp_button_two']; ?></a>
                                 </p>
                             </div>
                         </div>
