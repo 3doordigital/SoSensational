@@ -225,3 +225,46 @@ button#shop-controls-toggle {
   width: 100%;
   height: auto; }
 
+/* Header searchform */
+/* line 274, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+#sosen-searchform {
+  display: none;
+  margin-bottom: 30px; }
+  /* line 279, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  #sosen-searchform label {
+    font-size: 34px;
+    font-weight: normal;
+    color: #393939;
+    margin-bottom: 0;
+    line-height: 1; }
+  /* line 287, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  #sosen-searchform input {
+    font-size: 34px;
+    vertical-align: baseline;
+    height: auto; }
+  /* line 293, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  #sosen-searchform #btnSubmit {
+    display: none; }
+  /* line 297, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  #sosen-searchform #sosen-searchbox {
+    border: none;
+    box-shadow: none; }
+  /* line 302, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  #sosen-searchform #searchform-top {
+    border-bottom: 2px solid #C2C2C2; }
+  /* line 306, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  #sosen-searchform .form-group {
+    display: block; }
+  /* line 312, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  #sosen-searchform #searchform-bottom #related-searches p {
+    margin-top: 10px; }
+    /* line 315, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+    #sosen-searchform #searchform-bottom #related-searches p #suggestions-label {
+      font-size: 16px;
+      font-style: italic;
+      color: #848483; }
+    /* line 320, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+    #sosen-searchform #searchform-bottom #related-searches p .suggestion {
+      font-size: 16px;
+      text-decoration: underline; }
+

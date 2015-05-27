@@ -231,6 +231,13 @@ jQuery(document).ready(function($) {
         });
     }
     
+    
+    jQuery('#mega-menu-primary li:last-child > a').click(function(e) {
+        e.preventDefault();
+        jQuery('#sosen-searchform').toggle();
+    }); 
+    
+    
 });
 
 
@@ -431,4 +438,7 @@ jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
     }
 
 });
+
+
+
 

@@ -269,3 +269,60 @@ button#shop-controls-toggle {
     width: 100%;
     height: auto;
 }
+
+/* Header searchform */
+#sosen-searchform {    
+    
+    display: none;
+    margin-bottom: 30px;
+    
+    label {
+        font-size: 34px;
+        font-weight: normal;
+        color: #393939;
+        margin-bottom: 0;
+        line-height: 1;
+    }
+    
+    input {
+        font-size: 34px;
+        vertical-align: baseline;
+        height: auto;
+    }
+    
+    #btnSubmit {
+        display: none;
+    }
+
+    #sosen-searchbox {
+        border: none;
+        box-shadow: none;
+    }    
+    
+    #searchform-top {
+        border-bottom: 2px solid #C2C2C2;                    
+    }
+    
+    .form-group {
+        display: block;
+    }
+    
+    #searchform-bottom {
+        #related-searches {
+            p {
+                margin-top: 10px;
+                
+                #suggestions-label {
+                    font-size: 16px;
+                    font-style: italic;
+                    color: #848483
+                }
+                .suggestion {
+                    font-size: 16px;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+

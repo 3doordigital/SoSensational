@@ -297,7 +297,7 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
 						'desc'        => __('Usage: Title - main text, Descripton - Not in use, Link - where the browse collection button links to.', 'redux-framework-demo'),
 						'placeholder' => array(
 							'title'           => __('Slider text', 'redux-framework-demo'),
-							'description'     => __('Not in use!', 'redux-framework-demo'),
+							'description'     => __('Button Text', 'redux-framework-demo'),
 							'url'             => __('URL to link to', 'redux-framework-demo'),
 						)
 					),

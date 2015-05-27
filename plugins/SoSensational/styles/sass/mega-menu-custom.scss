@@ -128,7 +128,13 @@
         }
         input {
             max-width: 89%;
-            float: left;
+        }
+        #btnSubmit {
+            display: none;
+        }
+        .form-control {
+            border: none;
+            box-shadow: none;
         }
         li {
             margin-bottom: 5px;                      

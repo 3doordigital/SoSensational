@@ -57,4 +57,9 @@
                 ?>
             </nav>
         </div>
+            <div class="row">
+                <div class="col-xs-24" id="sosen-searchform">
+                  <?php get_template_part('header-searchform'); ?>                    
+                </div>
+            </div>
     </div>        

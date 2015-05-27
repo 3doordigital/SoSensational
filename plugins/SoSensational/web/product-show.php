@@ -37,20 +37,22 @@ $args = array(
 
 <?php echo displaySystemNoticeForSteps($user, $advertiser); ?>
 <ul class="nav nav-pills nav-stacked"> 
-<?php
-$my_query = new WP_Query($args);
-$num_of_products = null;
-$productIndex = 0;
-if ($my_query->have_posts()) : while ($my_query->have_posts()) : $my_query->the_post();
-        $num_of_products = count($my_query->posts);
-        // Display an additional 'Add a product' button if more than 3 products have been added
-        if ($num_of_products > 3 && $productIndex === 0) :
-            ?>
-            <div class="form-buttons-group clearfix">
-                <a href="/add-product/" rel="bookmark" class="btn btn-default navbar-btn" title="Permanent Link to <?php the_title_attribute(); ?>">Add A New Product</a>
-                <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
-            </div>   
-        <?php endif; ?>
+    <?php
+    $my_query = new WP_Query($args);
+    $num_of_products = null;
+    $productIndex = 0;
+    if ($my_query->have_posts()) : while ($my_query->have_posts()) : $my_query->the_post();
+            $num_of_products = count($my_query->posts);
+            // Display an additional 'Add a product' button if more than 3 products have been added
+            if ($num_of_products > 3 && $productIndex === 0) :
+                ?>
+                <?php if ($num_of_products < $allowed_products) { ?>
+                    <div class="form-buttons-group clearfix">
+                        <a href="/add-product/" rel="bookmark" class="btn btn-default navbar-btn" title="Permanent Link to <?php the_title_attribute(); ?>">Add A New Product</a>
+                        <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
+                    </div>   
+                <?php } ?>
+            <?php endif; ?>
             <li>                
                 <a href="/add-product/?action=edit&product_id=<?php echo get_the_ID(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
                     <img class="ss_product_img" src="<?php echo get_post_meta(get_the_ID(), 'ss_product_image', true); ?>" /> 
@@ -68,19 +70,17 @@ if ($my_query->have_posts()) : while ($my_query->have_posts()) : $my_query->the_
             No Products Found 
         </div>
 
-<?php endif; ?>
+    <?php endif; ?>
 
 </ul>
-<?php if ($num_of_products < $allowed_products) { ?><br /><br />
-    
-
-        <div class="form-buttons-group clearfix">
-            <a href="/add-product/" rel="bookmark" class="btn btn-default navbar-btn" title="Permanent Link to <?php the_title_attribute(); ?>">Add A New Product</a>
-            <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
-        </div>
-
-        <h4>You have entered <?php echo $num_of_products ?> of <?php echo $allowed_products ?> products</h4>
+<?php if ($num_of_products < $allowed_products) { ?><br /><br />    
+    <div class="form-buttons-group clearfix">
+        <a href="/add-product/" rel="bookmark" class="btn btn-default navbar-btn" title="Permanent Link to <?php the_title_attribute(); ?>">Add A New Product</a>
+        <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
+    </div>
 <?php } ?>
+<h4>You have entered <?php echo $num_of_products ?> of <?php echo $allowed_products ?> products</h4>
+
 
 
 <nav>
