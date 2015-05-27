@@ -79,6 +79,7 @@ if (!class_exists('WPFront_Notification_Bar_Options')) {
             $this->addOption('display_scroll_offset', 'int', '100', array($this, 'validate_zero_positive'))->__('Scroll Offset');
             $this->addOption('start_date', 'string', '', array($this, 'validate_date_range'))->__('Start Date');
             $this->addOption('end_date', 'string', '', array($this, 'validate_date_range'))->__('End Date');
+            $this->addOption('wp_emember_integration', 'bit', FALSE);
         }
 
         //validation function
@@ -135,15 +136,15 @@ if (!class_exists('WPFront_Notification_Bar_Options')) {
                 return array();
             return $obj;
         }
-        
+
         protected function validate_date_range($arg) {
-            if(trim($arg) == '')
+            if (trim($arg) == '')
                 return NULL;
-            
+
             if (($timestamp = strtotime($arg)) === false) {
                 return NULL;
             }
-            
+
             return $timestamp;
         }
 

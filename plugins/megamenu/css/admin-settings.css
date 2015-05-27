@@ -53,9 +53,7 @@
 	text-decoration: none!important;
 	margin-right: 0;
 }
-.nav-tab-active {
-	background: white;
-}
+
 .appearance_page_megamenu_settings .megamenu_right {
 	margin-left: 190px;
 	padding: 20px;
@@ -72,6 +70,12 @@
 	border-bottom: 1px solid #cccccc;
 	padding: 0 0 10px 0;
 	font-size: 1.2em;
+	margin: 1.33em 0 0.7em 0;
+}
+.appearance_page_megamenu_settings .megamenu_right h5 {
+	clear: both;
+	padding: 0 0 10px 0;
+	font-size: 1.1em;
 	margin: 1.33em 0 0.7em 0;
 }
 .appearance_page_megamenu_settings .megamenu_right ul.bullets {
@@ -142,10 +146,21 @@
 .appearance_page_megamenu_settings .megamenu_outer_wrap .megamenu_header_top ul {
 	margin: 0;
 	float: right;
+	position: relative;
 }
 .appearance_page_megamenu_settings .megamenu_outer_wrap .megamenu_header_top ul li {
 	display: inline-block;
 	margin: 0 0 0 10px;
+	line-height: 30px;
+}
+.appearance_page_megamenu_settings .megamenu_outer_wrap .megamenu_header_top ul li.mega-highlight {
+	background: #00b7bf;
+	border-radius: 5px;
+}
+.appearance_page_megamenu_settings .megamenu_outer_wrap .megamenu_header_top ul li.mega-highlight a {
+	color: white;
+	line-height: 30px;
+	padding: 0 10px;
 }
 .appearance_page_megamenu_settings .megamenu_wrap {
 	background: white;
@@ -177,6 +192,28 @@
 	line-height: 1.5em;
 }
 
+.appearance_page_megamenu_settings .megamenu_right .menu_settings td.mega-value .mega-info {
+	clear: both;
+	margin-top: 15px;
+	display: block;
+	float: left;
+	font-size: 0.9em;
+	color: #aaa;
+	line-height: 20px;
+	width: 100%;
+}
+.appearance_page_megamenu_settings .megamenu_right .menu_settings td.mega-value .mega-info:before {
+	font: 400 20px/1 dashicons;
+	content: "\f348";
+	speak: none;
+	padding: 0;
+	margin-right: 6px;
+	display: inline-block;
+	vertical-align: top;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 .appearance_page_megamenu_settings .megamenu_right .menu_settings td.mega-value .mega-description {
 	text-indent: 2px;
 	margin-top: 5px;
@@ -189,6 +226,10 @@
 	height: 28px;
 	line-height: 28px;
 	vertical-align: top;
+}
+.appearance_page_megamenu_settings .megamenu_right .menu_settings table input[type=number] {
+	height: auto;
+	line-height: 1.2em;
 }
 .appearance_page_megamenu_settings .megamenu_right .menu_settings table label {
 	margin-right: 10px;
