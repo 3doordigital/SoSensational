@@ -36,7 +36,7 @@ if (!class_exists('WPFront_Notification_Bar')) {
     class WPFront_Notification_Bar extends WPFront_Base {
 
         //Constants
-        const VERSION = '1.4.2';
+        const VERSION = '1.5.2';
         const OPTIONS_GROUP_NAME = 'wpfront-notification-bar-options-group';
         const OPTION_NAME = 'wpfront-notification-bar-options';
         const PLUGIN_SLUG = 'wpfront-notification-bar';
@@ -230,18 +230,18 @@ if (!class_exists('WPFront_Notification_Bar')) {
                 case 1:
                     break;
                 case 2:
-                    if (!is_user_logged_in())
+                    if (!$this->is_user_logged_in())
                         return FALSE;
                     break;
                 case 3:
-                    if (is_user_logged_in())
+                    if ($this->is_user_logged_in())
                         return FALSE;
                     break;
                 case 4:
                     global $current_user;
                     if (empty($current_user->roles)) {
                         $role = self::ROLE_GUEST;
-                        if (is_user_logged_in())
+                        if ($this->is_user_logged_in())
                             $role = self::ROLE_NOROLE;
                         if (!in_array($role, $this->options->include_roles()))
                             return FALSE;
@@ -303,6 +303,16 @@ if (!class_exists('WPFront_Notification_Bar')) {
             }
 
             return TRUE;
+        }
+        
+        protected function is_user_logged_in() {
+            $logged_in = is_user_logged_in();
+            
+            if($this->options->wp_emember_integration() && function_exists('wp_emember_is_member_logged_in')) {
+                $logged_in = $logged_in || wp_emember_is_member_logged_in();
+            }
+            
+            return $logged_in;
         }
 
         public function filter_pages_contains($list, $key) {

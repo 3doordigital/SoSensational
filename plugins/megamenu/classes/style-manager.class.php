@@ -48,8 +48,6 @@ final class Mega_Menu_Style_Manager {
         add_action( 'megamenu_after_theme_revert', array( $this, 'generate_css') );
         add_action( 'megamenu_after_theme_duplicate', array( $this, 'generate_css') );
         add_action( 'megamenu_after_theme_create', array( $this, 'generate_css') );
-        add_action( 'megamenu_after_update', array( $this, 'generate_css') );
-        add_action( 'megamenu_after_install', array( $this, 'generate_css') );
         add_action( 'megamenu_generate_css', array( $this, 'generate_css') );
         add_action( 'after_switch_theme', array( $this, 'generate_css') );    
 
@@ -106,6 +104,12 @@ final class Mega_Menu_Style_Manager {
             'menu_item_link_border_radius_top_right'    => '0px',
             'menu_item_link_border_radius_bottom_left'  => '0px',
             'menu_item_link_border_radius_bottom_right' => '0px',
+            'menu_item_border_color'                    => '#fff',
+            'menu_item_border_left'                     => '0px',
+            'menu_item_border_right'                    => '0px',
+            'menu_item_border_top'                      => '0px',
+            'menu_item_border_bottom'                   => '0px',
+            'menu_item_border_color_hover'              => '#fff',
             'menu_item_highlight_current'               => 'off',
             'menu_item_divider'                         => 'off',
             'menu_item_divider_color'                   => 'rgba(255, 255, 255, 0.1)',
@@ -132,6 +136,15 @@ final class Mega_Menu_Style_Manager {
             'panel_header_padding_right'                => '0px',
             'panel_header_padding_bottom'               => '5px',
             'panel_header_padding_left'                 => '0px',
+            'panel_header_margin_top'                   => '0px',
+            'panel_header_margin_right'                 => '0px',
+            'panel_header_margin_bottom'                => '0px',
+            'panel_header_margin_left'                  => '0px',
+            'panel_header_border_color'                 => 'panel_header_color',
+            'panel_header_border_left'                  => '0px',
+            'panel_header_border_right'                 => '0px',
+            'panel_header_border_top'                   => '0px',
+            'panel_header_border_bottom'                => '0px',
             'panel_padding_left'                        => '0px',
             'panel_padding_right'                       => '0px',
             'panel_padding_top'                         => '0px',
@@ -143,7 +156,48 @@ final class Mega_Menu_Style_Manager {
             'panel_font_size'                           => 'font_size',
             'panel_font_color'                          => 'font_color',
             'panel_font_family'                         => 'font_family',
+            'panel_second_level_font_color'             => 'panel_header_color',
+            'panel_second_level_font_color_hover'       => 'panel_header_color',
+            'panel_second_level_text_transform'         => 'panel_header_text_transform',
+            'panel_second_level_font'                   => 'panel_header_font',
+            'panel_second_level_font_size'              => 'panel_header_font_size',
+            'panel_second_level_font_weight'            => 'panel_header_font_weight',
+            'panel_second_level_font_weight_hover'      => 'panel_header_font_weight',
+            'panel_second_level_text_decoration'        => 'panel_header_text_decoration',
+            'panel_second_level_text_decoration_hover'  => 'panel_header_text_decoration',
+            'panel_second_level_background_hover_from'  => 'transparent',
+            'panel_second_level_background_hover_to'    => 'transparent',
+            'panel_second_level_padding_left'           => '0px',
+            'panel_second_level_padding_right'          => '0px',
+            'panel_second_level_padding_top'            => '0px',
+            'panel_second_level_padding_bottom'         => '0px',
+            'panel_second_level_margin_left'            => '0px',
+            'panel_second_level_margin_right'           => '0px',
+            'panel_second_level_margin_top'             => '0px',
+            'panel_second_level_margin_bottom'          => '0px',
+            'panel_second_level_border_color'           => 'panel_header_color',
+            'panel_second_level_border_left'            => '0px',
+            'panel_second_level_border_right'           => '0px',
+            'panel_second_level_border_top'             => '0px',
+            'panel_second_level_border_bottom'          => '0px',
+            'panel_third_level_font_color'              => 'panel_font_color',
+            'panel_third_level_font_color_hover'        => 'panel_font_color',
+            'panel_third_level_text_transform'          => 'none',
+            'panel_third_level_font'                    => 'panel_font_family',
+            'panel_third_level_font_size'               => 'panel_font_size',
+            'panel_third_level_font_weight'             => 'normal',
+            'panel_third_level_font_weight_hover'       => 'normal',
+            'panel_third_level_text_decoration'         => 'none',
+            'panel_third_level_text_decoration_hover'   => 'none',
+            'panel_third_level_background_hover_from'   => 'transparent',
+            'panel_third_level_background_hover_to'     => 'transparent',
+            'panel_third_level_padding_left'            => '0px',
+            'panel_third_level_padding_right'           => '0px',
+            'panel_third_level_padding_top'             => '0px',
+            'panel_third_level_padding_bottom'          => '0px',
             'flyout_width'                              => '150px',
+            'flyout_menu_background_from'               => '#f1f1f1',
+            'flyout_menu_background_to'                 => '#f1f1f1',
             'flyout_border_color'                       => '#ffffff',
             'flyout_border_left'                        => '0px',
             'flyout_border_right'                       => '0px',
@@ -153,6 +207,12 @@ final class Mega_Menu_Style_Manager {
             'flyout_border_radius_top_right'            => '0px',
             'flyout_border_radius_bottom_left'          => '0px',
             'flyout_border_radius_bottom_right'         => '0px',
+            'flyout_menu_item_divider'                  => 'off',
+            'flyout_menu_item_divider_color'            => 'rgba(255, 255, 255, 0.1)',
+            'flyout_padding_top'                        => '0px',
+            'flyout_padding_right'                      => '0px',
+            'flyout_padding_bottom'                     => '0px',
+            'flyout_padding_left'                       => '0px',
             'flyout_link_padding_left'                  => '10px',
             'flyout_link_padding_right'                 => '10px',
             'flyout_link_padding_top'                   => '0px',
@@ -175,6 +235,13 @@ final class Mega_Menu_Style_Manager {
             'responsive_text'                           => 'MENU',
             'line_height'                               => '1.7',
             'z_index'                                   => '999',
+            'shadow'                                    => 'off',
+            'shadow_horizontal'                         => '0px',
+            'shadow_vertical'                           => '0px',
+            'shadow_blur'                               => '5px',
+            'shadow_spread'                             => '0px',
+            'shadow_color'                              => 'rgba(0, 0, 0, 0.1)',
+            'transitions'                               => 'off',
             'custom_css'                                => '
 #{$wrap} #{$menu} {
     /** Custom styles should be added below this line **/
@@ -368,6 +435,7 @@ final class Mega_Menu_Style_Manager {
     private function save_to_cache( $css ) {
 
         set_transient( 'megamenu_css', $css, 0 );
+        set_transient( 'megamenu_css_version', MEGAMENU_VERSION, 0 );
 
     }
 
@@ -378,6 +446,10 @@ final class Mega_Menu_Style_Manager {
      */
     private function save_to_filesystem( $css ) {
         global $wp_filesystem;
+
+        if ( ! $wp_filesystem ) {
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+        }
 
         $upload_dir = wp_upload_dir();
         $filename = $this->get_css_filename();
@@ -472,9 +544,9 @@ final class Mega_Menu_Style_Manager {
         $wrap_selector = apply_filters( "megamenu_scss_wrap_selector", "#mega-menu-wrap-{$sanitized_location}", $menu_id, $location );
         $menu_selector = apply_filters( "megamenu_scss_menu_selector", "#mega-menu-{$sanitized_location}", $menu_id, $location );
 
-        $vars = "\$wrap: \"$wrap_selector\";
-                 \$menu: \"$menu_selector\";
-                 \$menu_id: \"{$menu_id}\";";
+        $vars['wrap'] = "'$wrap_selector'";
+        $vars['menu'] = "'$menu_selector'";
+        $vars['menu_id'] = "'$menu_id'";
 
         foreach( $theme as $name => $value ) {
 
@@ -485,7 +557,7 @@ final class Mega_Menu_Style_Manager {
 
                 $arrow_icon = $code == 'disabled' ? "''" : "'\\" . $code . "'";
 
-                $vars .= "$" . $name . ": " . $arrow_icon . ";\n";
+                $vars[$name] = $arrow_icon;
 
                 continue;
             }
@@ -493,9 +565,9 @@ final class Mega_Menu_Style_Manager {
             if ( in_array( $name, array( 'responsive_text' ) ) ) {
 
                 if ( strlen( $value ) ) {
-                    $vars .= "$" . $name . ": '" . do_shortcode( $value ) . "';\n";
+                    $vars[$name] = "'" . do_shortcode( $value ) . "'";
                 } else {
-                    $vars .= "$" . $name . ": '';\n";
+                    $vars[$name] = "''";
                 }
 
                 continue;
@@ -504,7 +576,7 @@ final class Mega_Menu_Style_Manager {
             if ( in_array( $name, array( 'panel_width' ) ) ) {
 
                 if ( preg_match('/^\d/', $value) !== 1 ) { // doesn't start with number (jQuery selector)
-                    $vars .= "$" . $name . ": 100%;\n";
+                    $vars[$name] = '100%';
 
                     continue;
 
@@ -513,12 +585,18 @@ final class Mega_Menu_Style_Manager {
             }
 
             if ( $name != 'custom_css' ) {
-                $vars .= "$" . $name . ": " . $value . ";\n";
+                $vars[$name] = $value;
             }
 
         }
 
-        $scss = apply_filters( "megamenu_scss_variables", $vars, $location, $theme, $menu_id );
+        $vars = apply_filters( "megamenu_scss_variables", $vars, $location, $theme, $menu_id );
+
+        $scss = "";
+
+        foreach ($vars as $name => $value) {
+            $scss .= "$" . $name . ": " . $value . ";\n";
+        }
 
         $scss .= $this->load_scss_file();
         
@@ -580,8 +658,7 @@ final class Mega_Menu_Style_Manager {
                 "effect" => array(
                     "fade" => array(
                         "in" => array(
-                            "animate" => array("opacity" => "show"),
-                            "css" => array("display" => "none")
+                            "animate" => array("opacity" => "show")
                         ),
                         "out" => array(
                             "animate" => array("opacity" => "hide")
@@ -594,14 +671,6 @@ final class Mega_Menu_Style_Manager {
                         ),
                         "out" => array(
                             "animate" => array("height" => "hide")
-                        )
-                    ),
-                    "disabled" => array(
-                        "in" => array(
-                            "css" => array("display" => "block")
-                        ),
-                        "out" => array(
-                            "css" => array("display" => "none")
                         )
                     )
                 ),
