@@ -280,7 +280,7 @@
             </form>
         </div>
         <?php
-			//print_var( $this->aff_option['apis'] );
+			print_var( $this->aff_option['apis'] );
 			//$awin = new WordPress_Affiliate_Shop_Awin;
 			//echo $awin->update_feed( 5907 );
 			
