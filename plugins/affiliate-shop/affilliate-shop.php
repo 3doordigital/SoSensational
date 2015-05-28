@@ -2652,7 +2652,7 @@ class WordPress_Affiliate_Shop {
 				),
 			)
 		);*/
-		
+		set_time_limit(0);
 		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
