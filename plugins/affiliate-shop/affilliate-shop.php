@@ -2664,6 +2664,7 @@ class WordPress_Affiliate_Shop {
 
 			$output['status'] = 1;	
 			foreach( $posts as $post ) {
+				set_time_limit(0);
 				//$prod_id = get_post_meta( $post->ID, 'wp_aff_product_id', true );
 				//$aff = get_post_meta( $post->ID, 'wp_aff_product_aff', true );
 				
