@@ -196,7 +196,9 @@ class WordPress_Affiliate_Shop_Linkshare {
 					$contents .= $line;
 				}
 				gzclose($fp);
-				
+				if ( function_exists( 'ini_set' ) ) {
+					@ini_set('memory_limit', '2048M');
+				}
 				$xml = simplexml_load_string( $contents );
 				foreach( $xml->product as $product ) {
 					if( isset( $product->price->sale ) && $product->price->sale < $product->price->retail ) {
