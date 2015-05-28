@@ -192,6 +192,7 @@ class WordPress_Affiliate_Shop_Awin {
 		}
 		
 		public function update_feed( $ID ) {
+			$out = array();
 			$local_file = $this->get_file( $ID );
 			// get the absolute path to $file
 			$path = pathinfo(realpath($local_file), PATHINFO_DIRNAME);
@@ -207,10 +208,12 @@ class WordPress_Affiliate_Shop_Awin {
 			 }
 			  $zip->close();
 			} else {
+				$out ['status'] = 0;
+				return $out;
 			}
 			$upload_dir = wp_upload_dir(); 
 			$user_dirname = $upload_dir['basedir'].'/feed-data';
-			$out = array();
+			
 			if(($handle = fopen( $user_dirname.'/'.$filename, 'r')) !== false)
 			{
 				global $wpdb;
@@ -237,14 +240,17 @@ class WordPress_Affiliate_Shop_Awin {
 					switch ($replace) {
 						case false :
 							if( is_wp_error( $replace ) ) {
-								$out[] = $replace->get_error_message();
+								$out['status'] = 0;
+								$out['message'][] = $replace->get_error_message();
 							}
 							break;
 						case 1 :
-							$out[] = 'Inserted '.$data[0];
+							$out['status'] = 1;
+							$out['message'][] = 'Inserted '.$data[0];
 							break;
 						default :
-							$out[] = 'Replaced '.$data[0];
+							$out['status'] = 1;
+							$out['message'][] = 'Replaced '.$data[0];
 							break;	
 					}
 					

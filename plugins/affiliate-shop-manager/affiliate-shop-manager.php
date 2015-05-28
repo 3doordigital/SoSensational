@@ -271,6 +271,7 @@
                         <th>Update Progress</th>
                         <td>
                             <span class="update_percent">0%</span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
+                            <div><span class="update_success">0</span> Updated - <span class="update_fail">0</span> Failed to Update</div>
                         </td>
                     </tr>
                 </table>
