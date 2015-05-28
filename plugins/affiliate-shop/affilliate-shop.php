@@ -1963,7 +1963,7 @@ class WordPress_Affiliate_Shop {
                 <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
             </form>
             </div>
-        <?php phpinfo(); //$this->ajax_update_get_count(); ?>
+        <?php //$this->ajax_update_get_count(); ?>
     <?php } 
     public function addons_page() { ?>
         <div class="wrap">
@@ -2652,7 +2652,9 @@ class WordPress_Affiliate_Shop {
 				),
 			)
 		);*/
-		
+		if ( function_exists( 'ini_set' ) ) {
+			@ini_set('memory_limit', '2048M');
+		}
 		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
