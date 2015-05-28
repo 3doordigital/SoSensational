@@ -187,7 +187,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 			$conn_id = @ftp_connect('aftp.linksynergy.com');
 			$login_result = @ftp_login($conn_id, 'cyndylessing', 'zbrbZdyk');
 					
-			if (ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
+			if (@ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
 				$out['status'] = 1;
 				ftp_close($conn_id);
 				
