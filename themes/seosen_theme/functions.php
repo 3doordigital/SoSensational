@@ -5,6 +5,7 @@ require_once('inc/custom_functions.php');
 require_once('inc/wp_bootstrap_navwalker.php');
 require_once('inc/widgets.php');
 require_once('inc/template_functions.php');
+require_once('lib/Template.php');
 
 function registerMenus() {
     register_nav_menus(array(
