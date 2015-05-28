@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
 	
 	function update_merchant_feed( thisID, nextID, total ) {
 		console.log( thisID+' :: '+nextID+' :: '+total+' :: '+items[thisID].ID+' :: '+items[thisID].aff );
-		if( thisID <= total ) {
+		if( thisID < total ) {
 			var update_feed_data2 = {
 				'action'	: 'update_merchant_feed',
 				'ID'		: items[thisID].ID,

@@ -60,6 +60,7 @@ class WordPress_Affiliate_Shop_Awin {
 			$array = $wp_aff->get_option();
 			$array['apis']['awin'] = array(
 				'name' 		=> 'awin',
+				'nicename'	=> 'Affiliate Window',
 				'class' 	=> 'WordPress_Affiliate_Shop_Awin'
 			);
 		}

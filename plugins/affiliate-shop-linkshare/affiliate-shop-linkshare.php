@@ -47,6 +47,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 			$array = $wp_aff->get_option();
 			$array['apis']['linkshare'] = array(
 				'name' 		=> 'awin',
+				'nicename'	=> 'Linkshare',
 				'class' 	=> 'WordPress_Affiliate_Shop_Linkshare'
 			);
 		}
