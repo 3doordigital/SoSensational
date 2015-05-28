@@ -38,7 +38,6 @@ require_once (dirname(__FILE__) . '/classes/FeaturedMeta.php');
 require_once (dirname(__FILE__) . '/classes/RelatedCarousel.php');
 require_once (dirname(__FILE__) . '/classes/FeaturedCarousel.php');
 require_once (dirname(__FILE__) . '/classes/SeoMeta.php');
-//require_once (dirname(__FILE__) . '/classes/SearchEngine.php');
 require_once (dirname(__FILE__) . '/lib/hooks.php');
 
 
