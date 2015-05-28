@@ -251,7 +251,7 @@ jQuery(document).ready(function($) {
 		var ids;
 		var counter = 0;
 		$.post(ajaxurl, ajax_update_get_count_data, function(response) {
-			
+			console.log( response );
 			if( response.status == 1 ) {
 				total = response.total;
 				ids = response.ids;
