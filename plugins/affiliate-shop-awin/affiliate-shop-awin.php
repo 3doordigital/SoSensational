@@ -254,6 +254,6 @@ class WordPress_Affiliate_Shop_Awin {
 			}
 			return $out;
 		}
-}
+	}
 register_activation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Awin', 'activation' ) );
 register_deactivation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Awin', 'deactivation' ) );
