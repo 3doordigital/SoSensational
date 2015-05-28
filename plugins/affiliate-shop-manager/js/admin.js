@@ -4,12 +4,14 @@ jQuery(document).ready(function($) {
 	var total;
 	var counter = 0;
 	var loop = 1;
+	var success = 0;
+	var failed = 0;
 	var items = [];
 	var per_query;
 	
 	function update_merchant_feed( thisID, nextID, total ) {
 		console.log( thisID+' :: '+nextID+' :: '+total+' :: '+items[thisID].ID+' :: '+items[thisID].aff );
-		if( thisID < total ) {
+		if( thisID <= total ) {
 			var update_feed_data2 = {
 				'action'	: 'update_merchant_feed',
 				'ID'		: items[thisID].ID,
@@ -26,9 +28,16 @@ jQuery(document).ready(function($) {
 				}
 				$('.update_percent').html( full_percent+'%' );
 				$('#update_progress').css( 'width', percent+'%' );
+				if( response.status == 1 ) {
+					success++;
+					$('.update_success').html( success );
+				} else {
+					failed++;
+					$('.update_fail').html( failed );
+				}
 				loop++;
 				update_merchant_feed( nextID, nextFeed, total );
-			}); 	
+			}, 'json'); 	
 		}
 	}
 	
@@ -42,6 +51,7 @@ jQuery(document).ready(function($) {
 				$('.prod_update_row').show();
 				total = response.total;
 				ids = response.items;
+				$('.total_update').html(' of '+response.total+' merchants.');
 				console.log( 'Total posts: '+response.total );
 				per_query = 100 / total;
 				var last = response.total - 1;

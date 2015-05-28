@@ -116,31 +116,50 @@
 						
 		}
 		
-		public function update_product( $id = null, $prod_id = null, $aff = null, $title = null, $merch = null ) {
+		public function update_product( $id = null, $prod_id = null, $api = null, $title = null, $merch = null ) {
 			
 			$data = array();
-			
-			$classname = $this->option['apis'][$api]['class'];
-			$class = new $classname();
-			$data = $class->update_product( $prod_id, $merch );
-			
 			$out = '';
-			if( !empty( $data['item'] ) ) {
-				foreach( $data['item'] as $item ) {
-				if( ( $item['price'] == '' || $item['price'] == 0 || $item['price'] == '0.00' ) && $item['rrp'] != '' ) {
-					update_post_meta($id, 'wp_aff_product_price', $item['rrp']);
-				} else {
-					update_post_meta($id, 'wp_aff_product_price', $item['price']);
-				}
-				//update_post_meta($id, 'wp_aff_product_id', $item['ID']);
-				//update_post_meta($id, 'wp_aff_product_aff', $item['aff']);
-				update_post_meta($id, 'wp_aff_product_rrp', $item['rrp']);
-				update_post_meta($id, 'wp_aff_product_merch', $item['merch'] );
-				}
+			
+			global $wpdb;
+			$table_name = $wpdb->prefix . "feed_data";
+			$query ="
+				SELECT * 
+				FROM 
+				$table_name 
+				WHERE product_id 
+				REGEXP '^([0-9]+)_{$prod_id}$' 
+				LIMIT 1
+				";
+			//$out = $query;
+			if ($products = $wpdb->get_results( $query, ARRAY_A	) ) {
+				$data['status'] = 1;
+				foreach ( $products as $product ) 
+				{
+					$data['item'] = $product;
+				}	
 			} else {
+				$data['status'] = 0;
+			}
+			
+			
+			
+			if( !empty( $data['item'] ) ) {
+				$item = $data['item'];
+				/*if( ( $item['price'] == '' || $item['price'] == 0 || $item['price'] == '0.00' ) && $item['rrp'] != '' ) {
+					update_post_meta( $id, 'wp_aff_product_price', $item['rrp'] );
+				} else {
+					update_post_meta( $id, 'wp_aff_product_price', $item['price'] );
+				}
+				update_post_meta( $id, 'wp_aff_product_rrp', $item['rrp'] );
+				update_post_meta( $id, 'wp_aff_product_merch', $item['merch'] );*/
+				$data['out'] = ' updated '.$id;
+			} else {
+				update_post_meta( $id, 'wp_aff_product_notfound', 1 );
+				$data['out'] = 'not found '.$id;
 				//wp_trash_post( $id  );
 			}
-			return $out;
+			return $data;
 		}
 				
 		private function usort_reorder( $a, $b ){

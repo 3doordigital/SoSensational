@@ -173,7 +173,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 		}
 		
 		public function feed_data( $merchant ) {
-			
+			$out = array();
 			$upload_dir = wp_upload_dir(); 
 			$user_dirname = $upload_dir['basedir'].'/feed-data';
 			if( ! file_exists( $user_dirname ) )
@@ -184,11 +184,11 @@ class WordPress_Affiliate_Shop_Linkshare {
 			$contents = '';
 			$data = array();
 			
-			$conn_id = ftp_connect('aftp.linksynergy.com');
-			$login_result = ftp_login($conn_id, 'cyndylessing', 'zbrbZdyk');
+			$conn_id = @ftp_connect('aftp.linksynergy.com');
+			$login_result = @ftp_login($conn_id, 'cyndylessing', 'zbrbZdyk');
 					
-			if (ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
-				
+			if (@ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
+				$out['status'] = 1;
 				ftp_close($conn_id);
 				
 				$fp = gzopen( $local_file, "r");
@@ -196,7 +196,9 @@ class WordPress_Affiliate_Shop_Linkshare {
 					$contents .= $line;
 				}
 				gzclose($fp);
-				
+				if ( function_exists( 'ini_set' ) ) {
+					@ini_set('memory_limit', '2048M');
+				}
 				$xml = simplexml_load_string( $contents );
 				foreach( $xml->product as $product ) {
 					if( isset( $product->price->sale ) && $product->price->sale < $product->price->retail ) {
@@ -221,7 +223,6 @@ class WordPress_Affiliate_Shop_Linkshare {
 				}
 				//print_var( $data );
 				global $wpdb;
-				$out = array();
 				foreach( $data as $product ) {
 					//print_var($product);
 					$table_name = $wpdb->prefix . "feed_data";
@@ -241,19 +242,24 @@ class WordPress_Affiliate_Shop_Linkshare {
 					switch ($replace) {
 						case false :
 							if( is_wp_error( $replace ) ) {
-								$out[] = $replace->get_error_message();
+								$out['status'] = 0;
+								$out['message'][] = $replace->get_error_message();
 							}
 							break;
 						case 1 :
-							$out[] = 'Inserted '.$product['ID'];
+							$out['message'][] = 'Inserted '.$product['ID'];
 							break;
 						default :
-							$out[] = 'Replaced '.$product['ID'];
+							$out['message'][] = 'Replaced '.$product['ID'];
 							break;	
 					}
 				}
-				return $out;
+				
+			} else {
+				$out['status'] = 0;
+				$out['message']	= 'FTP Failed';
 			}
+			return $out;
 		}
 		
 		public function update_feed( $ID ) {

@@ -1801,7 +1801,6 @@ class WordPress_Affiliate_Shop {
             $redirect = urlencode( remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ) );
             $redirect = urlencode( $_SERVER['REQUEST_URI'] );
 			$option = $this->get_option();
-			print_var( $option );
         ?>
         <div class="wrap">
             <h2>Settings</h2>
@@ -1945,6 +1944,7 @@ class WordPress_Affiliate_Shop {
                     	<th>Update Progress</th>
                         <td>
                         	<span class="update_percent">0%</span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
+                            <div><span class="update_success">0</span> Updated - <span class="update_fail">0</span> Failed to Update</div>
                         </td>
                     </tr>
                 </table>
@@ -1963,7 +1963,7 @@ class WordPress_Affiliate_Shop {
                 <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
             </form>
             </div>
-        
+        <?php //$this->ajax_update_get_count(); ?>
     <?php } 
     public function addons_page() { ?>
         <div class="wrap">
@@ -2652,7 +2652,9 @@ class WordPress_Affiliate_Shop {
 				),
 			)
 		);*/
-		
+		if ( function_exists( 'ini_set' ) ) {
+			@ini_set('memory_limit', '2048M');
+		}
 		$qry_args = array(
 			'post_status' => 'publish', 
 			'post_type' => 'wp_aff_products', 
@@ -2664,6 +2666,7 @@ class WordPress_Affiliate_Shop {
 
 			$output['status'] = 1;	
 			foreach( $posts as $post ) {
+				set_time_limit(0);
 				//$prod_id = get_post_meta( $post->ID, 'wp_aff_product_id', true );
 				//$aff = get_post_meta( $post->ID, 'wp_aff_product_aff', true );
 				
@@ -2715,7 +2718,7 @@ class WordPress_Affiliate_Shop {
 			$output['status'] = 0;	
 		}
 		$output['html'] = $data;
-		$output = json_encode( $output );
+		$output = json_encode( $data );
 		echo $output; 	
 		die;
 		

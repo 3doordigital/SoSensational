@@ -102,7 +102,7 @@
 	}
 	
 	public function admin_scripts() {
-		wp_enqueue_script( 'wp_aff_functions', $this->plugin_url . 'js/admin.js' );
+		wp_enqueue_script( 'wp_aff_feed_functions', $this->plugin_url . 'js/admin.js' );
 	}
 	
 	/**
@@ -271,6 +271,7 @@
                         <th>Update Progress</th>
                         <td>
                             <span class="update_percent">0%</span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
+                            <div><span class="update_success">0</span> Updated - <span class="update_fail">0</span> Failed to Update</div>
                         </td>
                     </tr>
                 </table>
@@ -279,12 +280,6 @@
                 <?php wp_nonce_field( 'wp_man_save_feed', $this->option_name . '_nonce', TRUE ); ?>
             </form>
         </div>
-        <?php
-			print_var( $this->aff_option['apis'] );
-			//$awin = new WordPress_Affiliate_Shop_Awin;
-			//echo $awin->update_feed( 5907 );
-			
-		?>
 <?php
 		
 	}
