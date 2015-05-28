@@ -1963,7 +1963,7 @@ class WordPress_Affiliate_Shop {
                 <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
             </form>
             </div>
-        <?php $this->ajax_update_get_count(); ?>
+        <?php phpinfo(); //$this->ajax_update_get_count(); ?>
     <?php } 
     public function addons_page() { ?>
         <div class="wrap">
