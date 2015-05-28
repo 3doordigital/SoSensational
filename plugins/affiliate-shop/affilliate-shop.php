@@ -1,11 +1,11 @@
 <?php
 /*
-  Plugin Name: WordPress Aflliate Shop
+  Plugin Name: Affiliate Shop
   Plugin URI: 
   Description: Create a shop on your WordPress site using the most popular Affiliate networks.
   Version: 0.1b
-  Author: Dan Taylor +[W.mtMUzAZy
-  Author URI: http://www.tailoredmarketing.co.uk
+  Author: 3 Door Digital
+  Author URI: http://www.3doordigital.com
   License: GPL V3
  */
 require_once('inc/base_functions.php');
@@ -20,7 +20,7 @@ class WordPress_Affiliate_Shop {
 	private $plugin_url;
     private $text_domain    = 'wpaffshop';
     private $admin_icon     = 'dashicons-cart';
-    private $option_name    = 'wp_aff_apis';
+    public $option_name    = 'wp_aff_apis';
 	/**
 	 * Creates or returns an instance of this class.
 	 */
@@ -233,6 +233,7 @@ class WordPress_Affiliate_Shop {
         }
         
         return $data = $currentUrl;
+
 	}
     
     
@@ -1476,27 +1477,27 @@ class WordPress_Affiliate_Shop {
                                     <input class="regular-text" type="text" name="q" value="<?php echo (isset( $_GET['q'] ) ? $_GET['q'] : '' ); ?>" id="wp_aff_search">
                                     <p class="description">Search for products, such as <code>Black Dress</code>.</p>
                                 </td>
-                            
+                            	<?php
+									$i =1;
+									$api = new wpAffAPI();
+									if( isset( $_REQUEST['wp_aff_merch'] ) ) {
+										$merch = $_REQUEST['wp_aff_merch'];
+									} else {
+										$merch = NULL;
+									}
+								?>
                                 <th>Affiliate</th>
                                 <td>
                                     <select name="wp_aff_api">
                                         <option <?php echo ( isset( $_REQUEST['api'] ) && $_REQUEST['api'] == 'all' ? 'selected' : '' ); ?> value="all" selected>All</option>
-                                        <option <?php echo ( isset( $_REQUEST['api'] ) && $_REQUEST['api'] == 'awin' ? 'selected' : '' ); ?> value="awin">Affiliate Window</option>
-                                        <option <?php echo ( isset( $_REQUEST['api'] ) && $_REQUEST['api'] == 'linkshare' ? 'selected' : '' ); ?> value="linkshare">Linkshare</option>
+                                        <?php
+											$api->get_affiliates( $_REQUEST['api'] );
+                                        ?>
                                     </select>
                                 </td>
                             
                                 <th>Merchant</th>
                                 <td>
-                                    <?php
-            							$i =1;
-										$api = new wpAffAPI();
-										if( isset( $_REQUEST['wp_aff_merch'] ) ) {
-											$merch = $_REQUEST['wp_aff_merch'];
-										} else {
-											$merch = NULL;
-										}
-                                    ?>
                                     <select name="wp_aff_merch">
                                         <option selected value="0">All Merchants</option>
                                         <?php
@@ -1800,6 +1801,7 @@ class WordPress_Affiliate_Shop {
             $redirect = urlencode( remove_query_arg( 'msg', $_SERVER['REQUEST_URI'] ) );
             $redirect = urlencode( $_SERVER['REQUEST_URI'] );
 			$option = $this->get_option();
+			print_var( $option );
         ?>
         <div class="wrap">
             <h2>Settings</h2>
