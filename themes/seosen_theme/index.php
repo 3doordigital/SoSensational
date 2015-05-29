@@ -42,7 +42,7 @@
                             <div class="col-md-24">
 
                                 <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-                                <?php sosen_post_meta(); ?>
+                                <?php echo sosen_post_meta(); ?>
                                 <?php
                                 if (has_post_thumbnail()) { // check if the post has a Post Thumbnail assigned to it.
                                     ?>
@@ -56,7 +56,7 @@
                                 ?>
 
                                 <?php
-                                the_excerpt_max_charlength(340);
+                                echo the_excerpt_max_charlength(340);
                                 ?>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                             <div class="col-sm-12 blog-small">
 
                                 <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-                                <?php sosen_post_meta(); ?>
+                                <?php echo sosen_post_meta(); ?>
                                 <?php
                                 if (has_post_thumbnail()) { // check if the post has a Post Thumbnail assigned to it.
                                     ?>
@@ -81,7 +81,7 @@
                                 ?>
 
                                 <?php
-                                the_excerpt_max_charlength(170);
+                                echo the_excerpt_max_charlength(170);
                                 ?>
                             </div>   
                             <?php if ($x == 1 || $wp_query->post_count == $i) { ?>

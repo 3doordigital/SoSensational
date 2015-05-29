@@ -326,3 +326,43 @@ button#shop-controls-toggle {
     }
 }
 
+
+// Search results page
+
+.search-section {
+    overflow: hidden;
+    padding: 0 85px 45px;
+    border-bottom: 2px solid #E6E6E6;
+    margin-top: 30px;    
+    
+    &.last-section {
+        padding: 0 0 45px 0;
+        border-bottom: none;
+    }
+    
+    .search-section-head {
+        text-align: center;
+        h1 {
+            margin-bottom: 40px;
+            font-size: 24px;
+        }
+    }
+    .more-results {
+        text-align: center;
+        margin-top: 20px;
+        a {
+            font-size: 18px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+}
+
+.blog-posts {
+    h2 {
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+    }
+}

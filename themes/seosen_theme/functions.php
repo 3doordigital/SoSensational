@@ -5,7 +5,7 @@ require_once('inc/custom_functions.php');
 require_once('inc/wp_bootstrap_navwalker.php');
 require_once('inc/widgets.php');
 require_once('inc/template_functions.php');
-require_once('lib/Template.php');
+require_once('views/Template.php');
 
 function registerMenus() {
     register_nav_menus(array(
@@ -158,41 +158,45 @@ function lm_dequeue_footer_styles() {
 
 function the_excerpt_max_charlength($charlength, $comp = false) {
 	global $post;
+    $str = '';
 	if( $post->post_excerpt != '' ) {
         $content = get_the_excerpt();
-		echo '<p>'.$content.'</p>';
+		$str .= '<p>'.$content.'</p>';
     } else {
 	
 		$excerpt = strip_tags(get_the_content());
 		$charlength++;
-		echo '<p>';
+		$str.= '<p>';
 		if (mb_strlen($excerpt) > $charlength) {
 			$subex = mb_substr($excerpt, 0, $charlength - 5);
 			$exwords = explode(' ', $subex);
 			$excut = - ( mb_strlen($exwords[count($exwords) - 1]) );
 			if ($excut < 0) {
-				echo mb_substr($subex, 0, $excut);
+				$str .= mb_substr($subex, 0, $excut);
 			} else {
-				echo $subex;
+				$str .= $subex;
 			}
-			echo '...';
+			$str .= '...';
 		} else {
-			echo $excerpt;
+			$str .= $excerpt;
 		}
-		if( $comp ) { echo ' <a href="'.get_permalink( $post->ID ).'">Enter Now</a>'; }
-		echo '</p>';
+		if( $comp ) { $str .= ' <a href="'.get_permalink( $post->ID ).'">Enter Now</a>'; }
+		$str .= '</p>';
 	}
+    
+    return $str;
 }
 
 function sosen_post_meta() {
-    if ($category = get_the_category()) {
-        echo '<div class="post_meta">';
-        if ($category[0]) {
-            echo '<a href="' . get_category_link($category[0]->term_id) . '">' . $category[0]->cat_name . '</a> | ';
-        }
-        the_time(get_option('date_format'));
-        echo '</div>';
+    $category = get_the_category();
+    $str = '';
+    $str .= '<div class="post_meta">';
+    if ($category[0]) {
+        $str .= '<a href="' . get_category_link($category[0]->term_id) . '">' . $category[0]->cat_name . '</a> | ';
     }
+    $str .= get_the_time(get_option('date_format'));
+    $str .= '</div>';
+    return $str;
 }
 
 function sosen_related_posts($cat, $post_id) {
@@ -532,3 +536,22 @@ function eg_settings_api_init() {
     }
 }
 add_action( 'bp_before_activity_delete', 'delete_activity_images');
+
+
+function addQueryVars($vars)
+{
+    $vars[] = 'search-section';
+    $vars[] = 'search-term';
+    return $vars;
+}
+
+add_filter('query_vars', 'addQueryVars');
+
+function addRewriteRules($rules)
+{
+    $newRule = array('search-results/([^/]*)/?([^/]*)/?$' => 'index.php?pagename=search-results&search-section=$matches[1]&search-term=$matches[2]');
+    $rules = $newRule + $rules;
+    return $rules;
+}
+
+add_filter('rewrite_rules_array', 'addRewriteRules');

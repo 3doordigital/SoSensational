@@ -231,10 +231,10 @@ jQuery(document).ready(function($) {
         });
     }
     
-    jQuery('#mega-menu-primary > li:last-child > a').hide();
+
     jQuery('#mega-menu-primary > li:last-child > a').click(function(e) {
         e.preventDefault();
-        //jQuery('#sosen-searchform').toggle();
+        jQuery('#sosen-searchform').toggle();
     }); 
     
     
