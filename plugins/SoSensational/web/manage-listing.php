@@ -17,11 +17,11 @@
 </div>
 
 <span class="large_font">Here you can edit the details of your profile page as well as upload and change products and the categories you are listed in.</span>
-<h3 style="padding-left: 30px; margin-top: 30px;"><strong>Step 1:</strong> <a title="Edit Advertiser" href="/edit-advertiser/">Edit Your Profile</a></h3>
+<h3 style="padding-left: 30px; margin-top: 30px;"><strong>Step 1:</strong> <a title="Edit Advertiser" href="/edit-advertiser/">Add/Edit Your Profile</a></h3>
 &nbsp;
-<h3 style="padding-left: 30px;"><strong>Step 2:</strong> <a title="View Products" href="/view-products/">Edit Your Products</a></h3>
+<h3 style="padding-left: 30px;"><strong>Step 2:</strong> <a title="View Products" href="/view-products/">Add/Edit Your Products</a></h3>
 &nbsp;
-<h3 style="padding-left: 30px;"><b><strong>Step 3:</strong> </b><a title="Show Advertisers Cats" href="/show-advertisers-cats/">Edit Category Information</a></h3>
+<h3 style="padding-left: 30px;"><b><strong>Step 3:</strong> </b><a title="Show Advertisers Cats" href="/show-advertisers-cats/">Add/Edit Category Information</a></h3>
 &nbsp;
 <form action="<?php echo SOSENSATIONAL_URL?>/web/advertisers-cats-submit.php" method="POST" enctype="multipart/form-data" class="category-edit-block">
   <button type="submit" class="button_ss_small" href="#" style="margin-left: 30px;">Submit for Review</button>
