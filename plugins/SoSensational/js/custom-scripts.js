@@ -113,7 +113,7 @@ jQuery(document).ready(function($) {
       Ajax call for deleting products from /view-products/
      -------------------------------------------------------------------------*/
         
-    $('.ajax-delete').on('click', function(e) {
+    $('.remove-product').on('click', function(e) {
         e.preventDefault();
         var productId = $(this).attr('data');
         var sampleData = {

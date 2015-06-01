@@ -302,3 +302,27 @@ button#shop-controls-toggle {
   text-transform: uppercase;
   margin-bottom: 30px; }
 
+/* line 371, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.alert.alert-success > a, .alert.alert-success {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px; }
+
+/* line 376, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.preview-anchor-text.button_ss_small {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px; }
+  /* line 380, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  .preview-anchor-text.button_ss_small:hover {
+    color: #fff;
+    text-decoration: none; }
+
+/* line 385, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.navbar-btn {
+  margin-top: 0px; }
+
+/* line 389, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.remove-product {
+  margin-left: 20px;
+  color: #7F0000; }
+
