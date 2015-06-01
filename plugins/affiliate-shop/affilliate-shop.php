@@ -2628,7 +2628,7 @@ class WordPress_Affiliate_Shop {
 		die;
 	}
 	
-	public function ajax_update_get_count() {
+	public function ajax_update_get_count( $cron = false ) {
 		$output = array();
 		
 		 
@@ -2690,7 +2690,7 @@ class WordPress_Affiliate_Shop {
 					'id' => $post->ID,
 					'title' => $post->post_title,
 					'prod_id' => $prod_id,
-					'merch' => $brand[0]->name,
+					'merch' => '',
 					'aff'	=> $aff
 				);
 				
@@ -2702,9 +2702,13 @@ class WordPress_Affiliate_Shop {
 		//$count_posts = wp_count_posts( 'wp_aff_products' );
 		$output['total'] = count( $posts  ); //
 		
-		$output = json_encode( (object) $output );
-		echo $output; 	
-		die;
+		if( $cron == true ) {
+			return $output;
+		} else {
+			$output = json_encode( (object) $output );
+			echo $output; 	
+			die;
+		}
 	}
 	
 	function ajax_update_product() {
@@ -2723,6 +2727,21 @@ class WordPress_Affiliate_Shop {
 		die;
 		
 	}
+	
+	function cron_update_product( $id, $prod_id, $aff, $title = null, $merch ) {
+		$output = array();
+		
+		$api = new wpAffAPI();
+		$data = $api->update_product( $id, $prod_id, $aff, $title, $merch ) ;
+		if( $data ) {
+			$output['status'] = 1;	
+		} else {
+			$output['status'] = 0;	
+		}
+		$output['html'] = $data;
+		return $output; 		
+	}
+	
 	public function product_price() {
 		global $post;
 		

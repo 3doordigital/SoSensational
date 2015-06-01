@@ -43,6 +43,9 @@
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
 		
 		// Actions
+		
+		add_action( 'init', array( $this, 'cron_process' ) );
+		
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'admin_menu', array( $this, 'create_menu' ) );
 		add_action( 'wp_ajax_get_api_merchants', array( $this, 'get_api_merchants' ) );
@@ -304,6 +307,24 @@
 			}
 	}
 	
+	public function cron_get_api_merchants() {
+		if( count( $this->aff_option['apis'] ) > 0 ) {
+				foreach( $this->aff_option['apis'] as $affiliate ) {
+					$classname = $affiliate['class'];
+					$class = new $classname();
+					$temp[] = $class->merchants();
+				}
+				$output = array();
+				$output['items'] = array();
+				foreach( $temp as $key=>$input ) {
+					$output['items'] = array_replace( $output['items'], $input );
+				}
+				$output['total'] = count( $output['items'] );
+				$output['status'] = 1;
+				return $output;
+			}
+	}
+	
 	public function update_merchant_feed( ) {
 		$classname = $this->aff_option['apis'][$_POST['aff']]['class'];
 		$class = new $classname();
@@ -314,21 +335,32 @@
 	public function cron_update_merchant_feed( $ID, $aff ) {
 		$classname = $this->aff_option['apis'][$aff]['class'];
 		$class = new $classname();
-		echo json_encode( $class->update_feed( $ID ) );
+		return $class->update_feed( $ID );
+	}
+	
+	public function cron_process() {
+		if( isset( $_REQUEST['aff_cron'] ) && $_REQUEST['aff_cron'] == 1 ) {
+			@ini_set('memory_limit', '2048M');
+			@ini_set('max_execution_time', '5000');
+			$merchants = $this->cron_get_api_merchants();	
+			foreach( $merchants['items'] as $merchant ) {
+				//print_var( $merchant );
+				$this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
+			}		
+			flush();
+			global $wp_aff;
+			
+			$products = $wp_aff->ajax_update_get_count( true );
+			foreach( $products['ids'] as $product ) {
+				print_var( $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] ) );	
+				flush();
+			}
+			die();
+		}
 	}
 	
  }
- if( isset( $_REQUEST['cron'] ) && $_REQUEST['cron'] == 1 ) {
-	define('WP_USE_THEMES', false);
-	require('/wp-blog-header.php'); 
- }
  $feed_man = new WordPress_Affiliate_Shop_Manager();
  
-if( isset( $_REQUEST['cron'] ) && $_REQUEST['cron'] == 1 ) {
-	$merchants = $feed_man->get_api_merchants();	
-	foreach( $merchants as $merchant ) {
-		print_var( $merchant );
-		//$feed_man->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
-	}
-}
+
  
