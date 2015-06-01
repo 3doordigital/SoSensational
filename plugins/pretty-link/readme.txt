@@ -4,7 +4,7 @@ Donate link: http://prettylinkpro.com
 Tags: links, link, url, urls, affiliate, affiliates, pretty, marketing, redirect, forward, plugin, twitter, tweet, rewrite, shorturl, hoplink, hop, shortlink, short, shorten, click, clicks, track, tracking, tiny, tinyurl, budurl, shrinking, domain, shrink, mask, masking, cloak, cloaking, slug, slugs, admin, administration, stats, statistics, stat, statistic, email, ajax, javascript, ui, csv, download, page, post, pages, posts, shortcode, seo, automation, widget, widgets, dashboard
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 1.6.6
+Stable tag: 1.6.7
 
 Shrink, beautify, track, manage and share any URL on or off of your WordPress website. Create links that look how you want using your own domain name!
 
@@ -66,6 +66,9 @@ http://blairwilliams.com/w7a
 
 == Changelog ==
 
+= 1.6.7 =
+* A fix to remove url encoding from target urls
+
 = 1.6.6 =
 * Two security fixes
 
@@ -108,6 +111,9 @@ http://blairwilliams.com/w7a
 * *Fix* Fixed some potential security vulnerabilities
 
 == Upgrade Notice ==
+
+= 1.6.7 =
+* A fix to remove url encoding from target urls. Everyone needs to upgrade asap.
 
 = 1.6.6 =
 * Two security fixes. Everyone should upgrade.
