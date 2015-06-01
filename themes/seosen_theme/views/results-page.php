@@ -6,7 +6,7 @@
         <div class="col-24-sm">
             <div class="search-section products">                
                 <div class="search-section-head">
-                    <h1>Results from our Shop:</h1>
+                    <h1>Results from <?php if($shop) : ?>our Shop:<?php else : ?>Brands & Boutiques<?php endif; ?></h1>
                 </div>
                 <div class="search-results-section">
                     <?php
@@ -47,6 +47,45 @@
         </div>
     </div>  
 </div>    
+<?php elseif (isset($posts)) : ?>
+<div class="container">
+    <div class="row">
+        <div class="col-24-xs">
+            <div class="search-section products">                
+                <div class="search-section-head">
+                    <h1>Results from our Blog:</h1>
+                </div>
+                <div class="search-results-section">
+                    <?php
+                    if ($posts) :
+                    $i = 1;
+                    foreach($posts as $post) {
+                    ?>
+                        <div class="col-sm-8 blog-small">
+                            <h2><a href="<?php echo $post['link'] ?>"><?php echo $post['title'] ?></a></h2>
+                            <?php echo $blogPost['meta'] ?>
+                                    <img width="<?php echo $post['thumbnail'][1] ?>" height="<?php echo $post['thumbnail'][2] ?>" src="<?php echo $post['thumbnail'][0] ?>" class="img-responsive wp-post-image" alt="<?php echo $post['alt-text'] ?>">
+                            <?php echo $post['exerpt'] ?>                           
+                        </div>
+                    <?php  
+                    $i++;
+                    }     
+                    ?>
+                    <div class="clearfix"></div>
+                    <div class="more-results">
+                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'shop/' . get_query_var('s')) ?>">Click here to see more shop results >></a>
+                    </div>                        
+                    <?php
+                    else:
+                        echo '<p>There were no resutls found</p>';
+                    endif;
+                    ?>            
+                </div>                       
+            </div>               
+        </div>
+    </div>  
+</div>  
+
 <?php endif; ?>
 
 <?php get_footer();

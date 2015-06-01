@@ -331,7 +331,7 @@ $attachments = get_posts( array(
     </p>
         <div class="form-buttons-group clearfix">
             <button type="submit" name="update" class="button_ss_small btn pull-left">Update Your Details</button>
-            <a  name="preview" id="ajax-preview" class="preview-anchor-text" target="_blank" style="bottom: -27px;">Preview Your Listing</a>
+            <a  name="preview" id="ajax-preview" class="preview-anchor-text button_ss_small" target="_blank" >Preview Your Listing</a>
         </div>
     </form>
     <br /><br />

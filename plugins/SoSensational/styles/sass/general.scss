@@ -390,3 +390,21 @@ button#shop-controls-toggle {
     margin-left: 20px;
     color: #7F0000;
 }
+
+.bootstrap-tagsinput {
+    ::-webkit-input-placeholder {
+       color: #555;
+    }
+
+    :-moz-placeholder { /* Firefox 18- */
+       color: #555; 
+    }
+
+    ::-moz-placeholder {  /* Firefox 19+ */
+       color: #555;  
+    }
+
+    :-ms-input-placeholder {  
+       color: #555;  
+    }
+}

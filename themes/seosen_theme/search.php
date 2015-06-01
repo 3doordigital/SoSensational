@@ -1,13 +1,15 @@
 <?php
+
     $searchPage = new Template('searchpage.php');
     
     $shopArgs = array(
         's' =>   get_query_var('s'),
-        'post_type' =>  array('wp_aff_products'),
+        'post_type' =>  'wp_aff_products',
         'posts_per_page'    => 3,
     );
-    $shopQuery = new WP_Query($shopArgs);        
-    
+                    
+    $shopQuery = new WP_Query($shopArgs);     
+
     if ($shopQuery->have_posts()) {
         $products = [];
         $i = 0;
@@ -37,7 +39,9 @@
         'posts_per_page'    => 3,
         'post_status'   =>  array('publish', 'pending'),
     );
-    $bbQuery = new WP_Query($bbArgs);    
+    $bbQuery = new WP_Query($bbArgs);  
+    
+
     
     if ($bbQuery->have_posts()) {
         $bbProducts = [];
@@ -67,7 +71,9 @@
         'post_type' =>  array('post'),
         'posts_per_page'    => 3,
     );
-    $blogQuery = new WP_Query($blogArgs);    
+    $blogQuery = new WP_Query($blogArgs);  
+    
+
     
     if ($blogQuery->have_posts()) {
         $blogPosts = [];

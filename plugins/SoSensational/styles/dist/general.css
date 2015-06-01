@@ -326,3 +326,18 @@ button#shop-controls-toggle {
   margin-left: 20px;
   color: #7F0000; }
 
+/* line 395, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.bootstrap-tagsinput ::-webkit-input-placeholder {
+  color: #555; }
+/* line 399, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.bootstrap-tagsinput :-moz-placeholder {
+  /* Firefox 18- */
+  color: #555; }
+/* line 403, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.bootstrap-tagsinput ::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #555; }
+/* line 407, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+.bootstrap-tagsinput :-ms-input-placeholder {
+  color: #555; }
+

@@ -20,6 +20,12 @@
     .advertiser-block-wrapper {
         height: 400px;
     }
+    
+    .search-results-section {
+        .blog-small {
+            height: 450px;
+        }
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
