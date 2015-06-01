@@ -33,9 +33,11 @@ $args = array(
     'post_status' => array('publish', 'pending', 'draft'),
     'author' => $user->ID
 );
+
 ?> 
 
 <?php echo displaySystemNoticeForSteps($user, $advertiser); ?>
+
 <ul class="nav nav-pills nav-stacked"> 
     <?php
     $my_query = new WP_Query($args);

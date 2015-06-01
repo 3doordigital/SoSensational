@@ -196,25 +196,8 @@ jQuery(document).ready(function($) {
            }           
         });        
     });
-
-
-//    $.each($('.ajax-preview'), function(key, val) {
-//        var formData =  $('#advertiser-edit-form').serializeArray();
-//        var _this = $(this);
-//        
-//        /* Pass another key/value pair for a later AJAX check in the script */
-//        formData.push({name: 'ajaxPreview', value: true});
-//        
-//        $.ajax({
-//           type: 'post' ,
-//           url: "../wp-content/plugins/SoSensational/web/edit-advertiser-action.php",
-//           data: formData,
-//           success: function(data, status, jqXHR) {
-//                previewURL = data;
-//                _this.attr('href', previewURL);        
-//           }           
-//        });        
-//    });
+    var previewURL = $('.preview-anchor-text').attr('href');
+    $('.ajax-preview').attr('href', previewURL);
     
     /*--------------------------------------------------------------------------
      Max Mega Menu - make parent elements clickable on mobile devices
