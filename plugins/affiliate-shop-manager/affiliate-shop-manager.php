@@ -27,6 +27,7 @@
     private $option_name    = 'wp_aff_man';
 	private $aff_option		= 'wp_aff_apis';
 	private $page_title 	= 'Affiliate Feed Manager';
+	
 	public function __construct() {
 		
 		// Globals
@@ -310,6 +311,24 @@
 		die();
 	}
 	
+	public function cron_update_merchant_feed( $ID, $aff ) {
+		$classname = $this->aff_option['apis'][$aff]['class'];
+		$class = new $classname();
+		echo json_encode( $class->update_feed( $ID ) );
+	}
+	
  }
- 
+ if( isset( $_REQUEST['cron'] ) && $_REQUEST['cron'] == 1 ) {
+	define('WP_USE_THEMES', false);
+	require('/wp-blog-header.php'); 
+ }
  $feed_man = new WordPress_Affiliate_Shop_Manager();
+ 
+if( isset( $_REQUEST['cron'] ) && $_REQUEST['cron'] == 1 ) {
+	$merchants = $feed_man->get_api_merchants();	
+	foreach( $merchants as $merchant ) {
+		print_var( $merchant );
+		//$feed_man->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
+	}
+}
+ 
