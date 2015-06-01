@@ -51,14 +51,14 @@ $args = array(
                 <?php if ($num_of_products < $allowed_products) { ?>
                     <div class="form-buttons-group clearfix">
                         <a href="/add-product/" rel="bookmark" class="btn btn-default navbar-btn" title="Permanent Link to <?php the_title_attribute(); ?>">Add A New Product</a>
-                        <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
+                        <a name="preview" class="preview-anchor-text button_ss_small" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
                     </div>   
                 <?php } ?>
             <?php endif; ?>
             <li>                
-                <a href="/add-product/?action=edit&product_id=<?php echo get_the_ID(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+                <a href="/add-product/?action=edit&product_id=<?php echo get_the_ID(); ?>" rel="bookmark" title="Edit <?php the_title_attribute(); ?>">
                     <img class="ss_product_img" src="<?php echo get_post_meta(get_the_ID(), 'ss_product_image', true); ?>" /> 
-                    <span class="large_font"><?php the_title(); ?><i data="<?php echo get_the_ID(); ?>" class="glyphicon glyphicon-remove ajax-delete" title="Remove Product"></i></span> 
+                    <span class="large_font"><?php the_title(); ?></span> <span class="remove-product" data="<?php echo get_the_ID(); ?>" title="Remove Product">remove product<i class="glyphicon glyphicon-remove ajax-delete" ></i></span>
                 </a>                
             </li>
             <?php
@@ -78,7 +78,7 @@ $args = array(
 <?php if ($num_of_products < $allowed_products) { ?><br /><br />    
     <div class="form-buttons-group clearfix">
         <a href="/add-product/" rel="bookmark" class="btn btn-default navbar-btn" title="Permanent Link to <?php the_title_attribute(); ?>">Add A New Product</a>
-        <a name="preview" class="preview-anchor-text" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
+        <a name="preview" class="preview-anchor-text button_ss_small" target="_blank" href="<?php echo $advertiser[0]->guid; ?>">Preview Your Listing</a>
     </div>
 <?php } ?>
 <h4>You have entered <?php echo $num_of_products ?> of <?php echo $allowed_products ?> products</h4>

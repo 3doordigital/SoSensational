@@ -366,3 +366,27 @@ button#shop-controls-toggle {
         margin-bottom: 30px;
     }
 }
+
+.alert.alert-success > a,
+.alert.alert-success {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+}
+
+.preview-anchor-text.button_ss_small {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+    &:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+}
+.navbar-btn {
+    margin-top: 0px;
+}
+
+.remove-product {
+    margin-left: 20px;
+    color: #7F0000;
+}
