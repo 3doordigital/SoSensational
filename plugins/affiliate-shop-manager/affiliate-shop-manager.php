@@ -350,7 +350,13 @@
 			global $wp_aff;
 			$products = $wp_aff->ajax_update_get_count( true );
 			foreach( $products['ids'] as $product ) {
-				file_put_contents( $this->get_plugin_path()."/cron.log", print_r( $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] ), true ), FILE_APPEND | LOCK_EX);
+				$data = $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] );
+				if( $data['html']['status'] == 0 ) {
+					$line = '"'.$data['html']['item']['product_id'].'", "'.$data['html']['item']['product_aff'].'", "'.$data['html']['item']['product_title'].'", "'.$data['html']['item']['product_brand'].'", "'.$data['html']['item']['product_image'].'", "'.$data['html']['item']['product_desc'].'", "'.$data['html']['item']['product_price'].'", "'.$data['html']['item']['product_rrp'].'", "'.$data['html']['item']['product_link'].'", "Updated"'. PHP_EOL;
+				} else {
+					$line = '"'.$product['prod_id'].'", "'.$product['aff'].'", "'.$product['title'].'", "", "", "", "", "", "", "Not Found"'. PHP_EOL;
+				}
+				file_put_contents( $this->get_plugin_path()."/cron.log", $line, FILE_APPEND | LOCK_EX);
 			}
 			die();
 		}
