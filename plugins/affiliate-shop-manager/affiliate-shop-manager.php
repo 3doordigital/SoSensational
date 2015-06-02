@@ -352,7 +352,7 @@
 			$log = '';
 			$products = $wp_aff->ajax_update_get_count( true );
 			foreach( $products['ids'] as $product ) {
-				$log .= print_r( $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] ), true );
+				$log .= $i++;
 				//echo $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] );
 				//flush();
 			}
