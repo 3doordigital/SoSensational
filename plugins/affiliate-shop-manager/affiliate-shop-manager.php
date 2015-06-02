@@ -339,7 +339,6 @@
 	}
 	
 	public function cron_process() {
-		if( isset( $_REQUEST['aff_cron'] ) && $_REQUEST['aff_cron'] == 1 ) {
 			ini_set('memory_limit', '2048M');
 			ini_set('max_execution_time', '5000');
 			$logfile = $this->get_plugin_path()."/".date('d-m-Y-H-i-s')."_cron.log";
@@ -368,7 +367,6 @@
 				$i++;
 			}
 			die();
-		}
 	}
 	
  }
