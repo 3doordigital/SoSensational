@@ -342,18 +342,23 @@
 		if( isset( $_REQUEST['aff_cron'] ) && $_REQUEST['aff_cron'] == 1 ) {
 			@ini_set('memory_limit', '2048M');
 			@ini_set('max_execution_time', '5000');
-			$merchants = $this->cron_get_api_merchants();	
+			/*$merchants = $this->cron_get_api_merchants();	
 			foreach( $merchants['items'] as $merchant ) {
 				//print_var( $merchant );
-				$this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
-			}		
-			flush();
+				//$this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
+			}*/		
 			global $wp_aff;
-			
+			$i = 0;
 			$products = $wp_aff->ajax_update_get_count( true );
 			foreach( $products['ids'] as $product ) {
-				print_var( $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] ) );	
-				flush();
+				if( $i < 10 ) {
+					//error_log( $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] ), 3, $this->get_plugin_path()."/cron.log");
+					echo $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] );
+					flush();
+					$i ++;
+				} else {
+					die();
+				}
 			}
 			die();
 		}
