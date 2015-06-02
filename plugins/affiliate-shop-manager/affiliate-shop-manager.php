@@ -349,10 +349,11 @@
 			}*/		
 			global $wp_aff;
 			$i = 0;
+			$log = '';
 			$products = $wp_aff->ajax_update_get_count( true );
 			foreach( $products['ids'] as $product ) {
 				if( $i < 10 ) {
-					error_log( print_r( $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] ), true ), 3, $this->get_plugin_path()."/cron.log");
+					$log .= print_r( $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] ), true );
 					//echo $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] );
 					//flush();
 					$i ++;
@@ -360,6 +361,7 @@
 					die();
 				}
 			}
+			error_log( $log, 3, $this->get_plugin_path()."/cron.log");
 			die();
 		}
 	}
