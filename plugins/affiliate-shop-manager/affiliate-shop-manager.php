@@ -346,7 +346,8 @@
 			foreach( $merchants['items'] as $merchant ) {
 				//print_var( $merchant );
 				//$this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
-			}*/		
+			}*/	
+			mail( 'dan@tailored.im', 'Cron Started', $logfile, 'From:server@sosensational.co.uk' );	
 			$i = 1;
 			global $wp_aff;
 			
@@ -366,6 +367,7 @@
 				file_put_contents( $logfile , $line, FILE_APPEND | LOCK_EX);
 				$i++;
 			}
+			mail( 'dan@tailored.im', 'Cron Ended', $logfile, 'From:server@sosensational.co.uk' );	
 			die();
 	}
 	
