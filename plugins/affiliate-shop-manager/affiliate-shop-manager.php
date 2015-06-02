@@ -348,16 +348,23 @@
 				//print_var( $merchant );
 				//$this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
 			}*/		
+			$i = 1;
 			global $wp_aff;
+			
+			$header = '"Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Description", "Price", "RRP", "Link", "Status"'. PHP_EOL;
+			file_put_contents( $logfile , $header, FILE_APPEND | LOCK_EX);
+			
 			$products = $wp_aff->ajax_update_get_count( true );
+			$total = $products['total'];
 			foreach( $products['ids'] as $product ) {
 				$data = $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] );
 				if( $data['html']['status'] == 1 ) {
-					$line = '"'. $product['id'] .'", "'.$data['html']['item']['product_id'].'", "'.$data['html']['item']['product_aff'].'", "'.$data['html']['item']['product_title'].'", "'.$data['html']['item']['product_brand'].'", "'.$data['html']['item']['product_image'].'", "'.$data['html']['item']['product_desc'].'", "'.$data['html']['item']['product_price'].'", "'.$data['html']['item']['product_rrp'].'", "'.$data['html']['item']['product_link'].'", "Updated"'. PHP_EOL;
+					$line = '"'.$i.' of '.$total.'", "'. $product['id'] .'", "'.$data['html']['item']['product_id'].'", "'.$data['html']['item']['product_aff'].'", "'.$data['html']['item']['product_title'].'", "'.$data['html']['item']['product_brand'].'", "'.$data['html']['item']['product_image'].'", "'.$data['html']['item']['product_desc'].'", "'.$data['html']['item']['product_price'].'", "'.$data['html']['item']['product_rrp'].'", "'.$data['html']['item']['product_link'].'", "Updated"'. PHP_EOL;
 				} else {
-					$line = '"'. $product['id'] .'", "'.$product['prod_id'].'", "'.$product['aff'].'", "'.$product['title'].'", "", "", "", "", "", "", "Not Found"'. PHP_EOL;
+					$line = '"'.$i.' of '.$total.'", "'. $product['id'] .'", "'.$product['prod_id'].'", "'.$product['aff'].'", "'.$product['title'].'", "", "", "", "", "", "", "Not Found"'. PHP_EOL;
 				}
 				file_put_contents( $logfile , $line, FILE_APPEND | LOCK_EX);
+				$i++;
 			}
 			die();
 		}
