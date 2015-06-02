@@ -352,11 +352,11 @@
 			$log = '';
 			$products = $wp_aff->ajax_update_get_count( true );
 			foreach( $products['ids'] as $product ) {
-				$log .= $i++;
+				file_put_contents($this->get_plugin_path()."/cron.log", print_r( $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] ), true ), FILE_APPEND | LOCK_EX);
 				//echo $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] );
 				//flush();
 			}
-			error_log( $log, 3, $this->get_plugin_path()."/cron.log");
+			//error_log( $log, 3, $this->get_plugin_path()."/cron.log");
 			die();
 		}
 	}
