@@ -341,7 +341,7 @@
 	public function cron_process() {
 			ini_set('memory_limit', '2048M');
 			ini_set('max_execution_time', '5000');
-			$logfile = $this->get_plugin_path()."/".date('d-m-Y-H-i-s')."_cron.log";
+			$logfile = $this->get_plugin_path().date('d-m-Y-H-i-s')."_cron.log";
 			/*$merchants = $this->cron_get_api_merchants();	
 			foreach( $merchants['items'] as $merchant ) {
 				//print_var( $merchant );
