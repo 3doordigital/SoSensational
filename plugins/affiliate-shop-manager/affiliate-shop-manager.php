@@ -342,6 +342,7 @@
 		if( isset( $_REQUEST['aff_cron'] ) && $_REQUEST['aff_cron'] == 1 ) {
 			ini_set('memory_limit', '2048M');
 			ini_set('max_execution_time', '5000');
+			$logfile = $this->get_plugin_path()."/".date('d-m-Y-H-i-s')."_cron.log";
 			/*$merchants = $this->cron_get_api_merchants();	
 			foreach( $merchants['items'] as $merchant ) {
 				//print_var( $merchant );
@@ -356,7 +357,7 @@
 				} else {
 					$line = '"'.$product['prod_id'].'", "'.$product['aff'].'", "'.$product['title'].'", "", "", "", "", "", "", "Not Found"'. PHP_EOL;
 				}
-				file_put_contents( $this->get_plugin_path()."/cron.log", $line, FILE_APPEND | LOCK_EX);
+				file_put_contents( $logfile , $line, FILE_APPEND | LOCK_EX);
 			}
 			die();
 		}
