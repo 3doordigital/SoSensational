@@ -342,11 +342,11 @@
 			//ini_set('memory_limit', '2048M');
 			//ini_set('max_execution_time', '5000');
 			$logfile = $this->get_plugin_path().date('d-m-Y-H-i-s')."_cron.log";
-			/*$merchants = $this->cron_get_api_merchants();	
+			$merchants = $this->cron_get_api_merchants();	
 			foreach( $merchants['items'] as $merchant ) {
 				//print_var( $merchant );
-				//$this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
-			}*/	
+				$this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
+			}	
 			mail( 'dan@tailored.im', 'Cron Started', $logfile, 'From:server@sosensational.co.uk' );	
 			$i = 1;
 			global $wp_aff;
