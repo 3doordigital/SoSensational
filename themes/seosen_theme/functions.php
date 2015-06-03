@@ -542,6 +542,7 @@ function addQueryVars($vars)
 {
     $vars[] = 'search-section';
     $vars[] = 'search-term';
+    $vars[] = 'page-no';
     return $vars;
 }
 
@@ -549,9 +550,26 @@ add_filter('query_vars', 'addQueryVars');
 
 function addRewriteRules($rules)
 {
-    $newRule = array('search-results/([^/]*)/?([^/]*)/?$' => 'index.php?pagename=search-results&search-section=$matches[1]&search-term=$matches[2]');
+    $newRule = array('search-results/([^/]*)/?([^/]*)/?([^/]*)/?$' => 'index.php?pagename=search-results&search-section=$matches[1]&search-term=$matches[2]&page-no=$matches[3]');
     $rules = $newRule + $rules;
     return $rules;
 }
 
 add_filter('rewrite_rules_array', 'addRewriteRules');
+
+function changeSearchQuery($where)
+{
+    if (is_search() && ! is_admin() || get_the_title() == 'Search Results') {
+
+        $newWhere = explode('AND', $where);
+        $newWhere = array_slice($newWhere, -3);
+        $newWhere = implode($newWhere, 'AND');
+
+        return $newWhere = 'AND' . $newWhere;
+    }
+    
+    return $where;
+
+}
+
+add_filter('posts_where', 'changeSearchQuery');

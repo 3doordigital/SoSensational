@@ -11,10 +11,11 @@ switch($argsArray['search-section']) {
             's' =>   $argsArray['search-term'],
             'post_type' =>  array('wp_aff_products'),
             'posts_per_page'    => 12,
+            'paged' => $argsArray['page-no'],
         );        
         
         $searchQuery = new WP_Query($args);
-        
+
         if ($searchQuery->have_posts()) {
             $products = [];
             $i = 0;
@@ -36,6 +37,7 @@ switch($argsArray['search-section']) {
             
             $allResultsPage->products = $products;
             $allResultsPage->shop = true;
+
             
             wp_reset_postdata();        
             
@@ -48,6 +50,7 @@ switch($argsArray['search-section']) {
             'post_type' =>  array('products'),
             'posts_per_page'    => 12,
             'post_status'   =>  array('publish', 'pending'),
+            'paged' => $argsArray['page-no'],
         );  
         
         $searchQuery = new WP_Query($args);
@@ -85,6 +88,7 @@ switch($argsArray['search-section']) {
             's' =>   $argsArray['search-term'],
             'post_type' =>  array('post'),
             'posts_per_page'    => 12,
+            'paged' => $argsArray['page-no'],
         );          
         
         $searchQuery = new WP_Query($args);

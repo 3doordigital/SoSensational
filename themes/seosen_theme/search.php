@@ -8,8 +8,8 @@
         'posts_per_page'    => 3,
     );
                     
-    $shopQuery = new WP_Query($shopArgs);     
-
+    $shopQuery = new WP_Query($shopArgs);    
+    //print_r($shopQuery->request);
     if ($shopQuery->have_posts()) {
         $products = [];
         $i = 0;
@@ -51,7 +51,7 @@
             $bbProductMeta = get_post_meta($bbQuery->post->ID);
             
             $postAuthor = get_post_field('post_author', $bbQuery->post->ID);
-            $bbProductBrand = get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1));            
+           // $bbProductBrand = get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1));            
 
             $bbProducts[$i]['title'] = $bbQuery->post->post_title;
             $bbProducts[$i]['link'] = $bbProductMeta['ss_product_link'][0];

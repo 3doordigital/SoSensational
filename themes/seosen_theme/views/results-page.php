@@ -1,4 +1,9 @@
 <?php get_header(); ?>
+<?php 
+    $nextPage = get_query_var('page-no') + 1;
+    $previousPage = get_query_var('page-no') - 1;
+    $section = $shop ? 'shop' : 'brands';
+?>
 
 <?php if (isset($products)) : ?>
 <div class="container">
@@ -12,6 +17,7 @@
                     <?php
                     if ($products) :
                     foreach($products as $product) {
+
                     ?>
                         <div class="col-md-8 product">        
                             <div>
@@ -34,8 +40,11 @@
                     }     
                     ?>
                     <div class="clearfix"></div>
-                    <div class="more-results">
-                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'shop/' . get_query_var('s')) ?>">Click here to see more shop results >></a>
+                    <div class="pagination">
+                        <?php if (get_query_var('page-no') > 1) : ?>
+                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . $section . '/' . get_query_var('search-term')) . '/' . $previousPage ?>"><< Previous results</a>   
+                        <?php endif; ?>
+                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . $section . '/' . get_query_var('search-term')) . '/' . $nextPage ?>">Next results >></a>                     
                     </div>                        
                     <?php
                     else:
@@ -72,9 +81,12 @@
                     }     
                     ?>
                     <div class="clearfix"></div>
-                    <div class="more-results">
-                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'shop/' . get_query_var('s')) ?>">Click here to see more shop results >></a>
-                    </div>                        
+                    <div class="pagination">
+                        <?php if (get_query_var('page-no') > 1) : ?>
+                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'blog/' . get_query_var('search-term')) . '/' . $previousPage ?>"><< Previous results</a>   
+                        <?php endif; ?>
+                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'blog/' . get_query_var('search-term')) . '/' . $nextPage ?>">Next results >></a>                     
+                    </div>                          
                     <?php
                     else:
                         echo '<p>There were no resutls found</p>';

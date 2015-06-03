@@ -356,6 +356,14 @@ button#shop-controls-toggle {
             cursor: pointer;
         }
     }
+    .pagination {
+        text-align: center;
+        width: 100%;
+        a {
+            margin: 5px;
+            color: #404040;
+        }
+    }
 }
 
 .blog-posts {

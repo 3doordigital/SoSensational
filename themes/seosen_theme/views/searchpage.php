@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+
 <div class="container">
     <div class="row">
         <div class="col-24-sm">
@@ -33,7 +34,7 @@
                     ?>
                     <div class="clearfix"></div>
                     <div class="more-results">
-                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'shop/' . preg_replace('/\s/', '+', get_query_var('s'))) ?>">Click here to see more shop results >></a>
+                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'shop/' . preg_replace('/\s/', '+', get_query_var('s'))) . '/1' ?>">Click here to see more shop results >></a>
                     </div>                        
                     <?php
                     else:
@@ -77,7 +78,7 @@
                     ?>
                     <div class="clearfix"></div>
                     <div class="more-results">
-                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'brands/' . preg_replace('/\s/', '+', get_query_var('s'))) ?>">Click here to see more shop results >></a>
+                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'brands/' . preg_replace('/\s/', '+', get_query_var('s'))) . '/1'?>">Click here to see more shop results >></a>
                     </div>                        
                     <?php
                     else:
@@ -110,7 +111,7 @@
                     ?>
                     <div class="clearfix"></div>
                     <div class="more-results">
-                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'blog/' . preg_replace('/\s/', '+', get_query_var('s'))) ?>">Click here to see more shop results >></a>
+                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'blog/' . preg_replace('/\s/', '+', get_query_var('s'))) . '/1'?>">Click here to see more shop results >></a>
                     </div>                        
                     <?php
                     else:

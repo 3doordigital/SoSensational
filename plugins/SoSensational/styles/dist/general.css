@@ -294,50 +294,58 @@ button#shop-controls-toggle {
       font-size: 18px;
       text-decoration: underline;
       cursor: pointer; }
+  /* line 359, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  .search-section .pagination {
+    text-align: center;
+    width: 100%; }
+    /* line 362, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+    .search-section .pagination a {
+      margin: 5px;
+      color: #404040; }
 
-/* line 362, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 370, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .blog-posts h2 {
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 30px; }
 
-/* line 371, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 379, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .alert.alert-success > a, .alert.alert-success {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px; }
 
-/* line 376, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 384, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .preview-anchor-text.button_ss_small {
   position: relative;
   display: inline-block;
   padding-bottom: 10px; }
-  /* line 380, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+  /* line 388, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
   .preview-anchor-text.button_ss_small:hover {
     color: #fff;
     text-decoration: none; }
 
-/* line 385, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 393, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .navbar-btn {
   margin-top: 0px; }
 
-/* line 389, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 397, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .remove-product {
   margin-left: 20px;
   color: #7F0000; }
 
-/* line 395, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 403, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .bootstrap-tagsinput ::-webkit-input-placeholder {
   color: #555; }
-/* line 399, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 407, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .bootstrap-tagsinput :-moz-placeholder {
   /* Firefox 18- */
   color: #555; }
-/* line 403, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 411, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .bootstrap-tagsinput ::-moz-placeholder {
   /* Firefox 19+ */
   color: #555; }
-/* line 407, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+/* line 415, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
 .bootstrap-tagsinput :-ms-input-placeholder {
   color: #555; }
 
