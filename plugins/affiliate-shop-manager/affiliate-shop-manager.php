@@ -349,7 +349,7 @@
 			fputcsv($fp, $header);
 			
 			$i = 1;
-			$merchants = $this->cron_get_api_merchants();
+			/*$merchants = $this->cron_get_api_merchants();
 			$total = $merchants['total'];	
 			foreach( $merchants['items'] as $merchant ) {
 				print_var( $merchant );
@@ -363,7 +363,7 @@
 				fputcsv($fp, $line);
 				$i++;
 			}	
-			fclose( $fp );
+			fclose( $fp );*/
 			$i = 1;
 			global $wp_aff;
 			
