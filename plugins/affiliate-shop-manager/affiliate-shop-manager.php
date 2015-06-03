@@ -44,8 +44,6 @@
 		
 		// Actions
 		
-		add_action( 'init', array( $this, 'cron_process' ) );
-		
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'admin_menu', array( $this, 'create_menu' ) );
 		add_action( 'wp_ajax_get_api_merchants', array( $this, 'get_api_merchants' ) );
