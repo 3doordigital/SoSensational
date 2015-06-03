@@ -381,7 +381,7 @@
 					
 				} else {
 					
-					$line = '"'.$i.' of '.$total.' ('.$percent.'%)", "'. $product['id'] .'", "'.$product['prod_id'].'", "'.$product['aff'].'", "'.$product['title'].'", "", "", "", "", "", "", "Not Found"'. PHP_EOL;
+					$line = '"'.$i.' of '.$total.' ('.$percent.'%)", "'. $product['id'] .'", "'.$product['prod_id'].'", "'.$product['aff'].'", "'.$product['title'].'", "'.$product['merch'].'", "", "", "", "", "", "Not Found"'. PHP_EOL;
 					
 				}
 				file_put_contents( $productlog , $line, FILE_APPEND | LOCK_EX);
