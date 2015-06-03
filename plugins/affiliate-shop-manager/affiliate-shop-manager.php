@@ -341,18 +341,34 @@
 	public function cron_process() {
 			//ini_set('memory_limit', '2048M');
 			//ini_set('max_execution_time', '5000');
-			$logfile = $this->get_plugin_path().date('d-m-Y-H-i-s')."_cron.log";
-			$merchants = $this->cron_get_api_merchants();	
+			
+			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.csv";
+			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.csv";
+			
+			mail( 'dan@tailored.im', 'Cron Started', "Product Log: $productlog \r\n Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );	
+			
+			$header = '"Number", "Merchant ID", "Merchant Name", "Affiliate", "Status"'. PHP_EOL;
+			file_put_contents( $merchantlog , $header, FILE_APPEND | LOCK_EX);
+			$i = 1;
+			$merchants = $this->cron_get_api_merchants();
+			$total = $merchants['total'];	
 			foreach( $merchants['items'] as $merchant ) {
 				//print_var( $merchant );
-				$this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
+				$percent = number_format( ( $i / $total ) * 100, 2 );
+				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
+				if( $data['status'] == 1 ) {
+					$line = '"'.$i.' of '.$total.' ('.$percent.'%)", "'. $merchant['ID'] .'", "'.$merchant['name'].'", "'.$merchant['aff'].'", "Updated"'. PHP_EOL;
+				} else {
+					$line = '"'.$i.' of '.$total.' ('.$percent.'%)", "'. $merchant['ID'] .'", "'.$merchant['name'].'", "'.$merchant['aff'].'", "Failed"'. PHP_EOL;
+				}
+				file_put_contents( $merchantlog , $line, FILE_APPEND | LOCK_EX);
+				$i++;
 			}	
-			mail( 'dan@tailored.im', 'Cron Started', $logfile, 'From:server@sosensational.co.uk' );	
 			$i = 1;
 			global $wp_aff;
 			
 			$header = '"Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Description", "Price", "RRP", "Link", "Status"'. PHP_EOL;
-			file_put_contents( $logfile , $header, FILE_APPEND | LOCK_EX);
+			file_put_contents( $productlog , $header, FILE_APPEND | LOCK_EX);
 			
 			$products = $wp_aff->ajax_update_get_count( true );
 			$total = $products['total'];
@@ -365,13 +381,13 @@
 					
 				} else {
 					
-					$line = '"'.$i.' of '.$total.'", "'. $product['id'] .'", "'.$product['prod_id'].'", "'.$product['aff'].'", "'.$product['title'].'", "", "", "", "", "", "", "Not Found"'. PHP_EOL;
+					$line = '"'.$i.' of '.$total.' ('.$percent.'%)", "'. $product['id'] .'", "'.$product['prod_id'].'", "'.$product['aff'].'", "'.$product['title'].'", "", "", "", "", "", "", "Not Found"'. PHP_EOL;
 					
 				}
-				file_put_contents( $logfile , $line, FILE_APPEND | LOCK_EX);
+				file_put_contents( $productlog , $line, FILE_APPEND | LOCK_EX);
 				$i++;
 			}
-			mail( 'dan@tailored.im', 'Cron Ended', $logfile, 'From:server@sosensational.co.uk' );	
+			mail( 'dan@tailored.im', 'Cron Ended', "Product Log: $productlog \r\n Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );	
 			//die();
 	}
 	
