@@ -504,7 +504,8 @@ class WordPress_Affiliate_Shop {
             'hierarchical'       => true,
             'taxonomies'         => array( 'wp_aff_categories' ),
             'menu_position'      => null,
-            'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields','page-attributes'  )
+            'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields','page-attributes'  ),
+            'exclude_from_search'   =>  false,
         );
 
         register_post_type( 'wp_aff_products', $args );   

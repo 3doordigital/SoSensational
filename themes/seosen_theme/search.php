@@ -8,8 +8,10 @@
         'posts_per_page'    => 3,
     );
                     
-    $shopQuery = new WP_Query($shopArgs);    
-    //print_r($shopQuery->request);
+    $shopQuery = new WP_Query($shopArgs);  
+    
+    relevanssi_do_query($shopQuery);       
+    
     if ($shopQuery->have_posts()) {
         $products = [];
         $i = 0;
@@ -37,11 +39,11 @@
         's' =>   get_query_var('s'),
         'post_type' =>  array('products'),
         'posts_per_page'    => 3,
-        'post_status'   =>  array('publish', 'pending'),
+        'post_status'   =>  'pending',
     );
     $bbQuery = new WP_Query($bbArgs);  
     
-
+    relevanssi_do_query($bbQuery);      
     
     if ($bbQuery->have_posts()) {
         $bbProducts = [];
@@ -51,7 +53,7 @@
             $bbProductMeta = get_post_meta($bbQuery->post->ID);
             
             $postAuthor = get_post_field('post_author', $bbQuery->post->ID);
-           // $bbProductBrand = get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1));            
+            $bbProductBrand = get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1));            
 
             $bbProducts[$i]['title'] = $bbQuery->post->post_title;
             $bbProducts[$i]['link'] = $bbProductMeta['ss_product_link'][0];
@@ -73,7 +75,7 @@
     );
     $blogQuery = new WP_Query($blogArgs);  
     
-
+    relevanssi_do_query($blogQuery);  
     
     if ($blogQuery->have_posts()) {
         $blogPosts = [];

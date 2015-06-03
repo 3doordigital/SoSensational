@@ -556,20 +556,3 @@ function addRewriteRules($rules)
 }
 
 add_filter('rewrite_rules_array', 'addRewriteRules');
-
-function changeSearchQuery($where)
-{
-    if (is_search() && ! is_admin() || get_the_title() == 'Search Results') {
-
-        $newWhere = explode('AND', $where);
-        $newWhere = array_slice($newWhere, -3);
-        $newWhere = implode($newWhere, 'AND');
-
-        return $newWhere = 'AND' . $newWhere;
-    }
-    
-    return $where;
-
-}
-
-add_filter('posts_where', 'changeSearchQuery');
