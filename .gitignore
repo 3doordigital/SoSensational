@@ -1,5 +1,4 @@
 backup-wp/*
-index.php
 themes/*
 !themes/seosen_theme/
 !themes/seosen_theme/*
@@ -8,3 +7,4 @@ uploads/*
 node_modules
 README.md
 error_log
+*.log
