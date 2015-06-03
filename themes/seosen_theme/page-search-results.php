@@ -15,6 +15,8 @@ switch($argsArray['search-section']) {
         );        
         
         $searchQuery = new WP_Query($args);
+        
+        relevanssi_do_query($searchQuery);
 
         if ($searchQuery->have_posts()) {
             $products = [];
@@ -55,6 +57,8 @@ switch($argsArray['search-section']) {
         
         $searchQuery = new WP_Query($args);
         
+        relevanssi_do_query($searchQuery);
+        
         if ($searchQuery->have_posts()) {
             $bbProducts = [];
             $i = 0;
@@ -92,6 +96,8 @@ switch($argsArray['search-section']) {
         );          
         
         $searchQuery = new WP_Query($args);
+        
+        relevanssi_do_query($searchQuery);
         
     if ($searchQuery->have_posts()) {
         $blogPosts = [];
