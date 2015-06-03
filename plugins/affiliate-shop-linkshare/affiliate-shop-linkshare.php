@@ -66,7 +66,19 @@ class WordPress_Affiliate_Shop_Linkshare {
 		update_option( $wp_aff->option_name, $array );
 	}
 	
-	public function search( $term, $merchant, $depth, $page, $sortby, $sort ) {
+	/**
+	* Take search term and outputs a formatted array
+	*
+	* @param  string	$term  		This is the search term
+	* @param  string  	$merchant 	The merchant ID (if required)
+	* @param  string  	$depth 		Number of results to return
+	* @param  string  	$page 		The page number to return
+	* @param  string  	$sortby 	The field to sort by
+	* @param  string  	$sort 		How to sort
+	* 
+	* @return array		$array 
+	*/ 
+	public function search( $term, $merchant = null, $depth = 100, $page = 1, $sortby, $sort = 'asc' ) {
 			
 			switch ( $sortby ) {
 				case 'title' :
@@ -146,10 +158,16 @@ class WordPress_Affiliate_Shop_Linkshare {
 			return $array;
 		}
 		
+		/**
+		* Returns array of merchants
+		*
+		* @return array	$array
+		*/ 
+		
 		public function merchants() {
 			
 			$url = 'http://findadvertisers.linksynergy.com/merchantsearch';
-			$token = $this->option['linkshare']; //Change this to your token
+			$token = $this->option['linkshare']; 
 			$resturl = $url."?"."token=".$token;
 			$SafeQuery = urlencode($resturl);
 			$xml = simplexml_load_file($SafeQuery);
@@ -172,6 +190,13 @@ class WordPress_Affiliate_Shop_Linkshare {
 			
 		}
 		
+		/**
+		* Retrieves feed from affilaite for a merchant ($merchant) and replaces the entry in the database.
+		*
+		* @param  string 	$merchant 	The ID of the merchant
+		* 
+		* @return array	$out
+		*/ 
 		public function feed_data( $merchant ) {
 			$out = array();
 			$upload_dir = wp_upload_dir(); 
@@ -262,7 +287,14 @@ class WordPress_Affiliate_Shop_Linkshare {
 			}
 			return $out;
 		}
-		
+
+		/**
+		* Calls $this->feed_data
+		*
+		* @param  string	$ID	  The ID of the merchant to be updated.
+		* 
+		* @return array
+		*/ 		
 		public function update_feed( $ID ) {
 			return $this->feed_data( $ID );
 		}
