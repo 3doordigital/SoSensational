@@ -64,6 +64,35 @@
 				}
 				
 			}
+			$query ="
+				SELECT * 
+				FROM 
+				$table_name 
+				WHERE product_title ";
+			$query .= "LIKE '%";
+			if( $api != 'all' ) { $query .= " AND product_aff='$aff' "; }
+			if( $merchant != NULL && $merchant != 0 ) { $query .= " AND product_merch='$merchant' "; }	
+			$terms = split( ' ', $term );
+			foreach( $terms as $term ) {
+				$query .= $term.'%';
+			}
+			if ( $result = $wpdb->get_results( $query2, ARRAY_A	) ) {
+				foreach( $result as $product ) {
+					$products['items'][] = array (
+						'ID'        => $product['product_id'],
+						'aff'     	=> $product['product_aff'],   
+						'title'     => addslashes( trim( ucwords( strtolower( $product['product_title'] ) ) ) ),
+						'brand'     => addslashes( $product['product_brand'] ),
+						'img'       => addslashes( $product['product_image'] ),
+						'desc'      => addslashes( $product['product_desc'] ),
+						'price'     => number_format( $product['product_price'], 2, '.', '' ),
+						'rrp'       => number_format( $product['product_rrp'], 2, '.', ''  ),
+						'link'      => addslashes( $product['product_link'] )	,
+						'exists'	=> 0
+					);	
+				}
+				
+			}
 			return $products;
 		}
 		
