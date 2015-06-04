@@ -378,11 +378,11 @@
 				$data = $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] );
 				if( $data['html']['status'] == 1 ) {
 					
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $data['html']['item']['product_id'], $data['html']['item']['product_aff'], addslashes($data['html']['item']['product_title']), $data['html']['item']['product_brand'], $data['html']['item']['product_image'], addslashes($data['html']['item']['product_desc']), $data['html']['item']['product_price'], $data['html']['item']['product_rrp'], $data['html']['item']['product_link'], "Updated" );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $data['html']['item']['product_id'], $data['html']['item']['product_aff'], $data['html']['item']['product_title'], $data['html']['item']['product_brand'], $data['html']['item']['product_image'], $data['html']['item']['product_price'], $data['html']['item']['product_rrp'], $data['html']['item']['product_link'], "Updated" );
 					
 				} else {
 					
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'], "", "", "", "", "", "Not Found" );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'], "", "", "", "", "Not Found" );
 					
 				}
 				fputcsv($fp, $line);
