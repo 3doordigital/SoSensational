@@ -344,13 +344,13 @@
 			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.csv";
 			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.csv";
 			
-			mail( 'dan@tailored.im', 'Cron Started', "Product Log: $productlog \r\n Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );	
+				
 			$fp = fopen($merchantlog, 'w');
 			$header = array( "Number", "Merchant ID", "Merchant Name", "Affiliate", "Status" );
 			fputcsv($fp, $header);
-			
+			mail( 'dan@tailored.im', 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
 			$i = 1;
-			/*$merchants = $this->cron_get_api_merchants();
+			$merchants = $this->cron_get_api_merchants();
 			$total = $merchants['total'];	
 			foreach( $merchants['items'] as $merchant ) {
 				print_var( $merchant );
@@ -364,14 +364,16 @@
 				fputcsv($fp, $line);
 				$i++;
 			}	
-			fclose( $fp );*/
+			fclose( $fp );
+			mail( 'dan@tailored.im', 'Merchant Cron Ended', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
+			
 			$i = 1;
 			global $wp_aff;
 			
 			$fp = fopen($productlog, 'w');
 			$header = array( "Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Description", "Price", "RRP", "Link", "Status" );
 			fputcsv($fp, $header);
-			
+			mail( 'dan@tailored.im', 'Product Cron Started', "Product Log: $productlog", 'From:server@sosensational.co.uk' );
 			$products = $wp_aff->ajax_update_get_count( true );
 			$total = $products['total'];
 			foreach( $products['ids'] as $product ) {
@@ -390,7 +392,8 @@
 				$i++;
 			}
 			fclose( $fp );
-			mail( 'dan@tailored.im', 'Cron Ended', "Product Log: $productlog \r\n Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );	
+			mail( 'dan@tailored.im', 'Product Cron Ended', "Product Log: $productlog", 'From:server@sosensational.co.uk' );	
+			
 			//die();
 	}
 	
