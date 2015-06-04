@@ -26,56 +26,34 @@
 		}
 		
 		public function db_search( $term = '', $api = 'all', $merchant = NULL,  $depth = 25, $page = 1, $sortby = 'title', $sort = 'asc') {
-			
+			ini_set('memory_limit', '2048M');
+			ini_set('max_execution_time', '5000');
 			$products = array();
 			$products['items'] = array();
-			
+			$search = '';
 			$offset = $depth * ( $page - 1);
 			
+			/*$terms = explode( ' ', $term );
+			foreach( $terms as $term ) {
+				$search .= '+'.$term.' ';	
+			}*/
+			$search = $term;
 			global $wpdb;
 			$table_name = $wpdb->prefix . "feed_data";
 			$query ="
 				SELECT * 
 				FROM 
 				$table_name 
-				WHERE product_title ";
+				WHERE MATCH(product_title) AGAINST('+($search)' IN BOOLEAN MODE)	";
+			//$query .= "LIKE '%$term%' ";
 			if( $api != 'all' ) { $query .= " AND product_aff='$aff' "; }
 			if( $merchant != NULL && $merchant != 0 ) { $query .= " AND product_merch='$merchant' "; }	
-			$query .= "LIKE '%$term%' ";
-			
+			$query .= "ORDER BY MATCH(product_title) AGAINST('+($search)' IN BOOLEAN MODE) DESC";
 			$query2 = $query." LIMIT $offset, $depth";
+			echo $query2;
 			//$out = $query;
 			$totalres = $wpdb->get_results( $query );
 			$products['total']['total'] = $wpdb->num_rows;
-			if ( $result = $wpdb->get_results( $query2, ARRAY_A	) ) {
-				foreach( $result as $product ) {
-					$products['items'][] = array (
-						'ID'        => $product['product_id'],
-						'aff'     	=> $product['product_aff'],   
-						'title'     => addslashes( trim( ucwords( strtolower( $product['product_title'] ) ) ) ),
-						'brand'     => addslashes( $product['product_brand'] ),
-						'img'       => addslashes( $product['product_image'] ),
-						'desc'      => addslashes( $product['product_desc'] ),
-						'price'     => number_format( $product['product_price'], 2, '.', '' ),
-						'rrp'       => number_format( $product['product_rrp'], 2, '.', ''  ),
-						'link'      => addslashes( $product['product_link'] )	,
-						'exists'	=> 0
-					);	
-				}
-				
-			}
-			$query ="
-				SELECT * 
-				FROM 
-				$table_name 
-				WHERE product_title ";
-			$query .= "LIKE '%";
-			if( $api != 'all' ) { $query .= " AND product_aff='$aff' "; }
-			if( $merchant != NULL && $merchant != 0 ) { $query .= " AND product_merch='$merchant' "; }	
-			$terms = split( ' ', $term );
-			foreach( $terms as $term ) {
-				$query .= $term.'%';
-			}
 			if ( $result = $wpdb->get_results( $query2, ARRAY_A	) ) {
 				foreach( $result as $product ) {
 					$products['items'][] = array (

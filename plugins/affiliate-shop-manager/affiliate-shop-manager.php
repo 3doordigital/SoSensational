@@ -224,7 +224,9 @@
 			product_price decimal(12,2) DEFAULT NULL,
 			product_rrp decimal(12,2) DEFAULT NULL,
 			product_link varchar(255) DEFAULT NULL,
-			UNIQUE KEY product_id (product_id)
+			UNIQUE KEY product_id (product_id),
+			PRIMARY KEY (product_id ),
+			FULLTEXT KEY product_title (product_title)
 		) {$charset_collate};";
 				
 		require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-admin/includes/upgrade.php');
