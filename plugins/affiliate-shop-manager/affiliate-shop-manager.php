@@ -284,7 +284,7 @@
             </form>
         </div>
 <?php
-		
+	print_var( $this->get_option() );
 	}
 	
 	public function get_api_merchants() {
