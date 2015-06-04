@@ -1525,7 +1525,8 @@ class WordPress_Affiliate_Shop {
                             
 							$curr_api = ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' );
 							
-							$table_data = $api->search( $_GET['q'], $curr_api, $merch, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
+							$table_data = $api->db_search( $_GET['q'], $curr_api, $merch, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
+							//print_var( $table_data );
                             $ListProductSearch = new ListProductSearch( $table_data );
                             $ListProductSearch->prepare_items();
                         }
@@ -1853,7 +1854,7 @@ class WordPress_Affiliate_Shop {
                     </tr>
                 </table>
                 
-            
+            <?php $api = new wpAffAPI(); $api->db_search('black dress'); ?>
             <?php } elseif( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 1 ) { 
 			?>
             	<table class="form-table" >

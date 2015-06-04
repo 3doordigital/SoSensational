@@ -255,6 +255,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 					$replace = $wpdb->replace( $table_name, array( 
 							'product_id' => $merchant.'_'.$product['ID'], 
 							'product_aff' => $product['aff'],
+							'product_merch' => $merchant,
 							'product_title' => $product['title'],
 							'product_brand' => $product['brand'],
 							'product_image' => $product['img'],

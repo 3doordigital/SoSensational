@@ -227,6 +227,7 @@ class WordPress_Affiliate_Shop_Awin {
 					$replace = $wpdb->replace( $table_name, array( 
 							'product_id' => $data[11].'_'.$data[0], 
 							'product_aff' => 'awin',
+							'product_merch' => $data[11],
 							'product_title' => $data[7],
 							'product_brand' => $data[10],
 							'product_image' => $data[9],
