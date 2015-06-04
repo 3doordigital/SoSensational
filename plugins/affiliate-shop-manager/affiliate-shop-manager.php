@@ -216,6 +216,7 @@
 		  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
 			product_id varchar(255) NOT NULL,
 			product_aff varchar(255) DEFAULT NULL,
+			product_merch varchar(255) DEFAULT NULL,
 			product_title varchar(255) DEFAULT NULL,
 			product_brand varchar(255) DEFAULT NULL,
 			product_image varchar(255) DEFAULT NULL,
