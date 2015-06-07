@@ -1,0 +1,12 @@
+/*------------------------------------------------------------------------------
+                       SoSensational Plugin Admin Styles
+------------------------------------------------------------------------------*/
+/* line 5, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/admin-styles.scss */
+#affiliate-shop-categories > ol > li {
+  float: left;
+  width: 250px; }
+
+/* line 11, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/admin-styles.scss */
+.aff-categories-list {
+  list-style: none; }
+

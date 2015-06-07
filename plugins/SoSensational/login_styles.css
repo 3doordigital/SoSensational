@@ -1,0 +1,46 @@
+/* Change background color and font family */
+body {
+  background: #fff;
+  font-family: Arial,Verdana,sans-serif;
+}
+ 
+/* Change Width and Height of Logo Image + Add Custom Image File */
+.login h1 a {
+  background-image: url(logo.png);
+  width: 232px;
+  height: 197px;
+  background-size: 135px 89px;
+  float: left;
+  margin-top: 100px;
+}
+ 
+/* Add a few changes to the color and style of form itself */
+.login label {
+  color: #454545;
+  display: block;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+ 
+.login form .input {
+  font-weight: normal;
+}
+ 
+.login #backtoblog a, .login #nav a {
+  color: #ff0000;
+}
+ 
+.wp-core-ui .button-primary {
+  background: #C00;
+  border-color: #C00;
+}
+
+wp-core-ui .button-primary:focus {
+  background: #C00!important;
+  border-color: #C00;
+}
+
+
+#login {
+	width: 550px!important;	
+}
