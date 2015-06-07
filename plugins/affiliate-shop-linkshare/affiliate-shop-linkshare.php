@@ -214,7 +214,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 					
 			if (@ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
 				if ( function_exists( 'ini_set' ) ) {
-					@ini_set('memory_limit', '2048M');
+					@ini_set('memory_limit', '4096M');
 				}
 				$out['status'] = 1;
 				ftp_close($conn_id);
