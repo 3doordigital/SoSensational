@@ -340,7 +340,7 @@
 	}
 	
 	public function cron_process() {
-			ini_set('memory_limit', '2048M');
+			ini_set('memory_limit', '4096M');
 			ini_set('max_execution_time', '5000');
 			
 			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.csv";
