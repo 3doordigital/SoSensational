@@ -33,18 +33,18 @@
 			$search = '';
 			$offset = $depth * ( $page - 1);
 			
-			/*$terms = explode( ' ', $term );
+			$terms = explode( ' ', $term );
 			foreach( $terms as $term ) {
 				$search .= '+'.$term.' ';	
-			}*/
-			$search = $term;
+			}
+			//$search = $term;
 			global $wpdb;
 			$table_name = $wpdb->prefix . "feed_data";
 			$query ="
 				SELECT * 
 				FROM 
 				$table_name 
-				WHERE MATCH(product_title) AGAINST('+($search)' IN BOOLEAN MODE)	";
+				WHERE MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE)	";
 			//$query .= "LIKE '%$term%' ";
 			if( $api != 'all' ) { $query .= " AND product_aff='$aff' "; }
 			if( $merchant != NULL && $merchant != 0 ) { $query .= " AND product_merch='$merchant' "; }	
