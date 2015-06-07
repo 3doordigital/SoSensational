@@ -1,1 +1,0 @@
-Contributor: Anders Lind <erding-mallards.de>
