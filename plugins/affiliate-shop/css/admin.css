@@ -150,3 +150,6 @@
 	font-size: 14px;
 	color: #333;
 }
+#advanced_search {
+	display: none;
+}

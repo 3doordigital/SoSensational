@@ -1475,7 +1475,7 @@ class WordPress_Affiliate_Shop {
                             <tr>
                                 <th>Search Query</th>
                                 <td>
-                                    <input class="regular-text" type="text" name="q" value="<?php echo (isset( $_GET['q'] ) ? $_GET['q'] : '' ); ?>" id="wp_aff_search">
+                                    <input class="regular-text" type="text" name="q" value="<?php echo (isset( $_GET['q'] ) ? $_GET['q'] : '' ); ?>" id="wp_aff_search"><!-- <input type="checkbox" id="adv_search_check" name="adv_search_check" value="1"> <label>Advanced Search?</label>-->
                                     <p class="description">Search for products, such as <code>Black Dress</code>.</p>
                                 </td>
                             	<?php
@@ -1507,7 +1507,27 @@ class WordPress_Affiliate_Shop {
                                     </select>
                                 </td>
                             </tr>
-                        </table>
+                            </table>
+                            <div id="advanced_search">    
+                                <h3>Advanced Search </h3>
+                                <table class="form-table">
+                                    <tr>
+                                        <th>Include these terms</th>
+                                        <td>
+                                            <input class="regular-text" type="text" name="q" value="<?php echo (isset( $_GET['q'] ) ? $_GET['q'] : '' ); ?>" id="wp_aff_search">
+                                            <p class="description">These terms will be included in the search.</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ignore these terms</th>
+                                        <td>
+                                            <input class="regular-text" type="text" name="q" value="<?php echo (isset( $_GET['q'] ) ? $_GET['q'] : '' ); ?>" id="wp_aff_search">
+                                            <p class="description">These terms will be ignored in the search.</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                             </div>
+                        
                       
                         <input type="hidden" value="wp_aff_product_search" name="action" />
                         <?php wp_nonce_field( 'wp_aff_product_search', '_wpnonce', FALSE ); ?>

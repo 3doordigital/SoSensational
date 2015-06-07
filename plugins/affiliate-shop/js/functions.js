@@ -18,6 +18,16 @@ jQuery(function($) {
 
 jQuery(document).ready(function($) {
     
+	$('#adv_search_check').click( function(e) {
+		if( $(this).is(':checked') ) {
+			$('#advanced_search').show();
+			$('#wp_aff_search').attr('disabled', true);	
+		} else {
+			$('#advanced_search').hide();
+			$('#wp_aff_search').removeAttr('disabled');
+		}
+	});
+	
 	$('.drop_cats').live( 'click' , function( e ) {
 		e.preventDefault();
 		if( $(this).parent().hasClass('open') ) {
