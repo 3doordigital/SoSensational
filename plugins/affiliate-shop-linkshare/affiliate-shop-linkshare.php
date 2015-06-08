@@ -214,7 +214,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 					
 			if (@ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
 				if ( function_exists( 'ini_set' ) ) {
-					@ini_set('memory_limit', '2048M');
+					@ini_set('memory_limit', '4096M');
 				}
 				$out['status'] = 1;
 				ftp_close($conn_id);
@@ -255,6 +255,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 					$replace = $wpdb->replace( $table_name, array( 
 							'product_id' => $merchant.'_'.$product['ID'], 
 							'product_aff' => $product['aff'],
+							'product_merch' => $merchant,
 							'product_title' => $product['title'],
 							'product_brand' => $product['brand'],
 							'product_image' => $product['img'],
