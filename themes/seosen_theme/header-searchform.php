@@ -7,10 +7,5 @@
                 <button type="submit" class="search-submit btn btn-primary"><i class="fa fa-chevron-right"></i></button>
             </span>
         </div>
-        <div id="searchform-bottom">
-            <div id="related-searches">
-                <p><span id="suggestions-label">related searches: </span><span class="suggestion">red evening dresses</span></p>
-            </div>
-        </div>
     </div>
 </form>
