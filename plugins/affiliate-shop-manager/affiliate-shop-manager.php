@@ -352,6 +352,9 @@
 			fputcsv($fp, $header);
 			mail( 'dan@tailored.im', 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
 			$i = 1;
+			global $wpdb;
+			$table_name = $wpdb->prefix . "feed_data";
+			$wpdb->query("TRUNCATE TABLE $table_name");
 			$merchants = $this->cron_get_api_merchants();
 			$total = $merchants['total'];	
 			foreach( $merchants['items'] as $merchant ) {
