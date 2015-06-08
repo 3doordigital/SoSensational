@@ -1581,6 +1581,7 @@ class WordPress_Affiliate_Shop {
                                             }    
                                         } elseif( ( isset( $ListProductSearch) && 'clear-products'===$ListProductSearch->current_action() ) || ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'clear-products' ) ) {
                                             $_SESSION['products'] = '';
+											$_SESSION['product_data'] = '';
                                         } elseif( isset( $ListProductSearch) && 'remove-product'===$ListProductSearch->current_action() ) {
                                             if(isset($_GET['product'])) {
                                                 unset($_SESSION['products'][$_GET['product'] ]);
