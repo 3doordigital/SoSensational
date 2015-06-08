@@ -358,7 +358,7 @@
 			$merchants = $this->cron_get_api_merchants();
 			$total = $merchants['total'];	
 			foreach( $merchants['items'] as $merchant ) {
-				print_var( $merchant );
+				//print_var( $merchant );
 				$percent = number_format( ( $i / $total ) * 100, 2 );
 				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
 				if( $data['status'] == 1 ) {
