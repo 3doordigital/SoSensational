@@ -44,7 +44,9 @@
                         <?php if (get_query_var('page-no') > 1) : ?>
                         <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . $section . '/' . get_query_var('search-term')) . '/' . $previousPage ?>"><< Previous results</a>   
                         <?php endif; ?>
+                        <?php if (get_query_var('page-no') < $max_num_pages) : ?>
                         <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . $section . '/' . get_query_var('search-term')) . '/' . $nextPage ?>">Next results >></a>                     
+                        <?php endif; ?>
                     </div>                        
                     <?php
                     else:
@@ -85,7 +87,9 @@
                         <?php if (get_query_var('page-no') > 1) : ?>
                         <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'blog/' . get_query_var('search-term')) . '/' . $previousPage ?>"><< Previous results</a>   
                         <?php endif; ?>
+                        <?php if (get_query_var('page-no') < $max_num_pages) : ?>
                         <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'blog/' . get_query_var('search-term')) . '/' . $nextPage ?>">Next results >></a>                     
+                        <?php endif; ?>
                     </div>                          
                     <?php
                     else:
