@@ -291,6 +291,9 @@
 	
 	public function get_api_merchants() {
 		if( count( $this->aff_option['apis'] ) > 0 ) {
+			global $wpdb;
+			$table_name = $wpdb->prefix . "feed_data";
+			$wpdb->query("TRUNCATE TABLE $table_name");
 				foreach( $this->aff_option['apis'] as $affiliate ) {
 					$classname = $affiliate['class'];
 					$class = new $classname();
@@ -329,7 +332,7 @@
 	public function update_merchant_feed( ) {
 		$classname = $this->aff_option['apis'][$_POST['aff']]['class'];
 		$class = new $classname();
-		echo json_encode( $class->update_feed( $_POST['ID'] ) );
+		echo json_encode( $class->update_feed( $_POST['ID'], $_POST['merch'] ) );
 		die();
 	}
 	

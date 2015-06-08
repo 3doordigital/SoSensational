@@ -191,7 +191,7 @@ class WordPress_Affiliate_Shop_Awin {
 			return $destination;
 		}
 		
-		public function update_feed( $ID ) {
+		public function update_feed( $ID, $merch = NULL ) {
 			$out = array();
 			$local_file = $this->get_file( $ID );
 			// get the absolute path to $file

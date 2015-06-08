@@ -197,7 +197,8 @@ class WordPress_Affiliate_Shop_Linkshare {
 		* 
 		* @return array	$out
 		*/ 
-		public function feed_data( $merchant ) {
+		public function feed_data( $merchant, $merch ) {
+			
 			$out = array();
 			$upload_dir = wp_upload_dir(); 
 			$user_dirname = $upload_dir['basedir'].'/feed-data';
@@ -227,8 +228,17 @@ class WordPress_Affiliate_Shop_Linkshare {
 				fclose( $fp1 );
 				gzclose($fp);
 				
-				$xml = simplexml_load_file( $uc_local_file );
-				foreach( $xml->product as $product ) {
+				//$xml = simplexml_load_file( $uc_local_file );
+				$reader = new XMLReader();
+				$reader->open($uc_local_file);
+				
+				while ($reader->read() && $reader->name !== 'product');
+				while ($reader->name === 'product')
+				{
+					$product = simplexml_load_string($reader->readOuterXML());
+					
+				
+					//print_var( $product );
 					if( isset( $product->price->sale ) && $product->price->sale < $product->price->retail ) {
 						$price = number_format( (int) $product->price->sale, 2, '.', '' );	
 						$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
@@ -248,8 +258,9 @@ class WordPress_Affiliate_Shop_Linkshare {
 						'rrp'       => $rrp,
 						'link'      => (string) $product->URL->product
 					);
-					
+					$reader->next('product');
 				}
+				//print_var( $data );
 				global $wpdb;
 				foreach( $data as $product ) {
 					//print_var($product);
@@ -259,7 +270,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 							'product_aff' => $product['aff'],
 							'product_merch' => $merchant,
 							'product_title' => $product['title'],
-							'product_brand' => $product['brand'],
+							'product_brand' => $merch,
 							'product_image' => $product['img'],
 							'product_desc' => $product['desc'],
 							'product_price' => $product['price'],
@@ -296,8 +307,8 @@ class WordPress_Affiliate_Shop_Linkshare {
 		* 
 		* @return array
 		*/ 		
-		public function update_feed( $ID ) {
-			return $this->feed_data( $ID );
+		public function update_feed( $ID, $merch ) {
+			return $this->feed_data( $ID, $merch );
 		}
 }
 register_activation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Linkshare', 'activation' ) );
