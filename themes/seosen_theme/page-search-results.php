@@ -16,7 +16,7 @@ switch($argsArray['search-section']) {
         
         $searchQuery = new WP_Query($args);
         
-        relevanssi_do_query($searchQuery);        
+        relevanssi_do_query($searchQuery);                       
 
         if ($searchQuery->have_posts()) {
             $products = [];
@@ -56,7 +56,7 @@ switch($argsArray['search-section']) {
         
         $searchQuery = new WP_Query($args);
         
-        relevanssi_do_query($searchQuery);
+        relevanssi_do_query($searchQuery);        
         
         if ($searchQuery->have_posts()) {
             $bbProducts = [];
@@ -124,5 +124,7 @@ switch($argsArray['search-section']) {
         
      
 }
+
+$allResultsPage->max_num_pages = $searchQuery->max_num_pages;
 
 echo $allResultsPage;
