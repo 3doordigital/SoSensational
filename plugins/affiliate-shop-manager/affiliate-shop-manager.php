@@ -383,7 +383,7 @@
 			$total = $products['total'];
 			foreach( $products['ids'] as $product ) {
 				$percent = number_format( ( $i / $total ) * 100, 2 );
-				$data = $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'] );
+				$data = $wp_aff->cron_update_product( $product['id'], $product['prod_id'] );
 				if( $data['html']['status'] == 1 ) {
 					
 					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $data['html']['item']['product_id'], $data['html']['item']['product_aff'], $data['html']['item']['product_title'], $data['html']['item']['product_brand'], $data['html']['item']['product_image'], $data['html']['item']['product_price'], $data['html']['item']['product_rrp'], $data['html']['item']['product_link'], "Updated" );

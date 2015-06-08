@@ -165,7 +165,7 @@
 						
 		}
 		
-		public function update_product( $id = null, $prod_id = null, $api = null, $title = null, $merch = null ) {
+		public function update_product( $id = null, $prod_id = null ) {
 			
 			$data = array();
 			$out = '';

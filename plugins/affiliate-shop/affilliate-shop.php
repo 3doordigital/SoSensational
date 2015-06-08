@@ -2752,11 +2752,11 @@ class WordPress_Affiliate_Shop {
 		
 	}
 	
-	function cron_update_product( $id, $prod_id, $aff, $title = null, $merch ) {
+	function cron_update_product( $id, $prod_id ) {
 		$output = array();
 		
 		$api = new wpAffAPI();
-		$data = $api->update_product( $id, $prod_id, $aff, $title, $merch ) ;
+		$data = $api->update_product( $id, $prod_id ) ;
 		if( $data ) {
 			$output['status'] = 1;	
 		} else {

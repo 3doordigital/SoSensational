@@ -26,6 +26,7 @@ jQuery(document).ready(function($) {
 					var percent = loop * per_query;
 					var full_percent = percent.toFixed(1);
 				}
+				console.log( response );
 				$('.update_percent').html( full_percent+'%' );
 				$('#update_progress').css( 'width', percent+'%' );
 				if( response.status == 1 ) {
