@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <div class="container">
-    <div class="row">
+    <div class="row search-row">
         <div class="col-24-sm">
             <div class="search-section products">                
                 <div class="search-section-head">
@@ -38,14 +38,14 @@
                     </div>                        
                     <?php
                     else:
-                        echo '<p>There were no resutls found</p>';
+                        echo '<p class="no-results">There were no resutls found</p>';
                     endif;
                     ?>            
                 </div>                       
             </div>               
         </div>
     </div>    
-    <div class="row">
+    <div class="row search-row">
         <div class="col-24-sm">    
             <div class="search-section products">
                 <div class="search-section-head">
@@ -82,16 +82,16 @@
                     </div>                        
                     <?php
                     else:
-                        echo '<p>There were no resutls found</p>';
+                        echo '<p class="no-results">There were no resutls found</p>';
                     endif;
                     ?>                       
                 </div>
             </div>   
         </div>
     </div>
-    <div class="row">
+    <div class="row search-row last">
         <div class="col-24-sm">    
-            <div class="search-section blog-posts last-section">
+            <div class="search-section blog-posts">
                 <div class="search-section-head">
                     <h1>Results from our Blog:</h1>
                 </div>
@@ -115,7 +115,7 @@
                     </div>                        
                     <?php
                     else:
-                        echo '<p>There were no resutls found</p>';
+                        echo '<p class="no-results">There were no resutls found</p>';
                     endif;
                     ?>                      
                 </div>

@@ -1,6 +1,7 @@
 <?php
 
     $searchPage = new Template('searchpage.php');
+    $noResultsPage = new Template('no-results-page.php');
     
     $shopArgs = array(
         's' =>   get_query_var('s'),
@@ -39,7 +40,6 @@
         's' =>   get_query_var('s'),
         'post_type' =>  array('products'),
         'posts_per_page'    => 3,
-        'post_status'   =>  'pending',
     );
     $bbQuery = new WP_Query($bbArgs);  
     
@@ -101,6 +101,11 @@
     $searchPage->products = $products;
     $searchPage->bbProducts = $bbProducts;
     $searchPage->blogPosts = $blogPosts;
-
     
-    echo $searchPage;
+
+    if ( ! $products && ! $bbProducts && ! $blogPosts ) {
+        echo $noResultsPage;
+    } else {
+        echo $searchPage;        
+    }
+    

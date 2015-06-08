@@ -214,12 +214,20 @@ jQuery(document).ready(function($) {
         });
     }
     
+    //Toggle the searchform on the search icon click event
 
     jQuery('#mega-menu-primary > li:last-child > a').click(function(e) {
         e.preventDefault();
         jQuery('#sosen-searchform').toggle();
     }); 
     
+    if (jQuery('.search-row').length) {
+        $(jQuery('.search-row')).each(function(index) {
+            if ($(this).find('.no-results').length) {
+                $(this).insertAfter(jQuery('.search-row.last'));
+            }
+        });
+    }
     
 });
 

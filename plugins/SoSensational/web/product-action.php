@@ -91,7 +91,7 @@ if ($countProducts[0]->num < $productsLimit + 1) {
     $post = array(
         'post_title' => $_POST['post_title'],
         'post_type' => 'products',
-        'post_status' => 'pending',
+        'post_status' => 'publish',
         'post_parent' => $advertiser[0]->ID,
         'post_author' => $user->ID,
     );
