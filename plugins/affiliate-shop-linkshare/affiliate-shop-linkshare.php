@@ -247,7 +247,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 						$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
 					}
 					
-					$data[] = array(
+					$data = array(
 						'ID'        => (string) $product['product_id'],
 						'aff'     	=> 'linkshare',    
 						'title'     => trim( ucwords( strtolower( (string) $product['name'] ) ) ),
@@ -258,24 +258,20 @@ class WordPress_Affiliate_Shop_Linkshare {
 						'rrp'       => $rrp,
 						'link'      => (string) $product->URL->product
 					);
-					$reader->next('product');
-				}
-				//print_var( $data );
-				global $wpdb;
-				foreach( $data as $product ) {
+					global $wpdb;
 					//print_var($product);
 					$table_name = $wpdb->prefix . "feed_data";
 					$replace = $wpdb->insert( $table_name, array( 
-							'product_id' => $merchant.'_'.$product['ID'], 
-							'product_aff' => $product['aff'],
+							'product_id' => $merchant.'_'.$data['ID'], 
+							'product_aff' => $data['aff'],
 							'product_merch' => $merchant,
-							'product_title' => $product['title'],
+							'product_title' => $data['title'],
 							'product_brand' => $merch,
-							'product_image' => $product['img'],
-							'product_desc' => $product['desc'],
-							'product_price' => $product['price'],
-							'product_rrp' => $product['rrp'],
-							'product_link' => $product['link'], 
+							'product_image' => $data['img'],
+							'product_desc' => $data['desc'],
+							'product_price' => $data['price'],
+							'product_rrp' => $data['rrp'],
+							'product_link' => $data['link'], 
 						)
 					);
 					//echo $replace;
@@ -285,13 +281,17 @@ class WordPress_Affiliate_Shop_Linkshare {
 							$out['message'][] = $wpdb->print_error();
 							break;
 						case 1 :
-							$out['message'][] = 'Inserted '.$product['ID'];
+							$out['message'][] = 'Inserted '.$data['ID'];
 							break;
 						default :
-							$out['message'][] = 'Replaced '.$product['ID'];
+							$out['message'][] = 'Replaced '.$data['ID'];
 							break;	
 					}
+					unset( $data );
+					$reader->next('product');
 				}
+				//print_var( $data );
+				
 				
 			} else {
 				$out['status'] = 0;
