@@ -205,6 +205,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 				wp_mkdir_p( $user_dirname );
 	
 			$local_file = $user_dirname.'/local.xml.gz';
+			$uc_local_file = $user_dirname.'/local1.xml';
 			$server_file = $merchant.'_2476350_mp.xml.gz';
 			$contents = '';
 			$data = array();
@@ -214,18 +215,19 @@ class WordPress_Affiliate_Shop_Linkshare {
 					
 			if (@ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
 				if ( function_exists( 'ini_set' ) ) {
-					@ini_set('memory_limit', '4096M');
+					@ini_set('memory_limit', '2048M');
 				}
 				$out['status'] = 1;
 				ftp_close($conn_id);
-				
+				$fp1 = fopen($uc_local_file, "w");
 				$fp = gzopen( $local_file, "r");
-				while ($line = gzgets($fp,1024)) {
-					$contents .= $line;
+				while ($line = gzread($fp,1024)) {
+					fwrite($fp1, $line, strlen($line));
 				}
+				fclose( $fp1 );
 				gzclose($fp);
 				
-				$xml = simplexml_load_string( $contents );
+				$xml = simplexml_load_file( $uc_local_file );
 				foreach( $xml->product as $product ) {
 					if( isset( $product->price->sale ) && $product->price->sale < $product->price->retail ) {
 						$price = number_format( (int) $product->price->sale, 2, '.', '' );	
@@ -246,13 +248,13 @@ class WordPress_Affiliate_Shop_Linkshare {
 						'rrp'       => $rrp,
 						'link'      => (string) $product->URL->product
 					);
+					
 				}
-				//print_var( $data );
 				global $wpdb;
 				foreach( $data as $product ) {
 					//print_var($product);
 					$table_name = $wpdb->prefix . "feed_data";
-					$replace = $wpdb->replace( $table_name, array( 
+					$replace = $wpdb->insert( $table_name, array( 
 							'product_id' => $merchant.'_'.$product['ID'], 
 							'product_aff' => $product['aff'],
 							'product_merch' => $merchant,
@@ -265,13 +267,11 @@ class WordPress_Affiliate_Shop_Linkshare {
 							'product_link' => $product['link'], 
 						)
 					);
-					
+					//echo $replace;
 					switch ($replace) {
 						case false :
-							if( is_wp_error( $replace ) ) {
-								$out['status'] = 0;
-								$out['message'][] = $replace->get_error_message();
-							}
+							$out['status'] = 0;
+							$out['message'][] = $wpdb->print_error();
 							break;
 						case 1 :
 							$out['message'][] = 'Inserted '.$product['ID'];
