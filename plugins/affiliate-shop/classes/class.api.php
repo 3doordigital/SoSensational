@@ -56,7 +56,7 @@
 			$products['total']['total'] = $wpdb->num_rows;
 			if ( $result = $wpdb->get_results( $query2, ARRAY_A	) ) {
 				foreach( $result as $product ) {
-					$products['items'][] = array (
+					$products['items']['ID-'.$product['product_id']] = array (
 						'ID'        => $product['product_id'],
 						'aff'     	=> $product['product_aff'],   
 						'title'     => addslashes( trim( ucwords( strtolower( $product['product_title'] ) ) ) ),
