@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-md-24 notfound">
                     <h1>Oops!</h1>
-                    <h2>Looks like you can't find what you're looking for?</h2>
+                    <h2>It looks like we don't have any results for that search.</h2>
                     <div class="center notfound_middle">
-                        <h3>404</h3>
-                        <h4>Page Not Found</h4>
+                        <h3>NO</h3>
+                        <h4>RESULTS FOUND</h4>
                     </div>
                     <div class="notfound_search">
                         <h5>Try searching for something else:</h5>
