@@ -379,7 +379,7 @@
 			global $wp_aff;
 			
 			$fp = fopen($productlog, 'w');
-			$header = array( "Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Description", "Price", "RRP", "Link", "Status" );
+			$header = array( "Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Price", "RRP", "Link", "Status" );
 			fputcsv($fp, $header);
 			mail( 'dan@tailored.im', 'Product Cron Started', "Product Log: $productlog", 'From:server@sosensational.co.uk' );
 			$products = $wp_aff->ajax_update_get_count( true );
