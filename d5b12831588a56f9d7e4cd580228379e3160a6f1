@@ -1,0 +1,19 @@
+commit a4d99be588a0b69993208f9c681e576b6d40cdcd
+Author: @dantaylorseo <dan@tailored.im>
+Date:   Thu May 14 11:29:16 2015 +0100
+
+    logo update
+
+diff --git a/plugins/SoSensational/SoSensational.php b/plugins/SoSensational/SoSensational.php
+index dad7a4a..c3b074f 100644
+--- a/plugins/SoSensational/SoSensational.php
++++ b/plugins/SoSensational/SoSensational.php
+@@ -303,7 +303,7 @@ add_action('user_register', 'create_firstpost', 10, 1);
+ function my_loginlogo() {
+     echo '<style type="text/css">
+     h1 a {
+-      background-image: url(' . get_template_directory_uri() . '/images/SoSensational-Logo.gif) !important;
++      background-image: url(' . get_template_directory_uri() . '/images/logo-new.png) !important;
+     }
+   </style>';
+ }
