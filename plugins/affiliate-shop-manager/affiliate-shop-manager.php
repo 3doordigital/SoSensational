@@ -286,8 +286,8 @@
             </form>
         </div>
 <?php
-	$test = new WordPress_Affiliate_Shop_TradeDoubler;
-	print_var( $test->merchants() );
+	
+	print_var( $this->cron_process() );
 	//print_var( $test->update_feed( 18871, '' ) );
 	//print_var( $this->get_option() );
 	}
