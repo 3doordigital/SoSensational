@@ -200,7 +200,7 @@
 				update_post_meta( $id, 'wp_aff_product_price', $item['product_price'] );
 				update_post_meta( $id, 'wp_aff_product_merch', $item['product_merch'] );
 				
-				$data['out'] = ' updated by ID '.$id;
+				$data['out'] = 'Updated by ID '.$id;
 			} else {
 				$query ="
 					SELECT * 
@@ -219,11 +219,14 @@
 						update_post_meta( $id, 'wp_aff_product_price', $data['item']['product_price'] );
 						update_post_meta( $id, 'wp_aff_product_merch', $data['item']['product_merch'] );
 						$data['status'] = 2;
-						$data['out'] = ' updated by URL '.$id;	
+						$data['out'] = 'Updated by URL '.$id;	
+					} else {
+						$data['out'] = $query;
+						return $data;	
 					}
 				} else {
 					update_post_meta( $id, 'wp_aff_product_notfound', 1 );
-					$data['out'] = 'not found '.$id;
+					$data['out'] = 'Not Found '.$id;
 					//wp_trash_post( $id  );
 					$data['status'] = 0;
 				}

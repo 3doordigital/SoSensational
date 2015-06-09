@@ -206,17 +206,16 @@ jQuery(document).ready(function($) {
 	
 	function update_product( thisID, nextID, total ) {
 		
-		console.log( thisID+' :: '+nextID+' :: '+total+' :: '+items[thisID].id+' :: '+items[thisID].prod_id );
-		
+		console.log( thisID+' :: '+nextID+' :: '+total+' :: '+items[thisID].id+' :: '+items[thisID].prod_id+' :: '+items[thisID].url );
 		if( thisID <= total ) {
 			var ajax_update_product = {
 				'action'	: 'ajax_update_product',
 				'id'		: items[thisID].id,
 				'prod_id'	: items[thisID].prod_id,
+				'url'		: items[thisID].url
 			};
 			
 			$.post(ajaxurl, ajax_update_product, function(response) {
-				//console.log( response );
 				var nextProd = nextID + 1;
 				if( thisID == total ) {
 					var percent = 100;
@@ -261,11 +260,9 @@ jQuery(document).ready(function($) {
 		var ids;
 		var counter = 0;
 		$.post(ajaxurl, ajax_update_get_count_data, function(response) {
-			console.log( response );
 			if( response.status == 1 ) {
 				total = response.total;
 				ids = response.ids;
-				console.log( 'Total posts: '+response.total );
 				$('.total_update').html(' of '+response.total+' products.');
 				per_query = 100 / total;
 				var last = total - 1;
@@ -274,8 +271,9 @@ jQuery(document).ready(function($) {
 				console.log( last );
 				$.each( ids, function ( i, item ) {
 					items[counter] = {
-						id : item.id,
-						prod_id: item.prod_id,
+						'id' : item.id,
+						'prod_id': item.prod_id,
+						'url': item.url
 					};
 					counter++;
 				});
