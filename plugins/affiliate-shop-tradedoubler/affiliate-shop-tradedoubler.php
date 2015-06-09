@@ -127,7 +127,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 		fclose($fp);
 
 		if( $out['status'] == 1 ) {
-			 $file = file_get_contents( $destination ) ) 
+			$file = file_get_contents( $destination );
 		
 			$req = json_decode( $file );
 			
