@@ -160,7 +160,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 			//echo $replace;
 			switch ($replace) {
 				case false :
-					$out['message'][] = $replace->print_error();
+					$out['message'][] = $wpdb->print_error();
 					$out['error'] ++;
 					break;
 				case 1 :
