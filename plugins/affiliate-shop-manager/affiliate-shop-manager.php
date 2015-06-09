@@ -286,10 +286,14 @@
             </form>
         </div>
 <?php
-	
-	print_var( $test->merchants() );
-	//print_var( $test->update_feed( 18871, '' ) );
+	$test = new WordPress_Affiliate_Shop_TradeDoubler;
+	$merchs = $test->merchants();
+	foreach( $merchs as $merch ) {
+		$test->update_feed( $merch['ID'], $merch['name'] );
+	}
+	//print_var( $test->update_feed( 11456, '' ) );
 	//print_var( $this->get_option() );
+	//$this->cron_process();
 	}
 	
 	public function get_api_merchants() {
@@ -349,8 +353,8 @@
 			ini_set('memory_limit', '4096M');
 			ini_set('max_execution_time', '5000');
 			
-			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.csv";
-			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.csv";
+			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.txt";
+			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
 			
 				
 			$fp = fopen($merchantlog, 'w');

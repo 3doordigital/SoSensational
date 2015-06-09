@@ -149,7 +149,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 					'product_aff' => $data['aff'],
 					'product_merch' => $merchant,
 					'product_title' => $data['title'],
-					'product_brand' => $data['brand'],
+					'product_brand' => $merch,
 					'product_image' => $data['img'],
 					'product_desc' => $data['desc'],
 					'product_price' => $data['price'],
@@ -162,19 +162,19 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 			switch ($replace) {
 				case false :
 					$out['message'][] = $wpdb->last_query;
-					echo $wpdb->last_query;
 					$out['error'] ++;
 					break;
 				case 1 :
-					$out['message'][] = 'Inserted '.$data['ID'];
+					$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
 					$out['success'] ++;
 					break;
 				default :
-					$out['message'][] = 'Replaced '.$data['ID'];
+					$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
 					break;	
 			}
 			unset( $data );
 		}
+		print_var ( $out );
 		return $out;
 	}
 	
