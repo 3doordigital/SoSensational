@@ -24,16 +24,16 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul>
-                                <li><a href="#">Browse Our Shop</a></li>
-                                <li><a href="#">Brose Our Collections</a></li>
-                                <li><a href="#">Browse Our Competitions</a></li>
+                                <li><a href="<?php echo get_permalink(get_page_by_title('Shop'))  ?>">Browse Our Shop</a></li>
+                                <li><a href="<?php echo get_permalink(get_page_by_title('Shop')) . 'collections'  ?>">Brose Our Collections</a></li>
+                                <li><a href="<?php echo home_url() . '/competitions'  ?>"">Browse Our Competitions</a></li>
                             </ul>
                         </div>
                         <div class="col-md-12">
                             <ul>
-                                <li><a href="#">Browse Our Brands &amp; Boutiques</a></li>
-                                <li><a href="#">Browse our Hot Deals</a></li>
-                                <li><a href="#">Browse Our Blog</a></li>
+                                <li><a href="<?php echo get_permalink(get_page_by_title('Brands & Boutiques'))  ?>">Browse Our Brands &amp; Boutiques</a></li>
+                                <li><a href="<?php echo home_url() . '/hot-deals'  ?>">Browse our Hot Deals</a></li>
+                                <li><a href="<?php echo get_permalink(get_page_by_title('Style Advice Blog'))  ?>">Browse Our Blog</a></li>
                             </ul>
                         </div>
                     </div>
