@@ -352,7 +352,7 @@
 				
 			$fp = fopen($merchantlog, 'w');
 			$header = array( "Number", "Merchant ID", "Merchant Name", "Affiliate", "Status" );
-			fputcsv($fp, $header);
+			fputcsv($fp, $header, '|');
 			mail( 'dan@tailored.im', 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
 			$i = 1;
 			global $wpdb;
@@ -369,7 +369,7 @@
 				} else {
 					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'], $merchant['name'], $merchant['aff'], "Failed" );
 				}
-				fputcsv($fp, $line);
+				fputcsv($fp, $line, '|');
 				$i++;
 			}	
 			fclose( $fp );
@@ -380,23 +380,27 @@
 			
 			$fp = fopen($productlog, 'w');
 			$header = array( "Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Price", "RRP", "Link", "Status" );
-			fputcsv($fp, $header);
+			fputcsv($fp, $header, '|');
 			mail( 'dan@tailored.im', 'Product Cron Started', "Product Log: $productlog", 'From:server@sosensational.co.uk' );
 			$products = $wp_aff->ajax_update_get_count( true );
 			$total = $products['total'];
 			foreach( $products['ids'] as $product ) {
 				$percent = number_format( ( $i / $total ) * 100, 2 );
-				$data = $wp_aff->cron_update_product( $product['id'], $product['prod_id'] );
+				$data = $wp_aff->cron_update_product( $product['id'], $product['prod_id'], $product['link'] );
 				if( $data['html']['status'] == 1 ) {
 					
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $data['html']['item']['product_id'], $data['html']['item']['product_aff'], $data['html']['item']['product_title'], $data['html']['item']['product_brand'], $data['html']['item']['product_image'], $data['html']['item']['product_price'], $data['html']['item']['product_rrp'], $data['html']['item']['product_link'], "Updated" );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $data['html']['item']['product_id'], $data['html']['item']['product_aff'], $data['html']['item']['product_title'], $data['html']['item']['product_brand'], $data['html']['item']['product_image'], $data['html']['item']['product_price'], $data['html']['item']['product_rrp'], $data['html']['item']['product_link'], "Updated by ID" );
+					
+				} elseif( $data['html']['status'] == 2 ) {
+					
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $data['html']['item']['product_id'], $data['html']['item']['product_aff'], $data['html']['item']['product_title'], $data['html']['item']['product_brand'], $data['html']['item']['product_image'], $data['html']['item']['product_price'], $data['html']['item']['product_rrp'], $data['html']['item']['product_link'], "Updated by URL" );
 					
 				} else {
 					
 					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'], "", "", "", "", "Not Found" );
 					
 				}
-				fputcsv($fp, $line);
+				fputcsv($fp, $line, '|');
 				$i++;
 			}
 			fclose( $fp );

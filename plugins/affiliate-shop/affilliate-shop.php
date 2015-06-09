@@ -2708,6 +2708,12 @@ class WordPress_Affiliate_Shop {
 					$aff = '';
 				}
 				
+				if( isset( $meta['wp_aff_product_link'] ) ) {
+					$link = $meta['wp_aff_product_link'][0];
+				} else {
+					$link = '';
+				}
+				
 				$brand = wp_get_post_terms( $post->ID, 'wp_aff_brands' );
 				
 				$output['ids'][] = array(
@@ -2715,7 +2721,8 @@ class WordPress_Affiliate_Shop {
 					'title' => $post->post_title,
 					'prod_id' => $prod_id,
 					'merch' => '',
-					'aff'	=> $aff
+					'aff'	=> $aff,
+					'link' => $link
 				);
 				
 			}
@@ -2752,11 +2759,11 @@ class WordPress_Affiliate_Shop {
 		
 	}
 	
-	function cron_update_product( $id, $prod_id ) {
+	function cron_update_product( $id, $prod_id, $link = NULL ) {
 		$output = array();
 		
 		$api = new wpAffAPI();
-		$data = $api->update_product( $id, $prod_id ) ;
+		$data = $api->update_product( $id, $prod_id, $link ) ;
 		if( $data ) {
 			$output['status'] = 1;	
 		} else {
