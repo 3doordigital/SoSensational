@@ -2426,7 +2426,7 @@ class WordPress_Affiliate_Shop {
                         <tr class="form-field">
                             <th>SEO Canonical</th>
                             <td>
-                                <input class="regular-text" type="text" name="wp_seo_canonical" placeholder="SEO Title" value="<?php echo htmlspecialchars_decode( $seo_canonical ); ?>">
+                                <input class="regular-text" type="text" name="wp_seo_canonical" placeholder="http://" value="<?php echo htmlspecialchars_decode( $seo_canonical ); ?>">
                                 <p class="description">Leave blank for default</p>
                             </td>
                         </tr>
