@@ -202,6 +202,22 @@ class WordPress_Affiliate_Shop {
 	
 	function canonical( $data ) {
         
+		global $wp_query;
+		$shopcat = 0;
+		if( get_query_var( 'shop-cat' ) != '' ) {
+			$term = get_query_var( 'shop-cat' );
+			$tax = 'wp_aff_categories';
+			$shopcat = 1;
+		}
+		if( $shopcat == 1 && is_page() && $wp_query->query['page_id'] == 37 ) {
+			$cat = get_term_by( 'slug', $term , $tax );
+			$seo_canonical = get_metadata('wp_aff_categories', $cat->term_id, 'aff_seo_canonical', true);
+			if( $seo_canonical != '' ) {
+				$data = $seo_canonical;
+				return $data;
+			}
+		} 
+		
         $currentUrl = get_bloginfo('url') . $_SERVER['REQUEST_URI'];
         
 		if( preg_match( '#/shop/#', $_SERVER['REQUEST_URI'] ) ) {
