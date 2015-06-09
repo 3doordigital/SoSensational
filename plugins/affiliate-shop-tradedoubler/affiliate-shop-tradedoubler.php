@@ -142,7 +142,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 			//print_var( $data );
 			global $wpdb;
 			//print_var($product);
-			$wpdb->show_errors();
+			
 			$table_name = $wpdb->prefix . "feed_data";
 			$replace = $wpdb->insert( $table_name, array( 
 					'product_id' => $merchant.'_'.$data['ID'], 
@@ -162,7 +162,6 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 			switch ($replace) {
 				case false :
 					$out['message'][] = $wpdb->last_query;
-					echo $wpdb->print_error();
 					echo $wpdb->last_query;
 					$out['error'] ++;
 					break;

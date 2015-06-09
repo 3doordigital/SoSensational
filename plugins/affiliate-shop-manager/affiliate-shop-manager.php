@@ -287,7 +287,7 @@
         </div>
 <?php
 	
-	print_var( $this->cron_process() );
+	print_var( $test->merchants() );
 	//print_var( $test->update_feed( 18871, '' ) );
 	//print_var( $this->get_option() );
 	}
@@ -368,7 +368,7 @@
 				$percent = number_format( ( $i / $total ) * 100, 2 );
 				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'], $merchant['name'] );	
 				if( $data['status'] == 1 ) {
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], 'Updated - '.$data['success'].' Inserted, '.$data['error'].' Failed.', '' );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], 'Updated - '.$data['success'].' Inserted, '.$data['error'].' Failed.', print_r( $data['message'], true ) );
 				} else {
 					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'], $merchant['name'], $merchant['aff'], "Failed" );
 				}
