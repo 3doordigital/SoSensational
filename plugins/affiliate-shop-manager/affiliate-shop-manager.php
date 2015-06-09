@@ -354,7 +354,7 @@
 			
 				
 			$fp = fopen($merchantlog, 'w');
-			$header = array( "Number", "Merchant ID", "Merchant Name", "Affiliate", "Status" );
+			$header = array( "Number", "Merchant ID", "Merchant Name", "Affiliate", "Status", "Message" );
 			fputcsv($fp, $header, '|');
 			mail( 'dan@tailored.im', 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
 			$i = 1;
@@ -368,7 +368,7 @@
 				$percent = number_format( ( $i / $total ) * 100, 2 );
 				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'], $merchant['name'] );	
 				if( $data['status'] == 1 ) {
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], '"Updated '.$data['success'].' Inserted, '.$data['error'].' Failed."' );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], 'Updated - '.$data['success'].' Inserted, '.$data['error'].' Failed.', print_r( $data['message'], true ) );
 				} else {
 					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'], $merchant['name'], $merchant['aff'], "Failed" );
 				}
