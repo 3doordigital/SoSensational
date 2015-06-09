@@ -96,7 +96,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 		
 	}
 	
-	public function update_feed( $merchant, $merch = null ) {
+	public function update_feed( $merchant, $merch ) {
 		
 		$data = array();
 		$out = array();
@@ -118,63 +118,70 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 		$fp = fopen($destination, "w+");
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_FILE, $fp); // write curl response to file
-		curl_exec($ch); 
+		curl_exec($ch);
+		if(!curl_errno($ch))
+		{
+			$out['status'] = 1;	
+		}
 		curl_close($ch);
 		fclose($fp);
 
-		if( $file = file_get_contents( $destination ) ) $out['status'] = 1;
+		if( $out['status'] == 1 ) {
+			 $file = file_get_contents( $destination ) ) 
 		
-		$req = json_decode( $file );
-		
-		foreach( $req->products as $product ) {
-			//print_var( $product );	
-			$data = array(
-				'ID'        => $product->offers[0]->id,
-				'aff'     	=> 'tradedoubler',    
-				'title'     => trim( ucwords( strtolower( $product->name ) ) ),
-				'brand'     => trim( ucwords( strtolower( $product->offers[0]->programName ) ) ),
-				'img'       => $product->productImage->url,
-				'desc'      => $product->description,
-				'price'     => number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
-				'rrp'       => number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
-				'link'      => $product->offers[0]->productUrl
-			);
-			//print_var( $data );
-			global $wpdb;
-			//print_var($product);
+			$req = json_decode( $file );
 			
-			$table_name = $wpdb->prefix . "feed_data";
-			$replace = $wpdb->insert( $table_name, array( 
-					'product_id' => $merchant.'_'.$data['ID'], 
-					'product_aff' => $data['aff'],
-					'product_merch' => $merchant,
-					'product_title' => $data['title'],
-					'product_brand' => $merch,
-					'product_image' => $data['img'],
-					'product_desc' => $data['desc'],
-					'product_price' => $data['price'],
-					'product_rrp' => $data['rrp'],
-					'product_link' => $data['link'], 
-				)
-			);
-			$error = $wpdb->print_error();
-			//echo $replace;
-			switch ($replace) {
-				case false :
-					$out['message'][] = $wpdb->last_query;
-					$out['error'] ++;
-					break;
-				case 1 :
-					$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
-					$out['success'] ++;
-					break;
-				default :
-					$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
-					break;	
+			foreach( $req->products as $product ) {
+				//print_var( $product );	
+				$data = array(
+					'ID'        => $product->offers[0]->id,
+					'aff'     	=> 'tradedoubler',    
+					'title'     => trim( ucwords( strtolower( $product->name ) ) ),
+					'brand'     => trim( ucwords( strtolower( $product->offers[0]->programName ) ) ),
+					'img'       => $product->productImage->url,
+					'desc'      => $product->description,
+					'price'     => number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
+					'rrp'       => number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
+					'link'      => $product->offers[0]->productUrl
+				);
+				//print_var( $data );
+				global $wpdb;
+				//print_var($product);
+				
+				$table_name = $wpdb->prefix . "feed_data";
+				$replace = $wpdb->insert( $table_name, array( 
+						'product_id' => $merchant.'_'.$data['ID'], 
+						'product_aff' => $data['aff'],
+						'product_merch' => $merchant,
+						'product_title' => $data['title'],
+						'product_brand' => $merch,
+						'product_image' => $data['img'],
+						'product_desc' => $data['desc'],
+						'product_price' => $data['price'],
+						'product_rrp' => $data['rrp'],
+						'product_link' => $data['link'], 
+					)
+				);
+				$error = $wpdb->print_error();
+				//echo $replace;
+				switch ($replace) {
+					case false :
+						die( $wpdb->last_query );
+						$out['message'][] = $wpdb->last_query;
+						$out['error'] ++;
+						break;
+					case 1 :
+						$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
+						$out['success'] ++;
+						break;
+					default :
+						$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
+						break;	
+				}
+				unset( $data );
 			}
-			unset( $data );
 		}
-		print_var ( $out );
+		
 		return $out;
 	}
 	
