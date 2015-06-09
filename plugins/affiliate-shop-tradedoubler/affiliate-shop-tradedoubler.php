@@ -100,8 +100,8 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 		
 		$data = array();
 		$out = array();
-		$data['success'] = 0;
-		$data['error'] = 0;
+		$out['success'] = 0;
+		$out['error'] = 0;
 		$out['status'] = 0;
 		
 		$url = 'http://api.tradedoubler.com/1.0/productsUnlimited;fid='.$merchant.'?token='.$this->token;
@@ -160,11 +160,11 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 			switch ($replace) {
 				case false :
 					$out['message'][] = $wpdb->print_error();
-					$data['error'] ++;
+					$out['error'] ++;
 					break;
 				case 1 :
 					$out['message'][] = 'Inserted '.$data['ID'];
-					$data['success'] ++;
+					$out['success'] ++;
 					break;
 				default :
 					$out['message'][] = 'Replaced '.$data['ID'];
