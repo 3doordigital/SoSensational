@@ -1334,6 +1334,7 @@ class WordPress_Affiliate_Shop {
 			
 			$term['seo_title']   = sanitize_text_field( $_POST['wp_seo_title'] );
 			$term['seo_desc']   = sanitize_text_field( $_POST['wp_seo_desc'] );
+			$term['seo_canonical']   = sanitize_text_field( $_POST['wp_seo_canonical'] );
 			
             $term['alias'] = intval( $_POST['wp_term_alias'] );
             $term['parent'] = intval( $_POST['wp_term_parent'] );
@@ -2336,6 +2337,7 @@ class WordPress_Affiliate_Shop {
 					$term = get_term( $_GET['wp_aff_categories'], 'wp_aff_categories', 'OBJECT' ); 
 					$seo_title = get_metadata('wp_aff_categories', $term->term_id, 'aff_seo_title', true);
 					$seo_desc = get_metadata('wp_aff_categories', $term->term_id, 'aff_seo_desc', true);
+					$seo_canonical = get_metadata('wp_aff_categories', $term->term_id, 'aff_seo_canonical', true);
 				?>
                 
                 <h3>Edit Shop Category</h3>
@@ -2419,6 +2421,13 @@ class WordPress_Affiliate_Shop {
                             <th>SEO Description</th>
                             <td>
                               <textarea rows="3" name="wp_seo_desc" id="wp_seo_desc"><?php echo htmlspecialchars_decode( $seo_desc ); ?></textarea>
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>SEO Canonical</th>
+                            <td>
+                                <input class="regular-text" type="text" name="wp_seo_canonical" placeholder="SEO Title" value="<?php echo htmlspecialchars_decode( $seo_canonical ); ?>">
+                                <p class="description">Leave blank for default</p>
                             </td>
                         </tr>
                     </table>
