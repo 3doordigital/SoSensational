@@ -5,6 +5,8 @@ if(!class_exists('WP_List_Table')){
 }
 
 class WP_Terms_List_Tables extends WP_List_Table {
+    
+    private $level;
 
 	public $callback_args;
 
@@ -268,7 +270,8 @@ class WP_Terms_List_Tables extends WP_List_Table {
 
 		static $row_class = '';
 		$row_class = ( $row_class == '' ? ' class="alternate"' : '' );
-
+        
+        
 		$this->level = $level;
 		echo '<tr id="tag-' . $tag->term_id . '"' . $row_class . '>';
 		$this->single_row_columns( $tag );
