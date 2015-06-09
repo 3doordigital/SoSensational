@@ -122,7 +122,8 @@ class WordPress_Affiliate_Shop_Affilinet {
 	* @return array	$out
 	*/ 
 	public function update_feed( $merchant, $merch ) {
-		
+		$out['success'] = 0;
+		$out['error'] = 0;
 		$out = array();
 		$upload_dir = wp_upload_dir(); 
 		$user_dirname = $upload_dir['basedir'].'/feed-data';
@@ -201,14 +202,16 @@ class WordPress_Affiliate_Shop_Affilinet {
 				//echo $replace;
 				switch ($replace) {
 					case false :
-						$out['status'] = 0;
-						$out['message'][] = $wpdb->print_error();
+						//die( $wpdb->last_query );
+						$out['message'][] = $wpdb->last_query;
+						$out['error'] ++;
 						break;
 					case 1 :
-						$out['message'][] = 'Inserted '.$data['ID'];
+						$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
+						$out['success'] ++;
 						break;
 					default :
-						$out['message'][] = 'Replaced '.$data['ID'];
+						$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
 						break;	
 				}
 				unset( $data );

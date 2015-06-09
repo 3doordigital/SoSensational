@@ -286,11 +286,11 @@
             </form>
         </div>
 <?php
-	/*$test = new WordPress_Affiliate_Shop_TradeDoubler;
+	$test = new WordPress_Affiliate_Shop_TradeDoubler;
 	$merchs = $test->merchants();
 	foreach( $merchs as $merch ) {
 		$test->update_feed( $merch['ID'], $merch['name'] );
-	}*/
+	}
 	//print_var( $test->update_feed( 11456, '' ) );
 	//print_var( $this->get_option() );
 	//$this->cron_process();

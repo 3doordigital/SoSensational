@@ -192,6 +192,8 @@ class WordPress_Affiliate_Shop_Awin {
 		}
 		
 		public function update_feed( $ID, $merch = NULL ) {
+			$out['success'] = 0;
+			$out['error'] = 0;
 			$out = array();
 			$local_file = $this->get_file( $ID );
 			// get the absolute path to $file
@@ -240,18 +242,16 @@ class WordPress_Affiliate_Shop_Awin {
 					
 					switch ($replace) {
 						case false :
-							if( is_wp_error( $replace ) ) {
-								$out['status'] = 0;
-								$out['message'][] = $replace->get_error_message();
-							}
+							//die( $wpdb->last_query );
+							$out['message'][] = $wpdb->last_query;
+							$out['error'] ++;
 							break;
 						case 1 :
-							$out['status'] = 1;
-							$out['message'][] = 'Inserted '.$data[0];
+							$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
+							$out['success'] ++;
 							break;
 						default :
-							$out['status'] = 1;
-							$out['message'][] = 'Replaced '.$data[0];
+							$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
 							break;	
 					}
 					

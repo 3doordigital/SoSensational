@@ -134,15 +134,15 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 			foreach( $req->products as $product ) {
 				//print_var( $product );	
 				$data = array(
-					'ID'        => $product->offers[0]->id,
+					'ID'        => (string) sanitize_text_field( $product->offers[0]->id ),
 					'aff'     	=> 'tradedoubler',    
-					'title'     => trim( ucwords( strtolower( $product->name ) ) ),
-					'brand'     => trim( ucwords( strtolower( $product->offers[0]->programName ) ) ),
-					'img'       => $product->productImage->url,
-					'desc'      => $product->description,
-					'price'     => number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
-					'rrp'       => number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
-					'link'      => $product->offers[0]->productUrl
+					'title'     => (string) sanitize_text_field( trim( ucwords( strtolower( $product->name ) ) ) ),
+					'brand'     => (string) sanitize_text_field( trim( ucwords( strtolower( $product->offers[0]->programName ) ) ) ),
+					'img'       => (string) esc_url($product->productImage->url),
+					'desc'      => (string) sanitize_text_field( $product->description ),
+					'price'     => (int) number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
+					'rrp'       => (int) number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
+					'link'      => (string) esc_url($product->offers[0]->productUrl)
 				);
 				//print_var( $data );
 				global $wpdb;
@@ -162,11 +162,11 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 						'product_link' => $data['link'], 
 					)
 				);
-				$error = $wpdb->print_error();
+				$error = $wpdb->last_error;
 				//echo $replace;
 				switch ($replace) {
 					case false :
-						die( $wpdb->last_query );
+						//die( $wpdb->last_query );
 						$out['message'][] = $wpdb->last_query;
 						$out['error'] ++;
 						break;
