@@ -161,6 +161,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 			//echo $replace;
 			switch ($replace) {
 				case false :
+					exit( var_dump( $wpdb->last_query ) );
 					$out['message'][] = $wpdb->last_query;
 					$out['error'] ++;
 					break;
