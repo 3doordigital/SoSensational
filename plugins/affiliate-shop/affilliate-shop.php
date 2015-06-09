@@ -128,7 +128,7 @@ class WordPress_Affiliate_Shop {
         
 		add_filter( 'wp_title', array( $this, 'some_callback' ), 100, 2 );
 		add_filter( 'wpseo_canonical', array( $this, 'canonical' ) );
-		add_filter( 'wpseo_metadesc', array( $this, 'description' ) );
+		add_filter( 'wpseo_metadesc', array( $this, 'description' ), 100, 2 );
 		
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
@@ -153,19 +153,23 @@ class WordPress_Affiliate_Shop {
 		}
 		if( $shopcat == 1 && is_page() && $wp_query->query['page_id'] == 37 ) {
 			$cat = get_term_by( 'slug', $term , $tax );
-			
-			$title = $cat->name;
-			if( $cat->parent != 0 ) {
-				$cat2 = get_term_by( 'id', $cat->parent , $tax );
-				$title .= ' - '.$cat2->name;
+			$seo_title = get_metadata('wp_aff_categories', $cat->term_id, 'aff_seo_title', true);
+			if( $seo_title != '' ) {
+				$title = $seo_title. ' |';
+			} else {
+				$title = $cat->name;
+				if( $cat->parent != 0 ) {
+					$cat2 = get_term_by( 'id', $cat->parent , $tax );
+					$title .= ' - '.$cat2->name;
+				}
+				$title .= ' for Women |';
 			}
-			$title .= ' for Women | ';
 			
 			if( is_paged() ) {
-				$title .= 'Page '.get_query_var('paged').' | ';	
+				$title .= ' Page '.get_query_var('paged').' |';	
 			}
 			
-			$title .= get_bloginfo( 'name' );
+			$title .= ' '.get_bloginfo( 'name' );
 		} elseif( $_SERVER['REQUEST_URI'] == '/shop/' ) {
 			$option = $this->get_option();
 			$title = ( isset( $option['faceted']['home']['meta_title'] ) ? $option['faceted']['home']['meta_title'] : 'Shop for Women | '.get_bloginfo( 'name' ) ); 
@@ -176,14 +180,24 @@ class WordPress_Affiliate_Shop {
 	}
 	
 	function description( $desc ) {
-		
-		if( $_SERVER['REQUEST_URI'] == '/shop/' ) {
-			$option = $this->get_option();
-			$desc = ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' ); 
+		global $wp_query;
+		$shopcat = 0;
+		if( get_query_var( 'shop-cat' ) != '' ) {
+			$term = get_query_var( 'shop-cat' );
+			$tax = 'wp_aff_categories';
+			$shopcat = 1;
 		}
-		
-		return $desc;
-		
+		if( $shopcat == 1 && is_page() && $wp_query->query['page_id'] == 37 ) {
+			$cat = get_term_by( 'slug', $term , $tax );
+			$seo_desc = get_metadata('wp_aff_categories', $cat->term_id, 'aff_seo_desc', true);
+			if( $seo_desc != '' ) {
+				$desc = $seo_desc;
+			}
+		} elseif( $_SERVER['REQUEST_URI'] == '/shop/' ) {
+			$option = $this->get_option();
+			$desc = ( isset( $option['faceted']['home']['meta_desc'] ) ? $option['faceted']['home']['meta_desc'] : '' );
+		}
+		return $desc;		
 	}
 	
 	function canonical( $data ) {
