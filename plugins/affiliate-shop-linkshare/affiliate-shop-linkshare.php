@@ -197,7 +197,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 		* 
 		* @return array	$out
 		*/ 
-		public function feed_data( $merchant, $merch ) {
+		public function update_feed( $merchant, $merch ) {
 			
 			$out = array();
 			$upload_dir = wp_upload_dir(); 
@@ -300,16 +300,6 @@ class WordPress_Affiliate_Shop_Linkshare {
 			return $out;
 		}
 
-		/**
-		* Calls $this->feed_data
-		*
-		* @param  string	$ID	  The ID of the merchant to be updated.
-		* 
-		* @return array
-		*/ 		
-		public function update_feed( $ID, $merch ) {
-			return $this->feed_data( $ID, $merch );
-		}
 }
 register_activation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Linkshare', 'activation' ) );
 register_deactivation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Linkshare', 'deactivation' ) );

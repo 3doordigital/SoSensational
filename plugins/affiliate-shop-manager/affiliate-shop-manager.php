@@ -286,6 +286,9 @@
             </form>
         </div>
 <?php
+	$test = new WordPress_Affiliate_Shop_TradeDoubler;
+	//print_var( $test->merchants() );
+	print_var( $test->update_feed( 18871, '' ) );
 	//print_var( $this->get_option() );
 	}
 	
@@ -336,10 +339,10 @@
 		die();
 	}
 	
-	public function cron_update_merchant_feed( $ID, $aff ) {
+	public function cron_update_merchant_feed( $ID, $aff, $merch ) {
 		$classname = $this->aff_option['apis'][$aff]['class'];
 		$class = new $classname();
-		return $class->update_feed( $ID );
+		return $class->update_feed( $ID, $merch );
 	}
 	
 	public function cron_process() {
@@ -363,7 +366,7 @@
 			foreach( $merchants['items'] as $merchant ) {
 				//print_var( $merchant );
 				$percent = number_format( ( $i / $total ) * 100, 2 );
-				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
+				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'], $merchant['name'] );	
 				if( $data['status'] == 1 ) {
 					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], "Updated" );
 				} else {
