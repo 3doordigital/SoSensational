@@ -129,7 +129,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 		foreach( $req->products as $product ) {
 			//print_var( $product );	
 			$data = array(
-				'ID'        => $merchant.'_'.$product->offers[0]->id,
+				'ID'        => $product->offers[0]->id,
 				'aff'     	=> 'tradedoubler',    
 				'title'     => trim( ucwords( strtolower( $product->name ) ) ),
 				'brand'     => trim( ucwords( strtolower( $product->offers[0]->programName ) ) ),
@@ -161,7 +161,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 			//echo $replace;
 			switch ($replace) {
 				case false :
-					$out['message'][] = $wpdb->last_query;
+					$out['message'][] = $error;
 					$out['error'] ++;
 					break;
 				case 1 :
