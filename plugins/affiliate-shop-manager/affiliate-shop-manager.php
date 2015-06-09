@@ -368,7 +368,7 @@
 				$percent = number_format( ( $i / $total ) * 100, 2 );
 				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'], $merchant['name'] );	
 				if( $data['status'] == 1 ) {
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], "Updated" );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], '"Updated '.$data['success'].' Inserted, '.$data['error'].' Failed."' );
 				} else {
 					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'], $merchant['name'], $merchant['aff'], "Failed" );
 				}
