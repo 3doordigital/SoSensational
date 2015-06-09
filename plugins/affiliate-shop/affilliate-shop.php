@@ -37,13 +37,7 @@ class WordPress_Affiliate_Shop {
 	public function __construct() {
 		global $wpdb;
 		session_start();
-		$this->type = 'wp_aff_colours';
-		$this->table_name = $wpdb->prefix . $this->type . 'meta';
-		
-		$variable_name = $this->type . 'meta';
-		$this->variable_name = $variable_name;
-		$wpdb->$variable_name = $this->table_name;
-		$wpdb->tables[] = $variable_name;
+		$this->create_metadata_table( );
 		
 		$this->plugin_path = plugin_dir_path( __FILE__ );
 		$this->plugin_url  = plugin_dir_url( __FILE__ );
@@ -266,33 +260,46 @@ class WordPress_Affiliate_Shop {
         session_destroy(); 
     }
 	
-	public function create_metadata_table($table_name, $type) {
+	public function create_metadata_table( ) {
 			global $wpdb;
-		 
-			if (!empty ($wpdb->charset))
-				$charset_collate = "DEFAULT CHARACTER SET {$wpdb->charset}";
-			if (!empty ($wpdb->collate))
-				$charset_collate .= " COLLATE {$wpdb->collate}";
-					 
-			  $sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
-				meta_id bigint(20) NOT NULL AUTO_INCREMENT,
-				{$type}_id bigint(20) NOT NULL default 0,
-			 
-				meta_key varchar(255) DEFAULT NULL,
-				meta_value longtext DEFAULT NULL,
+		 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+			
+			$types = array(
+				'wp_aff_colours',
+				'wp_aff_categories'
+			);
+			
+			foreach( $types as $type ) {
+				$table_name = $wpdb->prefix . $type . 'meta';
+				
+				$variable_name = $type . 'meta';
+				$wpdb->$variable_name = $table_name;
+				$wpdb->tables[] = $variable_name;
+				
+				if (!empty ($wpdb->charset))
+					$charset_collate = "DEFAULT CHARACTER SET {$wpdb->charset}";
+				if (!empty ($wpdb->collate))
+					$charset_collate .= " COLLATE {$wpdb->collate}";
 						 
-				UNIQUE KEY meta_id (meta_id)
-			) {$charset_collate};";
-			 
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
+				  $sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
+					meta_id bigint(20) NOT NULL AUTO_INCREMENT,
+					{$type}_id bigint(20) NOT NULL default 0,
+				 
+					meta_key varchar(255) DEFAULT NULL,
+					meta_value longtext DEFAULT NULL,
+							 
+					UNIQUE KEY meta_id (meta_id)
+				) {$charset_collate};";
+				 
+				dbDelta($sql);
+			}
 		}
 	
     /**
      * Place code that runs at plugin activation here.
      */
     public function activation() {
-		$this->create_metadata_table($this->table_name, $this->type);
+		$this->create_metadata_table( );
 	}
     /**
      * Place code that runs at plugin deactivation here.
@@ -1153,6 +1160,10 @@ class WordPress_Affiliate_Shop {
             $term = array();
             $term['name']   = sanitize_text_field( $_POST['wp_term_name'] );
             $term['desc']   = htmlspecialchars( $_POST['wp_term_desc'] );
+			
+			$term['seo_title']   = sanitize_text_field( $_POST['wp_seo_title'] );
+			$term['seo_desc']   = sanitize_text_field( $_POST['wp_seo_desc'] );
+			
             $term['parent'] = intval( $_POST['wp_term_parent'] );
             $term['alias'] = intval( $_POST['wp_term_alias'] );
             $term['slug'] = sanitize_text_field( $_POST['wp_term_slug'] );
@@ -1193,6 +1204,8 @@ class WordPress_Affiliate_Shop {
                 $msg = 5; 
                 $url = add_query_arg( 'msg', $msg, urldecode( $_POST['_wp_http_referer'] ) );
             } else {
+				update_metadata( 'wp_aff_categories', $termarray['term_id'], 'aff_seo_title', $term['seo_title'] );
+				update_metadata( 'wp_aff_categories', $termarray['term_id'], 'aff_seo_desc', $term['seo_desc'] );
                 $msg = 4;
                 $url = add_query_arg( 'msg', $msg, admin_url('admin.php?page=affiliate-shop' ) );
             }
@@ -1318,6 +1331,10 @@ class WordPress_Affiliate_Shop {
             $term['name']   = sanitize_text_field( $_POST['wp_term_name'] );
             $term['slug']   = sanitize_text_field( $_POST['wp_term_slug'] );
             $term['desc']   = htmlspecialchars( $_POST['wp_term_desc'] );
+			
+			$term['seo_title']   = sanitize_text_field( $_POST['wp_seo_title'] );
+			$term['seo_desc']   = sanitize_text_field( $_POST['wp_seo_desc'] );
+			
             $term['alias'] = intval( $_POST['wp_term_alias'] );
             $term['parent'] = intval( $_POST['wp_term_parent'] );
             if( $term['alias'] == -1 ) {
@@ -1352,6 +1369,8 @@ class WordPress_Affiliate_Shop {
                 $msg = 5; 
                 $url = add_query_arg( 'msg', $msg, urldecode( $_POST['_wp_http_referer'] ) );
             } else {
+				update_metadata( 'wp_aff_categories', $termarray['term_id'], 'aff_seo_title', $term['seo_title'] );
+				update_metadata( 'wp_aff_categories', $termarray['term_id'], 'aff_seo_desc', $term['seo_desc'] );
                 $msg = 7;
                 $url = add_query_arg( 'msg', $msg, urldecode( $_POST['_wp_http_referer'] ) );
             }
@@ -2292,6 +2311,19 @@ class WordPress_Affiliate_Shop {
                                 
                             </td>
                         </tr>
+                        <tr class="form-field">
+                            <th>SEO Title</th>
+                            <td>
+                                <input class="regular-text" type="text" name="wp_seo_title" placeholder="SEO Title" value="">
+                                <p class="description">Keep below 70 characters</p>
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>SEO Description</th>
+                            <td>
+                              <textarea rows="3" name="wp_seo_desc" id="wp_seo_desc"></textarea>
+                            </td>
+                        </tr>
                     </table>
                     <input type="hidden" value="wp_aff_add_category" name="action" />
                     <?php wp_nonce_field( 'wp_aff_add_category', '_wpnonce', FALSE ); ?>
@@ -2302,7 +2334,8 @@ class WordPress_Affiliate_Shop {
             <?php elseif( $_GET['action'] == 'edit' && isset( $_GET['wp_aff_categories'] ) ) : ?>
                 <?php 
 					$term = get_term( $_GET['wp_aff_categories'], 'wp_aff_categories', 'OBJECT' ); 
-					
+					$seo_title = get_metadata('wp_aff_categories', $term->term_id, 'aff_seo_title', true);
+					$seo_desc = get_metadata('wp_aff_categories', $term->term_id, 'aff_seo_desc', true);
 				?>
                 
                 <h3>Edit Shop Category</h3>
@@ -2368,10 +2401,24 @@ class WordPress_Affiliate_Shop {
                                 <?php 
                                 $settings = array (
                                     'textarea_name' => 'wp_term_desc',
+									'textarea_rows' => 5
                                 );
                                 wp_editor( htmlspecialchars_decode( $term->description ), 'wp_term_desc', $settings ); 
                             ?>
                                 
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>SEO Title</th>
+                            <td>
+                                <input class="regular-text" type="text" name="wp_seo_title" placeholder="SEO Title" value="<?php echo htmlspecialchars_decode( $seo_title ); ?>">
+                                <p class="description">Keep below 70 characters</p>
+                            </td>
+                        </tr>
+                        <tr class="form-field">
+                            <th>SEO Description</th>
+                            <td>
+                              <textarea rows="3" name="wp_seo_desc" id="wp_seo_desc"><?php echo htmlspecialchars_decode( $seo_desc ); ?></textarea>
                             </td>
                         </tr>
                     </table>
