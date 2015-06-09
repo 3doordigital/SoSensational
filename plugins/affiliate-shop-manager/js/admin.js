@@ -10,12 +10,13 @@ jQuery(document).ready(function($) {
 	var per_query;
 	
 	function update_merchant_feed( thisID, nextID, total ) {
-		console.log( thisID+' :: '+nextID+' :: '+total+' :: '+items[thisID].ID+' :: '+items[thisID].aff );
+		console.log( thisID+' :: '+nextID+' :: '+total+' :: '+items[thisID].ID+' :: '+items[thisID].aff + ' :: ' + items[thisID].merch );
 		if( thisID <= total ) {
 			var update_feed_data2 = {
 				'action'	: 'update_merchant_feed',
 				'ID'		: items[thisID].ID,
-				'aff'		: items[thisID].aff
+				'aff'		: items[thisID].aff,
+				'merch'		: items[thisID].merch
 			};
 			$.post(ajaxurl, update_feed_data2, function(response) {
 				var nextFeed = nextID + 1;
@@ -26,7 +27,7 @@ jQuery(document).ready(function($) {
 					var percent = loop * per_query;
 					var full_percent = percent.toFixed(1);
 				}
-				console.log( response );
+				//console.log( response );
 				$('.update_percent').html( full_percent+'%' );
 				$('#update_progress').css( 'width', percent+'%' );
 				if( response.status == 1 ) {
@@ -61,7 +62,8 @@ jQuery(document).ready(function($) {
 				$.each( ids, function ( i, item ) {
 					items[counter] = {
 						ID : item.ID,
-						aff : item.aff
+						aff : item.aff,
+						merch: item.name
 					};
 					counter++;
 				});

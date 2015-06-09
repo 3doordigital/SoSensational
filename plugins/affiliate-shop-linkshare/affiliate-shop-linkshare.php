@@ -197,7 +197,8 @@ class WordPress_Affiliate_Shop_Linkshare {
 		* 
 		* @return array	$out
 		*/ 
-		public function feed_data( $merchant ) {
+		public function feed_data( $merchant, $merch ) {
+			
 			$out = array();
 			$upload_dir = wp_upload_dir(); 
 			$user_dirname = $upload_dir['basedir'].'/feed-data';
@@ -227,8 +228,17 @@ class WordPress_Affiliate_Shop_Linkshare {
 				fclose( $fp1 );
 				gzclose($fp);
 				
-				$xml = simplexml_load_file( $uc_local_file );
-				foreach( $xml->product as $product ) {
+				//$xml = simplexml_load_file( $uc_local_file );
+				$reader = new XMLReader();
+				$reader->open($uc_local_file);
+				
+				while ($reader->read() && $reader->name !== 'product');
+				while ($reader->name === 'product')
+				{
+					$product = simplexml_load_string($reader->readOuterXML());
+					
+				
+					//print_var( $product );
 					if( isset( $product->price->sale ) && $product->price->sale < $product->price->retail ) {
 						$price = number_format( (int) $product->price->sale, 2, '.', '' );	
 						$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
@@ -237,7 +247,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 						$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
 					}
 					
-					$data[] = array(
+					$data = array(
 						'ID'        => (string) $product['product_id'],
 						'aff'     	=> 'linkshare',    
 						'title'     => trim( ucwords( strtolower( (string) $product['name'] ) ) ),
@@ -248,23 +258,20 @@ class WordPress_Affiliate_Shop_Linkshare {
 						'rrp'       => $rrp,
 						'link'      => (string) $product->URL->product
 					);
-					
-				}
-				global $wpdb;
-				foreach( $data as $product ) {
+					global $wpdb;
 					//print_var($product);
 					$table_name = $wpdb->prefix . "feed_data";
 					$replace = $wpdb->insert( $table_name, array( 
-							'product_id' => $merchant.'_'.$product['ID'], 
-							'product_aff' => $product['aff'],
+							'product_id' => $merchant.'_'.$data['ID'], 
+							'product_aff' => $data['aff'],
 							'product_merch' => $merchant,
-							'product_title' => $product['title'],
-							'product_brand' => $product['brand'],
-							'product_image' => $product['img'],
-							'product_desc' => $product['desc'],
-							'product_price' => $product['price'],
-							'product_rrp' => $product['rrp'],
-							'product_link' => $product['link'], 
+							'product_title' => $data['title'],
+							'product_brand' => $merch,
+							'product_image' => $data['img'],
+							'product_desc' => $data['desc'],
+							'product_price' => $data['price'],
+							'product_rrp' => $data['rrp'],
+							'product_link' => $data['link'], 
 						)
 					);
 					//echo $replace;
@@ -274,13 +281,17 @@ class WordPress_Affiliate_Shop_Linkshare {
 							$out['message'][] = $wpdb->print_error();
 							break;
 						case 1 :
-							$out['message'][] = 'Inserted '.$product['ID'];
+							$out['message'][] = 'Inserted '.$data['ID'];
 							break;
 						default :
-							$out['message'][] = 'Replaced '.$product['ID'];
+							$out['message'][] = 'Replaced '.$data['ID'];
 							break;	
 					}
+					unset( $data );
+					$reader->next('product');
 				}
+				//print_var( $data );
+				
 				
 			} else {
 				$out['status'] = 0;
@@ -296,8 +307,8 @@ class WordPress_Affiliate_Shop_Linkshare {
 		* 
 		* @return array
 		*/ 		
-		public function update_feed( $ID ) {
-			return $this->feed_data( $ID );
+		public function update_feed( $ID, $merch ) {
+			return $this->feed_data( $ID, $merch );
 		}
 }
 register_activation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Linkshare', 'activation' ) );
