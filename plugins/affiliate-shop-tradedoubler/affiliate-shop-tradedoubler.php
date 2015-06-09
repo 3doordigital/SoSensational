@@ -157,10 +157,11 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 					'product_link' => $data['link'], 
 				)
 			);
+			$error = $wpdb->print_error();
 			//echo $replace;
 			switch ($replace) {
 				case false :
-					$out['message'][] = $wpdb->print_error();
+					$out['message'][] = $error;
 					$out['error'] ++;
 					break;
 				case 1 :
