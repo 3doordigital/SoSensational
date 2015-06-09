@@ -1372,6 +1372,7 @@ class WordPress_Affiliate_Shop {
             } else {
 				update_metadata( 'wp_aff_categories', $termarray['term_id'], 'aff_seo_title', $term['seo_title'] );
 				update_metadata( 'wp_aff_categories', $termarray['term_id'], 'aff_seo_desc', $term['seo_desc'] );
+				update_metadata( 'wp_aff_categories', $termarray['term_id'], 'aff_seo_canonical', $term['seo_canonical'] );
                 $msg = 7;
                 $url = add_query_arg( 'msg', $msg, urldecode( $_POST['_wp_http_referer'] ) );
             }
