@@ -2793,7 +2793,7 @@ class WordPress_Affiliate_Shop {
 					'prod_id' => $prod_id,
 					'merch' => '',
 					'aff'	=> $aff,
-					'link' => $link
+					'url' => $link
 				);
 				
 			}
@@ -2817,7 +2817,7 @@ class WordPress_Affiliate_Shop {
 		$output = array();
 		
 		$api = new wpAffAPI();
-		$data = $api->update_product( $_POST['id'], $_POST['prod_id'], $_POST['aff'], $_POST['title'], $_POST['merch'] ) ;
+		$data = $api->update_product( $_POST['id'], $_POST['prod_id'], $_POST['url'] ) ;
 		if( $data ) {
 			$output['status'] = 1;	
 		} else {
