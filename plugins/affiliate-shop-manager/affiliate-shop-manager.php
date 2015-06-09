@@ -27,6 +27,7 @@
     private $option_name    = 'wp_aff_man';
 	private $aff_option		= 'wp_aff_apis';
 	private $page_title 	= 'Affiliate Feed Manager';
+	private $db_version		= '1.1';
 	
 	public function __construct() {
 		
@@ -36,6 +37,17 @@
 		$this->plugin_path = plugin_dir_path( __FILE__ );
 		$this->plugin_url  = plugin_dir_url( __FILE__ );
         $this->option = get_option( $this->option_name );
+		
+		if( isset( $this->option['db_version'] ) ) {
+			if( $this->option['db_version'] < $db_version ) {
+				$this->db_update();
+			}
+		} else {
+			$this->option['db_version'] = $db_version;
+			update_option( $this->option_name, $this->option );
+			$this->db_update();
+		}
+		
 		$this->aff_option = get_option( $this->aff_option );
 		// WP Hooks
 		load_plugin_textdomain( $this->text_domain, false, 'lang' );
@@ -49,6 +61,10 @@
 		add_action( 'wp_ajax_get_api_merchants', array( $this, 'get_api_merchants' ) );
 		add_action( 'wp_ajax_update_merchant_feed', array( $this, 'update_merchant_feed' ) );
 		// Filters
+	}
+	
+	public function db_update() {
+				
 	}
 	
 	/**
@@ -286,14 +302,7 @@
             </form>
         </div>
 <?php
-	$test = new WordPress_Affiliate_Shop_TradeDoubler;
-	$merchs = $test->merchants();
-	foreach( $merchs as $merch ) {
-		$test->update_feed( $merch['ID'], $merch['name'] );
-	}
-	//print_var( $test->update_feed( 11456, '' ) );
-	//print_var( $this->get_option() );
-	//$this->cron_process();
+	
 	}
 	
 	public function get_api_merchants() {
