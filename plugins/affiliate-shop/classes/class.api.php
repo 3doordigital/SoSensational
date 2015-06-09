@@ -210,7 +210,7 @@
 					= '$link' 
 					LIMIT 1
 					";
-				//$out = $query;
+				$data['query'] = $query;
 				if ($products = $wpdb->get_results( $query, ARRAY_A	) ) {
 					if( $wpdb->num_rows > 0 ) {
 						$data['item'] = $products[0];
