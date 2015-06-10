@@ -316,7 +316,7 @@
 				array(
 				 'key' => 'wp_aff_product_notfound',
 				 'compare' => '=', // this should work...
-				 'value'	=> 1
+				 'value'	=> '1'
 				),
 			)
 		);	
