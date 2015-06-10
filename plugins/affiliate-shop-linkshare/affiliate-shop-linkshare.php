@@ -249,15 +249,15 @@ class WordPress_Affiliate_Shop_Linkshare {
 					}
 					
 					$data = array(
-						'ID'        => (string) $product['product_id'],
-						'aff'     	=> 'linkshare',    
-						'title'     => trim( ucwords( strtolower( (string) $product['name'] ) ) ),
-						'brand'     => trim( ucwords( strtolower( (string) $xml->header->merchantName ) ) ),
-						'img'       => (string) $product->URL->productImage,
-						'desc'      => (string) $product->description->short,
+						'ID'        => (string) sanitize_text_field( $product['product_id'] ),
+						'aff'     	=> 'linkshare',     
+						'title'     => (string) sanitize_text_field( trim( ucwords( strtolower( $product['name'] ) ) ) ),
+						'brand'     => (string) sanitize_text_field( trim( ucwords( strtolower( $xml->header->merchantName ) ) ) ),
+						'img'       => (string) esc_url( $product->URL->productImage ),
+						'desc'      => (string) sanitize_text_field( $product->description->short ),
 						'price'     => $price,
 						'rrp'       => $rrp,
-						'link'      => (string) $product->URL->product
+						'link'      => (string) esc_url( $product->URL->product )
 					);
 					global $wpdb;
 					//print_var($product);
