@@ -302,9 +302,40 @@
             </form>
         </div>
 <?php
-	
+		$this->remove_blank();
 	}
-	
+	public function remove_blank() {
+		$qry_args = array(
+			'post_status' => 'publish', 
+			'post_type' => 'wp_aff_products', 
+			'posts_per_page' => -1,
+			'orderby' => 'post_date',
+			'order' => 'DESC' ,
+			'meta_query' => array(
+				'relation' => 'OR',
+				array(
+				 'key' => 'wp_aff_product_id',
+				 'compare' => 'NOT EXISTS' // this should work...
+				),
+				array(
+				 'key' => 'wp_aff_product_aff',
+				 'compare' => 'NOT EXISTS' // this should work...
+				),
+			)
+		);	
+		if ( function_exists( 'ini_set' ) ) {
+			@ini_set('memory_limit', '2048M');
+		}
+		$done = 0;
+		if( $posts = get_posts( $qry_args ) ) {
+			echo count( $posts );
+			foreach( $posts as $post ) {
+				wp_trash_post( $post->ID );
+				$done ++;	
+			}
+			echo '<br>Done: '.$done;
+		}
+	}
 	public function get_api_merchants() {
 		if( count( $this->aff_option['apis'] ) > 0 ) {
 			global $wpdb;
@@ -372,7 +403,7 @@
 			mail( 'dan@tailored.im', 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
 			$i = 1;
 			global $wpdb;
-			$table_name = $wpdb->prefix . "feed_data";
+			/*$table_name = $wpdb->prefix . "feed_data";
 			$wpdb->query("TRUNCATE TABLE $table_name");
 			$merchants = $this->cron_get_api_merchants();
 			$total = $merchants['total'];	
@@ -390,7 +421,7 @@
 			}	
 			fclose( $fp );
 			mail( 'dan@tailored.im', 'Merchant Cron Ended', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
-			
+			*/
 			$i = 1;
 			global $wp_aff;
 			
