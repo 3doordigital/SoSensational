@@ -302,37 +302,9 @@
             </form>
         </div>
 <?php
-		$this->remove_blank();
+		
 	}
-	public function remove_blank() {
-		$qry_args = array(
-			'post_status' => 'publish', 
-			'post_type' => 'wp_aff_products', 
-			'posts_per_page' => -1,
-			'orderby' => 'post_date',
-			'order' => 'DESC' ,
-			'meta_query' => array(
-				'relation' => 'OR',
-				array(
-				 'key' => 'wp_aff_product_notfound',
-				 'compare' => '=', // this should work...
-				 'value'	=> '1'
-				),
-			)
-		);	
-		if ( function_exists( 'ini_set' ) ) {
-			@ini_set('memory_limit', '2048M');
-		}
-		$done = 0;
-		if( $posts = get_posts( $qry_args ) ) {
-			echo count( $posts );
-			/*foreach( $posts as $post ) {
-				wp_trash_post( $post->ID );
-				$done ++;	
-			}
-			echo '<br>Done: '.$done;*/
-		}
-	}
+	
 	public function get_api_merchants() {
 		if( count( $this->aff_option['apis'] ) > 0 ) {
 			global $wpdb;

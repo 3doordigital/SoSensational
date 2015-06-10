@@ -206,7 +206,7 @@
 			} else {
 				update_post_meta( $id, 'wp_aff_product_notfound', 1 );
 				$data['out'] = 'Not Found '.$id;
-				//wp_trash_post( $id  );
+				wp_trash_post( $id  );
 				$data['status'] = 0;
 				
 			}
