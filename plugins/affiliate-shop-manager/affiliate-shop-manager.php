@@ -314,12 +314,9 @@
 			'meta_query' => array(
 				'relation' => 'OR',
 				array(
-				 'key' => 'wp_aff_product_id',
-				 'compare' => 'NOT EXISTS' // this should work...
-				),
-				array(
-				 'key' => 'wp_aff_product_aff',
-				 'compare' => 'NOT EXISTS' // this should work...
+				 'key' => 'wp_aff_product_notfound',
+				 'compare' => '=', // this should work...
+				 'value'	=> 1
 				),
 			)
 		);	
@@ -329,11 +326,11 @@
 		$done = 0;
 		if( $posts = get_posts( $qry_args ) ) {
 			echo count( $posts );
-			foreach( $posts as $post ) {
+			/*foreach( $posts as $post ) {
 				wp_trash_post( $post->ID );
 				$done ++;	
 			}
-			echo '<br>Done: '.$done;
+			echo '<br>Done: '.$done;*/
 		}
 	}
 	public function get_api_merchants() {
