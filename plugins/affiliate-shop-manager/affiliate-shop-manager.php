@@ -39,11 +39,11 @@
         $this->option = get_option( $this->option_name );
 		
 		if( isset( $this->option['db_version'] ) ) {
-			if( $this->option['db_version'] < $db_version ) {
+			if( $this->option['db_version'] < $this->db_version ) {
 				$this->db_update();
 			}
 		} else {
-			$this->option['db_version'] = $db_version;
+			$this->option['db_version'] = $this->db_version;
 			update_option( $this->option_name, $this->option );
 			$this->db_update();
 		}

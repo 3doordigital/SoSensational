@@ -1596,11 +1596,14 @@ class WordPress_Affiliate_Shop {
 						if(isset($_GET['q']) && $_GET['q'] != '' || isset($_GET['paged'])) {
                             
 							$curr_api = ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' );
-							
+							$starttime = microtime(true);
 							$table_data = $api->db_search( $_GET['q'], $curr_api, $merch, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
+							$endtime = microtime(true);
+							$duration = $endtime - $starttime;
 							//print_var( $table_data );
                             $ListProductSearch = new ListProductSearch( $table_data );
                             $ListProductSearch->prepare_items();
+							echo '<p class="description">This query took '.number_format( $duration, 4 ).'ms.</p>';
                         }
                             
 						//print_var($_SESSION['product_data']);
