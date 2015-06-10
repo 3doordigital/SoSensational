@@ -413,7 +413,7 @@
 					
 				} else {
 					
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'], "", "", "", "", "Not Found" );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'], "", "", "", "", "Trashed" );
 					
 				}
 				fputcsv($fp, $line, '|');
