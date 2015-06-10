@@ -27,6 +27,7 @@
     private $option_name    = 'wp_aff_man';
 	private $aff_option		= 'wp_aff_apis';
 	private $page_title 	= 'Affiliate Feed Manager';
+	private $db_version		= '1.1';
 	
 	public function __construct() {
 		
@@ -36,6 +37,17 @@
 		$this->plugin_path = plugin_dir_path( __FILE__ );
 		$this->plugin_url  = plugin_dir_url( __FILE__ );
         $this->option = get_option( $this->option_name );
+		
+		if( isset( $this->option['db_version'] ) ) {
+			if( $this->option['db_version'] < $this->db_version ) {
+				$this->db_update();
+			}
+		} else {
+			$this->option['db_version'] = $this->db_version;
+			update_option( $this->option_name, $this->option );
+			$this->db_update();
+		}
+		
 		$this->aff_option = get_option( $this->aff_option );
 		// WP Hooks
 		load_plugin_textdomain( $this->text_domain, false, 'lang' );
@@ -49,6 +61,10 @@
 		add_action( 'wp_ajax_get_api_merchants', array( $this, 'get_api_merchants' ) );
 		add_action( 'wp_ajax_update_merchant_feed', array( $this, 'update_merchant_feed' ) );
 		// Filters
+	}
+	
+	public function db_update() {
+				
 	}
 	
 	/**
@@ -217,13 +233,13 @@
 			product_id varchar(255) NOT NULL,
 			product_aff varchar(255) DEFAULT NULL,
 			product_merch varchar(255) DEFAULT NULL,
-			product_title varchar(255) DEFAULT NULL,
+			product_title longtext DEFAULT NULL,
 			product_brand varchar(255) DEFAULT NULL,
-			product_image varchar(255) DEFAULT NULL,
+			product_image longtext DEFAULT NULL,
 			product_desc longtext DEFAULT NULL,
 			product_price decimal(12,2) DEFAULT NULL,
 			product_rrp decimal(12,2) DEFAULT NULL,
-			product_link varchar(255) DEFAULT NULL,
+			product_link longtext DEFAULT NULL,
 			UNIQUE KEY product_id (product_id),
 			PRIMARY KEY (product_id ),
 			FULLTEXT KEY product_title (product_title)
@@ -286,7 +302,7 @@
             </form>
         </div>
 <?php
-	//print_var( $this->get_option() );
+		
 	}
 	
 	public function get_api_merchants() {
@@ -336,45 +352,45 @@
 		die();
 	}
 	
-	public function cron_update_merchant_feed( $ID, $aff ) {
+	public function cron_update_merchant_feed( $ID, $aff, $merch ) {
 		$classname = $this->aff_option['apis'][$aff]['class'];
 		$class = new $classname();
-		return $class->update_feed( $ID );
+		return $class->update_feed( $ID, $merch );
 	}
 	
 	public function cron_process() {
 			ini_set('memory_limit', '4096M');
 			ini_set('max_execution_time', '5000');
 			
-			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.csv";
-			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.csv";
+			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.txt";
+			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
 			
 				
 			$fp = fopen($merchantlog, 'w');
-			$header = array( "Number", "Merchant ID", "Merchant Name", "Affiliate", "Status" );
+			$header = array( "Number", "Merchant ID", "Merchant Name", "Affiliate", "Status", "Message" );
 			fputcsv($fp, $header, '|');
 			mail( 'dan@tailored.im', 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
 			$i = 1;
 			global $wpdb;
-			$table_name = $wpdb->prefix . "feed_data";
+			/*$table_name = $wpdb->prefix . "feed_data";
 			$wpdb->query("TRUNCATE TABLE $table_name");
 			$merchants = $this->cron_get_api_merchants();
 			$total = $merchants['total'];	
 			foreach( $merchants['items'] as $merchant ) {
 				//print_var( $merchant );
 				$percent = number_format( ( $i / $total ) * 100, 2 );
-				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'] );	
+				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'], $merchant['name'] );	
 				if( $data['status'] == 1 ) {
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], "Updated" );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], 'Updated - '.$data['success'].' Inserted, '.$data['error'].' Failed.', '' );
 				} else {
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'], $merchant['name'], $merchant['aff'], "Failed" );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'], $merchant['name'], $merchant['aff'], 'Failed - '.$data['success'].' Inserted, '.$data['error'].' Failed.' );
 				}
 				fputcsv($fp, $line, '|');
 				$i++;
 			}	
 			fclose( $fp );
 			mail( 'dan@tailored.im', 'Merchant Cron Ended', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
-			
+			*/
 			$i = 1;
 			global $wp_aff;
 			
@@ -397,7 +413,7 @@
 					
 				} else {
 					
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'], "", "", "", "", "Not Found" );
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'], "", "", "", "", "Trashed" );
 					
 				}
 				fputcsv($fp, $line, '|');

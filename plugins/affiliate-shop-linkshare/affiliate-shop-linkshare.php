@@ -197,8 +197,9 @@ class WordPress_Affiliate_Shop_Linkshare {
 		* 
 		* @return array	$out
 		*/ 
-		public function feed_data( $merchant, $merch ) {
-			
+		public function update_feed( $merchant, $merch ) {
+			$out['success'] = 0;
+			$out['error'] = 0;
 			$out = array();
 			$upload_dir = wp_upload_dir(); 
 			$user_dirname = $upload_dir['basedir'].'/feed-data';
@@ -248,15 +249,15 @@ class WordPress_Affiliate_Shop_Linkshare {
 					}
 					
 					$data = array(
-						'ID'        => (string) $product['product_id'],
-						'aff'     	=> 'linkshare',    
-						'title'     => trim( ucwords( strtolower( (string) $product['name'] ) ) ),
-						'brand'     => trim( ucwords( strtolower( (string) $xml->header->merchantName ) ) ),
-						'img'       => (string) $product->URL->productImage,
-						'desc'      => (string) $product->description->short,
+						'ID'        => (string) sanitize_text_field( $product['product_id'] ),
+						'aff'     	=> 'linkshare',     
+						'title'     => (string) sanitize_text_field( trim( ucwords( strtolower( $product['name'] ) ) ) ),
+						'brand'     => (string) sanitize_text_field( trim( ucwords( strtolower( $xml->header->merchantName ) ) ) ),
+						'img'       => (string) esc_url( $product->URL->productImage ),
+						'desc'      => (string) sanitize_text_field( $product->description->short ),
 						'price'     => $price,
 						'rrp'       => $rrp,
-						'link'      => (string) $product->URL->product
+						'link'      => (string) esc_url( $product->URL->product )
 					);
 					global $wpdb;
 					//print_var($product);
@@ -277,14 +278,16 @@ class WordPress_Affiliate_Shop_Linkshare {
 					//echo $replace;
 					switch ($replace) {
 						case false :
-							$out['status'] = 0;
-							$out['message'][] = $wpdb->print_error();
+							//die( $wpdb->last_query );
+							$out['message'][] = $wpdb->last_query;
+							$out['error'] ++;
 							break;
 						case 1 :
-							$out['message'][] = 'Inserted '.$data['ID'];
+							$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
+							$out['success'] ++;
 							break;
 						default :
-							$out['message'][] = 'Replaced '.$data['ID'];
+							$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
 							break;	
 					}
 					unset( $data );
@@ -300,16 +303,6 @@ class WordPress_Affiliate_Shop_Linkshare {
 			return $out;
 		}
 
-		/**
-		* Calls $this->feed_data
-		*
-		* @param  string	$ID	  The ID of the merchant to be updated.
-		* 
-		* @return array
-		*/ 		
-		public function update_feed( $ID, $merch ) {
-			return $this->feed_data( $ID, $merch );
-		}
 }
 register_activation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Linkshare', 'activation' ) );
 register_deactivation_hook( __FILE__, array( 'WordPress_Affiliate_Shop_Linkshare', 'deactivation' ) );

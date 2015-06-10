@@ -50,7 +50,7 @@
 			if( $merchant != NULL && $merchant != 0 ) { $query .= " AND product_merch='$merchant' "; }	
 			$query .= "ORDER BY MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE) DESC";
 			$query2 = $query." LIMIT $offset, $depth";
-			echo $query2;
+			//echo $query2;
 			//$out = $query;
 			$totalres = $wpdb->get_results( $query );
 			$products['total']['total'] = $wpdb->num_rows;
@@ -175,9 +175,11 @@
 			$query ="
 				SELECT * 
 				FROM 
-				$table_name 
+					$table_name 
 				WHERE product_id 
-				REGEXP '^([0-9]+)_{$prod_id}$' 
+					REGEXP '^([0-9]+)_{$prod_id}$' 
+				OR product_id
+					= '$prod_id'
 				LIMIT 1
 				";
 			//$out = $query;
@@ -199,37 +201,14 @@
 				update_post_meta( $id, 'wp_aff_product_rrp', $item['product_rrp'] );
 				update_post_meta( $id, 'wp_aff_product_price', $item['product_price'] );
 				update_post_meta( $id, 'wp_aff_product_merch', $item['product_merch'] );
-				
+				update_post_meta( $id, 'wp_aff_product_notfound', 0 );
 				$data['out'] = 'Updated by ID '.$id;
 			} else {
-				$query ="
-					SELECT * 
-					FROM 
-					$table_name 
-					WHERE product_link 
-					= '$link' 
-					LIMIT 1
-					";
-				$data['query'] = $query;
-				if ($products = $wpdb->get_results( $query, ARRAY_A	) ) {
-					if( $wpdb->num_rows > 0 ) {
-						$data['item'] = $products[0];
-						update_post_meta( $id, 'wp_aff_product_id', $data['item']['product_id'] );
-						update_post_meta( $id, 'wp_aff_product_rrp', $data['item']['product_rrp'] );
-						update_post_meta( $id, 'wp_aff_product_price', $data['item']['product_price'] );
-						update_post_meta( $id, 'wp_aff_product_merch', $data['item']['product_merch'] );
-						$data['status'] = 2;
-						$data['out'] = 'Updated by URL '.$id;	
-					} else {
-						$data['out'] = $query;
-						return $data;	
-					}
-				} else {
-					update_post_meta( $id, 'wp_aff_product_notfound', 1 );
-					$data['out'] = 'Not Found '.$id;
-					//wp_trash_post( $id  );
-					$data['status'] = 0;
-				}
+				update_post_meta( $id, 'wp_aff_product_notfound', 1 );
+				$data['out'] = 'Not Found '.$id;
+				wp_trash_post( $id  );
+				$data['status'] = 0;
+				
 			}
 			return $data;
 		}

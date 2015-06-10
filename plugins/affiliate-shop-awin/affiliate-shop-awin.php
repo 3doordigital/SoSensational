@@ -192,6 +192,8 @@ class WordPress_Affiliate_Shop_Awin {
 		}
 		
 		public function update_feed( $ID, $merch = NULL ) {
+			$out['success'] = 0;
+			$out['error'] = 0;
 			$out = array();
 			$local_file = $this->get_file( $ID );
 			// get the absolute path to $file
@@ -219,6 +221,7 @@ class WordPress_Affiliate_Shop_Awin {
 				global $wpdb;
 				// get the first row, which contains the column-titles (if necessary)
 				$header = fgetcsv($handle);
+				$out['status'] = 1;	
 				// loop through the file line-by-line
 				while(($data = fgetcsv($handle)) !== false)
 				{
@@ -227,31 +230,29 @@ class WordPress_Affiliate_Shop_Awin {
 					$replace = $wpdb->replace( $table_name, array( 
 							'product_id' => $data[11].'_'.$data[0], 
 							'product_aff' => 'awin',
-							'product_merch' => $data[11],
-							'product_title' => $data[7],
-							'product_brand' => $data[10],
-							'product_image' => $data[9],
-							'product_desc' => $data[6],
+							'product_merch' => sanitize_text_field( $data[11] ),
+							'product_title' => sanitize_text_field( $data[7] ),
+							'product_brand' => sanitize_text_field( $data[10] ),
+							'product_image' => esc_url( $data[9] ),
+							'product_desc' => sanitize_text_field( $data[6] ),
 							'product_price' => $data[5],
 							'product_rrp' => $data[23],
-							'product_link' => $data[3], 
+							'product_link' => esc_url( $data[3] ), 
 						)
 					);
 					
 					switch ($replace) {
 						case false :
-							if( is_wp_error( $replace ) ) {
-								$out['status'] = 0;
-								$out['message'][] = $replace->get_error_message();
-							}
+							//die( $wpdb->last_query );
+							$out['message'][] = $wpdb->last_query;
+							$out['error'] ++;
 							break;
 						case 1 :
-							$out['status'] = 1;
-							$out['message'][] = 'Inserted '.$data[0];
+							$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
+							$out['success'] ++;
 							break;
 						default :
-							$out['status'] = 1;
-							$out['message'][] = 'Replaced '.$data[0];
+							$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
 							break;	
 					}
 					

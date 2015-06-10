@@ -202,6 +202,22 @@ class WordPress_Affiliate_Shop {
 	
 	function canonical( $data ) {
         
+		global $wp_query;
+		$shopcat = 0;
+		if( get_query_var( 'shop-cat' ) != '' ) {
+			$term = get_query_var( 'shop-cat' );
+			$tax = 'wp_aff_categories';
+			$shopcat = 1;
+		}
+		if( $shopcat == 1 && is_page() && $wp_query->query['page_id'] == 37 ) {
+			$cat = get_term_by( 'slug', $term , $tax );
+			$seo_canonical = get_metadata('wp_aff_categories', $cat->term_id, 'aff_seo_canonical', true);
+			if( $seo_canonical != '' ) {
+				$data = $seo_canonical;
+				return $data;
+			}
+		} 
+		
         $currentUrl = get_bloginfo('url') . $_SERVER['REQUEST_URI'];
         
 		if( preg_match( '#/shop/#', $_SERVER['REQUEST_URI'] ) ) {
@@ -1580,11 +1596,14 @@ class WordPress_Affiliate_Shop {
 						if(isset($_GET['q']) && $_GET['q'] != '' || isset($_GET['paged'])) {
                             
 							$curr_api = ( isset( $_REQUEST['api'] ) ? $_REQUEST['api'] : 'all' );
-							
+							$starttime = microtime(true);
 							$table_data = $api->db_search( $_GET['q'], $curr_api, $merch, 25, ( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1  ) ) ;
+							$endtime = microtime(true);
+							$duration = $endtime - $starttime;
 							//print_var( $table_data );
                             $ListProductSearch = new ListProductSearch( $table_data );
                             $ListProductSearch->prepare_items();
+							echo '<p class="description">This query took '.number_format( $duration, 4 ).' seconds.</p>';
                         }
                             
 						//print_var($_SESSION['product_data']);

@@ -1292,6 +1292,9 @@ function column_aff($item) {
 	if($item['aff'] == 'linkshare') {
         return '<img src="'.str_replace( 'inc/', '', plugin_dir_url( __FILE__ ) ).'img/linkshare.jpg" style="max-width: 50%; height: auto;" />';
     }
+	if($item['aff'] == 'tradedoubler') {
+        return '<img src="'.str_replace( 'inc/', '', plugin_dir_url( __FILE__ ) ).'img/tradedoubler.jpg" style="max-width: 50%; height: auto;" />';
+    }
 }
 function get_columns(){
     $columns = array(
