@@ -1603,7 +1603,7 @@ class WordPress_Affiliate_Shop {
 							//print_var( $table_data );
                             $ListProductSearch = new ListProductSearch( $table_data );
                             $ListProductSearch->prepare_items();
-							echo '<p class="description">This query took '.number_format( $duration, 4 ).'ms.</p>';
+							echo '<p class="description">This query took '.number_format( $duration, 4 ).' seconds.</p>';
                         }
                             
 						//print_var($_SESSION['product_data']);
