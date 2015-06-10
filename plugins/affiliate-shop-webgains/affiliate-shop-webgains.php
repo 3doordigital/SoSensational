@@ -116,96 +116,72 @@ class WordPress_Affiliate_Shop_Webgains {
 			wp_mkdir_p( $user_dirname );
 
 		$local_file = $user_dirname.'/local.xml.gz';
-		$uc_local_file = $user_dirname.'/local1.xml';
+		$uc_local_file = $user_dirname.'/webgainsproducts.csv';
 		$server_file = $merchant.'_2476350_mp.xml.gz';
 		$contents = '';
 		$data = array();
 		
-		$conn_id = @ftp_connect('aftp.linksynergy.com');
-		$login_result = @ftp_login($conn_id, 'cyndylessing', 'zbrbZdyk');
-				
-		if (@ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
-			if ( function_exists( 'ini_set' ) ) {
-				@ini_set('memory_limit', '2048M');
-			}
-			$out['status'] = 1;
-			ftp_close($conn_id);
-			$fp1 = fopen($uc_local_file, "w");
-			$fp = gzopen( $local_file, "r");
-			while ($line = gzread($fp,1024)) {
-				fwrite($fp1, $line, strlen($line));
-			}
-			fclose( $fp1 );
-			gzclose($fp);
-			
-			//$xml = simplexml_load_file( $uc_local_file );
-			$reader = new XMLReader();
-			$reader->open($uc_local_file);
-			
-			while ($reader->read() && $reader->name !== 'product');
-			while ($reader->name === 'product')
+		if ( function_exists( 'ini_set' ) ) {
+			@ini_set('memory_limit', '2048M');
+		}
+		$out['status'] = 1;
+		/*
+		$fp = gzopen( $local_file, "r");
+		while ($line = gzread($fp,1024)) {
+			fwrite($fp1, $line, strlen($line));
+		}
+		fclose( $fp1 );
+		gzclose($fp);
+		*/
+		if(($handle = fopen( $uc_local_file, 'r')) !== false) {
+			global $wpdb;
+			// get the first row, which contains the column-titles (if necessary)
+			$header = fgetcsv($handle, 0, '|');
+			print_var( $header );
+			$out['status'] = 1;	
+			$i = 0 ;
+			// loop through the file line-by-line
+			while(($data = fgetcsv($handle, 0, '|')) !== false && $i < 5 )
 			{
-				$product = simplexml_load_string($reader->readOuterXML());
-				
-			
-				//print_var( $product );
-				if( isset( $product->price->sale ) && $product->price->sale < $product->price->retail ) {
-					$price = number_format( (int) $product->price->sale, 2, '.', '' );	
-					$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
-				} else {
-					$price = number_format( (int) $product->price->retail, 2, '.', '' );
-					$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
+				if( $data[3] != '' && $data[8] != '' ) {
+					set_time_limit(0);
+					print_var( $data );
+					flush();
+					$i ++;
 				}
-				
-				$data = array(
-					'ID'        => (string) $product['product_id'],
-					'aff'     	=> 'linkshare',    
-					'title'     => trim( ucwords( strtolower( (string) $product['name'] ) ) ),
-					'brand'     => trim( ucwords( strtolower( (string) $xml->header->merchantName ) ) ),
-					'img'       => (string) $product->URL->productImage,
-					'desc'      => (string) $product->description->short,
-					'price'     => $price,
-					'rrp'       => $rrp,
-					'link'      => (string) $product->URL->product
-				);
-				global $wpdb;
-				//print_var($product);
-				$table_name = $wpdb->prefix . "feed_data";
-				$replace = $wpdb->insert( $table_name, array( 
-						'product_id' => $merchant.'_'.$data['ID'], 
-						'product_aff' => $data['aff'],
-						'product_merch' => $merchant,
-						'product_title' => $data['title'],
-						'product_brand' => $merch,
-						'product_image' => $data['img'],
-						'product_desc' => $data['desc'],
-						'product_price' => $data['price'],
-						'product_rrp' => $data['rrp'],
-						'product_link' => $data['link'], 
+				/*$table_name = $wpdb->prefix . "feed_data";
+				$replace = $wpdb->replace( $table_name, array( 
+						'product_id' => $data[11].'_'.$data[0], 
+						'product_aff' => 'awin',
+						'product_merch' => sanitize_text_field( $data[11] ),
+						'product_title' => sanitize_text_field( $data[7] ),
+						'product_brand' => sanitize_text_field( $data[10] ),
+						'product_image' => esc_url( $data[9] ),
+						'product_desc' => sanitize_text_field( $data[6] ),
+						'product_price' => $data[5],
+						'product_rrp' => $data[23],
+						'product_link' => esc_url( $data[3] ), 
 					)
 				);
-				//echo $replace;
+				
 				switch ($replace) {
 					case false :
-						$out['status'] = 0;
-						$out['message'][] = $wpdb->print_error();
+						//die( $wpdb->last_query );
+						$out['message'][] = $wpdb->last_query;
+						$out['error'] ++;
 						break;
 					case 1 :
-						$out['message'][] = 'Inserted '.$data['ID'];
+						$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
+						$out['success'] ++;
 						break;
 					default :
-						$out['message'][] = 'Replaced '.$data['ID'];
+						$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
 						break;	
-				}
-				unset( $data );
-				$reader->next('product');
+				}*/
+				
+				unset($data);
 			}
-			//print_var( $data );
-			
-			
-		} else {
-			$out['status'] = 0;
-			$out['message']	= 'FTP Failed';
+			fclose($handle);
 		}
 		return $out;
 	}

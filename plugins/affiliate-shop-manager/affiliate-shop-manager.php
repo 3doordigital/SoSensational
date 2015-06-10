@@ -302,7 +302,8 @@
             </form>
         </div>
 <?php
-		
+		$test = new WordPress_Affiliate_Shop_Webgains;
+		$test->update_feed( null, null );
 	}
 	
 	public function get_api_merchants() {
@@ -372,7 +373,7 @@
 			mail( 'dan@tailored.im', 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
 			$i = 1;
 			global $wpdb;
-			/*$table_name = $wpdb->prefix . "feed_data";
+			$table_name = $wpdb->prefix . "feed_data";
 			$wpdb->query("TRUNCATE TABLE $table_name");
 			$merchants = $this->cron_get_api_merchants();
 			$total = $merchants['total'];	
@@ -390,7 +391,7 @@
 			}	
 			fclose( $fp );
 			mail( 'dan@tailored.im', 'Merchant Cron Ended', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
-			*/
+			
 			$i = 1;
 			global $wp_aff;
 			
