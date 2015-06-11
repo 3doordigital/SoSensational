@@ -11,3 +11,4 @@ error_log
 *.csv
 *.zip
 *.gz
+plugins/wordfence/tmp/*
