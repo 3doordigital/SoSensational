@@ -105,7 +105,6 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 		$out['status'] = 0;
 		
 		$url = 'http://api.tradedoubler.com/1.0/productsUnlimited;fid='.$merchant.'?token='.$this->token;
-		echo $url;
 		if ( function_exists( 'ini_set' ) ) {
 			@ini_set('memory_limit', '2048M');
 		}
