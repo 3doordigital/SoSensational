@@ -302,8 +302,7 @@
             </form>
         </div>
 <?php
-		$test = new WordPress_Affiliate_Shop_Webgains;
-		$test->update_feed( null, null );
+		print_var( get_option( 'wp_aff_webgains_merchants' ) ); 
 	}
 	
 	public function get_api_merchants() {
