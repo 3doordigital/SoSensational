@@ -4,7 +4,7 @@
  * Plugin Name: Max Mega Menu
  * Plugin URI:  https://maxmegamenu.com
  * Description: Mega Menu for WordPress.
- * Version:     1.7.4
+ * Version:     1.8
  * Author:      Tom Hemsley
  * Author URI:  https://maxmegamenu.com
  * License:     GPL-2.0+
@@ -26,7 +26,7 @@ final class Mega_Menu {
 	/**
 	 * @var string
 	 */
-	public $version = '1.7.4';
+	public $version = '1.8';
 
 
 	/**
@@ -45,6 +45,7 @@ final class Mega_Menu {
 	 * @since 1.0
 	 */
 	public function __construct() {
+
 		$this->define_constants();
 		$this->includes();
 
@@ -52,17 +53,20 @@ final class Mega_Menu {
 		add_action( 'admin_init', array( $this, 'install_upgrade_check' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
         add_action( 'widgets_init', array( $this, 'register_widget' ) );
+		add_action( 'after_setup_theme', array( $this, 'register_nav_menus' ) );
 
 		add_filter( 'wp_nav_menu_args', array( $this, 'modify_nav_menu_args' ), 9999 );
 		add_filter( 'wp_nav_menu', array( $this, 'add_responsive_toggle' ), 10, 2 );
 		add_filter( 'wp_nav_menu_objects', array( $this, 'add_widgets_to_menu' ), 10, 2 );
 		add_filter( 'megamenu_nav_menu_css_class', array( $this, 'prefix_menu_classes' ) );
+		add_filter( 'black_studio_tinymce_enable_pages' , array($this, 'megamenu_blackstudio_tinymce' ) );
 
 		register_deactivation_hook( __FILE__, array( $this, 'delete_version_number') );
 
 		add_shortcode( 'maxmenu', array( $this, 'register_shortcode' ) );
-		
-		if ( is_admin() && current_user_can('edit_theme_options') ) {
+		add_shortcode( 'maxmegamenu', array( $this, 'register_shortcode' ) );
+
+		if ( is_admin() ) {
 
 			new Mega_Menu_Nav_Menus();
 			new Mega_Menu_Widget_Manager();
@@ -78,8 +82,43 @@ final class Mega_Menu {
 
 
 	/**
+	 * Register menu locations created within Max Mega Menu.
+	 *
+	 * @since 1.8
+	 */
+	public function register_nav_menus() {
+
+		$locations = get_option('megamenu_locations');
+
+		if ( is_array( $locations ) && count( $locations ) ) {
+
+			foreach ( $locations as $key => $val ) {
+
+			  register_nav_menu( $key, $val );
+
+			}
+
+		}
+	}
+
+
+	/**
+	 * Black Studio TinyMCE Compatibility.
+	 * Load TinyMCE assets on nav-menus.php page.
+	 *
+	 * @since 1.8
+	 * @param array $pages
+	 * @return array $pages
+	 */
+	public function megamenu_blackstudio_tinymce( $pages ) {
+	    $pages[] = 'nav-menus.php';
+	    return $pages;
+	}
+
+
+	/**
 	 * Detect new or updated installations and run actions accordingly.
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	public function install_upgrade_check() {
@@ -91,7 +130,7 @@ final class Mega_Menu {
 				update_option( "megamenu_version", $this->version );
 
 				do_action( "megamenu_after_update" );
-				
+
 			}
 
 		} else {
@@ -113,7 +152,7 @@ final class Mega_Menu {
 	public function delete_version_number() {
 
 		delete_option( "megamenu_version", $this->version );
-		
+
 	}
 
     /**
@@ -140,10 +179,10 @@ final class Mega_Menu {
         }
 
         if ( has_nav_menu( $atts['location'] ) ) {
-		     return wp_nav_menu( array( 'theme_location' => $atts['location'], 'echo' => false ) );
+		    return wp_nav_menu( array( 'theme_location' => $atts['location'], 'echo' => false ) );
 		}
 
-        return "<!-- menu not found [maxmenu location={$atts['location']}] -->";
+        return "<!-- menu not found [maxmegamenu location={$atts['location']}] -->";
 
     }
 
@@ -266,7 +305,7 @@ final class Mega_Menu {
 	}
 
 
-	/** 
+	/**
 	 * Add the html for the responsive toggle box to the menu
 	 *
 	 * @param string $nav_menu
@@ -279,7 +318,7 @@ final class Mega_Menu {
 		// make sure we're working with a Mega Menu
 		if ( ! is_a( $args->walker, 'Mega_Menu_Walker' ) )
 			return $nav_menu;
-		
+
 		$toggle_id = apply_filters("megamenu_toggle_id", "mega-menu-toggle-{$args->theme_location}", $args->menu, $args->theme_location );
 
 		$toggle_class = 'mega-menu-toggle';
@@ -293,7 +332,7 @@ final class Mega_Menu {
 
 
    	/**
-   	 * Append the widget objects to the menu array before the 
+   	 * Append the widget objects to the menu array before the
    	 * menu is processed by the walker.
    	 *
    	 * @since 1.0
@@ -346,8 +385,8 @@ final class Mega_Menu {
 							'db_id'             => 0, // This menu item does not have any childen
 							'ID'                => $widget['widget_id'],
 							'classes'           => array(
-								"menu-item", 
-								"menu-item-type-widget", 
+								"menu-item",
+								"menu-item-type-widget",
 								"menu-columns-{$widget['mega_columns']}-of-{$item->megamenu_settings['panel_columns']}"
 							)
 						);
@@ -371,7 +410,7 @@ final class Mega_Menu {
 
 	    $items = apply_filters( "megamenu_nav_menu_objects_after", $items, $args );
 
-		return $items;    
+		return $items;
 	}
 
 
@@ -396,7 +435,7 @@ final class Mega_Menu {
 			if ( ! isset( $locations[ $current_theme_location ] ) ) {
 				return $args;
 			}
-			
+
 			$menu_id = $locations[ $current_theme_location ];
 
 			if ( ! $menu_id ) {
@@ -485,9 +524,9 @@ final class Mega_Menu {
 
 	    ?>
 	    <div class="updated">
-	    	<?php 
+	    	<?php
 
-	    		$link = "<a href='" . admin_url("themes.php?page=megamenu_settings") . "'>" . __( "click here", 'megamenu' ) . "</a>"; 
+	    		$link = "<a href='" . admin_url("themes.php?page=megamenu_settings") . "'>" . __( "click here", 'megamenu' ) . "</a>";
 
 	    	?>
 	        <p><?php echo sprintf( __( 'Thanks for installing Max Mega Menu! Please %s to get started.', 'megamenu' ), $link); ?></p>
@@ -503,9 +542,9 @@ final class Mega_Menu {
 
 	    ?>
 	    <div class="updated">
-	    	<?php 
+	    	<?php
 
-	    		$link = "<a href='" . admin_url("themes.php?page=megamenu_settings&tab=tools") . "'>" . __( "regenerate the CSS", 'megamenu' ) . "</a>"; 
+	    		$link = "<a href='" . admin_url("themes.php?page=megamenu_settings&tab=tools") . "'>" . __( "regenerate the CSS", 'megamenu' ) . "</a>";
 
 	    	?>
 	        <p><?php echo sprintf( __( 'Max Mega Menu has been updated. Please %s to ensure maximum compatibility with the latest version.', 'megamenu' ), $link); ?></p>
@@ -532,3 +571,33 @@ final class Mega_Menu {
 add_action( 'plugins_loaded', array( 'Mega_Menu', 'init' ), 10 );
 
 endif;
+
+
+if ( ! function_exists( 'max_mega_menu_is_enabled' ) ) {
+
+	/**
+	 * Determines if Max Mega Menu has been enabled for a given menu location.
+	 *
+	 * Usage:
+	 *
+	 * Max Mega Menu is enabled:
+	 * function_exists( 'max_mega_menu_is_enabled' )
+	 *
+	 * Max Mega Menu has been enabled for a theme location:
+	 * function_exists( 'max_mega_menu_is_enabled' ) && max_mega_menu_is_enabled( $location )
+	 *
+	 * @since 1.8
+	 * @param string $location - theme location identifier
+	 */
+	function max_mega_menu_is_enabled( $location = false ) {
+
+		if ( ! $location ) {
+			return true; // the plugin is enabled
+		}
+
+		// if a location has been passed, check to see if MMM has been enabled for the location
+		$settings = get_option( 'megamenu_settings' );
+
+		return is_array( $settings ) && isset( $settings[ $location ]['enabled'] ) && $settings[ $location ]['enabled'] == true;
+	}
+}

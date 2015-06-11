@@ -43,8 +43,15 @@ class Mega_Menu_Nav_Menus {
         add_action( 'admin_init', array( $this, 'register_nav_meta_box' ), 9 );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_menu_page_scripts' ) );
         add_action( 'megamenu_save_settings', array($this, 'save') );
-
         add_filter( 'hidden_meta_boxes', array( $this, 'show_mega_menu_metabox' ) );
+
+        if ( function_exists( 'siteorigin_panels_admin_enqueue_scripts' ) ) {
+            //add_action( 'admin_print_scripts-nav-menus.php', 'siteorigin_panels_admin_enqueue_scripts' );
+        }
+
+        if ( function_exists( 'siteorigin_panels_admin_enqueue_styles' ) ) {
+            //add_action( 'admin_print_styles-nav-menus.php', 'siteorigin_panels_admin_enqueue_styles' );
+        }
 
     }
 
@@ -62,7 +69,7 @@ class Mega_Menu_Nav_Menus {
                 if ( $value == 'mega_menu_meta_box' ) {
                     unset( $hidden[$key] );
                 }
-            }            
+            }
         }
 
         return $hidden;
@@ -102,7 +109,7 @@ class Mega_Menu_Nav_Menus {
 
         if( 'nav-menus.php' != $hook )
             return;
-        
+
         // http://wordpress.org/plugins/image-widget/
         if ( class_exists( 'Tribe_Image_Widget' ) ) {
             $image_widget = new Tribe_Image_Widget;
@@ -202,21 +209,21 @@ class Mega_Menu_Nav_Menus {
 
         } else if ( ! count ( $tagged_menu_locations ) ) {
 
-            echo "<p>" . __("This menu is not tagged to a location. Please tag a location to enable the Mega Menu settings.", "megamenu") . "</p>";
+            echo "<p>" . __("Please assign this menu to a theme location to enable the Mega Menu settings.", "megamenu") . "</p>";
 
         } else { ?>
 
             <?php if ( count( $tagged_menu_locations ) == 1 ) : ?>
-            
-                <?php 
+
+                <?php
 
                 $locations = array_keys( $tagged_menu_locations );
                 $location = $locations[0];
 
                 if (isset( $tagged_menu_locations[ $location ] ) ) {
-                    $this->settings_table( $location, $saved_settings ); 
+                    $this->settings_table( $location, $saved_settings );
                 }
-                
+
                 ?>
 
             <?php else: ?>
@@ -224,7 +231,7 @@ class Mega_Menu_Nav_Menus {
                 <div id='megamenu_accordion'>
 
                     <?php foreach ( $theme_locations as $location => $name ) : ?>
-                    
+
                         <?php if ( isset( $tagged_menu_locations[ $location ] ) ): ?>
 
                             <h3 class='theme_settings'><?php echo esc_html( $name ); ?></h3>
@@ -232,15 +239,15 @@ class Mega_Menu_Nav_Menus {
                             <div class='accordion_content' style='display: none;'>
                                 <?php $this->settings_table( $location, $saved_settings ); ?>
                             </div>
-                            
+
                         <?php endif; ?>
-                    
+
                     <?php endforeach;?>
                 </div>
 
             <?php endif; ?>
 
-            <?php 
+            <?php
 
             submit_button( __( 'Save' ), 'button-primary alignright');
 
@@ -275,7 +282,7 @@ class Mega_Menu_Nav_Menus {
                 <td><?php _e("Effect", "megamenu") ?></td>
                 <td>
                     <select name='megamenu_meta[<?php echo $location ?>][effect]'>
-                    <?php 
+                    <?php
 
                         $selected = isset( $settings[$location]['effect'] ) ? $settings[$location]['effect'] : 'disabled';
 
@@ -307,7 +314,7 @@ class Mega_Menu_Nav_Menus {
                 <td>
 
                     <select name='megamenu_meta[<?php echo $location ?>][theme]'>
-                        <?php 
+                        <?php
                             $style_manager = new Mega_Menu_Style_Manager();
                             $themes = $style_manager->get_themes();
 
@@ -393,7 +400,6 @@ class Mega_Menu_Nav_Menus {
         return $nav_menu_selected_id;
 
     }
-
 }
 
 endif;

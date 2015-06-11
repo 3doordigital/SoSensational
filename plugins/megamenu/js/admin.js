@@ -38,9 +38,9 @@
             $.ajax({
                 type: 'POST',
                 url: ajaxurl,
-                data: { 
-                    action: "mm_get_lightbox_html", 
-                    _wpnonce: megamenu.nonce, 
+                data: {
+                    action: "mm_get_lightbox_html",
+                    _wpnonce: megamenu.nonce,
                     menu_item_id: panel.settings.menu_item_id,
                     menu_item_depth: panel.settings.menu_item_depth,
                     menu_id: panel.settings.menu_id
@@ -55,14 +55,14 @@
                     $('#cboxLoadingGraphic').hide();
                     $('#cboxLoadingOverlay').remove();
                 },
-                success: function(response) { 
+                success: function(response) {
                     var json = $.parseJSON(response.data);
 
                     var header_container = $("<div />").addClass("mm_header_container");
 
                     var title = $("<div />").addClass("mm_title").html(panel.settings.menu_item_title);
 
-                    var saving = $("<div class='mm_saving '><div class='spinner'></div><div class='text'>" + megamenu.saving + "</div></div>");
+                    var saving = $("<div class='mm_saving '>" + megamenu.saving + "</div>");
 
                     header_container.append(title).append(saving);
 
@@ -93,7 +93,7 @@
                         });
 
                         if (idx == 'menu_icon') {
-                        
+
                             var form = content.find('form');
 
                             // bind save button action
@@ -118,7 +118,7 @@
                         }
 
                         if (idx == 'general_settings') {
-                        
+
                         }
 
                         if (idx == 'mega_menu') {
@@ -245,7 +245,7 @@
                             content.show();
                         });
 
-                        if ( ( panel.settings.menu_item_depth == 0 && idx == 'mega_menu' ) || 
+                        if ( ( panel.settings.menu_item_depth == 0 && idx == 'mega_menu' ) ||
                              ( panel.settings.menu_item_depth > 0 && idx == 'general_settings' ) ) {
                             content.show();
                             tab.addClass('active');
@@ -255,9 +255,10 @@
                         content_container.append(content);
                     });
 
-                    $('#cboxLoadedContent').trigger('megamenu_content_loaded');
                     $('#cboxLoadedContent').addClass('depth-' + panel.settings.menu_item_depth).append(header_container).append(tabs_container).append(content_container);
                     $('#cboxLoadedContent').css({'width': '100%', 'height': '100%', 'display':'block'});
+                    $('#cboxLoadedContent').trigger('megamenu_content_loaded');
+
                 }
             });
 
@@ -268,21 +269,15 @@
         }
 
         var end_saving = function() {
-
-            $('.mm_saving').addClass("saved");
-
-            $('.mm_saving').delay(500).fadeOut('fast', function() {
-                $('.mm_saving').removeClass("saved");
-            });
-
+            $('.mm_saving').fadeOut('fast');
         }
 
         var add_events_to_widget = function (widget) {
 
-            var widget_spinner = widget.find(".spinner");
+            var widget_title = widget.find(".widget-title h4");
             var expand = widget.find(".widget-expand");
             var contract = widget.find(".widget-contract");
-            var edit = widget.find(".widget-edit");
+            var edit = widget.find(".widget-action");
             var widget_inner = widget.find(".widget-inner");
             var widget_id = widget.attr("data-widget-id");
             var menu_item_id = widget.attr("data-menu-item-id");
@@ -405,16 +400,17 @@
 
                 if (! widget.hasClass("open") && ! widget.data("loaded")) {
 
-                    widget_spinner.show();
+                    widget_title.addClass('loading');
 
                     // retrieve the widget settings form
                     $.post(ajaxurl, {
                         action: "mm_edit_widget",
                         widget_id: widget_id,
                         _wpnonce: megamenu.nonce
-                    }, function (form) {
+                    }, function (response) {
 
-                        var $form = $(form);
+                        var $response = $(response);
+                        var $form = $response.find('form');
 
                         // bind delete button action
                         $(".delete", $form).on("click", function (e) {
@@ -455,11 +451,17 @@
 
                         });
 
-                        widget_inner.html($form);
+                        widget_inner.html($response);
 
                         widget.data("loaded", true).toggleClass("open");
 
-                        widget_spinner.hide();
+                        widget_title.removeClass('loading');
+
+                        // Init Black Studio TinyMCE
+                        if ( widget.is( '[id*=black-studio-tinymce]' ) ) {
+                            bstw( widget ).deactivate().activate();
+                        }
+
                     });
 
                 } else {
@@ -493,7 +495,7 @@ jQuery(function ($) {
     });
 
     $('#megamenu_accordion').accordion({
-        heightStyle: "content", 
+        heightStyle: "content",
         collapsible: true,
         active: false,
         animate: 200

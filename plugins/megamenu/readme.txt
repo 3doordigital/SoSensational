@@ -1,9 +1,9 @@
 === Plugin Name ===
 Contributors: megamenu
-Tags: menu, mega menu, navigation, menu icons, menu style, responsive menu, megamenu, widget, dropdown menu, drag and drop, hover, click, responsive, retina, theme editor, widget, sidebar, icons, dashicons
+Tags: menu, mega menu, navigation, hamburger, menu icons, menu style, responsive menu, megamenu, widget, dropdown menu, drag and drop, hover, click, responsive, retina, theme editor, menu widget, sidebar, icons, dashicons
 Requires at least: 3.8
 Tested up to: 4.2
-Stable tag: 1.7.3.1
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,18 @@ See https://maxmegamenu.com for more screenshots
 
 == Changelog ==
 
+= 1.8 =
+
+* New Feature: Menu Theme Import/Export
+* New Feature: Create extra menu locations for use in shortcodes & the MMM widget
+* Fix: Compatibility with Black Studio TinyMCE widget
+* Fix: Save spinners not appearing in WordPress 4.2
+* Fix: Empty mega menu settings lightbox (caused by conflicting plugins outputting PHP warnings)
+* Fix: Incompatibility with Ultimate Member
+* Fix: Icon colours in Advada Theme
+* Change: Default CSS Output set to Filesystem
+* Add max_mega_menu_is_enabled function for easier theme integration
+
 = 1.7.4 =
 
 * New Feature: Max Mega Menu widget to display a menu location within a sidebar
@@ -97,7 +109,7 @@ See https://maxmegamenu.com for more screenshots
 
 = 1.7.3.1 =
 
-* Fix: A CSS conflict with Suffusion theme (and possibly others) which was uncovered in v1.7.3 
+* Fix: A CSS conflict with Suffusion theme (and possibly others) which was uncovered in v1.7.3
 
 = 1.7.3 =
 

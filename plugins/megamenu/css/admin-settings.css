@@ -15,6 +15,7 @@
 .appearance_page_megamenu_settings .megamenu_left ul li a:hover,
 .appearance_page_megamenu_settings .megamenu_left ul li a.active {
     border-left: 2px solid #0074a2;
+    color: #0074a2;
 }
 .appearance_page_megamenu_settings *:focus {
 	box-shadow: 0 0 0;
@@ -29,6 +30,7 @@
 	border-left: 2px solid white;
 	outline: 0;
 }
+
 
 .appearance_page_megamenu_settings .megamenu_left ul li.error {
 	border-left: 3px solid #dd3d36;
@@ -110,13 +112,13 @@
 }
 .appearance_page_megamenu_settings .megamenu_outer_wrap .megamenu_submit p {
 	margin: 0;
-	padding: 0;	
+	padding: 0;
 }
 .appearance_page_megamenu_settings .megamenu_outer_wrap .megamenu_submit .mega_right {
 	text-align: right;
 }
 .appearance_page_megamenu_settings .megamenu_outer_wrap .megamenu_submit .mega_right a {
-	color: red;
+	color: #a00;
 }
 .appearance_page_megamenu_settings .megamenu_outer_wrap .megamenu_header {
 	background: white;
@@ -171,6 +173,9 @@
 .appearance_page_megamenu_settings .megamenu_right .menu_settings tr:first-child td {
 	border-top: 0;
 }
+.appearance_page_megamenu_settings .megamenu_right .menu_settings th {
+	text-align: left;
+}
 .appearance_page_megamenu_settings .megamenu_right .menu_settings td {
 	padding-bottom: 25px;
 	padding-top: 10px;
@@ -215,7 +220,6 @@
 }
 
 .appearance_page_megamenu_settings .megamenu_right .menu_settings td.mega-value .mega-description {
-	text-indent: 2px;
 	margin-top: 5px;
 }
 
@@ -236,6 +240,14 @@
 }
 .appearance_page_megamenu_settings .megamenu_right .menu_settings table input.mega-setting-title {
 	width: 100px;
+}
+
+.appearance_page_megamenu_settings .megamenu_right textarea {
+	width: 100%;
+	height: 150px;
+	font-family: monospace;
+	line-height: 1.5em;
+	font-size: 0.8em;
 }
 
 .appearance_page_megamenu_settings .megamenu_right .menu_settings table textarea {
@@ -263,6 +275,10 @@
 .appearance_page_megamenu_settings .megamenu_right .menu_settings table label {
     font-size: 0.9em;
 }
+.appearance_page_megamenu_settings .megamenu_right .menu_settings table .wide input[type=text] {
+	width: 300px;
+}
+
 .appearance_page_megamenu_settings .megamenu_right .menu_settings table input[type=submit] {
 	width: auto;
 }
@@ -273,6 +289,7 @@
 }
 .appearance_page_megamenu_settings .megamenu_right .menu_settings table {
 	width: 100%;
+	border-collapse: collapse;
 }
 .appearance_page_megamenu_settings .megamenu_right .menu_settings table label span.mega-short-desc {
 	font-size: 0.8em;
@@ -307,10 +324,13 @@
 	border-left: 4px solid #7ad03a;
 	background: #fff;
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-	padding: 7px 0 7px 15px;
+	padding: 7px 0 7px 7px;
 	margin: 0 0 20px 0;
 }
-
+.appearance_page_megamenu_settings .megamenu_wrap .success .dashicons {
+	color: #7ad03a;
+	margin-right: 7px;
+}
 .appearance_page_megamenu_settings .megamenu_right .menu_settings select.icon_dropdown {
 	margin-right: 0;
 }
@@ -367,4 +387,81 @@
 	box-shadow: inset 0 1px 0 #fff;
 	float: left;
 	cursor: default;
+}
+
+.appearance_page_megamenu_settings .megamenu_right .mega-location {
+	border: 1px solid #e5e5e5;
+  	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  	box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+	margin-bottom: 15px;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location:hover,
+.appearance_page_megamenu_settings .megamenu_right .mega-location.mega-open {
+	border-color: #ccc;
+	opacity: 1;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-location-header {
+	width: 100%;
+	cursor: pointer;
+	line-height: 40px;
+	padding: 0 15px;
+	box-sizing: border-box;
+	font-weight: bold;
+	background: #f7f7f7;
+	color: #777;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-location-header:hover {
+	background: #f1f1f1;
+	color: #444;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location.mega-open .mega-location-header {
+	background: #f1f1f1;
+	color: #444;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-status:before,
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-assigned-menu:before,
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-location-header-indicator:after {
+	font: 400 20px/40px dashicons;
+	content: "\f142";
+	speak: none;
+	padding: 0;
+	display: inline-block;
+	vertical-align: top;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-location-header-indicator {
+	float: right;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location.mega-closed .mega-location-header-indicator:after {
+	content: "\f140";
+}
+.appearance_page_megamenu_settings .mega-delete {
+	margin-bottom: 15px;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-inner {
+	padding: 0 10px;
+	border-top: 1px solid #ddd;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-assigned-menu:before {
+	content: "\f333";
+	font-size: 16px;
+	margin-right: 2px;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-status:before {
+	content: "\f147";
+	font-size: 16px;
+	margin-right: 2px;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-status,
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-assigned-menu {
+	float: right;
+	text-transform: uppercase;
+	font-weight: bold;
+	opacity: 0.7;
+	margin-right: 15px;
+	font-size: 0.8em;
+}
+.appearance_page_megamenu_settings .megamenu_right .mega-location .mega-inner textarea {
+	height: 30px;
 }
