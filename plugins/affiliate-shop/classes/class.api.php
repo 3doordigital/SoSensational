@@ -41,7 +41,7 @@
 			global $wpdb;
 			$table_name = $wpdb->prefix . "feed_data";
 			$query ="
-				SELECT * 
+				SELECT SQL_CALC_FOUND_ROWS * 
 				FROM 
 				$table_name 
 				WHERE MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE)	";
@@ -52,9 +52,10 @@
 			$query2 = $query." LIMIT $offset, $depth";
 			//echo $query2;
 			//$out = $query;
-			$totalres = $wpdb->get_results( $query );
-			$products['total']['total'] = $wpdb->num_rows;
+			//$totalres = $wpdb->get_results( $query );
+			
 			if ( $result = $wpdb->get_results( $query2, ARRAY_A	) ) {
+				$totalres = $wpdb->get_var( "SELECT FOUND_ROWS();" );
 				foreach( $result as $product ) {
 					
 					$pid = explode( '_', $product['product_id'] );
@@ -101,6 +102,9 @@
 				}
 				
 			}
+			
+			//print_var( $result );
+			$products['total']['total'] = $totalres;
 			return $products;
 		}
 		
