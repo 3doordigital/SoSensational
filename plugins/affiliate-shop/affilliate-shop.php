@@ -851,19 +851,29 @@ class WordPress_Affiliate_Shop {
 	
 	public function get_product_terms( $taxonomy ) {
 		$arg = $this->shop_args( true );
+		/*print_var( $arg );
+		
+		global $wpdb;
+		
+		$query = "
+			SELECT $wpdb->term_taxonomy.term_taxonomy_id FROM $wpdb->posts
+			LEFT JOIN $wpdb->term_relationships ON
+			($wpdb->posts.ID = $wpdb->term_relationships.object_id)
+			LEFT JOIN $wpdb->term_taxonomy ON
+			($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)
+			WHERE $wpdb->posts.post_status = 'publish'
+			AND $wpdb->posts.post_type = 'wp_aff_products'
+			GROUP BY $wpdb->term_taxonomy.term_taxonomy_id
+			ORDER BY $wpdb->term_taxonomy.term_taxonomy_id ASC
+			";
+		$results = $wpdb->get_results($query);
+		print_var( $results );*/
 		$query = new WP_Query( $arg );
 		$fn_cats = array();
 		foreach($query->posts AS $post) {
 			$fn_temp_cats = wp_get_post_terms( $post->ID, $taxonomy );
 			foreach( $fn_temp_cats as $fn_temp_cat ) {
 				$fn_cats[] = $fn_temp_cat->term_id;	
-				$parent  = get_term_by( 'id', $fn_temp_cat->term_id, $taxonomy);
-				while ($parent->parent != '0'){
-					$term_id = $parent->parent;
-					$fn_cats[] = $term_id;
-					$parent  = get_term_by( 'id', $term_id, $taxonomy);
-				}
-					
 			}
 		}
 		$fn_cats = array_unique( $fn_cats );
