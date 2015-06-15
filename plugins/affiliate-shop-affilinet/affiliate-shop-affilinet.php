@@ -76,37 +76,17 @@ class WordPress_Affiliate_Shop_Affilinet {
 	*/ 
 	
 	public function merchants() {
+		$array = array();
+		$data = file_get_contents( 'https://product-api.affili.net/V3/productservice.svc/JSON/GetShopList?PublisherId=705085&password=B6dU3k5cnxe3NMq86MdM', FILE_TEXT );
+		$data2 = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data);
+		$data2 = json_decode( $data2 );
 		
 		
-		$logon = "https://api.affili.net/V2.0/Logon.svc?wsdl";
-		$stats = "https://api.affili.net/V2.0/PublisherProgram.svc?wsdl";
-		
-		$Username   = "705085"; // the publisher ID
-		$Password   = "CCyNKACOOXZCBhwmYbwT"; // the publisher web services password
-		
-		$SOAP_LOGON = new SoapClient($logon);
-		$Token      = $SOAP_LOGON->Logon(array(
-					 'Username'  => $Username,
-					 'Password'  => $Password,
-					 'WebServiceType' => 'Publisher'
-					 ));
-		
-		$params = array(
-				   'Query' => '' 
-				  );
-		
-		$SOAP_REQUEST = new SoapClient($stats);
-		$req = $SOAP_REQUEST->GetMyPrograms(array(
-					'CredentialToken' => $Token,
-					'GetProgramsRequestMessage' => $params
-					));
-		
-		//print_var($req);
-		foreach ($req->Programs->ProgramSummary as $item) {
+		foreach ($data2->Shops as $item) {
 			
-			$array['ID-'.$item->ProgramId] = array(
-				'ID'        => ( string ) $item->ProgramId,
-				'name'     	=> ( string ) $item->ProgramTitle,
+			$array['ID-'.$item->ShopId] = array(
+				'ID'        => ( string ) $item->ShopId,
+				'name'     	=> ( string ) $item->ShopTitle,
 				'aff'     	=> 'affilinet',
 			);
 		}
@@ -121,7 +101,7 @@ class WordPress_Affiliate_Shop_Affilinet {
 	* 
 	* @return array	$out
 	*/ 
-	public function update_feed( $merchant, $merch ) {
+	public function update_feed( $merchant, $merch = NULL ) {
 		$out['success'] = 0;
 		$out['error'] = 0;
 		$out = array();
@@ -130,100 +110,88 @@ class WordPress_Affiliate_Shop_Affilinet {
 		if( ! file_exists( $user_dirname ) )
 			wp_mkdir_p( $user_dirname );
 
-		$local_file = $user_dirname.'/local.xml.gz';
-		$uc_local_file = $user_dirname.'/local1.xml';
-		$server_file = $merchant.'_2476350_mp.xml.gz';
-		$contents = '';
-		$data = array();
+		$uc_local_file = $user_dirname.'/affilinet.csv';
 		
-		$conn_id = @ftp_connect('aftp.linksynergy.com');
-		$login_result = @ftp_login($conn_id, 'cyndylessing', 'zbrbZdyk');
-				
-		if (@ftp_get($conn_id, $local_file, $server_file, FTP_BINARY)) {
-			if ( function_exists( 'ini_set' ) ) {
-				@ini_set('memory_limit', '2048M');
-			}
-			$out['status'] = 1;
-			ftp_close($conn_id);
-			$fp1 = fopen($uc_local_file, "w");
-			$fp = gzopen( $local_file, "r");
-			while ($line = gzread($fp,1024)) {
-				fwrite($fp1, $line, strlen($line));
-			}
-			fclose( $fp1 );
-			gzclose($fp);
-			
-			//$xml = simplexml_load_file( $uc_local_file );
-			$reader = new XMLReader();
-			$reader->open($uc_local_file);
-			
-			while ($reader->read() && $reader->name !== 'product');
-			while ($reader->name === 'product')
-			{
-				$product = simplexml_load_string($reader->readOuterXML());
-				
-			
-				//print_var( $product );
-				if( isset( $product->price->sale ) && $product->price->sale < $product->price->retail ) {
-					$price = number_format( (int) $product->price->sale, 2, '.', '' );	
-					$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
-				} else {
-					$price = number_format( (int) $product->price->retail, 2, '.', '' );
-					$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
-				}
-				
-				$data = array(
-					'ID'        => (string) $product['product_id'],
-					'aff'     	=> 'linkshare',    
-					'title'     => trim( ucwords( strtolower( (string) $product['name'] ) ) ),
-					'brand'     => trim( ucwords( strtolower( (string) $xml->header->merchantName ) ) ),
-					'img'       => (string) $product->URL->productImage,
-					'desc'      => (string) $product->description->short,
-					'price'     => $price,
-					'rrp'       => $rrp,
-					'link'      => (string) $product->URL->product
-				);
-				global $wpdb;
-				//print_var($product);
-				$table_name = $wpdb->prefix . "feed_data";
-				$replace = $wpdb->insert( $table_name, array( 
-						'product_id' => $merchant.'_'.$data['ID'], 
-						'product_aff' => $data['aff'],
-						'product_merch' => $merchant,
-						'product_title' => $data['title'],
-						'product_brand' => $merch,
-						'product_image' => $data['img'],
-						'product_desc' => $data['desc'],
-						'product_price' => $data['price'],
-						'product_rrp' => $data['rrp'],
-						'product_link' => $data['link'], 
-					)
-				);
-				//echo $replace;
-				switch ($replace) {
-					case false :
-						//die( $wpdb->last_query );
-						$out['message'][] = $wpdb->last_query;
-						$out['error'] ++;
-						break;
-					case 1 :
-						$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
-						$out['success'] ++;
-						break;
-					default :
-						$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
-						break;	
-				}
-				unset( $data );
-				$reader->next('product');
-			}
-			//print_var( $data );
-			
-			
-		} else {
-			$out['status'] = 0;
-			$out['message']	= 'FTP Failed';
+		$data = array();
+		if ( function_exists( 'ini_set' ) ) {
+			@ini_set('memory_limit', '2048M');
 		}
+		set_time_limit(0);
+		$url = 'http://productdata-download.affili.net/affilinet_products_'.$merchant.'_705085.CSV?auth=I40KPXuRs0dGogcfI09H&type=CSV';
+		$fp = fopen($uc_local_file, "w+");
+		$ch = curl_init($url);
+		$options = array(
+			CURLOPT_URL            => $url,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_HEADER         => false,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_AUTOREFERER    => true,
+			CURLOPT_CONNECTTIMEOUT => 120,
+			CURLOPT_TIMEOUT        => 120,
+			CURLOPT_MAXREDIRS      => 10,
+			CURLOPT_FILE		   => $fp
+		);
+		curl_setopt_array( $ch, $options );
+		curl_exec($ch);
+		if(!curl_errno($ch))
+		{
+			$out['status'] = 1;	
+		}
+		curl_close($ch);
+		fclose($fp);
+
+		if(($handle = fopen( $uc_local_file, 'r')) !== false) {
+				global $wpdb;
+				// get the first row, which contains the column-titles (if necessary)
+				$header = fgetcsv($handle, 0, ';');
+				//print_var( $header );
+				$out['status'] = 1;	
+				$i = 0 ;
+				// loop through the file line-by-line
+				while(($data = fgetcsv($handle, 0, ';')) !== false )
+				{
+					set_time_limit(0);
+					$i ++;
+					$data = array_combine( $header, $data );
+					//print_var( $data );
+					
+					$table_name = $wpdb->prefix . "feed_data";
+					
+					$datainsert = array( 
+							'product_id' => $merchant.'_'.$data['ArtNumber'], 
+							'product_aff' => 'affilinet',
+							'product_merch' => sanitize_text_field( $merchant ),
+							'product_title' => sanitize_text_field( $data['Title'] ),
+							'product_brand' => sanitize_text_field( $merch ),
+							'product_image' => esc_url( $data['Img_url'] ),
+							'product_desc' => sanitize_text_field( $data['Description_Short'] ),
+							'product_price' => sanitize_text_field( str_replace('GBP', '', $data['DisplayPrice'] ) ),
+							'product_rrp' => sanitize_text_field( str_replace('GBP', '', $data['DisplayPrice'] ) ),
+							'product_link' => esc_url( $data['Deeplink1'] ), 
+						);
+					$replace = $wpdb->insert( $table_name, $datainsert );
+					
+					switch ($replace) {
+						case false :
+							//die( $wpdb->last_query );
+							$out['message'][] = $wpdb->last_query;
+							$out['error'] ++;
+							break;
+						case 1 :
+							$out['message'][] = 'Inserted '.$merchant.'_'.$data['ArtNumber'];
+							$out['success'] ++;
+							break;
+						default :
+							$out['message'][] = 'Replaced '.$merchant.'_'.$data['ArtNumber'];
+							break;	
+					}
+					//print_var( $datainsert );
+					unset($data);
+					unset($datainsert);
+				}
+				fclose($handle);
+		} 
+		
 		return $out;
 	}
 }

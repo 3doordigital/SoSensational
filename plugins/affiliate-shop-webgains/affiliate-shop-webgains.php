@@ -159,7 +159,7 @@ class WordPress_Affiliate_Shop_Webgains {
 			if( ! file_exists( $user_dirname ) )
 				wp_mkdir_p( $user_dirname );
 	
-			$uc_local_file = $user_dirname.'/webgainsproducts-'.$merchant.'.csv';
+			$uc_local_file = $user_dirname.'/webgainsproducts.csv';
 			
 			$url = 'http://www.webgains.com/affiliates/datafeed.html?action=download&campaign=71942&programs='.$merchant.'&categories=all&fields=extended&fieldIds=deeplink,description,image_url,price,product_id,product_name,program_id,program_name,recommended_retail_price,Full_merchant_price&format=csv&separator=comma&zipformat=none&stripNewlines=1&apikey=f04b19e18a7c601da209cee4036e4608';
 			$fp = fopen($uc_local_file, "w+");
