@@ -56,6 +56,36 @@
 			$products['total']['total'] = $wpdb->num_rows;
 			if ( $result = $wpdb->get_results( $query2, ARRAY_A	) ) {
 				foreach( $result as $product ) {
+					
+					$pid = explode( '_', $product['product_id'] );
+					$pid = $pid[1];
+					
+					$qry_args = array(
+						'post_status' => 'publish', 
+						'post_type' => 'wp_aff_products', 
+						'posts_per_page' => -1,
+						'orderby' => 'post_date',
+						'order' => 'DESC' ,
+						'meta_query' => array(
+							'relation' => 'OR',
+							array(
+							 'key' => 'wp_aff_product_id',
+							 'value' => $product['product_id'],
+							 'compare' => '=' // this should work...
+							),
+							array(
+							 'key' => 'wp_aff_product_id',
+							 'value' => $pid,
+							 'compare' => '=' // this should work...
+							),
+						)
+					);
+					$posts = get_posts( $qry_args );
+					if( count( $posts ) > 0 ) {
+						$exists = 1;
+					} else {
+						$exists = 0;
+					}
 					$products['items']['ID-'.$product['product_id']] = array (
 						'ID'        => $product['product_id'],
 						'aff'     	=> $product['product_aff'],   
@@ -66,7 +96,7 @@
 						'price'     => number_format( $product['product_price'], 2, '.', '' ),
 						'rrp'       => number_format( $product['product_rrp'], 2, '.', ''  ),
 						'link'      => addslashes( $product['product_link'] )	,
-						'exists'	=> 0
+						'exists'	=> $exists
 					);	
 				}
 				
