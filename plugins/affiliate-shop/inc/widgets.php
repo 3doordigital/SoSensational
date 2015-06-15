@@ -115,7 +115,12 @@ class aff_brand_widget extends WP_Widget {
         }
 		
 		global $wp_aff;
-        $fn_include = $wp_aff->get_product_terms('wp_aff_brands');
+        if( $_SERVER['REQUEST_URI'] == '/shop/' ) {
+			$fn_include = $wp_aff->get_product_terms('wp_aff_brands');
+		} else {
+			$fn_include = '';
+		}
+		
 		
         echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_brand_filter" method="POST">';
             echo '<div class="wp_aff_brands navbar navbar-default">';
