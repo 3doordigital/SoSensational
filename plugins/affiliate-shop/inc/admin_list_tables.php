@@ -1334,7 +1334,7 @@ function process_bulk_action() {
 function prepare_items() {
 	//print_var( $this->data );
 	$data = $this->data['items'];
-    $per_page = 50;
+    $per_page = $this->data['total']['depth'];
 
     $columns = $this->get_columns();
     $hidden = array();

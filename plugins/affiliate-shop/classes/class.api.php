@@ -32,7 +32,7 @@
 			$products['items'] = array();
 			$search = '';
 			$offset = $depth * ( $page - 1);
-			
+			$products['total']['depth'] = $depth;
 			$terms = explode( ' ', $term );
 			foreach( $terms as $term ) {
 				$search .= '+'.$term.' ';	
