@@ -149,6 +149,7 @@ get_header();
             </div>
             <div class="products">
                 <?php
+					
                     global $wp_aff;
 					global $paged;
 					$args = $wp_aff->shop_args();
