@@ -870,14 +870,15 @@ class WordPress_Affiliate_Shop {
 		print_var( $results );*/
 		$query = new WP_Query( $arg );
 		$fn_cats = array();
+		$ids = array();
 		foreach($query->posts AS $post) {
-			$fn_temp_cats = wp_get_post_terms( $post->ID, $taxonomy );
-			foreach( $fn_temp_cats as $fn_temp_cat ) {
-				$fn_cats[] = $fn_temp_cat->term_id;	
-			}
+			$ids[] = $post->ID;
 		}
-		$fn_cats = array_unique( $fn_cats );
+		$cats = wp_get_object_terms( $ids, $taxonomy, array( 'fields' => 'ids' )); 
+		
+		$fn_cats = array_unique( $cats );
 		$fn_cats = implode( ',', $fn_cats );
+		//print_var( $fn_cats );
 		if( $fn_cats == '') {
 			return 'none';
 		} else {
