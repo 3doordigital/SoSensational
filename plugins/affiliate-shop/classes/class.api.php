@@ -63,7 +63,7 @@
 					$qry_args = array(
 						'post_status' => 'publish', 
 						'post_type' => 'wp_aff_products', 
-						'posts_per_page' => -1,
+						'posts_per_page' => 1,
 						'orderby' => 'post_date',
 						'order' => 'DESC' ,
 						'meta_query' => array(
