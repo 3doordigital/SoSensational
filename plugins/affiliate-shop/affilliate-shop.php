@@ -758,7 +758,6 @@ class WordPress_Affiliate_Shop {
 										'compare' => '!=',
 									);
 							$args['orderby'] = 'rand';
-							$args['order'] = 'DESC';
 						} elseif( $wp_query->query_vars['shop-option'] == 'sale' ) {
 							$args['meta_query']['relation'] = 'AND';
 							$args['meta_query'][] = array(
@@ -838,7 +837,7 @@ class WordPress_Affiliate_Shop {
 																'inclusive' => true,
 															),
 														);
-														$args['orderby'] = 'post_date';
+														$args['orderby'] = 'rand';
 														$args['order'] = 'DESC';
 														break;
 													case 'our-picks' :
@@ -906,8 +905,8 @@ class WordPress_Affiliate_Shop {
             				$args['order'] 		= 'DESC';
 							break;	
 					}
-				} else {
-					$args['orderby']	= 'post_date';
+				} elseif( !isset( $args['orderby'] ) ) {
+					$args['orderby']	= 'rand';
             		$args['order'] 		= 'DESC';
 				}
 				//print_var( $args );
