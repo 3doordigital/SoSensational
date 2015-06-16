@@ -3093,7 +3093,7 @@ class WordPress_Affiliate_Shop {
 			$fp = fopen($merchantlog, 'w');
 			$header = array( "Number", "Merchant ID", "Merchant Name", "Affiliate", "Status", "Message" );
 			fputcsv($fp, $header, '|');
-			mail( 'dan@tailored.im', 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
+			mail( get_option( 'admin_email' ), 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
 			$i = 1;
 			global $wpdb;
 			$table_name = $wpdb->prefix . "feed_data";
@@ -3113,14 +3113,14 @@ class WordPress_Affiliate_Shop {
 				$i++;
 			}	
 			fclose( $fp );
-			mail( 'dan@tailored.im', 'Merchant Cron Ended', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
+			mail( get_option( 'admin_email' ), 'Merchant Cron Ended', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
 			
 			$i = 1;
 			
 			$fp = fopen($productlog, 'w');
 			$header = array( "Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Price", "RRP", "Link", "Status" );
 			fputcsv($fp, $header, '|');
-			mail( 'dan@tailored.im', 'Product Cron Started', "Product Log: $productlog", 'From:server@sosensational.co.uk' );
+			mail( get_option( 'admin_email' ), 'Product Cron Started', "Product Log: $productlog", 'From:server@sosensational.co.uk' );
 			$products = $this->ajax_update_get_count( true );
 			$total = $products['total'];
 			foreach( $products['ids'] as $product ) {
@@ -3143,7 +3143,7 @@ class WordPress_Affiliate_Shop {
 				$i++;
 			}
 			fclose( $fp );
-			mail( 'dan@tailored.im', 'Product Cron Ended', "Product Log: $productlog", 'From:server@sosensational.co.uk' );	
+			mail( get_option( 'admin_email' ), 'Product Cron Ended', "Product Log: $productlog", 'From:server@sosensational.co.uk' );	
 			
 			//die();
 	}
