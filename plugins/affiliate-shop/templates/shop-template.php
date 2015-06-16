@@ -227,7 +227,7 @@ get_header();
 									$options = $wp_aff->get_option();
 									//print_var($options);
 									$pastdate = strtotime('-'.$options['new_days'].' days');
-									echo $pastdate.'::'.strtotime( $post->post_date );
+									//echo $pastdate.'::'.strtotime( $post->post_date );
 									if ( $pastdate <= strtotime( $post->post_date ) ) {
 										echo '<div class="product-new"><span class="sr-only">New In!</span></div>';
 									}	
