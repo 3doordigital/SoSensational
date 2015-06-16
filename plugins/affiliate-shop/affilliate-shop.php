@@ -751,13 +751,13 @@ class WordPress_Affiliate_Shop {
 									'inclusive' => true,
 								),
 							);
-							$args['meta_query']['relation'] = 'AND';
+							$args['meta_query']['relation'] = 'OR';
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_sale',
 										'value'   => '1',
 										'compare' => '!=',
 									);
-							$args['orderby'] = 'post_date';
+							$args['orderby'] = 'rand';
 							$args['order'] = 'DESC';
 						} elseif( $wp_query->query_vars['shop-option'] == 'sale' ) {
 							$args['meta_query']['relation'] = 'AND';
