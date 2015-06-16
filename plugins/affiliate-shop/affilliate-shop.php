@@ -20,7 +20,12 @@ class WordPress_Affiliate_Shop {
 	private $plugin_url;
     private $text_domain    = 'wpaffshop';
     private $admin_icon     = 'dashicons-cart';
-    public $option_name    = 'wp_aff_apis';
+    public  $option_name    = 'wp_aff_apis';
+	// Feed manager options
+	private $man_admin_icon     = 'dashicons-admin-generic';
+    private $man_option_name    = 'wp_aff_man';
+	private $man_page_title 	= 'Affiliate Feed Manager';
+	private $db_version		= '1.1';
 	/**
 	 * Creates or returns an instance of this class.
 	 */
@@ -43,6 +48,7 @@ class WordPress_Affiliate_Shop {
 		$this->plugin_url  = plugin_dir_url( __FILE__ );
         
         $this->option = get_option( $this->option_name );
+		$this->man_option = get_option( $this->man_option_name );
 		
 		if( $this->option == FALSE ) {
 			$array = array(
@@ -122,6 +128,9 @@ class WordPress_Affiliate_Shop {
         
         add_action( 'template_redirect', array( $this, 'term_group_redirect' ) );
         
+		add_action( 'wp_ajax_get_api_merchants', array( $this, 'get_api_merchants' ) );
+		add_action( 'wp_ajax_update_merchant_feed', array( $this, 'update_merchant_feed' ) );
+		
         add_filter( 'template_include', array( $this, 'load_shop_template' ) );
         
         add_action( 'wp_logout', array( $this, 'wp_logout' ) );
@@ -289,7 +298,40 @@ class WordPress_Affiliate_Shop {
         // Finally, destroy the session.
         session_destroy(); 
     }
-	
+	/**
+	* Creates table for feed data if it doesn't exist
+	*
+	* @return nothing
+	*/ 
+	public function create_feedman_table() {
+		global $wpdb;
+		
+		$table_name = $wpdb->prefix . "feed_data"; 
+		
+		if (!empty ($wpdb->charset))
+			$charset_collate = "DEFAULT CHARACTER SET {$wpdb->charset}";
+		if (!empty ($wpdb->collate))
+			$charset_collate .= " COLLATE {$wpdb->collate}";
+				 
+		  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+			product_id varchar(255) NOT NULL,
+			product_aff varchar(255) DEFAULT NULL,
+			product_merch varchar(255) DEFAULT NULL,
+			product_title longtext DEFAULT NULL,
+			product_brand varchar(255) DEFAULT NULL,
+			product_image longtext DEFAULT NULL,
+			product_desc longtext DEFAULT NULL,
+			product_price decimal(12,2) DEFAULT NULL,
+			product_rrp decimal(12,2) DEFAULT NULL,
+			product_link longtext DEFAULT NULL,
+			UNIQUE KEY product_id (product_id),
+			PRIMARY KEY (product_id ),
+			FULLTEXT KEY product_title (product_title)
+		) {$charset_collate};";
+				
+		require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-admin/includes/upgrade.php');
+		dbDelta($sql);	
+	}
 	public function create_metadata_table( ) {
 			global $wpdb;
 		 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -329,7 +371,15 @@ class WordPress_Affiliate_Shop {
      * Place code that runs at plugin activation here.
      */
     public function activation() {
-		$this->create_metadata_table( );
+		$this->create_metadata_table();
+		$this->create_feedman_table();
+		
+		if( $this->man_option == FALSE ) {
+			$array = array(
+				'schedule' => 1
+			);
+			update_option( $this->man_option_name, $array );
+		}
 	}
     /**
      * Place code that runs at plugin deactivation here.
@@ -367,7 +417,8 @@ class WordPress_Affiliate_Shop {
         wp_enqueue_script( 'jquery' );
         wp_enqueue_script( 'jquery-effects-core' );
         wp_enqueue_script( 'jquery-effects-highlight' );
-        wp_enqueue_script( 'wp_aff_functions', $this->plugin_url . 'js/functions.js' );
+        wp_enqueue_script( 'wp_aff_functions', $this->plugin_url . 'js/shop-admin.js' );
+		wp_enqueue_script( 'wp_aff_feed_functions', $this->plugin_url . 'js/man-admin.js' );
 	}
     /**
      * Enqueue and register Admin CSS files here.
@@ -394,8 +445,12 @@ class WordPress_Affiliate_Shop {
 		$this->sizes = add_submenu_page('affiliate-shop', 'Sizes', 'Sizes', 'manage_options', 'affiliate-shop/sizes', array( $this, 'sizes_page' ));
         
 		$this->settings = add_submenu_page('affiliate-shop', 'Settings', 'Settings', 'manage_options', 'affiliate-shop/settings', array( $this, 'settings_page' ));
-        $this->add_ons = add_submenu_page('affiliate-shop', 'Add Ons', 'Add Ons', 'manage_options', 'affiliate-shop/add-ons', array( $this, 'addons_page' ));
         
+		
+		
+        add_action( "load-$this->man_settings", array ( $this, 'parse_message' ) );
+        add_action( "load-$this->man_main_page", array ( $this, 'parse_message' ) );
+		
         add_action( "load-$this->settings", array ( $this, 'parse_message' ) );
 		add_action( "load-$this->add_products", array ( $this, 'parse_message' ) );
 		add_action( "load-$this->brands", array ( $this, 'parse_message' ) );
@@ -405,6 +460,10 @@ class WordPress_Affiliate_Shop {
 		add_action( "load-$this->products", array ( $this, 'parse_message' ) );
 	}
     
+	private function man_page_title() {
+		echo '<h2>'.$this->man_page_title.'</h2>';	
+	}
+	
     public function register_widgets() {
         register_widget( 'aff_category_widget' );
         register_widget( 'aff_brand_widget' );
@@ -692,6 +751,12 @@ class WordPress_Affiliate_Shop {
 									'inclusive' => true,
 								),
 							);
+							$args['meta_query']['relation'] = 'AND';
+							$args['meta_query'][] = array(
+										'key' => 'wp_aff_product_sale',
+										'value'   => '1',
+										'compare' => '!=',
+									);
 							$args['orderby'] = 'post_date';
 							$args['order'] = 'DESC';
 						} elseif( $wp_query->query_vars['shop-option'] == 'sale' ) {
@@ -1438,7 +1503,63 @@ class WordPress_Affiliate_Shop {
         wp_safe_redirect( $url );
         exit;
     }
-    
+    /**
+	* The output for the main page of the plugin
+	*
+	* @return echo to screen
+	*/ 
+	public function main_manager_page() { ?>
+		<div class="wrap">
+			<?php $this->man_page_title(); ?>
+            <h3>Feeds</h3>
+            
+    <?php
+	}
+	
+	/**
+	* The output for the settings page of the plugin
+	*
+	* @return echo to screen
+	*/ 
+	public function manager_settings_page() { ?>
+		<div class="wrap">
+			<?php $this->man_page_title(); ?>
+            <h3>Update Feed</h3>
+            <form method="POST" action="<?php echo admin_url('admin-post.php'); ?>">                
+                <table class="form-table">
+                    <tr>
+                        <th>Update frequency</th>
+                        <td>
+                            <select name="<?php echo $this->man_option_name; ?>[product_update][frequency]" value="<?php echo ( isset( $option['product_update']['frequency'] ) ? $option['product_update']['frequency'] : '' ); ?>" id="<?php echo $this->man_option_name; ?>[product_update][frequency]">
+                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 0, true ); ?> value="0">Manual</option>
+                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 1, true ); ?> value="1">Daily</option>
+                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 2, true ); ?> value="2">Weekly</option>
+                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 3, true ); ?> value="3">Monthly</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Manual Update</th>
+                        <td><a href="<?php echo $_SERVER['REQUEST_URI']; ?>" class="button button-secondary manual_feed_update">Run Manual Update</a></td>
+                    </tr>
+                    <tr class="prod_update_row">
+                        <th>Update Progress</th>
+                        <td>
+                            <span class="update_percent">0%</span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
+                            <div><span class="update_success">0</span> Updated - <span class="update_fail">0</span> Failed to Update</div>
+                        </td>
+                    </tr>
+                </table>
+                <?php submit_button( 'Save' ); ?>
+                <input type="hidden" value="wp_man_save_feed" name="action" />
+                <?php wp_nonce_field( 'wp_man_save_feed', $this->man_option_name . '_nonce', TRUE ); ?>
+            </form>
+        </div>
+<?php
+		//$test = new WordPress_Affiliate_Shop_Affilinet;
+		//print_var( $test->update_feed( 722 ) );
+	}
+	
     public function add_products() { ?>
         <div class="wrap">
     <?php if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'manual' ) { wp_enqueue_media(); ?>
@@ -1819,7 +1940,7 @@ class WordPress_Affiliate_Shop {
                     <th width="200"></th><th>Product Name</th><th>Price</th><th>RRP</th>
                    </tr>
                    <tr>
-                        <td rowspan="6"><img style="width: 275px; height: auto;" src="<?php echo $product['img']; ?>"><input type="hidden" value="<?php echo $product['img']; ?>" name="product_image[<?php echo $i; ?>]" </td>
+                        <td rowspan="6"><img style="width: 275px; height: auto;" src="<?php echo $product['img']; ?>"><input type="hidden" value="<?php echo $product['img']; ?>" name="product_image[<?php echo $i; ?>]"> </td>
                    
                         <td>
                             <input class="large-text" type="text" name="product_name[<?php echo $i; ?>]" placeholder="" value="<?php echo ucwords( stripslashes( ($product['title']) )); ?>" id="">
@@ -1896,7 +2017,7 @@ class WordPress_Affiliate_Shop {
             <h2 class="nav-tab-wrapper">
             	<a class="nav-tab <?php echo ( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 0 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 0, $_SERVER['REQUEST_URI'] ); ?>">General Settings</a>
                 <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 1 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 1, $_SERVER['REQUEST_URI'] ); ?>">Titles and Desc's</a>
-                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 2 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 2, $_SERVER['REQUEST_URI'] ); ?>">Update Products</a>
+                <a class="nav-tab <?php echo ( isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] == 2 ? 'nav-tab-active' : '' ); ?>" href="<?php echo add_query_arg( 'tab', 2, $_SERVER['REQUEST_URI'] ); ?>">Update Feeds</a>
             </h2>
             <form method="POST" id="wp_aff_prod_search" action="<?php echo admin_url('admin-post.php'); ?>">
             <?php if( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 0 ) { ?>
@@ -2007,42 +2128,22 @@ class WordPress_Affiliate_Shop {
                     </tr>
                </table>
             <?php } elseif( !isset( $_REQUEST['tab'] ) || $_REQUEST['tab'] == 2 ) { ?>
-            	<h2>Update Products</h2>
-                
-                
-                <p>Occasionally products need to have their attributes, such as price or availability updated to match that of the merchant. You can schedule that update below, or run a manual update.</p>
-                <p><strong>Please note that this will use API credits.</strong></p>
-                <?php //print_var( $this->ajax_update_get_count() ); ?>
+            	<h3>Update Feed</h3>
+            <form method="POST" action="<?php echo admin_url('admin-post.php'); ?>">                
                 <table class="form-table">
-                	<tr>
-                    	<th>Update frequency</th>
-                        <td>
-                        	<select name="<?php echo $this->option_name; ?>[product_update][frequency]" value="<?php echo ( isset( $option['product_update']['frequency'] ) ? $option['product_update']['frequency'] : '' ); ?>" id="<?php echo $this->option_name; ?>[product_update][frequency]">
-                            	<option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 0, true ); ?> value="0">Manual</option>
-                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 1, true ); ?> value="1">Daily</option>
-                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 2, true ); ?> value="2">Weekly</option>
-                                <option <?php if( isset( $option['product_update']['frequency'] ) ) selected( $option['product_update']['frequency'], 3, true ); ?> value="3">Monthly</option>
-                            </select>
-                        </td>
-                    </tr>
                     <tr>
-                    	<th>Manual Update</th>
-                        <td><a href="<?php echo $_SERVER['REQUEST_URI']; ?>" class="button button-secondary manual_update">Run Manual Update</a></td>
+                        <th>Manual Update</th>
+                        <td><a href="<?php echo $_SERVER['REQUEST_URI']; ?>" class="button button-secondary manual_feed_update">Run Manual Update</a></td>
                     </tr>
                     <tr class="prod_update_row">
-                    	<th>Update Progress</th>
+                        <th>Update Progress</th>
                         <td>
-                        	<span class="update_percent">0%</span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
+                            <span class="update_percent">0%</span> <div id="update_cont"><div id="update_progress"></div></div> <span class="total_update"></span>
                             <div><span class="update_success">0</span> Updated - <span class="update_fail">0</span> Failed to Update</div>
                         </td>
                     </tr>
                 </table>
-            	<table id="tableout">
-                	<tr><th>Post ID</th><th>Old Title</th><th>Merchant</th><th>New ID</th><th>Found Title</th><th>Affilliate</th><th>Found By</th><th>Updated?</th><th>Sale</th></tr>
-                    <tbody>
-                    
-                    </tbody>
-                </table>
+            </form>
                 
                 
             <?php } ?>
@@ -2054,28 +2155,6 @@ class WordPress_Affiliate_Shop {
             </div>
         <?php //$this->ajax_update_get_count(); ?>
     <?php } 
-    public function addons_page() { ?>
-        <div class="wrap">
-            <h2>Add Ons <a href="<?php print admin_url('admin.php?page=affiliate-shop&action=add-category'); ?>" class="add-new-h2">Search Add Ons</a></h2>
-            <?php   
-                    $listAddOns = new AddOnsTable();
-                    $listAddOns->prepare_items();
-            ?>
-                            <form id="product-table" method="get">
-                                <!-- For plugins, we also need to ensure that the form posts back to our current page -->
-                                <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
-                                <input type="hidden" name="q" value="<?php echo $_REQUEST['q'] ?>" />
-                                <input type="hidden" name="wp_aff_merch" value="<?php echo $_REQUEST['wp_aff_merch'] ?>" />
-                                <?php
-                                    if( isset( $_REQUEST['category'] ) ) {
-                                       echo '<input type="hidden" name="category" value="'.$_REQUEST['category'].'" />';
-                                    }
-                                ?>
-                                <!-- Now we can render the completed list table -->
-                                <?php $listAddOns->display(); ?>
-                            </form>
-        </div>
-    <?php }
     public function list_brands() {
         $CategoryTable = new WP_Terms_List_Tables( array( 'taxonomy' =>  'wp_aff_brands' ) );
         $CategoryTable->prepare_items();
@@ -2947,6 +3026,127 @@ class WordPress_Affiliate_Shop {
 		} else {
 			return '';
 		}
+	}
+	
+	
+	public function get_api_merchants() {
+		
+		if( count( $this->option['apis'] ) > 0 ) {
+			global $wpdb;
+			$table_name = $wpdb->prefix . "feed_data";
+			$wpdb->query("TRUNCATE TABLE $table_name");
+				foreach( $this->option['apis'] as $affiliate ) {
+					$classname = $affiliate['class'];
+					$class = new $classname();
+					$temp[] = $class->merchants();
+				}
+				$output = array();
+				$output['items'] = array();
+				foreach( $temp as $key=>$input ) {
+					$output['items'] = array_replace( $output['items'], $input );
+				}
+				$output['total'] = count( $output['items'] );
+				$output['status'] = 1;
+				echo json_encode( $output );
+				die();
+			}
+	}
+	
+	public function cron_get_api_merchants() {
+		if( count( $this->option['apis'] ) > 0 ) {
+				foreach( $this->option['apis'] as $affiliate ) {
+					$classname = $affiliate['class'];
+					$class = new $classname();
+					$temp[] = $class->merchants();
+				}
+				$output = array();
+				$output['items'] = array();
+				foreach( $temp as $key=>$input ) {
+					$output['items'] = array_replace( $output['items'], $input );
+				}
+				$output['total'] = count( $output['items'] );
+				$output['status'] = 1;
+				return $output;
+			}
+	}
+	
+	public function update_merchant_feed( ) {
+		$classname = $this->option['apis'][$_POST['aff']]['class'];
+		$class = new $classname();
+		echo json_encode( $class->update_feed( $_POST['ID'], $_POST['merch'] ) );
+		die();
+	}
+	
+	public function cron_update_merchant_feed( $ID, $aff, $merch ) {
+		$classname = $this->option['apis'][$aff]['class'];
+		$class = new $classname();
+		return $class->update_feed( $ID, $merch );
+	}
+	
+	public function cron_process() {
+			ini_set('memory_limit', '4096M');
+			ini_set('max_execution_time', '5000');
+			
+			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.txt";
+			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
+			
+				
+			$fp = fopen($merchantlog, 'w');
+			$header = array( "Number", "Merchant ID", "Merchant Name", "Affiliate", "Status", "Message" );
+			fputcsv($fp, $header, '|');
+			mail( 'dan@tailored.im', 'Merchant Cron Started', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
+			$i = 1;
+			global $wpdb;
+			$table_name = $wpdb->prefix . "feed_data";
+			$wpdb->query("TRUNCATE TABLE $table_name");
+			$merchants = $this->cron_get_api_merchants();
+			$total = $merchants['total'];	
+			foreach( $merchants['items'] as $merchant ) {
+				//print_var( $merchant );
+				$percent = number_format( ( $i / $total ) * 100, 2 );
+				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'], $merchant['name'] );	
+				if( $data['status'] == 1 ) {
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], 'Updated - '.$data['success'].' Inserted, '.$data['error'].' Failed.', '' );
+				} else {
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'], $merchant['name'], $merchant['aff'], 'Failed - '.$data['success'].' Inserted, '.$data['error'].' Failed.' );
+				}
+				fputcsv($fp, $line, '|');
+				$i++;
+			}	
+			fclose( $fp );
+			mail( 'dan@tailored.im', 'Merchant Cron Ended', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
+			
+			$i = 1;
+			
+			$fp = fopen($productlog, 'w');
+			$header = array( "Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Price", "RRP", "Link", "Status" );
+			fputcsv($fp, $header, '|');
+			mail( 'dan@tailored.im', 'Product Cron Started', "Product Log: $productlog", 'From:server@sosensational.co.uk' );
+			$products = $this->ajax_update_get_count( true );
+			$total = $products['total'];
+			foreach( $products['ids'] as $product ) {
+				$percent = number_format( ( $i / $total ) * 100, 2 );
+				$data = $this->cron_update_product( $product['id'], $product['prod_id'], $product['link'] );
+				if( $data['html']['status'] == 1 ) {
+					
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $data['html']['item']['product_id'], $data['html']['item']['product_aff'], $data['html']['item']['product_title'], $data['html']['item']['product_brand'], $data['html']['item']['product_image'], $data['html']['item']['product_price'], $data['html']['item']['product_rrp'], $data['html']['item']['product_link'], "Updated by ID" );
+					
+				} elseif( $data['html']['status'] == 2 ) {
+					
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $data['html']['item']['product_id'], $data['html']['item']['product_aff'], $data['html']['item']['product_title'], $data['html']['item']['product_brand'], $data['html']['item']['product_image'], $data['html']['item']['product_price'], $data['html']['item']['product_rrp'], $data['html']['item']['product_link'], "Updated by URL" );
+					
+				} else {
+					
+					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $product['prod_id'], $product['aff'], $product['title'], $product['merch'], "", "", "", "", "Trashed" );
+					
+				}
+				fputcsv($fp, $line, '|');
+				$i++;
+			}
+			fclose( $fp );
+			mail( 'dan@tailored.im', 'Product Cron Ended', "Product Log: $productlog", 'From:server@sosensational.co.uk' );	
+			
+			//die();
 	}
 	
     /**
