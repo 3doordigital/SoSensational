@@ -116,6 +116,7 @@
 </div>
 <a href="#top" class="btn btn-circle top page-scroll"><i class="fa fa-angle-double-up animated"></i></a>
 <?php wp_footer(); ?>
+<?php if( !strstr( $_SERVER['REQUEST_URI'], 'competitions' ) ) { ?>
 <script type="text/javascript">
    var mfq = mfq || [];
    (function() {
@@ -124,5 +125,6 @@
        document.getElementsByTagName("head")[0].appendChild(mf);
    })();
 </script>
+<?php } ?>
 </body>
 </html>
