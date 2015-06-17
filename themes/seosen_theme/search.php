@@ -57,7 +57,7 @@
 
             $bbProducts[$i]['title'] = $bbQuery->post->post_title;
             $bbProducts[$i]['link'] = $bbProductMeta['ss_product_link'][0];
-            $bbProducts[$i]['pricture'] = $bbProductMeta['ss_product_image'][0];
+            $bbProducts[$i]['picture'] = $bbProductMeta['ss_product_image'][0];
             $bbProducts[$i]['price'] = $bbProductMeta['ss_product_price'][0];
             $bbProducts[$i]['brand'] = $bbProductBrand[0]->post_title;
             
