@@ -55,6 +55,7 @@
                     <?php
                     if ($bbProducts) :
                     foreach($bbProducts as $bbProduct) {
+						var_dump( $bbProduct );
                     ?>
                         <div class="col-md-8 product">        
                             <div>
