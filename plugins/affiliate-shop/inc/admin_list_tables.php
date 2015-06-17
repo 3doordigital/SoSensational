@@ -1135,7 +1135,8 @@ class AllProductTable extends WP_List_Table {
 			$data[$i]['rrp'] = ( isset( $post_meta['wp_aff_product_rrp'] ) ? $post_meta['wp_aff_product_rrp'][0] : $post_meta['wp_aff_product_price'][0] ); 
 			
 			( isset( $data[$i]['rrp'] ) && ( $data[$i]['price'] < $data[$i]['rrp'] )  ? $data[$i]['sale'] = 1 : $data[$i]['sale'] = 0 ); 
-			( isset( $post_meta['wp_aff_product_picks'] ) && $post_meta['wp_aff_product_picks'] == 1 ? $data[$i]['picks'] = 1 : $data[$i]['picks'] = 0 ); 
+			( isset( $post_meta['wp_aff_product_sale'] ) && $post_meta['wp_aff_product_sale'][0] == 1 ? $data[$i]['sale'] = 1 : NULL ); 
+			( isset( $post_meta['wp_aff_product_picks'] ) && $post_meta['wp_aff_product_picks'][0] == 1 ? $data[$i]['picks'] = 1 : $data[$i]['picks'] = 0 ); 
 			global $wp_aff;
 			$options = $wp_aff->get_option();
 			
