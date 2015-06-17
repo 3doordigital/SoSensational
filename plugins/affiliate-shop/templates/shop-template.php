@@ -217,7 +217,7 @@ get_header();
 						//print_var($brand);
                             echo '
                             <div class="col-md-8 product">';
-							if( isset( $rrp ) && ( $price < $rrp ) ) {
+							if( ( isset( $rrp ) && ( $price < $rrp ) ) || ( isset( $post_meta['wp_aff_product_sale'] ) && $post_meta['wp_aff_product_sale'][0] == 1 ) ) {
 								echo '<div class="product-sale"><span class="sr-only">Sale!</span></div>';
 							} else {
 								if( isset( $post_meta['wp_aff_product_picks'][0] ) && $post_meta['wp_aff_product_picks'][0] == 1 ) {
