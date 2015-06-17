@@ -116,5 +116,13 @@
 </div>
 <a href="#top" class="btn btn-circle top page-scroll"><i class="fa fa-angle-double-up animated"></i></a>
 <?php wp_footer(); ?>
+<script type="text/javascript">
+   var mfq = mfq || [];
+   (function() {
+       var mf = document.createElement("script"); mf.type = "text/javascript"; mf.async = true;
+       mf.src = "//cdn.mouseflow.com/projects/62687d6d-4c30-4305-bb52-fc8544845193.js";
+       document.getElementsByTagName("head")[0].appendChild(mf);
+   })();
+</script>
 </body>
 </html>
