@@ -58,7 +58,7 @@
                     ?>
                         <div class="col-md-8 product">        
                             <div>
-                                <a target="_blank" href="<?php echo $bbProduct['link'] ?>" title="<?php echo $bbProduct['title'] ?>"><img src="<?php echo $product['picture'] ?>"></a>
+                                <a target="_blank" href="<?php echo $bbProduct['link'] ?>" title="<?php echo $bbProduct['title'] ?>"><img src="<?php echo $bbProduct['picture'] ?>"></a>
                             </div>
                             <div class="row product-info">
                                 <div class="prod_title col-md-16">
