@@ -6,7 +6,7 @@
             <span class="input-group-btn" id="btnSubmit">
                 <button type="submit" class="search-submit btn btn-primary"><i class="fa fa-chevron-right"></i></button>
             </span>-->
-            <label for="sosen-searchbox">We're not quite dressed yet.</label>
+            <label for="sosen-searchbox">Search isn't quite dressed yet, please come back soon.</label>
         </div>
     </div>
 </form>
