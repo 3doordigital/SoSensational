@@ -88,7 +88,7 @@ get_header();
 <div class="container">
     <div class="row">        
         <div class="col-md-4">
-            <button id="shop-controls-toggle" class="visible-xs">Toggle Search Filters</button>
+            <button id="shop-controls-toggle" class="visible-xs visible-sm">Toggle Search Filters</button>
             <?php dynamic_sidebar( 'shop_sidebar' ); ?> 
         </div>
         <div class="col-md-19 col-md-offset-1">

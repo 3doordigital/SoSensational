@@ -210,7 +210,7 @@ jQuery(document).ready(function($) {
     var toggleButton = $('#shop-controls-toggle');
     if (toggleButton.length) {
         toggleButton.on('click', function() {
-            $('.shop_side').toggleClass('hidden-xs');
+            $('.shop_side').toggleClass('hidden-xs').toggleClass('hidden-sm');
         });
     }
     

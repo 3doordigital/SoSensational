@@ -1493,3 +1493,6 @@ a.preview-anchor-text {
 #mega-menu-wrap-primary #mega-menu-primary > li.mega-menu-flyout > ul.mega-sub-menu li.mega-menu-item a, ul.sub-footer-menu li a {
 	text-transform: none!important;
 }
+.navbar-nav.shop-filter>li {
+	float: none!important;
+}

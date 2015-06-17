@@ -68,7 +68,7 @@ function sosen_widgets_init() {
     register_sidebar(array(
         'name' => __('Shop Sidebar', 'seowned'),
         'id' => 'shop_sidebar',
-        'before_widget' => '<div class="shop_side hidden-xs">',
+        'before_widget' => '<div class="shop_side hidden-xs hidden-sm">',
         'after_widget' => "</div>",
         'before_title' => '<h3><span>',
         'after_title' => '</span></h3>',
