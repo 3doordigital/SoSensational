@@ -15,6 +15,6 @@
     global $wp, $wp_query, $wp_the_query, $wp_rewrite, $wp_did_header;
     require(BASE_PATH . 'wp-load.php');
 	
-	global $feed_man;
+	global $wp_aff;
 
-	$feed_man->cron_process();
+	$wp_aff->cron_process();
