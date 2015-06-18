@@ -50,7 +50,7 @@
                     </div>                        
                     <?php
                     else:
-                        echo '<p>There were no resutls found</p>';
+                        echo '<p>There were no results found</p>';
                     endif;
                     ?>            
                 </div>                       
@@ -93,7 +93,7 @@
                     </div>                          
                     <?php
                     else:
-                        echo '<p>There were no resutls found</p>';
+                        echo '<p>There were no results found</p>';
                     endif;
                     ?>            
                 </div>                       
