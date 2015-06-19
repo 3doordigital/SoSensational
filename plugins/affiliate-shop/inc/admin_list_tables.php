@@ -1050,7 +1050,7 @@ class AllProductTable extends WP_List_Table {
 		if( isset( $_REQUEST['prod_type'] ) ) {
 			switch( $_REQUEST['prod_type'] ) {
 				case 1 :
-					$args['meta_query'][] = array(
+					$args['meta_query'][] = array( 
 						'key' => 'wp_aff_product_manual',
 						'value' => '',
 						'compare' => 'NOT EXISTS'

@@ -230,7 +230,7 @@
 			
 			if( !empty( $data['item'] ) ) {
 				$item = $data['item'];
-				$data['status'] = 1;
+				$data['status'] = 1; 
 				wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
 				update_post_meta( $id, 'wp_aff_product_rrp', $item['product_rrp'] );
 				update_post_meta( $id, 'wp_aff_product_price', $item['product_price'] );
