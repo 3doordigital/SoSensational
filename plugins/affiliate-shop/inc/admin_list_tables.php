@@ -1039,6 +1039,7 @@ class AllProductTable extends WP_List_Table {
 		$offset = ( $paged - 1 ) * $per_page;
         $args = array(
             'post_type' => 'wp_aff_products',
+			'post_status' => 'all',
 			'posts_per_page' => $per_page,
 			'paged' => $paged,
 			'orderby' => $orderby,
