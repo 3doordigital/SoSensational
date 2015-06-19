@@ -231,9 +231,16 @@
 			if( !empty( $data['item'] ) ) {
 				$item = $data['item'];
 				$data['status'] = 1;
-				
+				wp_update_post( array( 'id' => $id, 'post_status' => 'publish' ) );
 				update_post_meta( $id, 'wp_aff_product_rrp', $item['product_rrp'] );
 				update_post_meta( $id, 'wp_aff_product_price', $item['product_price'] );
+				update_post_meta( $id, 'wp_aff_product_notfound', 0 );
+				if( $item['product_price'] < $item['product_rrp'] ) {
+					update_post_meta( $id, 'wp_aff_product_sale', 1 );
+				} else {
+					update_post_meta( $id, 'wp_aff_product_sale', 0 );
+				}
+				
 				update_post_meta( $id, 'wp_aff_product_merch', $item['product_merch'] );
 				update_post_meta( $id, 'wp_aff_product_notfound', 0 );
 				$data['out'] = 'Updated by ID '.$id;

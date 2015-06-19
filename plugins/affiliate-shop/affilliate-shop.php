@@ -2859,7 +2859,7 @@ class WordPress_Affiliate_Shop {
 			@ini_set('memory_limit', '2048M');
 		}
 		$qry_args = array(
-			'post_status' => 'publish', 
+			'post_status' => 'any', 
 			'post_type' => 'wp_aff_products', 
 			'posts_per_page' => -1,
 			'orderby' => 'post_date',
