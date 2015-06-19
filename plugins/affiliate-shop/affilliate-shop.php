@@ -3088,7 +3088,7 @@ class WordPress_Affiliate_Shop {
 			ini_set('max_execution_time', '5000');
 			
 			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.txt";
-			/*$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
+			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
 			
 				
 			$fp = fopen($merchantlog, 'w');
@@ -3115,7 +3115,7 @@ class WordPress_Affiliate_Shop {
 			}	
 			fclose( $fp );
 			mail( get_option( 'admin_email' ), 'Merchant Cron Ended', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
-			*/
+			
 			$i = 1;
 			
 			$fp = fopen($productlog, 'w');
