@@ -2859,7 +2859,7 @@ class WordPress_Affiliate_Shop {
 			@ini_set('memory_limit', '2048M');
 		}
 		$qry_args = array(
-			'post_status' => 'any', 
+			'post_status' => 'trash', 
 			'post_type' => 'wp_aff_products', 
 			'posts_per_page' => -1,
 			'orderby' => 'post_date',
@@ -2901,7 +2901,8 @@ class WordPress_Affiliate_Shop {
 					'prod_id' => $prod_id,
 					'merch' => '',
 					'aff'	=> $aff,
-					'url' => $link
+					'url' => $link,
+					'status' => $post->post_status
 				);
 				
 			}
@@ -3087,7 +3088,7 @@ class WordPress_Affiliate_Shop {
 			ini_set('max_execution_time', '5000');
 			
 			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.txt";
-			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
+			/*$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
 			
 				
 			$fp = fopen($merchantlog, 'w');
@@ -3114,7 +3115,7 @@ class WordPress_Affiliate_Shop {
 			}	
 			fclose( $fp );
 			mail( get_option( 'admin_email' ), 'Merchant Cron Ended', "Merchant Log: $merchantlog", 'From:server@sosensational.co.uk' );
-			
+			*/
 			$i = 1;
 			
 			$fp = fopen($productlog, 'w');
