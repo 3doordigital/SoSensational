@@ -1555,8 +1555,8 @@ class WordPress_Affiliate_Shop {
             </form>
         </div>
 <?php
-		//$test = new WordPress_Affiliate_Shop_Affilinet;
-		//print_var( $test->update_feed( 722 ) );
+		$test = new WordPress_Affiliate_Shop_Webgains;
+		print_var( $test->merchants() );
 	}
 	
     public function add_products() { ?>
@@ -2152,7 +2152,10 @@ class WordPress_Affiliate_Shop {
                 <input type="hidden" name="_wp_http_referer" value="<?php echo $redirect; ?>">
             </form>
             </div>
-        <?php //$this->ajax_update_get_count(); ?>
+        <?php //$this->ajax_update_get_count(); 
+			//$test = new WordPress_Affiliate_Shop_Webgains;
+			//print_var( $test->merchants() );
+		?>
     <?php } 
     public function list_brands() {
         $CategoryTable = new WP_Terms_List_Tables( array( 'taxonomy' =>  'wp_aff_brands' ) );

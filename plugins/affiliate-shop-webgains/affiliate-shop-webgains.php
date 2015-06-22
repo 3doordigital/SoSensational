@@ -81,67 +81,40 @@ class WordPress_Affiliate_Shop_Webgains {
 	*/ 
 	
 	public function merchants() {
-		if( ( isset( $this->merchants['updated'] ) && $this->merchants['updated'] != date('d-m-Y') ) || !isset( $this->merchants['updated'] ) ) {
-			
-			//update_option( $this->option_name, '' );
-			
-			$url = 'http://www.webgains.com/affiliates/datafeed.html?action=download&campaign=71942&programs=all&categories=all&fields=standard&fieldIds=program_id,program_name&format=csv&separator=pipe&zipformat=none&stripNewlines=1&apikey=f04b19e18a7c601da209cee4036e4608';
-			
-			//$array = $this->merchants;
-			$upload_dir = wp_upload_dir(); 
-			$user_dirname = $upload_dir['basedir'].'/feed-data';
-			if( ! file_exists( $user_dirname ) )
-				wp_mkdir_p( $user_dirname );
-	
-			$uc_local_file = $user_dirname.'/webgainsmerchants.csv';
-			
-			$fp = fopen($uc_local_file, "w+");
-			$ch = curl_init($url);
-			$options = array(
-				CURLOPT_URL            => $url,
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_HEADER         => false,
-				CURLOPT_FOLLOWLOCATION => true,
-				CURLOPT_AUTOREFERER    => true,
-				CURLOPT_CONNECTTIMEOUT => 120,
-				CURLOPT_TIMEOUT        => 120,
-				CURLOPT_MAXREDIRS      => 10,
-				CURLOPT_FILE		   => $fp
-			);
-			curl_setopt_array( $ch, $options );
-			curl_exec($ch);
-			if(!curl_errno($ch))
-			{
-				$out['status'] = 1;	
-			}
-			curl_close($ch);
-			fclose($fp);
-	
-			
-			if ( function_exists( 'ini_set' ) ) {
-				@ini_set('memory_limit', '2048M');
-			}
-			
-			$array = array();
-			if(($handle = fopen( $uc_local_file, 'r')) !== false) {
-				$header = fgetcsv($handle, 0, '|');
-				while(($data = fgetcsv($handle, 0, '|')) !== false )
-				{
-					if( !in_array( $data[0], $array ) ) {
-						$array['items'][$data[0]] = array(
-							'ID'        => ( string ) $data[0],
-							'name'     	=> ( string ) $data[1],
-							'aff'     	=> 'webgains',	
-						);
-					}
+		$array = array();
+		
+		$user =  'cyndylessing';
+		$password = 'sweedy';
+		$campaign = 71942;
+		
+		$wsdlUrl = 'http://ws.webgains.com/aws.php';
+		$soapClient = new SoapClient($wsdlUrl, array(
+			'login' 		 => $user,
+			'encoding'		 => 'UTF-8',
+			'password'		 => $password,
+			'compression'	 => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE,
+			'soap_version'	 => SOAP_1_1));
+		
+        $error = 0; 
+
+        try { 
+            $programs = $soapClient->getProgramsWithMembershipStatus( $user, $password, $campaign );
+        } catch (SoapFault $fault) { 
+            $error = 1; 
+        } 
+		if( $error == 0 ) {
+			//print_var( $programs );
+			foreach( $programs as $program ) {
+				if ($program->programMembershipStatusName == 'Live' || $program->programMembershipStatusName == 'Joined') {
+					$array['ID-'.$program->programID] = array(
+						'ID'        => ( string ) $program->programID,
+						'name'     	=> ( string ) $program->programName,
+						'aff'     	=> 'webgains',
+					);
 				}
-				 $array['updated'] = date( 'd-m-Y' );
-				 
-				 update_option( $this->option_name, $array );	
 			}
 		}
-		//print_var( $this->merchants );
-		return $this->merchants['items'];
+		return $array;
 	}
 	
 	/**
