@@ -349,3 +349,9 @@ button#shop-controls-toggle {
 .bootstrap-tagsinput :-ms-input-placeholder {
   color: #555; }
 
+/* Image maps */
+/* line 422, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/general.scss */
+img[usemap] {
+  max-width: 100%;
+  height: auto; }
+

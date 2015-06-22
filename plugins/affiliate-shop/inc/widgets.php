@@ -22,7 +22,7 @@ class aff_category_widget extends WP_Widget {
         global $wp_query;
         echo $args['before_widget'];
         if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . '<i class="fa fa-level-down navbar-toggle collapsed visible-xs" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></i>' . $args['after_title'];
+            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . '<i class="fa fa-level-down navbar-toggle collapsed visible-xs visible-sm" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></i>' . $args['after_title'];
         }
         if( isset( $wp_query->query_vars['shop-cat'] ) ) {
             $term = get_term_by( 'slug', $wp_query->query_vars['shop-cat'], 'wp_aff_categories' );
@@ -110,17 +110,23 @@ class aff_brand_widget extends WP_Widget {
         global $wp_query;
         echo $args['before_widget'];
         if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . '<i class="fa fa-level-down navbar-toggle collapsed visible-xs" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2"></i>' . $args['after_title'];
+            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . '<i class="fa fa-level-down navbar-toggle collapsed visible-xs visible-sm" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2"></i>' . $args['after_title'];
         }
 		
 		global $wp_aff;
-        $fn_include = $wp_aff->get_product_terms('wp_aff_brands');
+       
         echo '<form action="'.admin_url('admin-post.php').'" id="wp_aff_brand_filter" method="POST">';
             echo '<div class="wp_aff_brands navbar navbar-default">';
                 echo '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">';
                     echo '<ul class="nav navbar-nav shop-filter">';
                         $walker = new Faceted_Brand_Walker;
-                        wp_list_categories( array( 'include' => $fn_include, 'depth' => 0, 'taxonomy' => 'wp_aff_brands', 'hide_empty' => 0, 'walker' => $walker, 'title_li' => '', 'orderby' => 'name', 'hierarchical' => 1 ) );
+						
+						if( $_SERVER['REQUEST_URI'] == '/shop/' ) {
+							wp_list_categories( array( 'depth' => 0, 'taxonomy' => 'wp_aff_brands', 'hide_empty' => 0, 'walker' => $walker, 'title_li' => '', 'orderby' => 'name', 'hierarchical' => 1 ) );
+						} else {
+							$fn_include = $wp_aff->get_product_terms('wp_aff_brands');
+							wp_list_categories( array( 'include' => $fn_include, 'depth' => 0, 'taxonomy' => 'wp_aff_brands', 'hide_empty' => 0, 'walker' => $walker, 'title_li' => '', 'orderby' => 'name', 'hierarchical' => 1 ) );
+						}
                     echo '</ul>';
                 echo '</div>';
             echo '</div>';

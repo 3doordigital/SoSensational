@@ -343,10 +343,12 @@ function pbd_alp_init() {
     wp_enqueue_script(
         'pbd-alp-load-posts', plugin_dir_url(__FILE__) . 'sosensational-script.js', array('jquery'), '1.0', false
     );
-    wp_enqueue_script('custom-scripts', plugin_dir_url(__FILE__) . 'js/custom-scripts.js', array('pbd-alp-load-posts'), '120215', true);
+    wp_enqueue_script('rwd-image-maps', plugin_dir_url(__FILE__) . 'js/rwdimagemaps/jquery.rwdImageMaps.js', array('jquery'), 22062015, false);
+    wp_enqueue_script('custom-scripts', plugin_dir_url(__FILE__) . 'js/custom-scripts.js', array('pbd-alp-load-posts', 'rwd-image-maps'), '120215', false);
     wp_enqueue_script('tagsinput-scripts', plugin_dir_url(__FILE__) . 'js/tagsinput/bootstrap-tagsinput.min.js', array('bootstrap-js'), '130215', false);
     wp_localize_script('custom-scripts', 'AjaxObject', array('ss_ajax_url' => admin_url('admin-ajax.php')));
     wp_enqueue_script('flexslider-js', plugin_dir_url(__FILE__) . 'js/flexslider/jquery.flexslider.js', array('jquery'), 19032015, false);
+    
     wp_enqueue_style('tags-input', plugins_url('SoSensational/js/tagsinput/bootstrap-tagsinput.css'));
 }
 
