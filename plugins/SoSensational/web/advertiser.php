@@ -14,7 +14,7 @@ $product_params = array('width' => 265, 'height' => 350, 'crop' => false);
 $products = $wpdb->get_results("SELECT * FROM {$wpdb->posts} WHERE `post_author` = '{$advertiser->post_author}' AND `post_type`='products' AND (`post_status`='publish' OR post_status='pending') ORDER BY `post_date` DESC", OBJECT);
 
 //print_r($advertiser->ID);
-//print_r($products);
+print_r($products);
 
 
 $categories = $wpdb->get_results("SELECT * FROM {$wpdb->term_taxonomy} wptt 
