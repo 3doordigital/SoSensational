@@ -370,7 +370,8 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
             arguments = getDesktopSliderSettings();
             sliderMode = 'desktop';
         }
-        $('.flexslider').flexslider(arguments).addClass(sliderMode);      
+        $('.flexslider').flexslider(arguments).addClass(sliderMode); 
+		loadSlider(arguments, sliderMode);     
     });
 
     jQuery(window).resize(function () {  
@@ -393,7 +394,7 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
 
 // Dynamic flexslider - featured and related sliders (category and shop pages)
 
-    jQuery(window).ready(function ($) {
+    /*jQuery(window).ready(function ($) {
         //if (jQuery('.advertisers-carousel').length) {
             if (jqUpdateSize() < 768) {
                 arguments = getMobileSliderSettingsB();
@@ -408,9 +409,9 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
             $('.flexslider').flexslider(arguments).addClass(sliderMode);  
 			loadSlider(arguments, sliderMode);  
        // }
-    });
+    });*/
 
-    jQuery(window).resize(function () {  
+    /*jQuery(window).resize(function () {  
         if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
             arguments = getMobileSliderSettingsB(); 
             sliderMode = 'mobile';
@@ -424,7 +425,7 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
             sliderMode = 'desktop';
             loadSlider(arguments, sliderMode);
         }
-    });
+    });*/
     
 
 jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
