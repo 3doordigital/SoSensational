@@ -394,7 +394,7 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
 // Dynamic flexslider - featured and related sliders (category and shop pages)
 
     jQuery(window).ready(function ($) {
-        if (jQuery('.advertisers-carousel').length) {
+        //if (jQuery('.advertisers-carousel').length) {
             if (jqUpdateSize() < 768) {
                 arguments = getMobileSliderSettingsB();
                 sliderMode = 'mobile';
@@ -407,7 +407,7 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
             }
             $('.flexslider').flexslider(arguments).addClass(sliderMode);  
 			loadSlider(arguments, sliderMode);  
-        }
+       // }
     });
 
     jQuery(window).resize(function () {  
