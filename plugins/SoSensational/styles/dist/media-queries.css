@@ -79,7 +79,7 @@
   #menu-sub-footer-menu {
     display: none; } }
 
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   /* line 120, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   #mega-menu-wrap-primary .mega-menu-toggle + #mega-menu-primary li.mega-menu-item.mega-menu-item-11807 > ul.mega-sub-menu.visible {
     display: block !important; }
