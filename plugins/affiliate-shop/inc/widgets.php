@@ -120,7 +120,7 @@ class aff_brand_widget extends WP_Widget {
                 echo '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">';
                     echo '<ul class="nav navbar-nav shop-filter">';
                         $walker = new Faceted_Brand_Walker;
-						echo $_SERVER['REQUEST_URI'];
+						
 						if( $_SERVER['REQUEST_URI'] == '/shop/' ) {
 							wp_list_categories( array( 'depth' => 0, 'taxonomy' => 'wp_aff_brands', 'hide_empty' => 0, 'walker' => $walker, 'title_li' => '', 'orderby' => 'name', 'hierarchical' => 1 ) );
 						} else {
