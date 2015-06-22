@@ -22,7 +22,7 @@ class aff_category_widget extends WP_Widget {
         global $wp_query;
         echo $args['before_widget'];
         if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . '<i class="fa fa-level-down navbar-toggle collapsed visible-xs" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></i>' . $args['after_title'];
+            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . '<i class="fa fa-level-down navbar-toggle collapsed visible-xs visible-sm" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></i>' . $args['after_title'];
         }
         if( isset( $wp_query->query_vars['shop-cat'] ) ) {
             $term = get_term_by( 'slug', $wp_query->query_vars['shop-cat'], 'wp_aff_categories' );
@@ -110,7 +110,7 @@ class aff_brand_widget extends WP_Widget {
         global $wp_query;
         echo $args['before_widget'];
         if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . '<i class="fa fa-level-down navbar-toggle collapsed visible-xs" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2"></i>' . $args['after_title'];
+            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . '<i class="fa fa-level-down navbar-toggle collapsed visible-xs visible-sm" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2"></i>' . $args['after_title'];
         }
 		
 		global $wp_aff;
