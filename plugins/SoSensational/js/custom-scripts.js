@@ -352,9 +352,9 @@ function loadSlider(arguments, sliderMode) {
 
 
 // Dynamic flexslider - advertiser profile page
-if (jQuery('.flexslider-container.advertiser-profile').length) {
+//if (jQuery('.flexslider-container.advertiser-profile').length) {
 
-    jQuery(window).ready(function ($) {
+    jQuery(document).ready(function ($) {
         if (jqUpdateSize() < 768) {
             arguments = getMobileSliderSettings();
             sliderMode = 'mobile';
@@ -365,7 +365,7 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
             arguments = getDesktopSliderSettings();
             sliderMode = 'desktop';
         }
-        $('.flexslider').flexslider(arguments).addClass(sliderMode); 
+        //$('.flexslider').flexslider(arguments).addClass(sliderMode); 
 		loadSlider(arguments, sliderMode);     
     });
 
@@ -385,7 +385,7 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
         }
     });
     
-}    
+//}    
 
 // Dynamic flexslider - featured and related sliders (category and shop pages)
 
