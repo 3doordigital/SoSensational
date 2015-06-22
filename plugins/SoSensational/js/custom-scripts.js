@@ -405,7 +405,8 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
                 arguments = getDesktopSliderSettingsB();
                 sliderMode = 'desktop';
             }
-            $('.flexslider').flexslider(arguments).addClass(sliderMode);    
+            $('.flexslider').flexslider(arguments).addClass(sliderMode);  
+			loadSlider(arguments, sliderMode);  
         }
     });
 
