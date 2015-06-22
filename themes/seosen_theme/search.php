@@ -40,6 +40,7 @@
         's' =>   get_query_var('s'),
         'post_type' =>  array('products'),
         'posts_per_page'    => 3,
+		'orderby'			=> array( 'relevance', 'rand' )
     );
     $bbQuery = new WP_Query($bbArgs);  
     
