@@ -420,7 +420,7 @@ function addSeoTitleToSsCategory($str)
     $prefix = $vars['ss_sub_cat'] ? $vars['ss_sub_cat'] : $vars['ss_cat'];
     
     if ( ! $seoTitle) {
-        $seoTitle = str_replace('-', ' ', ucfirst($prefix)) . '| SoSensational';
+        $seoTitle = str_replace('-', ' ', ucfirst($prefix)) . ' | SoSensational';
     }
     
     return (string) $seoTitle;
