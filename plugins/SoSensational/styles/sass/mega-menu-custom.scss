@@ -221,7 +221,13 @@
 
 // Force hiding of children items in a mobile menu dropdown on hover, hide the caret, and searchbox
 
-@media (max-width: 767px) {
+
+@media (max-width: 992px) {
+    
+    #mega-menu-wrap-primary .mega-menu-toggle + #mega-menu-primary li.mega-menu-item.mega-toggle-on > ul.mega-sub-menu, #mega-menu-wrap-primary .mega-menu-toggle + #mega-menu-primary li.mega-menu-item.mega-menu-megamenu.mega-toggle-on ul.mega-sub-menu {
+        display: none;
+    }
+    
     #mega-menu-wrap-primary {
         #mega-menu-primary {
             .mega-menu-flyout.mega-toggle-on,
@@ -236,7 +242,7 @@
 
             
             li.mega-menu-megamenu {
-                ul.mega-sub-menu {
+                ul.mega-sub-menu { 
                     display: none !important;
                 }       
             }

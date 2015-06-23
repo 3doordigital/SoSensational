@@ -416,3 +416,10 @@ button#shop-controls-toggle {
        color: #555;  
     }
 }
+
+/* Image maps */
+
+img[usemap] {
+    max-width: 100%;
+    height: auto;
+}
