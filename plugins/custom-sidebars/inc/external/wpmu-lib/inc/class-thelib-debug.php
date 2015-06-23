@@ -4,7 +4,7 @@
  *
  * @since 1.1.4
  */
-class TheLib_2_0_1_Debug extends TheLib_2_0_1  {
+class TheLib_2_0_3_Debug extends TheLib_2_0_3  {
 
 	/**
 	 * If set to true or false it will override the WP_DEBUG value
@@ -234,6 +234,29 @@ class TheLib_2_0_1_Debug extends TheLib_2_0_1  {
 	}
 
 	/**
+	 * Adds a log-message to the HTTP response header.
+	 * This is very useful to debug Ajax requests or redirects
+	 *
+	 * @since  1.0.0
+	 * @param  string $message The debug message
+	 */
+	public function header( $message ) {
+		static $Number = 0;
+		if ( ! $this->is_enabled() ) { return; }
+
+		$Number += 1;
+		if ( headers_sent() ) {
+			// HTTP Headers already sent, so add the response as HTML comment.
+			$message = str_replace( '-->', '--/>', $message );
+			printf( "<!-- Debug-Note[%s]: %s -->\n", $Number, $message );
+		} else {
+			// No output was sent yet so add the message to the HTTP headers.
+			$message = str_replace( array( "\n", "\r" ), ' ', $message );
+			header( "X-Debug-Note[$Number]: $message", false );
+		}
+	}
+
+	/**
 	 * Displays a debug message at the current position on the page.
 	 *
 	 * @since  1.0.14
@@ -301,17 +324,19 @@ class TheLib_2_0_1_Debug extends TheLib_2_0_1  {
 		$plain_text = $this->is_plain_text();
 
 		$this->add_scripts();
+		$trace_str = '';
 
-		ob_start();
 		if ( ! $plain_text ) {
 			$block_id = 'wdev-debug-' . md5( rand() );
-			?>
-			<span class="wdev-trace-toggle" onclick="toggleBlock('<?php echo esc_attr( $block_id ); ?>-trace')">
-				<b>Back-Trace</b>
-			</span>
-			<div class="<?php echo esc_attr( $block_id ); ?>-trace" style="display:none">
-			<table class="wdev-trace" width="100%" cellspacing="0" cellpadding="3" border="1">
-			<?php
+			$trace_str .= sprintf(
+				'<span class="wdev-trace-toggle" onclick="toggleBlock(\'%1$s-trace\')">
+					<b>Back-Trace</b>
+				</span>
+				<div class="%1$s-trace" style="display:none">
+				<table class="wdev-trace" width="100%%" cellspacing="0" cellpadding="3" border="1">
+				',
+				esc_attr( $block_id )
+			);
 		}
 
 		$trace = debug_backtrace();
@@ -370,16 +395,16 @@ class TheLib_2_0_1_Debug extends TheLib_2_0_1  {
 					$file = str_pad( $file, 80, ' ', STR_PAD_RIGHT );
 				}
 
-				printf(
+				$trace_str .= sprintf(
 					"\r\n  %s. \t %s \t by %s",
 					str_pad( $line, 2, ' ', STR_PAD_LEFT ),
 					$file . ': ' . str_pad( $line_item['line'], 5, ' ', STR_PAD_LEFT ),
 					$item['class'] . $item['type'] . $item['function'] . '(' . strip_tags( $args ) . ')'
 				);
 			} else {
-				printf(
+				$trace_str .= sprintf(
 					"<tr onclick='_m(this)'><td class='trc-num'>%s</td><td class='trc-loc'>%s</td><td class='trc-arg'>%s</td></tr>\r\n",
-					$i,
+					$line,
 					$line_item['file'] . ': ' . $line_item['line'],
 					$item['class'] . $item['type'] . $item['function'] . '(' . $args . ')'
 				);
@@ -387,19 +412,17 @@ class TheLib_2_0_1_Debug extends TheLib_2_0_1  {
 		}
 
 		if ( $plain_text ) {
-			echo "\r\n-----\r\n";
+			$trace_str .= "\r\n-----\r\n";
 		} else {
-			echo '</table>';
-			echo '</div>';
+			$trace_str .= '</table>';
+			$trace_str .= '</div>';
 		}
-
-		$trace = ob_get_clean();
 
 		if ( $output ) {
-			echo '' . $trace;
+			echo '' . $trace_str;
 		}
 
-		return $trace;
+		return $trace_str;
 	}
 
 	/**
@@ -689,6 +712,10 @@ class TheLib_2_0_1_Debug extends TheLib_2_0_1  {
 		if ( defined( '__DEBUG_SCRIPT' ) ) { return; }
 		define( '__DEBUG_SCRIPT', true );
 
+		if ( ! headers_sent() ) {
+			header( 'Content-type: text/html; charset=utf-8' );
+		}
+
 		?>
 		<style>
 		.wdev-debug {
@@ -774,13 +801,15 @@ class TheLib_2_0_1_Debug extends TheLib_2_0_1  {
 			margin: 1px 0 !important;
 			background: rgba(255, 200, 200, 0.8);
 		}
-		.wdev-trace table td {
+		.wdev-trace td {
 			padding: 1px 2px !important;
 			font-size: 12px;
+			vertical-align: top;
 		}
-		.wdev-trace table {
+		.wdev-trace {
 			margin: 4px 0 0 0;
 			background: #EBB;
+			border-collapse: collapse;
 		}
 		.wdev-trace tr.mark td {
 			background: #EC9;
@@ -858,4 +887,72 @@ class TheLib_2_0_1_Debug extends TheLib_2_0_1  {
 		<?php
 	}
 
+	/**
+	 * Returns an HTML element that displays a colored label. By default the
+	 * label is a random/unique MD5 hash.
+	 * This marker is intended for debugging to identify changes in objects
+	 * that are loaded via ajax.
+	 *
+	 * @since  2.0.1
+	 * @api
+	 *
+	 * @param  string $label Optional. The label to display. Default is a
+	 *         random MD5 string.
+	 * @param  array $styles Optional. Array of CSS styles to apply.
+	 * @return object {
+	 *         Marker details
+	 *
+	 *         $html
+	 *         $hash
+	 *         $text
+	 *         $color
+	 * }
+	 */
+	public function marker_html( $label = null, $styles = array() ) {
+		$hash = md5( rand( 1000, 9999 ) . time() );
+
+		if ( null === $label ) {
+			$label = $hash;
+		} else {
+			$hash = md5( $label );
+		}
+
+		$color = substr( $hash, 0, 3 );
+		$def_styles = array(
+			'background' => '#' . $color,
+			'color' => '#fff',
+			'width' => '280px',
+			'font-size' => '12px',
+			'text-transform' => 'uppercase',
+			'font-family' => 'monospace',
+			'text-align' => 'center',
+			'margin' => '0 auto 5px',
+			'border-radius' => '3px',
+			'padding' => '4px',
+			'text-shadow' => '0 0 1px #666',
+			'box-shadow' => '0 0 1px #000 inset',
+		);
+		$styles = wp_parse_args(
+			$styles,
+			$def_styles
+		);
+
+		$style = '';
+		foreach ( $styles as $key => $val ) {
+			$style .= $key . ':' . $val . ';';
+		}
+
+		$marker = sprintf(
+			'<div style="%1$s">%2$s</div>',
+			esc_attr( $style ),
+			$label
+		);
+
+		return (object) array(
+			'html' => $marker,
+			'hash' => $hash,
+			'text' => $label,
+			'color' => '#' . $color,
+		);
+	}
 }
