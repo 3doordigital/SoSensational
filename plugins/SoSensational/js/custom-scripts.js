@@ -370,7 +370,7 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
             arguments = getDesktopSliderSettings();
             sliderMode = 'desktop';
         }
-        $('.flexslider').flexslider(arguments).addClass(sliderMode);      
+        $('.flexslider').flexslider(arguments).addClass(sliderMode);  
     });
 
     jQuery(window).resize(function () {  
