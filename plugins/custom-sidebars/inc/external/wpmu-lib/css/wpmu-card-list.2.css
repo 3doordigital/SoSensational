@@ -206,6 +206,7 @@
 .wpmui-list-wrapper .wpmui-list-table.has-details .detail-mode .details {
   display: block;
   position: absolute;
+  overflow: auto;
   top: 135px;
   left: 0;
   right: 0;
@@ -279,4 +280,4 @@
 }
 
 
-/* 370530-1429276085 */
+/* 370530-1435048275 */
