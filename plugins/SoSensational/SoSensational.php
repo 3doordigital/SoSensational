@@ -384,6 +384,7 @@ function wpa54064_inspect_scripts() {
  * @param string $str SEO title provided be Yoast SEO Plugin
  * @return string $str | $seoTitle SEO title for a fiven ss_category
  */
+
 function addSeoTitleToSsCategory($str)
 {
     global $query_string;
@@ -412,8 +413,17 @@ function addSeoTitleToSsCategory($str)
         $currentSeoData = get_post_meta($currentAdvertiser[0]->ID, '_seo_metadata', true);
         $seoTitle = $currentSeoData['seo-title'];
     }
-  
-    return "$seoTitle";
+    
+    global $query_string;
+    parse_str($query_string, $vars);
+    
+    $prefix = $vars['ss_sub_cat'] ? $vars['ss_sub_cat'] : $vars['ss_cat'];
+    
+    if ( ! $seoTitle) {
+        $seoTitle = str_replace('-', ' ', ucfirst($prefix)) . '| SoSensational';
+    }
+    
+    return (string) $seoTitle;
     
    
 }
