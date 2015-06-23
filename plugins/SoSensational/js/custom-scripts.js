@@ -229,10 +229,12 @@ jQuery(document).ready(function($) {
         });
     }
     
+    // Make images using maps responsive
+    
     if(jQuery('img[usemap]').length) {
         jQuery('img[usemap]').rwdImageMaps(); 
-    }
-    
+    }    
+
     
 });
 
