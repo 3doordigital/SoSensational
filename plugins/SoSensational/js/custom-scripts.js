@@ -229,9 +229,9 @@ jQuery(document).ready(function($) {
         });
     }
     
-    //if(jQuery('img[usemap]').length) {
+    if(jQuery('img[usemap]').length) {
         jQuery('img[usemap]').rwdImageMaps();
-    //}
+    }
     
     
 });
@@ -357,7 +357,7 @@ function loadSlider(arguments, sliderMode) {
 
 
 // Dynamic flexslider - advertiser profile page
-//if (jQuery('.flexslider-container.advertiser-profile').length) {
+if (jQuery('.flexslider-container.advertiser-profile').length) {
 
     jQuery(document).ready(function ($) {
         if (jqUpdateSize() < 768) {
@@ -370,12 +370,9 @@ function loadSlider(arguments, sliderMode) {
             arguments = getDesktopSliderSettings();
             sliderMode = 'desktop';
         }
-<<<<<<< HEAD
+
         $('.flexslider').flexslider(arguments).addClass(sliderMode);  
-=======
-        //$('.flexslider').flexslider(arguments).addClass(sliderMode); 
-		loadSlider(arguments, sliderMode);     
->>>>>>> feb662ebe604fcb7365e1f9eae2e311c15e37c64
+
     });
 
     jQuery(window).resize(function () {  
@@ -393,13 +390,12 @@ function loadSlider(arguments, sliderMode) {
             loadSlider(arguments, sliderMode);
         }
     });
-    
-//}    
+        
 
 // Dynamic flexslider - featured and related sliders (category and shop pages)
 
-    /*jQuery(window).ready(function ($) {
-        //if (jQuery('.advertisers-carousel').length) {
+    jQuery(window).ready(function ($) {
+        if (jQuery('.advertisers-carousel').length) {
             if (jqUpdateSize() < 768) {
                 arguments = getMobileSliderSettingsB();
                 sliderMode = 'mobile';
@@ -412,10 +408,10 @@ function loadSlider(arguments, sliderMode) {
             }
             $('.flexslider').flexslider(arguments).addClass(sliderMode);  
 			loadSlider(arguments, sliderMode);  
-       // }
-    });*/
+        }
+    });
 
-    /*jQuery(window).resize(function () {  
+    jQuery(window).resize(function () {  
         if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
             arguments = getMobileSliderSettingsB(); 
             sliderMode = 'mobile';
@@ -429,9 +425,8 @@ function loadSlider(arguments, sliderMode) {
             sliderMode = 'desktop';
             loadSlider(arguments, sliderMode);
         }
-    });*/
+    });
     
-
 jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
     var w = jQuery(window).width();
     if(w < 800) {
@@ -441,6 +436,5 @@ jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
 
 });
 
-
-
+}
 
