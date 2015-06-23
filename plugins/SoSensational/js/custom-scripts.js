@@ -229,9 +229,9 @@ jQuery(document).ready(function($) {
         });
     }
     
-    if(jQuery('img[usemap]').length) {
+    //if(jQuery('img[usemap]').length) {
         jQuery('img[usemap]').rwdImageMaps();
-    }
+    //}
     
     
 });
