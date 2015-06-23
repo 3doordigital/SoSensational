@@ -232,6 +232,7 @@ jQuery(document).ready(function($) {
     // Make images using maps responsive
     
     if(jQuery('img[usemap]').length) {
+        console.log('X');
         jQuery('img[usemap]').rwdImageMaps(); 
     }    
 
