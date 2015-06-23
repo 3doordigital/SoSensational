@@ -230,7 +230,7 @@ jQuery(document).ready(function($) {
     }
     
     if(jQuery('img[usemap]').length) {
-        jQuery('img[usemap]').rwdImageMaps();
+        jQuery('img[usemap]').rwdImageMaps(); 
     }
     
     
