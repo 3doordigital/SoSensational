@@ -229,9 +229,9 @@ jQuery(document).ready(function($) {
         });
     }
     
-    if(jQuery('img[usemap]').length) {
+    //if(jQuery('img[usemap]').length) {
         jQuery('img[usemap]').rwdImageMaps();
-    }
+    //}
     
     
 });
@@ -357,9 +357,9 @@ function loadSlider(arguments, sliderMode) {
 
 
 // Dynamic flexslider - advertiser profile page
-if (jQuery('.flexslider-container.advertiser-profile').length) {
+//if (jQuery('.flexslider-container.advertiser-profile').length) {
 
-    jQuery(window).ready(function ($) {
+    jQuery(document).ready(function ($) {
         if (jqUpdateSize() < 768) {
             arguments = getMobileSliderSettings();
             sliderMode = 'mobile';
@@ -370,7 +370,12 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
             arguments = getDesktopSliderSettings();
             sliderMode = 'desktop';
         }
+<<<<<<< HEAD
         $('.flexslider').flexslider(arguments).addClass(sliderMode);  
+=======
+        //$('.flexslider').flexslider(arguments).addClass(sliderMode); 
+		loadSlider(arguments, sliderMode);     
+>>>>>>> feb662ebe604fcb7365e1f9eae2e311c15e37c64
     });
 
     jQuery(window).resize(function () {  
@@ -389,12 +394,12 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
         }
     });
     
-}    
+//}    
 
 // Dynamic flexslider - featured and related sliders (category and shop pages)
 
-    jQuery(window).ready(function ($) {
-        if (jQuery('.advertisers-carousel').length) {
+    /*jQuery(window).ready(function ($) {
+        //if (jQuery('.advertisers-carousel').length) {
             if (jqUpdateSize() < 768) {
                 arguments = getMobileSliderSettingsB();
                 sliderMode = 'mobile';
@@ -405,11 +410,12 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
                 arguments = getDesktopSliderSettingsB();
                 sliderMode = 'desktop';
             }
-            $('.flexslider').flexslider(arguments).addClass(sliderMode);    
-        }
-    });
+            $('.flexslider').flexslider(arguments).addClass(sliderMode);  
+			loadSlider(arguments, sliderMode);  
+       // }
+    });*/
 
-    jQuery(window).resize(function () {  
+    /*jQuery(window).resize(function () {  
         if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
             arguments = getMobileSliderSettingsB(); 
             sliderMode = 'mobile';
@@ -423,7 +429,7 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
             sliderMode = 'desktop';
             loadSlider(arguments, sliderMode);
         }
-    });
+    });*/
     
 
 jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
