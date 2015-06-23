@@ -9,7 +9,7 @@
 global $wp_registered_sidebars;
 
 $available = $wp_registered_sidebars;
-$sidebars = CustomSidebars::get_options( 'modifiable' );
+$sidebars = CustomSidebars::get_options( 'modifiable' );	  			   		     		 	 
 
 ?>
 <fieldset class="inline-edit-col-left cs-quickedit">

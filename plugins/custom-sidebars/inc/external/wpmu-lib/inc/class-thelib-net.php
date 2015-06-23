@@ -5,7 +5,7 @@
  *
  * @since  2.0.0
  */
-class TheLib_2_0_1_Net extends TheLib_2_0_1 {
+class TheLib_2_0_3_Net extends TheLib_2_0_3 {
 
 	/**
 	 * Returns the current URL.
@@ -41,7 +41,17 @@ class TheLib_2_0_1_Net extends TheLib_2_0_1 {
 
 			$is_ssl = 'https' === $cur_url;
 			$cur_url .= '://';
-			$cur_url .= $_SERVER['SERVER_NAME'];
+
+			if ( isset( $_SERVER['SERVER_NAME'] ) ) {
+				$cur_url .= $_SERVER['SERVER_NAME'];
+			} elseif ( defined( 'WP_TESTS_DOMAIN' ) ) {
+				$cur_url .= WP_TESTS_DOMAIN;
+			}
+
+			if ( ! isset( $_SERVER['SERVER_PORT'] ) ) {
+				if ( $is_ssl ) { $_SERVER['SERVER_PORT'] = '443'; }
+				else { $_SERVER['SERVER_PORT'] = '80'; }
+			}
 
 			if ( ( ! $is_ssl && '80' != $_SERVER['SERVER_PORT'] ) ||
 				( $is_ssl && '443' != $_SERVER['SERVER_PORT'] )

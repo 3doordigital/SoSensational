@@ -1,4 +1,4 @@
-/*! Custom Sidebars Pro - v2.1.03
+/*! Custom Sidebars Pro - v2.1.06
  * http://premium.wpmudev.org/project/the-pop-over-plugin/
  * Copyright (c) 2015; * Licensed GPLv2+ */
 /*global window:false */
@@ -660,7 +660,6 @@ window.csSidebars = null;
 			// Submit the data via ajax.
 			var save_data = function save_data() {
 				var form = popup.$().find( 'form' );
-
 
 				// Start loading-animation.
 				popup.loading( true );

@@ -752,7 +752,7 @@ class CustomSidebarsExport extends CustomSidebars {
 				 * @param array     $old_instance Array of old widget settings.
 				 * @param WP_Widget $this         The current widget instance.
 				 */
-				$instance = apply_filters( 'widget_update_callback', $instance, $instance, array(), $obj );	  			   		     		 	 
+				$instance = apply_filters( 'widget_update_callback', $instance, $instance, array(), $obj );
 				if ( false !== $instance ) {
 					$all_instances[ $new_number ] = $instance;
 				}

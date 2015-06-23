@@ -47,8 +47,7 @@ function relevanssi_query($posts, $query = false) {
 
 // This is my own magic working.
 function relevanssi_search($args) {
-
-    global $wpdb, $relevanssi_variables;
+	global $wpdb, $relevanssi_variables;
 	$relevanssi_table = $relevanssi_variables['relevanssi_table'];
 	
 	$filtered_args = apply_filters( 'relevanssi_search_filters', $args );
@@ -330,6 +329,7 @@ function relevanssi_search($args) {
 	}
 
 	$remove_stopwords = true;
+	if (function_exists('wp_encode_emoji')) $q = wp_encode_emoji($q);
 	$phrases = relevanssi_recognize_phrases($q);
 
 	if (function_exists('relevanssi_recognize_negatives')) {
@@ -748,6 +748,7 @@ function relevanssi_do_query(&$query) {
 
 	if (isset($query->query_vars['searchblogs'])) {
 		$multi_args['search_blogs'] = $query->query_vars['searchblogs'];
+		$multi_args['q'] = $q;
 
 		$post_type = false;
 		if (isset($query->query_vars["post_type"]) && $query->query_vars["post_type"] != 'any') {
@@ -1016,7 +1017,7 @@ function relevanssi_do_query(&$query) {
 			'search_blogs' => $search_blogs,
 			'author' => $author,
 			'orderby' => $orderby,
-			'order' => $order);        
+			'order' => $order);
 	
 		$return = relevanssi_search($search_params);
 	}
