@@ -206,7 +206,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 			if( ! file_exists( $user_dirname ) )
 				wp_mkdir_p( $user_dirname );
 	
-			$local_file = $user_dirname.'/local.xml.gz';
+			$local_file = $user_dirname.'/'.$merch.'-local.xml.gz';
 			$uc_local_file = $user_dirname.'/local1.xml';
 			$server_file = $merchant.'_2476350_mp.xml.gz';
 			$contents = '';
