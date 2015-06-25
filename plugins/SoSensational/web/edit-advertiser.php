@@ -43,8 +43,8 @@ if (!empty($success_code)) :
 
 
         add_filter('wp_mail_content_type',create_function('', 'return "text/html"; '));
-
-        wp_mail( get_option( 'admin_notification_email' ), $topic, $message); 
+		$headers = 'From: SoSensational Website <website@sosensational.co.uk>' . "\r\n";
+        wp_mail( get_option( 'admin_notification_email' ), $topic, $message, $headers ); 
         		
       break;
 		}
