@@ -238,15 +238,10 @@ class WordPress_Affiliate_Shop_Linkshare {
 				{
 					$product = simplexml_load_string($reader->readOuterXML());
 					
-				
+					$sale = ( isset( $product->price->sale ) ? (float) $product->price->sale : (float) $product->price->retail );
+					$retail = (float) $product->price->retail;
 					//print_var( $product );
-					if( $product->price->sale < $product->price->retail ) {
-						$price = number_format( (int) $product->price->sale, 2, '.', '' );	
-						$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
-					} else {
-						$price = number_format( (int) $product->price->retail, 2, '.', '' );
-						$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
-					}
+					
 					
 					$data = array(
 						'ID'        => (string) sanitize_text_field( $product['product_id'] ),
@@ -255,8 +250,8 @@ class WordPress_Affiliate_Shop_Linkshare {
 						'brand'     => (string) sanitize_text_field( trim( ucwords( strtolower( $xml->header->merchantName ) ) ) ),
 						'img'       => (string) esc_url( $product->URL->productImage ),
 						'desc'      => (string) sanitize_text_field( $product->description->short ),
-						'price'     => $price,
-						'rrp'       => $rrp,
+						'price'     => $sale,
+						'rrp'       => $retail,
 						'link'      => (string) esc_url( $product->URL->product )
 					);
 					global $wpdb;
