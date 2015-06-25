@@ -240,7 +240,7 @@ class WordPress_Affiliate_Shop_Linkshare {
 					
 				
 					//print_var( $product );
-					if( isset( $product->price->sale ) && $product->price->sale < $product->price->retail ) {
+					if( $product->price->sale < $product->price->retail ) {
 						$price = number_format( (int) $product->price->sale, 2, '.', '' );	
 						$rrp = number_format( (int) $product->price->retail, 2, '.', '' );
 					} else {
