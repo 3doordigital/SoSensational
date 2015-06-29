@@ -242,6 +242,9 @@ class WordPress_Affiliate_Shop_Linkshare {
 					$retail = (float) $product->price->retail;
 					//print_var( $product );
 					
+					if( $sale == 0.00 || $sale == 0 ) {
+						$sale = $retail;	
+					}
 					
 					$data = array(
 						'ID'        => (string) sanitize_text_field( $product['product_id'] ),

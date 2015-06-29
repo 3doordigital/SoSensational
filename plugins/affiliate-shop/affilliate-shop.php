@@ -142,11 +142,25 @@ class WordPress_Affiliate_Shop {
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
         
+		add_action( 'trashed_post', array( $this, 'my_trash_action' ) );
+		
 		$this->run_plugin();
 		
 		//update_metadata('wp_aff_colours', 876, 'new_metadata', 'test');
 	}
-	
+	function my_trash_action( $post_id ) {
+	   	if ( 'wp_aff_products' != get_post_type( $post_id ) )
+			return;
+		
+		$notfound = get_post_meta( $post_id, 'wp_aff_product_notfound', true );
+		if( $notfound == 0 ) {
+			wp_delete_post( $post_id, true );
+		} else {
+			return;	
+		}
+		
+	}
+
 	function some_callback( $title, $sep ){
 		global $wp_query;
 		//print_var( $wp_query );
