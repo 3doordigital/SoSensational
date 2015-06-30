@@ -486,7 +486,7 @@ class wordfence {
 		add_action('wordfence_hourly_cron', 'wordfence::hourlyCron');
 		add_action('plugins_loaded', 'wordfence::veryFirstAction');
 		add_action('init', 'wordfence::initAction');
-		add_action('template_redirect', 'wordfence::templateRedir');
+		add_action('template_redirect', 'wordfence::templateRedir', 0);
 		add_action('shutdown', 'wordfence::shutdownAction');
 
 		if(version_compare(PHP_VERSION, '5.4.0') >= 0){
@@ -2021,7 +2021,7 @@ class wordfence {
 	}
 	public static function ajax_blockIP_callback(){
 		$IP = trim($_POST['IP']);
-		$perm = $_POST['perm'] == '1' ? true : false;
+		$perm = (isset($_POST['perm']) && $_POST['perm'] == '1') ? true : false;
 		if (!wfUtils::isValidIP($IP)) {
 			return array('err' => 1, 'errorMsg' => "Please enter a valid IP address to block.");
 		}
@@ -2251,6 +2251,17 @@ class wordfence {
 		if(strpos($localFile, ABSPATH) !== 0){
 			return array('errorMsg' => "An invalid file was requested for deletion.");
 		}
+		if ($localFile === ABSPATH . 'wp-config.php' && file_exists(ABSPATH . 'wp-config.php') && empty($_POST['forceDelete'])) {
+			return array(
+				'errorMsg' => "You must first download a backup copy of your <code>wp-config.php</code> prior to deleting the infected file.
+				The <code>wp-config.php</code> file contains your database credentials which you will need to restore normal site operations.
+				Your site will <b>NOT</b> function once the <code>wp-config.php</code> has been deleted.
+				<p>
+					<a class='button' href='/?_wfsf=download&nonce=" . wp_create_nonce('wp-ajax') . "&file=". rawurlencode($file) ."' target='_blank' onclick=\"jQuery('#wp-config-force-delete').show();\">Download a backup copy</a>
+					<a style='display:none' id='wp-config-force-delete' class='button' href='#' target='_blank' onclick='WFAD.deleteFile($issueID, true); return false;'>Delete wp-config.php</a>
+				</p>",
+			);
+		}
 		if(@unlink($localFile)){
 			$wfIssues->updateIssue($issueID, 'delete');
 			return array(
@@ -2339,6 +2350,9 @@ class wordfence {
 		}
 	}
 	public static function ajax_exportSettings_callback(){
+		/** @var wpdb $wpdb */
+		global $wpdb;
+
 		$keys = wfConfig::getExportableOptionsKeys();
 		$export = array();
 		foreach($keys as $key){
@@ -2346,6 +2360,12 @@ class wordfence {
 		}
 		$export['scanScheduleJSON'] = json_encode(wfConfig::get_ser('scanSched', array()));
 		$export['schedMode'] = wfConfig::get('schedMode', '');
+
+		// Any user supplied blocked IPs.
+		$export['_blockedIPs'] = $wpdb->get_results('SELECT *, HEX(IP) as IP FROM ' . $wpdb->base_prefix . 'wfBlocks WHERE wfsn = 0 AND permanent = 1');
+
+		// Any advanced blocking stuff too.
+		$export['_advancedBlocking'] = $wpdb->get_results('SELECT * FROM ' . $wpdb->base_prefix . 'wfBlocksAdv');
 
 		try {
 			$api = new wfAPI(wfConfig::get('apiKey'), wfUtils::getWPVersion());
@@ -2363,6 +2383,9 @@ class wordfence {
 		}
 	}
 	public static function importSettings($token){
+		/** @var wpdb $wpdb */
+		global $wpdb;
+
 		$api = new wfAPI(wfConfig::get('apiKey'), wfUtils::getWPVersion());
 		$res = $api->call('import_options', array(), array('token' => $token));
 		$totalSet = 0;
@@ -2380,6 +2403,27 @@ class wordfence {
 				wfConfig::set('schedMode', $res['options']['schedMode']);
 				$totalSet += 2;
 			}
+
+			if (!empty($res['options']['_blockedIPs']) && is_array($res['options']['_blockedIPs'])) {
+				foreach ($res['options']['_blockedIPs'] as $row) {
+					if (!empty($row['IP'])) {
+						$row['IP'] = pack('H*', $row['IP']);
+						if (!$wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM ' . $wpdb->base_prefix . 'wfBlocks WHERE IP = %s', $row['IP']))) {
+							$wpdb->insert($wpdb->base_prefix . 'wfBlocks', $row);
+						}
+					}
+				}
+			}
+
+			if (!empty($res['options']['_advancedBlocking']) && is_array($res['options']['_advancedBlocking'])) {
+				foreach ($res['options']['_advancedBlocking'] as $row) {
+					if (!empty($row['blockString']) && !$wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM ' . $wpdb->base_prefix . 'wfBlocksAdv WHERE blockString = %s', $row['blockString']))) {
+						unset($row['id']);
+						$wpdb->insert($wpdb->base_prefix . 'wfBlocksAdv', $row);
+					}
+				}
+			}
+
 			return $totalSet;
 		} else if($res['err']){
 			throw new Exception($res['err']);
@@ -2604,6 +2648,7 @@ class wordfence {
 		// prevent /?author=N scans from disclosing usernames.
 		if (wfConfig::get('loginSec_disableAuthorScan') && is_author() && !empty($_GET['author']) && is_numeric($_GET['author'])) {
 			wp_redirect(home_url());
+			exit;
 		}
 
 		$wfFunc = get_query_var('_wfsf');
@@ -2613,7 +2658,7 @@ class wordfence {
 		//End logging
 
 
-		if(! ($wfFunc == 'diff' || $wfFunc == 'view' || $wfFunc == 'viewOption' || $wfFunc == 'sysinfo' || $wfFunc == 'cronview' || $wfFunc == 'dbview' || $wfFunc == 'conntest' || $wfFunc == 'unknownFiles' || $wfFunc == 'IPTraf' || $wfFunc == 'viewActivityLog' || $wfFunc == 'testmem' || $wfFunc == 'testtime')){
+		if(! ($wfFunc == 'diff' || $wfFunc == 'view' || $wfFunc == 'viewOption' || $wfFunc == 'sysinfo' || $wfFunc == 'cronview' || $wfFunc == 'dbview' || $wfFunc == 'conntest' || $wfFunc == 'unknownFiles' || $wfFunc == 'IPTraf' || $wfFunc == 'viewActivityLog' || $wfFunc == 'testmem' || $wfFunc == 'testtime' || $wfFunc == 'download')){
 			return;
 		}
 		if(! wfUtils::isAdmin()){
@@ -2649,6 +2694,8 @@ class wordfence {
 			self::wfFunc_testmem();
 		} else if($wfFunc == 'testtime'){
 			self::wfFunc_testtime();
+		} else if($wfFunc == 'download'){
+			self::wfFunc_download();
 		}
 		exit(0);
 	}
@@ -2797,7 +2844,7 @@ EOL;
 	}
 
 	public static function wfFunc_view(){
-		$localFile = ABSPATH . '/' . preg_replace('/^(?:\.\.|[\/]+)/', '', sanitize_text_field($_GET['file']));
+		$localFile = ABSPATH . preg_replace('/^(?:\.\.|[\/]+)/', '', sanitize_text_field($_GET['file']));
 		if(strpos($localFile, '..') !== false){
 			echo "Invalid file requested. (Relative paths not allowed)";
 			exit();
@@ -2863,6 +2910,29 @@ EOL;
 		require 'diffResult.php';
 		exit(0);
 	}
+
+	public static function wfFunc_download() {
+		$localFile = ABSPATH . preg_replace('/^(?:\.\.|[\/]+)/', '', sanitize_text_field($_GET['file']));
+		if (strpos($localFile, '..') !== false) {
+			echo "Invalid file requested. (Relative paths not allowed)";
+			exit();
+		}
+		if (preg_match('/[\'\"<>\!\{\}\(\)\&\@\%\$\*\+\[\]\?]+/', $localFile)) {
+			echo "File contains illegal characters.";
+			exit();
+		}
+		if (!file_exists($localFile)) {
+			exit('File does not exist.');
+		}
+
+		$filename = basename($localFile);
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="' . $filename . '"');
+		header('Content-Length: ' . filesize($localFile));
+		readfile($localFile);
+		exit;
+	}
+
 	public static function initAction(){
 		global $wp;
 		if (!is_object($wp)) return; //Suggested fix for compatability with "Portable phpmyadmin"
@@ -2884,7 +2954,19 @@ EOL;
 	}
 	public static function admin_init(){
 		if(! wfUtils::isAdmin()){ return; }
-		foreach(array('activate', 'scan', 'updateAlertEmail', 'sendActivityLog', 'restoreFile', 'startPasswdAudit', 'deletePasswdAudit', 'weakPasswordsFix', 'passwdLoadResults', 'killPasswdAudit', 'passwdLoadJobs', 'exportSettings', 'importSettings', 'bulkOperation', 'deleteFile', 'deleteDatabaseOption', 'removeExclusion', 'activityLogUpdate', 'ticker', 'loadIssues', 'updateIssueStatus', 'deleteIssue', 'updateAllIssues', 'reverseLookup', 'unlockOutIP', 'loadBlockRanges', 'unblockRange', 'blockIPUARange', 'whois', 'unblockIP', 'blockIP', 'permBlockIP', 'loadStaticPanel', 'saveConfig', 'downloadHtaccess', 'checkFalconHtaccess', 'updateConfig', 'saveCacheConfig', 'removeFromCache', 'autoUpdateChoice', 'saveCacheOptions', 'clearPageCache', 'getCacheStats', 'clearAllBlocked', 'killScan', 'saveCountryBlocking', 'saveScanSchedule', 'tourClosed', 'welcomeClosed', 'startTourAgain', 'downgradeLicense', 'addTwoFactor', 'twoFacActivate', 'twoFacDel', 'loadTwoFactor', 'loadAvgSitePerf', 'sendTestEmail', 'addCacheExclusion', 'removeCacheExclusion', 'loadCacheExclusions', 'email_summary_email_address_debug') as $func){
+		foreach(array(
+			'activate', 'scan', 'updateAlertEmail', 'sendActivityLog', 'restoreFile', 'startPasswdAudit',
+			'deletePasswdAudit', 'weakPasswordsFix', 'passwdLoadResults', 'killPasswdAudit', 'passwdLoadJobs',
+			'exportSettings', 'importSettings', 'bulkOperation', 'deleteFile', 'deleteDatabaseOption', 'removeExclusion',
+			'activityLogUpdate', 'ticker', 'loadIssues', 'updateIssueStatus', 'deleteIssue', 'updateAllIssues',
+			'reverseLookup', 'unlockOutIP', 'loadBlockRanges', 'unblockRange', 'blockIPUARange', 'whois', 'unblockIP',
+			'blockIP', 'permBlockIP', 'loadStaticPanel', 'saveConfig', 'downloadHtaccess', 'checkFalconHtaccess',
+			'updateConfig', 'saveCacheConfig', 'removeFromCache', 'autoUpdateChoice', 'saveCacheOptions', 'clearPageCache',
+			'getCacheStats', 'clearAllBlocked', 'killScan', 'saveCountryBlocking', 'saveScanSchedule', 'tourClosed',
+			'welcomeClosed', 'startTourAgain', 'downgradeLicense', 'addTwoFactor', 'twoFacActivate', 'twoFacDel',
+			'loadTwoFactor', 'loadAvgSitePerf', 'sendTestEmail', 'addCacheExclusion', 'removeCacheExclusion',
+			'loadCacheExclusions', 'email_summary_email_address_debug', 'unblockNetwork', 'permanentlyBlockAllIPs',
+		) as $func){
 			add_action('wp_ajax_wordfence_' . $func, 'wordfence::ajaxReceiver');
 		}
 
@@ -3351,6 +3433,50 @@ EOL;
 			$content .= '<br />' . self::$authError->get_error_message();
 		}
 		return $content;
+	}
+
+	/**
+	 * Permanently blocks all temporarily locked out IPs.
+	 */
+	public static function ajax_permanentlyBlockAllIPs_callback() {
+		/** @var wpdb $wpdb */
+		global $wpdb;
+		$IPs = array();
+		$type = !empty($_REQUEST['type']) ? $_REQUEST['type'] : null;
+		$reason = !empty($_REQUEST['reason']) ? $_REQUEST['reason'] : 'Manual block by administrator';
+		switch ($type) {
+			case 'throttled':
+				$IPs = $wpdb->get_col('SELECT DISTINCT IP FROM ' . $wpdb->base_prefix . 'wfThrottleLog');
+				break;
+			case 'lockedOut':
+				$lockoutSecs = wfConfig::get('loginSec_lockoutMins') * 60;
+				$IPs = $wpdb->get_col($wpdb->prepare('SELECT DISTINCT IP FROM ' . $wpdb->base_prefix . 'wfLockedOut
+				WHERE blockedTime + %d > UNIX_TIMESTAMP()', $lockoutSecs));
+				break;
+			case 'blocked':
+				$blockedTime = wfConfig::get('blockedTime');
+				$IPs = $wpdb->get_col($wpdb->prepare('SELECT DISTINCT IP FROM ' . $wpdb->base_prefix . 'wfBlocks
+				WHERE wfsn = 0
+				AND permanent = 0
+				AND blockedTime + %d > UNIX_TIMESTAMP()', $blockedTime));
+				break;
+		}
+		if ($IPs && is_array($IPs)) {
+			foreach ($IPs as $IP) {
+				self::getLog()->blockIP(wfUtils::inet_ntop($IP), $reason, false, true);
+			}
+		}
+		switch ($type) {
+			case 'lockedOut':
+				if ($IPs) {
+					foreach ($IPs as &$IP) {
+						$IP = $wpdb->prepare('%s', $IP);
+					}
+					$wpdb->query('DELETE FROM ' . $wpdb->base_prefix . 'wfLockedOut WHERE IP IN ('. join(', ', $IPs).')');
+				}
+				break;
+		}
+		return array('ok' => 1);
 	}
 }
 ?>

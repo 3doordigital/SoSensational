@@ -42,7 +42,7 @@ Thumbs.db
 # "mu-plugins" directory
 # "plugins" directory
 # "themes" directory
-*
+/*
 !mu-plugins/
 !plugins/
 !themes/

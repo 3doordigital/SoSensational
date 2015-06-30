@@ -152,6 +152,10 @@
             font-family: dashicons;
         }
 
+        li.mega-disable-link > a {
+            cursor: default;
+        }
+
         li.mega-menu-item a:before {
             display: inline-block;
             font: inherit;
@@ -370,7 +374,7 @@
                 }
 
                 /* Widget titles */
-                > h4.mega-block-title {
+                h4.mega-block-title {
                     color: $panel_header_color;
                     font-family: $panel_header_font;
                     font-size: $panel_header_font_size;

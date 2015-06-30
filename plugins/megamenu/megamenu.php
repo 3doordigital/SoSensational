@@ -2,13 +2,13 @@
 
 /*
  * Plugin Name: Max Mega Menu
- * Plugin URI:  https://maxmegamenu.com
+ * Plugin URI:  http://www.maxmegamenu.com
  * Description: Mega Menu for WordPress.
- * Version:     1.8
+ * Version:     1.8.1
  * Author:      Tom Hemsley
- * Author URI:  https://maxmegamenu.com
+ * Author URI:  http://www.maxmegamenu.com
  * License:     GPL-2.0+
- * Copyright:   2015 Tom Hemsley (https://maxmegamenu.com)
+ * Copyright:   2015 Tom Hemsley (http://www.maxmegamenu.com)
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +26,7 @@ final class Mega_Menu {
 	/**
 	 * @var string
 	 */
-	public $version = '1.8';
+	public $version = '1.8.1';
 
 
 	/**
@@ -387,7 +387,8 @@ final class Mega_Menu {
 							'classes'           => array(
 								"menu-item",
 								"menu-item-type-widget",
-								"menu-columns-{$widget['mega_columns']}-of-{$item->megamenu_settings['panel_columns']}"
+								"menu-columns-{$widget['mega_columns']}-of-{$item->megamenu_settings['panel_columns']}",
+								"menu-widget-class-" . $widget_manager->get_widget_class( $widget['widget_id'] )
 							)
 						);
 
