@@ -1496,3 +1496,7 @@ a.preview-anchor-text {
 .navbar-nav.shop-filter>li {
 	float: none!important;
 }
+.single-post #content img {
+	max-width: 100%;
+	height: auto;
+}

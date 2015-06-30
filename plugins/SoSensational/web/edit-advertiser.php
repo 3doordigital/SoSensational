@@ -210,7 +210,7 @@ $attachments = get_posts( array(
 <br />
 <div class="input-group">
   <span class="input-group-addon input-width">Full Brand Description:<br /><div id="fullDescCounter"></div></span>
-	<textarea name="sosensational_options[advertiser_desc]" id="advertiser_desc"  class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_advertiser_desc'][0]) ? $meta['ss_advertiser_desc'][0] : "";?></textarea>
+	<textarea name="sosensational_options[advertiser_desc]" id="advertiser_desc" maxlength="1000" class="form-control" aria-describedby="basic-addon1" /><?php echo isset($meta['ss_advertiser_desc'][0]) ? $meta['ss_advertiser_desc'][0] : "";?></textarea>
 </div>
 
 
