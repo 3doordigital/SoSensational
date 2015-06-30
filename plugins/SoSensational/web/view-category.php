@@ -37,7 +37,7 @@ if (!empty($ss_cat_id)):
     ?>
     <div class="row">
         <?php
-        $categoriesWithPriority = sortCategoriesByPriority($categories);
+		$categoriesWithPriority = sortCategoriesByPriority($categories);
         $counterCategories = 1;
         $counterColor = 1;
         foreach ($categoriesWithPriority as $category):
