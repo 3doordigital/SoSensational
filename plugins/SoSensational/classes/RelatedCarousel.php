@@ -4,7 +4,7 @@ require_once 'inc/RelatedCarousel/Carousel.php';
 class RelatedCarousel
 {
 
-    private $imgDimensions = array( 'width' => 380, 'height' => 250, 'crop' => false );
+    private $imgDimensions = array( 'width' => 380, 'height' => 250, 'crop' => true );
     
     private $currentCategory;
     private $advertiserCategories;    
