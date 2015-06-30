@@ -430,6 +430,3 @@ jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
     }
 
 });
-
-
-
