@@ -240,7 +240,8 @@
 				} else {
 					update_post_meta( $id, 'wp_aff_product_sale', 0 );
 				}
-				
+				update_post_meta( $id, 'wp_aff_product_link', $item['product_link'] );
+				update_post_meta( $id, 'wp_aff_product_image', $item['product_image'] );
 				update_post_meta( $id, 'wp_aff_product_merch', $item['product_merch'] );
 				update_post_meta( $id, 'wp_aff_product_notfound', 0 );
 				$data['out'] = 'Updated by ID '.$id;
