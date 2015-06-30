@@ -30,7 +30,7 @@ class Carousel
                     <li>
                         <div class='related-item ss_border'>
                             <a href='<?php echo get_site_url() . '/brands-and-boutiques/' . $singleBox['post_name']; ?>'>
-                                <img src='<?php echo $singleBox['image'];  ?>' style="max-height: 250px; width: auto;" />
+                                <img src='<?php echo $singleBox['image'];  ?>' height="250" />
                                 <div class='title-bar'><h2><?php echo $singleBox['post_title']; ?></h2></div>                                
                             </a>  
                             <div class='related-description'>
