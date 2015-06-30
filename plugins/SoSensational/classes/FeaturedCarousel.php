@@ -4,7 +4,7 @@ require_once 'inc/FeaturedCarousel/Carousel.php';
 class FeaturedCarousel
 {
 
-    private $imgDimensions = array( 'width' => 380, 'height' => 250, 'crop' => false );
+    private $imgDimensions = array( 'width' => 380, 'height' => 250, 'crop' => true );
     private $currentCategory;
     private $allFeaturedAdvertisers = array();
     private $metaData = array();
