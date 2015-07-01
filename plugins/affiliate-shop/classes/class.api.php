@@ -203,21 +203,21 @@
 			
 			$data = array();
 			$out = '';
-			
+			if( !strstr( $prod_id, '_' ) && $merch != '' ) {
+				$prod_id = $merch.'_'.$prod_id;	
+			}
 			global $wpdb;
 			$table_name = $wpdb->prefix . "feed_data";
 			$query ="
 				SELECT * 
 				FROM 
 					$table_name 
-				WHERE product_id 
-					REGEXP '^{$merch}_{$prod_id}$' 
-				OR product_id
+				WHERE product_id
 					= '$prod_id' 
 				LIMIT 1
 				";
 			//$out = $query;
-			die( $query );
+			echo $query;
 			if ($products = $wpdb->get_results( $query, ARRAY_A	) ) {
 				foreach ( $products as $product ) 
 				{
