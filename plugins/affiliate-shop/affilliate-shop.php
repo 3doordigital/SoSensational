@@ -2800,7 +2800,10 @@ class WordPress_Affiliate_Shop {
                            </td>
                         </tr>
                     </table>
-                    <?php print_var( $meta ); ?>
+                    <?php print_var( $meta );
+						$test = new wpAffAPI();
+						print_var ($test->update_product( 20231, 1809 ) ); 
+					?>
                     <input type="hidden" value="wp_aff_edit_man_product" name="action" />
                     <input type="hidden" value="<?php echo $ID; ?>" name="post_id" />
                     <?php wp_nonce_field( 'wp_aff_edit_man_product', '_wpnonce', FALSE ); ?>
