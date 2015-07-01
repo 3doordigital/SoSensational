@@ -203,7 +203,7 @@
 			
 			$data = array();
 			$out = '';
-			if( !strstr( $prod_id, '_' ) ) {
+			if( !strstr( $prod_id, '_' ) && $merch != '' ) {
 				$prod_id = $merch.'_'.$prod_id;	
 			}
 			global $wpdb;
