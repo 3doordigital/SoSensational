@@ -199,7 +199,7 @@
 						
 		}
 		
-		public function update_product( $id = null, $prod_id = null, $link = null ) {
+		public function update_product( $id = null, $prod_id = null, $merch = null ) {
 			
 			$data = array();
 			$out = '';
@@ -211,9 +211,7 @@
 				FROM 
 					$table_name 
 				WHERE product_id 
-					REGEXP '^([0-9]+)_{$prod_id}$' 
-				OR product_id
-					= '$prod_id'
+					REGEXP '^{$merch}_{$prod_id}$' 
 				LIMIT 1
 				";
 			//$out = $query;
@@ -227,8 +225,7 @@
 			}
 			
 			
-			
-			if( !empty( $data['item'] ) ) {
+			if( !empty( $data['item'] ) && ( substr( strtolower( get_the_title( $id ) ), 5, 0 ) == substr( strtolower( $data['product_title'] ) ) ) ) {
 				$item = $data['item'];
 				$data['status'] = 1; 
 				wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );

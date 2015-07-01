@@ -2802,7 +2802,7 @@ class WordPress_Affiliate_Shop {
                     </table>
                     <?php print_var( $meta );
 						$test = new wpAffAPI();
-						print_var ($test->update_product( 20231, 1809 ) ); 
+						print_var ($test->update_product( 20231, '2762_1809' ) ); 
 					?>
                     <input type="hidden" value="wp_aff_edit_man_product" name="action" />
                     <input type="hidden" value="<?php echo $ID; ?>" name="post_id" />
@@ -2923,13 +2923,19 @@ class WordPress_Affiliate_Shop {
 					$link = '';
 				}
 				
+				if( isset( $meta['wp_aff_product_merch'] ) ) {
+					$merch = $meta['wp_aff_product_merch'][0];
+				} else {
+					$merch = '';
+				}
+				
 				$brand = wp_get_post_terms( $post->ID, 'wp_aff_brands' );
 				
 				$output['ids'][] = array(
 					'id' => $post->ID,
 					'title' => $post->post_title,
 					'prod_id' => $prod_id,
-					'merch' => '',
+					'merch' => $merch,
 					'aff'	=> $aff,
 					'url' => $link,
 					'status' => $post->post_status
@@ -2969,11 +2975,11 @@ class WordPress_Affiliate_Shop {
 		
 	}
 	
-	function cron_update_product( $id, $prod_id, $link = NULL ) {
+	function cron_update_product( $id, $prod_id, $merch = NULL ) {
 		$output = array();
 		
 		$api = new wpAffAPI();
-		$data = $api->update_product( $id, $prod_id, $link ) ;
+		$data = $api->update_product( $id, $prod_id, $merch ) ;
 		if( $data ) {
 			$output['status'] = 1;	
 		} else {
@@ -3120,7 +3126,7 @@ class WordPress_Affiliate_Shop {
 			$mailhead = 'From: Aff Shop Cron <cron@sosensational.co.uk>' . "\r\n";
 			
 			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.txt";
-			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
+			/*$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
 			
 				
 			$fp = fopen($merchantlog, 'w');
@@ -3149,7 +3155,7 @@ class WordPress_Affiliate_Shop {
 			}	
 			fclose( $fp );
 			wp_mail( get_option( 'admin_email' ), 'Merchant Cron Ended', "Merchant Log: $merchantlog", $mailhead );
-			
+			*/
 			$i = 1;
 			
 			$fp = fopen($productlog, 'w');
@@ -3160,7 +3166,7 @@ class WordPress_Affiliate_Shop {
 			$total = $products['total'];
 			foreach( $products['ids'] as $product ) {
 				$percent = number_format( ( $i / $total ) * 100, 2 );
-				$data = $this->cron_update_product( $product['id'], $product['prod_id'], $product['link'] );
+				$data = $this->cron_update_product( $product['id'], $product['prod_id'], $product['merch'] );
 				if( $data['html']['status'] == 1 ) {
 					
 					$line = array( $i.' of '.$total.' ('.$percent.'%)', $product['id'], $data['html']['item']['product_id'], $data['html']['item']['product_aff'], $data['html']['item']['product_title'], $data['html']['item']['product_brand'], $data['html']['item']['product_image'], $data['html']['item']['product_price'], $data['html']['item']['product_rrp'], $data['html']['item']['product_link'], "Updated by ID" );
