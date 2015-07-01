@@ -923,6 +923,16 @@ class WordPress_Affiliate_Shop {
 					$args['orderby']	= 'rand';
             		$args['order'] 		= 'DESC';
 				}
+				$args['meta_query'][] = array(
+					'key' => 'wp_aff_product_image',
+					'value'   => '',
+					'compare' => '!=',
+				);
+				$args['meta_query'][] = array(
+					'key' => 'wp_aff_product_link',
+					'value'   => '',
+					'compare' => '!=',
+				);
 				//print_var( $args );
 				return $args;
 	}
