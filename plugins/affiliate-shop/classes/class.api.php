@@ -213,6 +213,8 @@
 				FROM 
 					$table_name 
 				WHERE product_id 
+					REGEXP '^([0-9]+)_{$prod_id}$' 
+				OR product_id
 					= '$prod_id' 
 				LIMIT 1
 				";
@@ -251,7 +253,7 @@
 				$data['out'] = 'Updated by ID '.$id;
 			} else {
 				update_post_meta( $id, 'wp_aff_product_notfound', 1 );
-				$data['out'] = 'Not Found '.$id;
+				$data['out'] = 'Not Found '.$prod_id;
 				wp_trash_post( $id  );
 				$data['status'] = 0;
 				
