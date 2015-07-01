@@ -215,6 +215,7 @@
 				LIMIT 1
 				";
 			//$out = $query;
+			echo $query;
 			if ($products = $wpdb->get_results( $query, ARRAY_A	) ) {
 				foreach ( $products as $product ) 
 				{
