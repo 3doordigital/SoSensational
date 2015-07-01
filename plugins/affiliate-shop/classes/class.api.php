@@ -226,7 +226,7 @@
 			}
 			
 			
-			if( !empty( $data['item'] ) && ( substr( strtolower( get_the_title( $id ) ), 5, 0 ) == substr( strtolower( $data['product_title'] ) ) ) ) {
+			if( !empty( $data['item'] ) && ( substr( strtolower( get_the_title( $id ) ), 5, 0 ) == substr( strtolower( $data['product_title'] ), 5, 0 ) ) ) {
 				$item = $data['item'];
 				$data['status'] = 1; 
 				wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
