@@ -203,7 +203,9 @@
 			
 			$data = array();
 			$out = '';
-			
+			if( !strstr( $prod_id, '_' ) ) {
+				$prod_id = $merch.'_'.$prod_id;	
+			}
 			global $wpdb;
 			$table_name = $wpdb->prefix . "feed_data";
 			$query ="
@@ -226,12 +228,16 @@
 			}
 			
 			
-			if( !empty( $data['item'] ) && ( substr( strtolower( get_the_title( $id ) ), 5, 0 ) == substr( strtolower( $data['product_title'] ), 5, 0 ) ) ) {
+			if( !empty( $data['item'] ) ) {
 				$item = $data['item'];
 				$data['status'] = 1; 
+				
+				
+				
 				wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
 				update_post_meta( $id, 'wp_aff_product_rrp', $item['product_rrp'] );
 				update_post_meta( $id, 'wp_aff_product_price', $item['product_price'] );
+				update_post_meta( $id, 'wp_aff_product_id', $prod_id );
 				update_post_meta( $id, 'wp_aff_product_notfound', 0 );
 				if( $item['product_price'] < $item['product_rrp'] ) {
 					update_post_meta( $id, 'wp_aff_product_sale', 1 );
