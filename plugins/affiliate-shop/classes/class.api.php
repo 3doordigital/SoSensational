@@ -234,7 +234,9 @@
 				$dbtitle = substr( $item['product_title'], 0, 5 );
 				$wptitle = substr( get_the_title( $id ), 0, 5 );
 				
-				die( stristr( $dbtitle, $wptitle ) );
+				if( !stristr( $dbtitle, $wptitle ) ) {
+					die( 'Not a match:: '.$dbtitle.' :: '.$wptitle );
+				}
 				
 				$data['status'] = 1; 
 				
