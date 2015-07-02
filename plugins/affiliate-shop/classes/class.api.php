@@ -228,7 +228,7 @@
 			}
 			
 			
-			if( !empty( $data['item'] ) && ( isset( $data['product_title'] ) && stristr( $data['product_title'], get_the_title( $id ) ) ) ) {
+			if( !empty( $data['item'] ) && ( isset( $data['item']['product_title'] ) && stristr( $data['product_title'], get_the_title( $id ) ) ) ) {
 				$item = $data['item'];
 				$data['status'] = 1; 
 				
