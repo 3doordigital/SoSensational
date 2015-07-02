@@ -236,6 +236,8 @@
 				
 				if( stristr( $dbtitle, $wptitle ) == FALSE ) {
 					die( 'Not a match:: '.$dbtitle.' :: '.$wptitle );
+				} else {
+					die( 'Matched:: '.$dbtitle.' :: '.$wptitle );
 				}
 				
 				$data['status'] = 1; 
