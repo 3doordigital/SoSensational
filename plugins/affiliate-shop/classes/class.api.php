@@ -254,7 +254,7 @@
 				$data['status'] = 0;
 				
 			}
-			die( $data['product_title'].' :'. get_the_title( $id ) );
+			die( $data['item']['product_title'].' :'. get_the_title( $id ) );
 			//return $data;
 		}
 				
