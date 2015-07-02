@@ -228,8 +228,14 @@
 			}
 			
 			
-			if( !empty( $data['item'] ) && ( isset( $data['item']['product_title'] ) && stristr( $data['product_title'], get_the_title( $id ) ) ) ) {
+			if( !empty( $data['item'] ) ) {
 				$item = $data['item'];
+				
+				$dbtitle = substr( $item['product_title'], 0, 5 );
+				$wptitle = substr( get_the_title( $id ), 0, 5 );
+				
+				die( stristr( $dbtitle, $wptitle ) );
+				
 				$data['status'] = 1; 
 				
 				wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
