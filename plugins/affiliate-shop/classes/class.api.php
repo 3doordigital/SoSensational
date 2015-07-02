@@ -231,7 +231,7 @@
 			if( !empty( $data['item'] ) ) {
 				$item = $data['item'];
 				
-				$dbtitle = substr( $item['product_title'], 0, 5 );
+				$dbtitle = substr( htmlspecialchars( $item['product_title'] ), 0, 5 );
 				$wptitle = substr( get_the_title( $id ), 0, 5 );
 				
 				if( stristr( $dbtitle, $wptitle ) == FALSE ) {
