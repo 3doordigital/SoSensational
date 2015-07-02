@@ -235,28 +235,30 @@
 				$wptitle = substr( get_the_title( $id ), 0, 5 );
 				
 				if( stristr( $dbtitle, $wptitle ) == FALSE ) {
-					die( 'Not a match:: '.$dbtitle.' :: '.$wptitle );
+					update_post_meta( $id, 'wp_aff_product_notfound', 1 );
+					$data['out'] = 'Not Found '.$prod_id;
+					wp_trash_post( $id  );
+					$data['status'] = 0;
 				} else {
-					die( 'Matched:: '.$dbtitle.' :: '.$wptitle );
+					
+					$data['status'] = 1; 
+					
+					wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
+					update_post_meta( $id, 'wp_aff_product_rrp', $item['product_rrp'] );
+					update_post_meta( $id, 'wp_aff_product_price', $item['product_price'] );
+					update_post_meta( $id, 'wp_aff_product_id', $prod_id );
+					update_post_meta( $id, 'wp_aff_product_notfound', 0 );
+					if( $item['product_price'] < $item['product_rrp'] ) {
+						update_post_meta( $id, 'wp_aff_product_sale', 1 );
+					} else {
+						update_post_meta( $id, 'wp_aff_product_sale', 0 );
+					}
+					update_post_meta( $id, 'wp_aff_product_link', $item['product_link'] );
+					update_post_meta( $id, 'wp_aff_product_image', $item['product_image'] );
+					update_post_meta( $id, 'wp_aff_product_merch', $item['product_merch'] );
+					update_post_meta( $id, 'wp_aff_product_notfound', 0 );
+					$data['out'] = 'Updated by ID '.$id;
 				}
-				
-				$data['status'] = 1; 
-				
-				wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
-				update_post_meta( $id, 'wp_aff_product_rrp', $item['product_rrp'] );
-				update_post_meta( $id, 'wp_aff_product_price', $item['product_price'] );
-				update_post_meta( $id, 'wp_aff_product_id', $prod_id );
-				update_post_meta( $id, 'wp_aff_product_notfound', 0 );
-				if( $item['product_price'] < $item['product_rrp'] ) {
-					update_post_meta( $id, 'wp_aff_product_sale', 1 );
-				} else {
-					update_post_meta( $id, 'wp_aff_product_sale', 0 );
-				}
-				update_post_meta( $id, 'wp_aff_product_link', $item['product_link'] );
-				update_post_meta( $id, 'wp_aff_product_image', $item['product_image'] );
-				update_post_meta( $id, 'wp_aff_product_merch', $item['product_merch'] );
-				update_post_meta( $id, 'wp_aff_product_notfound', 0 );
-				$data['out'] = 'Updated by ID '.$id;
 			} else {
 				update_post_meta( $id, 'wp_aff_product_notfound', 1 );
 				$data['out'] = 'Not Found '.$prod_id;
@@ -264,7 +266,6 @@
 				$data['status'] = 0;
 				
 			}
-			//die( $data['item']['product_title'].' :'. get_the_title( $id ) );
 			return $data;
 		}
 				
