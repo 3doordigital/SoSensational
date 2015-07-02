@@ -228,11 +228,9 @@
 			}
 			
 			
-			if( !empty( $data['item'] ) ) {
+			if( !empty( $data['item'] ) && ( isset( $data['product_title'] ) && stristr( $data['product_title'], get_the_title( $id ) ) ) ) {
 				$item = $data['item'];
 				$data['status'] = 1; 
-				
-				
 				
 				wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
 				update_post_meta( $id, 'wp_aff_product_rrp', $item['product_rrp'] );
