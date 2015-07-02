@@ -254,8 +254,8 @@
 				$data['status'] = 0;
 				
 			}
-			die( $data['item']['product_title'].' :'. get_the_title( $id ) );
-			//return $data;
+			//die( $data['item']['product_title'].' :'. get_the_title( $id ) );
+			return $data;
 		}
 				
 		private function usort_reorder( $a, $b ){
