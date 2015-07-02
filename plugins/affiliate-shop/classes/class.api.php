@@ -217,7 +217,7 @@
 				LIMIT 1
 				";
 			//$out = $query;
-			echo $query;
+			//echo $query;
 			if ($products = $wpdb->get_results( $query, ARRAY_A	) ) {
 				foreach ( $products as $product ) 
 				{
@@ -254,7 +254,8 @@
 				$data['status'] = 0;
 				
 			}
-			return $data;
+			die( $data['product_title'].' :'. get_the_title( $id ) );
+			//return $data;
 		}
 				
 		private function usort_reorder( $a, $b ){
