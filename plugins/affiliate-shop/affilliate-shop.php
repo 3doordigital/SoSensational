@@ -765,7 +765,7 @@ class WordPress_Affiliate_Shop {
 									'inclusive' => true,
 								),
 							);
-							$args['meta_query']['relation'] = 'OR';
+							$args['meta_query']['relation'] = 'AND';
 							$args['meta_query'][] = array(
 										'key' => 'wp_aff_product_sale',
 										'value'   => '1',
