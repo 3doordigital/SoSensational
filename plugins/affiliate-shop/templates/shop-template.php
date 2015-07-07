@@ -153,7 +153,7 @@ get_header();
                     global $wp_aff;
 					global $paged;
 					$args = $wp_aff->shop_args();
-					//print_var($args);
+					print_var($args);
 					$per_page = $args['posts_per_page'];
 					$query = new WP_Query( $args );
 					//print_var($query);
