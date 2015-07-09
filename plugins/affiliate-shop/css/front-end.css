@@ -192,10 +192,12 @@
 .product-info, .products .prod_title {
     min-height: 85px;
 }
+#product_filter_bottom,
 #product_filter {
     padding: 15px 0;
     font-family: 'Open Sans', sans-serif; 
 }
+#product_filter_bottom div,
 #product_filter div {
     border: none;
     text-align: left;
@@ -203,6 +205,8 @@
     font-size: 14px;
     text-transform: uppercase;
 }
+
+#product_filter_bottom a,
 #product_filter a {
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;

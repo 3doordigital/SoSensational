@@ -270,6 +270,31 @@ get_header();
                         }
                     }
                 ?>
+                <div id="product_filter_bottom" class="row">
+                    <div class="col-md-17">
+                        <div id="product_count" class="col-md-12">
+                            <?php
+                            if( $query->found_posts == 0 ) {
+                                echo 'No Products';
+                            } elseif( $query->found_posts != 0 && $query->found_posts < 12 ) {
+                                echo 'Viewing '.$start.' - '.$query->found_posts.' of '.$query->found_posts.' Products';
+                            } else {
+                                echo 'Viewing '.$start.' - '.$end.' of '.$query->found_posts.' Products';
+                            }
+                            $i = 0;
+                            ?>
+                        </div>
+                        <div id="count_select" class="col-md-12">
+                            <?php
+                            $url18 = add_query_arg( 'per_page', 18, $_SERVER['REQUEST_URI'] );
+                            ?>
+                            View:
+                            <?php if( $query->found_posts >= 18 ) { ?><a href="<?php echo add_query_arg( 'per_page', 18, $_SERVER['REQUEST_URI'] ); ?>">18</a> /<?php } ?>
+                            <?php if( $query->found_posts >= 36 ) { ?><a href="<?php echo add_query_arg( 'per_page', 36, $_SERVER['REQUEST_URI'] ); ?>">36</a> /<?php } ?>
+                            <a href="<?php echo add_query_arg( 'per_page', 'all', $_SERVER['REQUEST_URI'] ); ?>">ALL</a>
+                        </div>
+                    </div>
+                </div>
                 <?php wp_pagenavi( array( 'query' => $query ) ); ?>                
             </div>
         </div>
