@@ -770,6 +770,7 @@ section h1 span {
 }
 .product {
     margin-bottom: 15px;
+    height: 300px;
 }
 .product .row {
     margin: 0;
