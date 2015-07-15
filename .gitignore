@@ -1,3 +1,4 @@
+plugins/wp-rocket/cache.json
 advanced-cache.php
 error_log
 *.log
