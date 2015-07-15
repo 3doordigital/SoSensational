@@ -829,15 +829,17 @@ class WordPress_Competition_Manager {
 				echo '<input type="hidden" name="competition-id" value="'.get_the_ID().'">';
 				echo '<input type="hidden" name="action" value="wp_comp_man_add_entry">';
 
-                if( function_exists( 'cptch_display_captcha_custom' ) ) {
-                    echo "<input type='hidden' name='cntctfrm_contact_action' value='true' />";
-                    echo cptch_display_captcha_custom();
-                }
+                echo '<div class="competition-captcha">';
+                    if( function_exists( 'cptch_display_captcha_custom' ) ) {
+                        echo "<input type='hidden' name='cntctfrm_contact_action' value='true' />";
+                        echo cptch_display_captcha_custom();
+                    }
 
-                if( function_exists( 'cptchpr_display_captcha_custom' ) ) {
-                    echo "<input type='hidden' name='cntctfrm_contact_action' value='true' />";
-                    echo cptchpr_display_captcha_custom();
-                }
+                    if( function_exists( 'cptchpr_display_captcha_custom' ) ) {
+                        echo "<input type='hidden' name='cntctfrm_contact_action' value='true' />";
+                        echo cptchpr_display_captcha_custom();
+                    }
+                echo '</div>';
 
                 echo '<br><br>';
 				echo '<a target="_blank" href="/competition-terms-conditions/">Terms &amp; Conditions</a>';

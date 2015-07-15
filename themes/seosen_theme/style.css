@@ -1501,3 +1501,7 @@ a.preview-anchor-text {
 	max-width: 100%;
 	height: auto;
 }
+
+.competition-captcha {
+    font-family: 'Open Sans', sans-serif;
+}
