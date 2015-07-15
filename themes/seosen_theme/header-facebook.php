@@ -7,7 +7,7 @@
         <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
         <title><?php wp_title(''); ?></title>
         <?php wp_head(); ?>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <!--<script src='https://www.google.com/recaptcha/api.js'></script>-->
     </head>
     <body <?php body_class('facebook-comp'); ?>>
 <?php global $seosen_options; echo $seosen_options['custom_html']; ?>

@@ -828,10 +828,19 @@ class WordPress_Competition_Manager {
 				echo '<input type="hidden" name="competition" value="'.get_the_title().'">';
 				echo '<input type="hidden" name="competition-id" value="'.get_the_ID().'">';
 				echo '<input type="hidden" name="action" value="wp_comp_man_add_entry">';
-				
-				echo '<br><div class="g-recaptcha" data-sitekey="6LdFgwYTAAAAANpxHyMNhLCjqNII56duND8kOPiE"></div><br>';
+
+                if( function_exists( 'cptch_display_captcha_custom' ) ) {
+                    echo "<input type='hidden' name='cntctfrm_contact_action' value='true' />";
+                    echo cptch_display_captcha_custom();
+                }
+
+                if( function_exists( 'cptchpr_display_captcha_custom' ) ) {
+                    echo "<input type='hidden' name='cntctfrm_contact_action' value='true' />";
+                    echo cptchpr_display_captcha_custom();
+                }
+
+                echo '<br><br>';
 				echo '<a target="_blank" href="/competition-terms-conditions/">Terms &amp; Conditions</a>';
-				
 				echo'<p><button type="submit" class="btn btn-primary" id="submit_answer">Submit Answer</button></p>';
 				echo '</form>';
 				return ob_get_contents();
@@ -843,37 +852,23 @@ class WordPress_Competition_Manager {
     }
     
     public function add_comp_entry() {
-        //print_var($_POST);
+
 		$return = array();
 		
 		$params = array();
-		$params['secret'] = '6LdFgwYTAAAAAAnuF0OV3TBHNIdhWQVHRfjj80Wf'; // Secret key
-		if (!empty($_POST) && isset($_POST['g-recaptcha-response'])) {
-			$params['response'] = urlencode($_POST['g-recaptcha-response']);
-		}
-		$params['remoteip'] = $_SERVER['REMOTE_ADDR'];
-	
-		$params_string = http_build_query($params);
-		$requestURL = 'https://www.google.com/recaptcha/api/siteverify?' . $params_string;
-	
-		// Get cURL resource
-		$curl = curl_init();
-	
-		// Set some options
-		curl_setopt_array($curl, array(
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_URL => $requestURL,
-		));
-	
-		// Send the request
-		$response = curl_exec($curl);
-		// Close request to clear up some resources
-		curl_close($curl);
-	
-		$response = @json_decode($response, true);
-	
-		if ($response["success"] == true) {
-		
+
+
+        if ( ( function_exists( 'cptch_check_custom_form' ) && cptch_check_custom_form() !== true ) || ( function_exists( 'cptchpr_check_custom_form' ) && cptchpr_check_custom_form() !== true ) ) {
+            $return = array(
+					'status' 	=> 3,
+					'message'	=> 'Captcha failed.',
+					'redirect'	=> site_url('competitions/?msg=0&comp='.$_POST['competition-id']),
+					'comp'		=> $_POST['competition-id']
+				);
+            echo json_encode( $return );
+            die();
+        }
+
 		$args = array(
 			'post_type'		=> 'wp_comp_entries',
 			'posts_per_page' => -1,
@@ -891,9 +886,8 @@ class WordPress_Competition_Manager {
 					'compare'   => '=',
 					'type'      => 'CHAR',
 				);
-		//print_var($args);
+
 		$lookup = new WP_Query( $args ) ;
-		//print_var($lookup);
 		if( $lookup->have_posts() ) {
 			$return = array(
 				'status' 	=> 0,
@@ -963,14 +957,6 @@ class WordPress_Competition_Manager {
 					var_dump($result->response);
 					echo '</pre>';
 			}
-		}
-		} else {
-			$return = array(
-					'status' 	=> 3,
-					'message'	=> 'Captcha failed.',
-					'redirect'	=> site_url('competitions/?msg=0&comp='.$_POST['competition-id']),
-					'comp'		=> $_POST['competition-id']
-				);
 		}
 		echo json_encode( $return );
 		die();

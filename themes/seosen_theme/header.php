@@ -7,7 +7,7 @@
         <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
         <title><?php wp_title(''); ?></title>
         <?php wp_head(); ?>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <!--<script src='https://www.google.com/recaptcha/api.js'></script>-->
         <meta name="avgthreatlabs-verification" content="e62dfc8e18b63d354a4f693629876df909f37b3b" />
     </head>
     <body <?php body_class(); ?>>
