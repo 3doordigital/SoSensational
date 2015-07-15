@@ -13,7 +13,8 @@ require_once('classes/walkers.php');
 require_once('inc/admin_list_tables.php');
 require_once('classes/tag-checklist.php');
 require_once('inc/widgets.php');
-require_once('classes/class.api.php');               
+require_once('classes/class.api.php');
+
 class WordPress_Affiliate_Shop {
 	private static $instance = null;
 	private $plugin_path;

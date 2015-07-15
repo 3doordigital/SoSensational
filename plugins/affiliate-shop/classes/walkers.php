@@ -292,7 +292,7 @@ class Faceted_Brand_Walker extends Walker {
 				}
 			}
 		}
-		$link .= 'class="brand_check" value="'.$category->slug.'" name="brands[]"> <label>'.ucwords(strtolower($cat_name)).'</label>';
+		$link .= 'class="brand_check" value="'.$category->slug.'" name="brands[]"> <label>'. $cat_name .'</label>';
 		
         if ( 'list' == $args['style'] ) {
 			$output .= "\t<li";
