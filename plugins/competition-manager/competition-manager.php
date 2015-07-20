@@ -996,7 +996,7 @@ class WordPress_Competition_Manager {
     }
     public function comp_columns_content ($column_name, $post_ID) {
         $meta = get_post_meta($post_ID);
-
+        
         if( isset ( $meta['wp_comp_winner'][0] ) && $meta['wp_comp_winner'][0] != '' ) {
             $winners = json_decode( $meta['wp_comp_winner'][0] );
         }
@@ -1017,9 +1017,8 @@ class WordPress_Competition_Manager {
                 'meta_value' => $post_ID,
                 'post_type'  => 'wp_comp_entries',
                 'fields'     => 'ids',
-                'posts_per_page' => -1,
             );
-            $entry_query = get_posts( $entry_args );
+            $entry_query = new WP_Query( $entry_args );
             $status = get_post_status( $post_ID );
 
             echo '<table>';
@@ -1033,7 +1032,7 @@ class WordPress_Competition_Manager {
                     break;
             }
             echo '</td></tr>';
-            echo '<tr><th>Entries</th><td>' . count($entry_query) . '</td></tr>';
+            echo '<tr><th>Entries</th><td>'. $entry_query->found_posts.'</td></tr>';
             echo '<tr><th>Answer</th><td>'. $meta['wp_comp_answer'][0].'</td></tr>';
             echo '</table>';
         }
