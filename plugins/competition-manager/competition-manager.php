@@ -1017,8 +1017,9 @@ class WordPress_Competition_Manager {
                 'meta_value' => $post_ID,
                 'post_type'  => 'wp_comp_entries',
                 'fields'     => 'ids',
+                'posts_per_page' => -1,
             );
-            $entry_query = new WP_Query( $entry_args );
+            $entry_query = get_posts( $entry_args );
             $status = get_post_status( $post_ID );
 
             echo '<table>';
@@ -1032,7 +1033,7 @@ class WordPress_Competition_Manager {
                     break;
             }
             echo '</td></tr>';
-            echo '<tr><th>Entries</th><td>'. $entry_query->found_posts.'</td></tr>';
+            echo '<tr><th>Entries</th><td>' . count($entry_query) . '</td></tr>';
             echo '<tr><th>Answer</th><td>'. $meta['wp_comp_answer'][0].'</td></tr>';
             echo '</table>';
         }
