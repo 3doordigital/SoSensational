@@ -987,7 +987,7 @@ class WordPress_Competition_Manager {
     public function comp_columns ($defaults) {
         $defaults['dates'] = 'Date';
         //$defaults['brand'] = 'Brand';
-        $defaults['facebook'] = 'Facebook Only?';
+        $defaults['facebook'] = 'Facebook Onlys?';
         $defaults['status'] = 'Status';
         $defaults['pick_winner'] = 'Winner(s)';
         $defaults['actions'] = '';
@@ -997,13 +997,7 @@ class WordPress_Competition_Manager {
     public function comp_columns_content ($column_name, $post_ID) {
         $meta = get_post_meta($post_ID);
         $status = get_post_status( $post_ID );
-        $entry_args = array(
-            'meta_key'   => 'wp_comp_entry_competition-id',
-            'meta_value' => $post_ID,
-            'post_type'  => 'wp_comp_entries'
-        );
-        $entry_query = new WP_Query( $entry_args );
-		//print_var( $entry_query );
+
         wp_reset_postdata();
         if( isset ( $meta['wp_comp_winner'][0] ) && $meta['wp_comp_winner'][0] != '' ) {
             $winners = json_decode( $meta['wp_comp_winner'][0] );
@@ -1019,6 +1013,15 @@ class WordPress_Competition_Manager {
             if( $meta['wp_comp_edate'][0] != '' ) echo ' - '.date('d-m-Y', strtotime( $meta['wp_comp_edate'][0] ) );
         }
         if ($column_name == 'status') {
+
+            $entry_args = array(
+                'meta_key'   => 'wp_comp_entry_competition-id',
+                'meta_value' => $post_ID,
+                'post_type'  => 'wp_comp_entries',
+                'fields'     => 'ids',
+            );
+            $entry_query = new WP_Query( $entry_args );
+
             echo '<table>';
             echo '<tr><th>Status</th><td>';
             switch ($status) {
@@ -1045,9 +1048,9 @@ class WordPress_Competition_Manager {
              }   
         }
         if ($column_name == 'actions') {
-            echo '<a href="#" '.( $entry_query->post_count == 0 ? 'disabled' : '' ).' class="button button-primary admin_pick_winner" data-comp="'.$post_ID.'" data-winners="'.$meta['wp_comp_winners'][0].'" title="Pick Winner"><i class="fa fa-ticket"></i> Pick Winner</a> ';
-            echo '<a href="'.admin_url('edit.php?s&post_status=all&post_type=wp_comp_entries&action=-1&m=0&wp_comp_man_id='.$post_ID.'&filter_action=Filter&paged=1&mode=list&action2=-1').'" '.( $entry_query->post_count == 0 ? 'disabled' : '' ).' class="button button-secondary" title="View Entries"><i class="fa fa-users"></i></a> ';
-            echo '<a href="#" '.( $entry_query->post_count == 0 ? 'disabled' : '' ).' data-comp="'.$post_ID.'" class="button button-secondary admin_export_entries" title="Export Entries"><i class="fa fa-cloud-download"></i></a> ';
+            echo '<a href="#" '.( $entry_query->post_count == 0 ? '' : '' ).' class="button button-primary admin_pick_winner" data-comp="'.$post_ID.'" data-winners="'.$meta['wp_comp_winners'][0].'" title="Pick Winner"><i class="fa fa-ticket"></i> Pick Winner</a> ';
+            echo '<a href="'.admin_url('edit.php?s&post_status=all&post_type=wp_comp_entries&action=-1&m=0&wp_comp_man_id='.$post_ID.'&filter_action=Filter&paged=1&mode=list&action2=-1').'" '.( $entry_query->post_count == 0 ? '' : '' ).' class="button button-secondary" title="View Entries"><i class="fa fa-users"></i></a> ';
+            echo '<a href="#" '.( $entry_query->post_count == 0 ? '' : '' ).' data-comp="'.$post_ID.'" class="button button-secondary admin_export_entries" title="Export Entries"><i class="fa fa-cloud-download"></i></a> ';
         }
     }
     
@@ -1211,3 +1214,4 @@ class WordPress_Competition_Manager {
     }
 }
 $comp_manager = WordPress_Competition_Manager::get_instance();
+
