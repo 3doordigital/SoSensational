@@ -996,7 +996,6 @@ class WordPress_Competition_Manager {
     }
     public function comp_columns_content ($column_name, $post_ID) {
         $meta = get_post_meta($post_ID);
-        $status = get_post_status( $post_ID );
 
         wp_reset_postdata();
         if( isset ( $meta['wp_comp_winner'][0] ) && $meta['wp_comp_winner'][0] != '' ) {
@@ -1021,6 +1020,7 @@ class WordPress_Competition_Manager {
                 'fields'     => 'ids',
             );
             $entry_query = new WP_Query( $entry_args );
+            $status = get_post_status( $post_ID );
 
             echo '<table>';
             echo '<tr><th>Status</th><td>';
