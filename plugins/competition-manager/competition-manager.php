@@ -997,7 +997,6 @@ class WordPress_Competition_Manager {
     public function comp_columns_content ($column_name, $post_ID) {
         $meta = get_post_meta($post_ID);
 
-        wp_reset_postdata();
         if( isset ( $meta['wp_comp_winner'][0] ) && $meta['wp_comp_winner'][0] != '' ) {
             $winners = json_decode( $meta['wp_comp_winner'][0] );
         }
