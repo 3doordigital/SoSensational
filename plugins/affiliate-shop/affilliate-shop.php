@@ -2895,6 +2895,13 @@ class WordPress_Affiliate_Shop {
 			'posts_per_page' => -1,
 			'orderby' => 'post_date',
 			'order' => 'DESC' ,
+			'meta_query' => array(
+				array(
+				 'key' 		=> 'wp_aff_product_manual',
+				 'compare' 	=> '!=',
+				 'value' 	=> 1
+				)
+			)
 		);
 		if( $posts = get_posts( $qry_args ) ) {
 
