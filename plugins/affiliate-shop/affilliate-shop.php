@@ -3133,7 +3133,7 @@ class WordPress_Affiliate_Shop {
 			$mailhead = 'From: Aff Shop Cron <cron@sosensational.co.uk>' . "\r\n";
 			
 			$productlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_products.txt";
-			/*$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
+			$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
 			
 				
 			$fp = fopen($merchantlog, 'w');
@@ -3162,7 +3162,7 @@ class WordPress_Affiliate_Shop {
 			}	
 			fclose( $fp );
 			wp_mail( get_option( 'admin_email' ), 'Merchant Cron Ended', "Merchant Log: $merchantlog", $mailhead );
-			*/
+			
 			$i = 1;
 			
 			$fp = fopen($productlog, 'w');
