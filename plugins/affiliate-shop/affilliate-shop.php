@@ -2898,8 +2898,7 @@ class WordPress_Affiliate_Shop {
 			'meta_query' => array(
 				array(
 				 'key' 		=> 'wp_aff_product_manual',
-				 'compare' 	=> '!=',
-				 'value' 	=> 1
+				 'compare' 	=> 'NOT EXISTS',
 				)
 			)
 		);
