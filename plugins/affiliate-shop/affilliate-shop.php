@@ -1570,8 +1570,8 @@ class WordPress_Affiliate_Shop
     {
         if (!wp_verify_nonce($_POST['_wpnonce'], 'wp_aff_product_search'))
             die('Invalid nonce.' . var_export($_POST, true));
-		$url = $url = admin_url( 'admin.php?page=affiliate-shop/add-products' );
-        $url = add_query_arg('q', $_POST['q'], $_POST['_wp_http_referer']);
+		$url = admin_url( 'admin.php?page=affiliate-shop/add-products' );
+        $url = add_query_arg('q', $_POST['q'], $url );
         $url = add_query_arg('wp_aff_merch', $_POST['wp_aff_merch'], $url);
         $url = add_query_arg('api', $_POST['wp_aff_api'], $url);
         if (!isset ($_POST['_wp_http_referer']))
