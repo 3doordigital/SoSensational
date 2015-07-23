@@ -3163,7 +3163,7 @@ class WordPress_Affiliate_Shop {
 			fclose( $fp );
 			wp_mail( get_option( 'admin_email' ), 'Merchant Cron Ended', "Merchant Log: $merchantlog", $mailhead );
 			
-			$i = 1;
+			$i = 1; 
 			
 			$fp = fopen($productlog, 'w');
 			$header = array( "Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Price", "RRP", "Link", "Status" );
