@@ -111,6 +111,10 @@
                         text-transform: uppercase;
                         color: #fff;
                         margin-top: 15px;
+                      &.red {
+                        background: #FD5152;
+                        margin-top: 72px;
+                      }
                     }
                 }
             }            
