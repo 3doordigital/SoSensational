@@ -115,6 +115,7 @@ class WordPress_Affiliate_Shop
         add_action('admin_post_wp_aff_sale_filter', array($this, 'wp_aff_sale_filter'));
 
         add_action('wp_ajax_ajax_update_sticker', array($this, 'ajax_update_sticker'));
+        add_action('wp_ajax_ajax_new_in', array($this, 'ajax_new_in'));
 
         add_action('wp_ajax_admin_product_filter', array($this, 'admin_product_filter'));
 
@@ -877,6 +878,7 @@ class WordPress_Affiliate_Shop
                                 foreach ($options as $option) {
                                     switch ($option) {
                                         case 'new' :
+                                            $newInCategoryIds = $this->getNewInCategories();
                                             $options = $this->get_option();
                                             $pastdate = strtotime('-' . ($options['new_days'] - 1) . ' days');
                                             $date = getdate($pastdate);
@@ -890,8 +892,17 @@ class WordPress_Affiliate_Shop
                                                     'inclusive' => true,
                                                 ),
                                             );
+                                            $args['tax_query'][] = array(
+                                                'taxonomy' => 'wp_aff_categories',
+                                                'terms' => $newInCategoryIds,
+                                            );
+
+
                                             $args['orderby'] = 'rand';
                                             $args['order'] = 'DESC';
+
+
+
                                             break;
                                         case 'our-picks' :
                                             $args['meta_query']['relation'] = 'AND';
@@ -974,6 +985,21 @@ class WordPress_Affiliate_Shop
         );
         //print_var( $args );
         return $args;
+    }
+
+
+    private function getNewInCategories()
+    {
+        $newInCategoryIds = [];
+        $wpAffCategories = get_terms('wp_aff_categories');
+        foreach($wpAffCategories as $wpAffCategory) {
+            $categoryMeta = get_post_meta($wpAffCategory->term_id, 'wp_aff_category_new_in', true);
+            if ($categoryMeta == 1) {
+                $newInCategoryIds[] = $wpAffCategory->term_id;
+            }
+        }
+        return $newInCategoryIds;
+
     }
 
     public function get_product_terms($taxonomy)
@@ -1576,7 +1602,6 @@ class WordPress_Affiliate_Shop
         $url = add_query_arg('api', $_POST['wp_aff_api'], $url);
         if (!isset ($_POST['_wp_http_referer']))
             die('Missing target.');
-
         wp_safe_redirect($url);
         exit;
     }
@@ -3124,6 +3149,43 @@ class WordPress_Affiliate_Shop
         }
         echo json_encode((object)$output);
         die;
+    }
+
+    public function ajax_new_in()
+    {
+        $output = [];
+        $output['status'] = 0;
+
+        $meta = get_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], true);
+
+        if (isset($meta) && $meta == 1) {
+            if (update_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], 0)) {
+                $output['status'] = 'success';
+                $output['previous'] = 1;
+                $output['new_in'] = 0;
+            } else {
+                $output['status'] = 0;
+            }
+        } elseif (isset($meta) && $meta == 0) {
+            if (update_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], 1)) {
+                $output['status'] = 'success';
+                $output['previous'] = 0;
+                $output['new_in'] = 1;
+            } else {
+                $output['status'] = 0;
+            }
+        } else {
+            if (update_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], 1)) {
+                $output['status'] = 'success';
+                $output['previous'] = 0;
+                $output['new_in'] = 1;
+            } else {
+                $output['status'] = 'failure';
+            }
+        }
+
+        echo json_encode((object) $output);
+        die();
     }
 
     function admin_product_filter()

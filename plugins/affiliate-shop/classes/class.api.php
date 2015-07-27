@@ -41,7 +41,7 @@
 			global $wpdb;
 			$table_name = $wpdb->prefix . "feed_data";
 			$query ="
-				SELECT SQL_CALC_FOUND_ROWS * 
+				SELECT SQL_CALC_FOUND_ROWS *
 				FROM 
 				$table_name 
 				WHERE MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE)	";
@@ -57,23 +57,18 @@
 			if ( $result = $wpdb->get_results( $query2, ARRAY_A	) ) {
 				$totalres = $wpdb->get_var( "SELECT FOUND_ROWS();" );
 				foreach( $result as $product ) {
-					
+
 					$pid = explode( '_', $product['product_id'] );
 					$pid = $pid[1];
-					
+
 					$qry_args = array(
-						'post_status' => 'publish', 
-						'post_type' => 'wp_aff_products', 
+						'post_status' => 'publish',
+						'post_type' => 'wp_aff_products',
 						'posts_per_page' => 1,
 						'orderby' => 'post_date',
 						'order' => 'DESC' ,
+                        'field' => 'ids',
 						'meta_query' => array(
-							'relation' => 'OR',
-							array(
-							 'key' => 'wp_aff_product_id',
-							 'value' => $product['product_id'],
-							 'compare' => '=' // this should work...
-							),
 							array(
 							 'key' => 'wp_aff_product_id',
 							 'value' => $pid,
@@ -89,7 +84,7 @@
 					}
 					$products['items']['ID-'.$product['product_id']] = array (
 						'ID'        => $product['product_id'],
-						'aff'     	=> $product['product_aff'],   
+						'aff'     	=> $product['product_aff'],
 						'title'     => addslashes( trim( ucwords( strtolower( $product['product_title'] ) ) ) ),
 						'brand'     => addslashes( $product['product_brand'] ),
 						'img'       => addslashes( $product['product_image'] ),
@@ -98,9 +93,9 @@
 						'rrp'       => number_format( $product['product_rrp'], 2, '.', ''  ),
 						'link'      => addslashes( $product['product_link'] )	,
 						'exists'	=> $exists
-					);	
+					);
 				}
-				
+
 			}
 			
 			//print_var( $result );
@@ -230,19 +225,19 @@
 			
 			if( !empty( $data['item'] ) ) {
 				$item = $data['item'];
-				
+
 				$dbtitle = substr( htmlspecialchars( $item['product_title'] ), 0, 5 );
 				$wptitle = substr( get_the_title( $id ), 0, 5 );
-				
+
 				if( stristr( $dbtitle, $wptitle ) == FALSE ) {
 					update_post_meta( $id, 'wp_aff_product_notfound', 1 );
 					$data['out'] = 'Not Found '.$prod_id;
 					wp_trash_post( $id  );
 					$data['status'] = 0;
 				} else {
-					
-					$data['status'] = 1; 
-					
+
+					$data['status'] = 1;
+
 					wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
 					update_post_meta( $id, 'wp_aff_product_rrp', $item['product_rrp'] );
 					update_post_meta( $id, 'wp_aff_product_price', $item['product_price'] );
@@ -264,7 +259,7 @@
 				$data['out'] = 'Not Found '.$prod_id;
 				wp_trash_post( $id  );
 				$data['status'] = 0;
-				
+
 			}
 			return $data;
 		}

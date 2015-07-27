@@ -91,12 +91,17 @@
 	vertical-align: top;
 	text-align: center;	
 }
+.column-new_in a i,
 .column-stickers a i {
 	color: #bbb;	
 }
+
+.column-new_in a:hover i,
 .column-stickers a:hover i {
 	color: #666;	
 }
+
+.column-new_in a.active i,
 .column-stickers a.active i {
 	color: #0074a2;	
 }
