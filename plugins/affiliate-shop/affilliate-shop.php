@@ -1596,8 +1596,8 @@ class WordPress_Affiliate_Shop
     {
         if (!wp_verify_nonce($_POST['_wpnonce'], 'wp_aff_product_search'))
             die('Invalid nonce.' . var_export($_POST, true));
-
-        $url = add_query_arg('q', $_POST['q'], $_POST['_wp_http_referer']);
+		$url = admin_url( 'admin.php?page=affiliate-shop/add-products' );
+        $url = add_query_arg('q', $_POST['q'], $url );
         $url = add_query_arg('wp_aff_merch', $_POST['wp_aff_merch'], $url);
         $url = add_query_arg('api', $_POST['wp_aff_api'], $url);
         if (!isset ($_POST['_wp_http_referer']))
@@ -3482,7 +3482,7 @@ class WordPress_Affiliate_Shop
         $mailhead = 'From: Aff Shop Cron <cron@sosensational.co.uk>' . "\r\n";
 
         $productlog = $this->get_plugin_path() . date('d-m-Y-H-i-s') . "_products.txt";
-        /*$merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
+        $merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
 
 				
 			$fp = fopen($merchantlog, 'w');
@@ -3511,7 +3511,8 @@ class WordPress_Affiliate_Shop
 			}	
 			fclose( $fp );
 			wp_mail( get_option( 'admin_email' ), 'Merchant Cron Ended', "Merchant Log: $merchantlog", $mailhead );
-			*/
+
+			
         $i = 1;
 
         $fp = fopen($productlog, 'w');
@@ -3544,8 +3545,6 @@ class WordPress_Affiliate_Shop
 
         //die();
     }
-
-
     /**
      * Place code for your plugin's functionality here.
      */
