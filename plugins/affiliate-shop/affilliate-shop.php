@@ -954,6 +954,7 @@ class WordPress_Affiliate_Shop
         $options = $this->get_option();
         $pastdate = strtotime('-' . ($options['new_days'] - 1) . ' days');
         $date = getdate($pastdate);
+        $args['posts_per_page'] = 18;
         $args['date_query'] = array(
             array(
                 'after' => array(
@@ -970,7 +971,7 @@ class WordPress_Affiliate_Shop
         );
 
 
-        $args['orderby'] = 'rand';
+        $args['orderby'] = 'date';
         $args['order'] = 'DESC';
         return $args;
     }
