@@ -973,6 +973,7 @@ class WordPress_Affiliate_Shop
 
         $args['orderby'] = 'date';
         $args['order'] = 'DESC';
+
         return $args;
     }
 
