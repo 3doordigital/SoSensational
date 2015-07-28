@@ -792,7 +792,7 @@ class WordPress_Affiliate_Shop
         } elseif (isset($wp_query->query_vars['shop-option'])) {
 
             if ($wp_query->query_vars['shop-option'] == 'new') {
-                $args = $this->retrieveNewInProducts();
+                $args = $this->retrieveNewInProducts($args['posts_per_page']);
             } elseif ($wp_query->query_vars['shop-option'] == 'sale') {
                 $args['meta_query']['relation'] = 'AND';
                 $args['meta_query'][] = array(
@@ -860,7 +860,7 @@ class WordPress_Affiliate_Shop
                                 foreach ($options as $option) {
                                     switch ($option) {
                                         case 'new' :
-                                            $args = $this->retrieveNewInProducts();
+                                            $args = $this->retrieveNewInProducts($args['posts_per_page']);
 
 
                                             break;
@@ -948,13 +948,13 @@ class WordPress_Affiliate_Shop
     }
 
 
-    private function retrieveNewInProducts()
+    private function retrieveNewInProducts($postsPerPage)
     {
         $newInCategoryIds = $this->getNewInCategories();
         $options = $this->get_option();
         $pastdate = strtotime('-' . ($options['new_days'] - 1) . ' days');
         $date = getdate($pastdate);
-        $args['posts_per_page'] = 18;
+        $args['posts_per_page'] = $postsPerPage;
         $args['date_query'] = array(
             array(
                 'after' => array(
