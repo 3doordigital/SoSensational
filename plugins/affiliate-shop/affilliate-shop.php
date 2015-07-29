@@ -793,6 +793,12 @@ class WordPress_Affiliate_Shop
 
             if ($wp_query->query_vars['shop-option'] == 'new') {
                 $args = $this->retrieveNewInProducts($args['posts_per_page']);
+                $args['meta_query']['relation'] = 'AND';
+                $args['meta_query'][] = array(
+                    'key' => 'wp_aff_product_sale',
+                    'value' => 0,
+                    'compare' => '=',
+                );
             } elseif ($wp_query->query_vars['shop-option'] == 'sale') {
                 $args['meta_query']['relation'] = 'AND';
                 $args['meta_query'][] = array(
@@ -861,8 +867,12 @@ class WordPress_Affiliate_Shop
                                     switch ($option) {
                                         case 'new' :
                                             $args = $this->retrieveNewInProducts($args['posts_per_page']);
-
-
+                                            $args['meta_query']['relation'] = 'AND';
+                                            $args['meta_query'][] = array(
+                                                'key' => 'wp_aff_product_sale',
+                                                'value' => 0,
+                                                'compare' => '=',
+                                            );
                                             break;
                                         case 'our-picks' :
                                             $args['meta_query']['relation'] = 'AND';
@@ -971,7 +981,8 @@ class WordPress_Affiliate_Shop
         );
 
 
-        $args['orderby'] = 'date';
+
+        $args['orderby'] = 'rand';
         $args['order'] = 'DESC';
 
         return $args;
@@ -982,13 +993,13 @@ class WordPress_Affiliate_Shop
         $newInCategoryIds = [];
         $wpAffCategories = get_terms('wp_aff_categories');
         foreach ($wpAffCategories as $wpAffCategory) {
-            $categoryMeta = get_post_meta($wpAffCategory->term_id, 'wp_aff_category_new_in', true);
-            if ($categoryMeta == 1) {
+            $newInItem = get_post_meta($wpAffCategory->term_id, 'wp_aff_category_new_in', true);
+            if ($newInItem == 1) {
                 $newInCategoryIds[] = $wpAffCategory->term_id;
             }
         }
-        return $newInCategoryIds;
 
+        return $newInCategoryIds;
     }
 
     public function get_product_terms($taxonomy)
