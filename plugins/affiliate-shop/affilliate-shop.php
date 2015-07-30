@@ -115,7 +115,10 @@ class WordPress_Affiliate_Shop
         add_action('admin_post_wp_aff_sale_filter', array($this, 'wp_aff_sale_filter'));
 
         add_action('wp_ajax_ajax_update_sticker', array($this, 'ajax_update_sticker'));
+        add_action('wp_ajax_ajax_new_in_single_product', array($this, 'ajax_new_in_single_product'));
+
         add_action('wp_ajax_ajax_new_in', array($this, 'ajax_new_in'));
+        add_action('wp_ajax_nopriv_ajax_new_in', array($this, 'ajax_new_in'));
 
         add_action('wp_ajax_admin_product_filter', array($this, 'admin_product_filter'));
 
@@ -871,8 +874,9 @@ class WordPress_Affiliate_Shop
                                             $args['meta_query'][] = array(
                                                 'key' => 'wp_aff_product_sale',
                                                 'value' => 0,
-                                                'compare' => '=',
+                                                'compare' => '==',
                                             );
+
                                             break;
                                         case 'our-picks' :
                                             $args['meta_query']['relation'] = 'AND';
@@ -960,11 +964,16 @@ class WordPress_Affiliate_Shop
 
     private function retrieveNewInProducts($postsPerPage)
     {
-        $newInCategoryIds = $this->getNewInCategories();
+        $newInProductIdsByCategory = $this->getNewInProductIdsByCategory();
+        $singleNewInProductIds = $this->getSingleNewInProductIds();
+        $newInProducts = array_merge($newInProductIdsByCategory, $singleNewInProductIds);
+
         $options = $this->get_option();
         $pastdate = strtotime('-' . ($options['new_days'] - 1) . ' days');
         $date = getdate($pastdate);
         $args['posts_per_page'] = $postsPerPage;
+        $args['post_type'] = 'wp_aff_products';
+        $args['post__in'] = $newInProducts;
         $args['date_query'] = array(
             array(
                 'after' => array(
@@ -975,12 +984,6 @@ class WordPress_Affiliate_Shop
                 'inclusive' => true,
             ),
         );
-        $args['tax_query'][] = array(
-            'taxonomy' => 'wp_aff_categories',
-            'terms' => $newInCategoryIds,
-        );
-
-
 
         $args['orderby'] = 'rand';
         $args['order'] = 'DESC';
@@ -988,7 +991,29 @@ class WordPress_Affiliate_Shop
         return $args;
     }
 
-    private function getNewInCategories()
+    private function getSingleNewInProductIds()
+    {
+        $args = array(
+            'post_type' => 'wp_aff_products',
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'wp_aff_product_new_in',
+                    'value' => 1,
+                    'compare' => '='
+                )
+            )
+        );
+
+        $productIds = get_posts($args);
+
+        return $productIds;
+
+    }
+
+    private function getNewInProductIdsByCategory()
     {
         $newInCategoryIds = [];
         $wpAffCategories = get_terms('wp_aff_categories');
@@ -999,7 +1024,19 @@ class WordPress_Affiliate_Shop
             }
         }
 
-        return $newInCategoryIds;
+        $args = array(
+            'post_type' => 'wp_aff_products',
+            'fields' => 'ids',
+            'posts_per_page' => -1,
+            'tax_query' => array(
+                'taxonomy' => 'wp_aff_categories',
+                'terms' => $newInCategoryIds,
+            )
+        );
+
+        $productIds = get_posts($args);
+
+        return $productIds;
     }
 
     public function get_product_terms($taxonomy)
@@ -3163,7 +3200,7 @@ class WordPress_Affiliate_Shop
             if (update_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], 0)) {
                 $output['status'] = 'success';
                 $output['previous'] = 1;
-                $output['new_in'] = 0;
+                $output['new'] = 0;
             } else {
                 $output['status'] = 0;
             }
@@ -3171,7 +3208,7 @@ class WordPress_Affiliate_Shop
             if (update_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], 1)) {
                 $output['status'] = 'success';
                 $output['previous'] = 0;
-                $output['new_in'] = 1;
+                $output['new'] = 1;
             } else {
                 $output['status'] = 0;
             }
@@ -3179,7 +3216,44 @@ class WordPress_Affiliate_Shop
             if (update_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], 1)) {
                 $output['status'] = 'success';
                 $output['previous'] = 0;
-                $output['new_in'] = 1;
+                $output['new'] = 1;
+            } else {
+                $output['status'] = 'failure';
+            }
+        }
+
+        echo json_encode((object)$output);
+        die();
+    }
+
+    public function ajax_new_in_single_product()
+    {
+        $output = [];
+        $output['status'] = 0;
+
+        $meta = get_post_meta($_POST['post'], 'wp_aff_product_new_in', true);
+
+        if (isset($meta) && $meta == 1) {
+            if (update_post_meta($_POST['post'], 'wp_aff_product_new_in', 0)) {
+                $output['status'] = 'success';
+                $output['previous'] = 1;
+                $output['new'] = 0;
+            } else {
+                $output['status'] = 0;
+            }
+        } elseif (isset($meta) && $meta == 0) {
+            if (update_post_meta($_POST['post'], 'wp_aff_product_new_in', 1)) {
+                $output['status'] = 'success';
+                $output['previous'] = 0;
+                $output['new'] = 1;
+            } else {
+                $output['status'] = 0;
+            }
+        } else {
+            if (update_post_meta($_POST['post'], 'wp_aff_product_new_in', 1)) {
+                $output['status'] = 'success';
+                $output['previous'] = 0;
+                $output['new'] = 1;
             } else {
                 $output['status'] = 'failure';
             }

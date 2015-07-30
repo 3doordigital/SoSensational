@@ -72,7 +72,28 @@ jQuery(document).ready(function($) {
         $.post(ajaxurl, data, function(response) {
             console.log( response );
             if( response.status == "success" ) {
-                if( response.new_in == 1 ) {
+                if( response.new == 1 ) {
+                    $this.addClass('active');
+                } else {
+                    $this.removeClass('active');
+                }
+            }
+        }, 'json');
+    });
+
+    $('.ajax_new_in_single_product').live( 'click', function( e ) {
+        e.preventDefault();
+        var $this = $(this);
+        var data = {
+            'action': 'ajax_new_in_single_product',
+            'post': $(this).attr('data-item'),
+            'var' : $(this).attr('data-action')
+        };
+        // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+        $.post(ajaxurl, data, function(response) {
+            console.log( response );
+            if( response.status == "success" ) {
+                if( response.new == 1 ) {
                     $this.addClass('active');
                 } else {
                     $this.removeClass('active');

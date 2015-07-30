@@ -886,13 +886,15 @@ class AllProductTable extends WP_List_Table {
 		} else {
 			$output .= '<a href="#" class="ajax_sticker" data-item="'.$item['ID'].'" data-action="picks"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
 		}
-		
-		if( $item['new'] == 1 ) {
-			$output .= '<a href="#" class="active" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+
+        $isProductNewIn = get_post_meta($item['ID'], 'wp_aff_product_new_in', true);
+
+		if($isProductNewIn == 1) {
+			$output .= '<a href="#" class="ajax_new_in_single_product active" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
 		} else {
-			$output .= '<a href="#" class="" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+			$output .= '<a href="#" class="ajax_new_in_single_product" data-item="'.$item['ID'].'" data-action="new_in_single_product"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
 		}
-		
+
 		return $output;
 	}
     function column_desc($item) {
