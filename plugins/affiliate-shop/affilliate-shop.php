@@ -2254,7 +2254,7 @@ class WordPress_Affiliate_Shop
         $redirect = urlencode(remove_query_arg('msg', $_SERVER['REQUEST_URI']));
         $redirect = urlencode($_SERVER['REQUEST_URI']);
         $option = $this->get_option();
-		print_var( $option );
+		//print_var( $option );
         ?>
         <div class="wrap">
             <h2>Settings</h2>
