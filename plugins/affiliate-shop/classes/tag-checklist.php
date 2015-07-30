@@ -37,7 +37,7 @@ class Walker_Tag_Checklist extends Walker {
 				if( ($this->counter === 'faceted' && $depth == 0 ) ) {
 					$output .= ' ' . esc_html( apply_filters('the_category', $tax_term->name )) . '</label>';
 				} else {
-					$output .= '<input value="' . $tax_term->term_id . '" type="checkbox" ';
+					$output .= '<input value="' . $tax_term->term_id . '" type="checkbox" ' . 'class="product_tag_checkbox_' . $tax_term->term_id . ' " ';
 					//$output .= ' disabled ';
 					$output .= ' name="'.$name.'" id="in-'.$taxonomy.'-' . $tax_term->term_id . '"' . checked( in_array( $tax_term->term_id, $selected_cats ), true, false ) . disabled( empty( $args['disabled'] ), false, false ) . ' /> ' . esc_html( apply_filters('the_category', $tax_term->name ));
 					if( $tax_term->term_group >1 ) {

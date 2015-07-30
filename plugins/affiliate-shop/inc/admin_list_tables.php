@@ -134,6 +134,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 			'name'        => _x( 'Name', 'term name' ),
 			'slug'        => __( 'Slug' ),
 			'alias'		  => __( 'Alias of' ),
+            'new_in'      => 'New In',
             'posts'       => _x( 'Products', 'Number/count of items' ),
 			'view'       => __( '', '' )
 		);
@@ -146,6 +147,7 @@ class WP_Terms_List_Tables extends WP_List_Table {
 			'name'    	=> array('name', false),
 			'slug'    	=> array('slug', false),
 			'alias'		=> array('alias', false),
+            'new_in'      => 'New In',
 			'posts'     => array('count', false)
         );
 	}
@@ -339,6 +341,24 @@ class WP_Terms_List_Tables extends WP_List_Table {
 
 		return $this->_column_headers;
 	}
+
+    private function column_new_in($term)
+    {
+        $output = '';
+        $meta = get_post_meta($term->term_id, 'wp_aff_category_new_in', true);
+
+        if (!$meta || $meta === 0) {
+            $output .= '<a href="#" class="ajax_new_in" data-item="'.$term->term_id.'" data-action="new_in"><i class="fa fa-calendar fa-fw fa-lg"></i></i></a> ';
+        } else {
+            $output .= '<a href="#" class="ajax_new_in active" data-item="'.$term->term_id.'" data-action="new_in"><i class="fa fa-calendar fa-fw fa-lg"></i></i></a> ';
+        }
+
+
+        return $output;
+
+    }
+
+
 	/**
 	 * @param object $tag
 	 * @return string
@@ -366,13 +386,14 @@ class WP_Terms_List_Tables extends WP_List_Table {
 		return $this->out;
 	}
 	public function column_alias( $tag ) {
-		//print_var( $tag );
 		$this->out = array();
 		if( $alias = get_term_by( 'id', $tag->term_group, $this->screen->taxonomy ) ) {
 			
 			$out = $this->rec_parent( $alias );
 			
-			$out = array_reverse( $out );
+			if (is_array($out)) {
+                $out = array_reverse( $out );
+            }
 			$out[] = '<a href="'.$_SERVER['REQUEST_URI'].'#tag-'.$alias->term_id.'">'.$alias->name.'</a>';
 			return implode( '', $out );
 		} else {
@@ -865,13 +886,15 @@ class AllProductTable extends WP_List_Table {
 		} else {
 			$output .= '<a href="#" class="ajax_sticker" data-item="'.$item['ID'].'" data-action="picks"><i class="fa fa-heart fa-fw fa-lg"></i></i></a> ';
 		}
-		
-		if( $item['new'] == 1 ) {
-			$output .= '<a href="#" class="active" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+
+        $isProductNewIn = get_post_meta($item['ID'], 'wp_aff_product_new_in', true);
+
+		if($isProductNewIn == 1) {
+			$output .= '<a href="#" class="ajax_new_in_single_product active" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
 		} else {
-			$output .= '<a href="#" class="" data-item="'.$item['ID'].'" data-action="new"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
+			$output .= '<a href="#" class="ajax_new_in_single_product" data-item="'.$item['ID'].'" data-action="new_in_single_product"><i class="fa fa-calendar fa-fw fa-lg"></i></a>';
 		}
-		
+
 		return $output;
 	}
     function column_desc($item) {

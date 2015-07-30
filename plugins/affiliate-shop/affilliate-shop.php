@@ -115,6 +115,10 @@ class WordPress_Affiliate_Shop
         add_action('admin_post_wp_aff_sale_filter', array($this, 'wp_aff_sale_filter'));
 
         add_action('wp_ajax_ajax_update_sticker', array($this, 'ajax_update_sticker'));
+        add_action('wp_ajax_ajax_new_in_single_product', array($this, 'ajax_new_in_single_product'));
+
+        add_action('wp_ajax_ajax_new_in', array($this, 'ajax_new_in'));
+        add_action('wp_ajax_nopriv_ajax_new_in', array($this, 'ajax_new_in'));
 
         add_action('wp_ajax_admin_product_filter', array($this, 'admin_product_filter'));
 
@@ -791,26 +795,13 @@ class WordPress_Affiliate_Shop
         } elseif (isset($wp_query->query_vars['shop-option'])) {
 
             if ($wp_query->query_vars['shop-option'] == 'new') {
-                $options = $this->get_option();
-                $pastdate = strtotime('-' . $options['new_days'] . ' days');
-                $date = getdate($pastdate);
-                $args['date_query'] = array(
-                    array(
-                        'after' => array(
-                            'year' => $date['year'],
-                            'month' => $date['mon'],
-                            'day' => $date['mday'],
-                        ),
-                        'inclusive' => true,
-                    ),
-                );
+                $args = $this->retrieveNewInProducts($args['posts_per_page']);
                 $args['meta_query']['relation'] = 'AND';
                 $args['meta_query'][] = array(
                     'key' => 'wp_aff_product_sale',
-                    'value' => '1',
-                    'compare' => '!=',
+                    'value' => 0,
+                    'compare' => '=',
                 );
-                $args['orderby'] = 'rand';
             } elseif ($wp_query->query_vars['shop-option'] == 'sale') {
                 $args['meta_query']['relation'] = 'AND';
                 $args['meta_query'][] = array(
@@ -872,26 +863,20 @@ class WordPress_Affiliate_Shop
                                     'terms' => $_REQUEST['category'],
                                 );
                                 break;
+                            case 'shop-option':
                             case 'options' :
                                 $options = explode(',', $_REQUEST['options']);
                                 foreach ($options as $option) {
                                     switch ($option) {
                                         case 'new' :
-                                            $options = $this->get_option();
-                                            $pastdate = strtotime('-' . ($options['new_days'] - 1) . ' days');
-                                            $date = getdate($pastdate);
-                                            $args['date_query'] = array(
-                                                array(
-                                                    'after' => array(
-                                                        'year' => $date['year'],
-                                                        'month' => $date['mon'],
-                                                        'day' => $date['mday'],
-                                                    ),
-                                                    'inclusive' => true,
-                                                ),
+                                            $args = $this->retrieveNewInProducts($args['posts_per_page']);
+                                            $args['meta_query']['relation'] = 'AND';
+                                            $args['meta_query'][] = array(
+                                                'key' => 'wp_aff_product_sale',
+                                                'value' => 0,
+                                                'compare' => '==',
                                             );
-                                            $args['orderby'] = 'rand';
-                                            $args['order'] = 'DESC';
+
                                             break;
                                         case 'our-picks' :
                                             $args['meta_query']['relation'] = 'AND';
@@ -974,6 +959,85 @@ class WordPress_Affiliate_Shop
         );
         //print_var( $args );
         return $args;
+    }
+
+
+    private function retrieveNewInProducts($postsPerPage)
+    {
+        $newInProductIdsByCategory = $this->getNewInProductIdsByCategory();
+        $singleNewInProductIds = $this->getSingleNewInProductIds();
+        $newInProducts = array_merge($newInProductIdsByCategory, $singleNewInProductIds);
+        $options = $this->get_option();
+        $pastdate = strtotime('-' . ($options['new_days'] - 1) . ' days');
+        $date = getdate($pastdate);
+        $args['posts_per_page'] = $postsPerPage;
+        $args['post_type'] = 'wp_aff_products';
+        $args['post__in'] = $newInProducts;
+        $args['date_query'] = array(
+            array(
+                'after' => array(
+                    'year' => $date['year'],
+                    'month' => $date['mon'],
+                    'day' => $date['mday'],
+                ),
+                'inclusive' => true,
+            ),
+        );
+
+        $args['orderby'] = 'rand';
+        $args['order'] = 'DESC';
+
+        return $args;
+    }
+
+    private function getSingleNewInProductIds()
+    {
+        $args = array(
+            'post_type' => 'wp_aff_products',
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'wp_aff_product_new_in',
+                    'value' => 1,
+                    'compare' => '='
+                )
+            )
+        );
+
+        $productIds = get_posts($args);
+
+        return $productIds;
+
+    }
+
+    private function getNewInProductIdsByCategory()
+    {
+        $newInCategoryIds = [];
+        $wpAffCategories = get_terms('wp_aff_categories');
+        foreach ($wpAffCategories as $wpAffCategory) {
+            $newInItem = get_post_meta($wpAffCategory->term_id, 'wp_aff_category_new_in', true);
+            if ($newInItem == 1) {
+                $newInCategoryIds[] = $wpAffCategory->term_id;
+            }
+        }
+
+        $args = array(
+            'post_type' => 'wp_aff_products',
+            'fields' => 'ids',
+            'posts_per_page' => -1,
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'wp_aff_categories',
+                    'terms' => $newInCategoryIds,
+                )
+            )
+        );
+
+        $productIds = get_posts($args);
+
+        return $productIds;
     }
 
     public function get_product_terms($taxonomy)
@@ -1570,13 +1634,12 @@ class WordPress_Affiliate_Shop
     {
         if (!wp_verify_nonce($_POST['_wpnonce'], 'wp_aff_product_search'))
             die('Invalid nonce.' . var_export($_POST, true));
-		$url = admin_url( 'admin.php?page=affiliate-shop/add-products' );
-        $url = add_query_arg('q', $_POST['q'], $url );
+        $url = admin_url('admin.php?page=affiliate-shop/add-products');
+        $url = add_query_arg('q', $_POST['q'], $url);
         $url = add_query_arg('wp_aff_merch', $_POST['wp_aff_merch'], $url);
         $url = add_query_arg('api', $_POST['wp_aff_api'], $url);
         if (!isset ($_POST['_wp_http_referer']))
             die('Missing target.');
-
         wp_safe_redirect($url);
         exit;
     }
@@ -2844,7 +2907,8 @@ class WordPress_Affiliate_Shop
                         <?php submit_button('Edit Category'); ?>
                     </form>
                 <?php endif; // End if($_GET['action'] == 'view') ?>
-            <?php endif; //End if(!isset($_GET['action'])) ?>
+            <?php endif; //End if(!isset($_GET['action']))
+            ?>
         </div>
     <?php }
 
@@ -3125,6 +3189,80 @@ class WordPress_Affiliate_Shop
         }
         echo json_encode((object)$output);
         die;
+    }
+
+    public function ajax_new_in()
+    {
+        $output = [];
+        $output['status'] = 0;
+
+        $meta = get_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], true);
+
+        if (isset($meta) && $meta == 1) {
+            if (update_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], 0)) {
+                $output['status'] = 'success';
+                $output['previous'] = 1;
+                $output['new'] = 0;
+            } else {
+                $output['status'] = 0;
+            }
+        } elseif (isset($meta) && $meta == 0) {
+            if (update_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], 1)) {
+                $output['status'] = 'success';
+                $output['previous'] = 0;
+                $output['new'] = 1;
+            } else {
+                $output['status'] = 0;
+            }
+        } else {
+            if (update_post_meta($_POST['post'], 'wp_aff_category_' . $_POST['var'], 1)) {
+                $output['status'] = 'success';
+                $output['previous'] = 0;
+                $output['new'] = 1;
+            } else {
+                $output['status'] = 'failure';
+            }
+        }
+
+        echo json_encode((object)$output);
+        die();
+    }
+
+    public function ajax_new_in_single_product()
+    {
+        $output = [];
+        $output['status'] = 0;
+
+        $meta = get_post_meta($_POST['post'], 'wp_aff_product_new_in', true);
+
+        if (isset($meta) && $meta == 1) {
+            if (update_post_meta($_POST['post'], 'wp_aff_product_new_in', 0)) {
+                $output['status'] = 'success';
+                $output['previous'] = 1;
+                $output['new'] = 0;
+            } else {
+                $output['status'] = 0;
+            }
+        } elseif (isset($meta) && $meta == 0) {
+            if (update_post_meta($_POST['post'], 'wp_aff_product_new_in', 1)) {
+                $output['status'] = 'success';
+                $output['previous'] = 0;
+                $output['new'] = 1;
+            } else {
+                $output['status'] = 0;
+            }
+        } else {
+            if (update_post_meta($_POST['post'], 'wp_aff_product_new_in', 1)) {
+                $output['status'] = 'success';
+                $output['previous'] = 0;
+                $output['new'] = 1;
+            } else {
+                $output['status'] = 'failure';
+            }
+        }
+
+        echo json_encode((object)$output);
+        die();
     }
 
     function admin_product_filter()
@@ -3421,37 +3559,37 @@ class WordPress_Affiliate_Shop
         $mailhead = 'From: Aff Shop Cron <cron@sosensational.co.uk>' . "\r\n";
 
         $productlog = $this->get_plugin_path() . date('d-m-Y-H-i-s') . "_products.txt";
-        $merchantlog = $this->get_plugin_path().date('d-m-Y-H-i-s')."_merchants.txt";
+        $merchantlog = $this->get_plugin_path() . date('d-m-Y-H-i-s') . "_merchants.txt";
 
-				
-			$fp = fopen($merchantlog, 'w');
-			$header = array( "Number", "Merchant ID", "Merchant Name", "Affiliate", "Status", "Message" );
-			fputcsv($fp, $header, '|');
-			
-			wp_mail( get_option( 'admin_email' ), 'Merchant Cron Started', "Merchant Log: $merchantlog" , $mailhead );
-			
-			$i = 1;
-			global $wpdb;
-			$table_name = $wpdb->prefix . "feed_data";
-			$wpdb->query("TRUNCATE TABLE $table_name");
-			$merchants = $this->cron_get_api_merchants();
-			$total = $merchants['total'];	
-			foreach( $merchants['items'] as $merchant ) {
-				//print_var( $merchant );
-				$percent = number_format( ( $i / $total ) * 100, 2 );
-				$data = $this->cron_update_merchant_feed( $merchant['ID'], $merchant['aff'], $merchant['name'] );	
-				if( $data['status'] == 1 ) {
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'] , $merchant['name'], $merchant['aff'], 'Updated - '.$data['success'].' Inserted, '.$data['error'].' Failed.', '' );
-				} else {
-					$line = array( $i.' of '.$total.' ('.$percent.'%)', $merchant['ID'], $merchant['name'], $merchant['aff'], 'Failed - '.$data['success'].' Inserted, '.$data['error'].' Failed.' );
-				}
-				fputcsv($fp, $line, '|');
-				$i++;
-			}	
-			fclose( $fp );
-			wp_mail( get_option( 'admin_email' ), 'Merchant Cron Ended', "Merchant Log: $merchantlog", $mailhead );
 
-			
+        $fp = fopen($merchantlog, 'w');
+        $header = array("Number", "Merchant ID", "Merchant Name", "Affiliate", "Status", "Message");
+        fputcsv($fp, $header, '|');
+
+        wp_mail(get_option('admin_email'), 'Merchant Cron Started', "Merchant Log: $merchantlog", $mailhead);
+
+        $i = 1;
+        global $wpdb;
+        $table_name = $wpdb->prefix . "feed_data";
+        $wpdb->query("TRUNCATE TABLE $table_name");
+        $merchants = $this->cron_get_api_merchants();
+        $total = $merchants['total'];
+        foreach ($merchants['items'] as $merchant) {
+            //print_var( $merchant );
+            $percent = number_format(($i / $total) * 100, 2);
+            $data = $this->cron_update_merchant_feed($merchant['ID'], $merchant['aff'], $merchant['name']);
+            if ($data['status'] == 1) {
+                $line = array($i . ' of ' . $total . ' (' . $percent . '%)', $merchant['ID'], $merchant['name'], $merchant['aff'], 'Updated - ' . $data['success'] . ' Inserted, ' . $data['error'] . ' Failed.', '');
+            } else {
+                $line = array($i . ' of ' . $total . ' (' . $percent . '%)', $merchant['ID'], $merchant['name'], $merchant['aff'], 'Failed - ' . $data['success'] . ' Inserted, ' . $data['error'] . ' Failed.');
+            }
+            fputcsv($fp, $line, '|');
+            $i++;
+        }
+        fclose($fp);
+        wp_mail(get_option('admin_email'), 'Merchant Cron Ended', "Merchant Log: $merchantlog", $mailhead);
+
+
         $i = 1;
 
         $fp = fopen($productlog, 'w');
@@ -3484,6 +3622,7 @@ class WordPress_Affiliate_Shop
 
         //die();
     }
+
     /**
      * Place code for your plugin's functionality here.
      */

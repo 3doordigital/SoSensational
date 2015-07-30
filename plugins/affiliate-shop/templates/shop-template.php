@@ -153,10 +153,10 @@ get_header();
                     global $wp_aff;
 					global $paged;
 					$args = $wp_aff->shop_args();
-					//print_var($args);
+                    $args['paged'] = get_query_var('paged') === 0 ? 1 : get_query_var('paged');
 					$per_page = $args['posts_per_page'];
 					$query = new WP_Query( $args );
-					//print_var($query);
+
                     if( $args['paged'] == 1 || !isset( $args['paged'] ) ) {
                         $start = '1';
                     } else {
@@ -165,7 +165,7 @@ get_header();
                     if( $per_page == -1 ) {
                         $end = $query->post_count;
                     } else {
-                        $end = $args['paged'] * $per_page;
+                        $end = ($args['paged'] * $per_page) <= $query->found_posts ? ($args['paged'] * $per_page) : $query->found_posts;
                     }
                     ?>
                         <div id="product_filter" class="row">

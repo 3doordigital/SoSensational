@@ -59,6 +59,61 @@ jQuery(document).ready(function($) {
 				}
 			}, 'json');
 	});
+
+    $('.ajax_new_in').live( 'click', function( e ) {
+        e.preventDefault();
+        var $this = $(this);
+        var data = {
+            'action': 'ajax_new_in',
+            'post': $(this).attr('data-item'),
+            'var' : $(this).attr('data-action')
+        };
+        // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+        $.post(ajaxurl, data, function(response) {
+            console.log( response );
+            if( response.status == "success" ) {
+                if( response.new == 1 ) {
+                    $this.addClass('active');
+                } else {
+                    $this.removeClass('active');
+                }
+            }
+        }, 'json');
+    });
+
+    $('.ajax_new_in_single_product').live( 'click', function( e ) {
+        e.preventDefault();
+        var $this = $(this);
+        var data = {
+            'action': 'ajax_new_in_single_product',
+            'post': $(this).attr('data-item'),
+            'var' : $(this).attr('data-action')
+        };
+        // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+        $.post(ajaxurl, data, function(response) {
+            console.log( response );
+            if( response.status == "success" ) {
+                if( response.new == 1 ) {
+                    $this.addClass('active');
+                } else {
+                    $this.removeClass('active');
+                }
+            }
+        }, 'json');
+    });
+
+    $("#postbox-container-2 table.form-table :checkbox").click(function() {
+        var $this = $(this);
+        var checkboxClass = $this.attr('class');
+        var siblings = $(":checkbox." + checkboxClass);
+        var prop = $this.prop('checked');
+        siblings.each(function() {
+            $this = $(this);
+            $this.prop('checked', prop);
+        }).bind(prop);
+
+    });
+
 	
 	$('.remove-product').live( 'click', function( e ) {
 		e.preventDefault();

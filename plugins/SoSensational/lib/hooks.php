@@ -11,6 +11,39 @@ add_action('manage_products_posts_custom_column', 'processBBColumn', 10, 2);
 add_filter('lost_password', 'ssPreventPasswordReset', 10, 2);
 add_filter('login_message', 'ssAddContactAdminMessage');
 add_action('admin_init', 'ssSettingsForHomepage');
+add_action('before_delete_post', 'deleteCorrespondingAdvertiserCategory');
+//add_action('wp_trash_post', 'beforeTrash');
+
+function deleteCorrespondingAdvertiserCategory($postId)
+{
+    if ('advertisers_cats' === get_post_type($postId)) {
+        return $postId;
+    }
+
+    if ('brands' === get_post_type($postId) || 'boutiques' === get_post_type($postId)) {
+        $deletedAdvertiser = get_post($postId);
+        $deletedAdvertiserTitle = $deletedAdvertiser->post_title;
+        $deletedAdvertiserAuthor = $deletedAdvertiser->post_author;
+
+        $args = array(
+            'post_type' => 'advertisers_cats',
+            'post_status' => array('publish', 'draft', 'pending'),
+            'author' => $deletedAdvertiserAuthor,
+            'posts_per_page' => -1,
+            'field' => 'ids'
+        );
+
+        $advertiserCategoriesByAuthor = get_posts($args);
+
+        foreach($advertiserCategoriesByAuthor as $category) {
+            if ($category->post_title == $deletedAdvertiserTitle) {
+                wp_delete_post($category->ID, true);
+            }
+        }
+    }
+
+    return $postId;
+}
 
 function ssSettingsForHomepage()
 {
