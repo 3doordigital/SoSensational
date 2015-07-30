@@ -967,7 +967,6 @@ class WordPress_Affiliate_Shop
         $newInProductIdsByCategory = $this->getNewInProductIdsByCategory();
         $singleNewInProductIds = $this->getSingleNewInProductIds();
         $newInProducts = array_merge($newInProductIdsByCategory, $singleNewInProductIds);
-
         $options = $this->get_option();
         $pastdate = strtotime('-' . ($options['new_days'] - 1) . ' days');
         $date = getdate($pastdate);
@@ -1029,8 +1028,10 @@ class WordPress_Affiliate_Shop
             'fields' => 'ids',
             'posts_per_page' => -1,
             'tax_query' => array(
-                'taxonomy' => 'wp_aff_categories',
-                'terms' => $newInCategoryIds,
+                array(
+                    'taxonomy' => 'wp_aff_categories',
+                    'terms' => $newInCategoryIds,
+                )
             )
         );
 
