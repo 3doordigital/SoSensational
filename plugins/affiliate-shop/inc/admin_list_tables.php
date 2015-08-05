@@ -1311,6 +1311,7 @@ function column_cb($item){
     );
 }
 function column_aff($item) {
+	
     if($item['aff'] == 'awin') {
         return '<img src="'.str_replace( 'inc/', '', plugin_dir_url( __FILE__ ) ).'img/awin.png" style="max-width: 50%; height: auto;" />';
     }
@@ -1320,7 +1321,7 @@ function column_aff($item) {
 	if($item['aff'] == 'ff') {
         return '<img src="'.str_replace( 'inc/', '', plugin_dir_url( __FILE__ ) ).'img/ff.jpg" style="max-width: 50%; height: auto;" />';
     }
-	if($item['aff'] == 'tradedoubler' || $item['aff'] == 'tradedoubler-hb' ) {
+	if($item['aff'] == 'tradedoubler' || $item['aff'] == 'td-hb' ) {
         return '<img src="'.str_replace( 'inc/', '', plugin_dir_url( __FILE__ ) ).'img/tradedoubler.jpg" style="max-width: 50%; height: auto;" />';
     }
 }
