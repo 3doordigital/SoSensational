@@ -128,7 +128,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 				$out['status'] = 1;	
 				// loop through the file line-by-line
 				$i = 0;
-				while(($test = fgetcsv($handle) && $i == 0 ) !== false)
+				while(($test = fgetcsv($handle, 0, '|') && $i == 0 ) !== false)
 				{
 					$i++;
 					print_var( $test );	
