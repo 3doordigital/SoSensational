@@ -78,20 +78,11 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 	public function merchants() {
 		
 		
-		$url = 'http://api.tradedoubler.com/1.0/productFeeds?token='.$this->token;
-		
-		$data = file_get_contents( $url );
-		
-		$req = json_decode( $data );
-				
-		foreach ($req->feeds as $item) {
-			
-			$array['ID-'.$item->feedId] = array(
-				'ID'        => ( string ) $item->feedId,
-				'name'     	=> ( string ) $item->name,
+			$array['td-hb'] = array(
+				'ID'        => 'td-hb',
+				'name'     	=> 'Hugo Boss',
 				'aff'     	=> 'tradedoubler-hb',
 			);
-		}
 		return $array;
 		
 	}
@@ -104,7 +95,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 		$out['error'] = 0;
 		$out['status'] = 0;
 		
-		$url = 'http://pf.tradedoubler.com/export/export?myFeed=14376626532501130&myFormat=14376626532501130';
+		$url = 'http://pf.tradedoubler.com/export/export?myFeed=14387854752501130&myFormat=14376626532501130';
 		if ( function_exists( 'ini_set' ) ) {
 			@ini_set('memory_limit', '2048M');
 		}
@@ -114,7 +105,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 		if( ! file_exists( $user_dirname ) )
 			wp_mkdir_p( $user_dirname );
 
-		$destination = $user_dirname.'/temp.json';
+		$destination = $user_dirname.'/td.csv';
 		$fp = fopen($destination, "w+");
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_FILE, $fp); // write curl response to file
@@ -127,59 +118,68 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 		fclose($fp);
 
 		if( $out['status'] == 1 ) {
-			$file = file_get_contents( $destination );
-		
-			$req = json_decode( $file );
-			
-			foreach( $req->products as $product ) {
-				//print_var( $product );	
-				$data = array(
-					'ID'        => (string) sanitize_text_field( $product->offers[0]->id ),
-					'aff'     	=> 'tradedoubler-hb',    
-					'title'     => (string) sanitize_text_field( trim( ucwords( strtolower( $product->name ) ) ) ),
-					'brand'     => (string) sanitize_text_field( trim( ucwords( strtolower( $product->offers[0]->programName ) ) ) ),
-					'img'       => (string) esc_url($product->productImage->url),
-					'desc'      => (string) sanitize_text_field( $product->description ),
-					'price'     => (int) number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
-					'rrp'       => (int) number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
-					'link'      => (string) esc_url($product->offers[0]->productUrl)
-				);
-				//print_var( $data );
+			if(($handle = fopen( $destination, 'r')) !== false)
+			{
 				global $wpdb;
-				//print_var($product);
 				
-				$table_name = $wpdb->prefix . "feed_data";
-				$replace = $wpdb->insert( $table_name, array( 
-						'product_id' => $merchant.'_'.$data['ID'], 
-						'product_aff' => $data['aff'],
-						'product_merch' => $merchant,
-						'product_title' => $data['title'],
-						'product_brand' => $merch,
-						'product_image' => $data['img'],
-						'product_desc' => $data['desc'],
-						'product_price' => $data['price'],
-						'product_rrp' => $data['rrp'],
-						'product_link' => $data['link'], 
-					)
-				);
-				$error = $wpdb->last_error;
-				//echo $replace;
-				switch ($replace) {
-					case false :
-						//die( $wpdb->last_query );
-						$out['message'][] = $wpdb->last_query;
-						$out['error'] ++;
-						break;
-					case 1 :
-						$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
-						$out['success'] ++;
-						break;
-					default :
-						$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
-						break;	
+				// get the first row, which contains the column-titles (if necessary)
+				$header = fgetcsv($handle);
+				print_var( $header );
+				$out['status'] = 1;	
+				// loop through the file line-by-line
+				$i = 0;
+				while(($test = fgetcsv($handle) && $i == 0 ) !== false)
+				{
+					$i++;
+					print_var( $test );	
+					/*$data = array(
+						'ID'        => (string) sanitize_text_field( $product->offers[0]->id ),
+						'aff'     	=> 'tradedoubler-hb',    
+						'title'     => (string) sanitize_text_field( trim( ucwords( strtolower( $product->name ) ) ) ),
+						'brand'     => (string) sanitize_text_field( trim( ucwords( strtolower( $product->offers[0]->programName ) ) ) ),
+						'img'       => (string) esc_url($product->productImage->url),
+						'desc'      => (string) sanitize_text_field( $product->description ),
+						'price'     => (int) number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
+						'rrp'       => (int) number_format( $product->offers[0]->priceHistory[0]->price->value, 2, '.', '' ),
+						'link'      => (string) esc_url($product->offers[0]->productUrl)
+					);*/
+					//print_var( $data );
+					//print_var($product);
+					
+					/*$table_name = $wpdb->prefix . "feed_data";
+					$replace = $wpdb->insert( $table_name, array( 
+							'product_id' => $merchant.'_'.$data['ID'], 
+							'product_aff' => $data['aff'],
+							'product_merch' => $merchant,
+							'product_title' => $data['title'],
+							'product_brand' => $merch,
+							'product_image' => $data['img'],
+							'product_desc' => $data['desc'],
+							'product_price' => $data['price'],
+							'product_rrp' => $data['rrp'],
+							'product_link' => $data['link'], 
+						)
+					);
+					$error = $wpdb->last_error;
+					//echo $replace;
+					switch ($replace) {
+						case false :
+							//die( $wpdb->last_query );
+							$out['message'][] = $wpdb->last_query;
+							$out['error'] ++;
+							break;
+						case 1 :
+							$out['message'][] = 'Inserted '.$merchant.'_'.$data['ID'];
+							$out['success'] ++;
+							break;
+						default :
+							$out['message'][] = 'Replaced '.$merchant.'_'.$data['ID'];
+							break;	
+					}
+					unset( $data );
+					unset( $product );*/
 				}
-				unset( $data );
-			}
+			} else { $out = 'Failed'; }
 		}
 		
 		return $out;
