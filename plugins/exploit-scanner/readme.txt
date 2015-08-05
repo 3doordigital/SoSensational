@@ -1,8 +1,8 @@
 === Exploit Scanner ===
 Contributors: donncha, duck_, ryan, azaozz, tott, pento, philipjohn
 Tags: security, scanner, hacking, spam, hack, crack, exploit, vulnerability
-Tested up to: 4.2.2
-Stable tag: 1.4.5
+Tested up to: 4.2.4
+Stable tag: 1.4.6
 Requires at least: 3.3
 
 Search the files and database of your WordPress install for signs that may indicate that it has fallen victim to malicious hackers.
@@ -14,13 +14,15 @@ It does not remove anything. That is left to the user to do.
 
 Latest MD5 hash values for Exploit Scanner:
 
-* exploit-scanner.php (1.4.5): 68e4ebb3bdbaa56a2528cfbc51826961
-* hashes-4.2.2.php: bb2257aab7ac8807ae72653e0967202c
+* exploit-scanner.php (1.4.6): 68e4ebb3bdbaa56a2528cfbc51826961
+* hashes-4.2.3.php: 43eb84414b5b1184dc68871cc4d5daad
+* hashes-4.2.4.php: 3d23c8f9034569ba6397132e77d642c1
 
 Latest SHA1 hash values for Exploit Scanner:
 
-* exploit-scanner.php (1.4.5): aaf8e0cf4351e1a476e8128be1cb28f1fcbb5f6d
-* hashes-4.2.2.php: b4882105b2efaf6e6cf6263c2715d6336b585782
+* exploit-scanner.php (1.4.6): aaf8e0cf4351e1a476e8128be1cb28f1fcbb5f6d
+* hashes-4.2.3.php: 33f60bb29a655bbd959d261c7d4a2d97100eb471
+* hashes-4.2.4.php: d9864259097f9c78cb926aba47b01f1a31ee6adf
 
 See the [Exploit Scanner homepage](http://ocaoimh.ie/exploit-scanner/) for further information.
 
@@ -38,6 +40,10 @@ See the [Exploit Scanner homepage](http://ocaoimh.ie/exploit-scanner/) for furth
 * Wordpress 4.0 and 4.0.1 hashes
 
 == Changelog ==
+
+= 1.4.6 =
+* WordPress 4.2.3 hashes
+* WordPress 4.2.4 hashes
 
 = 1.4.5 =
 * WordPress 4.2.2 hashes

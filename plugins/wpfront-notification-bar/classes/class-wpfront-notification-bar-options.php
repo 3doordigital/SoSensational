@@ -42,6 +42,7 @@ if (!class_exists('WPFront_Notification_Bar_Options')) {
             $this->addOption('position', 'int', 1, array($this, 'validate_1or2'))->__('Position');
             $this->addOption('height', 'int', 0, array($this, 'validate_zero_positive'))->__('Bar Height');
             $this->addOption('message', 'string', '')->__('Message Text');
+            $this->addOption('message_process_shortcode', 'bit', FALSE)->__('Process Shortcode');
             $this->addOption('display_after', 'int', 1, array($this, 'validate_zero_positive'))->__('Display After');
             $this->addOption('animate_delay', 'float', 0.5, array($this, 'validate_zero_positive'))->__('Animation Duration');
             $this->addOption('close_button', 'bool', FALSE)->__('Display Close Button');
@@ -51,6 +52,7 @@ if (!class_exists('WPFront_Notification_Bar_Options')) {
             $this->addOption('button_action', 'int', 1, array($this, 'validate_1or2'))->__('Button Action');
             $this->addOption('button_action_url', 'string', '')->__('Open URL:');
             $this->addOption('button_action_new_tab', 'bool', FALSE)->__('Open URL in new tab/window');
+            $this->addOption('button_action_url_nofollow', 'bool', FALSE)->__('No follow link');
             $this->addOption('button_action_javascript', 'string', '')->__('Execute JavaScript');
             $this->addOption('button_action_close_bar', 'bit', FALSE)->__('Close Bar on Button Click');
             $this->addOption('display_shadow', 'bit', FALSE)->__('Display Shadow');

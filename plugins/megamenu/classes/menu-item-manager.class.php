@@ -79,14 +79,14 @@ class Mega_Menu_Menu_Item_Manager {
 
     	check_ajax_referer( 'megamenu_edit' );
 
-        $submitted_settings = $_POST['settings'];
+        $submitted_settings = isset( $_POST['settings'] ) ? $_POST['settings'] : array();
 
         $menu_item_id = absint( $_POST['menu_item_id'] );
 
         if ( $menu_item_id > 0 && is_array( $submitted_settings ) ) {
 
             // only check the checkbox values if the general settings form was submitted
-            if ( isset( $submitted_settings['item_align'] ) ) {
+            if ( isset( $_POST['tab'] ) && $_POST['tab'] == 'general_settings' ) {
 
                 // Hide Text checkbox is unchecked
                 if ( ! isset( $submitted_settings['hide_text'] ) ) {
@@ -183,7 +183,7 @@ class Mega_Menu_Menu_Item_Manager {
 
 		$all_widgets = $widget_manager->get_available_widgets();
 
-        $return .= "<label for='mm_enable_mega_menu'>" . __("Sub menu display mode", "megamenu") . "</label>";
+        $return = "<label for='mm_enable_mega_menu'>" . __("Sub menu display mode", "megamenu") . "</label>";
 
         $return .= "<select id='mm_enable_mega_menu' name='settings[type]'>";
         $return .= "    <option value='flyout'>" . __("Flyout Menu", "megamenu") . "</option>";
@@ -290,6 +290,7 @@ class Mega_Menu_Menu_Item_Manager {
         $return .= '    <input type="hidden" name="menu_item_id" value="' . $menu_item_id . '" />';
         $return .= '    <input type="hidden" name="action" value="mm_save_menu_item_settings" />';
         $return .= '    <input type="hidden" name="_wpnonce" value="' . wp_create_nonce('megamenu_edit') . '" />';
+        $return .= '    <input type="hidden" name="tab" value="general_settings" />';
         $return .= '    <h4 class="first">' . __("Menu Item Settings", "megamenu") . '</h4>';
         $return .= '    <table>';
         $return .= '        <tr>';
@@ -394,7 +395,22 @@ class Mega_Menu_Menu_Item_Manager {
                 'title' => __("Dashicons", "megamenu"),
                 'active' => ! isset( $menu_item_meta['icon'] ) || ( isset( $menu_item_meta['icon'] ) && substr( $menu_item_meta['icon'], 0, strlen("dash") ) === "dash" || $menu_item_meta['icon'] == 'disabled' ),
                 'content' => $this->dashicon_selector()
-            )
+            ),
+            'fontawesome' => array(
+                'title' => __("Font Awesome", "megamenu"),
+                'active' => false,
+                'content' => str_replace( "{link}", "<a href='http://www.maxmegamenu.com/upgrade/?utm_source=free&amp;utm_medium=link&amp;utm_campaign=pro'>" . __("Max Mega Menu Pro", "megamenu") . "</a>", __("Get access to over 400 Font Awesome Icons with {link}", "megamenu") )
+            ),
+            'genericons' => array(
+                'title' => __("Genericons", "megamenu"),
+                'active' => false,
+                'content' => str_replace( "{link}", "<a href='http://www.maxmegamenu.com/upgrade/?utm_source=free&amp;utm_medium=link&amp;utm_campaign=pro'>" . __("Max Mega Menu Pro", "megamenu") . "</a>", __("Choose from over 100 genericons with {link}", "megamenu") )
+            ),
+            'custom' => array(
+                'title' => __("Custom Icon", "megamenu"),
+                'active' => false,
+                'content' => str_replace( "{link}", "<a href='http://www.maxmegamenu.com/upgrade/?utm_source=free&amp;utm_medium=link&amp;utm_campaign=pro'>" . __("Max Mega Menu Pro", "megamenu") . "</a>", __("Select icons from your media library with {link}", "megamenu") )
+            ),
         );
 
         $icon_tabs = apply_filters( "megamenu_icon_tabs", $icon_tabs, $menu_item_id, $menu_id, $menu_item_depth, $menu_item_meta );

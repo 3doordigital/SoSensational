@@ -1,6 +1,6 @@
 <?php
 
-$ct_agent_version = 'wordpress-514';
+$ct_agent_version = 'wordpress-518';
 $ct_plugin_name = 'Anti-spam by CleanTalk';
 $ct_checkjs_frm = 'ct_checkjs_frm';
 $ct_checkjs_register_form = 'ct_checkjs_register_form';
@@ -247,7 +247,7 @@ function get_sender_info() {
 		}
 	}
 	
-	$options2server = array(	// Options for sending to server for support information
+	/*$options2server = array(	// Options for sending to server for support information
             'apikey' => $ct_options['apikey'],
             'registrations_test' => $ct_options['registrations_test'],
             'comments_test' => $ct_options['comments_test'],
@@ -257,7 +257,7 @@ function get_sender_info() {
             'autoPubRevelantMess' => $ct_options['autoPubRevelantMess'],
             'spam_store_days' => $ct_options['spam_store_days'],
             'ssl_on' => $ct_options['ssl_on'],
-	);
+	);*/
 	$options2server=$ct_options;
 
 	return $sender_info = array(
@@ -271,6 +271,7 @@ function get_sender_info() {
         'checkjs_data_post' => $checkjs_data_post, 
         'checkjs_data_cookies' => $checkjs_data_cookies, 
         'ct_options' => json_encode($options2server),
+        'fields_number' => sizeof($_POST),
     );
 }
 
@@ -306,7 +307,7 @@ function ct_cookies_test ($test = false) {
  */
 function ct_get_checkjs_value($random_key = false) {
     global $ct_options, $ct_data;
-    $ct_data=ct_get_data();
+    //$ct_data=ct_get_data();
 
     if ($random_key) {
         $keys = $ct_data['js_keys'];
@@ -556,6 +557,13 @@ function ct_get_fields_any(&$email,&$message,&$nickname,&$subject, &$contact,$ar
 	    'txn_type', // PayPal transaction type
 	    'payment_status', // PayPal payment status
     );
+   	foreach($skip_params as $key=>$value)
+   	{
+   		if(@array_key_exists($value,$_GET)||@array_key_exists($value,$_POST))
+   		{
+   			$contact = false;
+   		}
+   	}
 	foreach($arr as $key=>$value)
 	{
 		if(!is_array($value)&&!is_object($value)&&@get_class($value)!='WP_User')

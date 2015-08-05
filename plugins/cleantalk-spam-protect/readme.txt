@@ -1,12 +1,11 @@
-=== Anti-spam by CleanTalk - No Captcha, no comments & registrations spam ===
+=== Anti-Spam by CleanTalk - No Captcha, no comments & registrations spam ===
 Contributors: znaeff, shagimuratov, vlad-cleantalk
-Tags: akismet, anti-spam, antispam, bbpress spam, buddypress spam, captcha antispam, cf7 spam, comments spam, contact form spam, form, Formidable spam, jetpack spam, math, registration spam, s2member spam, signup spam, spam, spammers, spammy, WooCommerce spam, wordpress spam, booking spam, order spam, subscriptions spam, comments, gravity spam, gravity forms spam, widget, widget spam, registration, plugin, antispam plugin, anti-spam plugin, ninja, cache
+Tags: anti-spam, antispam, bbpress, buddypress, captcha, cf7 spam, comments, contact form spam, signup, spam, spammers, spammy, WooCommerce, wordpress spam, booking spam, order spam, subscriptions spam, gravity spam, jetpack, bots, contact form 7, contact form, registrations, ninja, Fast Secure Contact, Gravity forms, formidable, mailchimp, s2member, protection
 Requires at least: 3.0
 Tested up to: 4.3
-Stable tag: 5.14
+Stable tag: 5.18
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
 
 Max power, all-in-one, premium anti-spam. No comments & registrations spam, no contact spam, protects any forms. Just install and forget spam. 
 
@@ -23,27 +22,44 @@ No CAPTCHA, no questions, no counting animals, no puzzles, no math and no spam b
 1. Stops spam in widgets.
 1. Check existing comments for spam.
 
-= Spam protection =
-* WordPress, JetPack comments.
-* WordPress, BuddyPress, bbPress, S2Member, WooCommerce  registrations.
-* Formidable forms, Contact form 7, JetPack Contact form, Fast Secure Contact form, Ninja forms, Landing pages, Gravity forms and any themes/custom contact form.
-* WooCommerce review form.
+= Includes comments spam protection =
+Supports native WordPress, JetPack comments and any other comments plugins. Plugin moves spam comments to SPAM folder or you can set option to silent ban spam comments.
+
+= Spam bots registrations filter =
+Filers spam bots on registrations forms WordPress, BuddyPress, bbPress, S2Member, WooCommerce and any other registrations plugins.
+
+= Protection against contact forms spam =
+Plugin is tested and ready to protect against spam emails via Formidable forms, Contact form 7, JetPack Contact form, Fast Secure Contact form, Ninja forms, Landing pages, Gravity forms and any themes/custom contact forms.
+
+= WooCommerce spam filter =
+Anti-spam by CleanTalk filters spam bots registrations and spam reviews for WooCommerce. Plugin is fully compatible with WooCommerce 2.1 and upper.
+
+= Spam filter for themes contact forms =
+Plugin blocks spam emails via any themes (built-in) contact forms. With AJAX forms plugin silent (without any error notices on WordPress frontend) filters spam emails. 
+
+= Other spam filters =
 * WordPress Landing Pages.
 * Any WordPress form (option 'Custom contact forms'). 
 
 = Compatible with WordPress cache plugins =
-* W3 Total Cache, Quick Cache, WP Fastest Cache, Hyper Cache, WP Super cache
+* W3 Total Cache, Quick Cache, WP Fastest Cache, Hyper Cache, WP Super cache and any other cache plugins.
 
 = Check existing comments for spam =
-With the help of anti-spam CleanTalk you can check existing comments, to find and quickly delete spam comments. For use this function, go to WP Console->Comments->Find spam comments.
+With the help of anti-spam by CleanTalk you can check existing comments, to find and quickly delete spam comments. For use this function, go to WP Console->Comments->Find spam comments.
 
-= Cloud anti-spam for WordPress. CAPTCHA less, no spam comments, no spam registrations, no spam contact emails, no spam trackbacks =
+= Low false/positive rate =
+This plugin uses multiple anti-spam tests to filter spam bots with lower false/positive rate as possible. Multiple anti-spam tests avoid false/positive blocks for real website visitors even if one of the tests failed.
+
+= Spam attacks log =
+Service CleanTalk (this plugin is a client application for CleanTalk anti-spam service) records all filtered comments, registration and other spam attacks in the "Log of spam attacks" and stores the data in the log up to 45 days. Using the log, you can ensure reliable protection of your website from spam and no false/positive filtering.
+
+= No spam comments, no spam registrations, no spam contact emails, no spam trackbacks. CAPTCHA less anti-spam for WordPress =
 Spam is one of the most irritating factors.  Spam become every year more and conventional anti-spam can no longer handle all the spam bots. CleanTalk prevents spam and automatically blocks it. You'll be surprised of effective protection against spam.
 
 = Anti-spam plugin info = 
-CleanTalk is an anti-spam protection **4 in 1 for WordPress** that protects login, comments, contact and WooCommerce forms all at once. You don't need to install separate anti-spam plugins for each form. This allows your blog to work faster and save resources. After installation **you will forget about spam**, CleanTalk plugin will do all the work. You won't have to deal with spam, CleanTalk will do this for you automatically. 
+CleanTalk is an anti-spam solution **all in 1 for WordPress** that protects login, comments, contact and WooCommerce forms all at once. You don't need to install separate anti-spam plugins for each form. This allows your blog to work faster and save resources. After installation **you will forget about spam**, CleanTalk plugin will do all the work. You won't have to deal with spam, CleanTalk will do this for you automatically. 
 
-CleanTalk is a transparent anti-spam protection, we provide detailed statistics of all entering comments and logins. You can always be sure that **there are no errors**. We have developed a mobile app for you to see anti-spam statistics wherever.
+CleanTalk is a transparent anti-spam tool, we provide detailed statistics of all entering comments and logins. You can always be sure that **there are no errors**. We have developed a mobile app for you to see anti-spam statistics wherever.
 
 We have developed antispam for WordPress that would provide **maximum protection from spam bots** and you can provide for your visitors **a simple and convenient form of comments/registrations without annoying CAPTCHAs and puzzles**. Used to detect spam multistage test that allows us to block up to 100% of spam bots.
 
@@ -62,37 +78,45 @@ CleanTalk is premium anti-spam service for WordPress, please look at the <a href
  * No captcha, puzzles, etc.
  * Free mobile app to control anti-spam function at your website.
 
-= How to protect sites from spam bots without CAPTCHA? =
-The most popular method is CAPTCHA - the annoying picture with curved and sloping symbols, which are offered to the visitor to fill in. It is supposed that spam bots won't discern these CAPTCHA, but a visitor will. CAPTCHA provokes great irritation, but if one wants to speak out, he has to fill in these symbols time after time, making mistakes and starting once again. 
-Sometimes CAPTCHA reminds doodle 2x year old child. For users with vision problems captcha is just an insurmountable obstacle. Users hate captcha. Captcha for users means "hate". Unreadable CAPTCHA stops about 80% of site visitors. After 2 failed attempts to bring it up to 95% reject further attempts. 
-At the sight of CAPTCHA and after input errors, many visitors leave the resource. Thus, CAPTCHA helps to protect the resource both from bots and visitors. CAPTCHA is not a panacea from spam. Doubts Concerning the Need for CAPTCHA?
-
 = Additional features =
 * Online, daily and weekly anti-spam reports traffic VS spam. 
 * Apps for iPhone, Android to control anti-spam service, comments, signups, contacts. With traffic and spam statistics for last 7 days.
 * Anti-spam apps for most popular CMS on cleantalk.org. 
 
+= How to protect sites from spam bots without CAPTCHA? =
+The most popular method is CAPTCHA - the annoying picture with curved and sloping symbols, which are offered to the visitor to fill in. It is supposed that spam bots won't discern these CAPTCHA, but a visitor will. CAPTCHA provokes great irritation, but if one wants to speak out, he has to fill in these symbols time after time, making mistakes and starting once again. 
+Sometimes CAPTCHA reminds doodle 2x year old child. For users with vision problems captcha is just an insurmountable obstacle. Users hate captcha. Captcha for users means "hate". Unreadable CAPTCHA stops about 80% of site visitors. After 2 failed attempts to bring it up to 95% reject further attempts. 
+At the sight of CAPTCHA and after input errors, many visitors leave the resource. Thus, CAPTCHA helps to protect the resource both from bots and visitors. CAPTCHA is not a panacea from spam. Doubts Concerning the Need for CAPTCHA?
+
 = We recommend =
 Audience engagement plugin <a href="http://wordpress.org/plugins/feedweb/">Feedweb</a>
 
-    Max power, all-in-one, premium anti-spam WordPress plugin.
-    No comments & registrations spam, no contact spam, protects any forms.
-    Just install and forget spam. 
+> Max power, all-in-one, premium anti-spam WordPress plugin. No comments & registrations spam, no contact spam, protects any forms. Just install and forget spam. 
 
 
 == Installation ==
+= Setup anti spam plugin =
 1. Download, install and activate Anti-spam by CleanTalk. 
 1. Get Access key <a href="https://cleantalk.org/register?platform=wordpress" target="_blank">https://cleantalk.org/register</a>
-1. Enter Access key on the plugin settings. 
-1. Do dummy spam comment (registration or contact message) with email **stop_email@example.com**.
+1. Enter Access key on the plugin settings,
 
-You should see notice,
+> WordPress console -> Settings -> CleanTalk
 
-    *** Forbidden. Sender blacklisted. Antispam service cleantalk.org. ***
+1. Do dummy spam comment (registration or contact message) with email **stop_email@example.com**. You should see notice,
 
-The setup is done! You can control anti-spam plugin by <a href="https://cleantalk.org/my" target="_blank">Dashboard</a> at the cleantalk.org or use <a href="https://play.google.com/store/apps/details?id=org.cleantalk.app">Android</a>, <a href="https://itunes.apple.com/us/app/cleantalk/id825479913?mt=8">iPhone</a> anti-spam app. 
+> *** Forbidden. Sender blacklisted. ***
+
+Done!
+= Manage and control spam protection = 
+Go to <a href="https://cleantalk.org/my" target="_blank">Dashboard</a> at the cleantalk.org or use <a href="https://play.google.com/store/apps/details?id=org.cleantalk.app">Android</a>, <a href="https://itunes.apple.com/us/app/cleantalk/id825479913?mt=8">iPhone</a> anti-spam app to manage and control spam protection. 
 
 == Frequently Asked Questions ==
+
+= Does the plugin protects against brute force, DoS attacks as well as against spam attacks? =
+No, it doesn't. Anti-spam by CleanTalk **is only anti-spam solution** for comments, registrations and other other forms on a website. Plugin saves your time against manage spam problem, but doesn't protect against any security issues.
+
+= Does anti spam protection safe for mobile visitors? =
+Yes, it does. Plugin doesn't block mobile visitors as well as desktop websites visitors. Because this plugin uses several anti-spam tests to detect spam bots and lower false/positive rate. Multiple anti-spam tests helps avoid false/positive blocks for real website visitors even if one of tests failed.
 
 = How does the plugin work with spam comments? =
 Spam comments moves to SPAM folder or you can set option to silent ban spam comments.
@@ -119,13 +143,13 @@ Plugin by default pass pingbacks without any checks. All trackbacks will be bloc
 = Can I use CleanTalk with Akismet? =
 Sure, you can use CleanTalk with Akismet. In this case probably you will have bigger false/positive rate (when legitimate comments/signups denies), but you will have stronger antispam protection at website.
 
-= Should I use another anti-spam plugins? =
+= Should I use another anti-spam tools (Captcha)? =
 CleanTalk stops up to 100% of spam bots, so you can disable other anti-spam plugins (especially CAPTCHA like anti-spam plugins). In some cases several anti-spam plugins can conflict, so it will be better use just one plugin.  
 
 = Is the plugin WordPress MultiUser (WPMU or WordPress network) compatible? =
 The plugin is WordPress MultiUser (WPMU or WordPress network) compatible. Each blog in multisite environment has individual anti-spam options for spam bots protection.
 
-= After the installation I noticed in the statistics that the number of spam attacks had increased =
+= After installation I noticed in the statistics that the number of spam attacks had increased =
 There are a few reasons for this:
 
 * With the indexing of your web-site by the search systems, appearance of external links and better search results position, your web-site attracts more and more spambots.
@@ -146,7 +170,33 @@ The plugin is free. But the plugin uses CleanTalk cloud service to filter spam b
 Anti-spam by CleanTalk doesn't use static HTML code into templates, so all anti-spam functions works correctly with any WordPress cache plugins.
 
 = Does the plugin protects against spam bots at forms with third-party services? =
-If your contact or subscribe form sends data to third-party servers (like mailchimp.com and etc.) the plugin will not protect your form against spam bots. Because the plugin protects only forms which are sends data directly to your WordPress website.
+Yes, it does. Plugin protects web-forms on your websites which are send data to third-party servers (like MailChimp). To enable this protection set option 'Protect external forms' in plugin settings. 
+
+= What is "Connection test" message? =
+After activation CleanTalk sends test message with email stop_email@example.com. This request required for test our plugin and in some cases it can give us information about problems in plugin, so you can contact our support in time. Result of test query you can see in plugin's settings - green ticks or red crosses.
+
+= Compatible with Cloudflare? = 
+CleanTalk is fully compatible with CloudFlare. Service doesn't filter CloudFlares IP's (AS13335) over blacklists database, so in this way plugin/service filters spam bots uses other anti spam tests.
+
+= Can I use Akismet and CleanTalk to protect my website against spam bots? =
+Sure, you can. You can use CleanTalk and any backend anti-spam tools to protect your website.
+
+= Can i use CleanTalk functionality in my plugins? =
+Yes, you can. Just use following snippet:
+
+    <?php 
+    if(!function_exists('ct_test_message')){
+    	include_once( ABSPATH . '/wp-content/plugins/cleantalk-spam-protect/cleantalk.php' );
+    }	
+    //for registration test:
+    $res=ct_test_registration("nickname", "stop_email@example.com", "127.0.0.1");
+    //or for some other messages (contact forms, comments etc.)
+    $res=ct_test_message("nickname", "stop_email@example.com", "127.0.0.1", "test message");
+
+
+$res now contents array with two parameters:
+  * $res['allow'] - is request allowed (1) or not (0)
+  * $res['comment'] - comment for our server's decision.
 
 == Other notes ==
 
@@ -159,9 +209,59 @@ If you're having trouble getting things to work after installing the plugin, her
 1. If you have error '*** Forbidden. Enable JavaScript. Anti-spam service cleantalk.org. ***' please check JavaScript support in your browser and do JavaScript test at this page <a href="http://cleantalk.org/checkout-javascript-support">Check out JavaScript support</a>.
 1. If you have spam comments, signups or contacts please check the Access key at plugin settings. The key should be same as you can find in service <a href="https://cleantalk.org/my/">Dashboard</a>.
 
-= CAPTCHA = 
-The annoying picture with curved and sloping symbols, which are offered to the visitor to fill in. It is supposed that spam bots won’t discern these symbols, but a visitor will. CAPTCHA provokes great irritation, but if one wants to speak out, he has to fill in these symbols time after time, making mistakes and starting once again. At the sight of CAPTCHA and after input errors, many visitors leave the resource. Thus, CAPTCHA helps to protect the resource from visitors. Spam bots can automatically recognize Captcha. 
-Spam bots can not pass through the anti-spam CleanTalk, complex invisible checks can immediately detect spam bots.
+= Spam protection, backend and frontend perfomance =
+We develop plugin to do it as optimized as possible, CleanTalk doesn't downgrade response time in backend or frontend. The plugin proccess only POST requests to WordPress core, it tackes less than 1 second to return results. Here are some P3 Profiler results from a real WordPress blog,
+
+> WordPress Plugin Profile Report
+> ===========================================
+> Report date: July 9, 2015
+> Theme name: amongsthumans (Canvas child theme)
+> Pages browsed: 24
+> Avg. load time: 2.1155 sec
+> Number of plugins: 28
+> Plugin impact: 45.25% of load time
+> Avg. plugin time: 0.9573 sec
+> Avg. core time: 0.1093 sec
+> Avg. theme time: 0.9339 sec
+> Avg. mem usage: 44.94 MB
+> Avg. ticks: 9,890
+> Avg. db queries : 65.00
+> Margin of error : 0.1149 sec
+
+> Plugin list:
+> ===========================================
+> P3 (Plugin Performance Profiler) - 0.1290 sec - 13.48%
+> Advanced Code Editor - 0.0045 sec - 0.47%
+> Bulk Comment Remove - 0.0029 sec - 0.30%
+> Bulk Delete - 0.0275 sec - 2.87%
+> Cleantalk Spam Protect - 0.0187 sec - 1.95%
+> Custom Share Buttons with Floating Sidebar - 0.0173 sec - 1.81%
+> Exclude Pages - 0.0009 sec - 0.10%
+> Google Sitemap Generator - 0.0032 sec - 0.34%
+> Jetpack by WordPress.com - 0.3644 sec - 38.06%
+> Last Modified Timestamp - 0.0031 sec - 0.32%
+> Le Petite Url - 0.0112 sec - 1.17%
+> Onenote Publisher - 0.0015 sec - 0.16%
+> Popups Premium Plugin - 0.0074 sec - 0.77%
+> Popups - WordPress Popup - 0.0419 sec - 4.37%
+> Post Duplicator - 0.0059 sec - 0.62%
+> Post Teaser - 0.0237 sec - 2.48%
+> Q2W3 Fixed Widget - 0.0017 sec - 0.18%
+> SSL Insecure Content Fixer - 0.0111 sec - 1.16%
+> TinyMCE Advanced - 0.0022 sec - 0.22%
+> Ultimate Follow Me Plugin by Free Blog Factory - 0.0008 sec - 0.08%
+> WooThemes Helper - 0.0282 sec - 2.95%
+> Wp Social Avatar - 0.0013 sec - 0.13%
+> WP User Avatar - 0.0559 sec - 5.84%
+> Wpcommentcleaner - 0.0119 sec - 1.24%
+> Wpdiscuz - 0.0369 sec - 3.85%
+> Online Backup for WordPress - 0.0039 sec - 0.41%
+> WPSSO Pro Update Manager (WPSSO UM) - 0.0114 sec - 1.19%
+> WordPress Social Sharing Optimization (WPSSO) Pro - 0.1288 sec - 13.45%
+
+
+= Some thoughts about CAPTCHA =
+186	The annoying picture with curved and sloping symbols, which are offered to the visitor to fill in. It is supposed that spam bots won’t discern these symbols, but a visitor will. CAPTCHA provokes great irritation, but if one wants to speak out, he has to fill in these symbols time after time, making mistakes and starting once again. At the sight of CAPTCHA and after input errors, many visitors leave the resource. Thus, CAPTCHA helps to protect the resource from visitors. Spam bots can automatically recognize Captcha. Spam bots can not pass through the anti-spam CleanTalk, complex invisible checks can immediately detect spam bots.
 
 = Requirements =
 WordPress 3.0 at least. PHP 5 with CURL or file_get_contents() function and enabled 'allow_url_fopen' setting. <a href="http://cleantalk.org/register?platform=wordpress">Sign up</a> to get an Access key.
@@ -184,6 +284,22 @@ WordPress 3.0 at least. PHP 5 with CURL or file_get_contents() function and enab
 1. Setup Android/iOS app to have push notices when new legitiamte comments/registrations or contactcs appears on the website. 
 
 == Changelog ==
+= 5.18 2015-08-04 =
+  * Fixed issue with user_token
+  * Added anti-spam API, see our FAQ
+  
+= 5.17 2015-07-23 =
+  * Fixed infinite redirection after activation
+  * Minor backend fixes
+
+= 5.16 2015-07-22 =
+  * Fixed external services checking
+  * Fixed mass comments deletion
+  * Fixed AJAX anti-spam protection
+  
+= 5.15 2015-07-16 =
+  * New feature: anti-spam protection for forms, that uses external services
+  
 = 5.14 2015-07-03 =
   * Added anti-spam protection for some themes and plugins
   * Some backend fixes
@@ -590,6 +706,22 @@ WordPress 3.0 at least. PHP 5 with CURL or file_get_contents() function and enab
   * First version
 
 == Upgrade Notice ==
+= 5.18 2015-08-04 =
+  * Fixed issue with user_token
+  * Added anti-spam API, see our FAQ
+  
+= 5.17 2015-07-23 =
+  * Fixed infinite redirection after activation
+  * Minor backend fixes
+  
+= 5.16 2015-07-22 =
+  * Fixed external services checking
+  * Fixed mass comments deletion
+  * Fixed AJAX anti-spam protection
+  
+= 5.15 2015-07-16 =
+  * New feature: anti-spam protection for forms, that uses external services
+  
 = 5.14 2015-07-03 =
   * Added anti-spam protection for some themes and plugins
   * Some backend fixes

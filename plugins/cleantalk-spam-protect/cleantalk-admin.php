@@ -5,7 +5,7 @@ $ct_plugin_basename = 'cleantalk-spam-protect/cleantalk.php';
 if(isset($_GET['close_notice']))
 {
 	global $ct_data, $pagenow;
-	$ct_data=ct_get_data();
+	//$ct_data=ct_get_data();
 	$ct_data['next_notice_show']=time()+86400;
 	update_option('cleantalk_data', $ct_data);
 	$_SERVER["QUERY_STRING"]=str_replace("close_notice=1","",$_SERVER["QUERY_STRING"]);
@@ -38,8 +38,9 @@ function ct_add_stats_js()
  
 function ct_ajax_get_timezone()
 {
+	global $ct_data;
 	check_ajax_referer( 'ct_secret_nonce', 'security' );
-	$ct_data = ct_get_data();
+	//$ct_data = ct_get_data();
 	if(isset($_POST['offset']))
 	{
 		$ct_data['timezone'] = intval($_POST['offset']);
@@ -72,14 +73,25 @@ function ct_admin_add_page() {
 function ct_admin_init() {
     global $ct_server_timeout, $show_ct_notice_autokey, $ct_notice_autokey_label, $ct_notice_autokey_value, $show_ct_notice_renew, $ct_notice_renew_label, $show_ct_notice_trial, $ct_notice_trial_label, $show_ct_notice_online, $ct_notice_online_label, $renew_notice_showtime, $trial_notice_showtime, $ct_plugin_name, $ct_options, $ct_data, $trial_notice_check_timeout, $account_notice_check_timeout, $ct_user_token_label, $cleantalk_plugin_version;
 
-    $ct_options = ct_get_options();
-    $ct_data = ct_get_data();
+    //$ct_options = ct_get_options();
+    //$ct_data = ct_get_data();
     
     $current_version=@trim($ct_data['current_version']);
     if($current_version!=$cleantalk_plugin_version)
     {
     	$ct_data['current_version']=$cleantalk_plugin_version;
     	update_option('cleantalk_data', $ct_data);
+    	$ct_base_call_result = ct_base_call(array(
+	        'message' => 'CleanTalk connection test',
+	        'example' => null,
+	        'sender_email' => 'stop_email@example.com',
+	        'sender_nickname' => 'CleanTalk',
+	        'post_info' => '',
+	        'checkjs' => 1
+	    ));
+    }
+    if(isset($_POST['option_page'])&&$_POST['option_page']=='cleantalk_settings')
+    {
     	$ct_base_call_result = ct_base_call(array(
 	        'message' => 'CleanTalk connection test',
 	        'example' => null,
@@ -129,8 +141,19 @@ function ct_admin_init() {
 					$ct_data['user_token'] = $result['user_token'];
 					update_option('cleantalk_data', $ct_data);
 				}
-                if (isset($result['auth_key']) && !empty($result['auth_key'])) {
-		    $_POST['cleantalk_settings']['apikey'] = $result['auth_key'];
+                if (isset($result['auth_key']) && !empty($result['auth_key']))
+                {
+					$_POST['cleantalk_settings']['apikey'] = $result['auth_key'];
+					$ct_options['apikey']=$result['auth_key'];
+					update_option('cleantalk_settings', $ct_options);
+					$ct_base_call_result = ct_base_call(array(
+				        'message' => 'CleanTalk connection test',
+				        'example' => null,
+				        'sender_email' => 'stop_email@example.com',
+				        'sender_nickname' => 'CleanTalk',
+				        'post_info' => '',
+				        'checkjs' => 1
+				    ));					
                 } else {
 		    setcookie($ct_notice_autokey_label, (string) base64_encode($result['error_message']), 0, '/');
 		}
@@ -138,11 +161,19 @@ function ct_admin_init() {
 		setcookie($ct_notice_autokey_label, (string) base64_encode(sprintf(__('Unable to connect to %s.', 'cleantalk'),  'api.cleantalk.org')), 0, '/');
             }
     }
-
-    if (time() > $ct_data['next_account_status_check']) {
+    
+    if (time() > $ct_data['next_account_status_check']||
+    	isset($_POST['option_page'])&&$_POST['option_page']=='cleantalk_settings'&&$ct_options['apikey']!=$_POST['cleantalk_settings']['apikey']) {
         $result = false;
 	    if (function_exists('curl_init') && function_exists('json_decode') && ct_valid_key($ct_options['apikey'])) {
-            $result=noticePaidTill($ct_options['apikey']);            
+	    	if(@isset($_POST['cleantalk_settings']['apikey']))
+	    	{
+            	$result=noticePaidTill($_POST['cleantalk_settings']['apikey']);            
+            }
+            else
+            {
+            	$result=noticePaidTill($ct_options['apikey']);    
+            }
             
             if ($result) {
                 $result = json_decode($result, true);
@@ -211,6 +242,7 @@ function ct_admin_init() {
     add_settings_field('cleantalk_general_postdata_test', __('Check all post data', 'cleantalk'), 'ct_input_general_postdata_test', 'cleantalk', 'cleantalk_settings_anti_spam');
     add_settings_field('cleantalk_show_adminbar', __('Show statistics in admin bar', 'cleantalk'), 'ct_input_show_adminbar', 'cleantalk', 'cleantalk_settings_anti_spam');
     add_settings_field('cleantalk_use_ajax', __('Use AJAX for JavaScript check', 'cleantalk'), 'ct_input_use_ajax', 'cleantalk', 'cleantalk_settings_anti_spam');
+    add_settings_field('cleantalk_check_external', __('Protect external forms', 'cleantalk'), 'ct_input_check_external', 'cleantalk', 'cleantalk_settings_anti_spam');
 }
 
 /**
@@ -244,7 +276,7 @@ function ct_add_admin_menu( $wp_admin_bar ) {
     
 	if ( current_user_can('activate_plugins')&&$value==1 )
 	{
-		$ct_data=ct_get_data();
+		//$ct_data=ct_get_data();
 		$args = array(
 			'id'    => 'ct_parent_node',
 			'title' => '<img src="' . plugin_dir_url(__FILE__) . 'inc/images/logo_small1.png" alt=""  height="" style="margin-top:9px;" /><a href="#" class="ab-item alignright" title="allowed / blocked" alt="allowed / blocked"><span class="ab-label" id="ct_stats"></span></a>'
@@ -504,6 +536,24 @@ function ct_input_use_ajax() {
     @admin_addDescriptionsFields(sprintf(__('', 'cleantalk'),  $ct_options['use_ajax']));
 }
 
+function ct_input_check_external() {
+    global $ct_options, $ct_data;
+
+    if(isset($ct_options['check_external']))
+    {
+    	$value = @intval($ct_options['check_external']);
+    }
+    else
+    {
+    	$value=0;
+    }
+    echo "<input type='radio' id='cleantalk_check_external1' name='cleantalk_settings[check_external]' value='1' " . ($value == '1' ? 'checked' : '') . " /><label for='cleantalk_check_external1'> " . __('Yes') . "</label>";
+    echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+    echo "<input type='radio' id='cleantalk_check_external0' name='cleantalk_settings[check_external]' value='0' " . ($value == '0' ? 'checked' : '') . " /><label for='cleantalk_check_external0'> " . __('No') . "</label>";
+    @admin_addDescriptionsFields(sprintf(__('', 'cleantalk'),  $ct_options['check_external']));
+}
+
+
 /**
  * Admin callback function - Plugin parameters validator
  */
@@ -556,7 +606,7 @@ input[type=submit] {padding: 10px; background: #3399FF; color: #fff; border:0 no
 function admin_notice_message(){
     global $show_ct_notice_trial, $show_ct_notice_renew, $show_ct_notice_online, $show_ct_notice_autokey, $ct_notice_autokey_value, $ct_plugin_name, $ct_options, $ct_data;
     
-    $ct_data=ct_get_data();
+    //$ct_data=ct_get_data();
 
     $user_token = '';
     if (isset($ct_data['user_token']) && $ct_data['user_token'] != '') {
@@ -809,38 +859,24 @@ function ct_update_option($option_name) {
     $key_valid = true;
     $app_server_error = false;
     $ct_data['testing_failed']=0;
-    if (function_exists('curl_init') && function_exists('json_decode')) {
-        $url = 'https://cleantalk.org/app_notice';
-        $data['auth_key'] = $api_key; 
-        $data['param'] = 'notice_validate_key'; 
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $ct_server_timeout);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-
-        // receive server response ...
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // resolve 'Expect: 100-continue' issue
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
-
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-
-        $result = curl_exec($ch);
-        curl_close($ch);
-        if ($result) {
-            $result = json_decode($result, true);
-            if (isset($result['valid']) && $result['valid'] == 0) {
-                $key_valid = false;
-                $ct_data['testing_failed']=1;
-            }
-        }
-        if (!$result || !isset($result['valid'])) {
-            $app_server_error = true;
+    
+    $request=Array();
+	$request['method_name'] = 'notice_validate_key'; 
+	$request['auth_key'] = $api_key;
+	$url='https://api.cleantalk.org';
+    $result=sendRawRequest($url, $request);
+    if ($result)
+    {
+        $result = json_decode($result, true);
+        if (isset($result['valid']) && $result['valid'] == 0) {
+            $key_valid = false;
             $ct_data['testing_failed']=1;
         }
+    }
+    if (!$result || !isset($result['valid']))
+    {
+        $app_server_error = true;
+        $ct_data['testing_failed']=1;
     }
     
     update_option('cleantalk_data', $ct_data);

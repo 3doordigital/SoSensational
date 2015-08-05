@@ -56,7 +56,7 @@ class Mega_Menu_Settings{
         add_action( 'megamenu_page_general_settings', array( $this, 'general_settings_page'));
 
         add_action( 'admin_menu', array( $this, 'megamenu_themes_page') );
-        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_theme_editor_scripts' ) );
+        add_action( 'megamenu_admin_scripts', array( $this, 'enqueue_scripts' ) );
 
     }
 
@@ -123,7 +123,7 @@ class Mega_Menu_Settings{
 
         do_action("megamenu_after_theme_save");
 
-        $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab=theme_editor&theme={$theme}&saved=true" ) );
+        $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab=theme_editor&theme={$theme}&saved=true" ) );
 
     }
 
@@ -149,7 +149,7 @@ class Mega_Menu_Settings{
 
         do_action("megamenu_after_add_menu_location");
 
-        $this->redirect( admin_url( 'themes.php?page=megamenu_settings&tab=general_settings&add_location=true' ) );
+        $this->redirect( admin_url( 'admin.php?page=maxmegamenu&tab=general_settings&add_location=true' ) );
 
     }
 
@@ -174,7 +174,7 @@ class Mega_Menu_Settings{
 
         do_action("megamenu_after_delete_menu_location");
 
-        $this->redirect( admin_url( 'themes.php?page=megamenu_settings&tab=general_settings&delete_location=true' ) );
+        $this->redirect( admin_url( 'admin.php?page=maxmegamenu&tab=general_settings&delete_location=true' ) );
 
     }
 
@@ -189,7 +189,7 @@ class Mega_Menu_Settings{
 
         do_action( 'megamenu_generate_css' );
 
-        $this->redirect( admin_url( 'themes.php?page=megamenu_settings&tab=tools&regenerate_css=true' ) );
+        $this->redirect( admin_url( 'admin.php?page=maxmegamenu&tab=tools&regenerate_css=true' ) );
 
     }
 
@@ -231,7 +231,7 @@ class Mega_Menu_Settings{
         // delete custom themes
         delete_site_option( "megamenu_themes" );
 
-        $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab=tools&delete_data=true" ) );
+        $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab=tools&delete_data=true" ) );
 
     }
 
@@ -266,7 +266,7 @@ class Mega_Menu_Settings{
 
         $tab = isset( $_POST['tab'] ) ? $_POST['tab'] : 'general_settings';
 
-        $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab={$tab}&saved=true" ) );
+        $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab={$tab}&saved=true" ) );
 
     }
 
@@ -282,7 +282,7 @@ class Mega_Menu_Settings{
 
         $this->init();
 
-        $import = json_decode( stripslashes( html_entity_decode( $_POST['data'] ) ), true );
+        $import = json_decode( stripslashes( $_POST['data'] ), true );
 
         if ( is_array( $import ) ) {
 
@@ -300,11 +300,11 @@ class Mega_Menu_Settings{
 
             do_action("megamenu_after_theme_import");
 
-            $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab=tools&theme_imported=true") );
+            $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab=tools&theme_imported=true") );
 
         } else {
 
-            $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab=tools&theme_imported=true") );
+            $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab=tools&theme_imported=false") );
 
         }
 
@@ -340,7 +340,7 @@ class Mega_Menu_Settings{
 
         do_action("megamenu_after_theme_duplicate");
 
-        $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab=theme_editor&theme={$new_theme_id}&duplicated=true") );
+        $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab=theme_editor&theme={$new_theme_id}&duplicated=true") );
 
     }
 
@@ -358,7 +358,7 @@ class Mega_Menu_Settings{
 
         if ( $this->theme_is_being_used_by_menu( $theme ) ) {
 
-            $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab=theme_editor&theme={$theme}&deleted=false") );
+            $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab=theme_editor&theme={$theme}&deleted=false") );
             return;
         }
 
@@ -372,7 +372,7 @@ class Mega_Menu_Settings{
 
         do_action("megamenu_after_theme_delete");
 
-        $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab=theme_editor&theme=default&deleted=true") );
+        $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab=theme_editor&theme=default&deleted=true") );
 
     }
 
@@ -398,7 +398,7 @@ class Mega_Menu_Settings{
 
         do_action("megamenu_after_theme_revert");
 
-        $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab=theme_editor&theme={$theme}&reverted=true") );
+        $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab=theme_editor&theme={$theme}&reverted=true") );
 
     }
 
@@ -430,7 +430,7 @@ class Mega_Menu_Settings{
 
         do_action("megamenu_after_theme_create");
 
-        $this->redirect( admin_url( "themes.php?page=megamenu_settings&tab=theme_editor&theme={$new_theme_id}&created=true") );
+        $this->redirect( admin_url( "admin.php?page=maxmegamenu&tab=theme_editor&theme={$new_theme_id}&created=true") );
 
     }
 
@@ -553,10 +553,30 @@ class Mega_Menu_Settings{
      */
     public function megamenu_themes_page() {
 
-        $page = add_theme_page(__('Max Mega Menu', 'megamenu'), __('Max Mega Menu', 'megamenu'), 'edit_theme_options', 'megamenu_settings', array($this, 'page' ) );
+        $appearance_page = add_theme_page(__('Max Mega Menu', 'megamenu'), __('Max Mega Menu', 'megamenu'), 'edit_theme_options', 'megamenu_settings', array($this, 'appearance_page' ) );
+
+        $page = add_menu_page( __('Max Mega Menu', 'megamenu'), __('Mega Menu', 'megamenu'), 'edit_theme_options', 'maxmegamenu', array($this, 'page') );
 
     }
 
+    /**
+     *
+     */
+    public function appearance_page() {
+
+        $url = admin_url('admin.php?page=maxmegamenu');
+
+        echo "<p>" . __("The Max Mega Menu settings have moved to their own top level menu page.", "megamenu") . "</p>";
+        echo "<p>" . str_replace( "{link}", "<a href='" . $url . "'>" . __("click here", "megamenu") . "</a>", __("If you are not automatically redirected within 5 seconds, please {link}.", "megamenu") ) . "</p>";
+        echo "<p>" . __("This redirect will be removed in the next version of Max Mega Menu.", "megamenu") . "</p>";
+
+        echo "<script type='text/javascript'>";
+        // redirect to google after 5 seconds
+        echo "window.setTimeout(function() {";
+        echo "    window.location.href = '{$url}';";
+        echo "}, 5000);";
+        echo "</script>";
+    }
 
     /**
      * Content for 'Settings' tab
@@ -588,6 +608,8 @@ class Mega_Menu_Settings{
 
         $css = isset( $saved_settings['css'] ) ? $saved_settings['css'] : 'fs';
         $mobile_second_click = isset( $saved_settings['mobile_second_click'] ) ? $saved_settings['mobile_second_click'] : 'close';
+        $mobile_behaviour = isset( $saved_settings['mobile_behaviour'] ) ? $saved_settings['mobile_behaviour'] : 'standard';
+
 
         ?>
 
@@ -614,7 +636,7 @@ class Mega_Menu_Settings{
                                 <option value='disabled' <?php echo selected( $css == 'disabled'); ?>><?php _e("Don't output CSS", "megamenu"); ?></option>
                             <select>
                             <div class='mega-description'>
-                                <div class='ajax' style='display: <?php echo $css == 'ajax' ? 'block' : 'none' ?>'><?php _e("Default. CSS will be enqueued dynamically through admin-ajax.php and loaded from the cache.", "megamenu"); ?></div>
+                                <div class='ajax' style='display: <?php echo $css == 'ajax' ? 'block' : 'none' ?>'><?php _e("CSS will be enqueued dynamically through admin-ajax.php and loaded from the cache.", "megamenu"); ?></div>
                                 <div class='fs' style='display: <?php echo $css == 'fs' ? 'block' : 'none' ?>'><?php _e("CSS will be saved to wp-content/uploads/maxmegamenu/style.css and enqueued from there.", "megamenu"); ?></div>
                                 <div class='head' style='display: <?php echo $css == 'head' ? 'block' : 'none' ?>'><?php _e("CSS will be loaded from the cache in a &lt;style&gt; tag in the &lt;head&gt; of the page.", "megamenu"); ?></div>
                                 <div class='disabled' style='display: <?php echo $css == 'disabled' ? 'block' : 'none' ?>'><?php _e("CSS will not be output, you must enqueue the CSS for the menu manually.", "megamenu"); ?></div>
@@ -632,6 +654,22 @@ class Mega_Menu_Settings{
                             <select name='settings[second_click]'>
                                 <option value='close' <?php echo selected( $mobile_second_click == 'close'); ?>><?php _e("First click will open a sub menu, second click will close the sub menu.", "megamenu"); ?></option>
                                 <option value='go' <?php echo selected( $mobile_second_click == 'go'); ?>><?php _e("First click will open a sub menu, second click will follow the link.", "megamenu"); ?></option>
+                            <select>
+                            <div class='mega-description'>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='mega-name'>
+                            <?php _e("Mobile Menu Behaviour", "megamenu"); ?>
+                            <div class='mega-description'>
+                                <?php _e("Define the sub menu toggle behaviour for the mobile menu.", "megamenu"); ?>
+                            </div>
+                        </td>
+                        <td class='mega-value'>
+                            <select name='settings[mobile_behaviour]'>
+                                <option value='standard' <?php echo selected( $mobile_behaviour == 'standard'); ?>><?php _e("Standard - Open sub menus will remain open until closed by the user.", "megamenu"); ?></option>
+                                <option value='accordion' <?php echo selected( $mobile_behaviour == 'accordion'); ?>><?php _e("Accordion - Open sub menus will automatically close when another one is opened.", "megamenu"); ?></option>
                             <select>
                             <div class='mega-description'>
                             </div>
@@ -890,7 +928,7 @@ class Mega_Menu_Settings{
                         <div class='mega-description'><?php _e("Export a menu theme", "megamenu"); ?></div>
                     </td>
                     <td class='mega-value'>
-                        <form method="post" action="<?php admin_url( "themes.php?page=megamenu_settings&tab=tools") ?>">
+                        <form method="post" action="<?php admin_url( "admin.php?page=maxmegamenu&tab=tools") ?>">
 
                             <?php
 
@@ -900,7 +938,7 @@ class Mega_Menu_Settings{
 
                                 if ( isset( $this->themes[ $theme_to_export ] ) ) {
 
-                                    echo "<textarea>" . json_encode( $this->themes[ $theme_to_export ] ) . "</textarea>";
+                                    echo "<textarea>" . htmlentities( json_encode( $this->themes[ $theme_to_export ] ) ) . "</textarea>";
 
                                 }
                             } else {
@@ -951,13 +989,13 @@ class Mega_Menu_Settings{
 
         $header_links = apply_filters( "megamenu_header_links", array(
             'homepage' => array(
-                'url' => 'http://www.maxmegamenu.com/',
+                'url' => 'http://www.maxmegamenu.com/?utm_source=free&amp;utm_medium=link&amp;utm_campaign=pro',
                 'target' => '_mmmpro',
                 'text' => __("Homepage", "megamenu"),
                 'class' => ''
             ),
             'documentation' => array(
-                'url' => 'http://www.maxmegamenu.com/documentation/getting-started/installation/',
+                'url' => 'http://www.maxmegamenu.com/documentation/getting-started/installation/?utm_source=free&amp;utm_medium=link&amp;utm_campaign=pro',
                 'text' => __("Documentation", "megamenu"),
                 'target' => '_mmmpro',
                 'class' => ''
@@ -1052,10 +1090,10 @@ class Mega_Menu_Settings{
 
                             $url = esc_url( add_query_arg(
                                 array(
-                                    'page'=>'megamenu_settings',
+                                    'page'=>'maxmegamenu',
                                     'tab' => $key
                                 ),
-                                admin_url("themes.php")
+                                admin_url("admin.php")
                             ) );
 
                             echo "<li><a class='{$class}' href='{$url}'>{$title}</a></li>";
@@ -1149,8 +1187,12 @@ class Mega_Menu_Settings{
             echo "<p class='success'><i class='dashicons dashicons-yes'></i>" . __("Menu Location Deleted", "megamenu") . "</p>";
         }
 
-        if ( isset( $_GET['theme_imported'] ) ) {
+        if ( isset( $_GET['theme_imported'] ) && $_GET['theme_imported'] == 'true' ) {
             echo "<p class='success'><i class='dashicons dashicons-yes'></i>" . __("Theme Imported", "megamenu") . "</p>";
+        }
+
+        if ( isset( $_GET['theme_imported'] ) && $_GET['theme_imported'] == 'false' ) {
+            echo "<p class='fail'>" . __("Theme Import Failed", "megamenu") . "</p>";
         }
 
         if ( isset( $_POST['theme_export'] ) ) {
@@ -1174,7 +1216,7 @@ class Mega_Menu_Settings{
         foreach ( $this->themes as $id => $theme ) {
             $selected = $id == $this->id ? 'selected=selected' : '';
 
-            $list_items .= "<option {$selected} value='" . admin_url("themes.php?page=megamenu_settings&tab=theme_editor&theme={$id}") . "'>{$theme['title']}</option>";
+            $list_items .= "<option {$selected} value='" . admin_url("admin.php?page=maxmegamenu&tab=theme_editor&theme={$id}") . "'>{$theme['title']}</option>";
         }
 
         return $list_items .= "</select>";
@@ -2712,9 +2754,31 @@ class Mega_Menu_Settings{
 
         $value = $this->active_theme[$key];
 
+        $options = apply_filters( "megamenu_font_weights", array(
+            'inherit' => __("Theme Default", "megamenu"),
+            '300' => __("Light (300)", "megamenu"),
+            'normal' => __("Normal (400)", "megamenu"),
+            'bold' => __("Bold (700)", "megamenu"),
+        ) );
+
+        /**
+         *   '100' => __("Thin (100)", "megamenu"),
+         *   '200' => __("Extra Light (200)", "megamenu"),
+         *   '300' => __("Light (300)", "megamenu"),
+         *   'normal' => __("Normal (400)", "megamenu"),
+         *   '500' => __("Medium (500)", "megamenu"),
+         *   '600' => __("Semi Bold (600)", "megamenu"),
+         *   'bold' => __("Bold (700)", "megamenu"),
+         *   '800' => __("Extra Bold (800)", "megamenu"),
+         *   '900' => __("Black (900)", "megamenu")
+        */
+
         echo "<select name='settings[$key]'>";
-        echo "    <option value='normal' " . selected( $value, 'normal', true) . ">" . __("Normal", "megamenu") . "</option>";
-        echo "    <option value='bold'"    . selected( $value, 'bold', true) . ">" . __("Bold", "megamenu") . "</option>";
+
+        foreach ( $options as $weight => $name ) {
+            echo "<option value='{$weight}' " . selected( $value, $weight, true ) . ">{$name}</option>";
+        }
+
         echo "</select>";
 
     }
@@ -2857,16 +2921,13 @@ class Mega_Menu_Settings{
 
     }
 
+
     /**
-     * Enqueue required CSS and JS for Mega Menu
+     * Enqueue nav-menus.php scripts
      *
-     * @since 1.0
+     * @since 1.8.3
      */
-    public function enqueue_theme_editor_scripts( $hook ) {
-
-        if( 'appearance_page_megamenu_settings' != $hook )
-            return;
-
+    public function enqueue_scripts() {
         wp_enqueue_style( 'spectrum', MEGAMENU_BASE_URL . 'js/spectrum/spectrum.css', false, MEGAMENU_VERSION );
         wp_enqueue_style( 'mega-menu-settings', MEGAMENU_BASE_URL . 'css/admin-settings.css', false, MEGAMENU_VERSION );
         wp_enqueue_style( 'codemirror', MEGAMENU_BASE_URL . 'js/codemirror/codemirror.css', false, MEGAMENU_VERSION );

@@ -4,7 +4,7 @@
  * Plugin Name: Max Mega Menu
  * Plugin URI:  http://www.maxmegamenu.com
  * Description: Mega Menu for WordPress.
- * Version:     1.8.1
+ * Version:     1.8.3.1
  * Author:      Tom Hemsley
  * Author URI:  http://www.maxmegamenu.com
  * License:     GPL-2.0+
@@ -26,7 +26,7 @@ final class Mega_Menu {
 	/**
 	 * @var string
 	 */
-	public $version = '1.8.1';
+	public $version = '1.8.3.1';
 
 
 	/**
@@ -58,8 +58,20 @@ final class Mega_Menu {
 		add_filter( 'wp_nav_menu_args', array( $this, 'modify_nav_menu_args' ), 9999 );
 		add_filter( 'wp_nav_menu', array( $this, 'add_responsive_toggle' ), 10, 2 );
 		add_filter( 'wp_nav_menu_objects', array( $this, 'add_widgets_to_menu' ), 10, 2 );
+
+		add_filter( 'megamenu_nav_menu_objects_before', array( $this, 'apply_depth_to_menu_items' ), 5, 2 );
+		add_filter( 'megamenu_nav_menu_objects_before', array( $this, 'apply_megamenu_settings_to_menu_items' ), 6, 2 );
+		add_filter( 'megamenu_nav_menu_objects_before', array( $this, 'apply_megamenu_classes_to_menu_items' ), 7, 2 );
+
 		add_filter( 'megamenu_nav_menu_css_class', array( $this, 'prefix_menu_classes' ) );
 		add_filter( 'black_studio_tinymce_enable_pages' , array($this, 'megamenu_blackstudio_tinymce' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts'), 9 );
+
+        // add 'go pro' link to plugin options
+        $plugin = plugin_basename( __FILE__ );
+
+        add_filter( "plugin_action_links_{$plugin}", array( $this, 'upgrade_to_pro_link' ) );
 
 		register_deactivation_hook( __FILE__, array( $this, 'delete_version_number') );
 
@@ -77,6 +89,26 @@ final class Mega_Menu {
 
 		$mega_menu_style_manager = new Mega_Menu_Style_Manager();
 		$mega_menu_style_manager->setup_actions();
+
+	}
+
+
+	/**
+	 * Add custom actions to allow enqueuing scripts on specific pages
+	 *
+	 * @since 1.8.3
+	 */
+	public function admin_enqueue_scripts( $hook ) {
+
+        wp_enqueue_style( 'maxmegamenu-global', MEGAMENU_BASE_URL . 'css/global.css', array(), MEGAMENU_VERSION );
+
+        if ( 'nav-menus.php' == $hook ) {
+        	do_action("megamenu_nav_menus_scripts", $hook );
+        }
+
+        if ( 'toplevel_page_maxmegamenu' == $hook ) {
+        	do_action("megamenu_admin_scripts", $hook );
+        }
 
 	}
 
@@ -100,6 +132,22 @@ final class Mega_Menu {
 
 		}
 	}
+
+
+    /**
+     * Add go pro link on plugin page
+     *
+     * @since 1.8.3
+     */
+    public function upgrade_to_pro_link( $links ) {
+
+        if ( function_exists( 'is_plugin_active' ) && ! is_plugin_active( 'megamenu-pro/megamenu-pro.php' ) ) {
+            $links[] = '<a href="http://www.maxmegamenu.com/upgrade/?utm_source=free&amp;utm_medium=link&amp;utm_campaign=pro" target="_blank"><b>' . __( "Go Pro", "megamenu" ) . '</b></a>';
+        }
+
+        return $links;
+
+    }
 
 
 	/**
@@ -332,22 +380,42 @@ final class Mega_Menu {
 
 
    	/**
-   	 * Append the widget objects to the menu array before the
-   	 * menu is processed by the walker.
+   	 * Apply a depth to each item in the menu
    	 *
-   	 * @since 1.0
+   	 * @since 1.8.2
    	 * @param array $items - All menu item objects
 	 * @param object $args
 	 * @return array - Menu objects including widgets
    	 */
-	public function add_widgets_to_menu( $items, $args ) {
-		// make sure we're working with a Mega Menu
-		if ( ! is_a( $args->walker, 'Mega_Menu_Walker' ) )
-			return $items;
+	public function apply_depth_to_menu_items( $items, $args ) {
 
-		$widget_manager = new Mega_Menu_Widget_Manager();
+	    $level = 0;
+	    $stack = array('0');
 
-		$default_columns = apply_filters("megamenu_default_columns", 1);
+	    foreach ( $items as $key => $item ) {
+	        while ( count( $stack ) && $item->menu_item_parent != array_pop( $stack ) ) {
+	            $level--;
+	        }
+
+	        $level++;
+	        $stack[] = $item->menu_item_parent;
+	        $stack[] = $item->ID;
+	        $items[ $key ]->depth = $level - 1;
+	    }
+
+	    return $items;
+	}
+
+
+   	/**
+   	 * Store the mega menu settings for each menu item
+   	 *
+   	 * @since 1.8.2
+   	 * @param array $items - All menu item objects
+	 * @param object $args
+	 * @return array - Menu objects including widgets
+   	 */
+	public function apply_megamenu_settings_to_menu_items( $items, $args ) {
 
 		// apply saved metadata to each menu item
 		foreach ( $items as $item ) {
@@ -358,12 +426,111 @@ final class Mega_Menu {
 
 	    }
 
+	    return $items;
+	}
+
+   	/**
+   	 * Apply classes to nav menu items
+   	 *
+   	 * @since 1.8.2
+   	 * @param array $items - All menu item objects
+	 * @param object $args
+	 * @return array - Menu objects including widgets
+   	 */
+	public function apply_megamenu_classes_to_menu_items( $items, $args ) {
+
+		$parents = array();
+
+
+	    foreach ( $items as $item ) {
+
+	        if ( $item->depth == 0 ) {
+				$item->classes[] = 'align-' . $item->megamenu_settings['align'];
+				$item->classes[] = 'menu-' . $item->megamenu_settings['type'];
+			}
+
+	        if ( $item->megamenu_settings['hide_arrow'] == 'true') {
+	        	$item->classes[] = 'hide-arrow';
+	        }
+
+	        if ( $item->megamenu_settings['hide_text'] == 'true' && $item->depth == 0 ) {
+	        	$item->classes[] = 'hide-text';
+	        }
+
+	        if ( $item->megamenu_settings['item_align'] != 'left' && $item->depth == 0 ) {
+	        	$item->classes[] = 'item-align-' . $item->megamenu_settings['item_align'];
+	        }
+
+			if ( $item->megamenu_settings['disable_link'] == 'true') {
+			    $item->classes[] = 'disable-link';
+			}
+
+	        // add column classes for second level menu items displayed in mega menus
+	        if ( $item->depth == 1 ) {
+
+	        	$parent_settings = array_filter( (array) get_post_meta( $item->menu_item_parent, '_megamenu', true ) );
+
+	        	if ( isset( $parent_settings['type'] ) && $parent_settings['type'] == 'megamenu' ) {
+
+					$parent_settings = array_merge( Mega_Menu_Nav_Menus::get_menu_item_defaults(), $parent_settings );
+
+					$span = $item->megamenu_settings['mega_menu_columns'];
+					$total_columns = $parent_settings['panel_columns'];
+
+					if ( $total_columns >= $span ) {
+						$item->classes[] = "menu-columns-{$span}-of-{$total_columns}";
+						$column_count = $span;
+					} else {
+						$item->classes[] = "menu-columns-{$total_columns}-of-{$total_columns}";
+						$column_count = $total_columns;
+					}
+
+					if ( ! isset( $parents[ $item->menu_item_parent ] ) ) {
+						$parents[ $item->menu_item_parent ] = $column_count;
+					} else {
+						$parents[ $item->menu_item_parent ] = $parents[ $item->menu_item_parent ] + $column_count;
+
+						if ( $parents[ $item->menu_item_parent ] > $total_columns ) {
+							$parents[ $item->menu_item_parent ] = $column_count;
+							$item->classes[] = 'menu-clear';
+						}
+					}
+
+				}
+
+	        }
+
+	    }
+
+	    return $items;
+	}
+
+
+   	/**
+   	 * Append the widget objects to the menu array before the
+   	 * menu is processed by the walker.
+   	 *
+   	 * @since 1.0
+   	 * @param array $items - All menu item objects
+	 * @param object $args
+	 * @return array - Menu objects including widgets
+   	 */
+	public function add_widgets_to_menu( $items, $args ) {
+
+		// make sure we're working with a Mega Menu
+		if ( ! is_a( $args->walker, 'Mega_Menu_Walker' ) )
+			return $items;
+
 	    $items = apply_filters( "megamenu_nav_menu_objects_before", $items, $args );
+
+		$widget_manager = new Mega_Menu_Widget_Manager();
+
+		$default_columns = apply_filters("megamenu_default_columns", 1);
 
 	    foreach ( $items as $item ) {
 
 			// only look for widgets on top level items
-			if ( $item->menu_item_parent == 0 && $item->megamenu_settings['type'] == 'megamenu' ) {
+			if ( $item->depth == 0 && $item->megamenu_settings['type'] == 'megamenu' ) {
 
 				$panel_widgets = $widget_manager->get_widgets_for_menu_id( $item->ID );
 
@@ -384,6 +551,7 @@ final class Mega_Menu {
 							'menu_item_parent'  => $item->ID,
 							'db_id'             => 0, // This menu item does not have any childen
 							'ID'                => $widget['widget_id'],
+							'menu_order'        => $item->menu_order + 1,
 							'classes'           => array(
 								"menu-item",
 								"menu-item-type-widget",
@@ -446,7 +614,7 @@ final class Mega_Menu {
 			$style_manager = new Mega_Menu_Style_Manager();
 			$themes = $style_manager->get_themes();
 
-			$menu_theme = $themes[ $settings[ $current_theme_location ]['theme'] ];
+			$menu_theme = isset( $themes[ $settings[ $current_theme_location ]['theme'] ] ) ? $themes[ $settings[ $current_theme_location ]['theme'] ] : $themes['default'];
 
 			$menu_settings = $settings[ $current_theme_location ];
 
@@ -457,6 +625,7 @@ final class Mega_Menu {
 				"data-effect" => isset( $menu_settings['effect'] ) ? $menu_settings['effect'] : 'disabled',
 				"data-panel-width" => preg_match('/^\d/', $menu_theme['panel_width']) !== 1 ? $menu_theme['panel_width'] : '',
 				"data-second-click" => isset( $settings['second_click'] ) ? $settings['second_click'] : 'close',
+				"data-mobile-behaviour" => isset( $settings['mobile_behaviour'] ) ? $settings['mobile_behaviour'] : 'standard',
 				"data-breakpoint" => absint( $menu_theme['responsive_breakpoint'] )
 			), $menu_id, $menu_settings, $settings, $current_theme_location );
 
@@ -527,7 +696,7 @@ final class Mega_Menu {
 	    <div class="updated">
 	    	<?php
 
-	    		$link = "<a href='" . admin_url("themes.php?page=megamenu_settings") . "'>" . __( "click here", 'megamenu' ) . "</a>";
+	    		$link = "<a href='" . admin_url("admin.php?page=maxmegamenu") . "'>" . __( "click here", 'megamenu' ) . "</a>";
 
 	    	?>
 	        <p><?php echo sprintf( __( 'Thanks for installing Max Mega Menu! Please %s to get started.', 'megamenu' ), $link); ?></p>
@@ -545,7 +714,7 @@ final class Mega_Menu {
 	    <div class="updated">
 	    	<?php
 
-	    		$link = "<a href='" . admin_url("themes.php?page=megamenu_settings&tab=tools") . "'>" . __( "regenerate the CSS", 'megamenu' ) . "</a>";
+	    		$link = "<a href='" . admin_url("admin.php?page=maxmegamenu&tab=tools") . "'>" . __( "regenerate the CSS", 'megamenu' ) . "</a>";
 
 	    	?>
 	        <p><?php echo sprintf( __( 'Max Mega Menu has been updated. Please %s to ensure maximum compatibility with the latest version.', 'megamenu' ), $link); ?></p>

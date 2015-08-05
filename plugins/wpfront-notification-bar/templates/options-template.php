@@ -172,6 +172,14 @@
     </tr>
     <tr>
         <th scope="row">
+            <?php echo $this->options->message_process_shortcode_label(); ?>
+        </th>
+        <td>
+            <input type="checkbox" name="<?php echo $this->options->message_process_shortcode_name(); ?>" <?php echo $this->options->message_process_shortcode() ? 'checked' : ''; ?> />&#160;<span class="description"><?php echo $this->__('[Processes shortcodes in message text.]'); ?></span>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
             <?php echo $this->options->display_button_label(); ?>
         </th>
         <td>
@@ -200,6 +208,11 @@
             <label>
                 <input type="checkbox" name="<?php echo $this->options->button_action_new_tab_name(); ?>" <?php echo $this->options->button_action_new_tab() ? 'checked' : ''; ?> />
                 <span><?php echo $this->options->button_action_new_tab_label(); ?></span>
+            </label>
+            <br />
+            <label>
+                <input type="checkbox" name="<?php echo $this->options->button_action_url_nofollow_name(); ?>" <?php echo $this->options->button_action_url_nofollow() ? 'checked' : ''; ?> />
+                <span><?php echo $this->options->button_action_url_nofollow_label(); ?></span>
             </label>
             <br />
             <label>
@@ -317,7 +330,7 @@
             <br />
             <label>
                 <input type="radio" name="<?php echo $this->options->display_roles_name(); ?>" value="4" <?php echo $this->options->display_roles() == 4 ? 'checked' : ''; ?> />
-                <span><?php echo $this->__('For following user roles'); ?></span>
+                <span><?php echo $this->__('For following user roles'); ?></span>&nbsp;<span>[<a target="_blank" href="https://wpfront.com/nbtoure"><?php echo $this->__('Manage Roles'); ?>]</a></span>
             </label>
             <br />
             <div class="roles-selection">

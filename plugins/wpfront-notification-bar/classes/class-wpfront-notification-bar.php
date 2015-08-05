@@ -36,7 +36,7 @@ if (!class_exists('WPFront_Notification_Bar')) {
     class WPFront_Notification_Bar extends WPFront_Base {
 
         //Constants
-        const VERSION = '1.5.2';
+        const VERSION = '1.6';
         const OPTIONS_GROUP_NAME = 'wpfront-notification-bar-options-group';
         const OPTION_NAME = 'wpfront-notification-bar-options';
         const PLUGIN_SLUG = 'wpfront-notification-bar';
@@ -168,6 +168,16 @@ if (!class_exists('WPFront_Notification_Bar')) {
             }
 
             $this->markupLoaded = TRUE;
+        }
+        
+        protected function get_message_text() {
+            $message = $this->options->message();
+            
+            if($this->options->message_process_shortcode()) {
+                $message = do_shortcode($message);
+            }
+            
+            return $message;
         }
 
         protected function get_filter_objects() {

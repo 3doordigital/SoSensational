@@ -1,9 +1,9 @@
 === Plugin Name ===
 Contributors: megamenu
-Tags: menu, mega menu, navigation, hamburger, menu icons, menu style, responsive menu, megamenu, widget, dropdown menu, drag and drop, hover, click, responsive, retina, theme editor, menu widget, sidebar, icons, dashicons
+Tags: menu, megamenu, mega menu, navigation, widget, dropdown menu, drag and drop, mobile, responsive, retina, theme editor, widget, shortcode, sidebar, icons, dashicons
 Requires at least: 3.8
-Tested up to: 4.2
-Stable tag: 1.8
+Tested up to: 4.2.3
+Stable tag: 1.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,8 @@ Documentation & Demo: http://www.maxmegamenu.com
 ####Pro Features:
 
 > * Sticky Menu
+> * WooCommerce cart total in menu
+> * Easy Digital Downloads cart total in menu
 > * Vertical Menus
 > * FontAwesome Icons
 > * Custom Item Styling
@@ -56,6 +58,7 @@ Translations:
 
 * Italian (thanks to aeco)
 * German (thanks to Thomas Meyer & dirk@d10n)
+* French (thanks to Pierre_02)
 
 == Frequently Asked Questions ==
 
@@ -88,6 +91,31 @@ See http://www.maxmegamenu.com for more screenshots
 5. Back end: Use the theme editor to change the appearance of your menus
 
 == Changelog ==
+
+= 1.8.3.1 [30/07/2015] =
+
+* Fix: Conflict with Add Descendents as Sub Menu Items plugin, where items are added to the menu and given a menu_item_parent ID of an item that doesn't exist in the menu
+
+= 1.8.3 [28/07/2015] =
+
+* New feature: Add accordion style mobile menu option
+* New feature: French Language pack added (thanks to Pierre_02!)
+* Change: Check MMM is enabled for the menu before enabling the Mega Menu button on each menu item
+* Change: Add '300' and 'inherit' options to font weight, add 'megamenu_font_weights' filter
+* Change: Move mega menu settings page from under Appearance to it's own Top Level menu item (since the plugin options are no longer purely appearance related)
+* Fix: Second row menu items not correctly being forced onto a new line
+* Fix: PHP warning when widget cannot be found (due to being uninstalled)
+* Fix: Remove borders and excess padding from mobile menu (regardless of theme settings)
+* Fix: Inability to undisable links on second level menu items
+* Fix: Fix theme export/import when custom CSS contains double quotes
+* Fix: Compatibility fix for SlideDeck Pro
+* Fix: Compatibility fix for TemplatesNext Toolkit
+* Fix: Widget title widths in mega menu editor
+* Fix: IE9 blue background when semi transparent colors are selected in the theme editor
+
+= 1.8.2 =
+
+* Fix: PHP Warning preventing mega menu settings from loading
 
 = 1.8.1 =
 

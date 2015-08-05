@@ -41,7 +41,7 @@ class Mega_Menu_Nav_Menus {
     public function __construct() {
 
         add_action( 'admin_init', array( $this, 'register_nav_meta_box' ), 9 );
-        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_menu_page_scripts' ) );
+        add_action( 'megamenu_nav_menus_scripts', array( $this, 'enqueue_menu_page_scripts' ), 9 );
         add_action( 'megamenu_save_settings', array($this, 'save') );
         add_filter( 'hidden_meta_boxes', array( $this, 'show_mega_menu_metabox' ) );
 
@@ -88,7 +88,7 @@ class Mega_Menu_Nav_Menus {
 
             add_meta_box(
                 'mega_menu_meta_box',
-                __("Mega Menu Settings", "megamenu"),
+                __("Max Mega Menu Settings", "megamenu"),
                 array( $this, 'metabox_contents' ),
                 'nav-menus',
                 'side',
@@ -116,6 +116,10 @@ class Mega_Menu_Nav_Menus {
             $image_widget->admin_setup();
         }
 
+        // Compatibility fix for SlideDeck Pro
+        wp_deregister_script('codemirror');
+        wp_deregister_style('codemirror');
+
         wp_enqueue_style( 'colorbox', MEGAMENU_BASE_URL . 'js/colorbox/colorbox.css', false, MEGAMENU_VERSION );
         wp_enqueue_style( 'mega-menu', MEGAMENU_BASE_URL . 'css/admin-menus.css', false, MEGAMENU_VERSION );
 
@@ -132,6 +136,7 @@ class Mega_Menu_Nav_Menus {
             array(
                 'debug_launched' => __("Launched for Menu ID", "megamenu"),
                 'launch_lightbox' => __("Mega Menu", "megamenu"),
+                'is_disabled_error' => __("Please enable Max Mega Menu using the settings on the left of this page.", "megamenu"),
                 'saving' => __("Saving", "megamenu"),
                 'nonce' => wp_create_nonce('megamenu_edit'),
                 'nonce_check_failed' => __("Oops. Something went wrong. Please reload the page.", "megamenu")
@@ -205,7 +210,11 @@ class Mega_Menu_Nav_Menus {
 
         if ( ! count( $theme_locations ) ) {
 
-            echo "<p>" . __("This theme does not have any menu locations.", "megamenu") . "</p>";
+            $link = '<a href="http://www.maxmegamenu.com/documentation/getting-started/max-mega-menu-widget/?utm_source=free&amp;utm_medium=link&amp;utm_campaign=pro" target="_blank">' . __("here", "megamenu") . '</a>';
+
+            echo "<p>" . __("This theme does not register any menu locations.", "megamenu") . "</p>";
+            echo "<p>" . __("You will need to create a new menu location and use the Max Mega Menu widget or shortcode to display the menu on your site.", "megamenu") . "</p>";
+            echo "<p>" . str_replace( "{link}", $link, __("Click {link} for instructions.", "megamenu") ) . "</p>";
 
         } else if ( ! count ( $tagged_menu_locations ) ) {
 
@@ -266,7 +275,7 @@ class Mega_Menu_Nav_Menus {
             <tr>
                 <td><?php _e("Enable", "megamenu") ?></td>
                 <td>
-                    <input type='checkbox' name='megamenu_meta[<?php echo $location ?>][enabled]' value='1' <?php checked( isset( $settings[$location]['enabled'] ) ); ?> />
+                    <input type='checkbox' class='megamenu_enabled' name='megamenu_meta[<?php echo $location ?>][enabled]' value='1' <?php checked( isset( $settings[$location]['enabled'] ) ); ?> />
                 </td>
             </tr>
             <tr>

@@ -3,17 +3,47 @@
   Plugin Name: Anti-spam by CleanTalk
   Plugin URI: http://cleantalk.org
   Description: Max power, all-in-one, captcha less, premium anti-spam plugin. No comment spam, no registration spam, no contact spam, protects any WordPress forms. 
-  Version: 5.14
+  Version: 5.18
   Author: СleanTalk <welcome@cleantalk.org>
   Author URI: http://cleantalk.org
  */
-$cleantalk_plugin_version='5.14';
+$cleantalk_plugin_version='5.18';
 $cleantalk_executed=false;
 
 if(!defined('CLEANTALK_PLUGIN_DIR')){
     define('CLEANTALK_PLUGIN_DIR', plugin_dir_path(__FILE__));
+    global $ct_options, $ct_data;
+    
 
     require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-common.php');
+    $ct_options=ct_get_options();
+    $ct_data=ct_get_data();
+    $jigo_version=@get_option('jigoshop_db_version', '');
+    if($jigo_version=='')
+    {
+    	ct_init_session();
+    }
+    
+    if(!isset($_SESSION['ct_redirects']))
+    {
+    	$_SESSION['ct_redirects']=0;
+    }
+    
+    if(isset($ct_options['check_external']))
+    {
+    	if(@intval($ct_options['check_external'])==1)
+    	{
+    		$test_external_forms=true;
+    	}
+    	else
+    	{
+    		$test_external_forms=false;
+    	}
+    }
+    else
+    {
+    	$test_external_forms=false;
+    }
 
     // Activation/deactivation functions must be in main plugin file.
     // http://codex.wordpress.org/Function_Reference/register_activation_hook
@@ -29,7 +59,6 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
     // After plugin loaded - to load locale as described in manual
     add_action( 'plugins_loaded', 'ct_plugin_loaded' );
     
-    $ct_options=ct_get_options();
     if(isset($ct_options['use_ajax']))
     {
     	$use_ajax = @intval($ct_options['use_ajax']);
@@ -44,10 +73,9 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
 		add_action('wp_loaded', 'ct_add_nocache_script', 1);
 		add_action('wp_footer', 'ct_add_nocache_script_footer', 1);
 		add_action('wp_head', 'ct_add_nocache_script_header', 1);
+		add_action( 'wp_ajax_nopriv_ct_get_cookie', 'ct_get_cookie',1 );
+		add_action( 'wp_ajax_ct_get_cookie', 'ct_get_cookie',1 );
 	}
-    
-    add_action( 'wp_ajax_nopriv_ct_get_cookie', 'ct_get_cookie',1 );
-	add_action( 'wp_ajax_ct_get_cookie', 'ct_get_cookie',1 );
     
 
     if (is_admin())
@@ -59,7 +87,7 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
     	    add_action('admin_menu', 'ct_admin_add_page');
     	    add_action('admin_notices', 'admin_notice_message');
 	}
-	if (defined( 'DOING_AJAX' ) && DOING_AJAX)
+	if (defined( 'DOING_AJAX' ) && DOING_AJAX||isset($_POST['cma-action']))
 		{
 			require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-public.php');
 			require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-ajax.php');
@@ -81,7 +109,8 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
 	require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-public.php');
 
 	// Init action.
-	add_action('init', 'ct_init', 1);
+	//add_action('init', 'ct_init', 1);
+	add_action('plugins_loaded', 'ct_init', 1);
 
 	// Hourly run hook
 	add_action('ct_hourly_event_hook', 'ct_do_this_hourly');
@@ -130,8 +159,9 @@ function ct_plugin_redirect()
 	if (get_option('ct_plugin_do_activation_redirect', false))
 	{
 		delete_option('ct_plugin_do_activation_redirect');
-		if(!isset($_GET['activate-multi']))
+		if(!isset($_GET['activate-multi'])&&@intval($_SESSION['ct_redirects'])==0)
 		{
+			$_SESSION['ct_redirects']=1;
 			wp_redirect("options-general.php?page=cleantalk");
 		}
 	}
@@ -151,6 +181,28 @@ function ct_add_event($event_type)
 		@$ct_data['stat_blocked']++;
 	}
 	$ct_data['stat_all']++;
+	
+	$t=time();
+	
+	if(!isset($ct_data['stat_accepted']))
+	{
+		$ct_data['stat_accepted']=0;
+		$ct_data['stat_blocked']=0;
+		$ct_data['stat_all']=0;
+		$ct_data['last_time']=$t;
+		update_option('cleantalk_data', $ct_data);
+	}
+	
+	$last_time=intval($ct_data['last_time']);
+	if($t-$last_time>86400)
+	{
+		$ct_data['stat_accepted']=0;
+		$ct_data['stat_blocked']=0;
+		$ct_data['stat_all']=0;
+		$ct_data['last_time']=$t;
+		update_option('cleantalk_data', $ct_data);
+	}
+	
 	update_option('cleantalk_data', $ct_data);
 	$cleantalk_executed=true;
 }
@@ -176,7 +228,13 @@ function ct_add_nocache_script()
 
 function ct_add_nocache_script_footer()
 {
-	print "<script type='text/javascript' src='".plugins_url( '/cleantalk_nocache.js' , __FILE__ )."?random=".rand()."'></script>\n";
+	global $test_external_forms;
+	print "<script async type='text/javascript' src='".plugins_url( '/cleantalk_nocache.js' , __FILE__ )."?random=".rand()."'></script>\n";
+	if($test_external_forms)
+	{
+		print "\n<script type='text/javascript'>var ct_blog_home = '".get_home_url()."';</script>\n";
+		print "<script async type='text/javascript' src='".plugins_url( '/cleantalk_external.js' , __FILE__ )."?random=".rand()."'></script>\n";
+	}
 }
 
 function ct_add_nocache_script_header()
@@ -186,10 +244,17 @@ function ct_add_nocache_script_header()
 
 function ct_inject_nocache_script($html)
 {
+	global $test_external_forms;
 	if(!is_admin()&&stripos($html,"</body")!==false)
 	{
 		//$ct_replace.="\n<script type='text/javascript'>var ajaxurl = '".admin_url('admin-ajax.php')."';</script>\n";
-		$ct_replace="<script type='text/javascript' src='".plugins_url( '/cleantalk_nocache.js' , __FILE__ )."?random=".rand()."'></script>\n";
+		$ct_replace="<script async type='text/javascript' src='".plugins_url( '/cleantalk_nocache.js' , __FILE__ )."?random=".rand()."'></script>\n";
+		if($test_external_forms)
+		{
+			$ct_replace.="\n<script type='text/javascript'>var ct_blog_home = '".get_home_url()."';</script>\n";
+			$ct_replace.="<script async type='text/javascript' src='".plugins_url( '/cleantalk_external.js' , __FILE__ )."?random=".rand()."'></script>\n";
+		}
+		
 		//$html=str_ireplace("</body",$ct_replace."</body",$html);
 		$html=substr_replace($html,$ct_replace."</body",strripos($html,"</body"),6);
 	}
@@ -200,7 +265,16 @@ function ct_inject_nocache_script($html)
 	}
 	return $html;
 }
-
-require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-comments.php');
+if(is_admin())
+{
+	require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-comments.php');
+}
+if(isset($_GET['ait-action'])&&$_GET['ait-action']=='register')
+{
+	$tmp=$_POST['redirect_to'];
+	unset($_POST['redirect_to']);
+	ct_contact_form_validate();
+	$_POST['redirect_to']=$tmp;
+}
 
 ?>
