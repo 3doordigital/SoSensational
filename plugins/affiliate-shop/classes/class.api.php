@@ -25,7 +25,7 @@
 			return $posts;
 		}
 		
-		public function db_search( $term = '', $api = 'all', $merchant = NULL,  $depth = 25, $page = 1, $sortby = 'title', $sort = 'asc') {
+		public function db_search( $term = '', $api = 'all', $merchant,  $depth = 25, $page = 1, $sortby = 'title', $sort = 'asc') {
 			ini_set('memory_limit', '2048M');
 			ini_set('max_execution_time', '5000');
 			$products = array();
