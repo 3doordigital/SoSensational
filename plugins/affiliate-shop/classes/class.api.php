@@ -50,7 +50,7 @@
 			if( $merchant != NULL && $merchant != 0 ) { $query .= " AND product_merch='$merchant' "; }	
 			$query .= "ORDER BY MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE) DESC";
 			$query2 = $query." LIMIT $offset, $depth";
-			//echo $query2;
+			echo $query2;
 			//$out = $query;
 			//$totalres = $wpdb->get_results( $query );
 			
