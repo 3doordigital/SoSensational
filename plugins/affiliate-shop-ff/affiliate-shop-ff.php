@@ -72,7 +72,7 @@ class WordPress_Affiliate_Shop_FF {
 			
 			
 				$array['ID-'.$item->iId] = array (
-					'ID'	=> 'fanf',
+					'ID'	=> 'fandf',
 					'name'	=> 'F&F (Tesco)',
 					'aff'	=> 'ff'
 				);	
