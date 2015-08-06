@@ -40,19 +40,18 @@
 			//$search = $term;
 			global $wpdb;
 			$table_name = $wpdb->prefix . "feed_data";
-			$query ="
-				SELECT SQL_CALC_FOUND_ROWS *
+			$query ="SELECT SQL_CALC_FOUND_ROWS *
 				FROM 
 				$table_name 
 				WHERE MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE)	";
 			//$query .= "LIKE '%$term%' ";
 			if( $api != 'all' ) { $query .= " AND product_aff='$api' "; }
 			$merchant = trim( $merchant );
-			if( $merchant == 0 ) { } else { $query .= " AND product_merch='$merchant' "; }	
+			if( $merchant != 0 ) { $query .= " AND product_merch='$merchant' "; }	
 			$query .= "ORDER BY MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE) DESC";
 			$query2 = $query." LIMIT $offset, $depth";
 			
-			echo $query2;
+			echo $merchant.$query2;
 			//$out = $query;
 			//$totalres = $wpdb->get_results( $query );
 			
