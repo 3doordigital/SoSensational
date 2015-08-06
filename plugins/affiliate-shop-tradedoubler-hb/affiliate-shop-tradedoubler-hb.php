@@ -77,9 +77,9 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 	
 	public function merchants() {
 		
-		
-			$array['td-hb'] = array(
-				'ID'        => 'td-hb',
+			$array = array();
+			$array['ID-tdhb'] = array(
+				'ID'        => 'tdhb',
 				'name'     	=> 'Hugo Boss',
 				'aff'     	=> 'tradedoubler-hb',
 			);
@@ -130,9 +130,9 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 				{
 					$table_name = $wpdb->prefix . "feed_data";
 					$replace = $wpdb->insert( $table_name, array( 
-							'product_id' => 'td-hb_'.$product[6], 
-							'product_aff' => 'td-hb',
-							'product_merch' => 'Hugo Boss',
+							'product_id' => 'tdhb_'.$product[6], 
+							'product_aff' => 'tdhb',
+							'product_merch' => 'tdhb_',
 							'product_title' => $product[0],
 							'product_brand' => 'Hugo Boss',
 							'product_image' => $product[2],
