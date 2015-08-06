@@ -53,7 +53,6 @@
 			$query .= "ORDER BY MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE) DESC";
 			$query2 = $query." LIMIT $offset, $depth";
 			
-			echo $merchant.$query2;
 			//$out = $query;
 			//$totalres = $wpdb->get_results( $query );
 			
