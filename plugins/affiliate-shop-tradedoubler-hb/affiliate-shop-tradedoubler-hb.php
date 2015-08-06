@@ -131,7 +131,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 					$table_name = $wpdb->prefix . "feed_data";
 					$replace = $wpdb->insert( $table_name, array( 
 							'product_id' => 'tdhb_'.$product[6], 
-							'product_aff' => 'tdhb',
+							'product_aff' => 'tradedoubler-hb',
 							'product_merch' => 'tdhb_',
 							'product_title' => $product[0],
 							'product_brand' => 'Hugo Boss',
