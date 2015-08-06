@@ -41,14 +41,14 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 			$array = $wp_aff->get_option();
 			$array['apis']['tradedoubler-hb'] = array(
 				'name' 		=> 'tradedoubler-hb',
-				'nicename'	=> 'TradeDoubler',
+				'nicename'	=> 'Hugo Boss',
 				'class' 	=> 'WordPress_Affiliate_Shop_TradeDoubler_HB'
 			);
 		} else {
 			$array = $wp_aff->get_option();
 			$array['apis']['tradedoubler-hb'] = array(
 				'name' 		=> 'tradedoubler-hb',
-				'nicename'	=> 'TradeDoubler',
+				'nicename'	=> 'Hugo Boss',
 				'class' 	=> 'WordPress_Affiliate_Shop_TradeDoubler_HB'
 			);
 		}
