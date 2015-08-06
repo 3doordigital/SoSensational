@@ -47,9 +47,9 @@
 			//$query .= "LIKE '%$term%' ";
 			if( $api != 'all' ) { $query .= " AND product_aff='$api' "; }
 			$merchant = trim( $merchant );
-			//if( $merchant != 0 ) { 
+			if( $merchant != '0' ) { 
 				$query .= " AND product_merch='$merchant' "; 
-			//}	
+			}	
 			$query .= "ORDER BY MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE) DESC";
 			$query2 = $query." LIMIT $offset, $depth";
 			
