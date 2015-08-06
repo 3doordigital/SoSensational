@@ -25,7 +25,7 @@
 			return $posts;
 		}
 		
-		public function db_search( $term = '', $api = 'all', $merchant,  $depth = 25, $page = 1, $sortby = 'title', $sort = 'asc') {
+		public function db_search( $term = '', $api = 'all', $merchant=0,  $depth = 25, $page = 1, $sortby = 'title', $sort = 'asc') {
 			ini_set('memory_limit', '2048M');
 			ini_set('max_execution_time', '5000');
 			$products = array();
@@ -47,10 +47,11 @@
 				WHERE MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE)	";
 			//$query .= "LIKE '%$term%' ";
 			if( $api != 'all' ) { $query .= " AND product_aff='$api' "; }
-			if( $merchant != 0 ) { $query .= " AND product_merch='$merchant' "; }	
+			echo $merchant;
+			if( $merchant == 0 ) { } else { $query .= " AND product_merch='$merchant' "; }	
 			$query .= "ORDER BY MATCH(product_title) AGAINST('$search' IN BOOLEAN MODE) DESC";
 			$query2 = $query." LIMIT $offset, $depth";
-			echo $merchant;
+			
 			echo $query2;
 			//$out = $query;
 			//$totalres = $wpdb->get_results( $query );
