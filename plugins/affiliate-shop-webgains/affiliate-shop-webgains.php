@@ -187,7 +187,7 @@ class WordPress_Affiliate_Shop_Webgains {
 						set_time_limit(0);
 						$i ++;
 						
-						if( $data[27] == 0 || $data[27] == '0.00' || $data[27] == '' ) {
+						if( $data[27] == 0 || $data[27] == '0.00' || $data[27] == '' || $data[8] == $data[11] ) {
 							$rrp = $data[8];
 						} else {
 							$rrp = $data[27];
