@@ -187,33 +187,25 @@ class WordPress_Affiliate_Shop_Webgains {
 						set_time_limit(0);
 						$i ++;
 						
-						if( $data[3] == 0 || $data[3] = '' || $data[3] == '0.00' ) {
-							$price = $data[9];
+						if( $data[27] == 0 || $data[27] == '0.00' || $data[27] == '' ) {
+							$rrp = $data[8];
 						} else {
-							$price = $data[3];	
-						}
-						
-						if( $data[8] == $data[6] ) {
-							$rrp = $price;
-						} elseif( $data[8] != 0 || $data[8] != '' || $data[8] != '0.00' ) {
-							$rrp = $data[8];	
-						} else {
-							$rrp = $price; 
+							$rrp = $data[27];
 						}
 						
 						$table_name = $wpdb->prefix . "feed_data";
 						
 						$datainsert = array( 
-								'product_id' => $data[6].'_'.$data[4], 
+								'product_id' => $data[11].'_'.$data[9], 
 								'product_aff' => 'webgains',
-								'product_merch' => sanitize_text_field( $data[6] ),
-								'product_title' => sanitize_text_field( $data[5] ),
-								'product_brand' => sanitize_text_field( $data[7] ),
-								'product_image' => esc_url( $data[2] ),
-								'product_desc' => sanitize_text_field( $data[1] ),
-								'product_price' => $price,
+								'product_merch' => sanitize_text_field( $data[12] ),
+								'product_title' => sanitize_text_field( $data[10] ),
+								'product_brand' => sanitize_text_field( $data[12] ),
+								'product_image' => esc_url( $data[5] ),
+								'product_desc' => sanitize_text_field( $data[4] ),
+								'product_price' => $data[8],
 								'product_rrp' => $rrp,
-								'product_link' => esc_url( $data[0] ), 
+								'product_link' => esc_url( $data[3] ), 
 							);
 						$replace = $wpdb->insert( $table_name, $datainsert );
 						
