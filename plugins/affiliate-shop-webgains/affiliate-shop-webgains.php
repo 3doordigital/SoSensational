@@ -183,7 +183,7 @@ class WordPress_Affiliate_Shop_Webgains {
 				// loop through the file line-by-line
 				while(($data = fgetcsv($handle, 0, ',')) !== false )
 				{
-					if( $data[8] != $data[11] ) {
+					if( $data[8] != $data[11] && $data[8] != 0 ) {
 						set_time_limit(0);
 						$i ++;
 						
