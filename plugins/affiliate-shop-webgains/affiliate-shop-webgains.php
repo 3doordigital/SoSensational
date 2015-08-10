@@ -183,11 +183,11 @@ class WordPress_Affiliate_Shop_Webgains {
 				// loop through the file line-by-line
 				while(($data = fgetcsv($handle, 0, ',')) !== false )
 				{
-					if( $data[3] != '' && $data[8] != '' ) {
+					if( $data[8] != $data[11] ) {
 						set_time_limit(0);
 						$i ++;
 						
-						if( $data[27] == 0 || $data[27] == '0.00' || $data[27] == '' || $data[8] == $data[11] ) {
+						if( $data[27] == 0 || $data[27] == '0.00' || $data[27] == '' || $data[27] == $data[11] ) {
 							$rrp = $data[8];
 						} else {
 							$rrp = $data[27];
