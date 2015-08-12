@@ -132,7 +132,7 @@ class WordPress_Affiliate_Shop_Webgains {
 			if( ! file_exists( $user_dirname ) )
 				wp_mkdir_p( $user_dirname );
 	
-			$uc_local_file = $user_dirname.'/'.$merchant.'_webgainsproducts.csv';
+			$uc_local_file = $user_dirname.'/webgainsproducts.csv';
 			$url = 'http://www.webgains.com/affiliates/datafeed.html?action=download&campaign=71942&programs='.$merchant.'&categories=all&fields=extended&fieldIds=category_id,category_name,category_path,deeplink,description,image_url,last_updated,merchant_category,price,product_id,product_name,program_id,program_name,best_sellers,brand,Colour,currency,delivery_cost,delivery_period,Fabric,Full_merchant_price,gender,image_large_url,image_thumbnail_url,image_url,in_stock,normal_price,promotion_details,recommended_retail_price,related_product_ids,short_description,size,type,volume&format=csv&separator=comma&zipformat=none&stripNewlines=0&apikey=f04b19e18a7c601da209cee4036e4608';
 			
 			//$url = 'http://www.webgains.com/affiliates/datafeed.html?action=download&campaign=71942&programs='.$merchant.'&categories=all&fields=extended&fieldIds=deeplink,description,image_url,price,product_id,product_name,program_id,program_name,recommended_retail_price,Full_merchant_price&format=csv&separator=comma&zipformat=none&stripNewlines=1&apikey=f04b19e18a7c601da209cee4036e4608';
