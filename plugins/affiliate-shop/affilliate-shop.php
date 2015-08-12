@@ -46,9 +46,11 @@ class WordPress_Affiliate_Shop
      */
     public function __construct()
     {
+
         global $wpdb;
         session_start();
         $this->create_metadata_table();
+
 
         $this->plugin_path = plugin_dir_path(__FILE__);
         $this->plugin_url = plugin_dir_url(__FILE__);
@@ -1719,8 +1721,7 @@ class WordPress_Affiliate_Shop
             </form>
         </div>
         <?php
-        $test = new WordPress_Affiliate_Shop_Webgains;
-        print_var($test->merchants());
+
     }
 
     public function add_products()
@@ -3380,7 +3381,6 @@ class WordPress_Affiliate_Shop
     function ajax_update_product()
     {
         $output = array();
-
         $api = new wpAffAPI();
         $data = $api->update_product($_POST['id'], $_POST['prod_id'], $_POST['url']);
         if ($data) {
@@ -3505,6 +3505,9 @@ class WordPress_Affiliate_Shop
                 $class = new $classname();
                 $temp[] = $class->merchants();
             }
+
+            die(var_dump($temp));
+
             $output = array();
             $output['items'] = array();
             foreach ($temp as $key => $input) {
@@ -3539,6 +3542,7 @@ class WordPress_Affiliate_Shop
     public function update_merchant_feed()
     {
         $classname = $this->option['apis'][$_POST['aff']]['class'];
+        echo $classname;
         $class = new $classname();
         echo json_encode($class->update_feed($_POST['ID'], $_POST['merch']));
         die();
@@ -3550,6 +3554,7 @@ class WordPress_Affiliate_Shop
         $class = new $classname();
         return $class->update_feed($ID, $merch);
     }
+
 
     public function cron_process()
     {
@@ -3575,7 +3580,7 @@ class WordPress_Affiliate_Shop
         $merchants = $this->cron_get_api_merchants();
         $total = $merchants['total'];
         foreach ($merchants['items'] as $merchant) {
-            //print_var( $merchant );
+            echo $merchant['ID'];
             $percent = number_format(($i / $total) * 100, 2);
             $data = $this->cron_update_merchant_feed($merchant['ID'], $merchant['aff'], $merchant['name']);
             if ($data['status'] == 1) {

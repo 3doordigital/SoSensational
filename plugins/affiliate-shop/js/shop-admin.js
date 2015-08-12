@@ -49,7 +49,6 @@ jQuery(document).ready(function($) {
 			};
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 			$.post(ajaxurl, data, function(response) {
-				console.log( response );
 				if( response.status == 1 ) {
 					if( response.new == 1 ) {
 						thislink.addClass('active');
@@ -260,7 +259,7 @@ jQuery(document).ready(function($) {
 	var per_query;
 	
 	function update_product( thisID, nextID, total ) {
-		
+
 		console.log( thisID+' :: '+nextID+' :: '+total+' :: '+items[thisID].id+' :: '+items[thisID].prod_id+' :: '+items[thisID].url );
 		if( thisID <= total ) {
 			var ajax_update_product = {
@@ -271,6 +270,7 @@ jQuery(document).ready(function($) {
 			};
 			
 			$.post(ajaxurl, ajax_update_product, function(response) {
+
 				var nextProd = nextID + 1;
 				if( thisID == total ) {
 					var percent = 100;

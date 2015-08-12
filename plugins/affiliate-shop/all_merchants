@@ -1,0 +1,506 @@
+array(56) {
+  'ID-117' =>
+  array(3) {
+    'ID' =>
+    string(3) "117"
+    'name' =>
+    string(8) "Webgains"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-270' =>
+  array(3) {
+    'ID' =>
+    string(3) "270"
+    'name' =>
+    string(22) "Wall Luxury Essentials"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-212' =>
+  array(3) {
+    'ID' =>
+    string(3) "212"
+    'name' =>
+    string(12) "Tightsplease"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-327' =>
+  array(3) {
+    'ID' =>
+    string(3) "327"
+    'name' =>
+    string(7) "Brastop"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-347' =>
+  array(3) {
+    'ID' =>
+    string(3) "347"
+    'name' =>
+    string(14) "feelunique.com"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-437' =>
+  array(3) {
+    'ID' =>
+    string(3) "437"
+    'name' =>
+    string(8) "Surfdome"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-8533' =>
+  array(3) {
+    'ID' =>
+    string(4) "8533"
+    'name' =>
+    string(7) "Gossard"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-8535' =>
+  array(3) {
+    'ID' =>
+    string(4) "8535"
+    'name' =>
+    string(13) "Pretty Polly "
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-1130' =>
+  array(3) {
+    'ID' =>
+    string(4) "1130"
+    'name' =>
+    string(11) "YesStyle UK"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-1408' =>
+  array(3) {
+    'ID' =>
+    string(4) "1408"
+    'name' =>
+    string(7) "Me + Em"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-8537' =>
+  array(3) {
+    'ID' =>
+    string(4) "8537"
+    'name' =>
+    string(6) "Berlei"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-2756' =>
+  array(3) {
+    'ID' =>
+    string(4) "2756"
+    'name' =>
+    string(17) "feelunique.com IE"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-2365' =>
+  array(3) {
+    'ID' =>
+    string(4) "2365"
+    'name' =>
+    string(7) "Trilogy"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-2690' =>
+  array(3) {
+    'ID' =>
+    string(4) "2690"
+    'name' =>
+    string(13) "Chesca Direct"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-2707' =>
+  array(3) {
+    'ID' =>
+    string(4) "2707"
+    'name' =>
+    string(13) "SalonSkincare"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-2951' =>
+  array(3) {
+    'ID' =>
+    string(4) "2951"
+    'name' =>
+    string(18) "Mastershoe & Myshu"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-3154' =>
+  array(3) {
+    'ID' =>
+    string(4) "3154"
+    'name' =>
+    string(14) "Pilot Clothing"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-4087' =>
+  array(3) {
+    'ID' =>
+    string(4) "4087"
+    'name' =>
+    string(8) "Bouf.com"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-6373' =>
+  array(3) {
+    'ID' =>
+    string(4) "6373"
+    'name' =>
+    string(7) "NIKE UK"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-4042' =>
+  array(3) {
+    'ID' =>
+    string(4) "4042"
+    'name' =>
+    string(18) "The Fragrance Shop"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-3780' =>
+  array(3) {
+    'ID' =>
+    string(4) "3780"
+    'name' =>
+    string(15) "Daniel Footwear"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-3949' =>
+  array(3) {
+    'ID' =>
+    string(4) "3949"
+    'name' =>
+    string(18) "Fashion-Conscience"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-4125' =>
+  array(3) {
+    'ID' =>
+    string(4) "4125"
+    'name' =>
+    string(7) "Jules B"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-4128' =>
+  array(3) {
+    'ID' =>
+    string(4) "4128"
+    'name' =>
+    string(16) "Charles Clinkard"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-4113' =>
+  array(3) {
+    'ID' =>
+    string(4) "4113"
+    'name' =>
+    string(6) "Triads"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-5250' =>
+  array(3) {
+    'ID' =>
+    string(4) "5250"
+    'name' =>
+    string(10) "Milanoo UK"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-9385' =>
+  array(3) {
+    'ID' =>
+    string(4) "9385"
+    'name' =>
+    string(14) "Chatham Marine"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-4948' =>
+  array(3) {
+    'ID' =>
+    string(4) "4948"
+    'name' =>
+    string(4) "Yumi"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-5151' =>
+  array(3) {
+    'ID' =>
+    string(4) "5151"
+    'name' =>
+    string(6) "Psyche"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-5528' =>
+  array(3) {
+    'ID' =>
+    string(4) "5528"
+    'name' =>
+    string(13) "Joy The Store"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-5556' =>
+  array(3) {
+    'ID' =>
+    string(4) "5556"
+    'name' =>
+    string(17) "Damsel In A Dress"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-5565' =>
+  array(3) {
+    'ID' =>
+    string(4) "5565"
+    'name' =>
+    string(7) "Ecco UK"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-5636' =>
+  array(3) {
+    'ID' =>
+    string(4) "5636"
+    'name' =>
+    string(11) "Extreme Pie"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-5733' =>
+  array(3) {
+    'ID' =>
+    string(4) "5733"
+    'name' =>
+    string(14) "Yours Clothing"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-5763' =>
+  array(3) {
+    'ID' =>
+    string(4) "5763"
+    'name' =>
+    string(18) "Repertoire Fashion"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-6147' =>
+  array(3) {
+    'ID' =>
+    string(4) "6147"
+    'name' =>
+    string(7) "Curvety"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-6397' =>
+  array(3) {
+    'ID' =>
+    string(4) "6397"
+    'name' =>
+    string(6) "Hurley"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-6415' =>
+  array(3) {
+    'ID' =>
+    string(4) "6415"
+    'name' =>
+    string(6) "Hervia"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-6475' =>
+  array(3) {
+    'ID' =>
+    string(4) "6475"
+    'name' =>
+    string(15) "Darling Clothes"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-6533' =>
+  array(3) {
+    'ID' =>
+    string(4) "6533"
+    'name' =>
+    string(9) "Hairtrade"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-6693' =>
+  array(3) {
+    'ID' =>
+    string(4) "6693"
+    'name' =>
+    string(9) "Temperley"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-6785' =>
+  array(3) {
+    'ID' =>
+    string(4) "6785"
+    'name' =>
+    string(6) "Marc B"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-7835' =>
+  array(3) {
+    'ID' =>
+    string(4) "7835"
+    'name' =>
+    string(7) "Larizia"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-7901' =>
+  array(3) {
+    'ID' =>
+    string(4) "7901"
+    'name' =>
+    string(16) "Camille Lingerie"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-7975' =>
+  array(3) {
+    'ID' =>
+    string(4) "7975"
+    'name' =>
+    string(16) "Malene Birger UK"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-8389' =>
+  array(3) {
+    'ID' =>
+    string(4) "8389"
+    'name' =>
+    string(14) "Treat Republic"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-8593' =>
+  array(3) {
+    'ID' =>
+    string(4) "8593"
+    'name' =>
+    string(11) "Ann Summers"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-8631' =>
+  array(3) {
+    'ID' =>
+    string(4) "8631"
+    'name' =>
+    string(9) "Escada UK"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-8895' =>
+  array(3) {
+    'ID' =>
+    string(4) "8895"
+    'name' =>
+    string(12) "Sunglasses2u"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-8993' =>
+  array(3) {
+    'ID' =>
+    string(4) "8993"
+    'name' =>
+    string(10) "Jolly Chic"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-8997' =>
+  array(3) {
+    'ID' =>
+    string(4) "8997"
+    'name' =>
+    string(7) "Aristoc"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-9169' =>
+  array(3) {
+    'ID' =>
+    string(4) "9169"
+    'name' =>
+    string(7) "Voga NL"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-9617' =>
+  array(3) {
+    'ID' =>
+    string(4) "9617"
+    'name' =>
+    string(7) "Voga UK"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-10263' =>
+  array(3) {
+    'ID' =>
+    string(5) "10263"
+    'name' =>
+    string(7) "Liberty"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-10443' =>
+  array(3) {
+    'ID' =>
+    string(5) "10443"
+    'name' =>
+    string(18) "Fenn Wright Manson"
+    'aff' =>
+    string(8) "webgains"
+  }
+  'ID-9639' =>
+  array(3) {
+    'ID' =>
+    string(4) "9639"
+    'name' =>
+    string(18) "Dollywood Boutique"
+    'aff' =>
+    string(8) "webgains"
+  }
+}
