@@ -17,4 +17,4 @@ require(BASE_PATH . 'wp-load.php');
 
 global $wp_aff;
 
-$wp_aff->testCron();
+$wp_aff->testMethod();

@@ -1,2 +1,0 @@
-Number|"Merchant ID"|"Merchant Name"|Affiliate|Status|Message
-"1 of 240 (0.42%)"|2396|"Adini Online"|awin|"Updated - 775 Inserted,  Failed."|

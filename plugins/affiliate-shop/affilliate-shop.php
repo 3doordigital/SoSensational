@@ -3555,6 +3555,12 @@ class WordPress_Affiliate_Shop
         return $class->update_feed($ID, $merch);
     }
 
+    public function testMethod()
+    {
+        $webgains = WordPress_Affiliate_Shop_Webgains();
+        $programs = $webgains->merchants();
+        print(var_dump($programs));
+    }
 
     public function cron_process()
     {

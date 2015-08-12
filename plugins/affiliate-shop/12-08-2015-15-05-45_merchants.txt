@@ -1,0 +1,9 @@
+Number|"Merchant ID"|"Merchant Name"|Affiliate|Status|Message
+"1 of 56 (1.79%)"|117|Webgains|webgains|"Updated -  Inserted,  Failed."|
+"2 of 56 (3.57%)"|270|"Wall Luxury Essentials"|webgains|"Updated -  Inserted,  Failed."|
+"3 of 56 (5.36%)"|212|Tightsplease|webgains|"Updated -  Inserted,  Failed."|
+"4 of 56 (7.14%)"|327|Brastop|webgains|"Updated - 2484 Inserted,  Failed."|
+"5 of 56 (8.93%)"|347|feelunique.com|webgains|"Updated - 13580 Inserted, 2484 Failed."|
+"6 of 56 (10.71%)"|437|Surfdome|webgains|"Updated - 24183 Inserted, 16064 Failed."|
+"7 of 56 (12.50%)"|8533|Gossard|webgains|"Updated - 3134 Inserted, 40247 Failed."|
+"8 of 56 (14.29%)"|8535|"Pretty Polly "|webgains|"Updated - 1385 Inserted, 43381 Failed."|
