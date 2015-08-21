@@ -191,7 +191,7 @@
 			if( $array == false ) {
 				$echo =  '';
 				foreach( $output as $item ) {
-					$echo .= '<option '.( $merchant == $item['ID'] ? ' selected ' : '' ).'value="'.$item['name'].'">'.$item['name'].' ('.$item['aff'].')</option>';
+					$echo .= '<option '.( $merchant == $item['ID'] ? ' selected ' : '' ).'value="'.$item['ID'].'">'.$item['name'].' ('.$item['aff'].')</option>';
 				}
 				
 				echo $echo;

@@ -198,7 +198,7 @@ class WordPress_Affiliate_Shop_Webgains {
 						$datainsert = array( 
 								'product_id' => $data[11].'_'.$data[9], 
 								'product_aff' => 'webgains',
-								'product_merch' => sanitize_text_field( $data[12] ),
+								'product_merch' => sanitize_text_field( $data[11] ),
 								'product_title' => sanitize_text_field( $data[10] ),
 								'product_brand' => sanitize_text_field( $data[12] ),
 								'product_image' => esc_url( $data[5] ),
