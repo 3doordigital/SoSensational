@@ -267,7 +267,7 @@
 			} else {
 				update_post_meta( $id, 'wp_aff_product_notfound', 1 );
 				$data['out'] = 'Not Found '.$prod_id;
-                if (get_post_meta($id, 'wp_aff_product_manual', true) !== 1) {
+                if (get_post_meta($id, 'wp_aff_product_manual', true) != 1) {
                     wp_trash_post( $id  );
                 }
 
