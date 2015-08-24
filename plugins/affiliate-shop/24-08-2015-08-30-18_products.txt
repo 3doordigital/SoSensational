@@ -1,0 +1,1 @@
+Number|"Post ID"|"Product ID"|Affiliate|"Product Title"|Brand|"Image URL"|Price|RRP|Link|Status

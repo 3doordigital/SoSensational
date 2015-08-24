@@ -241,7 +241,7 @@
 					if( stristr( $dbtitle, $wptitle ) == FALSE ) {
 						update_post_meta( $id, 'wp_aff_product_notfound', 1 );
 						$data['out'] = 'Not Found '.$prod_id;
-						wp_trash_post( $id  );
+						 ( $id  );
 						$data['status'] = 0;
 					} else {
 	
@@ -267,7 +267,10 @@
 			} else {
 				update_post_meta( $id, 'wp_aff_product_notfound', 1 );
 				$data['out'] = 'Not Found '.$prod_id;
-				wp_trash_post( $id  );
+                if (get_post_meta($id, 'wp_aff_product_manual', true) !== 1) {
+                    wp_trash_post( $id  );
+                }
+
 				$data['status'] = 0;
 
 			}
