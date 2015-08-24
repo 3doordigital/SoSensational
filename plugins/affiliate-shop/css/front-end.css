@@ -160,11 +160,7 @@
 .prod_title {
 	position: relative;
 }
-.prod_title h4 {
-	position: absolute;
-	bottom: 10px;
-	left: 10px;	
-}
+
 .prod_title .edit_link {
 	background-color: #a0862a;
 	color: #fff;
@@ -189,9 +185,7 @@
 	font-size: 11px;
 	font-family: 'Open Sans', sans-serif;
 }
-.product-info, .products .prod_title {
-    min-height: 85px;
-}
+
 #product_filter_bottom,
 #product_filter {
     padding: 15px 0;

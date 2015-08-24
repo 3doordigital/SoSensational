@@ -28,6 +28,22 @@
     }
 }
 
+@media (min-width: 992px) {
+  .product {
+    height: 300px;
+  }
+
+  .product-info, .products .prod_title {
+    min-height: 85px;
+  }
+
+  .prod_title h4 {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+  }
+}
+
 @media (min-width: 992px) and (max-width: 1199px) {
 
     .carousel-indicators {

@@ -236,7 +236,7 @@ get_header();
 								
                             echo '        <div>
                                             <div>
-                                                <a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'"><img src="'.$post_meta['wp_aff_product_image'][0].'"></a>
+                                                <a target="_blank" href="'.$post_meta['wp_aff_product_link'][0].'" title="'.$post->post_title.'"><img src="'.$post_meta['wp_aff_product_image'][0].'"/></a>
                                             </div>
                                             <div class="row product-info">
                                                 <div class="prod_title col-md-16">

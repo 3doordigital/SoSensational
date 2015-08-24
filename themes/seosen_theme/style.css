@@ -770,7 +770,6 @@ section h1 span {
 }
 .product {
     margin-bottom: 15px;
-    height: 300px;
 }
 .product .row {
     margin: 0;
@@ -1392,7 +1391,7 @@ a img.aligncenter {
 	overflow: hidden;
 }
 
-.screen-reader-text:focus {
+-reader-text:focus {
 	background-color: #f1f1f1;
 	border-radius: 3px;
 	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
