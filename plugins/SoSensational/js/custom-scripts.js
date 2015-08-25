@@ -347,7 +347,6 @@ function getTabletSliderSettingsB() {
 function loadSlider(sliderArguments, sliderMode) {     
     // on mobile there was a problem with  
     var clonedSliderDOM = jQuery('.flexslider').clone();
-    console.log(clonedSliderDOM);
     clonedSliderDOM.flexslider(sliderArguments);
     var oldSliderMode = function() {
         var classes = clonedSliderDOM.attr('class').split(/\s+/);
@@ -355,7 +354,8 @@ function loadSlider(sliderArguments, sliderMode) {
     };
     jQuery('.flexslider').replaceWith(clonedSliderDOM);
     jQuery('.flexslider').removeClass(oldSliderMode);
-    jQuery('.flexslider').addClass(sliderMode);        
+    jQuery('.flexslider').addClass(sliderMode);
+    console.log(jQuery('.flexslider'));
 }   
 
 
@@ -365,15 +365,12 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
     jQuery(window).ready(function ($) {
         if (jqUpdateSize() < 768) {
             sliderArguments = getMobileSliderSettings();
-            console.log(sliderArguments);
             sliderMode = 'mobile';
         } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
             sliderArguments = getTabletSliderSettings();
-            console.log(sliderArguments);
             sliderMode = 'tablet';
         } else {
             sliderArguments = getDesktopSliderSettings();
-            console.log(sliderArguments);
             sliderMode = 'desktop';
         }
         $('.flexslider').flexslider(sliderArguments).addClass(sliderMode);      
@@ -382,17 +379,14 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
     jQuery(window).resize(function () {  
         if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
             sliderArguments = getMobileSliderSettings();
-            console.log(sliderArguments);
             sliderMode = 'mobile';
             loadSlider(sliderArguments, sliderMode);
         } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
             sliderArguments = getTabletSliderSettings();
-            console.log(sliderArguments);
             sliderMode = 'tablet';
             loadSlider(sliderArguments, sliderMode);
         } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {          
             sliderArguments = getDesktopSliderSettings();
-            console.log(sliderArguments);
             sliderMode = 'desktop';
             loadSlider(sliderArguments, sliderMode);
         }
