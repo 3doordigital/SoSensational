@@ -95,8 +95,13 @@ jQuery(document).ready( function($) {
           itemSelector: '.deal'
         });
     });
+
+
+    if ($(".wp_aff_categories").length) {
+        $(".wp_aff_categories").niceScroll({ cursorcolor: '#ae984a', cursoropacitymin : '1'});
+        $(".wp_aff_brands").niceScroll({ cursorcolor: '#ae984a', cursoropacitymin : '1'});
+    }
     
-    $(".wp_aff_categories").niceScroll({ cursorcolor: '#ae984a', cursoropacitymin : '1'});
-    $(".wp_aff_brands").niceScroll({ cursorcolor: '#ae984a', cursoropacitymin : '1'});
+
 	
 }); // closes ready
