@@ -363,39 +363,42 @@ function loadSlider(sliderArguments, sliderMode) {
 
 
 // Dynamic flexslider - advertiser profile page
-if (jQuery('.flexslider-container.advertiser-profile').length) {
+
 
     jQuery(window).ready(function ($) {
-        if (jqUpdateSize() < 768) {
-            sliderArguments = getMobileSliderSettings();
-            sliderMode = 'mobile';
-        } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
-            sliderArguments = getTabletSliderSettings();
-            sliderMode = 'tablet';
-        } else {
-            sliderArguments = getDesktopSliderSettings();
-            sliderMode = 'desktop';
+        if (jQuery('.flexslider-container.advertiser-profile').length) {
+            if (jqUpdateSize() < 768) {
+                sliderArguments = getMobileSliderSettings();
+                sliderMode = 'mobile';
+            } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
+                sliderArguments = getTabletSliderSettings();
+                sliderMode = 'tablet';
+            } else {
+                sliderArguments = getDesktopSliderSettings();
+                sliderMode = 'desktop';
+            }
+            $('.flexslider').flexslider(sliderArguments).addClass(sliderMode);
         }
-        $('.flexslider').flexslider(sliderArguments).addClass(sliderMode);      
     });
 
-    jQuery(window).resize(function () {  
-        if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
-            sliderArguments = getMobileSliderSettings();
-            sliderMode = 'mobile';
-            loadSlider(sliderArguments, sliderMode);
-        } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
-            sliderArguments = getTabletSliderSettings();
-            sliderMode = 'tablet';
-            loadSlider(sliderArguments, sliderMode);
-        } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {          
-            sliderArguments = getDesktopSliderSettings();
-            sliderMode = 'desktop';
-            loadSlider(sliderArguments, sliderMode);
+    jQuery(window).resize(function () {
+        if (jQuery('.flexslider-container.advertiser-profile').length) {
+            if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {
+                sliderArguments = getMobileSliderSettings();
+                sliderMode = 'mobile';
+                loadSlider(sliderArguments, sliderMode);
+            } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
+                sliderArguments = getTabletSliderSettings();
+                sliderMode = 'tablet';
+                loadSlider(sliderArguments, sliderMode);
+            } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {
+                sliderArguments = getDesktopSliderSettings();
+                sliderMode = 'desktop';
+                loadSlider(sliderArguments, sliderMode);
+            }
         }
     });
-    
-}    
+
 
 // Dynamic flexslider - featured and related sliders (category and shop pages)
 
