@@ -344,9 +344,7 @@ function getTabletSliderSettingsB() {
     };              
 } 
 
-function loadSlider(sliderArguments, sliderMode) {     
-    // on mobile there was a problem with
-    console.log(jQuery('.flexslider'));
+function loadSlider(sliderArguments, sliderMode) {
     var clonedSliderDOM = jQuery('.flexslider').clone();
     clonedSliderDOM.flexslider(sliderArguments);
     var oldSliderMode = function() {
@@ -354,11 +352,10 @@ function loadSlider(sliderArguments, sliderMode) {
         console.log(classes[1]);
         return classes[1];
     }();
-    console.log(jQuery('.flexslider'));
     jQuery('.flexslider').replaceWith(clonedSliderDOM);
     jQuery('.flexslider').removeClass(oldSliderMode);
     jQuery('.flexslider').addClass(sliderMode);
-    console.log(jQuery('.flexslider'));
+
 }   
 
 
@@ -407,7 +404,7 @@ function loadSlider(sliderArguments, sliderMode) {
 
 // Dynamic flexslider - featured and related sliders (category and shop pages)
 
-    jQuery(window).ready(function ($) {
+    jQuery(document).ready(function ($) {
         if (jQuery('.advertisers-carousel').length) {
             if (jqUpdateSize() < 768) {
                 sliderArguments = getMobileSliderSettingsB();
@@ -419,28 +416,30 @@ function loadSlider(sliderArguments, sliderMode) {
                 sliderArguments = getDesktopSliderSettingsB();
                 sliderMode = 'desktop';
             }
-            $('.flexslider').flexslider(sliderArguments).addClass(sliderMode);    
+            $('.flexslider').flexslider(sliderArguments).addClass(sliderMode);
+            
+            jQuery(window).resize(function () {
+                if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {
+                    sliderArguments = getMobileSliderSettingsB();
+                    sliderMode = 'mobile';
+                    loadSlider(sliderArguments, sliderMode);
+
+                } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
+                    sliderArguments = getTabletSliderSettingsB();
+                    sliderMode = 'tablet';
+                    loadSlider(sliderArguments, sliderMode);
+
+                } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {
+                    sliderArguments = getDesktopSliderSettingsB();
+                    sliderMode = 'desktop';
+                    loadSlider(sliderArguments, sliderMode);
+
+                }
+            });
         }
     });
 
-    //jQuery(window).resize(function () {
-    //    if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {
-    //        sliderArguments = getMobileSliderSettingsB();
-    //        sliderMode = 'mobile';
-    //        loadSlider(sliderArguments, sliderMode);
-    //
-    //    } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
-    //        sliderArguments = getTabletSliderSettingsB();
-    //        sliderMode = 'tablet';
-    //        loadSlider(sliderArguments, sliderMode);
-    //
-    //    } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {
-    //        sliderArguments = getDesktopSliderSettingsB();
-    //        sliderMode = 'desktop';
-    //        loadSlider(sliderArguments, sliderMode);
-    //
-    //    }
-    //});
+
     
 
 jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
