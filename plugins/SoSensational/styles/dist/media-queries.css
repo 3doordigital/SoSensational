@@ -240,9 +240,6 @@
     display: none; } }
 
 @media (max-width: 991px) {
-  /* line 376, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
-  .shop-filter .children {
-    display: none !important; }
   /* line 380, /home/polcode/dev/scotch-box/public/sosen.3doordigital.local/wp-content/plugins/SoSensational/styles/sass/media-queries.scss */
   .shop-filter.nav > li {
     border-bottom: 1px solid #C9BA86 !important; }

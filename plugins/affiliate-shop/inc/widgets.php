@@ -42,7 +42,7 @@ class aff_category_widget extends WP_Widget {
 
                 $walker = new Faceted_Category_Walker;
                 $arg = array( 
-                    'depth' => 0, 
+                    'depth' => 1,
                     'taxonomy' => 'wp_aff_categories', 
                     'hide_empty' => 0, 
                     'walker' => $walker, 
