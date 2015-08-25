@@ -352,7 +352,7 @@ function loadSlider(sliderArguments, sliderMode) {
     var oldSliderMode = function() {
         var classes = clonedSliderDOM.attr('class').split(/\s+/);
         return classes[1];
-    };
+    }();
     console.log(jQuery('.flexslider'));
     jQuery('.flexslider').replaceWith(clonedSliderDOM);
     jQuery('.flexslider').removeClass(oldSliderMode);
