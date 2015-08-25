@@ -382,6 +382,7 @@ function loadSlider(sliderArguments, sliderMode) {
     });
 
     jQuery(window).resize(function () {
+        console.log('resizing');
         if (jQuery('.flexslider-container.advertiser-profile').length) {
             if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {
                 sliderArguments = getMobileSliderSettings();
