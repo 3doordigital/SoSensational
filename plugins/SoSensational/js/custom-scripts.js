@@ -365,7 +365,7 @@ function loadSlider(sliderArguments, sliderMode) {
 // Dynamic flexslider - advertiser profile page
 
 
-    jQuery(window).ready(function ($) {
+    jQuery(document).ready(function ($) {
         if (jQuery('.flexslider-container.advertiser-profile').length) {
             if (jqUpdateSize() < 768) {
                 sliderArguments = getMobileSliderSettings();
@@ -381,7 +381,7 @@ function loadSlider(sliderArguments, sliderMode) {
         }
     });
 
-    jQuery(window).resize(function () {
+    jQuery(window).resize(function ($) {
         console.log('resizing');
         if (jQuery('.flexslider-container.advertiser-profile').length) {
             if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {
