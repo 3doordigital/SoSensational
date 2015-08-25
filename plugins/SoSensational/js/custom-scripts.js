@@ -367,6 +367,7 @@ function loadSlider(sliderArguments, sliderMode) {
 
     jQuery(document).ready(function ($) {
         if (jQuery('.flexslider-container.advertiser-profile').length) {
+
             if (jqUpdateSize() < 768) {
                 sliderArguments = getMobileSliderSettings();
                 sliderMode = 'mobile';
@@ -378,27 +379,30 @@ function loadSlider(sliderArguments, sliderMode) {
                 sliderMode = 'desktop';
             }
             $('.flexslider').flexslider(sliderArguments).addClass(sliderMode);
+
+            jQuery(window).resize(function ($) {
+                console.log('resizing');
+                if (jQuery('.flexslider-container.advertiser-profile').length) {
+                    if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {
+                        sliderArguments = getMobileSliderSettings();
+                        sliderMode = 'mobile';
+                        loadSlider(sliderArguments, sliderMode);
+                    } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
+                        sliderArguments = getTabletSliderSettings();
+                        sliderMode = 'tablet';
+                        loadSlider(sliderArguments, sliderMode);
+                    } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {
+                        sliderArguments = getDesktopSliderSettings();
+                        sliderMode = 'desktop';
+                        loadSlider(sliderArguments, sliderMode);
+                    }
+                }
+            });
+
         }
     });
 
-    jQuery(window).resize(function ($) {
-        console.log('resizing');
-        if (jQuery('.flexslider-container.advertiser-profile').length) {
-            if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {
-                sliderArguments = getMobileSliderSettings();
-                sliderMode = 'mobile';
-                loadSlider(sliderArguments, sliderMode);
-            } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
-                sliderArguments = getTabletSliderSettings();
-                sliderMode = 'tablet';
-                loadSlider(sliderArguments, sliderMode);
-            } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {
-                sliderArguments = getDesktopSliderSettings();
-                sliderMode = 'desktop';
-                loadSlider(sliderArguments, sliderMode);
-            }
-        }
-    });
+
 
 
 // Dynamic flexslider - featured and related sliders (category and shop pages)
