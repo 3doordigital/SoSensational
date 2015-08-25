@@ -351,6 +351,7 @@ function loadSlider(sliderArguments, sliderMode) {
     clonedSliderDOM.flexslider(sliderArguments);
     var oldSliderMode = function() {
         var classes = clonedSliderDOM.attr('class').split(/\s+/);
+        console.log(classes[1]);
         return classes[1];
     }();
     console.log(jQuery('.flexslider'));
