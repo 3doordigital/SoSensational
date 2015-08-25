@@ -345,13 +345,15 @@ function getTabletSliderSettingsB() {
 } 
 
 function loadSlider(sliderArguments, sliderMode) {     
-    // on mobile there was a problem with  
+    // on mobile there was a problem with
+    console.log(jQuery('.flexslider'));
     var clonedSliderDOM = jQuery('.flexslider').clone();
     clonedSliderDOM.flexslider(sliderArguments);
     var oldSliderMode = function() {
         var classes = clonedSliderDOM.attr('class').split(/\s+/);
         return classes[1];
     };
+    console.log(jQuery('.flexslider'));
     jQuery('.flexslider').replaceWith(clonedSliderDOM);
     jQuery('.flexslider').removeClass(oldSliderMode);
     jQuery('.flexslider').addClass(sliderMode);
