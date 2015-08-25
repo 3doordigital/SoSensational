@@ -243,19 +243,19 @@ jQuery(document).ready(function($) {
  Dynamic Flexslider - adapts to the viewport size
  -----------------------------------------------------------------------------*/ 
 var sliderMode;
-var arguments;
+var sliderArguments;
 
 function jqUpdateSize() {
     var width = jQuery(window).width();
     return width;
 }
 
-function attachSlider(arguments) {
-    jQuery('.flexslider').flexslider(arguments);
+function attachSlider(sliderArguments) {
+    jQuery('.flexslider').flexslider(sliderArguments);
 }
 
 function getDesktopSliderSettings() {
-    return arguments = {
+    return sliderArguments = {
         animation: "slide",
         animationLoop: false,
         controlNav: false,
@@ -271,7 +271,7 @@ function getDesktopSliderSettings() {
 }
 
 function getMobileSliderSettings() {
-    return arguments = {
+    return sliderArguments = {
         animation: "slide",
         prevText: " ",
         nextText: " ",    
@@ -284,7 +284,7 @@ function getMobileSliderSettings() {
 }
 
 function getTabletSliderSettings() {
-    return arguments = {
+    return sliderArguments = {
         animation: "slide",
         animationLoop: false,
         controlNav: false,
@@ -300,7 +300,7 @@ function getTabletSliderSettings() {
 }   
 // Featured and related sliders
 function getDesktopSliderSettingsB() {
-    return arguments = {
+    return sliderArguments = {
         animation: "slide",
         animationLoop: false,
         controlNav: false,
@@ -316,7 +316,7 @@ function getDesktopSliderSettingsB() {
 }
 
 function getMobileSliderSettingsB() {
-    return arguments = {
+    return sliderArguments = {
         animation: "slide",
         prevText: " ",
         nextText: " ",    
@@ -329,7 +329,7 @@ function getMobileSliderSettingsB() {
 }
 
 function getTabletSliderSettingsB() {
-    return arguments = {
+    return sliderArguments = {
         animation: "slide",
         animationLoop: false,
         controlNav: false,
@@ -344,10 +344,10 @@ function getTabletSliderSettingsB() {
     };              
 } 
 
-function loadSlider(arguments, sliderMode) {     
+function loadSlider(sliderArguments, sliderMode) {     
     // on mobile there was a problem with  
     var clonedSliderDOM = jQuery('.flexslider').clone();  
-    clonedSliderDOM.flexslider(arguments);
+    clonedSliderDOM.flexslider(sliderArguments);
     var oldSliderMode = function() {
         var classes = clonedSliderDOM.attr('class').split(/\s+/);
         return classes[1];
@@ -363,31 +363,31 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
 
     jQuery(window).ready(function ($) {
         if (jqUpdateSize() < 768) {
-            arguments = getMobileSliderSettings();
+            sliderArguments = getMobileSliderSettings();
             sliderMode = 'mobile';
         } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
-            arguments = getTabletSliderSettings();
+            sliderArguments = getTabletSliderSettings();
             sliderMode = 'tablet';
         } else {
-            arguments = getDesktopSliderSettings();
+            sliderArguments = getDesktopSliderSettings();
             sliderMode = 'desktop';
         }
-        $('.flexslider').flexslider(arguments).addClass(sliderMode);      
+        $('.flexslider').flexslider(sliderArguments).addClass(sliderMode);      
     });
 
     jQuery(window).resize(function () {  
         if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
-            arguments = getMobileSliderSettings(); 
+            sliderArguments = getMobileSliderSettings(); 
             sliderMode = 'mobile';
-            loadSlider(arguments, sliderMode);
+            loadSlider(sliderArguments, sliderMode);
         } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
-            arguments = getTabletSliderSettings();
+            sliderArguments = getTabletSliderSettings();
             sliderMode = 'tablet';
-            loadSlider(arguments, sliderMode);         
+            loadSlider(sliderArguments, sliderMode);         
         } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {          
-            arguments = getDesktopSliderSettings();
+            sliderArguments = getDesktopSliderSettings();
             sliderMode = 'desktop';
-            loadSlider(arguments, sliderMode);
+            loadSlider(sliderArguments, sliderMode);
         }
     });
     
@@ -396,34 +396,42 @@ if (jQuery('.flexslider-container.advertiser-profile').length) {
 // Dynamic flexslider - featured and related sliders (category and shop pages)
 
     jQuery(window).ready(function ($) {
+        console.log('window ready');
         if (jQuery('.advertisers-carousel').length) {
             if (jqUpdateSize() < 768) {
-                arguments = getMobileSliderSettingsB();
+                sliderArguments = getMobileSliderSettingsB();
                 sliderMode = 'mobile';
             } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992) {
-                arguments = getTabletSliderSettingsB();
+                sliderArguments = getTabletSliderSettingsB();
                 sliderMode = 'tablet';
             } else {
-                arguments = getDesktopSliderSettingsB();
+                sliderArguments = getDesktopSliderSettingsB();
                 sliderMode = 'desktop';
             }
-            $('.flexslider').flexslider(arguments).addClass(sliderMode);    
+            $('.flexslider').flexslider(sliderArguments).addClass(sliderMode);    
         }
     });
 
-    jQuery(window).resize(function () {  
-        if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {                                    
-            arguments = getMobileSliderSettingsB(); 
+    jQuery(window).resize(function () {
+        console.log('window resize');
+        if (jqUpdateSize() < 768 && sliderMode !== 'mobile') {
+            console.log('mobile');
+            sliderArguments = getMobileSliderSettingsB(); 
             sliderMode = 'mobile';
-            loadSlider(arguments, sliderMode);
+            loadSlider(sliderArguments, sliderMode);
+
         } else if (jqUpdateSize() >= 768 && jqUpdateSize() < 992 && sliderMode !== 'tablet') {
-            arguments = getTabletSliderSettingsB();
+            console.log('tablet');
+            sliderArguments = getTabletSliderSettingsB();
             sliderMode = 'tablet';
-            loadSlider(arguments, sliderMode);         
-        } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {          
-            arguments = getDesktopSliderSettingsB();
+            loadSlider(sliderArguments, sliderMode);
+
+        } else if (jqUpdateSize() >= 992 && sliderMode !== 'desktop') {
+            console.log('desktop');
+            sliderArguments = getDesktopSliderSettingsB();
             sliderMode = 'desktop';
-            loadSlider(arguments, sliderMode);
+            loadSlider(sliderArguments, sliderMode);
+
         }
     });
     
