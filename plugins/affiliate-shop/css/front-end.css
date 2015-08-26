@@ -58,7 +58,7 @@
     padding-left: 10px;
 }
 .wp_aff_categories li ul {
-    /*display: none;*/
+    display: none;
 }
 .wp_aff_categories li.current-cat>ul, .wp_aff_categories li.current-cat-parent>ul, .wp_aff_categories li.cat-show>ul {
     display: block;

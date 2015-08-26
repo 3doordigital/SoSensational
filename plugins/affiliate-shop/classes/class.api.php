@@ -79,9 +79,21 @@
 							),
 						)
 					);
-					$posts = get_posts( $qry_args );
+                    $productInLocalDb = get_posts( $qry_args );
 
-					if( count( $posts ) > 0 ) {
+                    $productId = (int) $product['product_id'];
+
+                    global $wpdb;
+
+                    $productInLocalDb = $wpdb->get_row("SELECT ID
+                                              FROM $wpdb->posts
+                                              LEFT JOIN $wpdb->postmeta
+                                              ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+                                              WHERE $wpdb->postmeta.meta_key='wp_aff_product_id'
+                                              AND $wpdb->postmeta.meta_value={$productId}", ARRAY_A);
+
+
+					if( $productInLocalDb ) {
 						$exists = 1;
 					} else {
 						$exists = 0;
