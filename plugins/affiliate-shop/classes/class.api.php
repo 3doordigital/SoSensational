@@ -60,37 +60,37 @@
 				$totalres = $wpdb->get_var( "SELECT FOUND_ROWS();" );
 				foreach( $result as $product ) {
 
-//					$pid = explode( '_', $product['product_id'] );
-//					$pid = $pid[1];
+					$pid = explode( '_', $product['product_id'] );
+					$pid = $pid[1];
 
-//					$qry_args = array(
-//						'post_status' => 'publish',
-//						'post_type' => 'wp_aff_products',
-//						'posts_per_page' => 1,
-//						'orderby' => 'post_date',
-//						'order' => 'DESC' ,
-//                        'fields' => 'ids',
-//						'meta_query' => array(
-//                            'relation' => 'AND',
-//							array(
-//							 'key' => 'wp_aff_product_id',
-//							 'value' => $product['product_id'],
-//							 'compare' => '='
-//							),
-//						)
-//					);
-//                    $productInLocalDb = get_posts( $qry_args );
+					$qry_args = array(
+						'post_status' => 'publish',
+						'post_type' => 'wp_aff_products',
+						'posts_per_page' => 1,
+						'orderby' => 'post_date',
+						'order' => 'DESC' ,
+                        'fields' => 'ids',
+						'meta_query' => array(
+                            'relation' => 'AND',
+							array(
+							 'key' => 'wp_aff_product_id',
+							 'value' => $product['product_id'],
+							 'compare' => '='
+							),
+						)
+					);
+                    $productInLocalDb = get_posts( $qry_args );
 
                     $productId = (int) $product['product_id'];
 
                     global $wpdb;
 
-                    $productInLocalDb = $wpdb->get_row("SELECT ID
-                                              FROM $wpdb->posts
-                                              LEFT JOIN $wpdb->postmeta
-                                              ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-                                              WHERE $wpdb->postmeta.meta_key='wp_aff_product_id'
-                                              AND $wpdb->postmeta.meta_value={$productId}", ARRAY_A);
+//                    $productInLocalDb = $wpdb->get_row("SELECT ID
+//                                              FROM $wpdb->posts
+//                                              LEFT JOIN $wpdb->postmeta
+//                                              ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+//                                              WHERE $wpdb->postmeta.meta_key='wp_aff_product_id'
+//                                              AND $wpdb->postmeta.meta_value={$productId}", ARRAY_A);
 
 
 					if( $productInLocalDb ) {
