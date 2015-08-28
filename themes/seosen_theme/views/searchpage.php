@@ -79,7 +79,7 @@
                     ?>
                     <div class="clearfix"></div>
                     <div class="more-results">
-                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'brands/' . preg_replace('/\s/', '+', get_query_var('s'))) . '/1'?>">Click here to see more brands &amp boutiques results &raquo;</a>
+                        <a href="<?php echo esc_url(get_permalink(get_page_by_title('Search Results')) . 'brands/' . preg_replace('/\s/', '+', get_query_var('s'))) . '/1'?>">Click here to see more Brands &amp Boutiques results &raquo;</a>
                     </div>                        
                     <?php
                     else:
