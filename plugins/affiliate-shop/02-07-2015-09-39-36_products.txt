@@ -1,0 +1,28 @@
+Number|"Post ID"|"Product ID"|Affiliate|"Product Title"|Brand|"Image URL"|Price|RRP|Link|Status
+"1 of 9486 (0.01%)"|51399|2692_3216799633|awin|"Phase Eight Asami Lace Top Jumpsuit"|"Phase Eight"|http://images.productserve.com/preview/2/2692/33/96/3216799633.jpg|99.00|130.00|http://www.awin1.com/pclick.php?p=3216799633&#038;a=99908&#038;m=2692|"Updated by ID"
+"2 of 9486 (0.02%)"|51397|2692_3249214439|awin|"Phase Eight Walda Jumpsuit"|"Phase Eight"|http://images.productserve.com/preview/2/2692/39/44/3249214439.jpg|55.00|79.00|http://www.awin1.com/pclick.php?p=3249214439&#038;a=99908&#038;m=2692|"Updated by ID"
+"3 of 9486 (0.03%)"|51398|2692_3216799611|awin|"Phase Eight Fernanda Jumpsuit"|2692|||||Trashed
+"4 of 9486 (0.04%)"|51395|2692_3239522501|awin|"Phase Eight Eleanora Jumpsuit"|"Phase Eight"|http://images.productserve.com/preview/2/2692/01/25/3239522501.jpg|120.00|120.00|http://www.awin1.com/pclick.php?p=3239522501&#038;a=99908&#038;m=2692|"Updated by ID"
+"5 of 9486 (0.05%)"|51396|2692_3289515073|awin|"Phase Eight Sharon Culotte Jumpsuit"|"Phase Eight"|http://images.productserve.com/preview/2/2692/73/50/3289515073.jpg|59.00|89.00|http://www.awin1.com/pclick.php?p=3289515073&#038;a=99908&#038;m=2692|"Updated by ID"
+"6 of 9486 (0.06%)"|51393|2692_3309077833|awin|"Phase Eight Catalina Jumpsuit"|"Phase Eight"|http://images.productserve.com/preview/2/2692/33/78/3309077833.jpg|99.00|99.00|http://www.awin1.com/pclick.php?p=3309077833&#038;a=99908&#038;m=2692|"Updated by ID"
+"7 of 9486 (0.07%)"|51394|2692_3309077841|awin|"Phase Eight Wanita Floral Jumpsuit"|"Phase Eight"|http://images.productserve.com/preview/2/2692/41/78/3309077841.jpg|99.00|99.00|http://www.awin1.com/pclick.php?p=3309077841&#038;a=99908&#038;m=2692|"Updated by ID"
+"8 of 9486 (0.08%)"|47892|722_7709514|affilinet|"Debut Silver Metallic And Jersey Jumpsuit - . -"|722|||||Trashed
+"9 of 9486 (0.09%)"|47891|722_PV5554A93D3CB7B|affilinet|"Quiz Navy Contrast V Neck Palazzo Jumpsuit - . -"|722|||||Trashed
+"10 of 9486 (0.11%)"|47890|722_7958232|affilinet|"H! By Henry Holland Designer Navy Floral Jumpsuit - . -"|722|||||Trashed
+"11 of 9486 (0.12%)"|47888|722_P5052688132776|affilinet|"Alice &amp; You Black Crossover Jumpsuit - . -"|722|||||Trashed
+"12 of 9486 (0.13%)"|47887|722_7917721|affilinet|"Red Herring Black Gypsy Frill Jumpsuit - . -"|722|||||Trashed
+"13 of 9486 (0.14%)"|47886|722_P5702791258770|affilinet|"Girls On Film Floral Blur Print Jumpsuit - . -"|722|||||Trashed
+"14 of 9486 (0.15%)"|47745|1402_3330786299|awin|"Autograph Palm Print Jumpsuit"|"Marks and Spencer"|http://images.productserve.com/preview/2/1402/99/62/3330786299.jpg|65.00|65.00|http://www.awin1.com/pclick.php?p=3330786299&#038;a=99908&#038;m=1402|"Updated by ID"
+"15 of 9486 (0.16%)"|47744|1402_3300900101|awin|"Autograph V-Neck Jumpsuit"|"Marks and Spencer"|http://images.productserve.com/preview/2/1402/01/01/3300900101.jpg|65.00|65.00|http://www.awin1.com/pclick.php?p=3300900101&#038;a=99908&#038;m=1402|"Updated by ID"
+"16 of 9486 (0.17%)"|47742|1402_3246703733|awin|"Autograph Crossover V-Neck Jumpsuit"|"Marks and Spencer"|http://images.productserve.com/preview/2/1402/33/37/3246703733.jpg|69.00|69.00|http://www.awin1.com/pclick.php?p=3246703733&#038;a=99908&#038;m=1402|"Updated by ID"
+"17 of 9486 (0.18%)"|47743|1402_3319231073|awin|"Autograph V-Neck Denim Jumpsuit"|"Marks and Spencer"|http://images.productserve.com/preview/2/1402/73/10/3319231073.jpg|65.00|65.00|http://www.awin1.com/pclick.php?p=3319231073&#038;a=99908&#038;m=1402|"Updated by ID"
+"18 of 9486 (0.19%)"|47741|1402_3246704451|awin|"M&amp;s Collection Plus Splat Print Jumpsuit With Staynew"|1402|||||Trashed
+"19 of 9486 (0.20%)"|47740|1402_3272832547|awin|"M&amp;s Collection Petite Tencel Jumpsuit"|1402|||||Trashed
+"20 of 9486 (0.21%)"|47739|1402_3255512289|awin|"M&amp;s Collection Petite Animal Print Jumpsuit With Staynew"|1402|||||Trashed
+"21 of 9486 (0.22%)"|47650|1402_3336168821|awin|"Limited Edition Batik Print Jumpsuit"|1402|||||Trashed
+"22 of 9486 (0.23%)"|47651|1402_3318869733|awin|"Per Una Santorini Floral Jumpsuit"|1402|||||Trashed
+"23 of 9486 (0.24%)"|47649|1402_3246703875|awin|"M&amp;s Collection Splatter Print Zip Front Jumpsuit"|1402|||||Trashed
+"24 of 9486 (0.25%)"|47647|1402_3249134861|awin|"M&amp;s Collection Tencel 3/4 Sleeve Jumpsuit"|1402|||||Trashed
+"25 of 9486 (0.26%)"|47648|1402_3320613861|awin|"Twiggy for M&S Collection V-Neck Zipped Shoulder Jumpsuit"|"Marks and Spencer"|http://images.productserve.com/preview/2/1402/61/38/3320613861.jpg|55.00|55.00|http://www.awin1.com/pclick.php?p=3320613861&#038;a=99908&#038;m=1402|"Updated by ID"
+"26 of 9486 (0.27%)"|47646|1402_3291858257|awin|"M&amp;s Collection Palm Print Jumpsuit"|1402|||||Trashed
+"27 of 9486 (0.28%)"|47644|1402_3316853185|awin|"Indigo Collection Tile Print Jumpsuit"|"Marks and Spencer"|http://images.productserve.com/preview/2/1402/85/31/3316853185.jpg|45.00|45.00|http://www.awin1.com/pclick.php?p=3316853185&#038;a=99908&#038;m=1402|"Updated by ID"

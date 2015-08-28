@@ -95,7 +95,7 @@ function enqueue_and_register_my_scripts() {
     wp_enqueue_style('fontawesome', get_stylesheet_directory_uri() . '/css/font-awesome.min.css', '1.0');
     wp_enqueue_style('animate', get_stylesheet_directory_uri() . '/css/animate.css', '1.0');
     wp_enqueue_style('webfont', get_stylesheet_directory_uri() . '/MyFontsWebfontsKit.css', '1.0');
-	wp_enqueue_style('google-webfont', 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700', '1.0' );
+    wp_enqueue_style('google-webfont', 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700', '1.0' );
     wp_enqueue_style('sosen-style', get_stylesheet_uri(), array('bootstrap', 'bootstrap_theme', 'fontawesome', 'animate', 'webfont'), '1.1');
 
     wp_enqueue_style('flexslider-styles', plugins_url('SoSensational/js/flexslider/flexslider.css'));

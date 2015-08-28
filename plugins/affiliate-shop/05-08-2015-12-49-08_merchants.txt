@@ -1,0 +1,2 @@
+Number|"Merchant ID"|"Merchant Name"|Affiliate|Status|Message
+"1 of 1 (100.00%)"|fanf|"F&F (Tesco)"|ff|"Updated - 3122 Inserted,  Failed."|

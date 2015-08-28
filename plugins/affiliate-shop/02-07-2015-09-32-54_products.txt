@@ -1,0 +1,109 @@
+Number|"Post ID"|"Product ID"|Affiliate|"Product Title"|Brand|"Image URL"|Price|RRP|Link|Status
+"1 of 9486 (0.01%)"|51399|2692_3216799633|awin|"Phase Eight Asami Lace Top Jumpsuit"|2692|||||Trashed
+"2 of 9486 (0.02%)"|51397|2692_3249214439|awin|"Phase Eight Walda Jumpsuit"|2692|||||Trashed
+"3 of 9486 (0.03%)"|51398|2692_3216799611|awin|"Phase Eight Fernanda Jumpsuit"|2692|||||Trashed
+"4 of 9486 (0.04%)"|51395|2692_3239522501|awin|"Phase Eight Eleanora Jumpsuit"|2692|||||Trashed
+"5 of 9486 (0.05%)"|51396|2692_3289515073|awin|"Phase Eight Sharon Culotte Jumpsuit"|2692|||||Trashed
+"6 of 9486 (0.06%)"|51393|2692_3309077833|awin|"Phase Eight Catalina Jumpsuit"|2692|||||Trashed
+"7 of 9486 (0.07%)"|51394|2692_3309077841|awin|"Phase Eight Wanita Floral Jumpsuit"|2692|||||Trashed
+"8 of 9486 (0.08%)"|47892|722_7709514|affilinet|"Debut Silver Metallic And Jersey Jumpsuit - . -"|722|||||Trashed
+"9 of 9486 (0.09%)"|47891|722_PV5554A93D3CB7B|affilinet|"Quiz Navy Contrast V Neck Palazzo Jumpsuit - . -"|722|||||Trashed
+"10 of 9486 (0.11%)"|47890|722_7958232|affilinet|"H! By Henry Holland Designer Navy Floral Jumpsuit - . -"|722|||||Trashed
+"11 of 9486 (0.12%)"|47888|722_P5052688132776|affilinet|"Alice &amp; You Black Crossover Jumpsuit - . -"|722|||||Trashed
+"12 of 9486 (0.13%)"|47887|722_7917721|affilinet|"Red Herring Black Gypsy Frill Jumpsuit - . -"|722|||||Trashed
+"13 of 9486 (0.14%)"|47886|722_P5702791258770|affilinet|"Girls On Film Floral Blur Print Jumpsuit - . -"|722|||||Trashed
+"14 of 9486 (0.15%)"|47745|1402_3330786299|awin|"Autograph Palm Print Jumpsuit"|1402|||||Trashed
+"15 of 9486 (0.16%)"|47744|1402_3300900101|awin|"Autograph V-neck Jumpsuit"|1402|||||Trashed
+"16 of 9486 (0.17%)"|47742|1402_3246703733|awin|"Autograph Crossover V-neck Jumpsuit"|1402|||||Trashed
+"17 of 9486 (0.18%)"|47743|1402_3319231073|awin|"Autograph V-neck Denim Jumpsuit"|1402|||||Trashed
+"18 of 9486 (0.19%)"|47741|1402_3246704451|awin|"M&amp;s Collection Plus Splat Print Jumpsuit With Staynew"|1402|||||Trashed
+"19 of 9486 (0.20%)"|47740|1402_3272832547|awin|"M&amp;s Collection Petite Tencel Jumpsuit"|1402|||||Trashed
+"20 of 9486 (0.21%)"|47739|1402_3255512289|awin|"M&amp;s Collection Petite Animal Print Jumpsuit With Staynew"|1402|||||Trashed
+"21 of 9486 (0.22%)"|47650|1402_3336168821|awin|"Limited Edition Batik Print Jumpsuit"|1402|||||Trashed
+"22 of 9486 (0.23%)"|47651|1402_3318869733|awin|"Per Una Santorini Floral Jumpsuit"|1402|||||Trashed
+"23 of 9486 (0.24%)"|47649|1402_3246703875|awin|"M&amp;s Collection Splatter Print Zip Front Jumpsuit"|1402|||||Trashed
+"24 of 9486 (0.25%)"|47647|1402_3249134861|awin|"M&amp;s Collection Tencel 3/4 Sleeve Jumpsuit"|1402|||||Trashed
+"25 of 9486 (0.26%)"|47648|1402_3320613861|awin|"Twiggy For M&amp;s Collection V-neck Zipped Shoulder Jumpsuit"|1402|||||Trashed
+"26 of 9486 (0.27%)"|47646|1402_3291858257|awin|"M&amp;s Collection Palm Print Jumpsuit"|1402|||||Trashed
+"27 of 9486 (0.28%)"|47644|1402_3316853185|awin|"Indigo Collection Tile Print Jumpsuit"|1402|||||Trashed
+"28 of 9486 (0.30%)"|47645|1402_3312347409|awin|"M&amp;s Collection Tropical Print Jumpsuit"|1402|||||Trashed
+"29 of 9486 (0.31%)"|47643|1402_3316853223|awin|"M&amp;s Collection Cowl Neck Jumpsuit"|1402|||||Trashed
+"30 of 9486 (0.32%)"|47641|1402_3312347563|awin|"M&amp;s Collection Collared Neck Shirt Jumpsuit"|1402|||||Trashed
+"31 of 9486 (0.33%)"|47642|1402_3316853231|awin|"M&amp;s Collection Floral Jumpsuit"|1402|||||Trashed
+"32 of 9486 (0.34%)"|47640|1402_3316853287|awin|"Per Una V-neck Lula Print Jumpsuit"|1402|||||Trashed
+"33 of 9486 (0.35%)"|47639|1402_3316853321|awin|"Per Una Speziale Halterneck Belted Jumpsuit"|1402|||||Trashed
+"34 of 9486 (0.36%)"|47539|722_7709470|affilinet|"Debut Black Sequin Embellished Jumpsuit - . -"|722|||||Trashed
+"35 of 9486 (0.37%)"|47540|722_P5702791224287|affilinet|"Girls On Film Navy Kaleidoscope Floral Jumpsuit - . -"|722|||||Trashed
+"36 of 9486 (0.38%)"|47538|722_PV555F0B09C7E2B|affilinet|"Quiz Cream Lace Trim Jumpsuit - . -"|722|||||Trashed
+"37 of 9486 (0.39%)"|47537|722_D1552BLAB|affilinet|"Ariella London Black Melissa Jumpsuit - . -"|722|||||Trashed
+"38 of 9486 (0.40%)"|47536|722_P5055793912592|affilinet|"Hotsquash The Jumpsuit In Clever Fabric - . -"|722|||||Trashed
+"39 of 9486 (0.41%)"|47535|722_P5055793914442|affilinet|"Hotsquash The Jumpsuit In Clever Fabric - . -"|722|||||Trashed
+"40 of 9486 (0.42%)"|47534|722_P5055793914695|affilinet|"Hotsquash The Jumpsuit - . -"|722|||||Trashed
+"41 of 9486 (0.43%)"|47532|722_P5060384300870|affilinet|"Threads Black Zip Front Jumpsuit - . -"|722|||||Trashed
+"42 of 9486 (0.44%)"|47531|722_P5060384306049|affilinet|"Threads Black Wrap Over 2in1 Jumpsuit - . -"|722|||||Trashed
+"43 of 9486 (0.45%)"|47383|722_P5702791170782|affilinet|"Girls On Film Mineral Print Flared Leg Jumpsuit - . -"|722|||||Trashed
+"44 of 9486 (0.46%)"|47382|722_P5702791189289|affilinet|"Paper Dolls Black Wide Leg Lace Back Jumpsuit - . -"|722|||||Trashed
+"45 of 9486 (0.47%)"|47380|722_PV5509954D06108|affilinet|"Quiz Black Textured Gold Chain Jumpsuit - . -"|722|||||Trashed
+"46 of 9486 (0.48%)"|47381|722_P5702791214868|affilinet|"Paper Dolls White And Black Lace Top Jumpsuit - . -"|722|||||Trashed
+"47 of 9486 (0.50%)"|47379|722_P5702791156359|affilinet|"Girls On Film Black Zip Up Jumpsuit - . -"|722|||||Trashed
+"48 of 9486 (0.51%)"|47377|722_P5702791207402|affilinet|"Girls On Film Khaki 3/4 Sleeve Jumpsuit - . -"|722|||||Trashed
+"49 of 9486 (0.52%)"|47378|722_P5051741775646|affilinet|"Yumi Animal Print Jumpsuit. - . -"|722|||||Trashed
+"50 of 9486 (0.53%)"|47376|722_PV54EF1551BC894|affilinet|"Quiz Black Stripe V Neck Jumpsuit - . -"|722|||||Trashed
+"51 of 9486 (0.54%)"|47374|722_P5702791207457|affilinet|"Girls On Film Black Satin Culottes Jumpsuit - . -"|722|||||Trashed
+"52 of 9486 (0.55%)"|47375|722_P5060384305790|affilinet|"Threads Black Wrap Over Jumpsuit - . -"|722|||||Trashed
+"53 of 9486 (0.56%)"|47373|722_PV551BFD6BC33A4|affilinet|"Quiz Navy Palazzo Jumpsuit – . –"|722|||||Trashed
+"54 of 9486 (0.57%)"|47250|36467_129503320004|linkshare|"Reiss Arabella Monochrome Floral Dress"|36467|||||Trashed
+"55 of 9486 (0.58%)"|47249|36467_129500720004|linkshare|"Reiss Cheska Lace Detail Bodycon Dress"|36467|||||Trashed
+"56 of 9486 (0.59%)"|47248|36467_129505820004|linkshare|"Reiss Wenlock Patterned Boycon Dress"|36467|||||Trashed
+"57 of 9486 (0.60%)"|47247|36467_129500331004|linkshare|"Reiss Fox Textural Bodycon Dress"|36467|||||Trashed
+"58 of 9486 (0.61%)"|47233|36467_118501230000|linkshare|"Reiss Kallisti Blazer Dot Textured Blazer"|36467|||||Trashed
+"59 of 9486 (0.62%)"|47232|36467_118500320004|linkshare|"Reiss Leone Blazer Slim-fit Tailored Blazer"|36467|||||Trashed
+"60 of 9486 (0.63%)"|47230|36467_118502520004|linkshare|"Reiss Isla Blazer Longline Blazer"|36467|||||Trashed
+"61 of 9486 (0.64%)"|47231|36467_118502500006|linkshare|"Reiss Isla Blazer Longline Blazer"|36467|||||Trashed
+"62 of 9486 (0.65%)"|47228|36467_118404030000|linkshare|"Reiss Cyan Relaxed Tuxedo Blazer"|36467|||||Trashed
+"63 of 9486 (0.66%)"|47229|36467_118500520000|linkshare|"Reiss Bernice Blazer Scallop-detail Jacket"|36467|||||Trashed
+"64 of 9486 (0.67%)"|47226|36467_118403920002|linkshare|"Reiss Sullivan Check Print Blazer"|36467|||||Trashed
+"65 of 9486 (0.69%)"|47227|36467_118504920004|linkshare|"Reiss Piuma Relaxed-fit Blazer"|36467|||||Trashed
+"66 of 9486 (0.70%)"|47225|36467_118403930000|linkshare|"Reiss Sullivan Fitted Pinstripe Blazer"|36467|||||Trashed
+"67 of 9486 (0.71%)"|47224|36467_118502302004|linkshare|"Reiss Calma Blazer Single-breasted Blazer"|36467|||||Trashed
+"68 of 9486 (0.72%)"|47174|2291_3255766115|awin|"Two Tone Lace Dress"|2291|||||Trashed
+"69 of 9486 (0.73%)"|47173|2291_3249797489|awin|"Haze Print Dress"|2291|||||Trashed
+"70 of 9486 (0.74%)"|47172|2291_3256347499|awin|"Hydrangea Print Dress"|2291|||||Trashed
+"71 of 9486 (0.75%)"|47171|2291_3277562769|awin|"Rose Pink Shutter Dress"|2291|||||Trashed
+"72 of 9486 (0.76%)"|47170|2291_3235128901|awin|"Navy Sleevless Maxi Dress"|2291|||||Trashed
+"73 of 9486 (0.77%)"|47169|2291_3212001557|awin|"Black Peach Corded Lace Dress"|2291|||||Trashed
+"74 of 9486 (0.78%)"|47168|2291_3251239009|awin|"Pearl Spot Dress"|2291|||||Trashed
+"75 of 9486 (0.79%)"|47167|2291_3228216299|awin|"Cerise Lace Dress"|2291|||||Trashed
+"76 of 9486 (0.80%)"|47166|2291_3203159853|awin|"Cornflower Blue Lace Dress"|2291|||||Trashed
+"77 of 9486 (0.81%)"|47165|2291_3235574317|awin|"Turqouise Shutter Dress"|2291|||||Trashed
+"78 of 9486 (0.82%)"|47163|2291_3299040281|awin|"Pattern Maxi Dress"|2291|||||Trashed
+"79 of 9486 (0.83%)"|47164|2291_3277562771|awin|"Floral Maxi Dress"|2291|||||Trashed
+"80 of 9486 (0.84%)"|47162|2291_3244541723|awin|"Spot Belted Shift Dress"|2291|||||Trashed
+"81 of 9486 (0.85%)"|47161|2291_3217659367|awin|"Ivory Colour Block Dress"|2291|||||Trashed
+"82 of 9486 (0.86%)"|47160|2291_3314288065|awin|"Purple Lace Dress"|2291|||||Trashed
+"83 of 9486 (0.87%)"|47159|2291_3277562777|awin|"Stripe Maxi Dress"|2291|||||Trashed
+"84 of 9486 (0.89%)"|47157|2291_3319029903|awin|"Navy Maxi Dress"|2291|||||Trashed
+"85 of 9486 (0.90%)"|47158|2291_3302676861|awin|"Azure Maxi Dress"|2291|||||Trashed
+"86 of 9486 (0.91%)"|47156|2291_3299040273|awin|"Santorini Lace Dress"|2291|||||Trashed
+"87 of 9486 (0.92%)"|47147|24797_5054323068815|linkshare|"Contrast Panel Scuba Jersey Pencil Skirt"|24797|||||Trashed
+"88 of 9486 (0.93%)"|47148|24797_5054323072591|linkshare|"Patchwork Denim A-line Skirt"|24797|||||Trashed
+"89 of 9486 (0.94%)"|47146|24797_5054323020370|linkshare|"Zip Leather Pencil Skirt"|24797|||||Trashed
+"90 of 9486 (0.95%)"|47145|24797_5054323017653|linkshare|"Zip Leather Pencil Skirt"|24797|||||Trashed
+"91 of 9486 (0.96%)"|47141|24797_5054323040316|linkshare|"Pleated Lace Skirt"|24797|||||Trashed
+"92 of 9486 (0.97%)"|47139|24797_5054323026839|linkshare|"Pleated Maxi Skirt"|24797|||||Trashed
+"93 of 9486 (0.98%)"|47140|24797_5054323029694|linkshare|"Check Lace Midi Skirt"|24797|||||Trashed
+"94 of 9486 (0.99%)"|47138|24797_5054323000884|linkshare|"Pleated Lace Maxi Skirt"|24797|||||Trashed
+"95 of 9486 (1.00%)"|47137|24797_5054323012405|linkshare|"Scallop Lace Skirt"|24797|||||Trashed
+"96 of 9486 (1.01%)"|47136|24797_5054323088691|linkshare|"Flower Print Maxi Skirt"|24797|||||Trashed
+"97 of 9486 (1.02%)"|47135|24797_5054323087601|linkshare|"Painted Stripe Print Pleated Maxi Skirt"|24797|||||Trashed
+"98 of 9486 (1.03%)"|47134|24797_5054323087663|linkshare|"Floral Sketch Print Pleated Maxi Skirt"|24797|||||Trashed
+"99 of 9486 (1.04%)"|47133|24797_5054323087427|linkshare|"Painted Flower Print Pleated Maxi Skirt"|24797|||||Trashed
+"100 of 9486 (1.05%)"|47132|24797_5054323090182|linkshare|"Full Skirt With Ribbon Applique"|24797|||||Trashed
+"101 of 9486 (1.06%)"|47130|24797_5054323083139|linkshare|"Dot Print Pleated Maxi Skirt"|24797|||||Trashed
+"102 of 9486 (1.08%)"|47131|24797_5054323085010|linkshare|"Striped Jacquard Jersey Midi Skirt"|24797|||||Trashed
+"103 of 9486 (1.09%)"|47128|24797_5054323062165|linkshare|"Pleated Skirt"|24797|||||Trashed
+"104 of 9486 (1.10%)"|47129|24797_5054323074007|linkshare|"Colourblocked Full Skirted Maxi Skirt"|24797|||||Trashed
+"105 of 9486 (1.11%)"|46651|24797_5054323063711|linkshare|"Bold Neon Stripe Jumper"|24797|||||Trashed
+"106 of 9486 (1.12%)"|46650|24797_5054323072850|linkshare|"Chevron Stripe Knit Jumper"|24797|||||Trashed
+"107 of 9486 (1.13%)"|46649|24797_5054323066071|linkshare|"Graphic Stripe Shirt Back Jumper"|24797|||||Trashed
+"108 of 9486 (1.14%)"|46648|24797_5054323067351|linkshare|"Lace Stripe Knit Cardigan"|24797|||||Trashed
