@@ -1506,3 +1506,17 @@ a.preview-anchor-text {
 .competition-captcha {
     font-family: 'Open Sans', sans-serif;
 }
+.search-section .more-results a[href]{
+    background: #c5aa49;
+    background: -moz-linear-gradient(top, #c5aa49 0%, #a0862a 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c5aa49), color-stop(100%,#a0862a));
+    background: -webkit-linear-gradient(top, #c5aa49 0%,#a0862a 100%);
+    background: -o-linear-gradient(top, #c5aa49 0%,#a0862a 100%);
+    background: -ms-linear-gradient(top, #c5aa49 0%,#a0862a 100%);
+    background: linear-gradient(to bottom, #c5aa49 0%, #a0862a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c5aa49', endColorstr='#a0862a',GradientType=0 );
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 4px;
+}
