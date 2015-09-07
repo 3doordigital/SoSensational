@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
       Source: http://timschlechter.github.io/bootstrap-tagsinput/examples/
      -------------------------------------------------------------------------*/
     var tagsInputField = $("#post_tags");
-    var tagsLimit = 5;
+    var tagsLimit = 6;
            
     if (tagsInputField.length) {
         tagsInputField.tagsinput({
