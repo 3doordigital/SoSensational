@@ -108,7 +108,7 @@ jQuery(document).ready(function($) {
            usedTags++;
            tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags');
            if(usedTags > tagsLimit){
-                usedTags--;
+                --usedTags;
                 e.cancel = true;
            }
         });
