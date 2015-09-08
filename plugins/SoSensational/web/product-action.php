@@ -111,8 +111,8 @@ if ($countProducts[0]->num < $productsLimit + 1) {
 
     // update post tags
     $postAuthor = get_post_field('post_author', $post_id);
-    $bbProductBrand = get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1));
-    wp_set_post_tags($post_id, array($_POST['post_tags'],current($bbProductBrand)->post_title));
+    $bbProductBrand = current(get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1)));
+    wp_set_post_tags($post_id, array($_POST['post_tags'],$bbProductBrand->post_title));
 
     foreach ($_POST['sosensational_options'] as $key => $value) {
         if ($key == "product_link") {
