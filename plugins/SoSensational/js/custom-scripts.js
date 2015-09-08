@@ -86,7 +86,8 @@ jQuery(document).ready(function($) {
         tagsInputField.tagsinput({
            maxTags: tagsLimit,
            trimValue: true
-        });        
+        });
+        usedTags = tagsInputField.tagsinput('items').length;
     }
     
     /*-------------------------------------------------------------------------- 
@@ -100,21 +101,19 @@ jQuery(document).ready(function($) {
      -------------------------------------------------------------------------*/
     // Check if a user is on the single product page
     if (tagsInputField.length) {
-        usedTags = tagsLimit - tagsInputField.tagsinput('items').length;
-
         var tagsCounter = $("#tags-counter");
         tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left'); 
 
-        tagsInputField .on('itemAdded', function(e) {       
-           usedTags--;
+        tagsInputField .on('beforeItemAdd', function(e) {       
+           usedTags++;
            tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left');
-           if(usedTags >= tagsLimit){
-               tagsInputField.tagsinput('remove',tagsInputField.tagsinput('items').length -1);
+           if(usedTags > tagsLimit){
+               e.cancel = true;
            }
         });
 
         tagsInputField .on('itemRemoved', function(e) {       
-           usedTags++;
+           usedTags--;
            tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left'); 
            return usedTags;
         });    
