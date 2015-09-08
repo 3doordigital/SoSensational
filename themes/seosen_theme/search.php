@@ -42,6 +42,7 @@
         'posts_per_page'    => 3,
     );
     $bbQuery = new WP_Query($bbArgs);  
+    
     relevanssi_do_query($bbQuery);      
     
     if ($bbQuery->have_posts()) {
@@ -100,6 +101,7 @@
     $searchPage->products = $products;
     $searchPage->bbProducts = $bbProducts;
     $searchPage->blogPosts = $blogPosts;
+    
 
     if ( ! $products && ! $bbProducts && ! $blogPosts ) {
         echo $noResultsPage;

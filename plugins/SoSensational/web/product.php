@@ -93,7 +93,6 @@ endif;
     <span class="input-group-addon input-width" id="basic-addon1">Product Tags: <small id="tags-counter"></small></span>
     <input type="text" name="post_tags" id="post_tags" data-role="tagsinput" value="<?php echo $post_tags ;?>" class="required form-control" aria-describedby="basic-addon1" placeholder="(e.g. black dress)" disable/>
 </div>
-(please include brand name as a tag)
 <br />
 
 
