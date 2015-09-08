@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
       Source: http://timschlechter.github.io/bootstrap-tagsinput/examples/
      -------------------------------------------------------------------------*/
     var tagsInputField = $("#post_tags");
-    var tagsLimit = 6;
+    var tagsLimit = 5;
     var usedTags = 0;
            
     if (tagsInputField.length) {
@@ -101,9 +101,6 @@ jQuery(document).ready(function($) {
      -------------------------------------------------------------------------*/
     // Check if a user is on the single product page
     if (tagsInputField.length) {
-        if(!tagsInputField.tagsinput('items')){
-            tagsLimit = 5;          
-        }
         var tagsCounter = $("#tags-counter");
         tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
 
