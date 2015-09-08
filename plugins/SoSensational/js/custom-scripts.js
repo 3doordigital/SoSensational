@@ -80,6 +80,7 @@ jQuery(document).ready(function($) {
      -------------------------------------------------------------------------*/
     var tagsInputField = $("#post_tags");
     var tagsLimit = 6;
+    var usedTags = 0;
            
     if (tagsInputField.length) {
         tagsInputField.tagsinput({
@@ -99,27 +100,28 @@ jQuery(document).ready(function($) {
      -------------------------------------------------------------------------*/
     // Check if a user is on the single product page
     if (tagsInputField.length) {
-        var tagsLeftTmp = tagsLimit - tagsInputField.tagsinput('items').length;
+        usedTags = tagsLimit - tagsInputField.tagsinput('items').length;
 
         var tagsCounter = $("#tags-counter");
-        tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+        tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left'); 
 
         tagsInputField .on('itemAdded', function(e) {       
-           tagsLeftTmp--;
-           tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left');
-           if(parseInt(tagsLeftTmp) <= 0){
-               tagsLeftTmp = 0;
+           usedTags--;
+           tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left');
+           if(usedTags >= 6){
+               usedTags = 6;
                return false;
            }
-           return tagsLeftTmp;
+           return usedTags;
         });
 
         tagsInputField .on('itemRemoved', function(e) {       
-           tagsLeftTmp++;
-           tagsCounter.html(parseInt(tagsLeftTmp) + ' of ' + tagsLimit + ' tags left'); 
-           return tagsLeftTmp;
+           usedTags++;
+           tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left'); 
+           return usedTags;
         });    
     }else{
+        usedTags = 5
         tagsLimit = 5;
     }
     /*--------------------------------------------------------------------------
