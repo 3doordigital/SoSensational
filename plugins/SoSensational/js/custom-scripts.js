@@ -102,19 +102,20 @@ jQuery(document).ready(function($) {
     // Check if a user is on the single product page
     if (tagsInputField.length) {
         var tagsCounter = $("#tags-counter");
-        tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left'); 
+        tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
 
         tagsInputField .on('beforeItemAdd', function(e) {       
            usedTags++;
-           tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left');
+           tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags');
            if(usedTags > tagsLimit){
+                usedTags--
                e.cancel = true;
            }
         });
 
         tagsInputField .on('itemRemoved', function(e) {       
            usedTags--;
-           tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left'); 
+           tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
            return usedTags;
         });    
     }else{
