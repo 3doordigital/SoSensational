@@ -109,6 +109,7 @@ jQuery(document).ready(function($) {
            tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags');
            if(usedTags > tagsLimit){
                --usedTags;
+               tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
                 e.cancel = true;
            }
         });
