@@ -106,7 +106,10 @@ jQuery(document).ready(function($) {
 
         tagsInputField .on('itemAdded', function(e) {       
            tagsLeftTmp = tagsLeftTmp - 1;
-           tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+           tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left');
+           if(tagsLeftTmp === 0){
+               return false;
+           }
            return tagsLeftTmp;
         });
 
@@ -115,6 +118,8 @@ jQuery(document).ready(function($) {
            tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
            return tagsLeftTmp;
         });    
+    }else{
+        tagsLimit = 5;
     }
     /*--------------------------------------------------------------------------
       Ajax call for deleting products from /view-products/
