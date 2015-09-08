@@ -108,8 +108,8 @@ jQuery(document).ready(function($) {
         tagsInputField .on('itemAdded', function(e) {       
            usedTags--;
            tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left');
-           if(usedTags >= 6){
-               usedTags = 6;
+           if(usedTags >= tagsLimit){
+               tagsInputField.tagsinput('remove',tagsInputField.tagsinput('items').length -1);
                return false;
            }
            return usedTags;
