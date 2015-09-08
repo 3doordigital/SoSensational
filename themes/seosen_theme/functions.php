@@ -557,16 +557,16 @@ function addRewriteRules($rules)
 
 add_filter('rewrite_rules_array', 'addRewriteRules');
 
-//function custom_update_posts_tags(){
-//        $posts_array = get_posts( array(
-//                    'post_type' => 'products',
-//                    'posts_per_page' => -1
-//                )
-//            );
-//            foreach ($posts_array as $one_post){
-//                $postAuthor = get_post_field('post_author', $one_post->ID);
-//                $bbProductBrand = get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1));
-//                wp_set_post_tags( $one_post->ID, current($bbProductBrand)->post_title, true );
-//            }
-//}
-//custom_update_posts_tags();
+function custom_update_posts_tags(){
+        $posts_array = get_posts( array(
+                    'post_type' => 'products',
+                    'posts_per_page' => -1
+                )
+            );
+            foreach ($posts_array as $one_post){
+                $postAuthor = get_post_field('post_author', $one_post->ID);
+                $bbProductBrand = get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1));
+                wp_set_post_tags( $one_post->ID, current($bbProductBrand)->post_title, true );
+            }
+}
+custom_update_posts_tags();
