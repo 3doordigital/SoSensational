@@ -107,7 +107,8 @@ jQuery(document).ready(function($) {
         tagsInputField .on('itemAdded', function(e) {       
            tagsLeftTmp = tagsLeftTmp - 1;
            tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left');
-           if(tagsLeftTmp === 0){
+           if(tagsLeftTmp <= 0){
+               tagsLeftTmp = 0;
                return false;
            }
            return tagsLeftTmp;
