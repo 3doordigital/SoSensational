@@ -569,4 +569,4 @@ function custom_update_posts_tags(){
                 wp_set_post_tags( $one_post->ID, current($bbProductBrand)->post_title, true );
             }
 }
-custom_update_posts_tags();
+//custom_update_posts_tags();
