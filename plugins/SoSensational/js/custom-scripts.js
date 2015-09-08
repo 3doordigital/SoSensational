@@ -110,9 +110,7 @@ jQuery(document).ready(function($) {
            tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags left');
            if(usedTags >= tagsLimit){
                tagsInputField.tagsinput('remove',tagsInputField.tagsinput('items').length -1);
-               return false;
            }
-           return usedTags;
         });
 
         tagsInputField .on('itemRemoved', function(e) {       
@@ -121,7 +119,6 @@ jQuery(document).ready(function($) {
            return usedTags;
         });    
     }else{
-        usedTags = 5
         tagsLimit = 5;
     }
     /*--------------------------------------------------------------------------
