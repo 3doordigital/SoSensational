@@ -8,12 +8,16 @@ do_action('ss_css');
     if(isset($_GET['product_id'])){
         $product_id=$_GET['product_id'];
         $meta=get_post_meta($product_id);
-		$the_post = get_post($product_id);
-		$post_tags = wp_get_post_tags( $product_id, array( 'fields' => 'names' ) );
-		$post_tags = implode(', ',$post_tags); 
-		if ($the_post->post_author != $current_user->ID) {
-			die("You are not the product owner!");	
-		}
+        $the_post = get_post($product_id);
+        $post_tags = wp_get_post_tags( $product_id, array( 'fields' => 'names' ) );
+        $postAuthor = get_post_field('post_author', $the_post->ID);
+        $bbProductBrand = current(get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1)));
+        $bbProductBrandTitle = $bbProductBrand->post_title;
+        $post_tags = implode(', ',$post_tags); 
+        $post_tags = str_replace($bbProductBrandTitle, '', $post_tags);
+        if ($the_post->post_author != $current_user->ID) {
+                die("You are not the product owner!");	
+        }
     }  
 
 $error_code=isset($_GET['error_code']) ? $_GET['error_code'] : "";
@@ -92,6 +96,7 @@ endif;
 <div class="input-group">
     <span class="input-group-addon input-width" id="basic-addon1">Product Tags: <small id="tags-counter"></small></span>
     <input type="text" name="post_tags" id="post_tags" data-role="tagsinput" value="<?php echo $post_tags ;?>" class="required form-control" aria-describedby="basic-addon1" placeholder="(e.g. black dress)" disable/>
+    <input type="hidden" name="brand_name" id="brand_name" value="<?php echo $bbProductBrandTitle; ?>">
 </div>
 <br />
 
