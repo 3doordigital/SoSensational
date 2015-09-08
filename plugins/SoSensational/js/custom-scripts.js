@@ -105,9 +105,9 @@ jQuery(document).ready(function($) {
         tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
 
         tagsInputField .on('itemAdded', function(e) {       
-           tagsLeftTmp = tagsLeftTmp - 1;
+           tagsLeftTmp--;
            tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left');
-           if(tagsLeftTmp <= 0){
+           if(parseInt(tagsLeftTmp) <= 0){
                tagsLeftTmp = 0;
                return false;
            }
@@ -115,8 +115,8 @@ jQuery(document).ready(function($) {
         });
 
         tagsInputField .on('itemRemoved', function(e) {       
-           tagsLeftTmp = tagsLeftTmp + 1;
-           tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+           tagsLeftTmp++;
+           tagsCounter.html(parseInt(tagsLeftTmp) + ' of ' + tagsLimit + ' tags left'); 
            return tagsLeftTmp;
         });    
     }else{
