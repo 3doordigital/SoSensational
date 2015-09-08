@@ -101,6 +101,9 @@ jQuery(document).ready(function($) {
      -------------------------------------------------------------------------*/
     // Check if a user is on the single product page
     if (tagsInputField.length) {
+        if(!tagsInputField.tagsinput('items')){
+            tagsLimit = 5;          
+        }
         var tagsCounter = $("#tags-counter");
         tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
 
@@ -118,10 +121,7 @@ jQuery(document).ready(function($) {
            usedTags--;
            tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
            return usedTags;
-        });    
-    }else{
-        tagsLimit = 5;
-    }
+        }); 
     /*--------------------------------------------------------------------------
       Ajax call for deleting products from /view-products/
      -------------------------------------------------------------------------*/
