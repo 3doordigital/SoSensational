@@ -4,7 +4,7 @@
     $noResultsPage = new Template('no-results-page.php');
     
     $shopArgs = array(
-        's' =>   get_query_var('s'),
+        's' => htmlentities(get_query_var('s')),
         'post_type' =>  'wp_aff_products',
         'posts_per_page'    => 3,
     );
@@ -35,9 +35,8 @@
         wp_reset_postdata();
     }
     
-    
     $bbArgs = array(
-        's' =>   get_query_var('s'),
+        's' => htmlentities(get_query_var('s')),
         'post_type' =>  array('products'),
         'posts_per_page'    => 3,
     );
@@ -69,7 +68,7 @@
     
     
     $blogArgs = array(
-        's' =>   get_query_var('s'),
+        's' => htmlentities(get_query_var('s')),
         'post_type' =>  array('post'),
         'posts_per_page'    => 3,
     );
