@@ -79,13 +79,15 @@ jQuery(document).ready(function($) {
       Source: http://timschlechter.github.io/bootstrap-tagsinput/examples/
      -------------------------------------------------------------------------*/
     var tagsInputField = $("#post_tags");
-    var tagsLimit = 6;
+    var tagsLimit = 5;
+    var usedTags = 0;
            
     if (tagsInputField.length) {
         tagsInputField.tagsinput({
            maxTags: tagsLimit,
            trimValue: true
-        });        
+        });
+        usedTags = tagsInputField.tagsinput('items').length;
     }
     
     /*-------------------------------------------------------------------------- 
@@ -99,23 +101,24 @@ jQuery(document).ready(function($) {
      -------------------------------------------------------------------------*/
     // Check if a user is on the single product page
     if (tagsInputField.length) {
-        var tagsLeftTmp = tagsLimit - tagsInputField.tagsinput('items').length;
-
         var tagsCounter = $("#tags-counter");
-        tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
+        tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
 
-        tagsInputField .on('itemAdded', function(e) {       
-           tagsLeftTmp = tagsLeftTmp - 1;
-           tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
-           return tagsLeftTmp;
+        tagsInputField .on('beforeItemAdd', function(e) {       
+           usedTags++;
+           tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags');
+           if(usedTags > tagsLimit){
+               --usedTags;
+               tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
+                e.cancel = true;
+           }
         });
 
         tagsInputField .on('itemRemoved', function(e) {       
-           tagsLeftTmp = tagsLeftTmp + 1;
-           tagsCounter.html(tagsLeftTmp + ' of ' + tagsLimit + ' tags left'); 
-           return tagsLeftTmp;
-        });    
-    }
+           usedTags--;
+           tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
+           return usedTags;
+        }); 
     /*--------------------------------------------------------------------------
       Ajax call for deleting products from /view-products/
      -------------------------------------------------------------------------*/
@@ -236,7 +239,7 @@ jQuery(document).ready(function($) {
         });
     }
     
-});
+}});
 
 
 /*------------------------------------------------------------------------------

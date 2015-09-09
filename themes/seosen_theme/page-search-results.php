@@ -8,7 +8,7 @@ parse_str($query_string, $argsArray);
 switch($argsArray['search-section']) {
     case 'shop' :
         $args = array(
-            's' =>   $argsArray['search-term'],
+            's' => htmlentities($argsArray['search-term']),
             'post_type' =>  array('wp_aff_products'),
             'posts_per_page'    => 12,
             'paged' => $argsArray['page-no'],
@@ -47,7 +47,7 @@ switch($argsArray['search-section']) {
         
     case 'brands' :
         $args = array(
-            's' =>   $argsArray['search-term'],
+            's' =>   htmlentities($argsArray['search-term']),
             'post_type' =>  array('products'),
             'posts_per_page'    => 12,
             'post_status'   =>  array('publish', 'pending'),
@@ -88,7 +88,7 @@ switch($argsArray['search-section']) {
         
     case 'blog' :
         $args = array(
-            's' =>   $argsArray['search-term'],
+            's' =>   htmlentities($argsArray['search-term']),
             'post_type' =>  array('post'),
             'posts_per_page'    => 12,
             'paged' => $argsArray['page-no'],

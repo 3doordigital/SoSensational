@@ -110,7 +110,8 @@ if ($countProducts[0]->num < $productsLimit + 1) {
 
 
     // update post tags
-    wp_set_post_tags($post_id, $_POST['post_tags']);
+    $postAuthor = get_post_field('post_author', $post_id);
+    wp_set_post_tags($post_id, array($_POST['post_tags'],$_POST['brand_name']));
 
     foreach ($_POST['sosensational_options'] as $key => $value) {
         if ($key == "product_link") {

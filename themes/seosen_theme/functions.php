@@ -570,3 +570,17 @@ function custom_update_posts_tags(){
             }
 }
 //custom_update_posts_tags();
+
+add_filter('relevanssi_remove_punctuation', 'saveampersands_1', 9);
+function saveampersands_1($a) {
+    $a = str_replace('&amp;', 'AMPERSAND', $a);
+    $a = str_replace('&', 'AMPERSAND', $a);
+    return $a;
+}
+ 
+add_filter('relevanssi_remove_punctuation', 'saveampersands_2', 11);
+function saveampersands_2($a) {
+    $a = str_replace('AMPERSAND', '&', $a);
+    return $a;
+}
+

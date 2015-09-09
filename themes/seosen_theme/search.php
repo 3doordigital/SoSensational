@@ -4,7 +4,7 @@
     $noResultsPage = new Template('no-results-page.php');
     
     $shopArgs = array(
-        's' =>   get_query_var('s'),
+        's' => htmlentities(get_query_var('s')),
         'post_type' =>  'wp_aff_products',
         'posts_per_page'    => 3,
     );
@@ -35,13 +35,13 @@
         wp_reset_postdata();
     }
     
-    
     $bbArgs = array(
-        's' =>   get_query_var('s'),
+        's' => htmlentities(get_query_var('s')),
         'post_type' =>  array('products'),
         'posts_per_page'    => 3,
     );
     $bbQuery = new WP_Query($bbArgs);  
+    
     relevanssi_do_query($bbQuery);      
     
     if ($bbQuery->have_posts()) {
@@ -68,7 +68,7 @@
     
     
     $blogArgs = array(
-        's' =>   get_query_var('s'),
+        's' => htmlentities(get_query_var('s')),
         'post_type' =>  array('post'),
         'posts_per_page'    => 3,
     );
@@ -100,6 +100,7 @@
     $searchPage->products = $products;
     $searchPage->bbProducts = $bbProducts;
     $searchPage->blogPosts = $blogPosts;
+    
 
     if ( ! $products && ! $bbProducts && ! $blogPosts ) {
         echo $noResultsPage;
