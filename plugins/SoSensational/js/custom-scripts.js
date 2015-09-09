@@ -144,7 +144,8 @@ jQuery(document).ready(function($) {
                 window.location.href = window.location.href + queryVar;
             }               
         });
-    });  
+    }); 
+}
      
     /*--------------------------------------------------------------------------
      Enable submit button in a form that changed on categories edit page.
@@ -239,7 +240,7 @@ jQuery(document).ready(function($) {
         });
     }
     
-}});
+});
 
 
 /*------------------------------------------------------------------------------
