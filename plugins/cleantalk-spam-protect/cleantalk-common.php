@@ -1,6 +1,6 @@
 <?php
 
-$ct_agent_version = 'wordpress-518';
+$ct_agent_version = 'wordpress-523';
 $ct_plugin_name = 'Anti-spam by CleanTalk';
 $ct_checkjs_frm = 'ct_checkjs_frm';
 $ct_checkjs_register_form = 'ct_checkjs_register_form';
@@ -74,12 +74,6 @@ $ct_post_data_authnet_label = 's2member_pro_authnet_registration';
 // Form time load label  
 $ct_formtime_label = 'ct_formtime'; 
 
-// Plugin's options 
-$ct_options = null;
-
-// Plugin's data 
-$ct_data = null;
-
 // Post without page load
 $ct_direct_post = 0;
 
@@ -98,6 +92,10 @@ $ct_notice_autokey_label = 'ct_autokey';
 
 // Apikey automatic getting error text
 $ct_notice_autokey_value = '';
+
+$ct_options=ct_get_options();
+$ct_data=ct_get_data();
+
 
 /**
  * Public action 'plugins_loaded' - Loads locale, see http://codex.wordpress.org/Function_Reference/load_plugin_textdomain
@@ -132,6 +130,9 @@ function ct_init_session() {
  */
 function ct_base_call($params = array()) {
     global $wpdb, $ct_agent_version, $ct_formtime_label, $ct_options, $ct_data;
+    
+    $ct_options=ct_get_options();
+	$ct_data=ct_get_data();
 
     require_once('cleantalk.class.php');
         
@@ -229,6 +230,9 @@ function submit_time_test() {
  */
 function get_sender_info() {
     global $ct_direct_post, $ct_options, $ct_data;
+    
+    $ct_options = ct_get_options();
+    $ct_data = ct_get_data();
 
     $php_session = session_id() != '' ? 1 : 0;
     
@@ -307,7 +311,8 @@ function ct_cookies_test ($test = false) {
  */
 function ct_get_checkjs_value($random_key = false) {
     global $ct_options, $ct_data;
-    //$ct_data=ct_get_data();
+    $ct_options = ct_get_options();
+    $ct_data = ct_get_data();
 
     if ($random_key) {
         $keys = $ct_data['js_keys'];
@@ -435,6 +440,9 @@ function ct_hash($new_hash = '') {
  */
 function ct_feedback($hash, $message = null, $allow) {
     global $ct_options, $ct_data;
+    
+    $ct_options = ct_get_options();
+    $ct_data = ct_get_data();
 
     require_once('cleantalk.class.php');
 
@@ -472,6 +480,9 @@ function ct_feedback($hash, $message = null, $allow) {
  */
 function ct_send_feedback($feedback_request = null) {
     global $ct_options, $ct_data;
+    
+    $ct_options = ct_get_options();
+    $ct_data = ct_get_data();
 
     if (empty($feedback_request) && isset($_SESSION['feedback_request']) && preg_match("/^[a-z0-9\;\:]+$/", $_SESSION['feedback_request'])) {
 	$feedback_request = $_SESSION['feedback_request'];
@@ -514,6 +525,9 @@ function ct_send_feedback($feedback_request = null) {
  */
 function ct_do_this_hourly() {
     global $ct_options, $ct_data;
+    
+    $ct_options = ct_get_options();
+    $ct_data = ct_get_data();
     // do something every hour
 
     if (!isset($ct_options))
@@ -532,6 +546,9 @@ function ct_do_this_hourly() {
  */
 function delete_spam_comments() {
     global $pagenow, $ct_options, $ct_data;
+    
+    $ct_options = ct_get_options();
+    $ct_data = ct_get_data();
     
     if ($ct_options['remove_old_spam'] == 1) {
         $last_comments = get_comments(array('status' => 'spam', 'number' => 1000, 'order' => 'ASC'));
@@ -630,7 +647,7 @@ $ct_check_post_result=false;
 function ct_check_array_keys_loop($key)
 {
 	global $ct_check_post_result;
-	$strict=Array('pass','login','pwd');
+	$strict=Array('pass','login','pwd','members_search_submit');
 	for($i=0;$i<sizeof($strict);$i++)
 	{
 		if(stripos($key,$strict[$i])!==false)
@@ -657,4 +674,24 @@ function ct_check_array_keys($arr)
 	return $ct_check_post_result;
 }
 
+function check_url_exclusions()
+{
+	global $cleantalk_url_exclusions;
+	$result=false;
+	if(isset($cleantalk_url_exclusions) && sizeof($cleantalk_url_exclusions)>0)
+	{
+		foreach($cleantalk_url_exclusions as $key=>$value)
+		{
+			if(stripos($_SERVER['REQUEST_URI'], $value)!==false)
+			{
+				$result=true;
+			}
+		}
+	}
+	else
+	{
+		$result=false;
+	}
+	return $result;
+}
 ?>

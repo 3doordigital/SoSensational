@@ -1,13 +1,13 @@
 === Anti-Spam by CleanTalk - No Captcha, no comments & registrations spam ===
 Contributors: znaeff, shagimuratov, vlad-cleantalk
-Tags: anti-spam, antispam, bbpress, buddypress, captcha, cf7 spam, comments, contact form spam, signup, spam, spammers, spammy, WooCommerce, wordpress spam, booking spam, order spam, subscriptions spam, gravity spam, jetpack, bots, contact form 7, contact form, registrations, ninja, Fast Secure Contact, Gravity forms, formidable, mailchimp, s2member, protection
+Tags: anti-spam, antispam, bbpress, buddypress, captcha, capcha, captha, catcha, cf7 spam, comments, contact form spam, signup, spam, spammers, spammy, woocommerce, wordpress spam, booking, order, subscription, gravity spam, jetpack, bots, contact form 7, contact form, registrations, ninja, Fast Secure Contact, Gravity forms, formidable, mailchimp, s2member, protection, protect, email, akismet, plugin, contact, recaptcha, google captcha, math, security, login, blacklist, cache, prevent, wordpress, User Frontend, bulk delete, bulk remove, cloudflare, widget 
 Requires at least: 3.0
 Tested up to: 4.3
-Stable tag: 5.18
+Stable tag: 5.23
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Max power, all-in-one, premium anti-spam. No comments & registrations spam, no contact spam, protects any forms. Just install and forget spam. 
+Max power, all-in-one, premium anti-spam. No comments spam & registrations spam, no email spam, protects any forms. Just install and forget spam. 
 
 == Description ==
 No CAPTCHA, no questions, no counting animals, no puzzles, no math and no spam bots.
@@ -22,8 +22,12 @@ No CAPTCHA, no questions, no counting animals, no puzzles, no math and no spam b
 1. Stops spam in widgets.
 1. Check existing comments for spam.
 
-= Includes comments spam protection =
-Supports native WordPress, JetPack comments and any other comments plugins. Plugin moves spam comments to SPAM folder or you can set option to silent ban spam comments.
+= Public reviews =
+> Using on WPLift was a great test as we receive huge amounts of spam.
+> *Oliver Dale. <a href="http://wplift.com/wordpress-anti-spam-plugin" target="_blank">WPLift.com</a>.*
+
+= Comments spam protection =
+Supports native WordPress, JetPack comments and any other comments plugins. Plugin moves spam comments to SPAM folder or set option to silent ban spam comments.
 
 = Spam bots registrations filter =
 Filers spam bots on registrations forms WordPress, BuddyPress, bbPress, S2Member, WooCommerce and any other registrations plugins.
@@ -39,13 +43,17 @@ Plugin blocks spam emails via any themes (built-in) contact forms. With AJAX for
 
 = Other spam filters =
 * WordPress Landing Pages.
+* WP User Frontend. 
 * Any WordPress form (option 'Custom contact forms'). 
 
 = Compatible with WordPress cache plugins =
 * W3 Total Cache, Quick Cache, WP Fastest Cache, Hyper Cache, WP Super cache and any other cache plugins.
 
-= Check existing comments for spam =
-With the help of anti-spam by CleanTalk you can check existing comments, to find and quickly delete spam comments. For use this function, go to WP Console->Comments->Find spam comments.
+= Check existing comments for spam. Bulk comments removal =
+With the help of anti-spam by CleanTalk you can check existing comments, to find and quickly delete spam comments at once. For use this function, go to WP Console->Comments->Find spam comments.
+
+= Check existing users for spam. Bulk accounts removal =
+With the help of anti-spam by CleanTalk you can check existing comments, to find and quickly delete spam users at once. For use this function, go to WP Console->Users->Check for spam.
 
 = Low false/positive rate =
 This plugin uses multiple anti-spam tests to filter spam bots with lower false/positive rate as possible. Multiple anti-spam tests avoid false/positive blocks for real website visitors even if one of the tests failed.
@@ -75,7 +83,7 @@ CleanTalk is premium anti-spam service for WordPress, please look at the <a href
  * Traffic acquisition and user loyalty.
  * 24/7 technical support.
  * Clear statistics.
- * No captcha, puzzles, etc.
+ * No captcha (reCaptcha), puzzles, etc.
  * Free mobile app to control anti-spam function at your website.
 
 = Additional features =
@@ -92,7 +100,6 @@ At the sight of CAPTCHA and after input errors, many visitors leave the resource
 Audience engagement plugin <a href="http://wordpress.org/plugins/feedweb/">Feedweb</a>
 
 > Max power, all-in-one, premium anti-spam WordPress plugin. No comments & registrations spam, no contact spam, protects any forms. Just install and forget spam. 
-
 
 == Installation ==
 = Setup anti spam plugin =
@@ -143,7 +150,7 @@ Plugin by default pass pingbacks without any checks. All trackbacks will be bloc
 = Can I use CleanTalk with Akismet? =
 Sure, you can use CleanTalk with Akismet. In this case probably you will have bigger false/positive rate (when legitimate comments/signups denies), but you will have stronger antispam protection at website.
 
-= Should I use another anti-spam tools (Captcha)? =
+= Should I use another anti-spam tools (Captcha, reCaptcha and etc.)? =
 CleanTalk stops up to 100% of spam bots, so you can disable other anti-spam plugins (especially CAPTCHA like anti-spam plugins). In some cases several anti-spam plugins can conflict, so it will be better use just one plugin.  
 
 = Is the plugin WordPress MultiUser (WPMU or WordPress network) compatible? =
@@ -178,9 +185,6 @@ After activation CleanTalk sends test message with email stop_email@example.com.
 = Compatible with Cloudflare? = 
 CleanTalk is fully compatible with CloudFlare. Service doesn't filter CloudFlares IP's (AS13335) over blacklists database, so in this way plugin/service filters spam bots uses other anti spam tests.
 
-= Can I use Akismet and CleanTalk to protect my website against spam bots? =
-Sure, you can. You can use CleanTalk and any backend anti-spam tools to protect your website.
-
 = Can i use CleanTalk functionality in my plugins? =
 Yes, you can. Just use following snippet:
 
@@ -197,6 +201,29 @@ Yes, you can. Just use following snippet:
 $res now contents array with two parameters:
   * $res['allow'] - is request allowed (1) or not (0)
   * $res['comment'] - comment for our server's decision.
+
+= I see two loads of script cleantalk_nocache.js. Why are you use it? =
+This scrupt is using for AJAX JavaScript checking. Different themes use different mechanisms of loading, so we use two method for loading our script. If you absolutely knows what are you doing, you can switch one of methods off be defining constants in your wp-config.php file:
+
+    define('CLEANTALK_AJAX_USE_BUFFER', false); //false - don't use output buffering to include AJAX script, true - use it
+
+or
+
+	define('CLEANTALK_AJAX_USE_FOOTER_HEADER', false); //false - don't use wp_footer() and wp_header() for including AJAX script, true - use it
+
+= Can i add exclusions for some pages of my site? =
+Yes, you can. Add in you config.php file, before defining database constants, this string:
+
+	$cleantalk_url_exclusions = Array('url1', 'url2', 'url3');
+
+Now, all pages containg strings 'url1', 'url2', or 'url3' will be excluded from anti-spam checking. Remember, that this option will be not applied in registrations and comment checking - they are always protected from spam.
+
+= Can i exclude personal data from sending to CleanTalk servers? =
+Yes, you can. Add in you config.php file, before defining database constants, this string:
+
+	$cleantalk_key_exclusions = Array('key1', 'key2', 'key3'); 
+
+Now, all fields in your submissions with keys named 'key1', 'key2' or 'key3' will be excluded from spam checking.
 
 == Other notes ==
 
@@ -284,6 +311,28 @@ WordPress 3.0 at least. PHP 5 with CURL or file_get_contents() function and enab
 1. Setup Android/iOS app to have push notices when new legitiamte comments/registrations or contactcs appears on the website. 
 
 == Changelog ==
+= 5.23 2015-09-01 =
+  * Fixed BuddyPress profile search false positivities of anti-spam protection.
+  * Some interface fixes of bulk users & comments spam checking
+
+= 5.22 2015-08-26 =
+  * Fixed possible XSS issue for anti-spam test on third-party forms. 
+
+= 5.21 2015-08-21 =
+  * Fixed bug with skipping spam submissions
+  * Fixed bug with receiving old user_token for viewing anti-spam statistics
+  * Small backend fixes
+
+= 5.20 2015-08-15 =
+  * Fixed anti-spam stats in admin bar - now statistics updates every hour
+  * Fixed issue with skipping spam submissions
+  * Added some PHP-constants for advanced users - CLEANTALK_AJAX_USE_BUFFER and CLEANTALK_AJAX_USE_FOOTER_HEADER can be defined to true or false in wp-config.php to control method, which will be used for injection of AJAX script.
+
+= 5.19 2015-08-11 =
+  * New feature: anti-spam checking for registered users
+  * Fixed issue with AJAX JavaScript anti-spam test.
+  * Fixed issue with SEO Yoast xml sitemaps and JavaScript anti-spam test.
+  
 = 5.18 2015-08-04 =
   * Fixed issue with user_token
   * Added anti-spam API, see our FAQ
@@ -706,6 +755,28 @@ WordPress 3.0 at least. PHP 5 with CURL or file_get_contents() function and enab
   * First version
 
 == Upgrade Notice ==
+= 5.23 2015-09-01 =
+  * Fixed BuddyPress profile search false positivities of anti-spam protection.
+  * Some interface fixes of bulk users & comments spam checking
+  
+= 5.22 2015-08-26 =
+  * Fixed possible XSS issue for anti-spam test on third-party forms. 
+
+= 5.21 2015-08-21 =
+  * Fixed bug with skipping spam submissions
+  * Fixed bug with receiving old user_token for viewing anti-spam statistics
+  * Small backend fixes
+  
+= 5.20 2015-08-15 =
+  * Fixed anti-spam stats in admin bar
+  * Fixed issue with skipping spam submissions
+  * Added some PHP-constants for advanced users
+  
+= 5.19 2015-08-11 =
+  * New feature: anti-spam checking for registered users
+  * Fixed issue with AJAX JavaScript checking
+  * Fixed issue with SEO Yoast xml sitemaps.
+  
 = 5.18 2015-08-04 =
   * Fixed issue with user_token
   * Added anti-spam API, see our FAQ

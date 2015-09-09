@@ -15,47 +15,8 @@ function ct_show_checkspam_page()
 	?>
 	<div class="wrap">
 		<h2><?php _e("Anti-spam by CleanTalk", 'cleantalk'); ?></h2><br />
-		<?php
-		$args_unchecked = array(
-			'meta_query' => array(
-				'relation' => 'AND',
-				Array(
-					'key' => 'ct_checked',
-					'value' => '1',
-					'compare' => 'NOT EXISTS'
-				),
-				Array(
-					'key' => 'ct_hash',
-					'value' => '1',
-					'compare' => 'NOT EXISTS'
-				)
-			),
-			'count'=>true
-		);
-		$cnt_unchecked=get_comments($args_unchecked);
-		//if($cnt_unchecked>0)
-		{
-		?>
-			<button class="button" id="ct_check_spam_button"><?php _e("Find spam comments", 'cleantalk'); ?></button><br />
-			<div><?php _e("Anti-spam by CleanTalk will check all not spam comments against blacklists database and show you senders that have spam activity on other websites. Just click 'Find spam comments' to start.", 'cleantalk'); ?></div>
-		<?php
-		}
-		?>
-<?php
-		//print '<button class="button" id="ct_insert_comments">Insert comments</button><br />';
-?>
-
-		<div id="ct_working_message" style="display:none">
-			<?php _e("Please wait for a while. CleanTalk is checking all approved and pending comments via blacklist database at cleantalk.org. You will have option to delete found spam comments after plugin finish.", 'cleantalk'); ?>
-		</div>
-		<div id="ct_deleting_message" style="display:none">
-			<?php _e("Please wait for a while. CleanTalk is deleting spam comments. Comments left: ", 'cleantalk'); ?> <span id="cleantalk_comments_left"></span>
-		</div>
-		<div id="ct_done_message" <?php if($cnt_unchecked>0) print 'style="display:none"'; ?>>
-			<?php //_e("Done. All comments tested via blacklists database, please see result bellow.", 'cleantalk'); 
-			?>
-		</div>
-		<h3 id="ct_checking_status"></h3>
+		
+		<h3 id="ct_checking_status" style="text-align:center;width:90%;"></h3>
 		<?php
 			$args_spam = array(
 				'meta_query' => array(
@@ -94,7 +55,7 @@ function ct_show_checkspam_page()
 			<thead>
 				<th scope="col" id="cb" class="manage-column column-cb check-column">
 					<label class="screen-reader-text" for="cb-select-all-1">Select All</label>
-					<input id="cb-select-all-1" type="checkbox"/>
+					<input id="cb-select-all-1" type="checkbox" style="margin-top:0;"/>
 				</th>
 				<th scope="col" id="author" class="manage-column column-slug"><?php print _e('Author');?></th>
 				<th scope="col" id="comment" class="manage-column column-comment"><?php print _x( 'Comment', 'column name' );;?></th>
@@ -105,7 +66,7 @@ function ct_show_checkspam_page()
 					for($i=0;$i<sizeof($c_spam);$i++)
 					{
 						?>
-						<tr id="comment-<?php print $c_spam[$i]->comment_ID; ?>" class="comment even thread-even depth-1 approved">
+						<tr id="comment-<?php print $c_spam[$i]->comment_ID; ?>" class="comment even thread-even depth-1 approved  cleantalk_comment" data-id="<?php print $c_spam[$i]->comment_ID; ?>">
 						<th scope="row" class="check-column">
 							<label class="screen-reader-text" for="cb-select-<?php print $c_spam[$i]->comment_ID; ?>">Select comment</label>
 							<input id="cb-select-<?php print $c_spam[$i]->comment_ID; ?>" type="checkbox" name="del_comments[]" value="<?php print $c_spam[$i]->comment_ID; ?>"/>
@@ -134,10 +95,13 @@ function ct_show_checkspam_page()
 							<p>
 							<?php print $c_spam[$i]->comment_content; ?>
 							</p>
+							<div style="height:16px;">
+							<a href="#" class="cleantalk_delete_button" id="cleantalk_delete_<?php print $c_spam[$i]->comment_ID; ?>" data-id="<?php print $c_spam[$i]->comment_ID; ?>" style="color:#a00;display:none;" onclick="return false;">Delete</a>
+							</div>
 						</td>
 						<td class="response column-response">
-							<div class="response-links">
-								<span class="post-com-count-wrapper">
+							<div>
+								<span>
 									<a href="http://ct_wp/wp-admin/post.php?post=<?php print $c_spam[$i]->comment_post_ID; ?>&action=edit"><?php print get_the_title($c_spam[$i]->comment_post_ID); ?></a>
 									<br/>
 									<a href="http://ct_wp/wp-admin/edit-comments.php?p=<?php print $c_spam[$i]->comment_post_ID; ?>" class="post-com-count">
@@ -192,12 +156,71 @@ function ct_show_checkspam_page()
 				?>
 			</tbody>
 		</table>
-		<button class="button" id="ct_delete_all"><?php _e('Delete all content'); ?></button> 
-		<button class="button" id="ct_delete_checked"><?php _e('Delete selected', 'cleantalk'); ?></button>
+		<button class="button" id="ct_delete_all"><?php _e('Delete all comments from the list'); ?></button> 
+		<button class="button" id="ct_delete_checked"><?php _e('Delete selected', 'cleantalk'); ?></button><br /><br />
 		<?php
 		}
 		?>
+		<?php
+		$args_unchecked = array(
+			'meta_query' => array(
+				'relation' => 'AND',
+				Array(
+					'key' => 'ct_checked',
+					'value' => '1',
+					'compare' => 'NOT EXISTS'
+				),
+				Array(
+					'key' => 'ct_hash',
+					'value' => '1',
+					'compare' => 'NOT EXISTS'
+				)
+			),
+			'count'=>true
+		);
+		$cnt_unchecked=get_comments($args_unchecked);
+		
+		$args_spam = array(
+			'meta_query' => array(
+				Array(
+					'key' => 'ct_marked_as_spam',
+					'compare' => 'EXISTS'
+				)
+			),
+			'count'=>true
+		);
+		$cnt_spam=get_comments($args_spam);
+		//if($cnt_unchecked>0)
+		{
+		?>
+			<div id="ct_info_message"><?php _e("Anti-spam by CleanTalk checks all not spam comments against blacklists database and show you senders that have spam activity on other websites.", 'cleantalk'); ?>
+			<?php
+				if($cnt_spam>0)
+				{
+					print "<br />
+			There is some differencies between blacklists database and our API mechanisms. Blacklists shows all history of spam activity, but our API (that used in spam checking) used another parameters, too: last day of activity, number of spam attacks during last days etc. This mechanisms help us to reduce number of false positivitie. So, there is nothing strange, if some emails/IPs will be not found by this checking.";
+				}
+			?></div>
+		<?php
+		}
+		?>
+<?php
+		if($_SERVER['REMOTE_ADDR']=='127.0.0.1')print '<button class="button" id="ct_insert_comments">Insert comments</button><br />';
+?>
+
+		<div id="ct_working_message" style="margin:auto;padding:3px;width:70%;border:2px dotted gray;display:none;background:#ffff99;">
+			<?php _e("Please wait for a while. CleanTalk is checking all approved and pending comments via blacklist database at cleantalk.org. You will have option to delete found spam comments after plugin finish.", 'cleantalk'); ?>
+		</div>
+		<div id="ct_deleting_message" style="display:none;">
+			<?php _e("Please wait for a while. CleanTalk is deleting spam comments. Comments left: ", 'cleantalk'); ?> <span id="cleantalk_comments_left"></span>
+		</div>
+		<div id="ct_done_message" <?php if($cnt_unchecked>0) print 'style="display:none"'; ?>>
+			<?php //_e("Done. All comments tested via blacklists database, please see result bellow.", 'cleantalk'); 
+			?>
+		</div><br />
+		<button class="button" id="ct_check_spam_button"><?php _e("Check for spam again", 'cleantalk'); ?></button><br /><br />
 	</div>
+	<br /><a href="options-general.php?page=cleantalk">&laquo;<?php print __('Back to CleanTalk settings', 'cleantalk'); ?></a>
 	<?php
 }
 
@@ -232,30 +255,32 @@ function ct_ajax_check_comments()
 {
 	check_ajax_referer( 'ct_secret_nonce', 'security' );
 	global $ct_options;
-	//$ct_options = ct_get_options();
+	$ct_options = ct_get_options();
 	
 	$args_unchecked = array(
 		'meta_query' => array(
-			'relation' => 'AND',
+			//'relation' => 'AND',
 			Array(
 				'key' => 'ct_checked',
 				'value' => '1',
 				'compare' => 'NOT EXISTS'
 			),
-			Array(
+			/*Array(
 				'key' => 'ct_hash',
 				'value' => '1',
 				'compare' => 'NOT EXISTS'
-			)
+			)*/
 		),
-		'number'=>500
+		'number'=>500,
+		'status' => 'all'
 	);
 	
 	$u=get_comments($args_unchecked);
 	$u=array_slice($u,0,500);
 	if(sizeof($u)>0)
 	{
-		//print_r($unchecked);
+		//print_r($u);
+		//die();
 		$data=Array();
 		for($i=0;$i<sizeof($u);$i++)
 		{
@@ -320,7 +345,7 @@ function ct_ajax_info_comments()
 				'compare' => 'NUMERIC'
 			)
 		),
-		'count'=>true,
+		'count'=>true
 	);
 	
 	$cnt_spam=get_comments($args_spam);
@@ -329,6 +354,7 @@ function ct_ajax_info_comments()
 		'meta_query' => array(
 			Array(
 				'key' => 'ct_hash',
+				//'value'=>'1',
 				'compare' => 'EXISTS'
 			)
 		),
@@ -338,6 +364,7 @@ function ct_ajax_info_comments()
 		'meta_query' => array(
 			Array(
 				'key' => 'ct_checked',
+				//'value'=>'1',
 				'compare' => 'EXISTS'
 			)
 		),

@@ -10,6 +10,29 @@ String.prototype.format = String.prototype.f = function ()
         return args[n];
     });
 };
+var close_animate=true;
+function animate_comment(to,id)
+{
+	if(close_animate)
+	{
+		if(to==0.3)
+		{
+			jQuery('#comment-'+id).fadeTo(200,to,function(){
+				animate_comment(1,id)
+			});
+		}
+		else
+		{
+			jQuery('#comment-'+id).fadeTo(200,to,function(){
+				animate_comment(0.3,id)
+			});
+		}
+	}
+	else
+	{
+		close_animate=true;
+	}
+}
 
 function ct_clear_comments()
 {
@@ -150,11 +173,16 @@ function ct_delete_checked()
 }
 jQuery("#ct_check_spam_button").click(function(){
 	jQuery('#ct_working_message').show();
+	jQuery('#ct_check_spam_button').hide();
+	jQuery('#ct_info_message').hide();
 	working=true;
 	ct_clear_comments();
 });
 jQuery("#ct_check_spam_button").click(function(){
 	jQuery('#ct_checking_status').html('');
+	jQuery('#ct_check_comments_table').hide();
+	jQuery('#ct_delete_all').hide();
+	jQuery('#ct_delete_checked').hide();
 	working=true;
 	ct_show_info();
 });
@@ -170,9 +198,46 @@ jQuery("#ct_delete_all").click(function(){
 jQuery("#ct_delete_checked").click(function(){
 	ct_delete_checked();
 });
+jQuery(".cleantalk_comment").mouseover(function(){
+	id = jQuery(this).attr("data-id");
+	jQuery("#cleantalk_delete_"+id).show();
+});
+jQuery(".cleantalk_comment").mouseout(function(){
+	id = jQuery(this).attr("data-id");
+	jQuery("#cleantalk_delete_"+id).hide();
+});
+jQuery(".cleantalk_delete_button").click(function(){
+	id = jQuery(this).attr("data-id");
+	ids=Array();
+	ids[0]=id;
+	var data = {
+		'action': 'ajax_delete_checked',
+		'security': ajax_nonce,
+		'ids':ids
+	};
+	jQuery.ajax({
+		type: "POST",
+		url: ajaxurl,
+		data: data,
+		success: function(msg){
+			close_animate=false;
+			jQuery("#comment-"+id).hide();
+			jQuery("#comment-"+id).remove();
+			close_animate=true;
+		}
+	});
+});
+jQuery(".cleantalk_delete_button").click(function(){
+	id = jQuery(this).attr("data-id");
+	animate_comment(0.3, id);
+});
 
 jQuery(document).ready(function(){
 	working=true;
 	ct_show_info();
 	working=false;
+	if(location.href.match(/do_check/))
+	{
+		jQuery("#ct_check_spam_button").click();
+	}
 });

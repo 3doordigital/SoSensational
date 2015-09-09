@@ -6,11 +6,11 @@
 
 /*
 Plugin Name: WP Developer Tools
-Plugin URI: http://www.phkcorp.com?do=wordpress
+Plugin URI: https://wordpress.org/plugins/wp-developer-tools/
 Description: Collection of useful developer tools
 Author: PHK Corporation
 Author URI: http://www.phkcorp.com
-Version: 1.0.0
+Version: 1.0.1
 License: GPLv2
 */
 

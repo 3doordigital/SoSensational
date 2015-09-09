@@ -82,29 +82,17 @@ function ct_get_stats()
 {
 	check_ajax_referer( 'ct_secret_nonce', 'security' );
 	global $ct_data;
-	//$ct_data=ct_get_data();
-	$t=time();
+	$ct_data=ct_get_data();
 	
-	if(!isset($ct_data['stat_accepted']))
+	if(!isset($ct_data['array_accepted']))
 	{
-		$ct_data['stat_accepted']=0;
-		$ct_data['stat_blocked']=0;
-		$ct_data['stat_all']=0;
-		$ct_data['last_time']=$t;
+		$ct_data['array_accepted']=Array();
+		$ct_data['array_blocked']=Array();
+		$ct_data['current_hour']=0;
 		update_option('cleantalk_data', $ct_data);
 	}
 	
-	$last_time=intval($ct_data['last_time']);
-	if($t-$last_time>86400)
-	{
-		$ct_data['stat_accepted']=0;
-		$ct_data['stat_blocked']=0;
-		$ct_data['stat_all']=0;
-		$ct_data['last_time']=$t;
-		update_option('cleantalk_data', $ct_data);
-	}
-	
-	$ret=Array('stat_accepted'=>$ct_data['stat_accepted'],'stat_blocked'=>$ct_data['stat_blocked'],'stat_all'=>$ct_data['stat_all']);
+	$ret=Array('stat_accepted'=>@array_sum($ct_data['array_accepted']), 'stat_blocked'=>@array_sum($ct_data['array_blocked']), 'stat_all'=>@array_sum($ct_data['array_accepted']) + @array_sum($ct_data['array_blocked']));
 	print json_encode($ret);
 	die();
 }
@@ -114,8 +102,8 @@ function ct_validate_email_ajaxlogin($email=null, $is_ajax=true)
 	require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-public.php');
 	global $ct_agent_version, $ct_checkjs_register_form, $ct_session_request_id_label, $ct_session_register_ok_label, $bp, $ct_signup_done, $ct_formtime_label, $ct_negative_comment, $ct_options, $ct_data;
 	
-	//$ct_options=ct_get_options();
-	//$ct_data=ct_get_data();
+	$ct_options = ct_get_options();
+    $ct_data = ct_get_data();
 	
 	$email = is_null( $email ) ? $email : $_POST['email'];
 	$email=sanitize_email($email);
@@ -209,8 +197,8 @@ function ct_user_register_ajaxlogin($user_id)
 	require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-public.php');
 	global $ct_agent_version, $ct_checkjs_register_form, $ct_session_request_id_label, $ct_session_register_ok_label, $bp, $ct_signup_done, $ct_formtime_label, $ct_negative_comment, $ct_options, $ct_data;
 	
-	//$ct_options=ct_get_options();
-	//$ct_data=ct_get_data();
+	$ct_options = ct_get_options();
+    $ct_data = ct_get_data();
 
 	if(class_exists('AjaxLogin')&&isset($_POST['action'])&&$_POST['action']=='register_submit')
 	{
@@ -298,8 +286,8 @@ function ct_ajax_hook()
 	require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-public.php');
 	global $ct_agent_version, $ct_checkjs_register_form, $ct_session_request_id_label, $ct_session_register_ok_label, $bp, $ct_signup_done, $ct_formtime_label, $ct_negative_comment, $ct_options, $ct_data;
 	
-	//$ct_data=ct_get_data();
-	//$ct_options=ct_get_options();
+	$ct_options = ct_get_options();
+    $ct_data = ct_get_data();
 	
 	$sender_email = null;
     $message = '';

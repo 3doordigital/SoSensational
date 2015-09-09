@@ -11,7 +11,7 @@ class Su_Widget extends WP_Widget {
 			'height'  => 350,
 			'id_base' => 'shortcodes-ultimate'
 		);
-		$this->WP_Widget( 'shortcodes-ultimate', __( 'Shortcodes Ultimate', 'su' ), $widget_ops, $control_ops );
+		parent::__construct( 'shortcodes-ultimate', __( 'Shortcodes Ultimate', 'su' ), $widget_ops, $control_ops );
 	}
 
 	public static function register() {

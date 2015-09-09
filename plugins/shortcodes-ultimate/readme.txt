@@ -4,7 +4,7 @@ License: GPL
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MMA2VA7JDXWDY
 Tags: shortcode, shortcodes, short code, video, responsive, responsive video, youtube, vimeo, audio, mp3, tab, tabs, button, buttons, jquery, box, boxes, toggle, spoiler, column, columns, services, service, pullquote, list, lists, images, image, links, fancy, fancy link, fancy links, fancy buttons, jquery tabs, accordion, slider, plugin, admin, gallery, bloginfo, list pages, sub pages, navigation, siblings pages, children pages, permalink, permalinks, feed, document, member, members, guests, membership, documents, carousel, rss, touch, icon, icons, trl, right-to-left, multilingual, lang, international
 Requires at least: 3.5
-Tested up to: 5.0
+Tested up to: 4.3
 Stable tag: trunk
 
 Supercharge your WordPress theme with mega pack of shortcodes
@@ -67,6 +67,7 @@ With this plugin you can easily create tabs, buttons, boxes, different sliders, 
 * Ja, [Stranger](#)
 * Sk, [Patrik Žec (PATWIST)](http://patwist.com/)
 * Cz, [Punc00](http://nuze.cz/)
+* Se, [Javier Marcilla](http://ninjaseo.es/)
 
 Have a translation? [Contact me](http://gndev.info/feedback/)
 
@@ -108,6 +109,15 @@ Upgrade normally
 
 
 == Changelog ==
+
+= 4.9.8.1 =
+* Fixed: compatibility with WordPress 4.3
+
+= 4.9.8 =
+* Added: Spanish translation
+* Updated: Font Awesome updated to 4.4.0
+* Fixed: buttons line-height on narrow screens
+* Fixed: nested spoilers
 
 = 4.9.7 =
 * Added: [document] is now compatible with https
@@ -480,4 +490,3 @@ Upgrade normally
 
 = 1.0 =
 * Initial release
-

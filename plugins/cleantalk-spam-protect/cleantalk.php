@@ -3,12 +3,30 @@
   Plugin Name: Anti-spam by CleanTalk
   Plugin URI: http://cleantalk.org
   Description: Max power, all-in-one, captcha less, premium anti-spam plugin. No comment spam, no registration spam, no contact spam, protects any WordPress forms. 
-  Version: 5.18
+  Version: 5.23
   Author: СleanTalk <welcome@cleantalk.org>
   Author URI: http://cleantalk.org
  */
-$cleantalk_plugin_version='5.18';
+$cleantalk_plugin_version='5.23';
 $cleantalk_executed=false;
+
+if(defined('CLEANTALK_AJAX_USE_BUFFER'))
+{
+	$cleantalk_use_buffer=CLEANTALK_AJAX_USE_BUFFER;
+}
+else
+{
+	$cleantalk_use_buffer=true;
+}
+
+if(defined('CLEANTALK_AJAX_USE_FOOTER_HEADER'))
+{
+	$cleantalk_use_footer_header=CLEANTALK_AJAX_USE_FOOTER_HEADER;
+}
+else
+{
+	$cleantalk_use_footer_header=true;
+}
 
 if(!defined('CLEANTALK_PLUGIN_DIR')){
     define('CLEANTALK_PLUGIN_DIR', plugin_dir_path(__FILE__));
@@ -68,11 +86,19 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
     	$use_ajax=1;
     }
     
-    if($use_ajax==1)
+    if($use_ajax==1 && 
+    	stripos($_SERVER['REQUEST_URI'],'.xml')===false && 
+    	stripos($_SERVER['REQUEST_URI'],'.xsl')===false)
     {
-		add_action('wp_loaded', 'ct_add_nocache_script', 1);
-		add_action('wp_footer', 'ct_add_nocache_script_footer', 1);
-		add_action('wp_head', 'ct_add_nocache_script_header', 1);
+    	if($cleantalk_use_buffer)
+    	{
+			add_action('wp_loaded', 'ct_add_nocache_script', 1);
+		}
+		if($cleantalk_use_footer_header)
+		{
+			add_action('wp_footer', 'ct_add_nocache_script_footer', 1);
+			add_action('wp_head', 'ct_add_nocache_script_header', 1);
+		}
 		add_action( 'wp_ajax_nopriv_ct_get_cookie', 'ct_get_cookie',1 );
 		add_action( 'wp_ajax_ct_get_cookie', 'ct_get_cookie',1 );
 	}
@@ -171,37 +197,31 @@ function ct_add_event($event_type)
 {
 	global $ct_data,$cleantalk_executed;
 	$ct_data = ct_get_data();
-	$t=time();
+	
+	if(!isset($ct_data['array_accepted']))
+	{
+		$ct_data['array_accepted']=Array();
+		$ct_data['array_blocked']=Array();
+		$ct_data['current_hour']=0;
+	}
+	
+	$current_hour=intval(date('G'));
+	if($current_hour!=$ct_data['current_hour'])
+	{
+		$ct_data['current_hour']=$current_hour;
+		$ct_data['array_accepted'][$current_hour]=0;
+		$ct_data['array_blocked'][$current_hour]=0;
+	}
+	
 	if($event_type=='yes')
 	{
-		@$ct_data['stat_accepted']++;
+		@$ct_data['array_accepted'][$current_hour]++;
 	}
 	if($event_type=='no')
 	{
-		@$ct_data['stat_blocked']++;
-	}
-	$ct_data['stat_all']++;
-	
-	$t=time();
-	
-	if(!isset($ct_data['stat_accepted']))
-	{
-		$ct_data['stat_accepted']=0;
-		$ct_data['stat_blocked']=0;
-		$ct_data['stat_all']=0;
-		$ct_data['last_time']=$t;
-		update_option('cleantalk_data', $ct_data);
+		@$ct_data['array_blocked'][$current_hour]++;
 	}
 	
-	$last_time=intval($ct_data['last_time']);
-	if($t-$last_time>86400)
-	{
-		$ct_data['stat_accepted']=0;
-		$ct_data['stat_blocked']=0;
-		$ct_data['stat_all']=0;
-		$ct_data['last_time']=$t;
-		update_option('cleantalk_data', $ct_data);
-	}
 	
 	update_option('cleantalk_data', $ct_data);
 	$cleantalk_executed=true;
@@ -268,6 +288,7 @@ function ct_inject_nocache_script($html)
 if(is_admin())
 {
 	require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-comments.php');
+	require_once(CLEANTALK_PLUGIN_DIR . 'cleantalk-users.php');
 }
 if(isset($_GET['ait-action'])&&$_GET['ait-action']=='register')
 {
