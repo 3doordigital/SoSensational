@@ -118,7 +118,8 @@ jQuery(document).ready(function($) {
            usedTags--;
            tagsCounter.html(usedTags + ' of ' + tagsLimit + ' tags'); 
            return usedTags;
-        }); 
+        });
+    } 
     /*--------------------------------------------------------------------------
       Ajax call for deleting products from /view-products/
      -------------------------------------------------------------------------*/
@@ -145,7 +146,6 @@ jQuery(document).ready(function($) {
             }               
         });
     }); 
-}
      
     /*--------------------------------------------------------------------------
      Enable submit button in a form that changed on categories edit page.
