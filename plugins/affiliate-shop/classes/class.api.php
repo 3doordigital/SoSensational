@@ -149,7 +149,7 @@
 					$output['items'] = array_replace( $output['items'], $input['items'] );
 				}
 				if( isset( $input['total'] ) ) {
-					$output['total'] =  array_replace( $output['total'], $input['total'] );;
+					$output['total'] =  array_replace( $output['total'], $input['total'] );
 				}
 			}
 			
