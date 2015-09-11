@@ -1924,7 +1924,7 @@ class WordPress_Affiliate_Shop
 
                             $curr_api = (isset($_REQUEST['api']) ? $_REQUEST['api'] : 'all');
                             $starttime = microtime(true);
-                            $table_data = $api->db_search($_GET['q'], $curr_api, $merch, 10, (isset($_REQUEST['paged']) ? $_REQUEST['paged'] : 1));
+                            $table_data = $api->db_search($_GET['q'], $curr_api, $merch, 20, (isset($_REQUEST['paged']) ? $_REQUEST['paged'] : 1));
                             $endtime = microtime(true);
                             $duration = $endtime - $starttime;
                             //print_var( $table_data );

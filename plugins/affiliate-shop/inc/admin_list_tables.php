@@ -728,7 +728,7 @@ class ProductTable extends WP_List_Table {
     function prepare_items() {
         global $wpdb; //This is used only if making any database queries
 
-        $per_page = 10;
+        $per_page = 20;
         
         $columns = $this->get_columns();
         $hidden = array();
@@ -1044,7 +1044,7 @@ class AllProductTable extends WP_List_Table {
     function prepare_items() {
         global $wpdb; //This is used only if making any database queries
 
-        $per_page = 10;
+        $per_page = 20;
         
         $columns = $this->get_columns();
         $hidden = array();
