@@ -1355,6 +1355,7 @@ function get_bulk_actions() {
 }
 
 function process_bulk_action() {
+    var_dump($_SERVER["HTTP_REFERER"]);
     $current_page = $this->get_pagenum();
     $total_pages = $this->get_pagination_arg('total_pages');
     $action = $this->current_action();
