@@ -1375,7 +1375,7 @@ function prepare_items() {
 		$_SESSION['product_data'] = array_merge( $_SESSION['product_data'], $data );
 	}
     
-    $current_page = $this->get_pagenum();
+    $current_page = $this->get_pagenum()+1;
 
     $total_items = $this->data['total']['total'];
 
