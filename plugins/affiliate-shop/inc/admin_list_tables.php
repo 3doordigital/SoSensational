@@ -1354,7 +1354,10 @@ function get_bulk_actions() {
     return $actions;
 }
 
-function process_bulk_action() {}
+function process_bulk_action() {
+    $action = $this->current_action();
+    var_dump($action);
+}
     
 function prepare_items() {
 	//print_var( $this->data );
