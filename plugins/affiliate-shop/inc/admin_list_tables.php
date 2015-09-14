@@ -1370,7 +1370,7 @@ function process_bulk_action() {
         $modified_request_url.'&redirected=1';
         wp_redirect($modified_request_url);
     }
-}
+
     
 function prepare_items() {
 	//print_var( $this->data );
