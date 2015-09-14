@@ -5,7 +5,7 @@ if(!class_exists('WP_List_Table')){
 }
 
 class WP_Terms_List_Tables extends WP_List_Table {
-    
+
     private $level;
 
 	public $callback_args;
@@ -1195,7 +1195,7 @@ class AllProductTable extends WP_List_Table {
 }
 
 class ListProductSearch extends WP_List_Table {
-
+    private static $redirected = false;
     var $total;
 	var $data;
 function __construct( $data = array() ){
@@ -1358,7 +1358,7 @@ function process_bulk_action() {
     $current_page = $this->get_pagenum();
     $total_pages = $this->get_pagination_arg('total_pages');
     $request_url = $_SERVER['REQUEST_URI'];
-    if(isset($_GET['redirected'])){
+    if(self::$redirected === true){
         return;
     }
     $action = $this->current_action();
@@ -1369,8 +1369,7 @@ function process_bulk_action() {
             $paged = $_GET['paged'] = 1;           
         }
         $modified_request_url = preg_replace('/action=add&paged=[0-9]+/','action=add&paged='.$paged , $request_url);
-        $modified_request_url.'&redirected=1';
-        var_dump($modified_request_url);
+        self::$redirected = !self::$redirected;
         wp_redirect($modified_request_url);
     }   
 }
