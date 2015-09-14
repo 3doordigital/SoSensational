@@ -1941,7 +1941,7 @@ class WordPress_Affiliate_Shop
                             <div class="right_box">
                                 <div class="wp-box">
                                     <h3>Selected Products <a class="button-primary next_step"
-                                                             href="<?php echo admin_url('admin.php?page=' . $_REQUEST['page'] . (isset($_REQUEST['wp_aff_categories']) ? '&wp_aff_categories=' . $_REQUEST['wp_aff_categories'] : '') . '&step=2');; ?>">Next
+                                                             href="<?php echo admin_url('admin.php?page=' . $_REQUEST['page'] . (isset($_REQUEST['wp_aff_categories']) ? '&wp_aff_categories=' . $_REQUEST['wp_aff_categories'] : '') . '&step=2'); ?>">Next
                                             Step</a></h3>
 
                                     <div class="inside">

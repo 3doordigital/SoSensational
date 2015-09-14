@@ -1247,7 +1247,7 @@ function column_default($item, $column_name){
 					$_REQUEST['q'], 
 					$_REQUEST['category'], 
 					$_REQUEST['wp_aff_merch'],
-					( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1 )
+					( isset( $_REQUEST['paged'] ) ? (($_REQUEST['paged']+1) > $this->_pagination_args['total_pages'])? 1: $_REQUEST['paged']+1 : 1 )
 				
 				),
             );
@@ -1260,7 +1260,7 @@ function column_default($item, $column_name){
 					$item['ID'], 
 					$_REQUEST['q'], 
 					$_REQUEST['wp_aff_merch'],
-					( isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1 )
+					( isset( $_REQUEST['paged'] ) ? (($_REQUEST['paged']+1) > $this->_pagination_args['total_pages'])? 1: $_REQUEST['paged']+1 : 1 )
 				),
             );
         }
