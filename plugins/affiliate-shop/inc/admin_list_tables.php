@@ -1355,8 +1355,9 @@ function get_bulk_actions() {
 }
 
 function process_bulk_action() {
-    
-    
+  var_dump($_POST);
+ $currentPage = $this->get_pagenum();
+ $totalPages = $this->get_pagination_arg('total_pages');
 
 }
     
