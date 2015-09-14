@@ -1367,6 +1367,7 @@ function process_bulk_action() {
         }
         $modified_request_url = preg_replace('/action=add&paged=[0-9]+/','action=add&paged='.$paged , $request_url);
         wp_redirect($modified_request_url);
+        return;
     }
 }
     
