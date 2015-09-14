@@ -1357,6 +1357,9 @@ function get_bulk_actions() {
 function process_bulk_action() {
     $action = $this->current_action();
     var_dump($action);
+    if ($this->current_action() === 'add'){
+        var_dump($_GET);
+    }
 }
     
 function prepare_items() {
