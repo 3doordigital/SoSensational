@@ -1355,11 +1355,11 @@ function get_bulk_actions() {
 }
 
 function process_bulk_action() {
-    var_dump($_SERVER["HTTP_REFERER"]);
+    var_dump($_SERVER['PHP_SELF']);
     $current_page = $this->get_pagenum();
     $total_pages = $this->get_pagination_arg('total_pages');
     $action = $this->current_action();
-    var_dump($action);
+    var_dump($_SERVER['REQUEST_URI']);
     if ($this->current_action() === 'add'){
         if($_GET['paged']< $total_pages){
             $_GET['paged'] += 1;
