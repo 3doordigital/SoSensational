@@ -1357,7 +1357,7 @@ function get_bulk_actions() {
 function process_bulk_action() {
     $current_page = $this->get_pagenum();
     $total_pages = $this->get_pagination_arg('total_pages');
-    $request_url = $_SERVER['PHP_SELF'];
+    $request_url = $_SERVER['REQUEST_URI'];
     if(isset($_GET['redirected'])){
         return;
     }
