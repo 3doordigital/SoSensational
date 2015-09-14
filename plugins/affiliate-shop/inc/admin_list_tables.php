@@ -1368,6 +1368,7 @@ function process_bulk_action() {
             $paged = $_GET['paged'] = 1;           
         }
         $modified_request_url = preg_replace('/action=add&paged=[0-9]+/','action=add&paged='.$paged , $request_url);
+        var_dump($modified_request_url);
         $_SESSION['redirected'] = TRUE;
         wp_redirect($modified_request_url);
     }   
