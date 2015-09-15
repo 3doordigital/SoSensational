@@ -1355,15 +1355,16 @@ function get_bulk_actions() {
 
 function process_bulk_action() {
     $current_page = $this->get_pagenum();
-    $total_pages = $this->get_pagination_arg('total_pages');
+    $total_pages = $this->_pagination_args;
+    $args = $this->_args;
     $action = $this->current_action();
     if ($action === 'add'){
         if(isset($_REQUEST['paged'])){
             if($_REQUEST['paged'] < $total_pages){
-                var_dump([$current_page,$total_pages,$_REQUEST['paged']]);
-                wp_redirect(set_query_var('paged', $_REQUEST['paged']+1));
+                var_dump([$current_page,$total_pages,$_REQUEST['paged'],$args]);
+                wp_redirect(add_query_arg('paged', $_REQUEST['paged']+1));
             }else{
-               wp_redirect(set_query_var('paged', 1));
+               wp_redirect(add_query_arg('paged', 1));
             }
         }
         var_dump(json_encode(get_defined_vars()));
