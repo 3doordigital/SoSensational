@@ -1385,9 +1385,6 @@ function prepare_items() {
     $sortable = $this->get_sortable_columns();
 
     $this->_column_headers = array($columns, $hidden, $sortable);
-    if(!get_query_var('redirected')){
-        $this->process_bulk_action();   
-    }
 	  
 	if( !isset( $_SESSION['product_data'] ) ) {
 		$_SESSION['product_data'] = $data;
@@ -1406,6 +1403,10 @@ function prepare_items() {
         'per_page'    => $per_page,                     //WE have to determine how many items to show on a page
         'total_pages' => ceil($total_items/$per_page)   //WE have to calculate the total number of pages
     ) );
+        if(!get_query_var('redirected')){
+        $this->process_bulk_action();
+        exit;
+    }
 }
 
 }
