@@ -1362,12 +1362,11 @@ function process_bulk_action() {
         if(isset($_REQUEST['paged'])){
             if($_REQUEST['paged'] < $total_pages){
                 var_dump([$current_page,$total_pages,$_REQUEST['paged'],$args]);
-                wp_redirect(add_query_arg('paged', $_REQUEST['paged']+1));
+                 return $_REQUEST['paged']+1;
             }else{
-               wp_redirect(add_query_arg('paged', 1));
+               return $_REQUEST['paged'];
             }
         }
-        var_dump(json_encode(get_defined_vars()));
     }   
 }
 
@@ -1383,7 +1382,7 @@ function prepare_items() {
 
     $this->_column_headers = array($columns, $hidden, $sortable);
 
-    //$this->process_bulk_action();
+    $current_page = $this->process_bulk_action();
 	  
 	if( !isset( $_SESSION['product_data'] ) ) {
 		$_SESSION['product_data'] = $data;
@@ -1391,7 +1390,7 @@ function prepare_items() {
 		$_SESSION['product_data'] = array_merge( $_SESSION['product_data'], $data );
 	}
     
-    $current_page = $this->get_pagenum();
+    //$current_page = $this->get_pagenum();
 
     $total_items = $this->data['total']['total'];
 
