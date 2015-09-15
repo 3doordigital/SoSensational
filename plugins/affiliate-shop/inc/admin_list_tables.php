@@ -1354,6 +1354,9 @@ function get_bulk_actions() {
 }
 
 function process_bulk_action() {
+    if($_REQUEST['redirected']){
+        return;
+    }
     $current_page = $this->get_pagenum();
     $total_pages = $this->_pagination_args;
     $args = $this->_args;
