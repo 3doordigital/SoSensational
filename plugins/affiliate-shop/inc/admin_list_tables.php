@@ -1362,9 +1362,9 @@ function process_bulk_action() {
         if(isset($_REQUEST['paged'])){
             if($_REQUEST['paged'] < $total_pages){
                 var_dump([$current_page,$total_pages,$_REQUEST['paged'],$args]);
-                wp_redirect(array(add_query_arg(array(
+                wp_redirect(add_query_arg(array(
                     'paged' => $_REQUEST['paged']+1,
-                    'redirected' => 1))));
+                    'redirected' => 1)));
                 exit;
             }else{
                wp_redirect(add_query_arg('paged', 1));
