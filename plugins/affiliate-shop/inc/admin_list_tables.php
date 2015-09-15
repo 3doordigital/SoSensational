@@ -1408,7 +1408,6 @@ function prepare_items() {
     ) );
         if(!get_query_var('redirected')){
         $this->process_bulk_action();
-        exit;
     }
 }
 
