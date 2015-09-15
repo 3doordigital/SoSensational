@@ -1365,6 +1365,7 @@ function process_bulk_action() {
                 wp_redirect(add_query_arg('paged', $_REQUEST['paged']+1));
             }else{
                wp_redirect(add_query_arg('paged', 1));
+               exit;
             }
         }
         var_dump(json_encode(get_defined_vars()));
