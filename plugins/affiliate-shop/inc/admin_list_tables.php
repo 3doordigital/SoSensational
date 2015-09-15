@@ -1365,7 +1365,6 @@ function process_bulk_action() {
                 wp_redirect(add_query_arg('paged', $_REQUEST['paged']+1));
             }else{
                wp_redirect(add_query_arg('paged', 1));
-               exit;
             }
         }
         var_dump(json_encode(get_defined_vars()));
@@ -1384,7 +1383,7 @@ function prepare_items() {
 
     $this->_column_headers = array($columns, $hidden, $sortable);
 
-    $this->process_bulk_action();
+    //$this->process_bulk_action();
 	  
 	if( !isset( $_SESSION['product_data'] ) ) {
 		$_SESSION['product_data'] = $data;
