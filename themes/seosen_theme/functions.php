@@ -583,7 +583,7 @@ function saveampersands_2($a) {
     $a = str_replace('AMPERSAND', '&', $a);
     return $a;
 }
-
+// speed up meta boxes functions
 function admin_speedup_remove_post_meta_box() {
 	global $post_type;
 
