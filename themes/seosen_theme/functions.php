@@ -583,4 +583,3 @@ function saveampersands_2($a) {
     $a = str_replace('AMPERSAND', '&', $a);
     return $a;
 }
-
