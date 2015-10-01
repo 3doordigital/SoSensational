@@ -455,34 +455,34 @@ jQuery('body').on('click', '.mega-menu-item-11807 > a', function(e){
 
 });
 //module for change items order presented by advertisers 
-jQuery(function(){
-    var sortableList = jQuery('.advertiser-items-list').sortable({
-      update: updateEvent  
-    });
-    var sortableListElements = jQuery('.advertiser-items-list li');
-    var itemsQueque = [];
-    updateEvent();
-    jQuery('#changeItemsOrder').on('click',changeItemsOrder);
-    
-    function updateEvent(){
-        var arrayOfIds = [];
-       var spansWithIds = sortableListElements.find('span[data]');
-       spansWithIds.each(function(){
-           var self = jQuery(this);
-           var id = self.attr('data');
-           arrayOfIds.push(id);
-       });
-       
-      itemsQueque = arrayOfIds;
-    }
-    
-    function changeItemsOrder(){
-        jQuery.post(ajax_object.ajax_url,{
-            data: itemsQueque,
-            action: 'change_advertisers_products_order'
-        },
-        function(response){
-            console.log(response);
-        });
-    }
-});
+//jQuery(function(){
+//    var sortableList = jQuery('.advertiser-items-list').sortable({
+//      update: updateEvent  
+//    });
+//    var sortableListElements = jQuery('.advertiser-items-list li');
+//    var itemsQueque = [];
+//    updateEvent();
+//    jQuery('#changeItemsOrder').on('click',changeItemsOrder);
+//    
+//    function updateEvent(){
+//        var arrayOfIds = [];
+//       var spansWithIds = sortableListElements.find('span[data]');
+//       spansWithIds.each(function(){
+//           var self = jQuery(this);
+//           var id = self.attr('data');
+//           arrayOfIds.push(id);
+//       });
+//       
+//      itemsQueque = arrayOfIds;
+//    }
+//    
+//    function changeItemsOrder(){
+//        jQuery.post(ajax_object.ajax_url,{
+//            data: itemsQueque,
+//            action: 'change_advertisers_products_order'
+//        },
+//        function(response){
+//            console.log(response);
+//        });
+//    }
+//});
