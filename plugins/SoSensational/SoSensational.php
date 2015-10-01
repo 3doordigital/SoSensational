@@ -462,7 +462,7 @@ function addSeoDescriptionToSsCategory($desc)
         $currentAdvertiser = get_posts($args);
         
         $currentSeoData = get_post_meta($currentAdvertiser[0]->ID, '_seo_metadata', true);
-        $seoDescription = $currentSeoData['seo-description'];                
+        $seoDescription = (isset($currentSeoData['seo-description']))? $currentSeoData['seo-description'] : '';                
     }
     
   
@@ -473,3 +473,9 @@ function addSeoDescriptionToSsCategory($desc)
 }
 
 add_filter('wpseo_metadesc', 'addSeoDescriptionToSsCategory');
+
+add_action( 'wp_ajax_change_advertisers_products_order', 'change_advertisers_products_order' );
+add_action( 'wp_ajax_nopriv_change_advertisers_products_order', 'change_advertisers_products_order' );
+function change_advertisers_products_order(){
+    $quequeOrder = $_POST;
+}
