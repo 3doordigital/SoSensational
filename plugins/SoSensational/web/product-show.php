@@ -93,5 +93,4 @@ $args = array(
 </nav>
 <button id="changeItemsOrder">Save Order</button>
 <?php
-    var_dump($post);
 wp_enqueue_script('jquery-ui-sortable');
