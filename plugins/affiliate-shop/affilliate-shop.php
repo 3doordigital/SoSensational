@@ -3608,8 +3608,12 @@ class WordPress_Affiliate_Shop
         fputcsv($fp, $header, '|');
         wp_mail(get_option('admin_email'), 'Product Cron Started', "Product Log: $productlog", $mailhead);
         $products = $this->ajax_update_get_count(true);
+        
+        var_dump(count($products['ids']), $products['total']);
+        
         $total = $products['total'];
         foreach ($products['ids'] as $product) {
+            
             $percent = number_format(($i / $total) * 100, 2);
             $data = $this->cron_update_product($product['id'], $product['prod_id'], $product['merch']);
             if ($data['html']['status'] == 1) {
