@@ -1,4 +1,5 @@
 <?php
+    ini_set('memory_limit', '1M');
 	function find_wordpress_base_path() {
         $dir = dirname(__FILE__);
         do {
