@@ -3551,6 +3551,7 @@ class WordPress_Affiliate_Shop
     public function cron_update_merchant_feed($ID, $aff, $merch)
     {
         $classname = $this->option['apis'][$aff]['class'];
+        var_dump( $this->option['apis'][$aff]['class']);
         $class = new $classname();
         return $class->update_feed($ID, $merch);
     }
@@ -3585,6 +3586,7 @@ class WordPress_Affiliate_Shop
         $wpdb->query("TRUNCATE TABLE $table_name");
         $merchants = $this->cron_get_api_merchants();
         $total = $merchants['total'];
+        var_dump($merchants);
         foreach ($merchants['items'] as $merchant) {
             echo $merchant['ID'];
             $percent = number_format(($i / $total) * 100, 2);
@@ -3608,9 +3610,6 @@ class WordPress_Affiliate_Shop
         fputcsv($fp, $header, '|');
         wp_mail(get_option('admin_email'), 'Product Cron Started', "Product Log: $productlog", $mailhead);
         $products = $this->ajax_update_get_count(true);
-        
-        var_dump(count($products['ids']), $products['total']);
-        
         $total = $products['total'];
         foreach ($products['ids'] as $product) {
             
