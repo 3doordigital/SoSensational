@@ -3551,6 +3551,7 @@ class WordPress_Affiliate_Shop
     public function cron_update_merchant_feed($ID, $aff, $merch)
     {
         $classname = $this->option['apis'][$aff]['class'];
+        var_dump( $this->option['apis'][$aff]['class']);
         $class = new $classname();
         return $class->update_feed($ID, $merch);
     }
