@@ -258,6 +258,7 @@ class WordPress_Affiliate_Shop_Awin {
 					
 					unset($data);
 				}
+                                var_dump($wpdb->last_error);
 				fclose($handle);
 			}
 			return $out;
