@@ -60,8 +60,7 @@
                 sosen_related_posts($cur_cat_id, get_the_ID());
                 ?>
                 <?php
-                comment_form();
-                wp_list_comments();
+                comments_template();
                 ?>
             <?php endif; ?>
         </div>
