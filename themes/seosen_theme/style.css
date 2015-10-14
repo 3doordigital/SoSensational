@@ -1445,6 +1445,9 @@ a.preview-anchor-text {
         font-family: 'Open Sans',sans-serif; 
 	margin-top: 15px;
 }
+.su-button-center a span{
+        font-family: 'Open Sans',sans-serif;    
+}
 .nicescroll-rails>div {
   width: 6px!important;
   border-radius: 0px!important;
