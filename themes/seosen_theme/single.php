@@ -61,15 +61,13 @@
                 ?>
                 <?php
                 comment_form();
-                wp_list_comments(array(
-                    'walker' => new Walker_Comment()
-                ));
+                wp_list_comments();
                 ?>
-<?php endif; ?>
+            <?php endif; ?>
         </div>
         <div class="col-md-1 visible-lg"></div>
         <div class="col-lg-7 col-sm-offset-1 visible-lg">
-<?php dynamic_sidebar('blog_sidebar'); ?>
+            <?php dynamic_sidebar('blog_sidebar'); ?>
         </div>
     </div>
 </div>
