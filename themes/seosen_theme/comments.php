@@ -52,8 +52,8 @@ endif;
          * define twentyeleven_comment() and that will be used instead.
          * See twentyeleven_comment() in twentyeleven/functions.php for more.
          */
-        var_dump(wp_list_comments());
-        wp_list_comments();
+        //var_dump(wp_list_comments());
+        echo wp_list_comments();
         ?>
     </ol>
 
