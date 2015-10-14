@@ -1442,6 +1442,7 @@ a.preview-anchor-text {
 }
 
 .su-button-center {
+        font-family: 'Open Sans',sans-serif; 
 	margin-top: 15px;
 }
 .nicescroll-rails>div {
@@ -1519,4 +1520,7 @@ a.preview-anchor-text {
     text-decoration: none;
     padding: 5px;
     border-radius: 4px;
+}
+#respond{
+    font-family: 'Open Sans',sans-serif; 
 }
