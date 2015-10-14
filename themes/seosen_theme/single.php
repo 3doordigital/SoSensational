@@ -59,12 +59,17 @@
                 $cur_cat_id = $category[0]->term_id;
                 sosen_related_posts($cur_cat_id, get_the_ID());
                 ?>
-                <?php comment_form(); ?>
-            <?php endif; ?>
+                <?php
+                comment_form();
+                wp_list_comments(array(
+                    'walker' => new Walker_Comment()
+                ));
+                ?>
+<?php endif; ?>
         </div>
         <div class="col-md-1 visible-lg"></div>
         <div class="col-lg-7 col-sm-offset-1 visible-lg">
-            <?php dynamic_sidebar('blog_sidebar'); ?>
+<?php dynamic_sidebar('blog_sidebar'); ?>
         </div>
     </div>
 </div>
