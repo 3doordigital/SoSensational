@@ -1524,6 +1524,6 @@ a.preview-anchor-text {
     padding: 5px;
     border-radius: 4px;
 }
-#respond{
-    font-family: 'Open Sans',sans-serif; 
+#respond *{
+    font-family: 'Open Sans',sans-serif !important; 
 }
