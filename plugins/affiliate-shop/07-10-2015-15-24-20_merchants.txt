@@ -1,0 +1,6 @@
+Number|"Merchant ID"|"Merchant Name"|Affiliate|Status|Message
+"1 of 292 (0.34%)"|117|Webgains|webgains|"Updated -  Inserted,  Failed."|
+"2 of 292 (0.68%)"|270|"Wall Luxury Essentials"|webgains|"Updated -  Inserted,  Failed."|
+"3 of 292 (1.03%)"|212|Tightsplease|webgains|"Updated -  Inserted,  Failed."|
+"4 of 292 (1.37%)"|327|Brastop|webgains|"Updated - 2484 Inserted,  Failed."|
+"5 of 292 (1.71%)"|347|feelunique.com|webgains|"Updated - 12871 Inserted,  Failed."|

@@ -1,0 +1,26 @@
+Number|"Merchant ID"|"Merchant Name"|Affiliate|Status|Message
+"1 of 295 (0.34%)"|117|Webgains|webgains|"Updated -  Inserted,  Failed."|
+"2 of 295 (0.68%)"|270|"Wall Luxury Essentials"|webgains|"Updated -  Inserted,  Failed."|
+"3 of 295 (1.02%)"|212|Tightsplease|webgains|"Updated -  Inserted,  Failed."|
+"4 of 295 (1.36%)"|327|Brastop|webgains|"Updated - 2484 Inserted,  Failed."|
+"5 of 295 (1.69%)"|347|feelunique.com|webgains|"Updated - 12858 Inserted,  Failed."|
+"6 of 295 (2.03%)"|437|Surfdome|webgains|"Updated - 29429 Inserted,  Failed."|
+"7 of 295 (2.37%)"|8533|Gossard|webgains|"Updated - 3172 Inserted,  Failed."|
+"8 of 295 (2.71%)"|8535|"Pretty Polly "|webgains|"Updated - 908 Inserted,  Failed."|
+"9 of 295 (3.05%)"|1130|"YesStyle UK"|webgains|"Updated - 198612 Inserted,  Failed."|
+"10 of 295 (3.39%)"|1408|"Me + Em"|webgains|"Updated - 190 Inserted,  Failed."|
+"11 of 295 (3.73%)"|8537|Berlei|webgains|"Updated - 1995 Inserted,  Failed."|
+"12 of 295 (4.07%)"|2756|"feelunique.com IE"|webgains|"Updated - 7821 Inserted,  Failed."|
+"13 of 295 (4.41%)"|2365|Trilogy|webgains|"Updated - 547 Inserted,  Failed."|
+"14 of 295 (4.75%)"|2690|"Chesca Direct"|webgains|"Updated - 873 Inserted,  Failed."|
+"15 of 295 (5.08%)"|2707|SalonSkincare|webgains|"Updated - 4037 Inserted,  Failed."|
+"16 of 295 (5.42%)"|2951|"Mastershoe & Myshu"|webgains|"Updated - 1994 Inserted,  Failed."|
+"17 of 295 (5.76%)"|3154|"Just Last Season"|awin|"Updated - 1269 Inserted,  Failed."|
+"18 of 295 (6.10%)"|4087|Bouf.com|webgains|"Updated - 19733 Inserted,  Failed."|
+"19 of 295 (6.44%)"|6373|"NIKE UK"|webgains|"Updated - 7340 Inserted,  Failed."|
+"20 of 295 (6.78%)"|4042|"The Fragrance Shop"|webgains|"Updated - 2225 Inserted,  Failed."|
+"21 of 295 (7.12%)"|3780|"Daniel Footwear"|webgains|"Updated - 2272 Inserted,  Failed."|
+"22 of 295 (7.46%)"|3949|Fashion-Conscience|webgains|"Updated - 1493 Inserted,  Failed."|
+"23 of 295 (7.80%)"|4125|"Jules B"|webgains|"Updated - 3052 Inserted,  Failed."|
+"24 of 295 (8.14%)"|4128|"Charles Clinkard"|webgains|"Updated - 2808 Inserted,  Failed."|
+"25 of 295 (8.47%)"|4113|Triads|webgains|"Updated - 2407 Inserted,  Failed."|
