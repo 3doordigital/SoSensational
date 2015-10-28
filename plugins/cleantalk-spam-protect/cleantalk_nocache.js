@@ -12,7 +12,7 @@ function sendRequest(url,callback,postData) {
             return;
         }
         callback(req);
-    }
+    };
     if (req.readyState == 4) return;
     req.send(postData);
 }
@@ -66,7 +66,8 @@ function ct_setCookie(name, value)
 	var date = new Date;
 	date.setDate(date.getDate() + 1);
 	//setTimeout(function() { document.cookie = name+"=" + value + "; expires=" + date.toUTCString() + "; path = /; domain = " + domain}, 500)
-	setTimeout(function() { document.cookie = name+"=" + value + "; expires=" + date.toUTCString() + "; path = /;"}, 500)
+	setTimeout(function() { document.cookie = name+"=" + value + "; expires=" + date.toUTCString() + "; path = /;"}, 500);
+	//document.cookie = name+"=" + value + "; expires=" + date.toUTCString() + "; path = /;";
 }
 
 function ct_callback(req)

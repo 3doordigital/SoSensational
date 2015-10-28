@@ -1,8 +1,8 @@
 === Exploit Scanner ===
 Contributors: donncha, duck_, ryan, azaozz, tott, pento, philipjohn
 Tags: security, scanner, hacking, spam, hack, crack, exploit, vulnerability
-Tested up to: 4.3
-Stable tag: 1.4.7
+Tested up to: 4.3.1
+Stable tag: 1.4.8
 Requires at least: 3.3
 
 Search the files and database of your WordPress install for signs that may indicate that it has fallen victim to malicious hackers.
@@ -14,13 +14,45 @@ It does not remove anything. That is left to the user to do.
 
 Latest MD5 hash values for Exploit Scanner:
 
-* exploit-scanner.php (1.4.7): 27a5f53a192cae87379f29580ee4e720
-* hashes-4.3.php: e79f0310fcffcc596af9bba13fd7b4e5
+* 6d1a7b0e8473bcedee1fcf5b1227a037  exploit-scanner.php (1.4.8)
+* 2b0d0e1f028dc4dfeaa44bff7d24a605  hashes-4.3.1.php
+* 570cc1e5aa4cc76260119c83d0a819ae  hashes-4.2.5.php
+* 95f92e75c354ded98e6dff4f16932ca4  hashes-4.1.8.php
+* 5fe89402f4b1130e62a1874ad8e26a52  hashes-3.9.9.php
+* 6964b4ceb046069d7cde83341fe7b463  hashes-3.8.11.php
+* cf251de319137edd9d43339c0407f4c6  hashes-3.7.11.php
+* bd1f04ed3355a96e22b162cdd8d11ad1  hashes-4.0.8.php
+* d45d010b90935cfbb7f690f29ac06d01  hashes-3.7.9.php
+* d67dca846634692f0fcafbb287b0e9e2  hashes-3.7.10.php
+* 83e9b85e82f57731030f6d24a5076dbd  hashes-3.8.9.php
+* d6b1411c62dcebc5873224ea704f5fac  hashes-3.8.10.php
+* 3ceb4f75e5d5bf2322a3815b9829ebd1  hashes-3.9.7.php
+* 071807f22d4b04fafe51ce5cf30af4d1  hashes-3.9.8.php
+* dceaefb77a18a6333672d8deed3adcb5  hashes-4.0.6.php
+* 69c55007ce1eba31d76d4ad10bdc3075  hashes-4.0.7.php
+* 15fab6a2ecfd993e47410b7877e28248  hashes-4.1.6.php
+* b64ca1ed90e4d8624ce07995425504f1  hashes-4.1.7.php
 
 Latest SHA1 hash values for Exploit Scanner:
 
-* exploit-scanner.php (1.4.7): 0b83671adc8719bb4700ea6a07966218ee68147c
-* hashes-4.3.php: bc1487abeb54b0fd550aa3756c6eb9dda5180696
+* 74981a5b014524f0a9c7bbc5d0308bb4a5856e65  exploit-scanner.php (1.4.8):
+* 5cf810bcf2f83e03926ee279a11cbf90a47d46e8  hashes-4.3.1.php
+* 1831a54308762b6af552236243e68b5c8ea3a573  hashes-4.2.5.php
+* ddcbf8e2a77b0875ea18f3cdf5f8f4d599c2e762  hashes-4.1.8.php
+* ea5cf56f3058bbc23a309502d968517745e14ad9  hashes-3.9.9.php
+* 15956b557b43c3d8db42c9b6faeae77051349bb0  hashes-3.8.11.php
+* 0c9bf6b7b6ad4ba4bc4a51b255fc81e9c0dd6057  hashes-3.7.11.php
+* 3bb5d1f281673cd4a60780f05488fcaf3cb153b7  hashes-4.0.8.php
+* 7e1efa35f30f3d1537d92ddf598fc4a3a1405864  hashes-3.7.9.php
+* 3ecd073247978406328503e064b13714d003425c  hashes-3.7.10.php
+* 4463da725f7c69b75c27a859d07fd75483b537ab  hashes-3.8.9.php
+* 43a28f7130242e0b75d6dcc2dc891ea74744987c  hashes-3.8.10.php
+* aa4c0458df2fef2a13b9fbbb8ed7b8f0caef4b45  hashes-3.9.7.php
+* eb8896715041218dd4b663d5770e39fd04fabbfb  hashes-3.9.8.php
+* 0a4303dbfe7b6d0b8a727c983ab25679f76416d9  hashes-4.0.6.php
+* 84c1949b35ec20e8211addc1cb331b11d353bd97  hashes-4.0.7.php
+* aa514c1ab68836c0c56dbaad416780c7f8cc4486  hashes-4.1.6.php
+* b840aaabb2d3faac9e61b4a9654f6dbd906df30e  hashes-4.1.7.php
 
 See the [Exploit Scanner homepage](http://ocaoimh.ie/exploit-scanner/) for further information.
 
@@ -38,6 +70,10 @@ See the [Exploit Scanner homepage](http://ocaoimh.ie/exploit-scanner/) for furth
 * Wordpress 4.0 and 4.0.1 hashes
 
 == Changelog ==
+
+= 1.4.8 =
+* WordPress 4.3.1 security release hashes
+* Other missing hashes
 
 = 1.4.7 =
 * WordPress 4.3 hashes
