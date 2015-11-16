@@ -3473,7 +3473,7 @@ class WordPress_Affiliate_Shop {
 
         public function cron_process() {
             ini_set('memory_limit', '4096M');
-            ini_set('max_execution_time', '5000');
+            ini_set('max_execution_time', '10000');
 
             $mailhead = 'From: Aff Shop Cron <cron@sosensational.co.uk>' . "\r\n";
 
@@ -3537,7 +3537,7 @@ class WordPress_Affiliate_Shop {
             fclose($fp);
             wp_mail(get_option('admin_email'), 'Product Cron Ended', "Product Log: $productlog", $mailhead);
 
-            //die();
+            die();
         }
 
         /**
