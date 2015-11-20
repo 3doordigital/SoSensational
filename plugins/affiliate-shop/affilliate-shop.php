@@ -3230,7 +3230,7 @@ class WordPress_Affiliate_Shop {
               ); */
 
             if (function_exists('ini_set')) {
-                @ini_set('memory_limit', '3072M');
+                @ini_set('memory_limit', '4096M');
             }
             $qry_args = array(
                 'post_status' => 'all',
@@ -3467,13 +3467,13 @@ class WordPress_Affiliate_Shop {
 
         public function testMethod() {
             $webgains = WordPress_Affiliate_Shop_Webgains();
-            $programs = $webgains->merchants();
+            $programs = $this->cron_get_api_merchants();
             print(var_dump($programs));
         }
 
         public function cron_process() {
             ini_set('memory_limit', '4096M');
-            ini_set('max_execution_time', '5000');
+            ini_set('max_execution_time', '10000');
 
             $mailhead = 'From: Aff Shop Cron <cron@sosensational.co.uk>' . "\r\n";
 
@@ -3490,7 +3490,8 @@ class WordPress_Affiliate_Shop {
             $i = 1;
             global $wpdb;
             $table_name = $wpdb->prefix . "feed_data";
-            $wpdb->query("TRUNCATE TABLE $table_name");
+            //$wpdb->query("TRUNCATE TABLE $table_name");
+            $newItemsIds = [];
             $merchants = $this->cron_get_api_merchants();
             $total = $merchants['total'];
             foreach ($merchants['items'] as $merchant) {
@@ -3537,7 +3538,7 @@ class WordPress_Affiliate_Shop {
             fclose($fp);
             wp_mail(get_option('admin_email'), 'Product Cron Ended', "Product Log: $productlog", $mailhead);
 
-            //die();
+            die();
         }
 
         /**

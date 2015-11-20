@@ -175,26 +175,27 @@
 		}
 		
 		public function get_merchants( $api, $merchant, $array = false ) {
-			
+
 			$temp = array();
 			
-			$this->sortby = 'name';
-			$this->sort = 'asc';
-			
+			$sortby = $this->sortby = 'name';
+			$sort = $this->sort = 'asc';
+
 			if( count( $this->option['apis'] ) > 0 ) {
 				foreach( $this->option['apis'] as $affiliate ) {
 					$classname = $affiliate['class'];
 					$class = new $classname();
 					if( $api == $affiliate['name'] || $api == 'all' ) {
-						$temp[] = $class->merchants( $term, $merchant, $depth, $page, $sortby, $sort );
+						$temp[] = $class->merchants();
 					}
 				}
 			}
-			
 			$output = array();	
 				
-			foreach( $temp as $input ) {
-				$output = array_replace( $output, $input );
+			foreach( $temp as $input) {
+				foreach ($input as $oneSeller){
+					$output[] = $oneSeller;
+				}
 			}
 			
 			
