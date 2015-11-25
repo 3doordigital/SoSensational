@@ -100,9 +100,9 @@ class WordPress_Affiliate_Shop_Affilinet {
      * @return array	$out
      */
     public function update_feed($merchant, $merch = NULL) {
+        $out = array();
         $out['success'] = 0;
         $out['error'] = 0;
-        $out = array();
         $upload_dir = wp_upload_dir();
         $user_dirname = $upload_dir['basedir'] . '/feed-data';
         if (!file_exists($user_dirname))
@@ -143,6 +143,7 @@ class WordPress_Affiliate_Shop_Affilinet {
             $header = fgetcsv($handle, 0, ';');
             //print_var( $header );
             $out['status'] = 1;
+            $out['changedIds'] = [];
             $i = 0;
             // loop through the file line-by-line
             while (($data = fgetcsv($handle, 0, ';')) !== false) {
@@ -165,8 +166,7 @@ class WordPress_Affiliate_Shop_Affilinet {
                     'product_rrp' => sanitize_text_field(str_replace('GBP', '', $data['DisplayPrice'])),
                     'product_link' => esc_url($data['Deeplink1']),
                 );
-                $replace = $wpdb->insert($table_name, $datainsert);
-
+                $replace = $wpdb->replace($table_name, $datainsert);
                 switch ($replace) {
                     case false :
                         //die( $wpdb->last_query );
@@ -182,6 +182,7 @@ class WordPress_Affiliate_Shop_Affilinet {
                         break;
                 }
                 //print_var( $datainsert );
+                $out['changedIds'][] = $merchant . '_' . $data['ArtNumber'];
                 unset($data);
                 unset($datainsert);
             }

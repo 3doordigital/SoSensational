@@ -105,9 +105,10 @@ class WordPress_Affiliate_Shop_FF {
 		}
 		
 		public function update_feed( $ID, $merch = NULL ) {
+			$out = array();
 			$out['success'] = 0;
 			$out['error'] = 0;
-			$out = array();
+			$out['changedIds'] = [];
 			$local_file = $this->get_file( );
 			
 			$upload_dir = wp_upload_dir(); 
@@ -160,7 +161,7 @@ class WordPress_Affiliate_Shop_FF {
 							$out['message'][] = 'Replaced fandf_'.$data['2'];
 							break;	
 					}
-					
+					$out['changedIds'][] = 'fandf_'.$data[2];
 					unset($data);
 				}
 				fclose($handle);

@@ -101,10 +101,10 @@ class WordPress_Affiliate_Shop_TradeDoubler {
         $out['success'] = 0;
         $out['error'] = 0;
         $out['status'] = 0;
-
+        $out['changedIds'] = [];
         $url = 'http://api.tradedoubler.com/1.0/productsUnlimited;fid=' . $merchant . '?token=' . $this->token;
         if (function_exists('ini_set')) {
-            @ini_set('memory_limit', '3072M');
+            @ini_set('memory_limit', '4096M');
         }
         set_time_limit(0);
         $upload_dir = wp_upload_dir();
@@ -146,7 +146,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
                 //print_var($product);
 
                 $table_name = $wpdb->prefix . "feed_data";
-                $replace = $wpdb->insert($table_name, array(
+                $replace = $wpdb->replace($table_name, array(
                     'product_id' => $merchant . '_' . $data['ID'],
                     'product_aff' => $data['aff'],
                     'product_merch' => $merchant,
@@ -175,6 +175,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
                         $out['message'][] = 'Replaced ' . $merchant . '_' . $data['ID'];
                         break;
                 }
+                $out['changedIds'][] = $merchant . '_' . $data['ID'];
                 unset($data);
             }
         }

@@ -199,9 +199,10 @@ class WordPress_Affiliate_Shop_Linkshare {
      * @return array	$out
      */
     public function update_feed($merchant, $merch) {
+        $out = array();
         $out['success'] = 0;
         $out['error'] = 0;
-        $out = array();
+        $out['changedIds'] = [];
         $upload_dir = wp_upload_dir();
         $user_dirname = $upload_dir['basedir'] . '/feed-data';
         if (!file_exists($user_dirname))
@@ -260,7 +261,7 @@ class WordPress_Affiliate_Shop_Linkshare {
                 global $wpdb;
                 //print_var($product);
                 $table_name = $wpdb->prefix . "feed_data";
-                $replace = $wpdb->insert($table_name, array(
+                $replace = $wpdb->replace($table_name, array(
                     'product_id' => $merchant . '_' . $data['ID'],
                     'product_aff' => $data['aff'],
                     'product_merch' => $merchant,
@@ -288,6 +289,7 @@ class WordPress_Affiliate_Shop_Linkshare {
                         $out['message'][] = 'Replaced ' . $merchant . '_' . $data['ID'];
                         break;
                 }
+                $out['changedIds'][] = $merchant . '_' . $data['ID'];
                 unset($data);
                 $reader->next('product');
             }

@@ -221,6 +221,7 @@ class WordPress_Affiliate_Shop_Awin {
             // get the first row, which contains the column-titles (if necessary)
             $header = fgetcsv($handle);
             $out['status'] = 1;
+            $out['changedIds']= [];
             // loop through the file line-by-line
             while (($data = fgetcsv($handle)) !== false) {
                 set_time_limit(0);
@@ -238,7 +239,6 @@ class WordPress_Affiliate_Shop_Awin {
                     'product_link' => esc_url($data[3]),
                         )
                 );
-
                 switch ($replace) {
                     case false :
                         //die( $wpdb->last_query );
@@ -253,7 +253,7 @@ class WordPress_Affiliate_Shop_Awin {
                         $out['message'][] = 'Replaced ' . $merchant . '_' . $data['ID'];
                         break;
                 }
-
+                $out['changedIds'][] =  $data[11] . '_' . $data[0];
                 unset($data);
             }
             fclose($handle);

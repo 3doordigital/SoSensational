@@ -124,7 +124,7 @@ class WordPress_Affiliate_Shop_Webgains {
      */
     public function update_feed($merchant, $merch) {
 
-
+        $out['changedIds'] = [];
         $upload_dir = wp_upload_dir();
         $user_dirname = $upload_dir['basedir'] . '/feed-data';
         if (!file_exists($user_dirname))
@@ -159,7 +159,7 @@ class WordPress_Affiliate_Shop_Webgains {
         $data = array();
 
         if (function_exists('ini_set')) {
-            @ini_set('memory_limit', '3072M');
+            @ini_set('memory_limit', '4096M');
         }
         $out['status'] = 1;
         /*
@@ -203,7 +203,7 @@ class WordPress_Affiliate_Shop_Webgains {
                         'product_rrp' => $rrp,
                         'product_link' => esc_url($data[3]),
                     );
-                    $replace = $wpdb->insert($table_name, $datainsert);
+                    $replace = $wpdb->replace($table_name, $datainsert);
 
                     switch ($replace) {
                         case false :
@@ -220,6 +220,7 @@ class WordPress_Affiliate_Shop_Webgains {
                             break;
                     }
                 }
+                $out['changedIds'][] = $data[11] . '_' . $data[9];
                 unset($data);
             }
             fclose($handle);

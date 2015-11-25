@@ -3494,10 +3494,12 @@ class WordPress_Affiliate_Shop {
             $newItemsIds = [];
             $merchants = $this->cron_get_api_merchants();
             $total = $merchants['total'];
+            var_dump($total);
             foreach ($merchants['items'] as $merchant) {
                 echo $merchant['ID'];
                 $percent = number_format(($i / $total) * 100, 2);
                 $data = $this->cron_update_merchant_feed($merchant['ID'], $merchant['aff'], $merchant['name']);
+                $newItemsIds[] = $data['changedIds'];
                 if ($data['status'] == 1) {
                     $line = array($i . ' of ' . $total . ' (' . $percent . '%)', $merchant['ID'], $merchant['name'], $merchant['aff'], 'Updated - ' . $data['success'] . ' Inserted, ' . $data['error'] . ' Failed.', '');
                 } else {
@@ -3506,6 +3508,7 @@ class WordPress_Affiliate_Shop {
                 fputcsv($fp, $line, '|');
                 $i++;
             }
+            var_dump($newItemsIds);
             fclose($fp);
             wp_mail(get_option('admin_email'), 'Merchant Cron Ended', "Merchant Log: $merchantlog", $mailhead);
 

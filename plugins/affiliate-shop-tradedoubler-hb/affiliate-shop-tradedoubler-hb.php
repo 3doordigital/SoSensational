@@ -92,7 +92,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
         $out['success'] = 0;
         $out['error'] = 0;
         $out['status'] = 0;
-
+        $out['changedIds'] = [];
         $url = 'http://pf.tradedoubler.com/export/export?myFeed=14387877802501130&myFormat=14387877802501130';
         if (function_exists('ini_set')) {
             @ini_set('memory_limit', '3072M');
@@ -124,7 +124,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
                 // loop through the file line-by-line
                 while ($product = fgetcsv($handle)) {
                     $table_name = $wpdb->prefix . "feed_data";
-                    $replace = $wpdb->insert($table_name, array(
+                    $replace = $wpdb->replace($table_name, array(
                         'product_id' => 'tdhb_' . $product[6],
                         'product_aff' => 'tradedoubler-hb',
                         'product_merch' => 'tdhb_',
@@ -153,7 +153,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
                             $out['message'][] = 'Replaced td-hb_' . $product[6];
                             break;
                     }
-
+                    $out['changedIds'][] = 'tdhb_' . $product[6];
                     unset($data);
                     unset($product);
                 }
