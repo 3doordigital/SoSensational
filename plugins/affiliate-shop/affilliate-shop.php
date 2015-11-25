@@ -3508,7 +3508,8 @@ class WordPress_Affiliate_Shop {
                 fputcsv($fp, $line, '|');
                 $i++;
             }
-            var_dump($newItemsIds);
+            var_dump(count($newItemsIds));
+            die();
             fclose($fp);
             wp_mail(get_option('admin_email'), 'Merchant Cron Ended', "Merchant Log: $merchantlog", $mailhead);
 
