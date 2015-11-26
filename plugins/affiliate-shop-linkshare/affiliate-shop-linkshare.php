@@ -233,8 +233,10 @@ class WordPress_Affiliate_Shop_Linkshare {
 
             //$xml = simplexml_load_file( $uc_local_file );
             $reader = new XMLReader();
-            $reader->open($uc_local_file);
-
+            $streamOpened = $reader->open($uc_local_file);
+            if($streamOpened === false){
+                throw new Exception('Error when open XML file in affilite-shop-linkshare');
+            }
             while ($reader->read() && $reader->name !== 'product');
             while ($reader->name === 'product') {
                 $product = simplexml_load_string($reader->readOuterXML());
@@ -251,7 +253,7 @@ class WordPress_Affiliate_Shop_Linkshare {
                     'ID' => (string) sanitize_text_field($product['product_id']),
                     'aff' => 'linkshare',
                     'title' => (string) sanitize_text_field(trim(ucwords(strtolower($product['name'])))),
-                    'brand' => (string) sanitize_text_field(trim(ucwords(strtolower($xml->header->merchantName)))),
+                    'brand' => (string) sanitize_text_field(trim(ucwords(strtolower($product->header->merchantName)))),
                     'img' => (string) esc_url($product->URL->productImage),
                     'desc' => (string) sanitize_text_field($product->description->short),
                     'price' => ( $sale < $retail ? $sale : $retail ),
@@ -280,6 +282,7 @@ class WordPress_Affiliate_Shop_Linkshare {
                         //die( $wpdb->last_query );
                         $out['message'][] = $wpdb->last_query;
                         $out['error'] ++;
+                        throw new Exception('Error when making update feed data database in affilite-shop-linkshare');
                         break;
                     case 1 :
                         $out['message'][] = 'Inserted ' . $merchant . '_' . $data['ID'];
@@ -297,6 +300,7 @@ class WordPress_Affiliate_Shop_Linkshare {
         } else {
             $out['status'] = 0;
             $out['message'] = 'FTP Failed';
+            throw new Exception('Failed to establish ftp connection in affilite-shop-linkshare');
         }
         return $out;
     }

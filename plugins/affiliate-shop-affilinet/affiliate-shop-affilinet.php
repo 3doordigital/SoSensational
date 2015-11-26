@@ -133,6 +133,8 @@ class WordPress_Affiliate_Shop_Affilinet {
         curl_exec($ch);
         if (!curl_errno($ch)) {
             $out['status'] = 1;
+        }else{
+            throw new Exception('Filed download products from curl in affiliate-shop-affilnet');
         }
         curl_close($ch);
         fclose($fp);
@@ -172,6 +174,7 @@ class WordPress_Affiliate_Shop_Affilinet {
                         //die( $wpdb->last_query );
                         $out['message'][] = $wpdb->last_query;
                         $out['error'] ++;
+                        throw new Exception('Error when making update feed data database in affiliate-shop-affilnet');
                         break;
                     case 1 :
                         $out['message'][] = 'Inserted ' . $merchant . '_' . $data['ArtNumber'];
@@ -187,6 +190,8 @@ class WordPress_Affiliate_Shop_Affilinet {
                 unset($datainsert);
             }
             fclose($handle);
+        }else{
+            throw new Exception('Filed to save products in hard disk in affiliate-shop-affilnet');
         }
 
         return $out;

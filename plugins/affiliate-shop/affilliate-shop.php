@@ -3498,8 +3498,13 @@ class WordPress_Affiliate_Shop {
             foreach ($merchants['items'] as $merchant) {
                 echo $merchant['ID'];
                 $percent = number_format(($i / $total) * 100, 2);
+                try{
                 $data = $this->cron_update_merchant_feed($merchant['ID'], $merchant['aff'], $merchant['name']);
-                $newItemsIds[] = $data['changedIds'];
+                 array_push($newItemsIds,$data['changedIds']);
+                }catch (Exception $e){
+                    wp_mail(get_option('admin_email'), 'Product Cron Crashed', "Error description: {$e->getMessage()}"."\n"."Error stack: {$e->getTraceAsString()}"."\n", $mailhead);
+                }
+                array_push($newItemsIds,$data['changedIds']);
                 if ($data['status'] == 1) {
                     $line = array($i . ' of ' . $total . ' (' . $percent . '%)', $merchant['ID'], $merchant['name'], $merchant['aff'], 'Updated - ' . $data['success'] . ' Inserted, ' . $data['error'] . ' Failed.', '');
                 } else {
@@ -3508,14 +3513,15 @@ class WordPress_Affiliate_Shop {
                 fputcsv($fp, $line, '|');
                 $i++;
             }
-            var_dump(count($newItemsIds));
-            die();
+            var_dump(count('\n total items '.$newItemsIds));
+            $feedDataIdsString = implode(',',$newItemsIds);
+            if(count($newItemsIds)){
+                $eraseFeedDataQuery = "DELETE * FROM {$wpdb->prefix}feed_data where product_id NOT IN ($feedDataIdsString)";
+            }
+            $deletedItemsCount = $wpdb->query($eraseFeedDataQuery);
             fclose($fp);
-            wp_mail(get_option('admin_email'), 'Merchant Cron Ended', "Merchant Log: $merchantlog", $mailhead);
-
-
+            wp_mail(get_option('admin_email'), 'Merchant Cron Ended', "Merchant Log: $merchantlog deleted items count: $deletedItemsCount ", $mailhead);
             $i = 1;
-
             $fp = fopen($productlog, 'w');
             $header = array("Number", "Post ID", "Product ID", "Affiliate", "Product Title", "Brand", "Image URL", "Price", "RRP", "Link", "Status");
             fputcsv($fp, $header, '|');

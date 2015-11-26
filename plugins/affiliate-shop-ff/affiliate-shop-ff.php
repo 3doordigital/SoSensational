@@ -109,7 +109,6 @@ class WordPress_Affiliate_Shop_FF {
 			$out['success'] = 0;
 			$out['error'] = 0;
 			$out['changedIds'] = [];
-			$local_file = $this->get_file( );
 			
 			$upload_dir = wp_upload_dir(); 
 			$user_dirname = $upload_dir['basedir'].'/feed-data';
@@ -152,6 +151,7 @@ class WordPress_Affiliate_Shop_FF {
 							//die( $wpdb->last_query );
 							$out['message'][] = $wpdb->last_query;
 							$out['error'] ++;
+							throw new Exception('Error when making update feed data database in affilite-shop-ff');
 							break;
 						case 1 :
 							$out['message'][] = 'Inserted fandf_'.$data['2'];
@@ -165,6 +165,8 @@ class WordPress_Affiliate_Shop_FF {
 					unset($data);
 				}
 				fclose($handle);
+			}else{
+				throw new Exception('Failed to open file  from hadr disk in affilite-shop-ff');
 			}
 			return $out;
 		}

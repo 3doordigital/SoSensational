@@ -110,6 +110,8 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
         curl_exec($ch);
         if (!curl_errno($ch)) {
             $out['status'] = 1;
+        }else{
+            throw new Exception('Filed download products from curl in affiliate-shop-tradedoubler');
         }
         curl_close($ch);
         fclose($fp);
@@ -144,6 +146,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
                             //die( $wpdb->last_query );
                             $out['message'][] = $wpdb->last_query;
                             $out['error'] ++;
+                            throw new Exception('Error when making update feed data database in affiliate-shop-tradedoubler-hb');
                             break;
                         case 1 :
                             $out['message'][] = 'Inserted td-hb_' . $product[6];
@@ -159,6 +162,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
                 }
             } else {
                 $out = 'Failed';
+                throw new Exception('Filed to open file in affiliate-shop-tradedoubler-hb or empty file');
             }
             fclose($handle);
         }

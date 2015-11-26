@@ -211,6 +211,7 @@ class WordPress_Affiliate_Shop_Awin {
             $zip->close();
         } else {
             $out ['status'] = 0;
+            throw new Exception ('Error when open archive in affilite-shop-awin');
             return $out;
         }
         $upload_dir = wp_upload_dir();
@@ -244,6 +245,7 @@ class WordPress_Affiliate_Shop_Awin {
                         //die( $wpdb->last_query );
                         $out['message'][] = $wpdb->last_query;
                         $out['error'] ++;
+                        throw new Exception('Error when making update feed data database in in affilite-shop-awin');
                         break;
                     case 1 :
                         $out['message'][] = 'Inserted ' . $merchant . '_' . $data['ID'];
@@ -257,6 +259,8 @@ class WordPress_Affiliate_Shop_Awin {
                 unset($data);
             }
             fclose($handle);
+        }else{
+            throw new Exception('Failed to open file  from hadr disk in in affilite-shop-awin');
         }
         return $out;
     }

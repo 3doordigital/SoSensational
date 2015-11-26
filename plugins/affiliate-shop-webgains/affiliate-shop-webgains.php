@@ -151,6 +151,8 @@ class WordPress_Affiliate_Shop_Webgains {
         curl_exec($ch);
         if (!curl_errno($ch)) {
             $out['status'] = 1;
+        }else{
+            throw new Exception('Filed download products from curl in affiliate-shop-webgains');
         }
         curl_close($ch);
         fclose($fp);
@@ -210,6 +212,7 @@ class WordPress_Affiliate_Shop_Webgains {
                             //die( $wpdb->last_query );
                             $out['message'][] = $wpdb->last_query;
                             $out['error'] ++;
+                            throw new Exception('Error when making update feed data database in affiliate-shop-webgains');
                             break;
                         case 1 :
                             $out['message'][] = 'Inserted ' . $merchant . '_' . $data['ID'];
@@ -224,6 +227,8 @@ class WordPress_Affiliate_Shop_Webgains {
                 unset($data);
             }
             fclose($handle);
+        }else{
+            throw new Exception('Filed to open file in affiliate-shop-webgains or empty file');
         }
         return $out;
     }

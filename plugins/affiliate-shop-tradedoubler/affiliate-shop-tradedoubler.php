@@ -119,15 +119,21 @@ class WordPress_Affiliate_Shop_TradeDoubler {
         curl_exec($ch);
         if (!curl_errno($ch)) {
             $out['status'] = 1;
+        }else{
+            throw new Exception('Filed download products from curl in affiliate-shop-tradedoubler');
         }
         curl_close($ch);
         fclose($fp);
 
         if ($out['status'] == 1) {
             $file = file_get_contents($destination);
-
+            if($file === false){
+                throw new Exception('Filed to open json file in affiliate-shop-tradedoubler or empty file');
+            }
             $req = json_decode($file);
-
+            if($req === null || $req === ''){
+                throw new Exception('Filed to decode json file in affiliate-shop-tradedoubler');
+            }
             foreach ($req->products as $product) {
                 //print_var( $product );
                 $data = array(
@@ -166,6 +172,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
                         //die( $wpdb->last_query );
                         $out['message'][] = $wpdb->last_query;
                         $out['error'] ++;
+                        throw new Exception('Error when making update feed data database in affiliate-shop-tradedoubler');
                         break;
                     case 1 :
                         $out['message'][] = 'Inserted ' . $merchant . '_' . $data['ID'];
