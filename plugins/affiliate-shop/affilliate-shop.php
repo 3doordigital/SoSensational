@@ -3435,18 +3435,22 @@ class WordPress_Affiliate_Shop {
 
         public function cron_get_api_merchants() {
             if (count($this->option['apis']) > 0) {
+		$temp=[];
                 foreach ($this->option['apis'] as $affiliate) {
                     $classname = $affiliate['class'];
                     $class = new $classname();
                     $temp[] = $class->merchants();
                 }
                 $output = array();
-                $output['items'] = array();
-                foreach ($temp as $key => $input) {
-                    $output['items'] = array_replace($output['items'], $input);
+                $output['items:'] = array();
+                foreach ($temp as $input){
+                   foreach ($input as $oneItem){
+			$output['items'][] = $oneItem;
+			}
                 }
                 $output['total'] = count($output['items']);
-                $output['status'] = 1;
+               var_dump($output['total']);
+		 $output['status'] = 1;
                 return $output;
             }
         }
@@ -3490,7 +3494,7 @@ class WordPress_Affiliate_Shop {
             $i = 1;
             global $wpdb;
             $table_name = $wpdb->prefix . "feed_data";
-            //$wpdb->query("TRUNCATE TABLE $table_name");
+            $wpdb->query("TRUNCATE TABLE $table_name");
             $newItemsIds = [];
             $merchants = $this->cron_get_api_merchants();
             $total = $merchants['total'];
