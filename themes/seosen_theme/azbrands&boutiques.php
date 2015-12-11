@@ -18,11 +18,17 @@ $wpQueryObj = new WP_Query($queryArgs);
 $brandsAndBoutiques = $wpQueryObj->get_posts();
 $postsByLetters = array();
 foreach ($brandsAndBoutiques as $oneBrandOrBoutique) {
-    $firstLetter = substr($oneBrandOrBoutique->post_title, 0, 1);
-    if (!key_exists($firstLetter, $postsByLetters)) {
-        $postsByLetters[$firstLetter] = [];
+    if(preg_match('/^[\d]/',ltrim($oneBrandOrBoutique->post_title),$matches)){
+        $firstLetter = $matches[0];
+    }elseif(preg_match('/^[\w]/',ltrim($oneBrandOrBoutique->post_title))){
+        $firstLetter = strtoupper(substr($oneBrandOrBoutique->post_title, 0, 1));
+    }else{
+        $firstLetter = '.';
     }
-    array_push($postsByLetters[$firstLetter], $oneBrandOrBoutique);
+    if (!key_exists(ltrim($firstLetter), $postsByLetters)) {
+            $postsByLetters[$firstLetter] = [];
+        }
+    $postsByLetters[$firstLetter][] = $oneBrandOrBoutique;
 }
 $tpl->postsByLetters = $postsByLetters;
 echo $tpl;
