@@ -110,8 +110,8 @@ jQuery(document).ready(function ($) {
     }
 
     jQuery(function () {
-        jQuery('a[href*=#]:not([href=#])').click(function () {
-            $('a[href*=#]:not([href=#])').each(
+        jQuery('a[href*=#]:not([href=#],.btn-circle)').click(function () {
+            $('a[href*=#]:not([href=#]),.btn-circle').each(
                 function(){
                     $(this).parent().attr('style','');
                 }
@@ -135,23 +135,40 @@ jQuery(document).ready(function ($) {
         });
     });
     $('#searchBrands').on('keyup', function () {
-        $('.button-search').hide('500');
+        $('.button-search').addClass('button-clear').html("<span class=\"glyphicon glyphicon-remove\"></span>Clear");
         var self = $(this);
         var searchString = self.val();
         var advertisersCats = $('.ss_advertisers_cats');
-        advertisersCats.each(function () {
-            var self = $(this);
-            var title = self.find('.advertiser-title').first().text();
-            if (!title.match(new RegExp(searchString, 'gi'))) {
-                self.hide();
-            } else {
-                self.show();
-            }
-            if (searchString.length === 0) {
-                self.show();
-                $('.button-search').show('500');
-            }
+        var lettersWithItems = $('.category_ss_title_under');
+        lettersWithItems.each(function(){
+            var countOfHiddenLetters = 0;
+            var  letterWithItems= $(this);
+            var lettersBrands = letterWithItems.find('.ss_advertisers_cats');
+            var countOfLetterBrands = lettersBrands.length;
+            lettersBrands.each(function () {
+                var self = $(this);
+                var title = self.find('.advertiser-title').first().text();
+                if (!title.match(new RegExp(searchString, 'gi'))) {
+                    self.hide();
+                    countOfHiddenLetters++;
+                } else {
+                    self.show();
+                }
+                if (searchString.length === 0) {
+                    self.show();
+                    $('.button-search').html('<span class="glyphicon glyphicon-search" aria-hidden="true">Search</span>');
+                }
+                if(countOfHiddenLetters === countOfLetterBrands){
+                    letterWithItems.hide();
+                }else{
+                    letterWithItems.show();
+                }
+            });
         });
+    });
+    $(document).on('click','.button-clear',function(){
+        $('#searchBrands').val('');
+        $('#searchBrands').trigger('keyup');
     });
     $(window).scroll(function () {
         var scroll = $(window).scrollTop();

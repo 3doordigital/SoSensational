@@ -6,7 +6,7 @@ $ss_cat = isset($wp_query->query_vars['ss_cat']) ? $wp_query->query_vars['ss_cat
 $ss_sub_cat = isset($wp_query->query_vars['ss_sub_cat']) ? $wp_query->query_vars['ss_sub_cat'] : "";
 
 print
-$advertiser = false;
+    $advertiser = false;
 ?>
 
 <div class="container">
@@ -64,7 +64,9 @@ $advertiser = false;
                     ?>
                 </ul>
                 <label>
-                    <button class="button-search"><span class="glyphicon glyphicon-search" aria-hidden="true">Search</span></button> <input type="text" id="searchBrands">
+                    <input type="text" id="searchBrands">
+                    <button class="button-search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Search
+                    </button>
                 </label>
             </div>
             <div id="infiniteScroll" class="infiniteScroll">
@@ -88,46 +90,83 @@ $advertiser = false;
                     <div class="ss_clear"></div>
                     <?php $counter = 1; ?>
                     <?php foreach ($posts as $onePost): ?>
-                    <?php
-
-                    ?>
-                    <div class="post col-md-8 col-sm-12 fadebox ss_advertisers_cats showme animated fadeIn <?php
-                    if ($counter == 3) {
-                        echo 'breakRowClass';
-                    }
-                    ?>" style="visibility: visible;margin-top: 30px">
-                        <div class="advertiser-block-wrapper">
-                            <?php
-                            $post_name = isset($onePost->post_name) ? $onePost->post_name : null;
-                            $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} WHERE (post_type='brands' or post_type='boutiques') AND post_author='{$onePost->post_author}' AND post_status='publish'", OBJECT);
-                            ?>
-
-                            <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $post_name; ?>"
-                               rel="bookmark" title="Permanent Link to <?php $onePost->post_name; ?>"
-                               class="aHolderImgSS">
-                                <?php $image = bfi_thumb(get_post_meta($onePost->ID, 'ss_image_video', true), $cat_params); ?>
-                                <img src="<?php echo $image; ?>" class="img-responsive"/>
-
+                    <?php if ($onePost->post_type === 'custom_advertisers'): ?>
+                        <div class="post col-md-8 col-sm-12 fadebox ss_advertisers_cats showme animated fadeIn <?php
+                        if ($counter == 3) {
+                            echo 'breakRowClass';
+                        }
+                        ?>" style="visibility: visible;margin-top: 30px">
+                            <div class="advertiser-block-wrapper">
                                 <?php
-                                if ($counter % 2): echo '<div class="whitebar ss_whitebar" style="display: block;">';
-                                else: echo '<div class="blackbar ss_blackbar" style="display: block;">';
-                                endif;
+                                $meta = get_post_meta($onePost->ID);
+                                $post_name = isset($onePost->post_name) ? $onePost->post_name : null;
+                                $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} WHERE (post_type='brands' or post_type='boutiques') AND post_author='{$onePost->post_author}' AND post_status='publish'", OBJECT);
                                 ?>
-                                <h2><span class="advertiser-title"> <?php echo $onePost->post_title; ?></span></h2>
+                                <a href="<?php echo $meta['ss_custom_advertiser_url'][0] ?>"
+                                   rel="bookmark" title="Permanent Link to <?php $onePost->post_name; ?>"
+                                   class="aHolderImgSS">
+                                    <?php $image = bfi_thumb(wp_get_attachment_url(get_post_thumbnail_id($onePost->ID)), $cat_params);
+                                    ?>
+                                    <img src="<?php echo $image; ?>" class="img-responsive"/>
+                                    <?php
+                                    if ($counter % 2): echo '<div class="whitebar ss_whitebar" style="display: block;">';
+                                    else: echo '<div class="blackbar ss_blackbar" style="display: block;">';
+                                    endif;
+                                    ?>
+                                    <h2 class="advertiser-title"><?php echo $onePost->post_title; ?></h2>
+                            </div>
+                            </a>
+                            <div class="ss_clear"></div>
+                            <div class="ss_advertisers_cats_description">
+                                <?php
+                                $description = $onePost->post_content;
+                                $description = substr(strip_tags($description),0,186);
+                                $description = strip_tags($description);
+                                echo $description;
+                                ?>
+                            </div>
+                            <a class="button_ss large_ss" target="_blank"
+                               href="<?php echo $meta['ss_custom_advertiser_url'][0] ?>">Visit
+                                Website
+                            </a>
                         </div>
-                        </a>
-                        <div class="ss_clear"></div>
-                        <div class="ss_advertisers_cats_description">
-                            <?php
-                            $description = get_post_meta($onePost->ID, 'ss_advertiser_desc', true);
-                            $description = strip_tags($description);
-                            echo truncateDescription($description, $post_name);
-                            ?>
+                    <?php else: ?>
+                        <div class="post col-md-8 col-sm-12 fadebox ss_advertisers_cats showme animated fadeIn <?php
+                        if ($counter == 3) {
+                            echo 'breakRowClass';
+                        }
+                        ?>" style="visibility: visible;margin-top: 30px">
+                            <div class="advertiser-block-wrapper">
+                                <?php
+                                $post_name = isset($onePost->post_name) ? $onePost->post_name : null;
+                                $advertiser = $wpdb->get_results("SELECT DISTINCT * FROM {$wpdb->posts} WHERE (post_type='brands' or post_type='boutiques') AND post_author='{$onePost->post_author}' AND post_status='publish'", OBJECT);
+                                ?>
+                                <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $post_name; ?>"
+                                   rel="bookmark" title="Permanent Link to <?php $onePost->post_name; ?>"
+                                   class="aHolderImgSS">
+                                    <?php $image = bfi_thumb(get_post_meta($onePost->ID, 'ss_image_video', true), $cat_params); ?>
+                                    <img src="<?php echo $image; ?>" class="img-responsive"/>
+
+                                    <?php
+                                    if ($counter % 2): echo '<div class="whitebar ss_whitebar" style="display: block;">';
+                                    else: echo '<div class="blackbar ss_blackbar" style="display: block;">';
+                                    endif;
+                                    ?>
+                                    <h2 class="advertiser-title"><?php echo $onePost->post_title; ?></h2>
+                            </div>
+                            </a>
+                            <div class="ss_clear"></div>
+                            <div class="ss_advertisers_cats_description">
+                                <?php
+                                $description = get_post_meta($onePost->ID, 'ss_advertiser_desc', true);
+                                echo truncateDescription($description, $post_name);
+                                ?>
+                            </div>
+                            <a class="button_ss large_ss" target="_blank"
+                               href="http:\\<?php echo get_post_meta($onePost->ID, 'ss_affiliate_advertiser_link', true); ?>">Visit
+                                Website</a>
                         </div>
-                        <a class="button_ss large_ss" target="_blank"
-                           href="http:\\<?php echo get_post_meta($onePost->ID, 'ss_affiliate_advertiser_link', true); ?>">Visit
-                            Website</a>
-                    </div>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
             </div>

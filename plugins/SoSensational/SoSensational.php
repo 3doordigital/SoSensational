@@ -48,7 +48,6 @@ register_activation_hook(__FILE__, 'move_template_pages_on_plugin_activation');
 add_theme_support('infinite-scroll', array(
     'container' => 'infiniteScroll',
 ));
-
 function add_roles_on_plugin_activation() {
 
     remove_role('boutique_role');
@@ -358,6 +357,14 @@ function enqueueAdminStylesheets() {
 }
 
 add_action('admin_enqueue_scripts', 'enqueueAdminStylesheets');
+
+function enqueueAdminJavaScripts($hook) {
+    if($hook === 'post.php'){
+        wp_enqueue_script('admin_pages_scripts', plugins_url('SoSensational/js/admin_pages_scripts.js'),array('jquery'));
+    }
+}
+
+add_action('admin_enqueue_scripts', 'enqueueAdminJavaScripts');
 
 function deleteSelectedProduct() {
     if (isset($_POST['productToDelete']) && !empty($_POST['productToDelete'])) {

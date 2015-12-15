@@ -7,7 +7,8 @@ $tpl = new Template('azbrands&boutiques.php');
 $queryArgs = array(
     'post_type' => array(
         'brands',
-        'boutiques'
+        'boutiques',
+        'custom_advertisers'
     ),
     'orderby' => 'title',
     'order' => 'ASC',

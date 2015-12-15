@@ -1566,3 +1566,7 @@ a.preview-anchor-text {
 	font-family: DidotLT-Roman;
 	outline: none;
 }
+.glyphicon-search:before,
+.glyphicon-remove:before{
+	padding-right: 5px;
+}

@@ -171,6 +171,51 @@ function sosensational_custom_post_type() {
 
     register_post_type('advertisers_cats', $argsAdvertisersCats);
 
+    $labelsCustomAdvertisers = array(
+        'name' => 'Custom Advertisers',
+        'singular_name' => 'Custom Advertiser',
+        'add_new' => 'Add New',
+        'add_new_item' => 'Add New Custom Advertiser',
+        'edit_item' => 'Edit Custom Advertiser',
+        'new_item' => 'New Custom Advertiser',
+        'all_items' => 'All Custom Advertisers',
+        'view_item' => 'View Custom Advertiser',
+        'search_items' => 'Search Custom Advertiser',
+        'not_found' => 'No Custom Advertiser',
+        'not_found_in_trash' => 'No Custom Advertiser found in Trash',
+        'parent_item_colon' => '',
+        'menu_name' => 'Custom Advertisers',
+
+    );
+
+    $argsCustomAdvertisers = array(
+        'labels' => $labelsCustomAdvertisers,
+        'hierarchical' => false,
+        'description' => 'Custom Advertisers brands',
+        'supports' => array('title', 'page-attributes'),
+        'taxonomies' => array(),
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'menu_position' => 5,
+        'show_in_nav_menus' => true,
+        'publicly_queryable' => true,
+        'exclude_from_search' => false,
+        'has_archive' => true,
+        'register_meta_box_cb' => 'sosensational_custom_advertisers_url_add_meta_box',
+        'query_var' => true,
+        'can_export' => true,
+        'rewrite' => array(
+            'slug' => 'custom-advertisers',
+            'with_front'=> false,
+        ),
+        'capability_type' => 'post',
+        'supports' => array( 'title','author','thumbnail','editor')
+    );
+
+    register_post_type('custom_advertisers', $argsCustomAdvertisers);
+
+
 	
 }
 add_action('init', 'sosensational_custom_taxonomy',0);
@@ -238,7 +283,7 @@ function sosensational_taxonomy_add_new_meta_field($term) {
        <tr valign="top">
         <th scope="row">Upload Image or Video</th>
          <td>
-            <img src="<?php echo $term_meta['ss_cat_image']; ?>"></img>
+            <img src="<?php echo $term_meta['ss_cat_image']; ?>">
         <td>
         <td><label for="upload_image_video">
         <input id="upload_image_video" type="text" size="36" name="term_meta[ss_cat_image]" value="<?php echo $term_meta['ss_cat_image']; ?>" />
@@ -327,7 +372,9 @@ function sosensational_advertisers_cats_add_meta_box(){
     add_meta_box('sosensational_meta_box_advertisers_cats_details', 'Advertisers Cats Details', 'sosensational_advertisers_cats_meta_box_details_content', 'advertisers_cats', 'normal', 'default');
     remove_meta_box('pageparentdiv', 'advertisers_cats', 'side');
 }
-
+function sosensational_custom_advertisers_url_add_meta_box(){
+    add_meta_box('sosensational_custom_advertisers_url_link', 'Custom Advertiser Link', 'sosensational_custom_advertisers_url_link', 'custom_advertisers', 'normal', 'default');
+}
 function sosensational_products_add_meta_box(){
     add_meta_box('sosensational_meta_box_product_details', 'Product Details', 'sosensational_products_meta_box_details_content', 'products', 'normal', 'default');
     remove_meta_box('pageparentdiv', 'products', 'side');
@@ -340,7 +387,7 @@ function sosensational_brands_meta_box_details_content($post)
     echo '<tr valign="top">
         <th scope="row">Upload Logo</th>
          <td>
-            <img src="'.$meta['ss_logo'][0].'"></img>
+            <img src="'.$meta['ss_logo'][0].'">
         <td>
         <td><label for="upload_logo">
         <input id="upload_logo" type="text" size="36" name="upload_logo" value="" />
@@ -390,7 +437,7 @@ function sosensational_boutiques_meta_box_details_content($post)
     echo '<tr valign="top">
         <th scope="row">Upload Logo</th>
          <td>
-            <img src='.$meta['ss_logo'][0].'></img>
+            <img src='.$meta['ss_logo'][0].'>
         <td>
         <td><label for="upload_logo">
         <input id="upload_logo" type="text" size="36" name="upload_logo" value="" />
@@ -469,6 +516,13 @@ function sosensational_advertisers_cats_meta_box_details_content($post)
     echo '<p><label for="advertisers_cats_link">Link</label><input type="text" name="sosensational_options[advertisers_cats_link]" id="advertisers_cats_link" class="widefat" value="'.$meta['ss_advertisers_cats_link'][0].'" /></p>';
 
     }
+
+function sosensational_custom_advertisers_url_link($post){
+    global $post;
+    $meta = get_post_meta($post->ID);
+    wp_nonce_field('custom_form_action', 'SoSensational_noncename');
+    echo "<label>Custom Advertiser URL: <input type='url' name='sosensational_options[custom_advertiser_url]' value='{$meta['ss_custom_advertiser_url'][0]}'></label>";
+}
 
 add_action( 'save_post', 'sosensational_save_meta_box_data' );
 
