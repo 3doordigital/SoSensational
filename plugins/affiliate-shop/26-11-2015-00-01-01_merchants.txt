@@ -1,0 +1,10 @@
+Number|"Merchant ID"|"Merchant Name"|Affiliate|Status|Message
+"1 of 236 (0.42%)"|11456|"Tesco Wine"|tradedoubler|"Updated - 0 Inserted, 1440 Failed."|
+"2 of 236 (0.85%)"|23731|"F&F Product Feed"|tradedoubler|"Updated - 656 Inserted, 38791 Failed."|
+"3 of 236 (1.27%)"|14995|"Tesco Direct (fusepump)"|tradedoubler|"Updated - 0 Inserted, 30412 Failed."|
+"4 of 236 (1.69%)"|16789|"Madeleine Fashion Ltd."|tradedoubler|"Updated - 55 Inserted, 5285 Failed."|
+"5 of 236 (2.12%)"|18871|"Intimissimi UK PF"|tradedoubler|"Updated - 0 Inserted, 109 Failed."|
+"6 of 236 (2.54%)"|19176|"Tesco Mobile Own Network"|tradedoubler|"Updated - 0 Inserted, 386 Failed."|
+"7 of 236 (2.97%)"|14808|"Tesco Branded Pay Monthly"|tradedoubler|"Updated - 0 Inserted, 80 Failed."|
+"8 of 236 (3.39%)"|11530|"Tesco Clothing"|tradedoubler|"Updated - 600 Inserted, 32674 Failed."|
+"9 of 236 (3.81%)"|21900|"Tesco Grocery"|tradedoubler|"Updated - 0 Inserted, 32948 Failed."|
