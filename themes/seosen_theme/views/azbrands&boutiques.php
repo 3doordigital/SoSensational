@@ -57,6 +57,7 @@ print
             }
             ?>
             <div class="alphabet-links alphabet-links-first container">
+                <h3 class="display-alphabet">Jump to letter...</h3>
                 <ul class="pagination">
                     <?php foreach ($postsByLetters as $letter => $posts) {
                         echo "<li><span><a href=\"#{$letter}\">{$letter}</a></span></li>";
@@ -120,7 +121,7 @@ print
                             <div class="ss_advertisers_cats_description">
                                 <?php
                                 $description = $onePost->post_content;
-                                $description = substr(strip_tags($description),0,186);
+                                $description = substr(strip_tags($description), 0, 186);
                                 $description = strip_tags($description);
                                 echo $description;
                                 ?>
@@ -144,9 +145,12 @@ print
                                 <a href="<?php echo get_site_url() . '/brands-and-boutiques/' . $post_name; ?>"
                                    rel="bookmark" title="Permanent Link to <?php $onePost->post_name; ?>"
                                    class="aHolderImgSS">
-                                    <?php $image = bfi_thumb(get_post_meta($onePost->ID, 'ss_image_video', true), $cat_params); ?>
+                                    <?php $image = bfi_thumb(get_post_meta($onePost->ID, 'ss_image_video', true), $cat_params);
+                                        if(!$image){
+                                            $image = bfi_thumb(get_post_meta($onePost->ID, 'ss_logo', true), $cat_params);
+                                        }
+                                    ?>
                                     <img src="<?php echo $image; ?>" class="img-responsive"/>
-
                                     <?php
                                     if ($counter % 2): echo '<div class="whitebar ss_whitebar" style="display: block;">';
                                     else: echo '<div class="blackbar ss_blackbar" style="display: block;">';

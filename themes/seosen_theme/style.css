@@ -1570,3 +1570,61 @@ a.preview-anchor-text {
 .glyphicon-remove:before{
 	padding-right: 5px;
 }
+
+@media (max-width: 767px) {
+	div.whitebar.ss_whitebar, .blackbar.ss_blackbar {
+		height: initial;
+	}
+	div.fixed{
+		position: initial;
+	}
+	.alphabet-links{
+		box-shadow: none;
+		border: none;
+		border-bottom: solid #ddd 1px;
+	}
+	.alphabet-links h3{
+		color: #a0862a;
+		background-color: #fff;
+		border: solid 1px #a0862a;
+		padding: 4px;
+		padding-top: 5px;
+		line-height: 25px;
+		top: 1px;
+		position: relative;
+		font-family: DidotLT-Roman;
+		outline: none;
+		text-align: center;
+		margin-bottom: 0 !important;
+	}
+	.alphabet-links-first label {
+		float: none;
+		margin: 20px 0;
+		text-align: center;
+		display: block;
+	}
+	.alphabet-links .pagination{
+		display: none;
+		width: 100%;
+	}
+	.alphabet-links .pagination li{
+		display: block;
+		height: 35px;
+	}
+	.alphabet-links .pagination li span{
+		width: 100%;
+	}
+	.alphabet-links .pagination li span:hover{
+		color: rgb(99, 83, 26);
+		border-color: rgb(221, 221, 221);
+		background-color: rgb(238, 238, 238);
+	}
+	.alphabet-links .pagination li span a{
+		display: block;
+	}
+}
+@media (min-width: 768px) {
+	.alphabet-links h3{
+		display: none;
+	}
+}

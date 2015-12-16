@@ -112,8 +112,8 @@ jQuery(document).ready(function ($) {
     jQuery(function () {
         jQuery('a[href*=#]:not([href=#],.btn-circle)').click(function () {
             $('a[href*=#]:not([href=#]),.btn-circle').each(
-                function(){
-                    $(this).parent().attr('style','');
+                function () {
+                    $(this).parent().attr('style', '');
                 }
             );
             if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
@@ -121,7 +121,7 @@ jQuery(document).ready(function ($) {
                 target = target.length ? target : jQuery('[name=' + this.hash.slice(1) + ']');
                 if (target.length) {
                     jQuery('html,body').animate({
-                        scrollTop: target.offset().top -100
+                        scrollTop: target.offset().top - 100
                     }, 1000);
                     $(this).parent().css({
                         "color": "#63531a",
@@ -140,9 +140,9 @@ jQuery(document).ready(function ($) {
         var searchString = self.val();
         var advertisersCats = $('.ss_advertisers_cats');
         var lettersWithItems = $('.category_ss_title_under');
-        lettersWithItems.each(function(){
+        lettersWithItems.each(function () {
             var countOfHiddenLetters = 0;
-            var  letterWithItems= $(this);
+            var letterWithItems = $(this);
             var lettersBrands = letterWithItems.find('.ss_advertisers_cats');
             var countOfLetterBrands = lettersBrands.length;
             lettersBrands.each(function () {
@@ -158,17 +158,20 @@ jQuery(document).ready(function ($) {
                     self.show();
                     $('.button-search').html('<span class="glyphicon glyphicon-search" aria-hidden="true">Search</span>');
                 }
-                if(countOfHiddenLetters === countOfLetterBrands){
+                if (countOfHiddenLetters === countOfLetterBrands) {
                     letterWithItems.hide();
-                }else{
+                } else {
                     letterWithItems.show();
                 }
             });
         });
     });
-    $(document).on('click','.button-clear',function(){
+    $(document).on('click', '.button-clear', function () {
         $('#searchBrands').val('');
         $('#searchBrands').trigger('keyup');
+    });
+    $(document).on('click', '.display-alphabet', function () {
+        $('.alphabet-links .pagination').toggle();
     });
     $(window).scroll(function () {
         var scroll = $(window).scrollTop();
