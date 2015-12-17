@@ -1597,6 +1597,11 @@ a.preview-anchor-text {
 		text-align: center;
 		margin-bottom: 0 !important;
 	}
+	.alphabet-links h3 span{
+		float: right;
+		font-size: 16px;
+		padding: 10px;
+	}
 	.alphabet-links-first label {
 		float: none;
 		margin: 20px 0;

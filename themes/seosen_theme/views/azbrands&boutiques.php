@@ -57,7 +57,7 @@ print
             }
             ?>
             <div class="alphabet-links alphabet-links-first container">
-                <h3 class="display-alphabet">Jump to letter...</h3>
+                <h3 class="display-alphabet">Jump to letter... <span class="glyphicon glyphicon-arrow-down"></span></h3>
                 <ul class="pagination">
                     <?php foreach ($postsByLetters as $letter => $posts) {
                         echo "<li><span><a href=\"#{$letter}\">{$letter}</a></span></li>";
