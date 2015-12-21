@@ -345,7 +345,7 @@ body {
 
 
 .ss_advertisers_cats .blackbar, .ss_advertisers_cats .whitebar {
-	height: 62px;
+	height: auto;
 	top: auto;
 	bottom: 0px;
 	left: 0px;
@@ -377,6 +377,7 @@ body {
 }
 .ss_advertisers_cats a {
 	min-height: 100px;
+	white-space: normal;
 }
 
 .hideme .fadebox img {
