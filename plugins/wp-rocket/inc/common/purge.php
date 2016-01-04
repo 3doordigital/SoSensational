@@ -2,33 +2,36 @@
 defined( 'ABSPATH' ) or	die( 'Cheatin&#8217; uh?' );
 
 // Launch hooks that deletes all the cache domain
-add_action( 'switch_theme'				, 'rocket_clean_domain' );		// When user change theme
-add_action( 'user_register'				, 'rocket_clean_domain' );		// When a user is added
-add_action( 'profile_update'			, 'rocket_clean_domain' );		// When a user is updated
-add_action( 'deleted_user'				, 'rocket_clean_domain' );		// When a user is deleted
-add_action( 'wp_update_nav_menu'		, 'rocket_clean_domain' );		// When a custom menu is update
-add_action( 'update_option_theme_mods_' . get_option( 'stylesheet' ), 'rocket_clean_domain' ); // When location of a menu is updated
+add_action( 'switch_theme'				,     'rocket_clean_domain' );	// When user change theme
+add_action( 'user_register'				,     'rocket_clean_domain' );	// When a user is added
+add_action( 'profile_update'			,     'rocket_clean_domain' );	// When a user is updated
+add_action( 'deleted_user'				,     'rocket_clean_domain' );	// When a user is deleted
+add_action( 'wp_update_nav_menu'		,     'rocket_clean_domain' );	// When a custom menu is update
 add_action( 'update_option_sidebars_widgets', 'rocket_clean_domain' );	// When you change the order of widgets
-add_action( 'update_option_category_base', 'rocket_clean_domain' );		// When category permalink prefix is update
-add_action( 'update_option_tag_base'	, 'rocket_clean_domain' ); 		// When tag permalink prefix is update
-add_action( 'permalink_structure_changed', 'rocket_clean_domain' ); 	// When permalink structure is update
-add_action( 'create_term'				, 'rocket_clean_domain' ); 		// When a term is created
-add_action( 'edited_terms'				, 'rocket_clean_domain' ); 		// When a term is updated
-add_action( 'delete_term'				, 'rocket_clean_domain' ); 		// When a term is deleted
-add_action( 'add_link'					, 'rocket_clean_domain' );   	// When a link is added
-add_action( 'edit_link'					, 'rocket_clean_domain' );		// When a link is updated
-add_action( 'delete_link'				, 'rocket_clean_domain' );		// When a link is deleted
-add_action( 'customize_save'			, 'rocket_clean_domain' );		// When customizer is saved
-add_action( 'avada_clear_dynamic_css_cache', 'rocket_clean_domain' );	// When Avada theme purge its own cache
+add_action( 'update_option_category_base',    'rocket_clean_domain' );	// When category permalink prefix is update
+add_action( 'update_option_tag_base'	,     'rocket_clean_domain' ); 	// When tag permalink prefix is update
+add_action( 'permalink_structure_changed',    'rocket_clean_domain' ); 	// When permalink structure is update
+add_action( 'create_term'				,     'rocket_clean_domain' ); 	// When a term is created
+add_action( 'edited_terms'				,     'rocket_clean_domain' );	// When a term is updated
+add_action( 'delete_term'				,     'rocket_clean_domain' );	// When a term is deleted
+add_action( 'add_link'					,     'rocket_clean_domain' );	// When a link is added
+add_action( 'edit_link'					,     'rocket_clean_domain' );	// When a link is updated
+add_action( 'delete_link'				,     'rocket_clean_domain' );	// When a link is deleted
+add_action( 'customize_save'			,     'rocket_clean_domain' );	// When customizer is saved
+add_action( 'avada_clear_dynamic_css_cache',  'rocket_clean_domain' );	// When Avada theme purge its own cache
+add_action( 'update_option_theme_mods_' . get_option( 'stylesheet' ), 'rocket_clean_domain' ); // When location of a menu is updated
 
 /* @since 2.3.5 */
 // When SuperCacher (SiteGround) is purged
-add_action( 'wp_ajax_sg-cachepress-purge', 'rocket_clean_domain', 0 );
+add_action( 'wp_ajax_sg-cachepress-purge',    'rocket_clean_domain', 0 );
 add_action( 'admin_post_sg-cachepress-purge', 'rocket_clean_domain', 0 );
 
 /* @since 1.1.1 */
-add_filter( 'widget_update_callback'	, 'rocket_widget_update_callback' ); // When a widget is update
-function rocket_widget_update_callback( $instance ) { rocket_clean_domain(); return $instance; }
+add_filter( 'widget_update_callback'	, 'rocket_widget_update_callback' ); // When a widget is updated
+function rocket_widget_update_callback( $instance ) { 
+	rocket_clean_domain(); 
+	return $instance; 
+}
 
 /* @since 1.3.3
  * For not conflit with WooCommerce when clean_post_cache is called
@@ -90,10 +93,23 @@ function rocket_clean_post( $post_id )
 	$post = get_post( $post_id );
 	
 	// No purge for specifics conditions
-	if ( $post->post_status == 'auto-draft' || empty( $post->post_type ) || $post->post_type == 'nav_menu_item' ) {
+	if ( ! is_object( $post ) || $post->post_status == 'auto-draft' || empty( $post->post_type ) || $post->post_type == 'nav_menu_item' ) {
 		return;
 	}
+	
+	// Get the post language
+	$lang = false;
 
+	// WPML
+	if ( rocket_is_plugin_active( 'sitepress-multilingual-cms/sitepress.php' ) ) {
+		$lang = $GLOBALS['sitepress']->get_language_for_element( $post_id, 'post_' . get_post_type( $post_id ) );
+
+	// Polylang
+	} else if ( rocket_is_plugin_active( 'polylang/polylang.php' ) ) {
+		$post_language = $GLOBALS['polylang']->model->get_post_language( $post_id );
+		$lang = ( is_object( $post_language ) ) ? $post_language->slug : false;
+	}
+	
 	// Get the permalink structure
     $permalink_structure = get_rocket_sample_permalink( $post_id );
 
@@ -163,15 +179,16 @@ function rocket_clean_post( $post_id )
 	// Add the author page
 	$purge_author = array( get_author_posts_url( $post->post_author ) );
 	$purge_urls = array_merge( $purge_urls, $purge_author );
-
+	
 	/**
 	 * Fires before cache files related with the post are deleted
 	 *
 	 * @since 1.3.0
-	 * @param obj $post The post object
-	 * @param array $purge_urls URLs cache files to remove
+	 * @param obj 	 $post 		 The post object
+	 * @param array  $purge_urls URLs cache files to remove
+	 * @param string $lang 		 The post language
 	*/
-	do_action( 'before_rocket_clean_post', $post, $purge_urls );
+	do_action( 'before_rocket_clean_post', $post, $purge_urls, $lang );
 
 	/**
 	 * Filter URLs cache files to remove
@@ -179,22 +196,12 @@ function rocket_clean_post( $post_id )
 	 * @since 1.0
 	 * @param array $purge_urls List of URLs cache files to remove
 	*/
-	$purge_urls = apply_filters( 'rocket_post_purge_urls', $purge_urls );
+	$purge_urls = apply_filters( 'rocket_post_purge_urls', $purge_urls, $post );
 	
 	// Purge all files
 	rocket_clean_files( $purge_urls );
-
+	
 	// Never forget to purge homepage and their pagination
-	$lang = false;
-
-	// WPML
-	if ( rocket_is_plugin_active( 'sitepress-multilingual-cms/sitepress.php' ) ) {
-		$lang = $GLOBALS['sitepress']->get_language_for_element( $post_id, 'post_' . get_post_type( $post_id ) );
-
-	// Polylang
-	} else if ( rocket_is_plugin_active( 'polylang/polylang.php' ) ) {
-		$lang = $GLOBALS['polylang']->model->get_post_language( $post_id )->slug;
-	}
 	rocket_clean_home( $lang );
 
 	// Purge all parents
@@ -209,10 +216,11 @@ function rocket_clean_post( $post_id )
 	 * Fires after cache files related with the post are deleted
 	 *
 	 * @since 1.3.0
-	 * @param obj $post The post object
-	 * @param array $purge_urls URLs cache files to remove
+	 * @param obj 	 $post 		 The post object
+	 * @param array  $purge_urls URLs cache files to remove
+	 * @param string $lang 		 The post language
 	*/
-	do_action( 'after_rocket_clean_post', $post, $purge_urls );
+	do_action( 'after_rocket_clean_post', $post, $purge_urls, $lang );
 }
 
 /**
@@ -267,16 +275,16 @@ function rocket_post_purge_urls_for_qtranslate( $urls )
  *
  * @since 1.3.0
  */
-add_action( 'after_rocket_clean_post', 'run_rocket_bot_after_clean_post', 10, 2 );
-function run_rocket_bot_after_clean_post( $post, $purge_urls )
+add_action( 'after_rocket_clean_post', 'run_rocket_bot_after_clean_post', 10, 3 );
+function run_rocket_bot_after_clean_post( $post, $purge_urls, $lang )
 {
 	// Run robot only if post is published
-	if ( $post->post_status != 'publish' ) {
+	if ( 'publish' != $post->post_status ) {
 		return false;
 	}
 
 	// Add Homepage URL to $purge_urls for bot crawl
-	array_push( $purge_urls, home_url() );
+	array_push( $purge_urls, get_rocket_i18n_home_url( $lang ) );
 
 	// Get the author page
 	$purge_author = array( get_author_posts_url( $post->post_author ) );
@@ -296,14 +304,34 @@ function run_rocket_bot_after_clean_post( $post, $purge_urls )
 }
 
 /**
+ * Actions to be done after the purge cache files of a term
+ * By Default, this hook call the WP Rocket Bot (cache json)
+ *
+ * @since 2.6.8
+ */
+add_action( 'after_rocket_clean_term', 'run_rocket_bot_after_clean_term', 10, 3 );
+function run_rocket_bot_after_clean_term( $post, $purge_urls, $lang )
+{
+	// Add Homepage URL to $purge_urls for bot crawl
+	array_push( $purge_urls, get_rocket_i18n_home_url( $lang ) );
+
+	// Create json file and run WP Rocket Bot
+	$json_encode_urls = '["' . implode( '","', array_filter( $purge_urls ) ) . '"]';
+	if ( rocket_put_content( WP_ROCKET_PATH . 'cache.json', $json_encode_urls ) ) {
+		global $do_rocket_bot_cache_json;
+		$do_rocket_bot_cache_json = true;
+	}
+}
+
+/**
  * Run WP Rocket Bot when a post is added, updated or deleted
  *
  * @since 1.3.2
  */
 add_action( 'shutdown', 'do_rocket_bot_cache_json' );
-function do_rocket_bot_cache_json()
-{
-	if ( $GLOBALS['do_rocket_bot_cache_json'] ) {
+function do_rocket_bot_cache_json() {
+	global $do_rocket_bot_cache_json;
+	if ( $do_rocket_bot_cache_json ) {
 		run_rocket_bot( 'cache-json' );
 	}
 }
@@ -314,15 +342,16 @@ function do_rocket_bot_cache_json()
  * @since 1.3.0 Compatibility with WPML
  * @since 1.0
  */
-add_action( 'admin_post_purge_cache', 'rocket_purge_cache' );
-function rocket_purge_cache()
+add_action( 'admin_post_purge_cache', '__rocket_purge_cache' );
+function __rocket_purge_cache()
 {
 	if ( isset( $_GET['type'], $_GET['_wpnonce'] ) ) {
 
-		$_type = explode( '-', $_GET['type'] );
-		$_type = reset( $_type );
-		$_id = explode( '-', $_GET['type'] );
-		$_id = end( $_id );
+		$_type     = explode( '-', $_GET['type'] );
+		$_type     = reset( $_type );
+		$_id       = explode( '-', $_GET['type'] );
+		$_id       = end( $_id );
+		$_taxonomy = isset( $_GET['taxonomy'] ) ? $_GET['taxonomy'] : false;
 
 		if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'purge_cache_' . $_GET['type'] ) ) {
 			wp_nonce_ays( '' );
@@ -355,7 +384,17 @@ function rocket_purge_cache()
 			case 'post':
 				rocket_clean_post( $_id );
 				break;
-
+			
+			// Clear a specific term
+			case 'term':
+				rocket_clean_term( $_id, $_taxonomy );
+				break;
+				
+			// Clear a specific user
+			case 'user':
+				rocket_clean_user( $_id );
+				break;
+			
 			// Clear cache file of the current page in front-end
 			case 'url':
 				rocket_clean_files( wp_get_referer() );
@@ -378,9 +417,10 @@ function rocket_purge_cache()
  * @since 1.3.0 Compatibility with WPML
  * @since 1.0 (delete in 1.1.6 and re-add in 1.1.9)
  */
-add_action( 'admin_post_preload', 'rocket_preload_cache' );
-add_action( 'admin_post_nopriv_preload', 'rocket_preload_cache' );
-function rocket_preload_cache()
+add_action( 'admin_post_preload',        '__rocket_preload_cache' );
+add_action( 'admin_post_nopriv_preload', '__rocket_preload_cache' );
+/* if you want to programmatically preload the cache, use run_rocket_bot() instead */
+function __rocket_preload_cache()
 {
     if ( isset( $_GET['_wpnonce'] ) ) {
 
@@ -401,9 +441,9 @@ function rocket_preload_cache()
  *
  * @since 2.5
  */
-add_action( 'admin_post_rocket_purge_cloudflare', 'admin_post_rocket_purge_cloudflare' );
-function admin_post_rocket_purge_cloudflare()
-{
+add_action( 'admin_post_rocket_purge_cloudflare', '__admin_post_rocket_purge_cloudflare' );
+function __admin_post_rocket_purge_cloudflare() {
+	
 	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'rocket_purge_cloudflare' ) ) {
 		wp_nonce_ays( '' );
 	}

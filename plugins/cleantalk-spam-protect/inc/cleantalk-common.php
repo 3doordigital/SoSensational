@@ -1,6 +1,6 @@
 <?php
 
-$ct_agent_version = 'wordpress-529';
+$ct_agent_version = 'wordpress-5341';
 $ct_plugin_name = 'Anti-spam by CleanTalk';
 $ct_checkjs_frm = 'ct_checkjs_frm';
 $ct_checkjs_register_form = 'ct_checkjs_register_form';
@@ -101,7 +101,8 @@ $ct_data=ct_get_data();
  * Public action 'plugins_loaded' - Loads locale, see http://codex.wordpress.org/Function_Reference/load_plugin_textdomain
  */
 function ct_plugin_loaded() {
-    load_plugin_textdomain('cleantalk', false, basename(dirname(__FILE__)) . '/i18n');
+	$dir=plugin_basename( dirname( __FILE__ ) ) . '/../i18n';
+    $loaded=load_plugin_textdomain('cleantalk', false, $dir);
 }
 
 /**
@@ -143,6 +144,7 @@ function ct_base_call($params = array()) {
     if (array_key_exists('sender_info', $params)) {
 	    $sender_info = array_merge($sender_info, (array) $params['sender_info']);
     }
+
     $sender_info = json_encode($sender_info);
     if ($sender_info === false)
         $sender_info = '';
@@ -175,8 +177,10 @@ function ct_base_call($params = array()) {
     	$ct_request->last_error_time=$ct_data['last_error_time'];
     	$ct_request->last_error_text=$ct_data['last_error_text'];
     }    
+    
+    
 
-    $ct_result = $ct->isAllowMessage($ct_request);
+    $ct_result = @$ct->isAllowMessage($ct_request);
     if ($ct->server_change) {
         update_option(
                 'cleantalk_server', array(
@@ -187,7 +191,7 @@ function ct_base_call($params = array()) {
         );
     }
     
-    if($ct_result->errno != 0)
+    if(@intval($ct_result->errno) != 0)
     {
     	if($params['checkjs']!=1)
     	{
@@ -207,17 +211,11 @@ function ct_base_call($params = array()) {
         ct_init_session();
 
         $_SESSION[$ct_formtime_label] = time();
-        if(!isset($ct_result->errno)||isset($ct_result->errno)&&$ct_result->errno!=0)
-        {
-        	ct_add_event('no');
-        }
+       	ct_add_event('no');
     }
     else
     {
-    	if(!isset($ct_result->errno)||isset($ct_result->errno)&&$ct_result->errno!=0)
-        {
-        	ct_add_event('yes');
-        }
+       	ct_add_event('yes');
     	/*if($is_logged_in)
     	{
     		$user_cnt++;
@@ -261,6 +259,7 @@ function get_sender_info() {
     if (isset($_COOKIE['ct_checkjs'])) {
         $checkjs_data_cookies = $_COOKIE['ct_checkjs'];
     }
+    
 	
 	$checkjs_data_post = null;
 	if (count($_POST) > 0) {
@@ -283,6 +282,21 @@ function get_sender_info() {
             'ssl_on' => $ct_options['ssl_on'],
 	);*/
 	$options2server=$ct_options;
+	$js_info='';
+	if(isset($_COOKIE['ct_user_info']))
+    {
+    	$js_info=stripslashes(rawurldecode($_COOKIE['ct_user_info']));
+    	$js_info=mb_convert_encoding($js_info, "UTF-8", "Windows-1252");
+    }
+    
+    if (isset($_COOKIE['ct_first_referer']))
+    {
+        $ct_first_referer = $_COOKIE['ct_first_referer'];
+    }
+    else
+    {
+    	$ct_first_referer = 'null';
+    }
 
 	return $sender_info = array(
 	'page_url' => htmlspecialchars(@$_SERVER['SERVER_NAME'].@$_SERVER['REQUEST_URI']),
@@ -296,6 +310,8 @@ function get_sender_info() {
         'checkjs_data_cookies' => $checkjs_data_cookies, 
         'ct_options' => json_encode($options2server),
         'fields_number' => sizeof($_POST),
+        'js_info' => $js_info,
+        'ct_first_referer' => $ct_first_referer,
     );
 }
 
@@ -379,6 +395,10 @@ function ct_get_options($force=false) {
 	global $ct_options;
 	if(!$force && isset($ct_options) && isset($ct_options['apikey']) && strlen($ct_options['apikey'])>3)
 	{
+		if(defined('CLEANTALK_ACCESS_KEY'))
+	    {
+	    	$options['apikey']=CLEANTALK_ACCESS_KEY;
+	    }
 		return $ct_options;
 	}
 	else
@@ -389,6 +409,10 @@ function ct_get_options($force=false) {
 	    }else{
 		if(array_key_exists('apikey', $options))
 		    $options['apikey'] = trim($options['apikey']);
+	    }
+	    if(defined('CLEANTALK_ACCESS_KEY'))
+	    {
+	    	$options['apikey']=CLEANTALK_ACCESS_KEY;
 	    }
 	    return array_merge(ct_def_options(), (array) $options);
 	}
@@ -445,7 +469,7 @@ function ct_def_data() {
         'next_account_status_check' => 0, // Time label when the plugin should check account status 
         'user_token' => '', // User token 
         'js_keys' => array(), // Keys to do JavaScript antispam test 
-        'js_keys_store_days' => 8, // JavaScript keys store days - 8 days now
+        'js_keys_store_days' => 14, // JavaScript keys store days - 8 days now
         'js_key_lifetime' => 86400, // JavaScript key life time in seconds - 1 day now
     );
 }
@@ -626,7 +650,7 @@ function ct_get_fields_any(&$email,&$message,&$nickname,&$subject, &$contact,$ar
 	{
 		if(!is_array($value)&&!is_object($value)&&@get_class($value)!='WP_User')
 		{
-			if (in_array($key, $skip_params) || preg_match("/^ct_checkjs/", $key)) {
+			if (in_array($key, $skip_params) && $key!=0 && $key!='' || preg_match("/^ct_checkjs/", $key)) {
                 $contact = false;
             }
 			if ($email === '' && @preg_match("/^\S+@\S+\.\S+$/", $value))

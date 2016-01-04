@@ -3,8 +3,8 @@ Contributors: syammohanm
 Donate link: http://wpfront.com/donate/
 Tags: notification bar, wordpress notification bar, top bar, bottom bar, notification, bar, quick bar, fixed bar, sticky bar, message bar, message, floating bar, notice, sticky header, special offer, discount offer, offer, important, attention bar, highlight bar, popup bar, hellobar, heads up, heads up bar, headsup, headsupbar, popup, Toolbar
 Requires at least: 3.0
-Tested up to: 4.2.3
-Stable tag: 1.6
+Tested up to: 4.4
+Stable tag: 1.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -69,6 +69,9 @@ The new version(1.3) allows you to filter the bar based on user roles. In this c
 
 == Changelog ==
 
+= 1.7 =
+* Start and End times.
+
 = 1.6 =
 * Processes shortcodes.
 * Nofollow link option.
@@ -115,6 +118,9 @@ The new version(1.3) allows you to filter the bar based on user roles. In this c
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.7 =
+* Start and End times.
 
 = 1.6 =
 * Processes shortcodes.

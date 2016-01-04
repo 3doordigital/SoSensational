@@ -57,6 +57,43 @@ function __deactivate_rocket_lazyload_on_envira_gallery_indexable_images( $image
 }
 
 /**
+* Conflict with Envira Gallery: changes the URL argument if using WP Rocket CDN and Envira
+*
+* @since 2.6.5
+*/
+add_filter( 'envira_gallery_resize_image_args', '__rocket_cdn_resize_image_args_on_envira_gallery' );
+function __rocket_cdn_resize_image_args_on_envira_gallery( $args ) {
+	if ( ! isset( $args['url'] ) || (int) get_rocket_option('cdn') == 0 ) {
+		return $args;
+	}
+	
+	$cnames_host = get_rocket_cnames_host();
+    $url_host    = parse_url( $args['url'], PHP_URL_HOST );
+    $home_host   = parse_url( home_url(), PHP_URL_HOST );
+       
+    if ( in_array( $url_host, $cnames_host ) ) {
+    	$args['url'] = str_replace( $url_host, $home_host , $args['url'] );    
+    }
+    
+    return $args;
+}
+
+/**
+* Conflict with Envira Gallery: changes the resized URL if using WP Rocket CDN and Envira
+*
+* @since 2.6.5
+*/
+add_filter( 'envira_gallery_resize_image_resized_url', '__rocket_cdn_resized_url_on_envira_gallery' );
+function __rocket_cdn_resized_url_on_envira_gallery( $url ) {
+    if ( (int) get_rocket_option('cdn') == 0 ) {
+		return $url;
+	}
+	
+    $url = get_rocket_cdn_url( $url, array( 'all', 'images' ) );
+    return $url;
+}
+
+/**
  * Conflict with Meta Slider (Nivo Slider): don't apply LazyLoad on all images
  *
  * @since 2.4
@@ -92,16 +129,6 @@ function __deactivate_rocket_lazyload_on_soliloquy_indexable_images( $images ) {
 add_filter( 'rocket_override_donotcachepage', '__override_rocket_donotcachepage_on_thrive_leads' );
 function __override_rocket_donotcachepage_on_thrive_leads() {
 	return defined( 'TVE_LEADS_VERSION' ) && TVE_LEADS_VERSION > 0;
-}
-
-/**
- * Conflict with KK Star Rating: Clear the cache when a post gets rated.
- *
- * @since 2.5.3
- */
-add_action( 'kksr_rate', '__rocket_clear_cache_on_kksr_rate' );
-function __rocket_clear_cache_on_kksr_rate( $post_id ) {
-	rocket_clean_post( $post_id );	
 }
 
 /**
@@ -180,19 +207,4 @@ function __rocket_fix_mailchimp_main_css() {
 	
 	wp_deregister_style( 'mailchimpSF_main_css' );
 	wp_register_style( 'mailchimpSF_main_css', $cache_url . 'mailchimpSF_main_css.css', null, MCSF_VER );
-}
-
-/**
- * Conflict with Avada theme and WP Rocket CDN
- *
- * @since 2.6.1
- */
-add_filter( 'less_vars', '__rocket_fix_cdn_for_avada_theme', 11, 2 );
-function __rocket_fix_cdn_for_avada_theme( $vars, $handle ) {
-	if( $handle == 'avada-dynamic' && get_rocket_option( 'cdn' ) ) { 
-		$src = get_rocket_cdn_url( get_template_directory_uri() . '/assets/less/theme/dynamic.less' );
-		$vars['template-directory'] = sprintf( '~"%s"', dirname( dirname( dirname( dirname( $src ) ) ) ) );
-		$vars['lessurl'] = sprintf( '~"%s"', dirname( $src ) );
-	}
-	return $vars;
 }

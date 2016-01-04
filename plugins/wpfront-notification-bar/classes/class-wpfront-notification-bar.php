@@ -36,7 +36,7 @@ if (!class_exists('WPFront_Notification_Bar')) {
     class WPFront_Notification_Bar extends WPFront_Base {
 
         //Constants
-        const VERSION = '1.6';
+        const VERSION = '1.7';
         const OPTIONS_GROUP_NAME = 'wpfront-notification-bar-options-group';
         const OPTION_NAME = 'wpfront-notification-bar-options';
         const PLUGIN_SLUG = 'wpfront-notification-bar';
@@ -103,6 +103,8 @@ if (!class_exists('WPFront_Notification_Bar')) {
 
             wp_enqueue_script('jquery-ui-datepicker', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js', array('jquery'), '1.8.16');
 
+            wp_enqueue_script('jquery-ui-timepicker', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.8/jquery.timepicker.min.js', array('jquery'), '1.8.8');
+
             $jsRoot = $this->pluginURLRoot . 'jquery-plugins/colorpicker/js/';
             wp_enqueue_script('jquery.eyecon.colorpicker', $jsRoot . 'colorpicker.js', array('jquery', 'jquery-ui-datepicker'), self::VERSION);
 
@@ -119,6 +121,8 @@ if (!class_exists('WPFront_Notification_Bar')) {
 
             $styleRoot = $this->pluginURLRoot . 'jquery-plugins/jquery-ui/smoothness/';
             wp_enqueue_style('jquery.ui.smoothness.datepicker', $styleRoot . 'jquery-ui-1.10.4.custom.min.css', array(), self::VERSION);
+
+            wp_enqueue_style('jquery.ui.timepicker', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.8/jquery.timepicker.min.css', array(), '1.8.8');
 
             $styleRoot = $this->pluginURLRoot . 'jquery-plugins/colorpicker/css/';
             wp_enqueue_style('jquery.eyecon.colorpicker.colorpicker', $styleRoot . 'colorpicker.css', array(), self::VERSION);
@@ -169,14 +173,14 @@ if (!class_exists('WPFront_Notification_Bar')) {
 
             $this->markupLoaded = TRUE;
         }
-        
+
         protected function get_message_text() {
             $message = $this->options->message();
-            
-            if($this->options->message_process_shortcode()) {
+
+            if ($this->options->message_process_shortcode()) {
                 $message = do_shortcode($message);
             }
-            
+
             return $message;
         }
 
@@ -219,23 +223,44 @@ if (!class_exists('WPFront_Notification_Bar')) {
             if (is_admin())
                 return TRUE;
 
-            $today = current_time('mysql');
-            $today = strtotime($today);
-            $today = date('Y-m-d', $today);
-            $today = strtotime($today);
+            $now = current_time('mysql');
+            $now = strtotime($now);
+            $now = date('Y-m-d h:i a', $now);
+            $now = strtotime($now);
 
             $start_date = $this->options->start_date();
             if ($start_date != NULL) {
-                if ($start_date > $today)
+                $start_date = date('Y-m-d', $start_date);
+                $start_time = $this->options->start_time();
+                if($start_time == NULL) {
+                    $start_time = '12:00 am';
+                } else {
+                    $start_time = date('h:i a', $start_time);
+                }
+                $start_date = $start_date . ' ' . $start_time;
+                $start_date = strtotime($start_date);
+                
+                if ($start_date > $now)
                     return FALSE;
             }
-
+            
             $end_date = $this->options->end_date();
             if ($end_date != NULL) {
-                if ($end_date < $today)
+                $end_date = date('Y-m-d', $end_date);
+                $end_time = $this->options->end_time();
+                if($end_time == NULL) {
+                    $end_time = '11:59 pm';
+                } else {
+                    $end_time = date('h:i a', $end_time);
+                }
+                
+                $end_date = $end_date . ' ' . $end_time;
+                $end_date = strtotime($end_date);
+                
+                if ($end_date < $now)
                     return FALSE;
             }
-
+            
             switch ($this->options->display_roles()) {
                 case 1:
                     break;
@@ -314,14 +339,14 @@ if (!class_exists('WPFront_Notification_Bar')) {
 
             return TRUE;
         }
-        
+
         protected function is_user_logged_in() {
             $logged_in = is_user_logged_in();
-            
-            if($this->options->wp_emember_integration() && function_exists('wp_emember_is_member_logged_in')) {
+
+            if ($this->options->wp_emember_integration() && function_exists('wp_emember_is_member_logged_in')) {
                 $logged_in = $logged_in || wp_emember_is_member_logged_in();
             }
-            
+
             return $logged_in;
         }
 

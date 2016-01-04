@@ -1,7 +1,7 @@
 <?php
 /*
 * Function for displaying BestWebSoft menu
-* Version: 1.6.9
+* Version: 1.8.0
 */
 
 if ( ! function_exists ( 'bws_admin_enqueue_scripts' ) )
@@ -230,7 +230,10 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'link'			=> 'http://bestwebsoft.com/products/google-captcha/?k=7b59fbe542acf950b29f3e020d5ad735&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/google-captcha/download/?k=7b59fbe542acf950b29f3e020d5ad735&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&s=Google+Captcha+Bestwebsoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=google-captcha.php'
+				'settings'		=> 'admin.php?page=google-captcha.php',
+				'pro_version'	=> 'google-captcha-pro/google-captcha-pro.php',
+				'purchase'		=> 'http://bestwebsoft.com/products/google-captcha/buy/?k=773d30149acf1edc32e5c0766b96c134&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
+				'pro_settings'	=> 'admin.php?page=google-captcha-pro.php'
 			),
 			'sender/sender.php' => array(
 				'name'			=> 'Sender',
@@ -456,6 +459,14 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'download'		=> 'http://bestwebsoft.com/products/profile-extra-fields/download/?k=fe3b6c3dbc80bd4b1cf9a27a2f339820&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Profile+Extra+Fields+BestWebSoft&plugin-search-input=Search+Plugins',
 				'settings'		=> 'admin.php?page=profile-extra-fields.php'
+			),
+			'error-log-viewer/error-log-viewer.php' => array(
+				'name'			=> 'Error Log Viewer',
+				'description'	=> "Work with log files and folders on the WordPress server",
+				'link'			=> 'http://bestwebsoft.com/products/error-log-viewer/?k=da0de8bd2c7a0b2fea5df64d55a368b3&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
+				'download'		=> 'http://bestwebsoft.com/products/error-log-viewer/download/?k=da0de8bd2c7a0b2fea5df64d55a368b3&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
+				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Error+Log+Viewer+BestWebSoft&plugin-search-input=Search+Plugins',
+				'settings'		=> 'admin.php?page=rrrlgvwr.php&tab=settings'
 			)		
 		);
 
@@ -602,8 +613,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 			}
 		} ?>
 		<div class="wrap">
-			<div class="icon32 icon32-bws" id="icon-options-general"></div>
-			<h2>
+			<h1>
 				<span class="bws_main title">BestWebSoft</span>
 				<ul class="subsubsub bws_title_menu">
 					<li><a href="<?php echo esc_url( 'http://support.bestwebsoft.com/home' ); ?>" target="_blank"><?php _e( 'Need help?', 'bestwebsoft' ); ?></a></li> |
@@ -611,12 +621,10 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 					<li><a class="bws_system_status <?php if ( isset( $_GET['action'] ) && 'system_status' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=bws_plugins&amp;action=system_status"><?php _e( 'System status', 'bestwebsoft' ); ?></a></li>
 				</ul>
 				<div class="clear"></div>
-			</h2>
+			</h1>
 			<h2 class="nav-tab-wrapper">
 				<a class="nav-tab<?php if ( !isset( $_GET['action'] ) ) echo ' nav-tab-active'; ?>" href="admin.php?page=bws_plugins"><?php _e( 'Plugins', 'bestwebsoft' ); ?></a>
-				<?php if ( $wp_version >= '3.4' ) { ?>
-					<a class="nav-tab<?php if ( isset( $_GET['action'] ) && 'themes' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=bws_plugins&amp;action=themes"><?php _e( 'Themes', 'bestwebsoft' ); ?></a>
-				<?php } ?>
+				<a class="nav-tab<?php if ( isset( $_GET['action'] ) && 'themes' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=bws_plugins&amp;action=themes"><?php _e( 'Themes', 'bestwebsoft' ); ?></a>
 			</h2>
 			<?php if ( ! isset( $_GET['action'] ) ) { ?>
 				<ul class="subsubsub">
@@ -626,7 +634,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				</ul>
 				<div class="clear"></div>
 				<?php if ( ( isset( $_GET['sub'] ) && 'installed' == $_GET['sub'] ) || !isset( $_GET['sub'] ) ) { ?>
-					<h4 class="bws_installed"><?php _e( 'Installed plugins', 'bestwebsoft' ); ?></h4>
+					<h3 class="bws_installed"><?php _e( 'Installed plugins', 'bestwebsoft' ); ?></h3>
 					<?php foreach ( $all_plugins as $key_plugin => $value_plugin ) {
 						if ( isset( $bws_plugins_pro[ $key_plugin ] ) )
 							$key_plugin = $bws_plugins_pro[ $key_plugin ];
@@ -744,7 +752,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				} ?>
 				<div class="clear"></div>
 				<?php if ( ( isset( $_GET['sub'] ) && 'recommended' == $_GET['sub'] ) || !isset( $_GET['sub'] ) ) { ?>
-					<h4 class="bws_recommended"><?php _e( 'Recommended plugins', 'bestwebsoft' ); ?></h4>
+					<h3 class="bws_recommended"><?php _e( 'Recommended plugins', 'bestwebsoft' ); ?></h3>
 					<?php foreach ( $recommend_plugins as $key_plugin => $value_plugin ) {
 
 						if ( isset( $bws_plugins[ $key_plugin ] ) ) {
@@ -984,6 +992,7 @@ if ( ! function_exists( 'bws_get_banner_array' ) ) {
 	function bws_get_banner_array() {
 		global $bstwbsftwppdtplgns_banner_array;
 		$bstwbsftwppdtplgns_banner_array = array(
+			array( 'gglcptch_hide_banner_on_plugin_page', 'google-captcha/google-captcha.php', '1.18' ),
 			array( 'mltlngg_hide_banner_on_plugin_page', 'multilanguage/multilanguage.php', '1.1.1' ),
 			array( 'adsns_hide_banner_on_plugin_page', 'adsense-plugin/adsense-plugin.php', '1.36' ),
 			array( 'vstrsnln_hide_banner_on_plugin_page', 'visitors-online/visitors-online.php', '0.2' ),			

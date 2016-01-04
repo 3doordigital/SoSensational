@@ -79,8 +79,10 @@ if (!class_exists('WPFront_Notification_Bar_Options')) {
             $this->addOption('include_roles', 'string', array(), array($this, 'validate_include_roles'));
             $this->addOption('display_scroll', 'bit', false)->__('Display on Scroll');
             $this->addOption('display_scroll_offset', 'int', '100', array($this, 'validate_zero_positive'))->__('Scroll Offset');
-            $this->addOption('start_date', 'string', '', array($this, 'validate_date_range'))->__('Start Date');
-            $this->addOption('end_date', 'string', '', array($this, 'validate_date_range'))->__('End Date');
+            $this->addOption('start_date', 'string', '', array($this, 'validate_date_range'))->__('Start Date & Time');
+            $this->addOption('end_date', 'string', '', array($this, 'validate_date_range'))->__('End Date & Time');
+            $this->addOption('start_time', 'string', '', array($this, 'validate_date_range'))->__('Start Time');
+            $this->addOption('end_time', 'string', '', array($this, 'validate_date_range'))->__('End Time');
             $this->addOption('wp_emember_integration', 'bit', FALSE);
         }
 

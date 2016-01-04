@@ -47,7 +47,7 @@ class Jetpack_Comments_Settings {
 	 */
 	protected function setup_globals() {
 		// Default option values
-		$this->default_greeting = __( 'So, what do you think?', 'jetpack' );
+		$this->default_greeting = __( 'Leave a Reply', 'jetpack' );
 
 		// Possible color schemes
 		$this->color_schemes = array(

@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Init functions 
  * @return 	mixed[] Array of options
@@ -10,6 +9,18 @@ function ct_init() {
 
     $ct_options=ct_get_options();
 	$ct_data=ct_get_data();
+	
+	if(!isset($_COOKIE['ct_first_referer']))
+	{
+		if(isset($_SERVER['HTTP_REFERER']))
+		{
+			setcookie("ct_first_referer", $_SERVER['HTTP_REFERER'], 0, '/');
+		}
+		else
+		{
+			setcookie("ct_first_referer", "null", 0, '/');
+		}
+	}
     
     //fix for EPM registration form
     if(isset($_POST) && isset($_POST['reg_email']) && shortcode_exists( 'epm_registration_form' ))
@@ -31,7 +42,7 @@ function ct_init() {
     	die();
     }
     
-    if(isset($ct_options['general_postdata_test']) && $ct_options['general_postdata_test'] == 1)
+    if(isset($ct_options['general_postdata_test']) && $ct_options['general_postdata_test'] == 1 &&!@isset($_POST['ct_checkjs_cf7']))
     {
     	$ct_general_postdata_test = @intval($ct_options['general_postdata_test']);
     	//hook for Anonymous Post
@@ -42,12 +53,13 @@ function ct_init() {
     	$ct_general_postdata_test=0;
     }
     
-    if (isset($ct_options['general_contact_forms_test']) && $ct_options['general_contact_forms_test'] == 1)
+    if (isset($ct_options['general_contact_forms_test']) && $ct_options['general_contact_forms_test'] == 1&&!@isset($_POST['ct_checkjs_cf7']))
     {
 		add_action('CMA_custom_post_type_nav','ct_contact_form_validate_postdata',1);
 		add_action('template_redirect','ct_contact_form_validate',1);
 		if(isset($_POST['reg_redirect_link'])&&isset($_POST['tmpl_registration_nonce_field']))
 		{
+			unset($_POST['ct_checkjs_register_form']);
 			ct_contact_form_validate();
 		}
 		/*if(isset($_GET['ait-action'])&&$_GET['ait-action']=='register')
@@ -59,7 +71,7 @@ function ct_init() {
 		}*/
 	}
 	
-    if($ct_general_postdata_test==1)
+    if($ct_general_postdata_test==1&&!@isset($_POST['ct_checkjs_cf7']))
     {
     	add_action('CMA_custom_post_type_nav','ct_contact_form_validate_postdata',1);
     }
@@ -79,26 +91,26 @@ function ct_init() {
 
     // JetPack Contact form
     $jetpack_active_modules = false;
-    if(defined('JETPACK__VERSION')){
-	add_filter('grunion_contact_form_field_html', 'ct_grunion_contact_form_field_html', 10, 2);
-	if(JETPACK__VERSION=='3.4-beta')
-	{
-		add_filter('contact_form_is_spam', 'ct_contact_form_is_spam');
-	}
-	else if(JETPACK__VERSION=='3.4-beta2'||JETPACK__VERSION>='3.4')
-	{
-		add_filter('jetpack_contact_form_is_spam', 'ct_contact_form_is_spam_jetpack',1,2);
-	}
-	else
-	{
-		add_filter('contact_form_is_spam', 'ct_contact_form_is_spam');
-	}
+    if(defined('JETPACK__VERSION') && isset($_POST['comment_post_ID']))
+    {
+		add_filter('grunion_contact_form_field_html', 'ct_grunion_contact_form_field_html', 10, 2);
+		if(JETPACK__VERSION=='3.4-beta')
+		{
+			add_filter('contact_form_is_spam', 'ct_contact_form_is_spam');
+		}
+		else if(JETPACK__VERSION=='3.4-beta2'||JETPACK__VERSION>='3.4')
+		{
+			add_filter('jetpack_contact_form_is_spam', 'ct_contact_form_is_spam_jetpack',1,2);
+		}
+		else
+		{
+			add_filter('contact_form_is_spam', 'ct_contact_form_is_spam');
+		}
         $jetpack_active_modules = get_option('jetpack_active_modules');
-	if (
-	    (class_exists( 'Jetpack', false) && $jetpack_active_modules && in_array('comments', $jetpack_active_modules))
-	) {
-    	    $ct_jp_comments = true;
-	}
+		if ((class_exists( 'Jetpack', false) && $jetpack_active_modules && in_array('comments', $jetpack_active_modules)))
+		{
+	    	$ct_jp_comments = true;
+		}
     }
 
     // Contact Form7 
@@ -173,7 +185,7 @@ function ct_init() {
         	$ct_check_post_result=false;
             ct_contact_form_validate();
         }
-        if($_SERVER['REQUEST_METHOD'] == 'POST' && $ct_general_postdata_test==1 && !is_admin())
+        if($_SERVER['REQUEST_METHOD'] == 'POST' && $ct_general_postdata_test==1 && !is_admin()&&!@isset($_POST['ct_checkjs_cf7']))// || isset($_POST['url']) &&  isset($_POST['title']) && $_POST['excerpt'])
 	    {
 	    	$ct_check_post_result=false;
 	    	ct_contact_form_validate_postdata();
@@ -327,6 +339,7 @@ function ct_is_user_enable() {
     }
 
     return true;
+    //return !current_user_can('publish_posts');
 }
 
 /**
@@ -496,16 +509,17 @@ function ct_preprocess_comment($comment) {
     {
 	   	$args=Array('author_email' => $comment['comment_author_email'],
     				'status' => 'approve',
-    				'count' => true,
+    				'count' => false,
+    				'number' => $comments_check_number
     				);
-    	$cnt = get_comments( $args );
+    	$cnt = sizeof(get_comments( $args ));
     	if($cnt >= $comments_check_number)
     	{
     		$is_max_comments = true;
     	}
     }
 
-    if (ct_is_user_enable() === false || $ct_options['comments_test'] == 0 || $ct_comment_done || (isset($_SERVER['HTTP_REFERER']) && stripos($_SERVER['HTTP_REFERER'],'page=wysija_campaigns&action=editTemplate')!==false) || $is_max_comments || strpos($_SERVER['REQUEST_URI'],'/wp-admin/')!==false) {
+    if (($comment['comment_type']!='trackback') && (ct_is_user_enable() === false || $ct_options['comments_test'] == 0 || $ct_comment_done || (isset($_SERVER['HTTP_REFERER']) && stripos($_SERVER['HTTP_REFERER'],'page=wysija_campaigns&action=editTemplate')!==false) || $is_max_comments || strpos($_SERVER['REQUEST_URI'],'/wp-admin/')!==false)) {
         return $comment;
     }
     
@@ -520,14 +534,14 @@ function ct_preprocess_comment($comment) {
     );
 
     // Go out if author in local blacklists
-    if ($local_blacklists === true) {
+    if ($comment['comment_type']!='trackback' && $local_blacklists === true) {
         return $comment;
     }
 
     // Skip pingback anti-spam test
-    if ($comment['comment_type'] == 'pingback') {
+    /*if ($comment['comment_type'] == 'pingback') {
         return $comment;
-    }
+    }*/
 
     $ct_comment_done = true;
 
@@ -978,6 +992,7 @@ function ct_test_registration($nickname, $email, $ip){
     if ($sender_info === false) {
         $sender_info= '';
     }
+
  
     require_once('cleantalk.class.php');
     $config = get_option('cleantalk_server');
@@ -1001,9 +1016,19 @@ function ct_test_registration($nickname, $email, $ip){
     
     $ct_result = $ct->isAllowUser($ct_request);
     
-    if ($ct_result->errno != 0 && $checkjs==0)
+    if(@intval($ct_result->errno) != 0)
     {
-    	$ct_result->allow=0;
+    	if($params['checkjs']!=1)
+    	{
+    		$ct_result->allow = 0;
+    		$ct_result->spam = 1;
+    		$ct_result->comment=__( 'Forbidden. Please, enable Javascript.', 'cleantalk' );
+    	}
+    	else
+    	{
+    		$ct_result->allow = 1;
+    		$ct_result->comment=__( 'Allow', 'cleantalk' );
+    	}
     }
     
     $result=Array(
@@ -1116,16 +1141,26 @@ function ct_registration_errors($errors, $sanitized_user_login = null, $user_ema
                 )
         );
     }
-    
+
     $ct_signup_done = true;
 
-    if ($ct_result->errno != 0 && $ct_options['notice_api_errors']) {
+    /*if ($ct_result->errno != 0 && $ct_options['notice_api_errors']) {
         ct_send_error_notice($ct_result->comment);
         return $errors;
-    }
-    if ($ct_result->errno != 0 && $checkjs==0)
+    }*/
+    if(@intval($ct_result->errno) != 0)
     {
-    	$ct_result->allow=0;
+    	if($params['checkjs']!=1)
+    	{
+    		$ct_result->allow = 0;
+    		$ct_result->spam = 1;
+    		$ct_result->comment=__( 'Forbidden. Please, enable Javascript.', 'cleantalk' );
+    	}
+    	else
+    	{
+    		$ct_result->allow = 1;
+    		$ct_result->comment=__( 'Allow', 'cleantalk' );
+    	}
     }
     
     if ($ct_result->inactive != 0) {
@@ -1468,6 +1503,7 @@ function ct_si_contact_form_validate($form_errors = array(), $form_id_num = 0) {
 
     if ($ct_options['contact_forms_test'] == 0)
 	return $form_errors;
+	$sender_info='';
 
     $checkjs = js_test('ct_checkjs', $_POST, true);
 
@@ -1491,6 +1527,7 @@ function ct_si_contact_form_validate($form_errors = array(), $form_id_num = 0) {
 
     if (isset($_POST['message']))
         $message = $_POST['message'];
+        
 
     $ct_base_call_result = ct_base_call(array(
         'message' => $subject . "\n\n" . $message,
@@ -1667,8 +1704,19 @@ function ct_s2member_registration_test() {
         );
     }
 
-    if ($ct_result->errno != 0) {
-        return false;
+    if(@intval($ct_result->errno) != 0)
+    {
+    	if($params['checkjs']!=1)
+    	{
+    		$ct_result->allow = 0;
+    		$ct_result->spam = 1;
+    		$ct_result->comment=__( 'Forbidden. Please, enable Javascript.', 'cleantalk' );
+    	}
+    	else
+    	{
+    		$ct_result->allow = 1;
+    		$ct_result->comment=__( 'Allow', 'cleantalk' );
+    	}
     }
     
     // Restart submit form counter for failed requests
@@ -1727,7 +1775,8 @@ function ct_contact_form_validate () {
         isset($_POST['bbp_topic_content']) ||
         isset($_POST['bbp_reply_content']) ||
         isset($_COOKIE[LOGGED_IN_COOKIE]) ||
-        isset($_POST['fscf_submitted'])
+        isset($_POST['fscf_submitted']) ||
+        strpos($_SERVER['REQUEST_URI'],'/wc-api/')!==false
         ) {
         return null;
     }
@@ -1890,7 +1939,8 @@ function ct_contact_form_validate_postdata () {
         @intval($ct_options['general_contact_forms_test'])==0 ||
         isset($_POST['bbp_topic_content']) ||
         isset($_POST['bbp_reply_content']) ||
-        isset($_POST['fscf_submitted'])
+        isset($_POST['fscf_submitted']) ||
+        strpos($_SERVER['REQUEST_URI'],'/wc-api/')!==false
         ) {
         return null;
     }

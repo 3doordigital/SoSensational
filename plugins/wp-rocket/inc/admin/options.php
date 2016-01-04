@@ -66,14 +66,19 @@ function rocket_field( $args )
 			case 'email' :
 			case 'text' :
 
-				$value = esc_attr( get_rocket_option( $args['name'] ) );
+				$value = get_rocket_option( $args['name'] );
 				if ( $value === false ) {
 					$value = $default;
 				}
-
+				
+				if ( 'cloudflare_api_key' == $args['name'] && defined( 'WP_ROCKET_CF_API_KEY' ) ) {
+					$value = WP_ROCKET_CF_API_KEY;
+				} 
+				
+				$value 			= esc_attr( $value );
 				$number_options = $args['type']=='number' ? ' min="0" class="small-text"' : '';
-				$autocomplete = in_array( $args['name'], array( 'consumer_key', 'consumer_email' ) ) ? ' autocomplete="off"' : '';
-				$disabled = ( 'consumer_key' == $args['name'] && defined( 'WP_ROCKET_KEY' ) ) || ( 'consumer_email' == $args['name'] && defined( 'WP_ROCKET_EMAIL' ) ) ? ' disabled="disabled"' : $readonly;
+				$autocomplete 	= in_array( $args['name'], array( 'consumer_key', 'consumer_email' ) ) ? ' autocomplete="off"' : '';
+				$disabled 		= ( 'consumer_key' == $args['name'] && defined( 'WP_ROCKET_KEY' ) ) || ( 'consumer_email' == $args['name'] && defined( 'WP_ROCKET_EMAIL' ) || ( 'cloudflare_api_key' == $args['name'] && defined( 'WP_ROCKET_CF_API_KEY' ) ) ) ? ' disabled="disabled"' : $readonly;
 				?>
 
 					<legend class="screen-reader-text"><span><?php echo $args['label_screen']; ?></span></legend>
@@ -450,11 +455,13 @@ function rocket_display_options()
 	foreach( $modules as $module ) {
 		require( WP_ROCKET_ADMIN_UI_MODULES_PATH . $module . '.php' );
 	}
+	
+	$heading_tag = version_compare( $GLOBALS['wp_version'], '4.3' ) >= 0 ? 'h1' : 'h2';
 	?>
 	
 	<div class="wrap">
 
-	<h2><?php echo WP_ROCKET_PLUGIN_NAME; ?> <small><sup><?php echo WP_ROCKET_VERSION; ?></sup></small></h2>
+	<<?php echo $heading_tag; ?>><?php echo WP_ROCKET_PLUGIN_NAME; ?> <small><sup><?php echo WP_ROCKET_VERSION; ?></sup></small></<?php echo $heading_tag; ?>>
 	<form action="options.php" id="rocket_options" method="post" enctype="multipart/form-data">
 		<?php 
 		settings_fields( 'wp_rocket' );
@@ -505,22 +512,22 @@ function rocket_display_options()
 		</h2>
 		<div id="rockettabs">
 			<?php if( rocket_valid_key() ) { ?>
-				<div class="rkt-tab" id="tab_basic"><?php do_settings_sections( 'basic' ); ?></div>
-				<div class="rkt-tab" id="tab_advanced"><?php do_settings_sections( 'advanced' ); ?></div>
-				<div class="rkt-tab" id="tab_cloudflare" <?php echo get_rocket_option( 'do_cloudflare' ) ? '' : 'style="display:none"'; ?>><?php do_settings_sections( 'cloudflare' ); ?></div>
-				<div class="rkt-tab" id="tab_cdn"><?php do_settings_sections( 'cdn' ); ?></div>
+				<div class="rkt-tab" id="tab_basic"><?php do_settings_sections( 'rocket_basic' ); ?></div>
+				<div class="rkt-tab" id="tab_advanced"><?php do_settings_sections( 'rocket_advanced' ); ?></div>
+				<div class="rkt-tab" id="tab_cloudflare" <?php echo get_rocket_option( 'do_cloudflare' ) ? '' : 'style="display:none"'; ?>><?php do_settings_sections( 'rocket_cloudflare' ); ?></div>
+				<div class="rkt-tab" id="tab_cdn"><?php do_settings_sections( 'rocket_cdn' ); ?></div>
 				<?php $class_hidden = !defined( 'WP_RWL' ) ? ' hidden' : ''; ?>
-				<div class="rkt-tab<?php echo $class_hidden; ?>" id="tab_whitelabel"><?php do_settings_sections( 'white_label' ); ?></div>
-				<div class="rkt-tab" id="tab_tools"><?php do_settings_sections( 'tools' ); ?></div>
+				<div class="rkt-tab<?php echo $class_hidden; ?>" id="tab_whitelabel"><?php do_settings_sections( 'rocket_white_label' ); ?></div>
+				<div class="rkt-tab" id="tab_tools"><?php do_settings_sections( 'rocket_tools' ); ?></div>
 				<?php if ( ! rocket_is_white_label() ) { ?>
-					<div class="rkt-tab" id="tab_tutorials"><?php do_settings_sections( 'tutorials' ); ?></div>
-					<div class="rkt-tab rkt-tab-txt" id="tab_faq"><?php do_settings_sections( 'faq' ); ?></div>
-					<div class="rkt-tab rkt-tab-txt" id="tab_support"><?php do_settings_sections( 'support' ); ?></div>
+					<div class="rkt-tab" id="tab_tutorials"><?php do_settings_sections( 'rocket_tutorials' ); ?></div>
+					<div class="rkt-tab rkt-tab-txt" id="tab_faq"><?php do_settings_sections( 'rocket_faq' ); ?></div>
+					<div class="rkt-tab rkt-tab-txt" id="tab_support"><?php do_settings_sections( 'rocket_support' ); ?></div>
 				<?php } ?>
 			<?php }else{ ?>
-				<div class="rkt-tab" id="tab_apikey"><?php do_settings_sections( 'apikey' ); ?></div>
-				<div class="rkt-tab rkt-tab-txt" id="tab_faq"><?php do_settings_sections( 'faq' ); ?></div>
-				<div class="rkt-tab rkt-tab-txt" id="tab_support"><?php do_settings_sections( 'support' ); ?></div>
+				<div class="rkt-tab" id="tab_apikey"><?php do_settings_sections( 'rocket_apikey' ); ?></div>
+				<div class="rkt-tab rkt-tab-txt" id="tab_faq"><?php do_settings_sections( 'rocket_faq' ); ?></div>
+				<div class="rkt-tab rkt-tab-txt" id="tab_support"><?php do_settings_sections( 'rocket_support' ); ?></div>
 			<?php } ?>
 			<?php
 			do_action( 'rocket_tab_content', rocket_valid_key() );
@@ -621,7 +628,7 @@ function rocket_settings_callback( $inputs )
 			$inputs['cache_reject_cookies'] = explode( "\n", $inputs['cache_reject_cookies'] );
 		}
 		$inputs['cache_reject_cookies'] = array_map( 'trim', $inputs['cache_reject_cookies'] );
-		$inputs['cache_reject_cookies'] = array_map( 'sanitize_key', $inputs['cache_reject_cookies'] );
+		$inputs['cache_reject_cookies'] = array_map( 'rocket_sanitize_cookie', $inputs['cache_reject_cookies'] );
 		$inputs['cache_reject_cookies'] = (array) array_filter( $inputs['cache_reject_cookies'] );
 		$inputs['cache_reject_cookies'] = array_unique( $inputs['cache_reject_cookies'] );
 	} else {
@@ -651,7 +658,7 @@ function rocket_settings_callback( $inputs )
 			$inputs['cache_reject_ua'] = explode( "\n", $inputs['cache_reject_ua'] );
 		}
 		$inputs['cache_reject_ua'] = array_map( 'trim', $inputs['cache_reject_ua'] );
-		$inputs['cache_reject_ua'] = array_map( 'esc_textarea', $inputs['cache_reject_ua'] );
+		$inputs['cache_reject_ua'] = array_map( 'rocket_sanitize_ua', $inputs['cache_reject_ua'] );
 		$inputs['cache_reject_ua'] = (array) array_filter( $inputs['cache_reject_ua'] );
 		$inputs['cache_reject_ua'] = array_unique( $inputs['cache_reject_ua'] );
 	} else {
@@ -742,6 +749,14 @@ function rocket_settings_callback( $inputs )
 	$inputs['wl_author_URI']  = isset( $inputs['wl_author_URI'] )  ? esc_url( $inputs['wl_author_URI'] )            : get_rocket_option( 'wl_author_URI' );
 	$inputs['wl_description'] = isset( $inputs['wl_description'] ) ? (array)$inputs['wl_description']               : get_rocket_option( 'wl_description' );
 	$inputs['wl_plugin_slug'] = sanitize_key( $inputs['wl_plugin_name'] );
+	
+	/*
+	 * Option : CloudFlare
+	 */
+	 
+	 if( defined( 'WP_ROCKET_CF_API_KEY' ) ) {
+		 $inputs['cloudflare_api_key'] = get_rocket_option( 'cloudflare_api_key' );
+	 }
 	
 	/*
 	 * Option : CDN

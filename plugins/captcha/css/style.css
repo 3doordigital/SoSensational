@@ -20,51 +20,32 @@
 input.cptch_settings_input {
     width: 252px;
 }
-.cptch_span {
-    color: #888888;
-    font-size: 10px;
-}
-/*
-* styles help tooltips
-*/
-.cptch_help_box {
-    background-image: url("../images/tooltip_icons.png");
-    background-repeat: no-repeat;
-    cursor: pointer;
-    height: 28px;
-    position: relative;
-    margin: 3px 5px;
-    width: 28px;
-    display: inline-block;
-    vertical-align: middle;
-}
-.cptch_hidden_help_text {
-    background: #F4F4F4;
-    border: 1px solid #DCDCDC;
-    border-radius: 4px;
-    left: 40px;
-    padding: 5px 10px;
-    position: absolute;
-    width: auto;
-    line-height: 1.5;
-    display: none;
-}
-.cptch_hidden_help_text:before {
-    content: url("../images/help.png");
-    left: -10px;
-    position: absolute;
-    top: 7px;
-    direction: ltr;
-}
-.cptch_thumb img {
-    margin: 5px 0;
-}
-.cptch_help_box:hover .cptch_hidden_help_text {
-    display: block;
-    z-index: 10;
-}
 .cptch_how_to_use {
     float: right;
+}
+.cptch_limit_label {
+    display: block;
+}
+.cptch_images_example {
+    height: 33px;
+}
+.cptch_images_example .cptch_label {
+    position: relative;
+    left: 8px;
+    top: -6px;
+}
+.cptch_whitelist_buttons .alignleft {
+    margin-right: 10px;
+}
+.cptch_pro_block .bws_pro_version_tooltip {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    top: 5px;
+}
+#cptch_add_my_ip {
+    display: inline-block;
+    padding: 8px 0 5px;
 }
 /*
  * RTL styles
@@ -72,50 +53,8 @@ input.cptch_settings_input {
 .rtl .cptch_how_to_use {
     float: left;
 }
-.rtl .cptch_hidden_help_text {
-    left: auto;
-    right: 40px;
-}
-.rtl .cptch_hidden_help_text:before {
-    top: 0;
-    left: auto;
-    right: -10px;
-    -webkit-transform: rotate(180deg); /* Chrome y Safari */
-    -moz-transform: rotate(180deg); /* Firefox */
-    -o-transform: rotate(180deg); /* Opera */
-    transform: rotate(180deg);
-}
-@media only screen and ( max-width: 680px ) {
-    .cptch_thumb {
-        left: -120px;
-        top: 40px;
-    }
-    .cptch_thumb:before {
-        left: 125px;
-        top: -15px;
-        -webkit-transform: rotate(90deg); /* Chrome y Safari */
-        -moz-transform: rotate(90deg); /* Firefox */
-        -o-transform: rotate(90deg); /* Opera */
-        transform: rotate(90deg);
-    }
-    .rtl .cptch_thumb {
-        left: auto;
-        right: -120px;
-    }
-    .rtl .cptch_thumb:before {
-        left: auto;
-        right: 130px;
-        top: -15px;
-        -webkit-transform: rotate(90deg); /* Chrome y Safari */
-        -moz-transform: rotate(90deg); /* Firefox */
-        -o-transform: rotate(90deg); /* Opera */
-        transform: rotate(90deg);
-    }
-}
-@media only screen and ( max-width: 480px ) {
-    .cptch_thumb_block {
-        display: none;
-    }
+.rtl .cptch_block {
+    direction: rtl;
 }
 /*
 * frontend styles
@@ -129,4 +68,103 @@ input.cptch_settings_input {
 form input.cptch_input {
     padding-left: 8px;
     padding-right: 8px;
+}
+.cptch_whitelist_message {
+    font-style: italic;
+    color: #008000;
+    font-weight: normal !important;
+}
+.cptch_block {
+    display: block !important;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-spacing: normal !important;
+}
+.cptch_title {
+    display: block;
+    word-wrap: break-word;
+    padding-bottom: 5px;
+    clear: both;
+}
+.cptch_wrap {
+    display: table-row !important;
+    position: relative;
+    clear: both;
+}
+.cptch_label,
+.cptch_reload_button_wrap {
+    display: table-cell;
+    margin: 5px 0;
+    vertical-align: middle;
+    line-height: 1;
+}
+.cptch_span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+}
+.cptch_img {
+    width: 40px;
+    max-width: 40px !important;
+    height: auto;
+    top: 0;
+    z-index: 2;
+}
+.cptch_reduce {
+    position: absolute;
+}
+.cptch_reload_button {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 15px;
+    font-size: 2rem;
+}
+.cptch_reload_button.cptch_active {
+    opacity: 0.7;
+}
+
+@media only screen and ( max-width: 782px ) {
+    #cptch_whitelist_search p.search-box {
+        position: static;
+    }
+    #cptch_whitelist .tablenav.top {
+        display: none;
+    }
+    .cptchpr_reload_button {
+        width: 48px;
+        height: 48px;
+        font-size: 48px;
+    }
+    .cptch_how_to_use {
+        float: none;
+        text-align: left;
+    }
+    .rtl .cptch_how_to_use {
+        text-align: right;
+    }
+}
+
+@media only screen and ( max-width: 480px ) {
+    .bws_help_box.cptch_thumb_block {
+        display: none;
+    }
+    #cptch_whitelist .bulkactions {
+        float: none;
+    }
+    #cptch_whitelist .tablenav-pages {
+        display: inline-block;
+        margin-bottom: 10px;
+        float: none;
+        clear: both;
+    }
+    #cptch_whitelist .tablenav-pages .displaying-num {
+        position: static;
+    }
+    .cptchpr_reload_button {
+        margin: 0;
+    }
+    #cptch_whitelist .column-add_time {
+        display: none;
+    }
 }

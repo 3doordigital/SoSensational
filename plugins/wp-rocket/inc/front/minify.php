@@ -65,6 +65,14 @@ function __rocket_insert_minify_js_in_footer() {
 		if ( is_user_logged_in() && ! get_rocket_option( 'cache_logged_user' ) ) {
 			return;
 		}
+		
+		/** This filter is documented in inc/front/process.php */
+		$rocket_cache_search = apply_filters( 'rocket_cache_search', false );
+		
+		// Don't apply on search page
+		if( is_search() && ! $rocket_cache_search ) {
+			return;
+		}
 
 		// Don't apply on excluded pages.
 		if ( in_array( $_SERVER['REQUEST_URI'] , get_rocket_option( 'cache_reject_uri' , array() ) ) ) {
@@ -153,7 +161,8 @@ function rocket_concatenate_google_fonts( $buffer ) {
 	// Concatenate fonts tag
 	$subsets = ( $subsets ) ? '&subset=' . implode( ',', array_filter( array_unique( $subsets ) ) ) : '';
 	$fonts   = trim( implode( '|' , array_filter( array_unique( $fonts ) ) ), '|' );
-
+	$fonts	 = str_replace( '|', '%7C', $fonts );
+	
 	if( ! empty( $fonts ) ) {
 		$fonts   = '<link rel="stylesheet" href="//fonts.googleapis.com/css?family=' . $fonts . $subsets . '" />';
 	}
@@ -322,15 +331,18 @@ function rocket_minify_js( $buffer )
 	$i=0;
     foreach ( $tags_match[0] as $tag ) {
 
-        // Chek if the file is already minify by get_rocket_minify_files
+        // Check if the file is already minify by get_rocket_minify_files
         // or the file is rejected to the process
         if ( ! strpos( $tag, 'data-minify=' ) && ! strpos( $tag, 'data-no-minify=' ) ) {
 
 			// To check if a tag is to exclude of the minify process
             $excluded_tag = false;
-
-	        // Get URLs infos
-	        $js_url = parse_url( set_url_scheme( $tags_match[1][ $i ] ) );
+			
+			// Get JS URL with scheme
+			$js_url_with_scheme = set_url_scheme( $tags_match[1][ $i ] );
+			
+	        // Get URL infos
+	        $js_url = parse_url( $js_url_with_scheme );
 
 			// Get host for all langs
 			$langs_host = array();
@@ -360,7 +372,7 @@ function rocket_minify_js( $buffer )
 
 			// If it's an external file
 			} else {
-				if ( ! in_array( $tags_match[1][ $i ], $js_in_footer ) ) {
+				if ( ! in_array( $tags_match[1][ $i ], $js_in_footer ) && ! in_array( $js_url_with_scheme, $js_in_footer ) ) {
 					$external_tags[] = $tag;
 				}
 			}
@@ -376,9 +388,12 @@ function rocket_minify_js( $buffer )
 	// Get external JS tags and remove duplicate scripts
 	$external_tags = implode( '', array_unique( $external_tags ) );
 
+	// Remove domain on all JS in footer
+	$js_in_footer = array_map( 'rocket_clean_exclude_file', $js_in_footer );
+	
 	// Exclude JS files to insert in footer
 	foreach( $internal_files as $k=>$url ) {
-		if ( in_array( set_url_scheme( '//' . $home_host . $url ), $js_in_footer ) || in_array( $url, $js_in_footer ) ) {
+		if ( in_array( $url, $js_in_footer ) ) {
 			unset( $internal_files[ $k ] );
 		}
 	}
@@ -413,7 +428,7 @@ function rocket_extract_ie_conditionals( $buffer )
 function rocket_inject_ie_conditionals( $buffer, $conditionals )
 {
     foreach( $conditionals as $conditional ) {
-      if ( strpos( $buffer, '{{WP_ROCKET_CONDITIONAL}}' ) ) {
+      if ( false !== strpos( $buffer, '{{WP_ROCKET_CONDITIONAL}}' ) ) {
         $buffer = preg_replace( '/{{WP_ROCKET_CONDITIONAL}}/' , $conditional, $buffer, 1 );
       } else {
       	break;
@@ -521,7 +536,12 @@ add_action( 'wp_footer', '__rocket_extract_js_files_from_footer', 1 );
 function __rocket_extract_js_files_from_footer() {
 	global $rocket_enqueue_js_in_footer, $wp_scripts, $pagenow;
 	
-	if( ( isset( $wp_scripts->in_footer ) && ! is_array( $wp_scripts->in_footer ) ) || ! get_rocket_option( 'minify_js', false ) || in_array( $pagenow, array( 'wp-login.php', 'wp-register.php' ) ) || ( defined( 'DONOTMINIFYJS' ) && DONOTMINIFYJS ) || ( defined( 'DONOTCACHEPAGE' ) && DONOTCACHEPAGE ) || is_rocket_post_excluded_option( 'minify_js' ) || is_404() ) {
+	$rocket_enqueue_js_in_footer = array();
+	
+	/** This filter is documented in inc/front/process.php */
+	$rocket_cache_search = apply_filters( 'rocket_cache_search', false );
+	
+	if( empty( $wp_scripts->in_footer ) || ! get_rocket_option( 'minify_js', false ) || in_array( $pagenow, array( 'wp-login.php', 'wp-register.php' ) ) || ( defined( 'DONOTMINIFYJS' ) && DONOTMINIFYJS ) || ( defined( 'DONOTCACHEPAGE' ) && DONOTCACHEPAGE ) || is_rocket_post_excluded_option( 'minify_js' ) || is_404() || ( is_search() && ! $rocket_cache_search ) ) {
 		return;
 	}
 	
@@ -542,23 +562,104 @@ function __rocket_extract_js_files_from_footer() {
 
 	foreach( $wp_scripts->in_footer as $handle ) {
 		$script_src  = $wp_scripts->registered[ $handle ]->src;
+		$script_src  = ( strstr( $script_src, '/wp-includes/js/') ) ? $wp_scripts->base_url . $script_src : $script_src;
 		$script_src_cleaned = str_replace( array( 'http:', 'https:', '//' . $home_host ), '', $script_src );
 
-		if( in_array( $handle, $wp_scripts->queue ) && ! in_array( parse_url( $script_src, PHP_URL_HOST ), $excluded_external_js ) && ! in_array( $script_src, $deferred_js_files ) && ! in_array( parse_url( $script_src, PHP_URL_PATH ), $excluded_js ) && ! in_array( parse_url( $script_src_cleaned, PHP_URL_PATH ), $excluded_js ) ) {
+		if( in_array( $handle, $wp_scripts->queue ) && ! in_array( parse_url( $script_src, PHP_URL_HOST ), $excluded_external_js ) && ! in_array( $script_src, $deferred_js_files ) && ! in_array( parse_url( $script_src, PHP_URL_PATH ), $excluded_js ) && ! in_array( parse_url( $script_src_cleaned, PHP_URL_PATH ), $excluded_js ) ) {			
 			
 			// Dequeue JS files without extension
 			if( pathinfo( $script_src, PATHINFO_EXTENSION ) == '' ) {
 				wp_dequeue_script( $handle );
 			}
 			
+			// Add protocol on external JS to prevent conflict
+			if( $home_host != parse_url( $script_src, PHP_URL_HOST ) && strpos( $script_src, 'http://' ) === false && strpos( $script_src, 'https://' ) === false ) {
+				$script_src = set_url_scheme( $script_src );
+			}
+			
 			// Add dependency enqueued in the footer
 			foreach( $wp_scripts->registered[ $handle ]->deps as $handle_dep ) {
 				if( in_array( $handle_dep, $wp_scripts->in_footer ) ) {
-					$rocket_enqueue_js_in_footer[ $handle_dep ] = rocket_set_internal_url_scheme( $wp_scripts->registered[ $handle_dep ]->src );
+					$src = $wp_scripts->registered[ $handle_dep ]->src;
+					$src = ( strstr( $src, '/wp-includes/js/') ) ? $wp_scripts->base_url . $src : $src;
+					$rocket_enqueue_js_in_footer[ $handle_dep ] = rocket_set_internal_url_scheme( $src );
 				}
 			}
 			
 			$rocket_enqueue_js_in_footer[ $handle ] = rocket_set_internal_url_scheme( $script_src );
 		}
 	}
+}
+
+/**
+ * Compatibility with WordPress multisite with subfolders websites
+ *
+ * @since 2.6.5
+ */
+add_filter( 'rocket_pre_minify_path', '__rocket_fix_minify_multisite_path_issue' );
+function __rocket_fix_minify_multisite_path_issue( $url ) {
+	if ( ! is_multisite() || is_main_site() ) {
+		return $url;
+	}
+	
+	// Current blog infos
+	$blog_id  = get_current_blog_id();
+	$bloginfo = get_blog_details( $blog_id, false );
+	
+	// Main blog infos
+	$main_blog_id = 1;
+	
+	if ( ! empty( $GLOBALS['current_site']->blog_id ) ) {
+		$main_blog_id = absint( $GLOBALS['current_site']->blog_id );
+	}
+	elseif ( defined( 'BLOG_ID_CURRENT_SITE' ) ) {
+		$main_blog_id = absint( BLOG_ID_CURRENT_SITE );
+	}
+	elseif ( defined( 'BLOGID_CURRENT_SITE' ) ) { // deprecated.
+		$main_blog_id = absint( BLOGID_CURRENT_SITE );
+	}
+	
+	$main_bloginfo = get_blog_details( $main_blog_id, false );
+	
+	if ( $bloginfo->path != '/' ) {
+		$url = str_replace( $bloginfo->path, $main_bloginfo->path, $url );	
+	}
+	
+	return $url;
+}
+
+/**
+ * Compatibility with multilingual plugins & multidomain configuration
+ *
+ * @since 2.6.13 Regression Fix: Apply CDN on minified CSS and JS files by checking the CNAME host
+ * @since 2.6.8
+ */
+add_filter( 'rocket_css_url', '__rocket_minify_i18n_multidomain' );
+add_filter( 'rocket_js_url'	, '__rocket_minify_i18n_multidomain' );
+function __rocket_minify_i18n_multidomain( $url ) {
+	if ( ! rocket_has_i18n() ) {
+		return $url;
+	}
+	
+	$url_host = parse_url( $url, PHP_URL_HOST );
+	$zone     = array( 'all', 'css_and_js' );
+	
+	// Add only CSS zone
+	if ( current_filter() == 'rocket_css_url' ) {
+		$zone[] = 'css';
+	}
+
+	// Add only JS zone
+	if ( current_filter() == 'rocket_js_url' ) {
+		$zone[] = 'js';
+	}
+	
+	$cnames = get_rocket_cdn_cnames( $zone );
+	$cnames = array_map( 'rocket_remove_url_protocol' , $cnames );
+	
+	if ( $url_host != $_SERVER['HTTP_HOST'] && in_array( $_SERVER['HTTP_HOST'], get_rocket_i18n_host() ) && ! in_array( $url_host, $cnames ) ) {
+		$url = str_replace( $url_host, $_SERVER['HTTP_HOST'], $url );
+	}
+	
+	return $url;
 }

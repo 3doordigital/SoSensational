@@ -240,7 +240,10 @@
             <?php echo $this->options->start_date_label(); ?>
         </th>
         <td>
-            <input class="date" name="<?php echo $this->options->start_date_name(); ?>" value="<?php echo $this->options->start_date() == NULL ? '' : date('Y-m-d', $this->options->start_date()); ?>" />&#160;<span class="description"><?php echo $this->__('[YYYY-MM-DD]'); ?></span>
+            <input class="date" name="<?php echo $this->options->start_date_name(); ?>" value="<?php echo $this->options->start_date() == NULL ? '' : date('Y-m-d', $this->options->start_date()); ?>" />
+            <input class="time" name="<?php echo $this->options->start_time_name(); ?>" value="<?php echo $this->options->start_time() == NULL ? '' : date('h:i a', $this->options->start_time()); ?>" />
+            &#160;
+            <span class="description"><?php echo $this->__('[YYYY-MM-DD] [hh:mm ap]'); ?></span>
         </td>
     </tr>
     <tr>
@@ -248,7 +251,10 @@
             <?php echo $this->options->end_date_label(); ?>
         </th>
         <td>
-            <input class="date" name="<?php echo $this->options->end_date_name(); ?>" value="<?php echo $this->options->end_date() == NULL ? '' : date('Y-m-d', $this->options->end_date()); ?>" />&#160;<span class="description"><?php echo $this->__('[YYYY-MM-DD]'); ?></span>
+            <input class="date" name="<?php echo $this->options->end_date_name(); ?>" value="<?php echo $this->options->end_date() == NULL ? '' : date('Y-m-d', $this->options->end_date()); ?>" />
+            <input class="time" name="<?php echo $this->options->end_time_name(); ?>" value="<?php echo $this->options->end_time() == NULL ? '' : date('h:i a', $this->options->end_time()); ?>" />
+            &#160;
+            <span class="description"><?php echo $this->__('[YYYY-MM-DD] [hh:mm ap]'); ?></span>
         </td>
     </tr>
     <tr>
@@ -514,6 +520,10 @@
         
         $('#wpfront-notification-bar-options input.date').datepicker({
             'dateFormat' : 'yy-mm-dd'
+        });
+        
+        $('#wpfront-notification-bar-options input.time').timepicker({
+            'timeFormat': 'h:i a'
         });
 
     })(jQuery);

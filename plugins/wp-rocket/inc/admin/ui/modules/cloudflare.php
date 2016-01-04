@@ -1,12 +1,12 @@
 <?php 
 defined( 'ABSPATH' ) or die( 'Cheatin\' uh?' );
 
-add_settings_section( 'rocket_display_cloudflare_options', 'CloudFlare', '__return_false', 'cloudflare' );
+add_settings_section( 'rocket_display_cloudflare_options', 'CloudFlare', '__return_false', 'rocket_cloudflare' );
 add_settings_field(
 	'rocket_cloudflare_email',
 	__( 'CloudFlare Account Email', 'rocket' ),
 	'rocket_field',
-	'cloudflare',
+	'rocket_cloudflare',
 	'rocket_display_cloudflare_options',
 	array(
 		array(
@@ -16,11 +16,14 @@ add_settings_field(
 		)
 	)
 );
+
+if ( ! defined( 'WP_ROCKET_CF_API_KEY_HIDDEN' ) || ! WP_ROCKET_CF_API_KEY_HIDDEN ) :
+
 add_settings_field(
 	'rocket_cloudflare_api_key',
 	__( 'API Key', 'rocket' ),
 	'rocket_field',
-	'cloudflare',
+	'rocket_cloudflare',
 	'rocket_display_cloudflare_options',
 	array(
 		array(
@@ -35,11 +38,14 @@ add_settings_field(
 		)
 	)
 );
+
+endif;
+
 add_settings_field(
 	'rocket_cloudflare_domain',
 	__( 'Domain', 'rocket' ),
 	'rocket_field',
-	'cloudflare',
+	'rocket_cloudflare',
 	'rocket_display_cloudflare_options',
 	array(
 		array(
@@ -53,7 +59,7 @@ add_settings_field(
 	'rocket_cloudflare_devmode',
 	__( 'Development Mode', 'rocket' ),
 	'rocket_field',
-	'cloudflare',
+	'rocket_cloudflare',
 	'rocket_display_cloudflare_options',
 	array(
 		array(
@@ -76,7 +82,7 @@ add_settings_field(
 	'rocket_cloudflare_auto_settings',
 	__( 'Auto enable the optimal CloudFlare settings (props WP Rocket)', 'rocket' ),
 	'rocket_field',
-	'cloudflare',
+	'rocket_cloudflare',
 	'rocket_display_cloudflare_options',
 	array(
 		array(
@@ -99,7 +105,7 @@ add_settings_field(
 	'rocket_purge_cloudflare',
 	__( 'Clear cache', 'rocket' ),
 	'rocket_button',
-	'cloudflare',
+	'rocket_cloudflare',
 	'rocket_display_cloudflare_options',
 	array(
 		'button'=>array(

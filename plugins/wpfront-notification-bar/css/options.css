@@ -12,7 +12,8 @@
     width: 40px;
 }
 
-#wpfront-notification-bar-options  input.date
+#wpfront-notification-bar-options  input.date,
+#wpfront-notification-bar-options  input.time
 {
     width: 100px;
 }

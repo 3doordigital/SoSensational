@@ -1,5 +1,5 @@
 <?php
-
+global $cleantalk_hooked_actions;
 /*
 AJAX functions
 */
@@ -7,6 +7,7 @@ AJAX functions
 /*hooks for AJAX Login & Register email validation*/
 add_action( 'wp_ajax_nopriv_validate_email', 'ct_validate_email_ajaxlogin',1 );
 add_action( 'wp_ajax_validate_email', 'ct_validate_email_ajaxlogin',1 );
+$cleantalk_hooked_actions[]='validate_email';
 
 /*hooks for user registration*/
 add_action( 'user_register', 'ct_user_register_ajaxlogin',1 );
@@ -16,24 +17,28 @@ add_action( 'user_register', 'ct_user_register_ajaxlogin',1 );
 //add_action( 'wp_ajax_wpuf_submit_register', 'ct_wpuf_submit_register',1 );
 add_action( 'wp_ajax_nopriv_wpuf_submit_register', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_wpuf_submit_register', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='submit_register';
 
 /*hooks for MyMail */
 //add_action( 'wp_ajax_nopriv_mymail_form_submit', 'ct_mymail_form_submit',1 );
 //add_action( 'wp_ajax_mymail_form_submit', 'ct_mymail_form_submit',1 );
 add_action( 'wp_ajax_nopriv_mymail_form_submit', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_mymail_form_submit', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='form_submit';
 
 /*hooks for MailPoet */
 //add_action( 'wp_ajax_nopriv_wysija_ajax', 'ct_wysija_ajax',1 );
 //add_action( 'wp_ajax_wysija_ajax', 'ct_wysija_ajax',1 );
 add_action( 'wp_ajax_nopriv_wysija_ajax', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_wysija_ajax', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='wysija_ajax';
 
 /*hooks for cs_registration_validation */
 //add_action( 'wp_ajax_nopriv_cs_registration_validation', 'ct_cs_registration_validation',1 );
 //add_action( 'wp_ajax_cs_registration_validation', 'ct_cs_registration_validation',1 );
 add_action( 'wp_ajax_nopriv_cs_registration_validation', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_cs_registration_validation', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='cs_registration_validation';
 
 /*hooks for send_message and request_appointment */
 //add_action( 'wp_ajax_nopriv_send_message', 'ct_sm_ra',1 );
@@ -44,42 +49,67 @@ add_action( 'wp_ajax_nopriv_send_message', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_send_message', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_nopriv_request_appointment', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_request_appointment', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='send_message';
+$cleantalk_hooked_actions[]='request_appointment';
 
 /*hooks for zn_do_login */
 //add_action( 'wp_ajax_nopriv_zn_do_login', 'ct_zn_do_login',1 );
 //add_action( 'wp_ajax_zn_do_login', 'ct_zn_do_login',1 );
 add_action( 'wp_ajax_nopriv_zn_do_login', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_zn_do_login', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='zn_do_login';
 
 /*hooks for zn_do_login */
 //add_action( 'wp_ajax_nopriv_cscf-submitform', 'ct_cscf_submitform',1 );
 //add_action( 'wp_ajax_cscf-submitform', 'ct_cscf_submitform',1 );
 add_action( 'wp_ajax_nopriv_cscf-submitform', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_cscf-submitform', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='cscf-submitform';
 
 /*hooks for stats */
 add_action( 'wp_ajax_nopriv_ajax_get_stats', 'ct_get_stats',1 );
 add_action( 'wp_ajax_ajax_get_stats', 'ct_get_stats',1 );
+$cleantalk_hooked_actions[]='ajax_get_stats';
 
 /*hooks for visual form builder */
 //add_action( 'wp_ajax_nopriv_vfb_submit', 'ct_vfb_submit',1 );
 //add_action( 'wp_ajax_vfb_submit', 'ct_vfb_submit',1 );
 add_action( 'wp_ajax_nopriv_vfb_submit', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_vfb_submit', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='vfb_submit';
 
 /*hooks for woocommerce_checkout*/
 add_action( 'wp_ajax_nopriv_woocommerce_checkout', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_woocommerce_checkout', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='woocommerce_checkout';
 
 /*hooks for frm_action*/
 add_action( 'wp_ajax_nopriv_frm_entries_create', 'ct_ajax_hook',1 );
 add_action( 'wp_ajax_frm_entries_create', 'ct_ajax_hook',1 );
+$cleantalk_hooked_actions[]='frm_entries_create';
 
 add_action( 'wp_ajax_nopriv_td_mod_register', 'ct_ajax_hook',1  );
 add_action( 'wp_ajax_td_mod_register', 'ct_ajax_hook',1  );
+$cleantalk_hooked_actions[]='td_mod_register';
+
+/*hooks for tevolution theme*/
+add_action( 'wp_ajax_nopriv_tmpl_ajax_check_user_email', 'ct_ajax_hook',1  );
+add_action( 'wp_ajax_tmpl_ajax_check_user_email', 'ct_ajax_hook',1  );
+add_action( 'wp_ajax_nopriv_tevolution_submit_from_preview', 'ct_ajax_hook',1  );
+add_action( 'wp_ajax_tevolution_submit_from_preview', 'ct_ajax_hook',1  );
+add_action( 'wp_ajax_nopriv_submit_form_recaptcha_validation', 'ct_ajax_hook',1  );
+add_action( 'wp_ajax_tmpl_submit_form_recaptcha_validation', 'ct_ajax_hook',1  );
+$cleantalk_hooked_actions[]='tmpl_ajax_check_user_email';
+$cleantalk_hooked_actions[]='tevolution_submit_from_preview';
+$cleantalk_hooked_actions[]='submit_form_recaptcha_validation';
 
 /**hooks for cm answers pro */
 add_action( 'template_redirect', 'ct_ajax_hook',1 );
+
+/* hooks for ninja forms ajax*/
+add_action( 'wp_ajax_nopriv_ninja_forms_ajax_submit', 'ct_ajax_hook',1  );
+add_action( 'wp_ajax_ninja_forms_ajax_submit', 'ct_ajax_hook',1  );
+$cleantalk_hooked_actions[]='ninja_forms_ajax_submit';
 
 function ct_get_stats()
 {
@@ -370,7 +400,7 @@ function ct_ajax_hook()
 				print json_encode($result);
 				die();
 			}
-			else if($_POST['action']=='wysija_ajax')
+			else if($_POST['action']=='wysija_ajax'&&$_POST['task']!='send_preview')
 			{
 				$result=Array('result'=>false,'msgs'=>Array('updated'=>Array($ct_result->comment)));
 				//@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
@@ -426,6 +456,26 @@ function ct_ajax_hook()
 			else if($_POST['action']=='td_mod_register')
 			{
 				print json_encode(array('register', 0, $ct_result->comment));
+				die();
+			}
+			else if($_POST['action']=='tmpl_ajax_check_user_email')
+			{
+				print "17,email";
+				die();
+			}
+			else if($_POST['action']=='tevolution_submit_from_preview'||$_POST['action']=='submit_form_recaptcha_validation')
+			{
+				print $ct_result->comment;
+				die();
+			}
+			else if($_POST['action']=='ninja_forms_ajax_submit')
+			{
+				print '{"form_id":'.$_POST['_form_id'].',"errors":false,"success":{"success_msg-Success":"'.$ct_result->comment.'"}}';
+				die();
+			}
+			else
+			{
+				print $ct_result->comment;
 				die();
 			}
 		}

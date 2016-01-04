@@ -3,11 +3,11 @@
   Plugin Name: Anti-Spam by CleanTalk
   Plugin URI: http://cleantalk.org
   Description: Max power, all-in-one, captcha less, premium anti-spam plugin. No comment spam, no registration spam, no contact spam, protects any WordPress forms. 
-  Version: 5.29
+  Version: 5.34.1
   Author: СleanTalk <welcome@cleantalk.org>
   Author URI: http://cleantalk.org
  */
-$cleantalk_plugin_version='5.29';
+$cleantalk_plugin_version='5.34.1';
 $cleantalk_executed=false;
 
 if(defined('CLEANTALK_AJAX_USE_BUFFER'))
@@ -29,12 +29,16 @@ else
 }
 if(!defined('CLEANTALK_PLUGIN_DIR')){
     define('CLEANTALK_PLUGIN_DIR', plugin_dir_path(__FILE__));
-    global $ct_options, $ct_data;
+    global $ct_options, $ct_data, $pagenow;
     
     require_once(CLEANTALK_PLUGIN_DIR . 'inc/cleantalk-common.php');
     require_once(CLEANTALK_PLUGIN_DIR . 'inc/cleantalk-widget.php');
     $ct_options=ct_get_options();
     $ct_data=ct_get_data();
+    if(@stripos($_SERVER['REQUEST_URI'],'admin-ajax.php')!==false && sizeof($_POST)>0 && isset($_GET['action']) && $_GET['action']=='ninja_forms_ajax_submit')
+    {
+    	$_POST['action']='ninja_forms_ajax_submit';
+    }
     
     if(isset($ct_options['spam_firewall']))
     {
@@ -44,16 +48,37 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
     {
     	$value=0;
     }
-    
-    if($value==1 && !is_admin() && stripos($_SERVER['REQUEST_URI'],'/wp-admin/')===false)    //&& (!isset($_POST) || isset($_POST) && sizeof($_POST)==0)
+
+    if($value==1 && !is_admin() && stripos($_SERVER['REQUEST_URI'],'/wp-admin/')===false || $value==1 && defined( 'DOING_AJAX' ) && DOING_AJAX)
     {
-    	$is_sfw_check=true;
-    	if(isset($_COOKIE['ct_sfw_pass_key']) && $_COOKIE['ct_sfw_pass_key']==md5(cleantalk_get_ip().$ct_options['apikey']))
-    	{
-    		$is_sfw_check=false;
-    		@$ct_data['sfw_log'][cleantalk_get_ip()]['all']++;
-    		update_option('cleantalk_data', $ct_data);
-    	}
+	   	$is_sfw_check=true;
+	   	$ip=cleantalk_get_ip();
+
+	   	for($i=0;$i<sizeof($ip);$i++)
+	   	{
+	    	if(isset($_COOKIE['ct_sfw_pass_key']) && $_COOKIE['ct_sfw_pass_key']==md5($ip[$i].$ct_options['apikey']))
+	    	{
+	    		$is_sfw_check=false;
+	    		if(isset($_COOKIE['ct_sfw_passed']))
+	    		{
+	    			if(isset($ct_data['sfw_log']))
+					{
+						$sfw_log=$ct_data['sfw_log'];
+					}
+					else
+					{
+						$sfw_log=array();
+						$sfw_log[$ip[$i]]=Array();
+					}
+	    			$sfw_log[$ip[$i]]['allow']++;
+	    			$ct_data['sfw_log'] = $sfw_log;
+	    			update_option('cleantalk_data', $ct_data);
+	    			@setcookie ('ct_sfw_passed', '0', 1, "/");
+	    		}
+	    		//@$ct_data['sfw_log'][cleantalk_get_ip()]['all']++;
+	    		//update_option('cleantalk_data', $ct_data);
+	    	}
+	    }
     	if($is_sfw_check)
     	{
     		//include_once("cleantalk-sfw.php");
@@ -66,6 +91,23 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
     			$sfw->sfw_die();
     		}
     	}
+    	
+    	//cron start
+    	if(isset($ct_data['last_sfw_send']))
+    	{
+    		$last_sfw_send=$ct_data['last_sfw_send'];
+    	}
+    	else
+    	{
+    		$last_sfw_send=0;
+    	}
+    	if(time()-$last_sfw_send>3600)
+    	{
+    		ct_send_sfw_log();
+    		$ct_data['last_sfw_send']=time();
+    		update_option('cleantalk_data', $ct_data);
+    	}
+    	//cron end
     }
     
     if(isset($ct_options['check_external']))
@@ -90,7 +132,8 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
     register_deactivation_hook( __FILE__, 'ct_deactivation' );
     
     // After plugin loaded - to load locale as described in manual
-    add_action( 'admin_init', 'ct_plugin_loaded' );
+    add_action( 'ct_init', 'ct_plugin_loaded' );
+    ct_plugin_loaded();
     
     if(isset($ct_options['use_ajax']))
     {
@@ -133,32 +176,51 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
     }
 
 
-    if (is_admin())
+    if (is_admin()||is_network_admin())
     {
 		require_once(CLEANTALK_PLUGIN_DIR . 'inc/cleantalk-admin.php');
-	if (!(defined( 'DOING_AJAX' ) && DOING_AJAX)) {
-    	    add_action('admin_init', 'ct_admin_init', 1);
-    	    add_action('admin_menu', 'ct_admin_add_page');
-    	    add_action('admin_notices', 'cleantalk_admin_notice_message');
-	}
-	if (defined( 'DOING_AJAX' ) && DOING_AJAX||isset($_POST['cma-action']))
+		if (!(defined( 'DOING_AJAX' ) && DOING_AJAX))
 		{
+			add_action('admin_init', 'ct_admin_init', 1);
+			add_action('admin_menu', 'ct_admin_add_page');
+			if(is_network_admin())
+			{
+				add_action('network_admin_menu', 'ct_admin_add_page');
+			}
+			add_action('admin_notices', 'cleantalk_admin_notice_message');
+		}
+		if (defined( 'DOING_AJAX' ) && DOING_AJAX||isset($_POST['cma-action']))
+		{
+			$cleantalk_hooked_actions=Array();
 			require_once(CLEANTALK_PLUGIN_DIR . 'inc/cleantalk-public.php');
 			require_once(CLEANTALK_PLUGIN_DIR . 'inc/cleantalk-ajax.php');
+			if(isset($_POST['action'])&&!in_array($_POST['action'],$cleantalk_hooked_actions)&&!isset($_COOKIE[LOGGED_IN_COOKIE]))
+			{
+				ct_ajax_hook();
+			}
 		}
 
-	add_action('admin_enqueue_scripts', 'ct_enqueue_scripts');
-    	add_action('comment_unapproved_to_approvecomment', 'ct_comment_approved'); // param - comment object
-    	add_action('comment_unapproved_to_approved', 'ct_comment_approved'); // param - comment object
-    	add_action('comment_approved_to_unapproved', 'ct_comment_unapproved'); // param - comment object
-    	add_action('comment_unapproved_to_spam', 'ct_comment_spam');  // param - comment object
-    	add_action('comment_approved_to_spam', 'ct_comment_spam');   // param - comment object
-    	//add_filter('get_comment_text', 'ct_get_comment_text');   // param - current comment text
-    	add_filter('unspam_comment', 'ct_unspam_comment');
-    	add_action('delete_user', 'ct_delete_user');
-    	add_filter('plugin_row_meta', 'ct_register_plugin_links', 10, 2);
-    	add_filter('plugin_action_links', 'ct_plugin_action_links', 10, 2);
-	add_action('updated_option', 'ct_update_option'); // param - option name, i.e. 'cleantalk_settings'
+		add_action('admin_enqueue_scripts', 'ct_enqueue_scripts');
+		if($pagenow=='edit-comments.php')
+		{
+	    	add_action('comment_unapproved_to_approvecomment', 'ct_comment_approved'); // param - comment object
+	    	add_action('comment_unapproved_to_approved', 'ct_comment_approved'); // param - comment object
+	    	add_action('comment_approved_to_unapproved', 'ct_comment_unapproved'); // param - comment object
+	    	add_action('comment_unapproved_to_spam', 'ct_comment_spam');  // param - comment object
+	    	add_action('comment_approved_to_spam', 'ct_comment_spam');   // param - comment object
+	    	//add_filter('get_comment_text', 'ct_get_comment_text');   // param - current comment text
+	    	add_filter('unspam_comment', 'ct_unspam_comment');
+	    }
+	    if($pagenow=='users.php')
+		{
+	    	add_action('delete_user', 'ct_delete_user');
+	    }
+	    if($pagenow=='plugins.php' || @strpos($_SERVER['REQUEST_URI'],'plugins.php')!==false)
+		{
+	    	add_filter('plugin_row_meta', 'ct_register_plugin_links', 10, 2);
+	    	add_filter('plugin_action_links', 'ct_plugin_action_links', 10, 2);
+	    }
+		add_action('updated_option', 'ct_update_option'); // param - option name, i.e. 'cleantalk_settings'
     }else{
 	require_once(CLEANTALK_PLUGIN_DIR . 'inc/cleantalk-public.php');
 
@@ -193,7 +255,7 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
 if (!function_exists ( 'ct_activation')) {
     function ct_activation() {
 	wp_schedule_event(time(), 'hourly', 'ct_hourly_event_hook' );
-	wp_schedule_event(time(), 'hourly', 'ct_send_sfw_log' );
+	//wp_schedule_event(time(), 'hourly', 'ct_send_sfw_log' );
 	wp_schedule_event(time(), 'daily', 'cleantalk_update_sfw' );
 	
 	cleantalk_update_sfw();
@@ -206,7 +268,7 @@ if (!function_exists ( 'ct_activation')) {
 if (!function_exists ( 'ct_deactivation')) {
     function ct_deactivation() {
 	wp_clear_scheduled_hook( 'ct_hourly_event_hook' );
-	wp_clear_scheduled_hook( 'ct_send_sfw_log' );
+	@wp_clear_scheduled_hook( 'ct_send_sfw_log' );
 	wp_clear_scheduled_hook( 'cleantalk_update_sfw' );
     }
 }
@@ -273,19 +335,40 @@ function ct_add_nocache_script_footer()
 		print "\n<script type='text/javascript'>var ct_blog_home = '".get_home_url()."';</script>\n";
 		print "<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_external.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
 	}
+	//print "<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk-info.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
 }
 
 function ct_add_nocache_script_header()
 {
-	print "\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n</script>\n";
+	global $ct_options;
+    $ct_options=ct_get_options();
+    if(@intval($ct_options['collect_details'])==1)
+    {
+    	$ct_info_flag="var ct_info_flag=true;\n";
+    }
+    else
+    {
+    	$ct_info_flag="var ct_info_flag=false;\n";
+    }
+    
+	print "\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n $ct_info_flag </script>\n";
 }
 
 function ct_inject_nocache_script($html)
 {
-	global $test_external_forms, $cleantalk_plugin_version;
+	global $test_external_forms, $cleantalk_plugin_version, $ct_options;
+    $ct_options=ct_get_options();
+    if(@intval($ct_options['collect_details'])==1)
+    {
+    	$ct_info_flag="var ct_info_flag=true;\n";
+    }
+    else
+    {
+    	$ct_info_flag="var ct_info_flag=false;\n";
+    }
 	if(!is_admin()&&stripos($html,"</body")!==false)
 	{
-		//$ct_replace.="\n<script type='text/javascript'>var ajaxurl = '".admin_url('admin-ajax.php')."';</script>\n";
+		//$ct_replace.="\n<script type='text/javascript'>var ajaxurl = '".admin_url('admin-ajax.php')."';\n  $ct_info_flag </script>\n";
 		$ct_replace="<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_nocache.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
 		if($test_external_forms)
 		{
@@ -298,7 +381,7 @@ function ct_inject_nocache_script($html)
 	}
 	if(!is_admin()&&preg_match("#<head[^>]*>#i",$html)==1)
 	{
-		$ct_replace="\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n</script>\n";
+		$ct_replace="\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n $ct_info_flag </script>\n";
 		$html=preg_replace("(<head[^>]*>)","$0".$ct_replace,$html,1);
 	}
 	return $html;
@@ -337,7 +420,7 @@ INDEX (  `network` ,  `mask` )
 	{
 		require_once('inc/cleantalk.class.php');
 	}
-	global $ct_options, $ct_data, $wpdb;
+	global $ct_options, $ct_data;
 	if(isset($ct_options['spam_firewall']))
     {
     	$value = @intval($ct_options['spam_firewall']);
@@ -359,9 +442,9 @@ INDEX (  `network` ,  `mask` )
 		{
 			$result=$result['data'];
 			$query="INSERT INTO `".$wpdb->base_prefix."cleantalk_sfw` VALUES ";
-			if(sizeof($result)>200)
+			if(sizeof($result)>10)
 			{
-				$wpdb->query("TRUNCATE TABLE `".$wpdb->base_prefix."cleantalk_sfw`;");
+				//$wpdb->query("TRUNCATE TABLE `".$wpdb->base_prefix."cleantalk_sfw`;");
 				for($i=0;$i<sizeof($result);$i++)
 				{
 					if($i==sizeof($result)-1)
@@ -381,6 +464,7 @@ INDEX (  `network` ,  `mask` )
 
 function cleantalk_get_ip()
 {
+	$result=Array();
 	if ( function_exists( 'apache_request_headers' ) )
 	{
 		$headers = apache_request_headers();
@@ -392,22 +476,20 @@ function cleantalk_get_ip()
 	if ( array_key_exists( 'X-Forwarded-For', $headers ) )
 	{
 		$the_ip=explode(",", trim($headers['X-Forwarded-For']));
-		$the_ip = trim($the_ip[0]);
+		$result[] = trim($the_ip[0]);
 	}
-	elseif ( array_key_exists( 'HTTP_X_FORWARDED_FOR', $headers ))
+	if ( array_key_exists( 'HTTP_X_FORWARDED_FOR', $headers ))
 	{
 		$the_ip=explode(",", trim($headers['HTTP_X_FORWARDED_FOR']));
-		$the_ip = trim($the_ip[0]);
+		$result[] = trim($the_ip[0]);
 	}
-	else
-	{
-		$the_ip = filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 );
-	}
+	$result[] = filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 );
+
 	if(isset($_GET['sfw_test_ip']))
 	{
-		$the_ip=$_GET['sfw_test_ip'];
+		$result[]=$_GET['sfw_test_ip'];
 	}
-	return $the_ip;
+	return $result;
 }
 
 function ct_send_sfw_log()
