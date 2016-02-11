@@ -6,6 +6,12 @@
         <link rel="profile" href="http://gmpg.org/xfn/11">
         <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
         <title><?php wp_title(''); ?></title>
+        <?php
+            $pageId = get_the_ID();
+        ?>
+        <?php if($pageId === 22) : ?>
+            <script> var noskim = 'true'; </script>
+        <?php endif; ?>
         <?php wp_head(); ?>
         <!--<script src='https://www.google.com/recaptcha/api.js'></script>-->
         <meta name="avgthreatlabs-verification" content="e62dfc8e18b63d354a4f693629876df909f37b3b" />
