@@ -95,7 +95,7 @@ class WordPress_Affiliate_Shop_TradeDoubler_HB {
 
         $url = 'http://pf.tradedoubler.com/export/export?myFeed=14387877802501130&myFormat=14387877802501130';
         if (function_exists('ini_set')) {
-            @ini_set('memory_limit', '3072M');
+            @ini_set('memory_limit', '4096M');
         }
         set_time_limit(0);
         $upload_dir = wp_upload_dir();

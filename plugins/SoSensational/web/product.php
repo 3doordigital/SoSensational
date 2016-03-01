@@ -13,6 +13,9 @@ do_action('ss_css');
         $postAuthor = get_post_field('post_author', $the_post->ID);
         $bbProductBrand = current(get_posts(array('post_type' => array('brands', 'boutiques'), 'author' => $postAuthor, 'posts_per_page' => 1)));
         $bbProductBrandTitle = $bbProductBrand->post_title;
+        if(empty($bbProductBrandTitle)){
+            $bbProductBrandTitle = 'Undefined';
+        }
         $post_tags = implode(', ',$post_tags); 
         $post_tags = str_replace($bbProductBrandTitle, '', $post_tags);
         if ($the_post->post_author != $current_user->ID) {

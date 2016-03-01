@@ -112,7 +112,7 @@ class WordPress_Affiliate_Shop_Affilinet {
 
         $data = array();
         if (function_exists('ini_set')) {
-            @ini_set('memory_limit', '3072M');
+            @ini_set('memory_limit', '4096M');
         }
         set_time_limit(0);
         $url = 'http://productdata-download.affili.net/affilinet_products_' . $merchant . '_705085.CSV?auth=I40KPXuRs0dGogcfI09H&type=CSV';

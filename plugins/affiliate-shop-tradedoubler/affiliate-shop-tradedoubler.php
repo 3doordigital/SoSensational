@@ -104,7 +104,7 @@ class WordPress_Affiliate_Shop_TradeDoubler {
 
         $url = 'http://api.tradedoubler.com/1.0/productsUnlimited;fid=' . $merchant . '?token=' . $this->token;
         if (function_exists('ini_set')) {
-            @ini_set('memory_limit', '3072M');
+            @ini_set('memory_limit', '4096M');
         }
         set_time_limit(0);
         $upload_dir = wp_upload_dir();
