@@ -14,6 +14,23 @@
         <?php endif; ?>
         <?php wp_head(); ?>
         <!--<script src='https://www.google.com/recaptcha/api.js'></script>-->
+        <?php if(is_front_page()) : ?><!-- Facebook Pixel Code -->
+            <script>
+                !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+                    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+                    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                    document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+                fbq('init', '425393637658585');
+                fbq('track', "PageView");</script>
+            <noscript><img height=1" width="1" style="display:none"
+                src="https://www.facebook.com/tr?id=425393637658585&ev=PageView&noscript=1"
+                /></noscript>
+            <!-- End Facebook Pixel Code -->
+        <?php endif; ?>
+        <?php wp_head(); ?>
+        <!--<script src='https://www.google.com/recaptcha/api.js'></script>-->
         <meta name="avgthreatlabs-verification" content="e62dfc8e18b63d354a4f693629876df909f37b3b" />
     </head>
     <body <?php body_class(); ?>>
@@ -22,7 +39,7 @@
         	<div class="container">
             	<div class="row">
                     <div class="blog-masthead">
-                        <div class="col-xs-24 col-md-16"><span>THE</span> FASHION & BEAUTY SHOP FOR GROWN UP WOMEN</div>                
+                        <div class="col-xs-24 col-md-16">ALL THE FASHION IN ONE PLACE, EDITED FOR WHO YOU ARE NOW</div>
                         <div class="col-md-8 text-right hidden-xs">
                             <a href="https://www.facebook.com/sosensational"><i class="fa fa-facebook"></i></a>
                             <a href="https://instagram.com/_sosensational/"><i class="fa fa-instagram"></i></a>
@@ -31,6 +48,7 @@
                             <a href="/feed/"><i class="fa fa-rss"></i></a>
                             <a href="https://twitter.com/_sosensational"><i class="fa fa-twitter"></i></a>
                             <a href="https://www.youtube.com/channel/UCAveovGSdh3nxaNI3HYW7sg"><i class="fa fa-youtube"></i></a>
+                            <a href="https://plus.google.com/114715929781995055714/"><i class="fa fa-google-plus"></i> </a>
                         </div>
                     </div>
                 </div>

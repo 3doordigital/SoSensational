@@ -20,7 +20,7 @@ function cleantalk_custom_glance_items( )
 	if($blocked>0)
 	{
 		$blocked = number_format($blocked, 0, ',', ' ');
-		print "<div style='height:24px;width:100%;display:table-cell; vertical-align:middle;'><img src='" . plugin_dir_url(__FILE__) . "images/logo_color.png' style='margin-right:1em;vertical-align:middle;'/><span><a href='options-general.php?page=cleantalk'>CleanTalk</a> ";
+		print "<div style='height:24px;width:100%;display:table-cell; vertical-align:middle;'><img src='" . plugin_dir_url(__FILE__) . "images/logo_color.png' style='margin-right:1em;vertical-align:middle;'/><span><a href='https://cleantalk.org/my/?user_token=".@$ct_data['user_token']."&utm_source=wp-backend&utm_medium=dashboard_widget' target='_blank'>CleanTalk</a> ";
 		printf(
 			/* translators: %s: Number of spam messages */
 			__( 'has blocked %s spam', 'cleantalk' ),
@@ -35,6 +35,9 @@ if(isset($_GET['close_notice']))
 	global $ct_data, $pagenow;
 	$ct_data=ct_get_data();
 	$ct_data['next_notice_show']=time()+86400;
+	$ct_data['next_account_status_check']=time()+86400;
+	$ct_data['show_ct_notice_trial']=0;
+	$ct_data['show_ct_notice_renew']=0;
 	update_option('cleantalk_data', $ct_data);
 	$_SERVER["QUERY_STRING"]=str_replace("close_notice=1","",$_SERVER["QUERY_STRING"]);
 	header("Location: $pagenow?".$_SERVER["QUERY_STRING"]);
@@ -277,6 +280,17 @@ function ct_admin_init()
 					}
 				}
 				
+				if (isset($result['moderate_ip']) && $result['moderate_ip'] == 1)
+				{
+					$ct_data['moderate_ip'] = 1;
+					$ct_data['ip_license'] = $result['ip_license'];
+				}
+				else
+				{
+					$ct_data['moderate_ip'] = 0;
+					$ct_data['ip_license'] = 0;
+				}
+				
 				if (isset($result['user_token']))
 				{
 					$ct_data['user_token'] = $result['user_token']; 
@@ -468,6 +482,11 @@ function ct_section_settings_state() {
 	
 	$ct_options = ct_get_options();
 	$ct_data = ct_get_data();
+	
+	if(!isset($ct_data['moderate_ip']))
+	{
+		$ct_data['moderate_ip'] = 0;
+	}
 
 	$img="yes.png";
 	$img_no="no.png";
@@ -487,8 +506,15 @@ function ct_section_settings_state() {
 		$color="black";
 		$test_failed=true;
 	}
+	if($ct_data['moderate_ip'] == 1)
+	{
+		$img="yes.png";
+		$img_no="no.png";
+		$color="black";
+		$test_failed=false;
+	}
 	print "<div style='color:$color'>";
-	if($ct_options['registrations_test']==1)
+	if($ct_options['registrations_test']==1 || isset($ct_data['moderate_ip']) && $ct_data['moderate_ip'] == 1)
 	{
 		print '<img src="' . plugin_dir_url(__FILE__) . 'images/'.$img.'" alt=""  height="" /> '.__('Registration forms', 'cleantalk');
 	}
@@ -497,7 +523,7 @@ function ct_section_settings_state() {
 		print '<img src="' . plugin_dir_url(__FILE__) . 'images/'.$img_no.'" alt=""  height="" /> '.__('Registration forms', 'cleantalk');
 	}
 	
-	if($ct_options['comments_test']==1)
+	if($ct_options['comments_test']==1 || isset($ct_data['moderate_ip']) && $ct_data['moderate_ip'] == 1)
 	{
 		print ' &nbsp; <img src="' . plugin_dir_url(__FILE__) . 'images/'.$img.'" alt=""  height="" /> '.__('Comments form', 'cleantalk');
 	}
@@ -506,7 +532,7 @@ function ct_section_settings_state() {
 		print ' &nbsp; <img src="' . plugin_dir_url(__FILE__) . 'images/'.$img_no.'" alt=""  height="" /> '.__('Comments form', 'cleantalk');
 	}
 	
-	if($ct_options['contact_forms_test']==1)
+	if($ct_options['contact_forms_test']==1 || isset($ct_data['moderate_ip']) && $ct_data['moderate_ip'] == 1)
 	{
 		print ' &nbsp; <img src="' . plugin_dir_url(__FILE__) . 'images/'.$img.'" alt=""  height="" /> '.__('Contact forms', 'cleantalk');
 	}
@@ -515,7 +541,7 @@ function ct_section_settings_state() {
 		print ' &nbsp; <img src="' . plugin_dir_url(__FILE__) . 'images/'.$img_no.'" alt=""  height="" /> '.__('Contact forms', 'cleantalk');
 	}
 	
-	if($ct_options['general_contact_forms_test']==1)
+	if($ct_options['general_contact_forms_test']==1 || isset($ct_data['moderate_ip']) && $ct_data['moderate_ip'] == 1)
 	{
 		print ' &nbsp; <img src="' . plugin_dir_url(__FILE__) . 'images/'.$img.'" alt=""  height="" /> '.__('Custom contact forms', 'cleantalk');
 	}
@@ -523,9 +549,13 @@ function ct_section_settings_state() {
 	{
 		print ' &nbsp; <img src="' . plugin_dir_url(__FILE__) . 'images/'.$img_no.'" alt=""  height="" /> '.__('Custom contact forms', 'cleantalk');
 	}
+	if($ct_data['moderate_ip'] == 1)
+	{
+		print "<br /><br />The anti-spam service is paid by your hosting provider. License #".$ct_data['ip_license'].".<br />";
+	}
 	
 	print "</div>";
-	if($test_failed)
+	if($test_failed && $ct_data['moderate_ip'] != 1)
 	{
 		//print "Testing is failed, check settings. Tech support <a target=_blank href='mailto:support@cleantalk.org'>support@cleantalk.org</a>";
 		print __("Testing is failed, check settings. Tech support <a target=_blank href='mailto:support@cleantalk.org'>support@cleantalk.org</a>", 'cleantalk');
@@ -1033,6 +1063,11 @@ function cleantalk_admin_notice_message(){
 	
 	$ct_options = ct_get_options();
 	$ct_data = ct_get_data();
+	
+	if(!isset($ct_data['moderate_ip']))
+	{
+		$ct_data['moderate_ip'] = 0;
+	}
 
 	$user_token = '';
 	if (isset($ct_data['user_token']) && $ct_data['user_token'] != '') {
@@ -1055,7 +1090,8 @@ function cleantalk_admin_notice_message(){
 		echo " <a target='__blank' style='margin-left: 10px' href='https://cleantalk.org/register?platform=wordpress&email=".urlencode(get_option('admin_email'))."&website=".urlencode(parse_url(get_option('siteurl'),PHP_URL_HOST))."'>".__('Get the Access key', 'cleantalk').'</a></h3></div>';
 	}
 
-	if ($show_notice && ct_valid_key($ct_options['apikey']) === false && $value==1 && (is_network_admin() || (!defined('WP_ALLOW_MULTISITE')||defined('WP_ALLOW_MULTISITE')&&WP_ALLOW_MULTISITE==false) && is_admin())) {
+	if ($ct_data['moderate_ip'] == 0 && $show_notice && ct_valid_key($ct_options['apikey']) === false && $value==1 && 
+	(is_network_admin() || (!defined('WP_ALLOW_MULTISITE')||defined('WP_ALLOW_MULTISITE')&&WP_ALLOW_MULTISITE==false) && is_admin()) ) {
 		echo '<div class="error"><h3>' . sprintf(__("Please enter Access Key in %s settings to enable anti spam protection!", 'cleantalk'), "<a href=\"options-general.php?page=cleantalk\">CleanTalk plugin</a>") . '</h3></div>';
 		$show_notice = false;
 	}
@@ -1068,9 +1104,19 @@ function cleantalk_admin_notice_message(){
 	{
 		$show_ct_notice_trial = 0;
 	}
+	
+	$link=@$_SERVER["QUERY_STRING"];
+	if($link!='')
+	{
+		$link="?".$link."&close_notice=1";
+	}
+	else
+	{
+		$link="?close_notice=1";
+	}
 
-	if ($show_notice && $show_ct_notice_trial ==1 && $value==1 && (is_network_admin() || is_admin())) {
-		echo '<div class="error"><h3>' . sprintf(__("%s trial period ends, please upgrade to %s!", 'cleantalk'), "<a href=\"options-general.php?page=cleantalk\">$ct_plugin_name</a>", "<a href=\"http://cleantalk.org/my/bill/recharge?utm_source=wp-backend&utm_medium=cpc&utm_campaign=WP%20backend%20trial$user_token\" target=\"_blank\"><b>premium version</b></a>") . '</h3></div>';
+	if ($show_notice && $show_ct_notice_trial ==1 && $value==1 && (is_network_admin() || is_admin()) && $ct_data['moderate_ip'] == 0) {
+		echo '<div class="error"><a href="'.$link.'" style="text-decoration:none;float:right;font-size:16px;margin-top:5px;"><b>X</b></a><h3>' . sprintf(__("%s trial period ends, please upgrade to %s!", 'cleantalk'), "<a href=\"options-general.php?page=cleantalk\">$ct_plugin_name</a>", "<a href=\"http://cleantalk.org/my/bill/recharge?utm_source=wp-backend&utm_medium=cpc&utm_campaign=WP%20backend%20trial$user_token\" target=\"_blank\"><b>premium version</b></a>") . '</h3></div>';
 		$show_notice = false;
 	}
 	
@@ -1083,16 +1129,6 @@ function cleantalk_admin_notice_message(){
 		$next_notice_show=0;
 	}
 	
-	$link=@$_SERVER["QUERY_STRING"];
-	if($link!='')
-	{
-		$link="?".$link."&close_notice=1";
-	}
-	else
-	{
-		$link="?close_notice=1";
-	}
-	
 	if(isset($ct_data['show_ct_notice_renew']))
 	{
 		$show_ct_notice_renew = intval($ct_data['show_ct_notice_renew']);
@@ -1102,13 +1138,13 @@ function cleantalk_admin_notice_message(){
 		$show_ct_notice_renew = 0;
 	}
 
-	if ($show_notice && $show_ct_notice_renew == 1 && $value==1 && (is_network_admin() || is_admin())) {
+	if ($show_notice && $show_ct_notice_renew == 1 && $value==1 && (is_network_admin() || is_admin()) && $ct_data['moderate_ip'] != 1) {
 	$button_html = "<a href=\"http://cleantalk.org/my/bill/recharge?utm_source=wp-backend&utm_medium=cpc&utm_campaign=WP%20backend%20renew$user_token\" target=\"_blank\">" . '<input type="button" class="button button-primary" value="' . __('RENEW ANTI-SPAM', 'cleantalk') . '"  />' . "</a>";
 		echo '<div class="updated"><a href="'.$link.'" style="text-decoration:none;float:right;font-size:16px;margin-top:5px;"><b>X</b></a><h3>' . sprintf(__("Please renew your anti-spam license for %s.", 'cleantalk'), "<a href=\"http://cleantalk.org/my/bill/recharge?utm_source=wp-backend&utm_medium=cpc&utm_campaign=WP%20backend%20renew$user_token\" target=\"_blank\"><b>" . __('next year', 'cleantalk') ."</b></a>") . '<br /><br />' . $button_html . '</h3></div>';
 		$show_notice = false;
 	}
 
-	if ($show_notice && $show_ct_notice_online != '' && $value==1 && (is_network_admin() || is_admin())) {
+	if ($show_notice && $show_ct_notice_online != '' && $value==1 && (is_network_admin() || is_admin()) && $ct_data['moderate_ip'] != 1) {
 		if($show_ct_notice_online === 'Y'){
 			//echo '<div class="updated"><h3><b>';
 				//echo __("Don’t forget to disable CAPTCHA if you have it!", 'cleantalk');
@@ -1116,7 +1152,7 @@ function cleantalk_admin_notice_message(){
 			//echo '</b></h3></div>';
 		}
 		
-		if($show_ct_notice_online === 'N' && $value==1 && (is_network_admin() || (!defined('WP_ALLOW_MULTISITE')||defined('WP_ALLOW_MULTISITE')&&WP_ALLOW_MULTISITE==false) && is_admin())){
+		if($show_ct_notice_online === 'N' && $value==1 && (is_network_admin() || (!defined('WP_ALLOW_MULTISITE')||defined('WP_ALLOW_MULTISITE')&&WP_ALLOW_MULTISITE==false) && is_admin()) && $ct_data['moderate_ip'] != 1){
 			echo '<div class="error"><h3><b>';
 				echo __("Wrong <a href=\"options-general.php?page=cleantalk\"><b style=\"color: #49C73B;\">Clean</b><b style=\"color: #349ebf;\">Talk</b> access key</a>! Please check it or ask <a target=\"_blank\" href=\"https://cleantalk.org/forum/\">support</a>.", 'cleantalk');
 			echo '</b></h3></div>';

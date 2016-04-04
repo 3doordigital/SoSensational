@@ -73,7 +73,7 @@ function rocket_remove_url_protocol( $url, $no_dots=false )
  */
 function rocket_add_url_protocol( $url ) {
 	if ( strpos( $url, 'http://' ) === false && strpos( $url, 'https://' ) === false ) {
-		$url = 'http://' . ltrim( $url, '//' );
+		$url = set_url_scheme( $url );
 	}
 	return $url;
 }

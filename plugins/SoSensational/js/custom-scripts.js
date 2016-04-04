@@ -229,7 +229,9 @@ jQuery(document).ready(function($) {
 
     jQuery('#mega-menu-primary > li:last-child > a').click(function(e) {
         e.preventDefault();
-        jQuery('#sosen-searchform').toggle();
+        var $elem = jQuery('#sosen-searchform');
+        $elem.toggle();
+        $elem.find('input').focus();
     }); 
     
     if (jQuery('.search-row').length) {

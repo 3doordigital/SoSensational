@@ -189,7 +189,7 @@ get_header();
                                     View: 
                                     <?php if( $query->found_posts >= 18 ) { ?><a href="<?php echo add_query_arg( 'per_page', 18, $_SERVER['REQUEST_URI'] ); ?>">18</a> /<?php } ?>
                                     <?php if( $query->found_posts >= 36 ) { ?><a href="<?php echo add_query_arg( 'per_page', 36, $_SERVER['REQUEST_URI'] ); ?>">36</a> /<?php } ?>
-                                    <a href="<?php echo add_query_arg( 'per_page', 'all', $_SERVER['REQUEST_URI'] ); ?>">ALL</a>
+                                    <a href="<?php echo add_query_arg( 'per_page', 180, $_SERVER['REQUEST_URI'] ); ?>">180</a>
                                 </div>
                             </div>
                             <div class="col-md-7">
@@ -291,7 +291,7 @@ get_header();
                             View:
                             <?php if( $query->found_posts >= 18 ) { ?><a href="<?php echo add_query_arg( 'per_page', 18, $_SERVER['REQUEST_URI'] ); ?>">18</a> /<?php } ?>
                             <?php if( $query->found_posts >= 36 ) { ?><a href="<?php echo add_query_arg( 'per_page', 36, $_SERVER['REQUEST_URI'] ); ?>">36</a> /<?php } ?>
-                            <a href="<?php echo add_query_arg( 'per_page', 'all', $_SERVER['REQUEST_URI'] ); ?>">ALL</a>
+                            <a href="<?php echo add_query_arg( 'per_page', 180, $_SERVER['REQUEST_URI'] ); ?>">180</a>
                         </div>
                     </div>
                 </div>

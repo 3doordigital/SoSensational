@@ -38,7 +38,7 @@
                     </div>                        
                     <?php
                     else:
-                        echo '<p class="no-results">There were no resutls found</p>';
+                        echo '<p class="no-results">There were no results found</p>';
                     endif;
                     ?>            
                 </div>                       
@@ -83,7 +83,7 @@
                     </div>                        
                     <?php
                     else:
-                        echo '<p class="no-results">There were no resutls found</p>';
+                        echo '<p class="no-results">There were no results found</p>';
                     endif;
                     ?>                       
                 </div>
@@ -116,7 +116,7 @@
                     </div>                        
                     <?php
                     else:
-                        echo '<p class="no-results">There were no resutls found</p>';
+                        echo '<p class="no-results">There were no results found</p>';
                     endif;
                     ?>                      
                 </div>

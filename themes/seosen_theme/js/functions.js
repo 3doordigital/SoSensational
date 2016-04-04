@@ -181,4 +181,5 @@ jQuery(document).ready(function ($) {
             $(".alphabet-links-first").removeClass("panel panel-default fixed");
         }
     });
+    jQuery('#social-icons .fa-google-plus').not(':first').remove();
 }); // closes ready

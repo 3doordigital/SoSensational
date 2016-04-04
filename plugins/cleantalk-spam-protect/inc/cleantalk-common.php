@@ -1,6 +1,6 @@
 <?php
 
-$ct_agent_version = 'wordpress-5341';
+$ct_agent_version = 'wordpress-5361';
 $ct_plugin_name = 'Anti-spam by CleanTalk';
 $ct_checkjs_frm = 'ct_checkjs_frm';
 $ct_checkjs_register_form = 'ct_checkjs_register_form';
@@ -297,6 +297,8 @@ function get_sender_info() {
     {
     	$ct_first_referer = 'null';
     }
+//$post_id=url_to_postid($_SERVER['HTTP_ORIGIN'].@$_SERVER['REQUEST_URI']);
+//$post_type=get_post_type($post_id);
 
 	return $sender_info = array(
 	'page_url' => htmlspecialchars(@$_SERVER['SERVER_NAME'].@$_SERVER['REQUEST_URI']),
@@ -312,6 +314,7 @@ function get_sender_info() {
         'fields_number' => sizeof($_POST),
         'js_info' => $js_info,
         'ct_first_referer' => $ct_first_referer,
+        //'post_type' => $post_type,
     );
 }
 

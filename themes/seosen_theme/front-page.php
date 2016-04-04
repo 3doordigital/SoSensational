@@ -74,7 +74,7 @@
             <div class="col-md-8 col-sm-12 fadebox">
                 <a href="<?php echo $cat['url']; ?>">
     <?php echo wp_get_attachment_image($cat['attachment_id'], 'home_cat', false, array('class' => 'img-responsive')); ?>
-                    <div class="<?php echo ($i == 0 || $i == 2 || $i == 4 ? 'whitebar' : 'blackbar'); ?>">
+                    <div class="<?php echo ($i == 0 || $i == 2 || $i == 4 ? 'blackbar' : 'blackbar'); ?>">
                         <h2><?php echo $cat['title']; ?></h2>
                     </div>
                 </a>

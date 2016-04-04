@@ -3,11 +3,11 @@
   Plugin Name: Anti-Spam by CleanTalk
   Plugin URI: http://cleantalk.org
   Description: Max power, all-in-one, captcha less, premium anti-spam plugin. No comment spam, no registration spam, no contact spam, protects any WordPress forms. 
-  Version: 5.34.1
+  Version: 5.36.1
   Author: СleanTalk <welcome@cleantalk.org>
   Author URI: http://cleantalk.org
  */
-$cleantalk_plugin_version='5.34.1';
+$cleantalk_plugin_version='5.36.1';
 $cleantalk_executed=false;
 
 if(defined('CLEANTALK_AJAX_USE_BUFFER'))
@@ -328,61 +328,70 @@ function ct_add_nocache_script()
 
 function ct_add_nocache_script_footer()
 {
-	global $test_external_forms, $cleantalk_plugin_version;
-	print "<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_nocache.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
-	if($test_external_forms)
+	if(strpos($_SERVER['REQUEST_URI'],'jm-ajax')===false)
 	{
-		print "\n<script type='text/javascript'>var ct_blog_home = '".get_home_url()."';</script>\n";
-		print "<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_external.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
+		global $test_external_forms, $cleantalk_plugin_version;
+		print "<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_nocache.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
+		if($test_external_forms)
+		{
+			print "\n<script type='text/javascript'>var ct_blog_home = '".get_home_url()."';</script>\n";
+			print "<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_external.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
+		}
+		//print "<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk-info.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
 	}
-	//print "<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk-info.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
 }
 
 function ct_add_nocache_script_header()
 {
-	global $ct_options;
-    $ct_options=ct_get_options();
-    if(@intval($ct_options['collect_details'])==1)
-    {
-    	$ct_info_flag="var ct_info_flag=true;\n";
-    }
-    else
-    {
-    	$ct_info_flag="var ct_info_flag=false;\n";
-    }
-    
-	print "\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n $ct_info_flag </script>\n";
+	if(strpos($_SERVER['REQUEST_URI'],'jm-ajax')===false)
+	{
+		global $ct_options;
+	    $ct_options=ct_get_options();
+	    if(@intval($ct_options['collect_details'])==1)
+	    {
+	    	$ct_info_flag="var ct_info_flag=true;\n";
+	    }
+	    else
+	    {
+	    	$ct_info_flag="var ct_info_flag=false;\n";
+	    }
+	    
+		print "\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n $ct_info_flag </script>\n";
+	}
 }
 
 function ct_inject_nocache_script($html)
 {
-	global $test_external_forms, $cleantalk_plugin_version, $ct_options;
-    $ct_options=ct_get_options();
-    if(@intval($ct_options['collect_details'])==1)
-    {
-    	$ct_info_flag="var ct_info_flag=true;\n";
-    }
-    else
-    {
-    	$ct_info_flag="var ct_info_flag=false;\n";
-    }
-	if(!is_admin()&&stripos($html,"</body")!==false)
+	if(strpos($_SERVER['REQUEST_URI'],'jm-ajax')===false)
 	{
-		//$ct_replace.="\n<script type='text/javascript'>var ajaxurl = '".admin_url('admin-ajax.php')."';\n  $ct_info_flag </script>\n";
-		$ct_replace="<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_nocache.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
-		if($test_external_forms)
+		global $test_external_forms, $cleantalk_plugin_version, $ct_options;
+	    $ct_options=ct_get_options();
+	    if(@intval($ct_options['collect_details'])==1)
+	    {
+	    	$ct_info_flag="var ct_info_flag=true;\n";
+	    }
+	    else
+	    {
+	    	$ct_info_flag="var ct_info_flag=false;\n";
+	    }
+		if(!is_admin()&&stripos($html,"</body")!==false)
 		{
-			$ct_replace.="\n<script type='text/javascript'>var ct_blog_home = '".get_home_url()."';</script>\n";
-			$ct_replace.="<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_external.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
+			//$ct_replace.="\n<script type='text/javascript'>var ajaxurl = '".admin_url('admin-ajax.php')."';\n  $ct_info_flag </script>\n";
+			$ct_replace="<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_nocache.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
+			if($test_external_forms)
+			{
+				$ct_replace.="\n<script type='text/javascript'>var ct_blog_home = '".get_home_url()."';</script>\n";
+				$ct_replace.="<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_external.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
+			}
+			
+			//$html=str_ireplace("</body",$ct_replace."</body",$html);
+			$html=substr_replace($html,$ct_replace."</body",strripos($html,"</body"),6);
 		}
-		
-		//$html=str_ireplace("</body",$ct_replace."</body",$html);
-		$html=substr_replace($html,$ct_replace."</body",strripos($html,"</body"),6);
-	}
-	if(!is_admin()&&preg_match("#<head[^>]*>#i",$html)==1)
-	{
-		$ct_replace="\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n $ct_info_flag </script>\n";
-		$html=preg_replace("(<head[^>]*>)","$0".$ct_replace,$html,1);
+		if(!is_admin()&&preg_match("#<head[^>]*>#i",$html)==1)
+		{
+			$ct_replace="\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n $ct_info_flag </script>\n";
+			$html=preg_replace("(<head[^>]*>)","$0".$ct_replace,$html,1);
+		}
 	}
 	return $html;
 }
@@ -409,12 +418,6 @@ add_action( 'right_now_content_table_end', 'my_add_counts_to_dashboard' );
 function cleantalk_update_sfw()
 {
 	global $wpdb;
-	$wpdb->query("drop table if exists `".$wpdb->base_prefix."cleantalk_sfw`;");
-	$wpdb->query("CREATE TABLE IF NOT EXISTS `".$wpdb->base_prefix."cleantalk_sfw` (
-`network` int(11) unsigned NOT NULL,
-`mask` int(11) unsigned NOT NULL,
-INDEX (  `network` ,  `mask` )
-) ENGINE = MYISAM ;");
 
 	if(!function_exists('sendRawRequest'))
 	{
@@ -438,26 +441,29 @@ INDEX (  `network` ,  `mask` )
 		
 		$result=sendRawRequest('https://api.cleantalk.org/2.1', $data);
 		$result=json_decode($result, true);
-		if(!isset($result['error_no']))
+		if(isset($result['data']))
 		{
+			$wpdb->query("drop table if exists `".$wpdb->base_prefix."cleantalk_sfw`;");
+			$wpdb->query("CREATE TABLE IF NOT EXISTS `".$wpdb->base_prefix."cleantalk_sfw` (
+`network` int(11) unsigned NOT NULL,
+`mask` int(11) unsigned NOT NULL,
+INDEX (  `network` ,  `mask` )
+) ENGINE = MYISAM ;");
 			$result=$result['data'];
 			$query="INSERT INTO `".$wpdb->base_prefix."cleantalk_sfw` VALUES ";
-			if(sizeof($result)>10)
+			//$wpdb->query("TRUNCATE TABLE `".$wpdb->base_prefix."cleantalk_sfw`;");
+			for($i=0;$i<sizeof($result);$i++)
 			{
-				//$wpdb->query("TRUNCATE TABLE `".$wpdb->base_prefix."cleantalk_sfw`;");
-				for($i=0;$i<sizeof($result);$i++)
+				if($i==sizeof($result)-1)
 				{
-					if($i==sizeof($result)-1)
-					{
-						$query.="(".$result[$i][0].",".$result[$i][1].");";
-					}
-					else
-					{
-						$query.="(".$result[$i][0].",".$result[$i][1]."), ";
-					}
+					$query.="(".$result[$i][0].",".$result[$i][1].");";
 				}
-				$wpdb->query($query);
+				else
+				{
+					$query.="(".$result[$i][0].",".$result[$i][1]."), ";
+				}
 			}
+			$wpdb->query($query);
 		}
 	}
 }

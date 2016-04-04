@@ -27,6 +27,11 @@ function ct_init() {
     {
     	unset($_POST['ct_checkjs_register_form']);
     }
+    
+    if(isset($_POST['_wpnonce-et-pb-contact-form-submitted']))
+    {
+    	add_shortcode( 'et_pb_contact_form', 'ct_contact_form_validate' );
+    }
 
     if($test_external_forms && $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cleantalk_hidden_method']) && isset($_POST['cleantalk_hidden_action']))
     {
