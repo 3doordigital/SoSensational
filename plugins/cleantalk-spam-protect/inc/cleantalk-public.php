@@ -5,23 +5,11 @@
  * @return 	mixed[] Array of options
  */
 function ct_init() {
-    global $ct_wplp_result_label, $ct_jp_comments, $ct_post_data_label, $ct_post_data_authnet_label, $ct_formtime_label, $ct_direct_post, $ct_options, $ct_data, $ct_check_post_result, $test_external_forms;
+    global $ct_wplp_result_label, $ct_jp_comments, $ct_post_data_label, $ct_post_data_authnet_label, $ct_formtime_label, $ct_direct_post, $ct_options, $ct_data, $ct_check_post_result, $test_external_forms, $cleantalk_executed;
 
     $ct_options=ct_get_options();
 	$ct_data=ct_get_data();
 	
-	if(!isset($_COOKIE['ct_first_referer']))
-	{
-		if(isset($_SERVER['HTTP_REFERER']))
-		{
-			setcookie("ct_first_referer", $_SERVER['HTTP_REFERER'], 0, '/');
-		}
-		else
-		{
-			setcookie("ct_first_referer", "null", 0, '/');
-		}
-	}
-    
     //fix for EPM registration form
     if(isset($_POST) && isset($_POST['reg_email']) && shortcode_exists( 'epm_registration_form' ))
     {
@@ -167,8 +155,6 @@ function ct_init() {
         ct_s2member_registration_test(); 
     }
     
-    
-    
     //
     // New user approve hack
     // https://wordpress.org/plugins/new-user-approve/
@@ -177,6 +163,13 @@ function ct_init() {
         add_action('register_post', 'ct_register_post', 1, 3);
     }
     
+    //
+    // Gravity forms
+    //
+    if (defined('GF_MIN_WP_VERSION')) {
+        add_filter('gform_entry_is_spam', 'ct_gforms_spam_test', 1, 3);
+    }
+
     //
     // Load JS code to website footer
     //
@@ -279,7 +272,7 @@ function ct_add_hidden_fields($random_key = false, $field_name = 'ct_checkjs', $
     $ct_checkjs_key = ct_get_checkjs_value($random_key); 
     $field_id_hash = md5(rand(0, 1000));
     
-    if ($cookie_check) { 
+    if ($cookie_check && isset($ct_options['set_cookies']) && $ct_options['set_cookies'] == 1) { 
 			$html = '
 <script type="text/javascript">
 function ctSetCookie(c_name, value, def_value) {
@@ -527,7 +520,6 @@ function ct_preprocess_comment($comment) {
     if (($comment['comment_type']!='trackback') && (ct_is_user_enable() === false || $ct_options['comments_test'] == 0 || $ct_comment_done || (isset($_SERVER['HTTP_REFERER']) && stripos($_SERVER['HTTP_REFERER'],'page=wysija_campaigns&action=editTemplate')!==false) || $is_max_comments || strpos($_SERVER['REQUEST_URI'],'/wp-admin/')!==false)) {
         return $comment;
     }
-    
 
     $local_blacklists = wp_blacklist_check(
         $comment['comment_author'],
@@ -1639,6 +1631,71 @@ function ct_check_wplp(){
 }
 
 /**
+ * Gravity forms anti-spam test.
+ * @return boolean
+ */
+function ct_gforms_spam_test ($is_spam, $form, $entry) {
+    global $ct_options, $ct_data, $cleantalk_executed;
+    
+    $ct_options = ct_get_options();
+    $ct_data = ct_get_data();
+
+    if ($is_spam) {
+	    return $is_spam;
+    }
+
+    if ($ct_options['contact_forms_test'] == 0) {
+	    return $is_spam;
+    }
+	
+    // Return unchanged result if the submission was already tested.
+    if ($cleantalk_executed) {
+	    return $is_spam;
+    }
+	
+    $sender_info='';
+
+    $checkjs = js_test('ct_checkjs', $_COOKIE, true);
+
+    $post_info['comment_type'] = 'feedback';
+    $post_info = json_encode($post_info);
+    if ($post_info === false)
+        $post_info = '';
+
+    $sender_email = null;
+    $sender_nickname = null;
+    $subject = '';
+    $message = '';
+    foreach ($_POST as $k => $v) {
+    	if(is_array($v)) {
+    		continue;
+    	}
+        if ($sender_email === null && preg_match("/^\S+@\S+\.\S+$/", $v)) {
+            $sender_email = $v;
+            continue;
+        }
+        $message.= $v."\n";
+    }
+
+    $ct_base_call_result = ct_base_call(array(
+        'message' => $message,
+        'example' => null,
+        'sender_email' => $sender_email,
+        'sender_nickname' => $sender_nickname,
+        'post_info' => $post_info,
+	    'sender_info' => $sender_info,
+        'checkjs' => $checkjs
+    ));
+    $ct_result = $ct_base_call_result['ct_result'];
+
+    if ($ct_result->allow == 0) {
+        $is_spam = true;
+    }
+
+    return $is_spam;
+}
+
+/**
  * Test S2member registration
  * @return array with errors 
  */
@@ -1781,11 +1838,12 @@ function ct_contact_form_validate () {
         isset($_POST['bbp_reply_content']) ||
         isset($_COOKIE[LOGGED_IN_COOKIE]) ||
         isset($_POST['fscf_submitted']) ||
-        strpos($_SERVER['REQUEST_URI'],'/wc-api/')!==false
+        strpos($_SERVER['REQUEST_URI'],'/wc-api/')!==false ||
+        isset($_POST['log']) && isset($_POST['pwd']) && isset($_POST['wp-submit'])
         ) {
         return null;
     }
-    
+
     //@header("CtConditions: Passed");
     cleantalk_debug("CtConditions", "Passed");
 
@@ -1836,9 +1894,10 @@ function ct_contact_form_validate () {
     	$tmp=$_POST['TellAFriend_Link'];
     	unset($_POST['TellAFriend_Link']);
     }
-    
+
     //@header("CtBaseCallBefore: 1");
     cleantalk_debug("CtBaseCallBefore", "1");
+
 
     $ct_base_call_result = ct_base_call(array(
         'message' => $subject . "\n\n" . $message,
@@ -1849,9 +1908,10 @@ function ct_contact_form_validate () {
 	    'sender_info' => get_sender_info(),
         'checkjs' => $checkjs
     ));
+
     //@header("CtBaseCall: Executed");
     cleantalk_debug("CtBaseCall", "Executed");
-    
+
     if(isset($_POST['TellAFriend_Link']))
     {
     	$_POST['TellAFriend_Link']=$tmp;
@@ -1859,12 +1919,21 @@ function ct_contact_form_validate () {
     
     $ct = $ct_base_call_result['ct'];
     $ct_result = $ct_base_call_result['ct_result'];
-       
+
     if ($ct_result->allow == 0) {
     	//@header("CtResult: Not Allow");
     	cleantalk_debug("CtResult", "Not Allow");
         
-        if (!(defined( 'DOING_AJAX' ) && DOING_AJAX)) {
+        $ajax_call = false;
+        if ((defined( 'DOING_AJAX' ) && DOING_AJAX) 
+            ) {
+            $ajax_call = true;
+        }
+        if ($ajax_call) {
+        	//@header("AJAX: Yes");
+        	cleantalk_debug("AJAX", "Yes");
+            echo $ct_result->comment; 
+        } else {
         	//@header("AJAX: No");
         	cleantalk_debug("AJAX", "No");
             global $ct_comment;
@@ -1881,14 +1950,22 @@ function ct_contact_form_validate () {
             	echo $ct_result->comment;
             	die();
             }
+            //
+            // Gravity forms submission
+            //
+            else if(isset($_POST['gform_submit']))
+            {   
+                $response = sprintf("<!DOCTYPE html><html><head><meta charset='UTF-8' /></head><body class='GF_AJAX_POSTBACK'><div id='gform_confirmation_wrapper_1' class='gform_confirmation_wrapper '><div id='gform_confirmation_message_1' class='gform_confirmation_message_1
+ gform_confirmation_message'>%s</div></div></body></html>",
+                    $ct_result->comment
+                );
+                echo $response;
+            	die();
+            }
             else
             {
             	ct_die(null, null);
             }
-        } else {
-        	//@header("AJAX: Yes");
-        	cleantalk_debug("AJAX", "Yes");
-            echo $ct_result->comment; 
         }
         exit;
     }
@@ -1945,6 +2022,7 @@ function ct_contact_form_validate_postdata () {
         isset($_POST['bbp_topic_content']) ||
         isset($_POST['bbp_reply_content']) ||
         isset($_POST['fscf_submitted']) ||
+        isset($_POST['log']) && isset($_POST['pwd']) && isset($_POST['wp-submit'])||
         strpos($_SERVER['REQUEST_URI'],'/wc-api/')!==false
         ) {
         return null;

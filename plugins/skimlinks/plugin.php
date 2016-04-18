@@ -5,7 +5,7 @@ Plugin Name: Skimlinks
 Plugin URI: http://wordpress.org/extend/plugins/skimlinks/
 Description: Skimlinks helps you easily monetize content by converting product links in your post into their equivalent affiliate links on-the-fly.                 Install the plugin and add a new revenue stream to your blog, including monetising the links in your RSS feed, without affecting your users' experience.
 Author: Skimlinks
-Version: 1.2.2
+Version: 1.2.4
 Author URI: http://skimlinks.com/
 */
 

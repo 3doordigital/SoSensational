@@ -2,8 +2,8 @@
 Contributors: skimlinks
 Tags: skimlinks, Affiliate, Marketing, Links, Monetization, Monetisation, Javascript, Easy, Make Money, Advertising, Affiliate Widget, Referral, Plugin, RSS, Feeds, Text Links, Earn Money, Revenue, Free, Tool
 Requires at least: 2.7.1
-Tested up to: 3.5.1
-Stable tag: 1.2.3
+Tested up to: 4.3.3
+Stable tag: 1.2.4
 
 == Description ==
 
@@ -17,7 +17,7 @@ Skimlinks takes away all the effort usually associated with affiliate marketing,
 
 * **Earn from your RSS feed**: Monetize more activity on your blog when users click on an external link in your RSS feed, Skimlinks automatically turns these into affiliate links 
 
-* **Earn more from affiliate marketing with Skimlinks**: We work with over 8,000 merchants, and turn more links in your content into their equivalent affiliate link so you can earn more commission
+* **Earn more from affiliate marketing with Skimlinks**: We work with over 18,000 merchants, and turn more links in your content into their equivalent affiliate link so you can earn more commission
 
 * **Zero admin**: You can focus on creating great content and link to merchant products as normal and we'll do all the work to create and maintain affiliate links for you
 
@@ -91,7 +91,7 @@ Skimlinks lets the normal link appear, and turns it into an affiliate link only 
 The Skimlinks technology is monitored 24/7, and is fully redundant. If, in the unlikely event, our technology stops working, links will not be affiliated for a temporary period but the user experience is not affected.  
 
 = Q. I've upgraded to Version 1.2+ and links have started appearing on phrases in my content. Why is this? =
-There is nothing to worry about! When you upgraded to Version 1.2, your site is now using the latest version of our technology and this means that the current product settings on the Installation page in your Skimlinks Publisher Interface have taken effect. If you have SkimWords enabled on that page, this is why links are being added to your content. You can change these settings to suit your needs in your [Publisher Interface](https://skimlinks.com/login/settings) at anytime. You can read more about SkimWords, Skimlinks’ in-text monetization product, on [our website](http://skimlinks.com/skimwords).
+There is nothing to worry about! When you upgraded to Version 1.2, your site is now using the latest version of our technology and this means that the current product settings on the Installation page in your Skimlinks Publisher Interface have taken effect. If you have SkimWords enabled on that page, this is why links are being added to your content. You can change these settings to suit your needs in your [Publisher Interface](https://skimlinks.com/login/settings) at anytime. You can read more about SkimWords, Skimlinks' in-text monetization product, on [our website](http://skimlinks.com/skimwords).
 
 For more FAQ's and information on Skimlinks, please visit [skimlinks.com](http://skimlinks.com)
 
@@ -102,6 +102,9 @@ For more FAQ's and information on Skimlinks, please visit [skimlinks.com](http:/
 2. Skimlinks publisher dashboard
 
 == Changelog ==
+= 1.2.4 =
+* fixes url to skimlinks js library to be protocol-agnostic
+
 = 1.2.3 =
 * fixes bug with incorrectly encoded urls in rss feed
 * updated to support feeds with encoded content
@@ -121,10 +124,9 @@ For more FAQ's and information on Skimlinks, please visit [skimlinks.com](http:/
 * improved error messaging for incompatible themes
 * improved registration information
 
-= 1.1 = 
+= 1.1 =
 * Updated to add options for referral badge
 * Updated to add options for custom sub-domain
- 
+
 = 1.0 =
 * Initial version of Skimlinks Plugin
-

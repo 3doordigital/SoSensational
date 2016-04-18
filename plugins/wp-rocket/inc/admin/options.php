@@ -486,7 +486,7 @@ function rocket_display_options() {
 				<?php 
 				/** This filter is documented in inc/admin/ui/modules/vanrish.php */	
 				if ( apply_filters( 'rocket_display_varnish_options_tab', true ) ) { ?>
-				<a href="#tab_varnish" class="nav-tab"><?php _e( 'Varnish', 'rocket' ); ?></a>
+				<a href="#tab_varnish" class="nav-tab">Varnish</a>
 				<?php } ?>
 				<?php if( defined( 'WP_RWL' ) ) { ?>
 					<a href="#tab_whitelabel" class="nav-tab"><?php _e( 'White Label', 'rocket' ); ?></a>
@@ -748,9 +748,7 @@ function rocket_settings_callback( $inputs ) {
 	 * Option : CloudFlare Domain
 	 */
 	if ( ! empty( $inputs['cloudflare_domain'] ) ) {
-		$inputs['cloudflare_domain'] = trim( $inputs['cloudflare_domain'] );
-		$inputs['cloudflare_domain'] = rocket_remove_url_protocol( $inputs['cloudflare_domain'] );
-		$inputs['cloudflare_domain'] = str_replace( '/' , '', $inputs['cloudflare_domain'] ); 
+		$inputs['cloudflare_domain'] = rocket_get_domain( $inputs['cloudflare_domain'] );
 	} else {
 		$inputs['cloudflare_domain'] = '';
 	}
@@ -943,9 +941,9 @@ function rocket_after_save_options( $oldvalue, $value ) {
 	}
 	
 	// Regenerate advanced-cache.php file
-	if ( ! empty( $_POST ) && ( $oldvalue['do_caching_mobile_files'] != $value['do_caching_mobile_files'] || $oldvalue['do_caching_mobile_files'] != $value['do_caching_mobile_files'] ) ) {
-		rocket_generate_advanced_cache_file();
-	}
+	if ( ! empty( $_POST ) && ( ( isset( $oldvalue['do_caching_mobile_files'] ) && ! isset( $value['do_caching_mobile_files'] ) ) || ( ! isset( $oldvalue['do_caching_mobile_files'] ) &&  isset( $value['do_caching_mobile_files'] ) ) || ( isset( $oldvalue['do_caching_mobile_files'], $value['do_caching_mobile_files'] ) ) && $oldvalue['do_caching_mobile_files'] != $value['do_caching_mobile_files'] ) ) {
+        rocket_generate_advanced_cache_file();
+    }
 	
 	// Update .htaccess file rules
 	flush_rocket_htaccess( ! rocket_valid_key() );

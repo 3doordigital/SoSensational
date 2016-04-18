@@ -3,11 +3,12 @@
   Plugin Name: Anti-Spam by CleanTalk
   Plugin URI: http://cleantalk.org
   Description: Max power, all-in-one, captcha less, premium anti-spam plugin. No comment spam, no registration spam, no contact spam, protects any WordPress forms. 
-  Version: 5.36.1
+  Version: 5.39.1
   Author: СleanTalk <welcome@cleantalk.org>
   Author URI: http://cleantalk.org
  */
-$cleantalk_plugin_version='5.36.1';
+$cleantalk_plugin_version='5.39.1';
+$ct_agent_version = 'wordpress-5391';
 $cleantalk_executed=false;
 
 if(defined('CLEANTALK_AJAX_USE_BUFFER'))
@@ -48,8 +49,36 @@ if(!defined('CLEANTALK_PLUGIN_DIR')){
     {
     	$value=0;
     }
+    
+    /*
+        Turn off the SpamFireWall if current url in the exceptions list. 
+    */
+    if ($value == 1 && isset($cleantalk_url_exclusions) && is_array($cleantalk_url_exclusions)) {
+        foreach ($cleantalk_url_exclusions as $v) {
+            if (stripos($_SERVER['REQUEST_URI'], $v) !== false) {
+                $value = 0;
+                break;
+            }
+        } 
+    }
 
-    if($value==1 && !is_admin() && stripos($_SERVER['REQUEST_URI'],'/wp-admin/')===false || $value==1 && defined( 'DOING_AJAX' ) && DOING_AJAX)
+    /*
+        Turn off the SpamFireWall for WordPress core pages
+    */
+    $ct_wordpress_core_pages = array(
+        '/wp-admin',
+        '/feed'
+    );
+    if ($value == 1) {
+        foreach ($ct_wordpress_core_pages as $v) {
+            if (stripos($_SERVER['REQUEST_URI'], $v) !== false) {
+                $value = 0;
+                break;
+            }
+        }
+    }
+
+    if($value==1 && !is_admin() || $value==1 && defined( 'DOING_AJAX' ) && DOING_AJAX)
     {
 	   	$is_sfw_check=true;
 	   	$ip=cleantalk_get_ip();
@@ -341,21 +370,39 @@ function ct_add_nocache_script_footer()
 	}
 }
 
+/**
+*   Function prepares values to manage JavaScript code  
+*   @return string 
+*/
+function ct_set_info_flag () {
+    global $ct_options;
+    
+    $ct_options=ct_get_options();
+
+    $result = 'false';
+    if(@intval($ct_options['collect_details'])==1
+        && @intval($ct_options['set_cookies']) == 1
+        ) {
+        $result = 'true';
+    }
+    
+	$ct_info_flag = "var ct_info_flag=$result;\n";
+
+    $result = 'true';
+    if (@intval($ct_options['set_cookies']) == 0) {
+        $result = 'false';
+    }
+	
+    $ct_set_cookies_flag = "var ct_set_cookies_flag=$result;\n";
+
+    return $ct_info_flag . $ct_set_cookies_flag;
+}
+
 function ct_add_nocache_script_header()
 {
 	if(strpos($_SERVER['REQUEST_URI'],'jm-ajax')===false)
 	{
-		global $ct_options;
-	    $ct_options=ct_get_options();
-	    if(@intval($ct_options['collect_details'])==1)
-	    {
-	    	$ct_info_flag="var ct_info_flag=true;\n";
-	    }
-	    else
-	    {
-	    	$ct_info_flag="var ct_info_flag=false;\n";
-	    }
-	    
+        $ct_info_flag = ct_set_info_flag();
 		print "\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n $ct_info_flag </script>\n";
 	}
 }
@@ -365,16 +412,10 @@ function ct_inject_nocache_script($html)
 	if(strpos($_SERVER['REQUEST_URI'],'jm-ajax')===false)
 	{
 		global $test_external_forms, $cleantalk_plugin_version, $ct_options;
-	    $ct_options=ct_get_options();
-	    if(@intval($ct_options['collect_details'])==1)
-	    {
-	    	$ct_info_flag="var ct_info_flag=true;\n";
-	    }
-	    else
-	    {
-	    	$ct_info_flag="var ct_info_flag=false;\n";
-	    }
-		if(!is_admin()&&stripos($html,"</body")!==false)
+        
+        $ct_info_flag = ct_set_info_flag();
+		
+        if(!is_admin()&&stripos($html,"</body")!==false)
 		{
 			//$ct_replace.="\n<script type='text/javascript'>var ajaxurl = '".admin_url('admin-ajax.php')."';\n  $ct_info_flag </script>\n";
 			$ct_replace="<script async type='text/javascript' src='".plugins_url( '/inc/cleantalk_nocache.js' , __FILE__ )."?random=".$cleantalk_plugin_version."'></script>\n";
@@ -386,11 +427,6 @@ function ct_inject_nocache_script($html)
 			
 			//$html=str_ireplace("</body",$ct_replace."</body",$html);
 			$html=substr_replace($html,$ct_replace."</body",strripos($html,"</body"),6);
-		}
-		if(!is_admin()&&preg_match("#<head[^>]*>#i",$html)==1)
-		{
-			$ct_replace="\n<script type='text/javascript'>\nvar ct_ajaxurl = '".admin_url('admin-ajax.php')."';\n $ct_info_flag </script>\n";
-			$html=preg_replace("(<head[^>]*>)","$0".$ct_replace,$html,1);
 		}
 	}
 	return $html;

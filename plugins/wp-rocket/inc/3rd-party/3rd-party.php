@@ -14,8 +14,11 @@ if ( version_compare( phpversion(), '5.3.0', '>=' ) ) {
 require( WP_ROCKET_3RD_PARTY_PATH . 'slider/revslider.php' );
 require( WP_ROCKET_3RD_PARTY_PATH . 'i18n/wpml.php' );
 require( WP_ROCKET_3RD_PARTY_PATH . 'i18n/polylang.php' );
-require( WP_ROCKET_3RD_PARTY_PATH . 'aelia-currencyswitcher.php' );
+require( WP_ROCKET_3RD_PARTY_PATH . 'ecommerce/aelia-currencyswitcher.php' );
+require( WP_ROCKET_3RD_PARTY_PATH . 'ecommerce/woocommerce-currency-converter-widget.php' );
+require( WP_ROCKET_3RD_PARTY_PATH . 'ecommerce/edd-software-licencing.php' );
 require( WP_ROCKET_3RD_PARTY_PATH . 'age-verify.php' );
+require( WP_ROCKET_3RD_PARTY_PATH . 'autoptimize.php' );
 require( WP_ROCKET_3RD_PARTY_PATH . 'eu-cookie-law.php' );
 require( WP_ROCKET_3RD_PARTY_PATH . 'kk-star-ratings.php' );
 require( WP_ROCKET_3RD_PARTY_PATH . 'wp-postratings.php' );

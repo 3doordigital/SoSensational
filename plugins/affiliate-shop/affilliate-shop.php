@@ -3449,7 +3449,6 @@ class WordPress_Affiliate_Shop {
 			}
                 }
                 $output['total'] = count($output['items']);
-               var_dump($output['total']);
 		 $output['status'] = 1;
                 return $output;
             }
@@ -3498,8 +3497,9 @@ class WordPress_Affiliate_Shop {
             $newItemsIds = [];
             $merchants = $this->cron_get_api_merchants();
             $total = $merchants['total'];
+            var_dump("total merchants: ".$total."  ");
             foreach ($merchants['items'] as $merchant) {
-                echo $merchant['ID'];
+                echo ' '.$merchant['ID'].' ';
                 $percent = number_format(($i / $total) * 100, 2);
                 $data = $this->cron_update_merchant_feed($merchant['ID'], $merchant['aff'], $merchant['name']);
                 if ($data['status'] == 1) {

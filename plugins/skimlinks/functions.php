@@ -175,7 +175,7 @@ function sl_get_footer_js() {
 		$output .= '</script>' . "\n";	
 	}
 	
-	$output .=  '<script type="text/javascript" src="http://s.skimresources.com/js/' . sl_get_publisher_id() . '.skimlinks.js"></script>' . "\n";
+	$output .=  '<script type="text/javascript" src="//s.skimresources.com/js/' . sl_get_publisher_id() . '.skimlinks.js"></script>' . "\n";
 	
 	return $output;
 }

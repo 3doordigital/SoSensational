@@ -317,15 +317,42 @@ function ct_get_fields(&$email,&$message,$arr)
 function ct_ajax_hook()
 {
 	require_once(CLEANTALK_PLUGIN_DIR . 'inc/cleantalk-public.php');
-	global $ct_agent_version, $ct_checkjs_register_form, $ct_session_request_id_label, $ct_session_register_ok_label, $bp, $ct_signup_done, $ct_formtime_label, $ct_negative_comment, $ct_options, $ct_data;
+	global $ct_agent_version, $ct_checkjs_register_form, $ct_session_request_id_label, $ct_session_register_ok_label, $bp, $ct_signup_done, $ct_formtime_label, $ct_negative_comment, $ct_options, $ct_data, $current_user;
 	
 	$ct_options = ct_get_options();
     $ct_data = ct_get_data();
-	
 	$sender_email = null;
     $message = '';
     $nickname=null;
     
+    //
+    // Skip test if Custom contact forms is disabled.
+    //
+    if (intval($ct_options['general_contact_forms_test'])==0 ) {
+        return false;
+    }
+
+    //
+    // Go out because we call it on backend.
+    //
+    if (ct_is_user_enable() === false || (function_exists('get_current_user_id') && get_current_user_id() != 0)) {
+        return false;
+    }
+
+    //
+    // Go out because of not spam data 
+    //
+    $gmw_actions = array(
+        'gmaps_display_info_window',
+        'gmw_ps_display_info_window'
+    );
+	$checkjs = js_test('ct_checkjs', $_COOKIE, true);
+    if ($checkjs && // Spammers usually fail the JS test
+        (isset($_POST['action']) && in_array($_POST['action'], $gmw_actions)) // Geo My WP pop-up windows.
+        ) {
+        return false;
+    }
+
     if(isset($_POST['user_login']))
 	{
 		$nickname=$_POST['user_login'];
@@ -359,10 +386,8 @@ function ct_ajax_hook()
     	$_POST['target']=$tmp;
     }
     
-    
 	if($sender_email!=null)
 	{
-		$checkjs = js_test('ct_checkjs', $_COOKIE, true);
 		$submit_time = submit_time_test();
 	    $sender_info = get_sender_info();
 	    $sender_info['post_checkjs_passed']=$checkjs;
@@ -471,6 +496,19 @@ function ct_ajax_hook()
 			else if($_POST['action']=='ninja_forms_ajax_submit')
 			{
 				print '{"form_id":'.$_POST['_form_id'].',"errors":false,"success":{"success_msg-Success":"'.$ct_result->comment.'"}}';
+				die();
+			}
+            //
+            // WooWaitList
+            // http://codecanyon.net/item/woowaitlist-woocommerce-back-in-stock-notifier/7103373
+            //
+			else if($_POST['action']=='wew_save_to_db_callback')
+			{
+                $result = array();
+                $result['error'] = 1;
+			    $result['message'] = $ct_result->comment;
+                $result['code'] = 5; // Unused code number in WooWaitlist
+				print json_encode($result);
 				die();
 			}
 			else

@@ -2,7 +2,7 @@
 /*
 Plugin Name: CoSchedule by Todaymade
 Description: Schedule social media messages alongside your blog posts in WordPress, and then view them on a Google Calendar interface. <a href="http://app.coschedule.com" target="_blank">Account Settings</a>
-Version: 2.4.3
+Version: 2.4.4
 Author: Todaymade
 Author URI: http://todaymade.com/
 Plugin URI: http://coschedule.com/
@@ -24,8 +24,8 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
         private $app = "https://app.coschedule.com";
         private $app_metabox = "https://app.coschedule.com/metabox";
         private $assets = "https://d2lbmhk9kvi6z5.cloudfront.net";
-        private $version = "2.4.3";
-        private $build = 56;
+        private $version = "2.4.4";
+        private $build = 57;
         private $connected = false;
         private $token = false;
         private $blog_id = false;
@@ -130,7 +130,7 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
 
             // Called whenever a post is created/updated/deleted
             add_action( 'create_category', array( $this, "save_category_callback" ) );
-            add_action( 'edit_category', array( $this, "save_category_callback" ) );
+            add_action( 'edited_category', array( $this, "save_category_callback" ) ); // NOTE: edited_ prefix is critical as we want committed value //
             add_action( 'delete_category', array( $this, "delete_category_callback" ) );
 
             // Called whenever a user/author is created/updated/deleted
@@ -1278,6 +1278,15 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
                 $plugin['path'] = $key;
                 $plugin['status'] = is_plugin_active( $key ) ? 'Active' : 'Inactive';
 
+                // plugins with non-printable data in plugin manifest, this works around it //
+                foreach ( $plugin as $plugin_key => $string ) {
+                    if( is_string( $string ) ) {
+                        $plugin[ $plugin_key ] = preg_replace('/[[:^print:]]/', '', $string);
+                    } else {
+                        $plugin[ $plugin_key ] = $string;
+                    }
+                }
+
                 if ( is_plugin_active( $key ) ) {
                     array_push( $plugins['active'], $plugin );
                 } else {
@@ -1438,12 +1447,11 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
          * Returns: Result of call
          */
         public function api_post( $url, $body ) {
-            $http = new WP_Http;
             $params = array(
                 'method' => 'POST',
                 'body'   => $this->array_decode_entities( $body )
             );
-            return $http->request( $this->api . $url, $params );
+            return $this->do_request( $this->api . $url, $params );
         }
 
         /**
@@ -1451,8 +1459,51 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
          * Returns: Result of call
          */
         public function api_get( $url ) {
+            return $this->do_request( $this->api . $url );
+        }
+
+        /**
+         * Provide a layer of compatibility by detecting and retrying after an initial error state.  All attempts to
+         * access external resources should use this function.
+         *
+         * @param $url - fully qualified URL to target
+         * @param null $params - optional used in cases where caller wishes to POST
+         * @return mixed - result of $http->request(...) call or WP_Error instance
+         */
+        public function do_request( $url, $params = null) {
             $http = new WP_Http;
-            return $http->request( $this->api . $url );
+            
+            $out = $this->do_http_request( $http, $url, false, $params );
+            
+            if ( is_wp_error( $out ) ) {
+                $out = $this->do_http_request( $http, $url, true, $params );
+            }
+            
+            return $out;
+        }
+
+        /**
+         * @param $http - instance of an HTTP client, providing a `request` function
+         * @param $url - fully qualified URL to target
+         * @param bool|false $skip_ssl_verify - if true, will install filters that should prevent SSL cert validation
+         * for next request
+         * @param null $params - optional used in cases where caller wishes to POST
+         * @return mixed - result of $http->request(...) call or WP_Error instance
+         */
+        public function do_http_request( $http, $url, $skip_ssl_verify = false, $params = null) {
+
+            if ( isset( $skip_ssl_verify ) && ( $skip_ssl_verify === true ) ) {
+                // this is intended to work around bugs in CURL + SSL validation that is known to exist //
+                // WP_Error->get_error_message() === 'error:0D0890A1:asn1 encoding routines:func(137):reason(161)' //
+                add_filter( 'https_ssl_verify', '__return_false' );
+                add_filter( 'https_local_ssl_verify', '__return_false' );
+            }
+
+            if ( isset( $params ) ) {
+                return $http->request( $url, $params );
+            } else {
+                return $http->request( $url );
+            }
         }
 
         /**
@@ -1469,8 +1520,7 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             if ( true == function_exists( 'wpcom_vip_file_get_contents' ) ) {
                 $response = wpcom_vip_file_get_contents( $location );
             } else {
-                $http = new WP_Http;
-                $response = $http->request( $location );
+                $response = $this->do_request( $location );
             }
 
             // Validate response

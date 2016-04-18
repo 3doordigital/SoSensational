@@ -34,7 +34,7 @@ add_settings_field(
 		array(
 			'type' 		   => 'helper_description',
 			'name'         => 'cloudflare_api_key',
-			'description'  => sprintf( __( '<strong>Note:</strong> Where do I find my CloudFlare API key? <a href=%s"">Learn more</a>', 'rocket' ), 'https://support.cloudflare.com/hc/en-us/articles/200167836-Where-do-I-find-my-CloudFlare-API-key-' ),
+			'description'  => sprintf( __( '<strong>Note:</strong> Where do I find my CloudFlare API key? <a href="%s" target="_blank">Learn more</a>', 'rocket' ), 'https://support.cloudflare.com/hc/en-us/articles/200167836-Where-do-I-find-my-CloudFlare-API-key-' ),
 		)
 	)
 );
@@ -74,7 +74,7 @@ add_settings_field(
 		array(
 			'type' 		   => 'helper_description',
 			'name'         => 'cloudflare_devmode',
-			'description'  => sprintf( __( 'Temporarily enter development mode on your website. <a href=%s"">Learn more</a>', 'rocket' ), 'https://support.cloudflare.com/hc/en-us/articles/200168246' ),
+			'description'  => sprintf( __( 'Temporarily enter development mode on your website. <a href="%s" target="_blank">Learn more</a>', 'rocket' ), 'https://support.cloudflare.com/hc/en-us/articles/200168246' ),
 		)
 	)
 );

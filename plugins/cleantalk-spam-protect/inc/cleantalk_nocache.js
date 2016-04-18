@@ -2,6 +2,14 @@ function sendRequest(url,callback,postData) {
     var req = createXMLHTTPObject();
     if (!req) return;
     var method = (postData) ? "POST" : "GET";
+    
+    var protocol = location.protocol;
+    if (protocol === 'https:') {
+        url = url.replace('http:', 'https:');
+    } else {
+        url = url.replace('https:', 'http:');
+    }
+    
     req.open(method,url,true);
     if (postData)
         req.setRequestHeader('Content-type','application/x-www-form-urlencoded');
@@ -47,27 +55,16 @@ function ct_getCookie(name) {
 
 function ct_setCookie(name, value)
 {
-	/*var domain=location.hostname;
-	tmp=domain.split('.');
-	if(tmp[0].toLowerCase()=='www')
-	{
-		tmp[0]='';
-	}
-	else
-	{
-		tmp[0]='.'+tmp[0];
-	}
-	domain=tmp.join('.');*/
-	
-	document.cookie = name+" =; expires=Thu, 01 Jan 1970 00:00:01 GMT; path = /";
-	document.cookie = name+" =; expires=Thu, 01 Jan 1970 00:00:01 GMT";
-	//document.cookie = name+" =; expires=Thu, 01 Jan 1970 00:00:01 GMT; path = /; domain = " +  domain;
-	
-	var date = new Date;
-	date.setDate(date.getDate() + 1);
-	//setTimeout(function() { document.cookie = name+"=" + value + "; expires=" + date.toUTCString() + "; path = /; domain = " + domain}, 500)
-	setTimeout(function() { document.cookie = name+"=" + value + "; expires=" + date.toUTCString() + "; path = /;"}, 500);
-	//document.cookie = name+"=" + value + "; expires=" + date.toUTCString() + "; path = /;";
+    if (ct_set_cookies_flag) {
+        document.cookie = name+" =; expires=Thu, 01 Jan 1970 00:00:01 GMT; path = /";
+        document.cookie = name+" =; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+        
+        var date = new Date;
+        date.setDate(date.getDate() + 1);
+        setTimeout(function() { document.cookie = name+"=" + value + "; expires=" + date.toUTCString() + "; path = /;"}, 500);
+    }
+
+    return null;
 }
 
 function ct_callback(req)
@@ -127,11 +124,10 @@ if(ct_nocache_executed==undefined)
 	if(old_timestamp==undefined||new_timestamp-old_timestamp>86400||checkjs_cookie==undefined) //86400 is 24 hours
 	{
 		ct_setCookie('ct_timestamp', new_timestamp);
-		//alert('set!');
 		sendRequest(ct_ajaxurl+'?'+Math.random(),ct_callback,'action=ct_get_cookie');
 	}
 	
-	if(ct_info_flag)
+	if(typeof ct_info_flag !== 'undefined' && ct_info_flag)
 	{
 	
 		var cleantalk_user_info={};

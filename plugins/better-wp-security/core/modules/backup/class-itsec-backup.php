@@ -241,14 +241,14 @@ class ITSEC_Backup {
 		//save file
 		$file = 'backup-' . substr( sanitize_title( get_bloginfo( 'name' ) ), 0, 20 ) . '-' . current_time( 'Ymd-His' ) . '-' . wp_generate_password( 30, false );
 
-		if ( ! is_dir( $itsec_globals['ithemes_backup_dir'] ) ) {
-			@mkdir( $itsec_globals['ithemes_backup_dir'] );
-		}
+		wp_mkdir_p( $itsec_globals['ithemes_backup_dir'] );
 
 		// Make sure we have an index file to block directory listing
 		if ( ! file_exists( path_join( $itsec_globals['ithemes_backup_dir'], 'index.php' ) ) ) {
 			file_put_contents( path_join( $itsec_globals['ithemes_backup_dir'], 'index.php' ), "<?php\n// Silence is golden." );
 		}
+
+		$fileext = '.sql';
 
 		$handle = @fopen( $itsec_globals['ithemes_backup_dir'] . '/' . $file . '.sql', 'w+' );
 
@@ -272,10 +272,6 @@ class ITSEC_Backup {
 				$fileext = '.zip';
 
 			}
-
-		} else {
-
-			$fileext = '.sql';
 
 		}
 

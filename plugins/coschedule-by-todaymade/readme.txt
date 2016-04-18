@@ -3,8 +3,8 @@ Contributors: todaymade
 Donate link: http://coschedule.com
 Tags: calendar, schedule, social media, editorial, twitter, facebook, tweets, auto publish, linkedin, tumblr
 Requires at least: 3.5
-Tested up to: 4.2.3
-Stable tag: 2.4.3
+Tested up to: 4.4-RC1
+Stable tag: 2.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,9 +52,10 @@ With CoSchedule, you can automate your social media sharing while you blog. When
 * Google+ Pages
 * Buffer
 * Tumblr
+* Pinterest
 
 #### A Visual Way To Plan Your Content
-Like Edit Flow, CoSchedule a fully-functioning editorial calendar for WordPress. Schedule your blog with drag-and-drop ease.
+Like Edit Flow, CoSchedule is a fully-functioning editorial calendar for WordPress. Schedule your blog with drag-and-drop ease.
 
 
 #### Keep Your Team In The Loop
@@ -115,7 +116,7 @@ Once you have the plugin installed, you can follow instructions found [here](htt
 
 = How much does CoSchedule cost? =
 
-We charge a monthly fee for CoSchedule because we provide an ongoing service that publishes your blog posts and social media messages using a robust API. CoSchedule is low-cost at only $10/month. It is fully integrated with WordPress, Twitter, Facebook, LinkedIn, Google+, Buffer, and Tumblr.
+We charge a monthly fee for CoSchedule because we provide an ongoing service that publishes your blog posts and social media messages using a robust API. CoSchedule has several subscription plans to choose from, starting at only $15/month. It is fully integrated with WordPress, Twitter, Facebook, Pinterest, LinkedIn, Google+, Buffer, and Tumblr.
 
 == Screenshots ==
 
@@ -126,6 +127,9 @@ We charge a monthly fee for CoSchedule because we provide an ongoing service tha
 5. **Social Scheduling While You Blog**: Social messages are content, too. Write as many as you need at the same time you write your blog post. Hit publish, and automatically set them all in motion.
 
 == Changelog ==
+
+= 2.4.4 =
+* Improved compatibility with certain OS configurations
 
 = 2.4.3 =
 * Improved compatibility with certain PHP configurations
@@ -284,6 +288,9 @@ We charge a monthly fee for CoSchedule because we provide an ongoing service tha
 * Private beta release
 
 == Upgrade Notice ==
+
+= 2.4.4 =
+* This update improves compatibility with certain OS configurations
 
 = 2.4.3 =
 * This update improves compatibility with certain PHP configurations

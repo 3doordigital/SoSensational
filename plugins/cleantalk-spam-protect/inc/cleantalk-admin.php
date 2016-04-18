@@ -30,18 +30,6 @@ function cleantalk_custom_glance_items( )
 	}
 }
 
-if(isset($_GET['close_notice']))
-{
-	global $ct_data, $pagenow;
-	$ct_data=ct_get_data();
-	$ct_data['next_notice_show']=time()+86400;
-	$ct_data['next_account_status_check']=time()+86400;
-	$ct_data['show_ct_notice_trial']=0;
-	$ct_data['show_ct_notice_renew']=0;
-	update_option('cleantalk_data', $ct_data);
-	$_SERVER["QUERY_STRING"]=str_replace("close_notice=1","",$_SERVER["QUERY_STRING"]);
-	header("Location: $pagenow?".$_SERVER["QUERY_STRING"]);
-}
 
 // Timeout to get app server
 $ct_server_timeout = 10;
@@ -50,8 +38,10 @@ $ct_server_timeout = 10;
 /**
  * Admin action 'admin_print_footer_scripts' - Enqueue admin script for checking if timezone offset is saved in settings
  */
-
-add_action( 'admin_print_footer_scripts', 'ct_add_stats_js' );
+if(isset($ct_options['show_adminbar']) && @intval($ct_options['show_adminbar']) == 1)
+{
+	add_action( 'admin_print_footer_scripts', 'ct_add_stats_js' );
+}
 
 function ct_add_stats_js()
 {
@@ -408,9 +398,10 @@ function ct_admin_init()
 		add_settings_field('cleantalk_use_ajax', __('Use AJAX for JavaScript check', 'cleantalk'), 'ct_input_use_ajax', 'cleantalk', 'cleantalk_settings_anti_spam');
 		add_settings_field('cleantalk_check_external', __('Protect external forms', 'cleantalk'), 'ct_input_check_external', 'cleantalk', 'cleantalk_settings_anti_spam');
 		add_settings_field('cleantalk_check_comments_number', __("Don't check comments", 'cleantalk'), 'ct_input_check_comments_number', 'cleantalk', 'cleantalk_settings_anti_spam');
+		add_settings_field('cleantalk_set_cookies', __("Set cookies", 'cleantalk'), 'ct_input_set_cookies', 'cleantalk', 'cleantalk_settings_anti_spam');
 		//add_settings_field('cleantalk_check_messages_number', __("Don't check messages", 'cleantalk'), 'ct_input_check_messages_number', 'cleantalk', 'cleantalk_settings_anti_spam');
 		add_settings_field('cleantalk_spam_firewall', __('', 'cleantalk'), 'ct_input_spam_firewall', 'cleantalk', 'cleantalk_settings_banner');
-		add_settings_field('cleantalk_collect_details', __('Collect details about browsers', 'cleantalk'), 'ct_input_collect_details', 'cleantalk', 'cleantalk_settings_banner');
+		add_settings_field('cleantalk_collect_details', __('Collect details about browsers', 'cleantalk'), 'ct_input_collect_details', 'cleantalk', 'cleantalk_settings_anti_spam');
 		add_settings_field('cleantalk_show_link', __('', 'cleantalk'), 'ct_input_show_link', 'cleantalk', 'cleantalk_settings_banner');
 	}
 }
@@ -898,6 +889,26 @@ function ct_input_check_external() {
 	@admin_addDescriptionsFields(sprintf(__('', 'cleantalk'),  $ct_options['check_external']));
 }
 
+function ct_input_set_cookies() {
+	global $ct_options, $ct_data;
+	
+	$ct_options = ct_get_options();
+	$ct_data = ct_get_data();
+
+	if(isset($ct_options['set_cookies']))
+	{
+		$value = @intval($ct_options['set_cookies']);
+	}
+	else
+	{
+		$value=0;
+	}
+	echo "<input type='radio' id='cleantalk_set_cookies1' name='cleantalk_settings[set_cookies]' value='1' " . ($value == '1' ? 'checked' : '') . " /><label for='cleantalk_set_cookies1'> " . __('Yes') . "</label>";
+	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+	echo "<input type='radio' id='cleantalk_set_cookies0' name='cleantalk_settings[set_cookies]' value='0' " . ($value == '0' ? 'checked' : '') . " /><label for='cleantalk_set_cookies0'> " . __('No') . "</label>";
+	@admin_addDescriptionsFields(sprintf(__('Turn this option off to deny plugin generates any cookies on website fronentd. This option is helpfull if you use Varnish. But most of contact forms will not be protected by CleanTalk if the option is turnded off!', 'cleantalk')));
+}
+
 function ct_input_show_link() {
 	global $ct_options, $ct_data;
 	
@@ -1105,18 +1116,8 @@ function cleantalk_admin_notice_message(){
 		$show_ct_notice_trial = 0;
 	}
 	
-	$link=@$_SERVER["QUERY_STRING"];
-	if($link!='')
-	{
-		$link="?".$link."&close_notice=1";
-	}
-	else
-	{
-		$link="?close_notice=1";
-	}
-
 	if ($show_notice && $show_ct_notice_trial ==1 && $value==1 && (is_network_admin() || is_admin()) && $ct_data['moderate_ip'] == 0) {
-		echo '<div class="error"><a href="'.$link.'" style="text-decoration:none;float:right;font-size:16px;margin-top:5px;"><b>X</b></a><h3>' . sprintf(__("%s trial period ends, please upgrade to %s!", 'cleantalk'), "<a href=\"options-general.php?page=cleantalk\">$ct_plugin_name</a>", "<a href=\"http://cleantalk.org/my/bill/recharge?utm_source=wp-backend&utm_medium=cpc&utm_campaign=WP%20backend%20trial$user_token\" target=\"_blank\"><b>premium version</b></a>") . '</h3></div>';
+		echo '<div class="error"><h3>' . sprintf(__("%s trial period ends, please upgrade to %s!", 'cleantalk'), "<a href=\"options-general.php?page=cleantalk\">$ct_plugin_name</a>", "<a href=\"http://cleantalk.org/my/bill/recharge?utm_source=wp-backend&utm_medium=cpc&utm_campaign=WP%20backend%20trial$user_token\" target=\"_blank\"><b>premium version</b></a>") . '</h3></div>';
 		$show_notice = false;
 	}
 	
@@ -1140,7 +1141,7 @@ function cleantalk_admin_notice_message(){
 
 	if ($show_notice && $show_ct_notice_renew == 1 && $value==1 && (is_network_admin() || is_admin()) && $ct_data['moderate_ip'] != 1) {
 	$button_html = "<a href=\"http://cleantalk.org/my/bill/recharge?utm_source=wp-backend&utm_medium=cpc&utm_campaign=WP%20backend%20renew$user_token\" target=\"_blank\">" . '<input type="button" class="button button-primary" value="' . __('RENEW ANTI-SPAM', 'cleantalk') . '"  />' . "</a>";
-		echo '<div class="updated"><a href="'.$link.'" style="text-decoration:none;float:right;font-size:16px;margin-top:5px;"><b>X</b></a><h3>' . sprintf(__("Please renew your anti-spam license for %s.", 'cleantalk'), "<a href=\"http://cleantalk.org/my/bill/recharge?utm_source=wp-backend&utm_medium=cpc&utm_campaign=WP%20backend%20renew$user_token\" target=\"_blank\"><b>" . __('next year', 'cleantalk') ."</b></a>") . '<br /><br />' . $button_html . '</h3></div>';
+		echo '<div class="updated"><h3>' . sprintf(__("Please renew your anti-spam license for %s.", 'cleantalk'), "<a href=\"http://cleantalk.org/my/bill/recharge?utm_source=wp-backend&utm_medium=cpc&utm_campaign=WP%20backend%20renew$user_token\" target=\"_blank\"><b>" . __('next year', 'cleantalk') ."</b></a>") . '<br /><br />' . $button_html . '</h3></div>';
 		$show_notice = false;
 	}
 

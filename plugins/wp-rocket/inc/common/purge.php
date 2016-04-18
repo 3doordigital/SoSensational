@@ -100,7 +100,7 @@ function rocket_clean_post( $post_id ) {
 	$lang = false;
 
 	// WPML
-	if ( rocket_is_plugin_active( 'sitepress-multilingual-cms/sitepress.php' ) ) {
+	if ( rocket_is_plugin_active( 'sitepress-multilingual-cms/sitepress.php' ) && ! rocket_is_plugin_active( 'woocommerce-multilingual/wpml-woocommerce.php' ) ) {
 		$lang = $GLOBALS['sitepress']->get_language_for_element( $post_id, 'post_' . get_post_type( $post_id ) );
 
 	// Polylang
@@ -401,7 +401,14 @@ function __rocket_purge_cache() {
 			
 			// Clear cache file of the current page in front-end
 			case 'url':
-				rocket_clean_files( wp_get_referer() );
+			    $referer = wp_get_referer();
+
+			    if ( 0 !== strpos( $referer, 'http' ) ) {
+    			    list( $host, $path, $scheme, $query ) = get_rocket_parse_url( untrailingslashit( home_url() ) );
+                    $referer = $scheme . '://' . $host . $referer;
+                }
+			    
+				rocket_clean_files( $referer );
 				break;
 
 			default:

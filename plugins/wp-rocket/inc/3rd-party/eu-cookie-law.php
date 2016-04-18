@@ -12,6 +12,7 @@ if ( function_exists( 'eucookie_start' ) ) :
 	 * Update .htaccess & config files when the "Activate" option is turned on
 	 *
 	 */
+    add_filter( 'rocket_cache_mandatory_cookies' , '_rocket_add_eu_cookie_law_mandatory_cookie' );
 	add_action( 'update_option_peadig_eucookie', '__rocket_after_update_eu_cookie_law_options', 10, 2 );
 	function __rocket_after_update_eu_cookie_law_options( $old_value, $value ) {
 		if ( ( ! isset( $old_value['enabled'] ) && isset( $value['enabled'] ) ) || ( isset( $old_value['enabled'], $value['enabled'] ) && $old_value['enabled'] != $value['enabled'] )

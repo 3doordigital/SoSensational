@@ -1,7 +1,6 @@
 <?php
 
-$ct_agent_version = 'wordpress-5361';
-$ct_plugin_name = 'Anti-spam by CleanTalk';
+$ct_plugin_name = 'CleanTalk Spam Protect';
 $ct_checkjs_frm = 'ct_checkjs_frm';
 $ct_checkjs_register_form = 'ct_checkjs_register_form';
 $ct_session_request_id_label = 'request_id';
@@ -112,7 +111,11 @@ function ct_plugin_loaded() {
 function ct_init_session() {
     $session_id = session_id(); 
     if(empty($session_id) && !headers_sent()) {
-        session_start();
+        $result = @session_start();
+        if(!$result){
+            session_regenerate_id(true); // replace the Session ID, bug report https://bugs.php.net/bug.php?id=68063
+            session_start(); 
+        }    
     }
 
     return null;
@@ -132,7 +135,7 @@ function ct_init_session() {
  */
 function ct_base_call($params = array()) {
     global $wpdb, $ct_agent_version, $ct_formtime_label, $ct_options, $ct_data;
-    
+
     $ct_options=ct_get_options();
 	$ct_data=ct_get_data();
 	
@@ -178,7 +181,6 @@ function ct_base_call($params = array()) {
     	$ct_request->last_error_text=$ct_data['last_error_text'];
     }    
     
-    
 
     $ct_result = @$ct->isAllowMessage($ct_request);
     if ($ct->server_change) {
@@ -216,11 +218,6 @@ function ct_base_call($params = array()) {
     else
     {
        	ct_add_event('yes');
-    	/*if($is_logged_in)
-    	{
-    		$user_cnt++;
-    		update_user_meta( $user_id, 'cleantalk_messages_number', $user_cnt);
-    	}*/
     }
     return array('ct' => $ct, 'ct_result' => $ct_result);
 }
@@ -247,7 +244,7 @@ function submit_time_test() {
  * @return array 
  */
 function get_sender_info() {
-    global $ct_direct_post, $ct_options, $ct_data;
+    global $ct_direct_post, $ct_options, $ct_data, $wp_rewrite;
     
     $ct_options = ct_get_options();
     $ct_data = ct_get_data();
@@ -270,36 +267,14 @@ function get_sender_info() {
 		}
 	}
 	
-	/*$options2server = array(	// Options for sending to server for support information
-            'apikey' => $ct_options['apikey'],
-            'registrations_test' => $ct_options['registrations_test'],
-            'comments_test' => $ct_options['comments_test'],
-            'contact_forms_test' => $ct_options['contact_forms_test'],
-            'general_contact_forms_test' => $ct_options['general_contact_forms_test'],
-            'remove_old_spam' => $ct_options['remove_old_spam'],
-            'autoPubRevelantMess' => $ct_options['autoPubRevelantMess'],
-            'spam_store_days' => $ct_options['spam_store_days'],
-            'ssl_on' => $ct_options['ssl_on'],
-	);*/
 	$options2server=$ct_options;
 	$js_info='';
-	if(isset($_COOKIE['ct_user_info']))
+	if(isset($_COOKIE['ct_user_info']) && function_exists('mb_convert_encoding'))
     {
     	$js_info=stripslashes(rawurldecode($_COOKIE['ct_user_info']));
     	$js_info=mb_convert_encoding($js_info, "UTF-8", "Windows-1252");
     }
     
-    if (isset($_COOKIE['ct_first_referer']))
-    {
-        $ct_first_referer = $_COOKIE['ct_first_referer'];
-    }
-    else
-    {
-    	$ct_first_referer = 'null';
-    }
-//$post_id=url_to_postid($_SERVER['HTTP_ORIGIN'].@$_SERVER['REQUEST_URI']);
-//$post_type=get_post_type($post_id);
-
 	return $sender_info = array(
 	'page_url' => htmlspecialchars(@$_SERVER['SERVER_NAME'].@$_SERVER['REQUEST_URI']),
         'cms_lang' => substr(get_locale(), 0, 2),
@@ -313,8 +288,6 @@ function get_sender_info() {
         'ct_options' => json_encode($options2server),
         'fields_number' => sizeof($_POST),
         'js_info' => $js_info,
-        'ct_first_referer' => $ct_first_referer,
-        //'post_type' => $post_type,
     );
 }
 
@@ -323,6 +296,8 @@ function get_sender_info() {
  * @return null|0|1;
  */
 function ct_cookies_test ($test = false) {
+    $ct_options = ct_get_options();
+    
     $cookie_label = 'ct_cookies_test';
     $secret_hash = ct_get_checkjs_value();
 
@@ -334,7 +309,12 @@ function ct_cookies_test ($test = false) {
             $result = 0;
         }
     } else {
-        @setcookie($cookie_label, $secret_hash, 0, '/');
+        //
+        // Do not generate if admin turned off the cookies.
+        //
+        if (isset($ct_options['set_cookies']) && $ct_options['set_cookies'] == 1) {
+            @setcookie($cookie_label, $secret_hash, 0, '/');
+        }
 
         if ($test) {
             $result = 0;
@@ -439,7 +419,8 @@ function ct_def_options() {
         'ssl_on' => 0, // Secure connection to servers 
         'relevance_test' => 0, // Test comment for relevance 
         'notice_api_errors' => 0, // Send API error notices to WP admin
-        'user_token'=>'' //user token for auto login into spam statistics
+        'user_token'=>'', //user token for auto login into spam statistics
+        'set_cookies'=> 1 // Disable cookies generatation to be compatible with Varnish.
     );
 }
 

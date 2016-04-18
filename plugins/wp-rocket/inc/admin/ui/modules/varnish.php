@@ -14,7 +14,7 @@ add_settings_section( 'rocket_display_main_options', 'Varnish', '__return_false'
 
 add_settings_field(
 	'rocket_varnish_auto_purge',
-	__( 'Varnish Caching Purge:', 'rocket' ),
+	__( 'Varnish Caching Purge', 'rocket' ),
 	'rocket_field',
 	'rocket_varnish',
 	'rocket_display_main_options',
@@ -23,7 +23,7 @@ add_settings_field(
 			'type'         => 'checkbox',
 			'label'        => __('Enable the Varnish caching auto-purge.', 'rocket' ),
 			'label_for'    => 'varnish_auto_purge',
-			'label_screen' =>__( 'Caching Files:', 'rocket' ),
+			'label_screen' => __( 'Varnish Caching Purge', 'rocket' ),
 		),
 		array(
 			'type'         => 'helper_description',

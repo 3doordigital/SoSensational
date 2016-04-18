@@ -234,7 +234,7 @@ function ct_ajax_check_users()
 	check_ajax_referer('ct_secret_nonce', 'security');
 	global $ct_options;
 	$ct_options = ct_get_options();
-	
+
 	$args_unchecked = array(
 		'meta_query' => array(
 			'relation' => 'AND',
@@ -286,8 +286,11 @@ function ct_ajax_check_users()
 		);
 		
 		$context = stream_context_create($opts);
-		
-		$result = @file_get_contents("https://api.cleantalk.org/?method_name=spam_check&auth_key=".$ct_options['apikey'], 0, $context);
+	    
+        $url = sprintf("https://api.cleantalk.org/?method_name=spam_check&auth_key=%s",
+            $ct_options['apikey']
+        ); 
+		$result = file_get_contents($url, 0, $context);
 		$result=json_decode($result);
 		if(isset($result->error_message))
 		{
@@ -299,21 +302,18 @@ function ct_ajax_check_users()
 			{
 				update_user_meta($u[$i]->ID,'ct_checked',date("Y-m-d H:m:s"),true);
 				$user_meta=get_user_meta($u[$i]->ID, 'session_tokens', true);
-				if(is_array($user_meta))
+				
+                if(is_array($user_meta))
 				{
 					$user_meta=array_values($user_meta);
 				}
+                $uip = null;
 				if(@isset($user_meta[0]['ip']))
 				{
 					$uip=$user_meta[0]['ip'];
 				}
-				else
-				{
-					$uip='127.0.0.1';
-				}
-				if($uip=='127.0.0.1')continue;
-				$uim=$u[$i]->data->user_email;
-				if(empty($uim))continue;
+			    	
+                $uim=$u[$i]->data->user_email;
 				
 				//print "uip: $uip, uim: $uim\n";
 				if(isset($result->data->$uip) && $result->data->$uip->appears==1 || isset($result->data->$uim) && $result->data->$uim->appears==1)

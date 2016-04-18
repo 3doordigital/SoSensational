@@ -78,7 +78,16 @@ function get_rocket_config_file() {
 	$buffer .= 'defined( \'ABSPATH\' ) or die( \'Cheatin\\\' uh?\' );' . "\n\n";
 
 	if ( apply_filters( 'rocket_override_min_documentRoot', false ) ) {
-		$buffer .= '$min_documentRoot = \'' . ABSPATH . '\';' . "\n";
+		/**
+		 * Filter the Document Root path to use during the minification
+		 *
+		 * @since 2.7
+		 *
+		 * @param string The Document Root path
+		*/
+		$min_documentRoot = apply_filters( 'rocket_min_documentRoot', ABSPATH );
+		
+		$buffer .= '$min_documentRoot = \'' . $min_documentRoot . '\';' . "\n";
 	}
 
 	$buffer .= '$rocket_cookie_hash = \'' . COOKIEHASH . '\'' . ";\n";
@@ -581,7 +590,7 @@ function rocket_clean_term( $term_id, $taxonomy_slug ) {
 	$lang = false;
 	
 	// WPML
-	if ( rocket_is_plugin_active( 'sitepress-multilingual-cms/sitepress.php' ) ) {
+	if ( rocket_is_plugin_active( 'sitepress-multilingual-cms/sitepress.php' ) && ! rocket_is_plugin_active( 'woocommerce-multilingual/wpml-woocommerce.php' ) ) {
 		$lang = $GLOBALS['sitepress']->get_language_for_element( $term_id, 'tax_' . $taxonomy_slug );
 
 	// Polylang
