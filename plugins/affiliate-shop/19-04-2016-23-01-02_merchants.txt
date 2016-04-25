@@ -1,0 +1,257 @@
+Number|"Merchant ID"|"Merchant Name"|Affiliate|Status|Message
+"1 of 256 (0.39%)"|117|Webgains|webgains|"Updated -  Inserted,  Failed."|
+"2 of 256 (0.78%)"|270|"Wall Luxury Essentials"|webgains|"Updated -  Inserted,  Failed."|
+"3 of 256 (1.17%)"|327|Brastop|webgains|"Updated - 2484 Inserted,  Failed."|
+"4 of 256 (1.56%)"|347|feelunique.com|webgains|"Updated - 11655 Inserted,  Failed."|
+"5 of 256 (1.95%)"|8533|Gossard|webgains|"Updated - 4032 Inserted,  Failed."|
+"6 of 256 (2.34%)"|8535|"Pretty Polly "|webgains|"Updated - 1190 Inserted,  Failed."|
+"7 of 256 (2.73%)"|1408|"Me + Em"|webgains|"Updated - 952 Inserted,  Failed."|
+"8 of 256 (3.13%)"|8537|Berlei|webgains|"Updated - 2739 Inserted,  Failed."|
+"9 of 256 (3.52%)"|2756|"feelunique.com IE"|webgains|"Updated - 7010 Inserted,  Failed."|
+"10 of 256 (3.91%)"|2365|Trilogy|webgains|"Updated - 232 Inserted,  Failed."|
+"11 of 256 (4.30%)"|2690|"Chesca Direct"|webgains|"Updated - 1065 Inserted,  Failed."|
+"12 of 256 (4.69%)"|6373|"NIKE UK"|webgains|"Updated - 8119 Inserted,  Failed."|
+"13 of 256 (5.08%)"|4042|"The Fragrance Shop"|webgains|"Updated - 2291 Inserted,  Failed."|
+"14 of 256 (5.47%)"|3780|"Daniel Footwear"|webgains|"Updated - 2191 Inserted,  Failed."|
+"15 of 256 (5.86%)"|4125|"Jules B"|webgains|"Updated - 3270 Inserted,  Failed."|
+"16 of 256 (6.25%)"|4128|"Charles Clinkard"|webgains|"Updated - 3409 Inserted,  Failed."|
+"17 of 256 (6.64%)"|5250|"Milanoo UK"|webgains|"Updated - 38922 Inserted,  Failed."|
+"18 of 256 (7.03%)"|4948|Yumi|webgains|"Updated - 1077 Inserted,  Failed."|
+"19 of 256 (7.42%)"|5528|"Joy The Store"|webgains|"Updated - 4389 Inserted,  Failed."|
+"20 of 256 (7.81%)"|5556|"Damsel In A Dress"|webgains|"Updated - 472 Inserted,  Failed."|
+"21 of 256 (8.20%)"|5565|"Ecco UK"|webgains|"Updated - 632 Inserted,  Failed."|
+"22 of 256 (8.59%)"|5733|"Yours Clothing"|webgains|"Updated - 3793 Inserted,  Failed."|
+"23 of 256 (8.98%)"|10295|"Honor Gold"|webgains|"Updated - 96 Inserted,  Failed."|
+"24 of 256 (9.38%)"|6415|Hervia|webgains|"Updated - 1769 Inserted,  Failed."|
+"25 of 256 (9.77%)"|6533|Hairtrade|webgains|"Updated - 5287 Inserted,  Failed."|
+"26 of 256 (10.16%)"|6785|"Marc B"|webgains|"Updated - 63 Inserted,  Failed."|
+"27 of 256 (10.55%)"|7835|Larizia|webgains|"Updated - 1228 Inserted,  Failed."|
+"28 of 256 (10.94%)"|7901|"Camille Lingerie"|webgains|"Updated - 1282 Inserted,  Failed."|
+"29 of 256 (11.33%)"|7975|"Malene Birger UK"|webgains|"Updated -  Inserted,  Failed."|
+"30 of 256 (11.72%)"|8593|"Ann Summers"|webgains|"Updated - 1445 Inserted,  Failed."|
+"31 of 256 (12.11%)"|8997|Aristoc|webgains|"Updated - 248 Inserted,  Failed."|
+"32 of 256 (12.50%)"|9339|"Poppy and Zach"|webgains|"Updated - 5073 Inserted,  Failed."|
+"33 of 256 (12.89%)"|9617|"Voga UK"|webgains|"Updated - 1135 Inserted,  Failed."|
+"34 of 256 (13.28%)"|10263|Liberty|webgains|"Updated - 16338 Inserted,  Failed."|
+"35 of 256 (13.67%)"|10605|Finery|webgains|"Updated - 776 Inserted,  Failed."|
+"36 of 256 (14.06%)"|10443|"Fenn Wright Manson"|webgains|"Updated - 149 Inserted,  Failed."|
+"37 of 256 (14.45%)"|11051|"Cloud 10 Beauty"|webgains|"Updated - 2265 Inserted,  Failed."|
+"38 of 256 (14.84%)"|23731|F&F|tradedoubler|"Updated - 33618 Inserted, 0 Failed."|
+"39 of 256 (15.23%)"|23908|Lancome|tradedoubler|"Updated - 259 Inserted, 0 Failed."|
+"40 of 256 (15.63%)"|16789|"Madeleine Fashion Ltd."|tradedoubler|"Updated - 5088 Inserted, 0 Failed."|
+"41 of 256 (16.02%)"|23767|"Kiehl's Aff UK"|tradedoubler|"Updated - 192 Inserted, 0 Failed."|
+"42 of 256 (16.41%)"|18871|"Intimissimi UK PF"|tradedoubler|"Updated - 453 Inserted, 0 Failed."|
+"43 of 256 (16.80%)"|23913|"Yves St Laurent"|tradedoubler|"Updated - 386 Inserted, 0 Failed."|
+"44 of 256 (17.19%)"|11530|"Tesco Clothing"|tradedoubler|"Updated - 26594 Inserted, 0 Failed."|
+"45 of 256 (17.58%)"|23914|Clarisonic|tradedoubler|"Updated - 37 Inserted, 0 Failed."|
+"46 of 256 (17.97%)"|tdhb|"Hugo Boss"|tradedoubler-hb|"Updated - 2413 Inserted, 3519 Failed."|
+"47 of 256 (18.36%)"|36372|"The Jewellery Channel"|linkshare|"Updated - 32701 Inserted,  Failed."|
+"48 of 256 (18.75%)"|36334|"Ralph Lauren UK"|linkshare|"Updated - 35019 Inserted,  Failed."|
+"49 of 256 (19.14%)"|24423|"Firenze Seta SRL / Forzie"|linkshare|"Failed -  Inserted,  Failed."
+"50 of 256 (19.53%)"|24797|"Karen Millen Fashions Ltd"|linkshare|"Updated - 931 Inserted,  Failed."|
+"51 of 256 (19.92%)"|36756|Masdings|linkshare|"Updated - 5415 Inserted,  Failed."|
+"52 of 256 (20.31%)"|35205|"Sweaty Betty"|linkshare|"Updated - 338 Inserted,  Failed."|
+"53 of 256 (20.70%)"|39593|"Pandora Jewellery UK Ltd"|linkshare|"Updated - 1286 Inserted,  Failed."|
+"54 of 256 (21.09%)"|35563|"Stylebop (UK)"|linkshare|"Updated - 15572 Inserted,  Failed."|
+"55 of 256 (21.48%)"|36363|"Eve Lom"|linkshare|"Failed -  Inserted,  Failed."
+"56 of 256 (21.88%)"|35199|Kickers|linkshare|"Updated - 1411 Inserted,  Failed."|
+"57 of 256 (22.27%)"|36973|"Molton Brown"|linkshare|"Updated - 141 Inserted,  Failed."|
+"58 of 256 (22.66%)"|40316|"Rebecca Minkoff UK"|linkshare|"Failed -  Inserted,  Failed."
+"59 of 256 (23.05%)"|37257|"Anthropologie (UK)"|linkshare|"Updated - 2555 Inserted,  Failed."|
+"60 of 256 (23.44%)"|35664|Jigsaw|linkshare|"Updated - 1279 Inserted,  Failed."|
+"61 of 256 (23.83%)"|38511|Navabi|linkshare|"Updated - 5341 Inserted,  Failed."|
+"62 of 256 (24.22%)"|35663|MyTheresa|linkshare|"Updated - 16312 Inserted,  Failed."|
+"63 of 256 (24.61%)"|35713|"Anna Scholz"|linkshare|"Updated - 254 Inserted,  Failed."|
+"64 of 256 (25.00%)"|35725|Matchesfashion.com|linkshare|"Updated - 21566 Inserted,  Failed."|
+"65 of 256 (25.39%)"|36373|"Warehouse Fashions Ltd"|linkshare|"Updated - 4319 Inserted,  Failed."|
+"66 of 256 (25.78%)"|37323|"FitFlop Ltd"|linkshare|"Updated - 587 Inserted,  Failed."|
+"67 of 256 (26.17%)"|36666|Harrods|linkshare|"Updated - 32890 Inserted,  Failed."|
+"68 of 256 (26.56%)"|36057|Mango|linkshare|"Updated - 7614 Inserted,  Failed."|
+"69 of 256 (26.95%)"|39513|"English Abode"|linkshare|"Updated - 1156 Inserted,  Failed."|
+"70 of 256 (27.34%)"|24274|"LinkShare UK Referral Pro"|linkshare|"Failed -  Inserted,  Failed."
+"71 of 256 (27.73%)"|35703|"Radley (UK)"|linkshare|"Updated - 768 Inserted,  Failed."|
+"72 of 256 (28.13%)"|35814|"Amanda Wakeley"|linkshare|"Updated - 266 Inserted,  Failed."|
+"73 of 256 (28.52%)"|38401|ASPIGA|linkshare|"Updated - 471 Inserted,  Failed."|
+"74 of 256 (28.91%)"|24862|"Benefit Cosmetics (UK)"|linkshare|"Updated - 244 Inserted,  Failed."|
+"75 of 256 (29.30%)"|40556|"Lilla P"|linkshare|"Failed -  Inserted,  Failed."
+"76 of 256 (29.69%)"|24302|"Charles Tyrwhitt LLP (UK)"|linkshare|"Updated - 21230 Inserted,  Failed."|
+"77 of 256 (30.08%)"|38095|"M.i.h Jeans"|linkshare|"Updated - 312 Inserted,  Failed."|
+"78 of 256 (30.47%)"|36731|Question-air|linkshare|"Updated - 1131 Inserted,  Failed."|
+"79 of 256 (30.86%)"|38489|Nuxe|linkshare|"Updated - 106 Inserted,  Failed."|
+"80 of 256 (31.25%)"|35491|"The Jaeger Companys Shops"|linkshare|"Updated - 770 Inserted,  Failed."|
+"81 of 256 (31.64%)"|38043|Joseph|linkshare|"Updated - 599 Inserted,  Failed."|
+"82 of 256 (32.03%)"|39379|"Ernest Jones"|linkshare|"Updated - 8752 Inserted,  Failed."|
+"83 of 256 (32.42%)"|38009|"Vestiaire Collective"|linkshare|"Updated - 288032 Inserted,  Failed."|
+"84 of 256 (32.81%)"|38021|"Luisa Via Roma (UK)"|linkshare|"Updated - 22593 Inserted,  Failed."|
+"85 of 256 (33.20%)"|37335|Deborah|linkshare|"Updated - 490 Inserted,  Failed."|
+"86 of 256 (33.59%)"|35653|"Farfetch UK"|linkshare|"Updated - 125127 Inserted,  Failed."|
+"87 of 256 (33.98%)"|36168|Monsoon|linkshare|"Updated - 2205 Inserted,  Failed."|
+"88 of 256 (34.38%)"|39794|"Geox (UK)"|linkshare|"Updated - 955 Inserted,  Failed."|
+"89 of 256 (34.77%)"|39482|"Leia Lingerie"|linkshare|"Updated - 1286 Inserted,  Failed."|
+"90 of 256 (35.16%)"|36027|Notonthehighstreet.com|linkshare|"Updated - 169801 Inserted,  Failed."|
+"91 of 256 (35.55%)"|36598|"John Smedley"|linkshare|"Updated - 1291 Inserted,  Failed."|
+"92 of 256 (35.94%)"|36374|EAST|linkshare|"Updated - 2407 Inserted,  Failed."|
+"93 of 256 (36.33%)"|39802|"People Tree Ltd"|linkshare|"Updated - 114 Inserted,  Failed."|
+"94 of 256 (36.72%)"|36301|"Girl Meets Dress"|linkshare|"Updated - 968 Inserted,  Failed."|
+"95 of 256 (37.11%)"|39380|"H Samuel"|linkshare|"Updated - 9724 Inserted,  Failed."|
+"96 of 256 (37.50%)"|24794|Whistles|linkshare|"Updated - 813 Inserted,  Failed."|
+"97 of 256 (37.89%)"|35998|"Lulu Guinness (UK)"|linkshare|"Updated - 250 Inserted,  Failed."|
+"98 of 256 (38.28%)"|37884|Viyella|linkshare|"Updated - 2291 Inserted,  Failed."|
+"99 of 256 (38.67%)"|37885|"CC Fashion"|linkshare|"Updated - 2045 Inserted,  Failed."|
+"100 of 256 (39.06%)"|35269|"Cult Beauty, Ltd."|linkshare|"Updated - 2444 Inserted, 1 Failed."|
+"101 of 256 (39.45%)"|36621|"Long Tall Sally"|linkshare|"Updated - 5707 Inserted,  Failed."|
+"102 of 256 (39.84%)"|36286|"Boutique 1"|linkshare|"Updated - 9649 Inserted,  Failed."|
+"103 of 256 (40.23%)"|38734|"TOMS (UK)"|linkshare|"Updated - 854 Inserted,  Failed."|
+"104 of 256 (40.63%)"|36350|Dune|linkshare|"Updated - 6645 Inserted,  Failed."|
+"105 of 256 (41.02%)"|41124|"temperley london"|linkshare|"Updated - 938 Inserted,  Failed."|
+"106 of 256 (41.41%)"|38701|BIRCHBOX|linkshare|"Updated - 880 Inserted,  Failed."|
+"107 of 256 (41.80%)"|36767|"Macys UK"|linkshare|"Updated - 410685 Inserted,  Failed."|
+"108 of 256 (42.19%)"|36944|"Nine West UK"|linkshare|"Updated - 401 Inserted,  Failed."|
+"109 of 256 (42.58%)"|35605|"Quiz Clothing"|linkshare|"Updated - 1351 Inserted,  Failed."|
+"110 of 256 (42.97%)"|38267|"Monica Vinader"|linkshare|"Updated - 816 Inserted,  Failed."|
+"111 of 256 (43.36%)"|36362|"Space NK"|linkshare|"Updated - 4827 Inserted,  Failed."|
+"112 of 256 (43.75%)"|40203|"Charlotte Tilbury (UK)"|linkshare|"Updated - 255 Inserted,  Failed."|
+"113 of 256 (44.14%)"|38595|"Hobbs Ltd"|linkshare|"Updated - 727 Inserted,  Failed."|
+"114 of 256 (44.53%)"|36813|"SAM SRL Tessabit Store"|linkshare|"Updated - 13413 Inserted,  Failed."|
+"115 of 256 (44.92%)"|36467|"Reiss UK"|linkshare|"Updated - 1695 Inserted,  Failed."|
+"116 of 256 (45.31%)"|36338|Accessorize|linkshare|"Updated - 2551 Inserted,  Failed."|
+"117 of 256 (45.70%)"|39528|"Paul Smith Ltd"|linkshare|"Updated - 8860 Inserted,  Failed."|
+"118 of 256 (46.09%)"|36933|"Kurt Geiger Ltd"|linkshare|"Updated - 2889 Inserted,  Failed."|
+"119 of 256 (46.48%)"|24724|UNIQLO|linkshare|"Updated - 4476 Inserted,  Failed."|
+"120 of 256 (46.88%)"|38657|"Peruvian Connection LLC"|linkshare|"Failed -  Inserted,  Failed."
+"121 of 256 (47.27%)"|37091|"Lily Lolo"|linkshare|"Updated -  Inserted,  Failed."|
+"122 of 256 (47.66%)"|38573|"31 Dover"|linkshare|"Updated - 790 Inserted,  Failed."|
+"123 of 256 (48.05%)"|37883|"Austin Reed (UK)"|linkshare|"Updated - 3827 Inserted,  Failed."|
+"124 of 256 (48.44%)"|37410|"Saks Fifth Avenue - UK"|linkshare|"Updated - 65279 Inserted,  Failed."|
+"125 of 256 (48.83%)"|37206|"Bloomingdales UK"|linkshare|"Updated - 196605 Inserted,  Failed."|
+"126 of 256 (49.22%)"|38031|"White Stuff"|linkshare|"Failed -  Inserted,  Failed."
+"127 of 256 (49.61%)"|36267|Aveda|linkshare|"Updated - 126 Inserted,  Failed."|
+"128 of 256 (50.00%)"|38311|"Stuart Weitzman"|linkshare|"Updated - 155 Inserted,  Failed."|
+"129 of 256 (50.39%)"|39618|"Milli Millu"|linkshare|"Updated - 111 Inserted,  Failed."|
+"130 of 256 (50.78%)"|35118|"Browns Fashion"|linkshare|"Updated - 3105 Inserted,  Failed."|
+"131 of 256 (51.17%)"|24359|"L'Occitane UK"|linkshare|"Updated - 415 Inserted,  Failed."|
+"132 of 256 (51.56%)"|36192|"Heidi Klein"|linkshare|"Updated - 348 Inserted,  Failed."|
+"133 of 256 (51.95%)"|35731|Black.co.uk|linkshare|"Updated - 13 Inserted,  Failed."|
+"134 of 256 (52.34%)"|38432|"River Island"|linkshare|"Updated - 10794 Inserted,  Failed."|
+"135 of 256 (52.73%)"|37401|Clinique|linkshare|"Updated - 747 Inserted,  Failed."|
+"136 of 256 (53.13%)"|35352|"Oliver Bonas Ltd"|linkshare|"Updated - 2535 Inserted,  Failed."|
+"137 of 256 (53.52%)"|35667|"Astley Clarke Ltd"|linkshare|"Updated - 401 Inserted,  Failed."|
+"138 of 256 (53.91%)"|37024|"Cotton Traders"|linkshare|"Updated - 1330 Inserted,  Failed."|
+"139 of 256 (54.30%)"|36943|"The Dressing Room Retail"|linkshare|"Updated - 1618 Inserted,  Failed."|
+"140 of 256 (54.69%)"|fandf|"F&F (Tesco)"|ff|"Updated - 3018 Inserted,  Failed."|
+"141 of 256 (55.08%)"|271|"Swarovski UK"|affilinet|"Updated - 2241 Inserted,  Failed."|
+"142 of 256 (55.47%)"|722|Debenhams.com|affilinet|"Updated - 210017 Inserted,  Failed."|
+"143 of 256 (55.86%)"|5513|"Penhaligons - Complete list"|affilinet|"Updated - 158 Inserted,  Failed."|
+"144 of 256 (56.25%)"|911|allbeauty.com|awin|"Updated - 10989 Inserted,  Failed."|
+"145 of 256 (56.64%)"|3660|Allsole|awin|"Updated - 6527 Inserted,  Failed."|
+"146 of 256 (57.03%)"|3469|"Ample Bosom"|awin|"Updated - 881 Inserted,  Failed."|
+"147 of 256 (57.42%)"|6024|Ariella|awin|"Updated - 134 Inserted,  Failed."|
+"148 of 256 (57.81%)"|5921|Artigiano|awin|"Updated - 196 Inserted,  Failed."|
+"149 of 256 (58.20%)"|5678|ASOS|awin|"Updated - 75488 Inserted,  Failed."|
+"150 of 256 (58.59%)"|5931|"ATG Tickets"|awin|"Updated - 8393 Inserted,  Failed."|
+"151 of 256 (58.98%)"|3423|Baukjen|awin|"Updated - 4167 Inserted,  Failed."|
+"152 of 256 (59.38%)"|1831|Bhs|awin|"Updated - 72311 Inserted,  Failed."|
+"153 of 256 (59.77%)"|1669|Boden|awin|"Updated - 4780 Inserted,  Failed."|
+"154 of 256 (60.16%)"|2041|Boots.com|awin|"Updated - 27954 Inserted,  Failed."|
+"155 of 256 (60.55%)"|3454|"Boux Avenue"|awin|"Updated - 735 Inserted,  Failed."|
+"156 of 256 (60.94%)"|2810|"Bras &amp; Honey"|awin|"Updated - 1726 Inserted,  Failed."|
+"157 of 256 (61.33%)"|3772|Bravissimo|awin|"Updated - 631 Inserted,  Failed."|
+"158 of 256 (61.72%)"|273|Buyagift.co.uk|awin|"Updated - 5142 Inserted,  Failed."|
+"159 of 256 (62.11%)"|6301|"Celtic &amp; Co"|awin|"Failed -  Inserted,  Failed."
+"160 of 256 (62.50%)"|2102|"Chemist Direct"|awin|"Updated - 5842 Inserted,  Failed."|
+"161 of 256 (62.89%)"|2515|Clarks|awin|"Updated - 1659 Inserted,  Failed."|
+"162 of 256 (63.28%)"|2805|Coast|awin|"Updated - 751 Inserted,  Failed."|
+"163 of 256 (63.67%)"|4318|Coggles|awin|"Updated - 20712 Inserted,  Failed."|
+"164 of 256 (64.06%)"|2367|"Crabtree &amp; Evelyn"|awin|"Updated - 416 Inserted,  Failed."|
+"165 of 256 (64.45%)"|3109|Crocs|awin|"Updated - 5170 Inserted,  Failed."|
+"166 of 256 (64.84%)"|3540|CRUISE|awin|"Updated - 34948 Inserted,  Failed."|
+"167 of 256 (65.23%)"|3403|Curvissa|awin|"Updated - 9208 Inserted,  Failed."|
+"168 of 256 (65.63%)"|5653|"Diamond Style"|awin|"Failed -  Inserted,  Failed."
+"169 of 256 (66.02%)"|1134|"Dorothy Perkins"|awin|"Updated - 38974 Inserted,  Failed."|
+"170 of 256 (66.41%)"|6601|Elemis|awin|"Failed -  Inserted,  Failed."
+"171 of 256 (66.80%)"|6157|"Elizabeth Arden"|awin|"Failed -  Inserted,  Failed."
+"172 of 256 (67.19%)"|3819|Elvi|awin|"Updated - 2575 Inserted,  Failed."|
+"173 of 256 (67.58%)"|6091|"Etsy UK"|awin|"Failed -  Inserted,  Failed."
+"174 of 256 (67.97%)"|1423|"Evans Clothing"|awin|"Updated - 19013 Inserted,  Failed."|
+"175 of 256 (68.36%)"|1625|"F.Hinds Jewellers"|awin|"Updated - 4623 Inserted,  Failed."|
+"176 of 256 (68.75%)"|3030|"Fashion World"|awin|"Failed -  Inserted,  Failed."
+"177 of 256 (69.14%)"|3805|Flannels|awin|"Updated - 17884 Inserted,  Failed."|
+"178 of 256 (69.53%)"|6555|"Folli Follie"|awin|"Failed -  Inserted,  Failed."
+"179 of 256 (69.92%)"|5682|"Fortnum &amp; Mason"|awin|"Failed -  Inserted,  Failed."
+"180 of 256 (70.31%)"|5715|"Fragrance Expert Limited"|awin|"Updated - 9835 Inserted,  Failed."|
+"181 of 256 (70.70%)"|3208|"French Connection"|awin|"Updated - 2624 Inserted,  Failed."|
+"182 of 256 (71.09%)"|6153|"Gerry Weber"|awin|"Failed -  Inserted,  Failed."
+"183 of 256 (71.48%)"|2894|Goddiva|awin|"Updated - 714 Inserted,  Failed."|
+"184 of 256 (71.88%)"|2174|Goldsmiths|awin|"Updated - 55118 Inserted,  Failed."|
+"185 of 256 (72.27%)"|3209|"Great Plains"|awin|"Updated - 742 Inserted,  Failed."|
+"186 of 256 (72.66%)"|3321|"Hawes &amp; Curtis"|awin|"Failed -  Inserted,  Failed."
+"187 of 256 (73.05%)"|1837|"Holland &amp; Barrett"|awin|"Failed -  Inserted,  Failed."
+"188 of 256 (73.44%)"|1320|"Hotter Shoes"|awin|"Updated - 262 Inserted,  Failed."|
+"189 of 256 (73.83%)"|3100|"House of Fraser"|awin|"Updated - 112506 Inserted,  Failed."|
+"190 of 256 (74.22%)"|1206|"Hush Homewear"|awin|"Updated - 1894 Inserted,  Failed."|
+"191 of 256 (74.61%)"|2289|"Jacques Vert"|awin|"Updated - 418 Inserted,  Failed."|
+"192 of 256 (75.00%)"|5566|"John Greed Jewellery"|awin|"Updated - 7478 Inserted,  Failed."|
+"193 of 256 (75.39%)"|1203|"John Lewis"|awin|"Failed -  Inserted,  Failed."
+"194 of 256 (75.78%)"|713|"Jones Bootmaker.com"|awin|"Updated - 4476 Inserted,  Failed."|
+"195 of 256 (76.17%)"|1283|Joules|awin|"Updated -  Inserted,  Failed."|
+"196 of 256 (76.56%)"|3154|"Just Last Season"|awin|"Updated - 1267 Inserted,  Failed."|
+"197 of 256 (76.95%)"|1008|Kiniki|awin|"Updated - 200 Inserted,  Failed."|
+"198 of 256 (77.34%)"|2246|"L.K. Bennett"|awin|"Updated - 767 Inserted,  Failed."|
+"199 of 256 (77.73%)"|1496|"La Redoute"|awin|"Failed -  Inserted,  Failed."
+"200 of 256 (78.13%)"|2364|"Laura Ashley"|awin|"Updated - 6743 Inserted,  Failed."|
+"201 of 256 (78.52%)"|6553|"Links of London"|awin|"Failed -  Inserted,  Failed."
+"202 of 256 (78.91%)"|6334|"Little Black Dress"|awin|"Failed -  Inserted,  Failed."
+"203 of 256 (79.30%)"|2453|Lloydspharmacy|awin|"Updated - 6057 Inserted,  Failed."|
+"204 of 256 (79.69%)"|2082|lookfantastic.com|awin|"Updated - 17979 Inserted,  Failed."|
+"205 of 256 (80.08%)"|1685|M&amp;Co|awin|"Updated - 14687 Inserted,  Failed."|
+"206 of 256 (80.47%)"|3029|Marisota|awin|"Updated - 105163 Inserted,  Failed."|
+"207 of 256 (80.86%)"|1402|"Marks and Spencer"|awin|"Updated - 39972 Inserted,  Failed."|
+"208 of 256 (81.25%)"|2527|"Moda in Pelle"|awin|"Failed -  Inserted,  Failed."
+"209 of 256 (81.64%)"|5030|Muubaa|awin|"Updated - 30 Inserted,  Failed."|
+"210 of 256 (82.03%)"|3604|Mybag.com|awin|"Updated - 2122 Inserted,  Failed."|
+"211 of 256 (82.42%)"|4454|myvitamins.com|awin|"Updated - 600 Inserted,  Failed."|
+"212 of 256 (82.81%)"|3169|"Neals Yard Remedies"|awin|"Updated - 44 Inserted,  Failed."|
+"213 of 256 (83.20%)"|1946|"New Look"|awin|"Updated - 15677 Inserted,  Failed."|
+"214 of 256 (83.59%)"|5672|"Next (UK)"|awin|"Updated - 17185 Inserted,  Failed."|
+"215 of 256 (83.98%)"|5362|"Nip &amp; Fab"|awin|"Updated - 69 Inserted,  Failed."|
+"216 of 256 (84.38%)"|2374|"Office Shoes"|awin|"Failed -  Inserted,  Failed."
+"217 of 256 (84.77%)"|1688|Orchira|awin|"Updated - 654 Inserted,  Failed."|
+"218 of 256 (85.16%)"|5842|"Organic Surge"|awin|"Updated - 59 Inserted,  Failed."|
+"219 of 256 (85.55%)"|2753|"Pai Skincare"|awin|"Updated - 22 Inserted,  Failed."|
+"220 of 256 (85.94%)"|6294|"Peter Hahn"|awin|"Failed -  Inserted,  Failed."
+"221 of 256 (86.33%)"|2692|"Phase Eight"|awin|"Updated - 7388 Inserted,  Failed."|
+"222 of 256 (86.72%)"|2292|Precis|awin|"Updated - 222 Inserted,  Failed."|
+"223 of 256 (87.11%)"|4251|"QP Jewellers"|awin|"Updated - 11019 Inserted,  Failed."|
+"224 of 256 (87.50%)"|5658|Ray-Ban|awin|"Failed -  Inserted,  Failed."
+"225 of 256 (87.89%)"|3744|"Rock My Vintage Ltd"|awin|"Failed -  Inserted,  Failed."
+"226 of 256 (88.28%)"|2780|Sarenza|awin|"Updated - 38226 Inserted,  Failed."|
+"227 of 256 (88.67%)"|2044|Schuh|awin|"Updated - 21966 Inserted,  Failed."|
+"228 of 256 (89.06%)"|3539|Selfridges|awin|"Updated - 148687 Inserted,  Failed."|
+"229 of 256 (89.45%)"|3027|"Simply Be"|awin|"Updated - 73788 Inserted,  Failed."|
+"230 of 256 (89.84%)"|1295|"Simply Beach"|awin|"Updated - 2250 Inserted,  Failed."|
+"231 of 256 (90.23%)"|1294|"Simply Swim"|awin|"Updated - 1897 Inserted,  Failed."|
+"232 of 256 (90.63%)"|2749|SmartBuyGlasses|awin|"Failed -  Inserted,  Failed."
+"233 of 256 (91.02%)"|2638|Spartoo.co.uk|awin|"Updated - 29971 Inserted,  Failed."|
+"234 of 256 (91.41%)"|6401|"Studio 8"|awin|"Failed -  Inserted,  Failed."
+"235 of 256 (91.80%)"|3180|"Sunglasses Shop"|awin|"Updated - 5691 Inserted,  Failed."|
+"236 of 256 (92.19%)"|2026|Superdrug|awin|"Updated - 10125 Inserted,  Failed."|
+"237 of 256 (92.58%)"|2530|"Swarovski Crystal"|awin|"Updated - 647 Inserted,  Failed."|
+"238 of 256 (92.97%)"|4322|Swimwear365|awin|"Updated - 7854 Inserted,  Failed."|
+"239 of 256 (93.36%)"|2525|"Ted Baker"|awin|"Updated - 8544 Inserted,  Failed."|
+"240 of 256 (93.75%)"|2547|"The Hut"|awin|"Updated - 42042 Inserted,  Failed."|
+"241 of 256 (94.14%)"|4277|"The Jewel Hut"|awin|"Updated - 10051 Inserted,  Failed."|
+"242 of 256 (94.53%)"|4802|"The White Company"|awin|"Updated - 2777 Inserted,  Failed."|
+"243 of 256 (94.92%)"|6620|"TK Maxx"|awin|"Failed -  Inserted,  Failed."
+"244 of 256 (95.31%)"|1752|"TM Lewin"|awin|"Updated - 1969 Inserted,  Failed."|
+"245 of 256 (95.70%)"|6009|Topshop|awin|"Updated - 36123 Inserted,  Failed."|
+"246 of 256 (96.09%)"|3247|"Treatwell (UK)"|awin|"Updated - 182318 Inserted,  Failed."|
+"247 of 256 (96.48%)"|3482|"Triumph Online Shop"|awin|"Updated - 12179 Inserted,  Failed."|
+"248 of 256 (96.88%)"|3186|"UK Tights"|awin|"Updated - 1565 Inserted,  Failed."|
+"249 of 256 (97.27%)"|6227|Vanmildert|awin|"Failed -  Inserted,  Failed."
+"250 of 256 (97.66%)"|5735|"Vitamin Planet"|awin|"Updated - 166 Inserted,  Failed."|
+"251 of 256 (98.05%)"|2419|Wallis|awin|"Updated - 7121 Inserted,  Failed."|
+"252 of 256 (98.44%)"|2290|Windsmoor|awin|"Updated - 161 Inserted,  Failed."|
+"253 of 256 (98.83%)"|2685|"Wolford Online Boutique"|awin|"Updated - 1715 Inserted,  Failed."|
+"254 of 256 (99.22%)"|790|Woolovers|awin|"Updated - 2112 Inserted,  Failed."|
+"255 of 256 (99.61%)"|4992|"Woolovers (US)"|awin|"Updated - 8 Inserted,  Failed."|
+"256 of 256 (100.00%)"|3356|"Zalando SE"|awin|"Failed -  Inserted,  Failed."
