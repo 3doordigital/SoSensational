@@ -7,6 +7,8 @@ require_once('inc/widgets.php');
 require_once('inc/template_functions.php');
 require_once('views/Template.php');
 
+remove_filter('template_redirect', 'redirect_canonical');
+
 function registerMenus() {
     register_nav_menus(array(
         'primary' => __('Primary Menu', 'sosen'),

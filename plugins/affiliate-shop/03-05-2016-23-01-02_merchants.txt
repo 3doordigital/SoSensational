@@ -1,0 +1,38 @@
+Number|"Merchant ID"|"Merchant Name"|Affiliate|Status|Message
+"1 of 259 (0.39%)"|117|Webgains|webgains|"Updated -  Inserted,  Failed."|
+"2 of 259 (0.77%)"|270|"Wall Luxury Essentials"|webgains|"Updated -  Inserted,  Failed."|
+"3 of 259 (1.16%)"|327|Brastop|webgains|"Updated - 2484 Inserted,  Failed."|
+"4 of 259 (1.54%)"|347|"Feelunique UK"|webgains|"Updated - 11531 Inserted,  Failed."|
+"5 of 259 (1.93%)"|8533|Gossard|webgains|"Updated - 4032 Inserted,  Failed."|
+"6 of 259 (2.32%)"|8535|"Pretty Polly "|webgains|"Updated - 1195 Inserted,  Failed."|
+"7 of 259 (2.70%)"|1408|"Me + Em"|webgains|"Updated - 947 Inserted,  Failed."|
+"8 of 259 (3.09%)"|8537|Berlei|webgains|"Updated - 2667 Inserted,  Failed."|
+"9 of 259 (3.47%)"|2756|"feelunique.com IE"|webgains|"Updated - 6928 Inserted,  Failed."|
+"10 of 259 (3.86%)"|2365|Trilogy|webgains|"Updated - 232 Inserted,  Failed."|
+"11 of 259 (4.25%)"|2690|"Chesca Direct"|webgains|"Updated - 1042 Inserted,  Failed."|
+"12 of 259 (4.63%)"|6373|"NIKE UK"|webgains|"Updated - 8102 Inserted,  Failed."|
+"13 of 259 (5.02%)"|4042|"The Fragrance Shop"|webgains|"Updated - 2450 Inserted,  Failed."|
+"14 of 259 (5.41%)"|3780|"Daniel Footwear"|webgains|"Updated - 2355 Inserted,  Failed."|
+"15 of 259 (5.79%)"|4125|"Jules B"|webgains|"Updated - 3309 Inserted,  Failed."|
+"16 of 259 (6.18%)"|4128|"Charles Clinkard"|webgains|"Updated - 3529 Inserted,  Failed."|
+"17 of 259 (6.56%)"|5250|"Milanoo UK"|webgains|"Updated - 39867 Inserted,  Failed."|
+"18 of 259 (6.95%)"|4948|Yumi|webgains|"Updated - 1288 Inserted,  Failed."|
+"19 of 259 (7.34%)"|5528|"Joy The Store"|webgains|"Updated - 4627 Inserted,  Failed."|
+"20 of 259 (7.72%)"|5556|"Damsel In A Dress"|webgains|"Updated - 472 Inserted,  Failed."|
+"21 of 259 (8.11%)"|5565|"Ecco UK"|webgains|"Updated - 658 Inserted,  Failed."|
+"22 of 259 (8.49%)"|5733|"Yours Clothing"|webgains|"Updated - 3793 Inserted,  Failed."|
+"23 of 259 (8.88%)"|10295|"Honor Gold"|webgains|"Updated - 96 Inserted,  Failed."|
+"24 of 259 (9.27%)"|6415|Hervia|webgains|"Updated - 1774 Inserted,  Failed."|
+"25 of 259 (9.65%)"|6533|Hairtrade|webgains|"Updated - 5287 Inserted,  Failed."|
+"26 of 259 (10.04%)"|6785|"Marc B"|webgains|"Updated - 36 Inserted,  Failed."|
+"27 of 259 (10.42%)"|7835|Larizia|webgains|"Updated - 1255 Inserted,  Failed."|
+"28 of 259 (10.81%)"|7975|"Malene Birger UK"|webgains|"Updated - 98 Inserted,  Failed."|
+"29 of 259 (11.20%)"|8593|"Ann Summers"|webgains|"Updated - 1458 Inserted,  Failed."|
+"30 of 259 (11.58%)"|8997|Aristoc|webgains|"Updated - 288 Inserted,  Failed."|
+"31 of 259 (11.97%)"|9617|"Voga UK"|webgains|"Updated - 1135 Inserted,  Failed."|
+"32 of 259 (12.36%)"|10263|Liberty|webgains|"Updated - 16816 Inserted,  Failed."|
+"33 of 259 (12.74%)"|10605|Finery|webgains|"Updated - 776 Inserted,  Failed."|
+"34 of 259 (13.13%)"|10443|"Fenn Wright Manson"|webgains|"Updated - 149 Inserted,  Failed."|
+"35 of 259 (13.51%)"|11051|"Cloud 10 Beauty"|webgains|"Updated - 2265 Inserted,  Failed."|
+"36 of 259 (13.90%)"|9339|"Poppy and Zach"|webgains|"Updated - 5073 Inserted,  Failed."|
+"37 of 259 (14.29%)"|7901|"Camille Lingerie"|webgains|"Updated - 1324 Inserted,  Failed."|

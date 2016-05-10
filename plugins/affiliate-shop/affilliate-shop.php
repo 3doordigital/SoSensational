@@ -1953,6 +1953,8 @@ class WordPress_Affiliate_Shop {
                                             <!-- For plugins, we also need to ensure that the form posts back to our current page -->
                                             <input type="hidden" name="page"
                                                    value="<?php echo urldecode($_REQUEST['page']); ?>"/>
+                                            <input type="hidden" name="api"
+                                                   value="<?php echo $curr_api ?>"/>
                                             <input type="hidden" name="q" value="<?php echo $_REQUEST['q'] ?>"/>
                                             <input type="hidden" name="wp_aff_merch"
                                                    value="<?php echo @$_REQUEST['wp_aff_merch'] ?>"/>
