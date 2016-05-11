@@ -7,7 +7,17 @@ require_once('inc/widgets.php');
 require_once('inc/template_functions.php');
 require_once('views/Template.php');
 
-remove_filter('template_redirect', 'redirect_canonical');
+function my_custom_function( ) {
+	global $wp_query;
+	$home = $wp_query->is_home;
+if($wp_query->query_vars['page_id'] == "20"){
+		
+		remove_filter('template_redirect', 'redirect_canonical');
+	}
+}
+add_action( 'template_redirect', 'my_custom_function' );
+
+//
 
 function registerMenus() {
     register_nav_menus(array(
