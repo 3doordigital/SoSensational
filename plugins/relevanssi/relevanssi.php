@@ -3,7 +3,7 @@
 Plugin Name: Relevanssi
 Plugin URI: http://www.relevanssi.com/
 Description: This plugin replaces WordPress search with a relevance-sorting search.
-Version: 3.5.2
+Version: 3.5.6.1
 Author: Mikko Saari
 Author URI: http://www.mikkosaari.fi/
 */
@@ -86,13 +86,14 @@ function relevanssi_didyoumean($query, $pre, $post, $n = 5, $echo = true) {
 		}
 	}
 	
+	$result = null;
 	if ($distance > 0) {
  		$url = get_bloginfo('url');
 		$url = esc_attr(add_query_arg(array(
 			's' => urlencode($closest)
 
 			), $url ));
-		$url = apply_filters('relevanssi_didyoumean_url', $url);
+		$url = apply_filters('relevanssi_didyoumean_url', $url, $query, $closest);
 		$result = apply_filters('relevanssi_didyoumean_suggestion', "$pre<a href='$url'>$closest</a>$post");
 		if ($echo) echo $result;
  	}
@@ -101,6 +102,9 @@ function relevanssi_didyoumean($query, $pre, $post, $n = 5, $echo = true) {
 }
 
 function relevanssi_check_old_data() {
+	$screen = get_current_screen();
+	if ($screen->base != 'settings_page_relevanssi-premium/relevanssi') return;
+
 	if (is_admin()) {
 		// Version 3.3 removes the cache feature
 		$cache = get_option('relevanssi_enable_cache', 'nothing');
@@ -250,7 +254,7 @@ function _relevanssi_install() {
 	add_option('relevanssi_highlight_comments', 'off');
 	add_option('relevanssi_index_comments', 'none');	//added by OdditY
 	add_option('relevanssi_show_matches', '');
-	add_option('relevanssi_show_matches_text', '(Search hits: %body% in body, %title% in title, %category% in categories, %tags% in tags, %taxonomy% in other taxonomies, %comments% in comments. Score: %score%)');
+	add_option('relevanssi_show_matches_text', '(Search hits: %body% in body, %title% in title, %categories% in categories, %tags% in tags, %taxonomies% in other taxonomies, %comments% in comments. Score: %score%)');
 	add_option('relevanssi_fuzzy', 'sometimes');
 	add_option('relevanssi_indexed', '');
 	add_option('relevanssi_expand_shortcodes', 'on');
@@ -373,7 +377,7 @@ better search experience for your users?</p>
 <p><strong>Go Premium!</strong> Buy Relevanssi Premium. See <a href="http://www.relevanssi.com/features/?utm_source=plugin&utm_medium=link&utm_campaign=features">feature
 comparison</a> and <a href="http://www.relevanssi.com/buy-premium/?utm_source=plugin&utm_medium=link&utm_campaign=license">license prices</a>.</p>
 
-<p><strong><a href="http://sites.fastspring.com/painavasana/product/relevanssipremium?source=p">Buy Premium here &raquo;</a></strong></p>
+<p><strong><a href="http://www.relevanssi.com/buy-premium/?utm_source=plugin&utm_medium=link&utm_campaign=license">Buy Premium now &raquo;</a></strong></p>
 			</div>
 		</div>
 	</div>

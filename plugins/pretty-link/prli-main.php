@@ -154,9 +154,7 @@ function prli_dashboard_widget_function() {
 
 // Create the function use in the action hook
 function prli_add_dashboard_widgets() {
-  global $current_user;
-  get_currentuserinfo();
-  if($current_user->user_level >= 8)
+  if(current_user_can( 'update_core' ))
   {
     wp_add_dashboard_widget('prli_dashboard_widget', __('Pretty Link Quick Add', 'pretty-link'), 'prli_dashboard_widget_function');   
 

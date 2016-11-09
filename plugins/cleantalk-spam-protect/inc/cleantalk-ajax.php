@@ -1,5 +1,6 @@
 <?php
 global $cleantalk_hooked_actions;
+
 /*
 AJAX functions
 */
@@ -62,14 +63,13 @@ $cleantalk_hooked_actions[]='zn_do_login';
 /*hooks for zn_do_login */
 //add_action( 'wp_ajax_nopriv_cscf-submitform', 'ct_cscf_submitform',1 );
 //add_action( 'wp_ajax_cscf-submitform', 'ct_cscf_submitform',1 );
-add_action( 'wp_ajax_nopriv_cscf-submitform', 'ct_ajax_hook',1 );
-add_action( 'wp_ajax_cscf-submitform', 'ct_ajax_hook',1 );
-$cleantalk_hooked_actions[]='cscf-submitform';
+if(isset($_POST['action']) && $_POST['action'] == 'cscf-submitform'){
+	add_filter('preprocess_comment', 'ct_ajax_hook', 1);
+	//add_action( 'wp_ajax_nopriv_cscf-submitform', 'ct_ajax_hook',1 );
+	//add_action( 'wp_ajax_cscf-submitform', 'ct_ajax_hook',1 );
+	$cleantalk_hooked_actions[]='cscf-submitform';
+}
 
-/*hooks for stats */
-add_action( 'wp_ajax_nopriv_ajax_get_stats', 'ct_get_stats',1 );
-add_action( 'wp_ajax_ajax_get_stats', 'ct_get_stats',1 );
-$cleantalk_hooked_actions[]='ajax_get_stats';
 
 /*hooks for visual form builder */
 //add_action( 'wp_ajax_nopriv_vfb_submit', 'ct_vfb_submit',1 );
@@ -109,26 +109,9 @@ add_action( 'template_redirect', 'ct_ajax_hook',1 );
 /* hooks for ninja forms ajax*/
 add_action( 'wp_ajax_nopriv_ninja_forms_ajax_submit', 'ct_ajax_hook',1  );
 add_action( 'wp_ajax_ninja_forms_ajax_submit', 'ct_ajax_hook',1  );
-$cleantalk_hooked_actions[]='ninja_forms_ajax_submit';
 
-function ct_get_stats()
-{
-	check_ajax_referer( 'ct_secret_nonce', 'security' );
-	global $ct_data;
-	$ct_data=ct_get_data();
-	
-	if(!isset($ct_data['array_accepted']))
-	{
-		$ct_data['array_accepted']=Array();
-		$ct_data['array_blocked']=Array();
-		$ct_data['current_hour']=0;
-		update_option('cleantalk_data', $ct_data);
-	}
-	
-	$ret=Array('stat_accepted'=>@array_sum($ct_data['array_accepted']), 'stat_blocked'=>@array_sum($ct_data['array_blocked']), 'stat_all'=>@array_sum($ct_data['array_accepted']) + @array_sum($ct_data['array_blocked']));
-	print json_encode($ret);
-	die();
-}
+add_action( 'ninja_forms_process', 'ct_ajax_hook',1  );
+$cleantalk_hooked_actions[]='ninja_forms_ajax_submit';
 
 function ct_validate_email_ajaxlogin($email=null, $is_ajax=true)
 {
@@ -168,7 +151,7 @@ function ct_validate_email_ajaxlogin($email=null, $is_ajax=true)
 		}
 		
 		require_once('cleantalk.class.php');
-		$config = get_option('cleantalk_server');
+		$config = ct_get_server();
 		$ct = new Cleantalk();
 		$ct->work_url = $config['ct_work_url'];
 		$ct->server_url = $ct_options['server'];
@@ -253,7 +236,7 @@ function ct_user_register_ajaxlogin($user_id)
 		}
 		
 		require_once('cleantalk.class.php');
-		$config = get_option('cleantalk_server');
+		$config = ct_get_server();
 		$ct = new Cleantalk();
 		$ct->work_url = $config['ct_work_url'];
 		$ct->server_url = $ct_options['server'];
@@ -292,39 +275,19 @@ function ct_user_register_ajaxlogin($user_id)
 	return $user_id;
 }
 
-function ct_get_fields(&$email,&$message,$arr)
-{
-	foreach($arr as $key=>$value)
-	{
-		if(!is_array($value))
-		{
-			if ($email === null && preg_match("/^\S+@\S+\.\S+$/", $value))
-	    	{
-	            $email = $value;
-	        }
-	        else
-	        {
-	        	$message.="$value\n";
-	        }
-		}
-		else
-		{
-			ct_get_fields($email,$message,$value);
-		}
-	}
-}
-
-function ct_ajax_hook()
+function ct_ajax_hook($message_obj = false)
 {
 	require_once(CLEANTALK_PLUGIN_DIR . 'inc/cleantalk-public.php');
 	global $ct_agent_version, $ct_checkjs_register_form, $ct_session_request_id_label, $ct_session_register_ok_label, $bp, $ct_signup_done, $ct_formtime_label, $ct_negative_comment, $ct_options, $ct_data, $current_user;
-	
+
 	$ct_options = ct_get_options();
     $ct_data = ct_get_data();
 	$sender_email = null;
     $message = '';
     $nickname=null;
-    
+    $contact = true;
+    $subject = '';
+
     //
     // Skip test if Custom contact forms is disabled.
     //
@@ -342,13 +305,14 @@ function ct_ajax_hook()
     //
     // Go out because of not spam data 
     //
-    $gmw_actions = array(
-        'gmaps_display_info_window',
-        'gmw_ps_display_info_window'
+    $skip_post = array(
+        'gmaps_display_info_window',  // Geo My WP pop-up windows.
+        'gmw_ps_display_info_window',  // Geo My WP pop-up windows.
+        'the_champ_user_auth',  // Super Socializer 
     );
 	$checkjs = js_test('ct_checkjs', $_COOKIE, true);
     if ($checkjs && // Spammers usually fail the JS test
-        (isset($_POST['action']) && in_array($_POST['action'], $gmw_actions)) // Geo My WP pop-up windows.
+        (isset($_POST['action']) && in_array($_POST['action'], $skip_post))
         ) {
         return false;
     }
@@ -362,29 +326,42 @@ function ct_ajax_hook()
 		$nickname='';
 	}
 
-    if(isset($_POST['cscf']['confirm-email']))
-    {
-    	$tmp=$_POST['cscf']['confirm-email'];
-    	$_POST['cscf']['confirm-email']=1;
+    //CSCF fix
+    if($_POST['action']== 'cscf-submitform' && !isset($_POST['cscf'])){
+		$ct_post_temp[] = $message_obj['comment_author'];
+        $ct_post_temp[] = $message_obj['comment_author_email'];
+		$ct_post_temp[] = $message_obj['comment_content'];
     }
-    
-    if(($_POST['action']=='request_appointment'||$_POST['action']=='send_message')&&isset($_POST['target']))
-    {
-    	$tmp=$_POST['target'];
-    	$_POST['target']=1;
+	
+	
+	//??? fix
+    if(($_POST['action']=='request_appointment'||$_POST['action']=='send_message')&&isset($_POST['target'])){
+		$ct_post_temp=$_POST;
+    	$ct_post_temp['target']=1;
     }
-    
-    ct_get_fields($sender_email,$message,$_POST);
-    
-    if(isset($_POST['cscf']['confirm-email']))
-    {
-    	$_POST['cscf']['confirm-email']=$tmp;
+  	
+	//UserPro fix
+	if($_POST['action']=='userpro_process_form' && $_POST['template']=='register'){
+		$ct_post_temp = $_POST;
+		$ct_post_temp['shortcode'] = '';
+	}
+	
+	if(isset($ct_post_temp))
+		$ct_temp_msg_data = ct_get_fields_any($ct_post_temp);
+	else
+		$ct_temp_msg_data = ct_get_fields_any($_POST);
+
+	$sender_email = ($ct_temp_msg_data['email'] ? $ct_temp_msg_data['email'] : '');
+	$sender_nickname = ($ct_temp_msg_data['nickname'] ? $ct_temp_msg_data['nickname'] : '');
+	$subject = ($ct_temp_msg_data['subject'] ? $ct_temp_msg_data['subject'] : '');
+	$contact_form = ($ct_temp_msg_data['contact'] ? $ct_temp_msg_data['contact'] : true);
+	$message = ($ct_temp_msg_data['message'] ? $ct_temp_msg_data['message'] : array());
+	
+    if ($subject != '') {
+        $message = array_merge(array('subject' => $subject), $message);
     }
-    
-    if(($_POST['action']=='request_appointment'||$_POST['action']=='send_message')&&isset($_POST['target']))
-    {
-    	$_POST['target']=$tmp;
-    }
+   
+    $message = json_encode($message);
     
 	if($sender_email!=null)
 	{
@@ -397,6 +374,12 @@ function ct_ajax_hook()
 		{
 			$sender_info= '';
 		}
+        
+        $post_info['comment_type'] = 'feedback_ajax';
+        $post_info = json_encode($post_info);
+        if ($post_info === false)
+            $post_info = '';
+
 		
 		$ct_base_call_result = ct_base_call(array(
 			'message' => $message,
@@ -404,7 +387,7 @@ function ct_ajax_hook()
 			'sender_email' => $sender_email,
 			'sender_nickname' => $nickname,
 			'sender_info' => $sender_info,
-			'post_info'=>null,
+			'post_info'=> $post_info,
 			'checkjs' => $checkjs));
 		
 		$ct = $ct_base_call_result['ct'];
@@ -455,11 +438,13 @@ function ct_ajax_hook()
 				print json_encode($result);
 				die();
 			}
-			else if($_POST['action']=='cscf-submitform')
+			else if($_POST['action']== 'cscf-submitform' && !isset($_POST['cscf']))
 			{
-				$result=Array('sent'=>true,'valid'=>false,'errorlist'=>Array('name'=>$ct_result->comment));
-				print json_encode($result);
-				die();
+				$message_obj['akismet_result'] = 'true';
+				return $message_obj;
+				//$result=Array('sent'=>true,'valid'=>false,'errorlist'=>Array('name'=>$ct_result->comment));
+				//print json_encode($result);
+				//die();
 			}
 			else if($_POST['action']=='woocommerce_checkout')
 			{
@@ -511,7 +496,29 @@ function ct_ajax_hook()
 				print json_encode($result);
 				die();
 			}
-			else
+			//UserPro
+			else if($_POST['action']=='userpro_process_form' && $_POST['template']=='register')
+			{
+				foreach($_POST as $key => $value){
+					$output[$key]=$value;
+				}unset($key, $value);
+				$output['template'] = $ct_result->comment;
+				$output=json_encode($output);
+				print_r($output);
+				die;
+			}
+			//Quick event manager
+            else if($_POST['action']=='qem_validate_form'){
+				$errors[] = 'registration_forbidden';
+				$result = Array(
+ 					success => 'false',
+ 					errors => $errors,
+ 					title => $ct_result->comment
+ 				);
+ 				print json_encode($result);
+ 				die();
+ 			}
+            else
 			{
 				print $ct_result->comment;
 				die();

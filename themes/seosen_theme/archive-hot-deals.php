@@ -19,7 +19,7 @@
             <div id="hot_deals" class="row">
                 <?php
                 $options = array(
-                    'posts_per_page' => 10,
+                    'posts_per_page' => 100,
                     'post_type' => 'hot-deals',
                     'order_by' => 'post_date',
                     'order' => 'DESC'

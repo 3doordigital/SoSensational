@@ -35,6 +35,11 @@ function rocket_upgrader() {
 		}
 
 		update_option( WP_ROCKET_SLUG, $options );
+
+        // Empty OPCache to prevent issue where plugin is updated but still showing as old version in WP admin
+        if ( function_exists( 'opcache_reset' ) ) {
+            @opcache_reset();
+        }
 	} else {
 		if ( empty( $_POST ) && rocket_valid_key() ) {
 			rocket_check_key( 'transient_30' );
@@ -63,7 +68,14 @@ function rocket_first_install() {
 
 	// Create Option
 	add_option( WP_ROCKET_SLUG,
-		array(
+        /*
+         * Filters the default rocket options array
+         *
+         * @since 2.8
+         *
+         * @param array Array of default rocket options
+         */
+		apply_filters( 'rocket_first_install_options', array(
 			'secret_cache_key'            => $secret_cache_key,
 			'cache_mobile'                => 0,
 			'do_caching_mobile_files'     => 0,
@@ -95,7 +107,22 @@ function rocket_first_install() {
 			'minify_html'                 => 0,
 			'minify_html_inline_css'      => 0,
 			'minify_html_inline_js'       => 0,
+			'manual_preload'              => 1,
+			'automatic_preload'           => 1,
+			'sitemap_preload'             => 0,
+			'sitemap_preload_url_crawl'   => '500000',
+			'sitemaps'                    => array(),
 			'dns_prefetch'                => 0,
+			'database_revisions'          => 0,
+			'database_auto_drafts'        => 0,
+			'database_trashed_posts'      => 0,
+			'database_spam_comments'      => 0,
+			'database_trashed_comments'   => 0,
+			'database_expired_transients' => 0,
+			'database_all_transients'     => 0,
+			'database_optimize_tables'    => 0,
+			'schedule_automatic_cleanup'  => 0,
+			'automatic_cleanup_frequency' => '',
 			'cdn'                         => 0,
 			'cdn_cnames'                  => array(),
 			'cdn_zone'                    => array(),
@@ -105,14 +132,15 @@ function rocket_first_install() {
 			'cloudflare_email'            => '',
 			'cloudflare_api_key'          => '',
 			'cloudflare_domain'           => '',
+			'cloudflare_zone_id'          => '',
 			'cloudflare_devmode'          => 0,
 			'cloudflare_protocol_rewrite' => 0,
 			'cloudflare_auto_settings'    => 0,
-			'cloudflare_old_settings'     => 0,
+			'cloudflare_old_settings'     => '',
 			'varnish_auto_purge'          => 0,
 			'do_beta'                     => 0,
 		)
-	);
+	) );
 	rocket_dismiss_box( 'rocket_warning_plugin_modification' );
 	rocket_reset_white_label_values( false );
 }
@@ -252,4 +280,36 @@ function rocket_new_upgrade( $wp_rocket_version, $actual_version ) {
 		// Regenerate advanced-cache.php file
 		rocket_generate_advanced_cache_file();
 	}
+
+    if ( version_compare( $actual_version, '2.8', '<' ) ) {
+		$options                              = get_option( WP_ROCKET_SLUG );
+		$options['manual_preload']            = 1;
+		$options['automatic_preload']         = 1;
+		$options['sitemap_preload_url_crawl'] = '500000';
+		
+		update_option( WP_ROCKET_SLUG, $options );
+	}
+
+    // Deactivate CloudFlare completely if PHP Version is lower than 5.4
+    if ( version_compare( $actual_version, '2.8.16', '<' ) && phpversion() < '5.4' ) {
+        $options                                = get_option( WP_ROCKET_SLUG );
+        $options['do_cloudflare']               = 0;
+        $options['cloudflare_email']            = '';
+		$options['cloudflare_api_key']          = '';
+		$options['cloudflare_domain']           = '';
+		$options['cloudflare_devmode']          = 0;
+		$options['cloudflare_protocol_rewrite'] = 0;
+		$options['cloudflare_auto_settings']    = 0;
+		$options['cloudflare_old_settings']     = '';
+
+        update_option( WP_ROCKET_SLUG, $options );
+    }
+
+    // Add a value to the new CF zone_id field if the CF domain is set
+    if ( version_compare( $actual_version, '2.8.21', '<' ) && phpversion() >= '5.4' ) {
+        $options = get_option( WP_ROCKET_SLUG );
+        if ( 0 < $options['do_cloudflare'] && $options['cloudflare_domain'] !== '' ) {
+            require( WP_ROCKET_ADMIN_PATH . 'compat/cf-upgrader-5.4.php' );
+        }
+    }
 }

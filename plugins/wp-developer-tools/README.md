@@ -5,7 +5,7 @@ Contributors: phkcorp2005
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9674139
 Tags: php quick profiler, wordpress developer tools
 Requires at least: 2.8.6
-Tested up to: 4.3
+Tested up to: 4.6
 Stable tag: 1.0.1
 
 A needed plugin to help developers optimize their installation of wordpress. plugins and themes.
@@ -27,6 +27,13 @@ The WP-Developer-Tools is an ongoing collection of useful tools and components t
 Using thie WP-Developer-Tools PHP Quick Profiler, you will be able to see, in real time session information, load time, the database queries with the query time, the amount of memory used and the number of files loaded per page with their individual sizes.
 
 An added feature, this plugin is designed to be safe for production as the WP-Developer-Tools PHP Quick Profiler is ONLY active when the Administrator is logged in and the session active. Once the Administrator losgs out, the WP-Developer-Tools PHP Quick Profiler will automatically turn off and disable.
+
+# Publication
+
+The following publication, "Wordpress High Availability: Configuration, Deployment, Maintenance Tips & Techniques" available on
+Amazon at (https://www.amazon.com/dp/B00RAIMGAC) shows how to improved performance for high availability environments.
+
+<img src="https://images-na.ssl-images-amazon.com/images/I/51NqitVDtOL.jpg">
 
 # Installation 
 
@@ -55,6 +62,11 @@ Please do not be afraid of asking questions?<br>
 
 
 # Changelog 
+= 1.1 =
+* Change to use MySQLi extension
+* Change user capability check for activate_plugins
+* Updates for WP 4.6
+
 = 1.0.1 =
 * Updates for WP 4.3
 

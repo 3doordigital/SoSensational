@@ -2,7 +2,7 @@
 if(!defined('ABSPATH'))
   die('You are not allowed to call this page directly.');
 
-  if(is_user_logged_in() and current_user_can('level_10'))
+  if(is_user_logged_in() and current_user_can( 'update_core' ))
   {
 
     $filename = date("ymdHis",time()) . '_' . $link_name . '_pretty_link_clicks_' . $hmin . '-' . $hmax . '.csv';

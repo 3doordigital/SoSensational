@@ -2,8 +2,7 @@
 require_once(dirname(__FILE__) . '/../../../../../../../wp-config.php');
 require_once(dirname(__FILE__) . '/../../../prlipro-config.php');
 
-
-if(is_user_logged_in() and $current_user->user_level >= 8)
+if(is_user_logged_in() and current_user_can( 'update_core' ))
 {
   header("Content-Type: application/json");
   if(isset($_GET['sdate']) and isset($_GET['edate']) and isset($_GET['id']))

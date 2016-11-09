@@ -1,85 +1,78 @@
-=== CoSchedule by Todaymade ===
-Contributors: todaymade
+=== CoSchedule ===
+Contributors: CoSchedule
 Donate link: http://coschedule.com
-Tags: calendar, schedule, social media, editorial, twitter, facebook, tweets, auto publish, linkedin, tumblr
+Tags: Content marketing calendar, drag and drop editorial calendar plugin, social media scheduling, editorial calendar plugin, content marketing, social automation tool, pinterest integration, schedule facebook posts, schedule to twitter, social media, tumblr, schedule posts to google+, schedule posts to Linkedin, Google Analytics, social media analytics, Google Docs integration, Evernote integration, Click to Tweet
 Requires at least: 3.5
-Tested up to: 4.4-RC1
-Stable tag: 2.4.4
+Tested up to: 4.6.1
+Stable tag: 2.4.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin connects to CoSchedule, a team content marketing editorial calendar. Send unlimited social messages with each blog post.
+CoSchedule is an editorial calendar for your content marketing and social scheduling. Take control of your content strategy and consolidate your tools into one content marketing editorial calendar with CoSchedule.
+
 
 == Description ==
-Finally, there is an all-in-one [editorial calendar plugin for WordPress](http://coschedule.com/wordpress-editorial-calendar-plugin  "Social Media Auto Publish Editorial Calendar Plugin For WordPress") that brings true automated social media publishing to your blog!
 
-CoSchedule is the first (and only) social media editorial calendar for WordPress that allows you to schedule your blog and social media on the same drag-and-drop calendar.
-
-Now, you can save time and grow traffic by scheduling blog posts and social media at the same time!
-
-[Try It Free Now](http://coschedule.com/sign-up "Content Marketing Editorial Calendar Plugin For WordPress")
+CoSchedule is the **all in one editorial calendar** for content marketing and social scheduling! It keeps you and your team insanely organized and is the first (and only) editorial calendar to **integrate with Wordpress**. Collaborate, schedule, and automate all of your content marketing and social media with CoSchedule.
 
 
-CoSchedule allows you to create a queue of social media messages that will be automatically sent once your blog post goes live. Even better, if you drag a blog post from one date to another on the editorial calendar, your social media messages move with it. This allows bloggers to create a series of messages that promote their blog posts on a rolling schedule, and also reschedule them with ease!
+##### Take control of your content strategy and consolidate your tools into one content marketing editorial calendar with CoSchedule.
 
-CoSchedule is a lightweight social sharing plugin that runs off of our own hand-crafted API to ensure that social media and blog scheduling is 100% reliable. It is a paid (monthly) service, but you can [try it free for 14 days](http://coschedule.com/sign-up "Social Media Editorial Calendar Plugin For WordPress").
+##### [Start your 14 Day Free Trial Today >>>](http://coschedule.com/sign-up)
 
-#### Features
-* Drag-And-Drop Editorial Calendar
-* Automated Social Publishing
-* Schedule Social Media While You Blog
-* Editorial Comments
-* Team Workflow Management
-* Notifications And Blog Management Center
-* Lightweight WordPress Plugin
-* All-In-One Publishing Solution
-* 2-Minute Installation
-* Beautiful Modern Design
+[vimeo https://vimeo.com/166544659]
+
+##### Easily Plan all Your Content in One Editorial Calendar
+
+Easily plan your blog posts, marketing content, and social media on one drag and drop calendar. Create any type of content from emails, blog posts, webinars, even ebooks! They all have a place on your calendar. Add color labels to keep things in order, and never miss a deadline.
+
+##### Keep Your Whole Team Organized
+
+CoSchedule makes it easy to keep your whole team organized. Share tasks, upload resources, and tell your story without breaking your workflow. Your team will always know what to work on with clear deadlines and simple communication.
+
+##### Schedule All Your Social Media in One Place
+
+The CoSchedule calendar is perfect for social media scheduling.
+
+* **Schedule Everything in CoSchedule:** Schedule all your social messages directly in the calendar (no more jumping from one social platform to the next!).
+* **Monitor Social Traffic:** Monitor how often your content has been shared on networks such as FB, Pinterest, Google+, and Linkedin.
+* **Schedule Dozens of Social Media Messages in Bulk:** Use reusable social templates to share posts faster and drive traffic to your blog.
+* **Eliminate the Guesswork of Scheduling:** Let CoSchedule intelligently promote your content at the best possible traffic times for each network.
+
+##### Make Your Social Media Smarter *(coming soon)*
+
+The average lifespan of a single social message is mere minutes, so why are you only sharing it once? Set your messages to automation, select your frequency level (low, medium, or high) and let CoSchedule re-share your best content at the most optimal frequency.
+
+##### Integrate With the Tools You Love
+
+Along with the optional WordPress plugin, CoSchedule integrates with the tools you love, giving you powerful options for editing content, tracking your success, and more!
+
+* **Evernote & Google Docs**: Write your content in Evernote or Google docs and instantly convert to your Wordpress blog!
+* **Headline Analyzer**: Grade multiple headlines within your CoSchedule calendar; optimizing them to increase clickthrough rates and social shares.
+* **Google Analytics**: Track improvements to your website traffic with GA link tracking!
+* **Chrome Extension:** Curate content to your calendar from around the web with our Chrome Extension.
+* **Pinterest**: Plan your Pins right on your editorial calendar with the rest of your blog and marketing content.
 
 
-[youtube http://www.youtube.com/watch?v=uK3un3Wt_Qo]
+##### Take control of your content strategy and consolidate your tools into one content marketing editorial calendar with CoSchedule.
 
-#### Social Media Auto-Publish While You Blog
-With CoSchedule, you can automate your social media sharing while you blog. When your blog post is published, CoSchedule will automatically send your designated queue of messages to the most popular social networks:
-
-* Twitter
-* Facebook Profiles
-* Facebook Pages
-* Facebook Groups
-* LinkedIn Profiles
-* LinkedIn Business Pages
-* LinkedIn Groups
-* Google+ Pages
-* Buffer
-* Tumblr
-* Pinterest
-
-#### A Visual Way To Plan Your Content
-Like Edit Flow, CoSchedule is a fully-functioning editorial calendar for WordPress. Schedule your blog with drag-and-drop ease.
+##### [Start your 14 Day Free Trial Today >>>](http://coschedule.com/sign-up)
 
 
-#### Keep Your Team In The Loop
-CoSchedule has full support for editorial comments, and even allows you to assign tasks to your authors and team members. It is an all-in-one-publishing solution.
-
-#### The All-In-One Publishing Solution
-This plugin connects to CoSchedule, the all-in-one content marketing editorial calendar for WordPress. It allows you to visually schedule blog posts with your team and automatically send messages to your social networks. Imagine true social media automation for Facebook, Twitter, LinkedIn, Google+ and Tumblr.
-
-#### Save Time With CoSchedule
-You can save a ton of time with CoSchedule. Most of our users tell us that they blog more, [schedule more social media messages](http://coschedule.com/blog/promote-your-blog-with-social-media/ "How To Promote Your Blog With Social Media"), and get more traffic. The bottom line is that CoSchedule will make you a better blogger.
 
 == Installation ==
 
 You can install CoSchedule via the WordPress.org plugin directory or manually by uploading the files to your server.
 
-= WordPress Gallery =
+##### WordPress Gallery
 
 1. Sign in to your WordPress blog
 2. Go to 'Plugins' -> 'Add New'
 3. Search for 'coschedule'
-4. Find 'CoSchedule by Todaymade' in the results and click 'Install Now'
-5. Follow the on screen intructions
+4. Find 'CoSchedule’ in the results and click 'Install Now'
+5. Follow the onscreen instructions
 
-= Manual =
+##### Manual
 
 [youtube http://www.youtube.com/watch?v=uK3un3Wt_Qo]
 
@@ -92,41 +85,69 @@ You can install CoSchedule via the WordPress.org plugin directory or manually by
 
 == Frequently Asked Questions ==
 
-= What is CoSchedule? =
+##### What is CoSchedule?
 
-CoSchedule is a content marketing editorial calendar that syncs with your WordPress blog using a WordPress plugin.
+CoSchedule is a content marketing editorial calendar that integrates with your WordPress blog using a WordPress plugin.
 
 It helps you visualize and plan your blog content with drag-and-drop ease. You can create and publish customized messages for your social networks for each blog post. Posts are easily moved, and social messages attached to those posts move with them. You can collaborate with your writing team and delegate tasks surrounding your blog posts. Learn more [here.](http://coschedule.com/help)
 
-= How does CoSchedule work? =
+##### How does CoSchedule work?
 
 After you sign up for an account at CoSchedule.com, you can connect your WordPress blog to your CoSchedule account. You will then have access to the calendar and team features at CoSchedule.com.
 
 CoSchedule synchronizes your WordPress post, author, and category information to its servers, but all of your WordPress data remains in WordPress. CoSchedule will update that WordPress data as you direct, but the data always remains in WordPress. Social messages, tasks, comments, team members, and other data you create in CoSchedule will be stored on CoSchedule's servers, and never in WordPress.
 
-= Why do I need CoSchedule? =
+##### Why do I need CoSchedule?
 
 Managing a team blog or planning your own blog's content marketing is not easy inside of WordPress.
 
 CoSchedule is an all-in-one editorial calendar that makes it easier to create, move, and manage your blog posts and stay ahead of your plan. It allows for WordPress blogging team collaboration without needing extra outside tools and logins, reducing the time and unnecessary complexity required to plan your blog's content marketing program. The lightweight plugin allows CoSchedule to work without unnecessary burden on WordPress, which is different that WordPress-oriented plugins like Edit Flow. You can read more [here.](http://coschedule.com)
 
-= How do I use CoSchedule? =
+##### How do I use CoSchedule?
 
 Once you have the plugin installed, you can follow instructions found [here](http://coschedule.com/help) that will help you get maximum use out of your CoSchedule account.
 
-= How much does CoSchedule cost? =
+##### How much does CoSchedule cost?
 
-We charge a monthly fee for CoSchedule because we provide an ongoing service that publishes your blog posts and social media messages using a robust API. CoSchedule has several subscription plans to choose from, starting at only $15/month. It is fully integrated with WordPress, Twitter, Facebook, Pinterest, LinkedIn, Google+, Buffer, and Tumblr.
+We charge a monthly fee for CoSchedule because we provide an ongoing service that publishes your blog posts and social media messages using a robust API. CoSchedule has several subscription plans to choose from, starting at only $15/month. It is fully integrated with WordPress, Twitter, Facebook, Pinterest, LinkedIn, Google+, Buffer, and Tumblr. [Find the right calendar plan for you!](http://coschedule.com/pricing)
 
 == Screenshots ==
 
 1. **Drag-and-Drop Editorial Calendar**: You can easily make changes to your blogging schedule, just by dragging and dropping posts. What you do on your calendar happens in WordPress.
-2. **See What's Happening**: You can use your calendar to view and filter what's happening on your blog. It's easy to make a schedule with this customizable bird's-eye-view.
+2. **Create Any Type of Content**: Use the calendar to schedule everything! From emails, blog posts, podcasts, and the like, CoSchedule is perfect for creating any content or social media campaign.
 3. **The WordPress Plugin**: Install the plugin, and connect your blogs and accounts. The plugin lets you share your blog posts on social media, and puts them all on your calendar, too.
-4. **Collaborate With Your Team**: You don’t have to chase after deadlines. Your team can clearly see what and when they should write. They’ll even get a few friendly reminders.
-5. **Social Scheduling While You Blog**: Social messages are content, too. Write as many as you need at the same time you write your blog post. Hit publish, and automatically set them all in motion.
+4. **Collaborate With Your Team**: You don't have to chase after deadlines. Your team can clearly see what and when they should write. They'll even get a few friendly reminders.
+5. **Social Scheduling While You Blog**: Social messages are content too. Write as many as you need at the same time you write your blog post. Hit publish, and automatically set them all in motion.
+
 
 == Changelog ==
+
+= 2.4.13 =
+* Improves overall plugin performance
+
+= 2.4.12 =
+* Improved plugin activation
+
+= 2.4.11 =
+* Improved plugin performance
+
+= 2.4.10 =
+* Fixes issue with post name overrides
+
+= 2.4.9 =
+* Fixes issues with Jetpack compatibility
+
+= 2.4.8 =
+* Fixes issues with photos in the last plugin release
+
+= 2.4.7 =
+* Fixes issues with the deployment of release 2.4.6
+
+= 2.4.6 =
+* Improves overall plugin performance
+
+= 2.4.5 =
+* Improves overall plugin performance
 
 = 2.4.4 =
 * Improved compatibility with certain OS configurations
@@ -288,6 +309,33 @@ We charge a monthly fee for CoSchedule because we provide an ongoing service tha
 * Private beta release
 
 == Upgrade Notice ==
+
+= 2.4.13 =
+* Improves overall plugin performance
+
+= 2.4.12 =
+* This update improves plugin activation
+
+= 2.4.11 =
+* This update improves overall plugin performance
+
+= 2.4.10 =
+* This update fixes issues with post name overrides
+
+= 2.4.9 =
+* This update fixes issues with Jetpack compatibility
+
+= 2.4.8 =
+* This update fixes issues with photos in the last plugin release
+
+= 2.4.7 =
+* This update fixes issues with the deployment of release 2.4.6
+
+= 2.4.6 =
+* This update improves overall plugin performance
+
+= 2.4.5 =
+* This update improves overall plugin performance
 
 = 2.4.4 =
 * This update improves compatibility with certain OS configurations

@@ -66,6 +66,7 @@ add_action( 'after_rocket_clean_domain', 'rocket_clean_pressidium' );
 /**
  * Update cache when a post is updated or commented
  *
+ * @since 2.8   Only add post type archive if post type is not post
  * @since 2.6 	Purge the page defined in "Posts page" option
  * @since 2.5.5 Don't cache for auto-draft post status
  * @since 1.3.2 Add wp_update_comment_count to purge cache when a comment is added/updated/deleted
@@ -91,10 +92,21 @@ function rocket_clean_post( $post_id ) {
 	// Get all post infos
 	$post = get_post( $post_id );
 	
-	// No purge for specifics conditions
-	if ( ! is_object( $post ) || $post->post_status == 'auto-draft' || empty( $post->post_type ) || $post->post_type == 'nav_menu_item' ) {
+	// Return if $post is not an object
+	if ( ! is_object( $post ) ) {
+    	return;
+    }
+
+    // No purge for specific conditions
+    if ( $post->post_status == 'auto-draft' || empty( $post->post_type ) || $post->post_type == 'nav_menu_item' ) {
 		return;
 	}
+
+    // Don't purge if post's post type is not public or not publicly queryable
+    $post_type = get_post_type_object( $post->post_type );
+    if ( $post_type->public !== true ) {
+        return;
+    }
 	
 	// Get the post language
 	$lang = false;
@@ -104,7 +116,7 @@ function rocket_clean_post( $post_id ) {
 		$lang = $GLOBALS['sitepress']->get_language_for_element( $post_id, 'post_' . get_post_type( $post_id ) );
 
 	// Polylang
-	} else if ( rocket_is_plugin_active( 'polylang/polylang.php' ) ) {
+	} else if ( rocket_is_plugin_active( 'polylang/polylang.php' ) || rocket_is_plugin_active( 'polylang-pro/polylang.php' ) ) {
 		$lang = pll_get_post_language( $post_id );
 	}
 	
@@ -120,15 +132,16 @@ function rocket_clean_post( $post_id ) {
 	}
 	
 	// Add Posts page
-	if( $post->post_type == 'post' && (int) get_option( 'page_for_posts' ) > 0 ) {
+	if( 'post' == $post->post_type && (int) get_option( 'page_for_posts' ) > 0 ) {
 		array_push( $purge_urls, get_permalink( get_option( 'page_for_posts' ) ) );
 	}
 	
 	// Add Post Type archive
-	$post_type_archive = get_post_type_archive_link( get_post_type( $post_id ) );
-	if ( $post_type_archive ) {
-		array_push( $purge_urls, $post_type_archive );
-	}
+	if ( 'post' !== $post->post_type ) {
+	    if ( $post_type_archive = get_post_type_archive_link( get_post_type( $post_id ) ) ) {
+	    	array_push( $purge_urls, $post_type_archive );
+	    }
+    }
 
 	// Add next post
 	$next_post = get_adjacent_post( false, '', false );
@@ -157,8 +170,19 @@ function rocket_clean_post( $post_id ) {
 	// Add urls page to purge every time a post is save
 	$cache_purge_pages = get_rocket_option( 'cache_purge_pages' );
 	if ( $cache_purge_pages ) {
+        global $blog_id;
+
+        $home_url = get_option( 'home' );
+
+        if ( ! empty( $blog_id ) && is_multisite() ) {
+            switch_to_blog( $blog_id );
+            $home_url = get_option( 'home' );
+            restore_current_blog();
+        }
+
 		foreach( $cache_purge_pages as $page ) {
-			array_push( $purge_urls, home_url( $page ) );
+    		$page = trailingslashit( $home_url ) . $page;
+			array_push( $purge_urls, $page );
 		}
 	}
 
@@ -337,7 +361,7 @@ add_action( 'shutdown', 'do_rocket_bot_cache_json' );
 function do_rocket_bot_cache_json() {
 	global $do_rocket_bot_cache_json;
 	if ( $do_rocket_bot_cache_json ) {
-		run_rocket_bot( 'cache-json' );
+    	run_rocket_preload_cache( 'cache-json', false );
 	}
 }
 
@@ -407,8 +431,12 @@ function __rocket_purge_cache() {
     			    list( $host, $path, $scheme, $query ) = get_rocket_parse_url( untrailingslashit( home_url() ) );
                     $referer = $scheme . '://' . $host . $referer;
                 }
-			    
-				rocket_clean_files( $referer );
+                
+                if ( home_url( '/' ) === $referer ) {
+                    rocket_clean_home();
+                } else {
+                    rocket_clean_files( $referer );
+                }
 				break;
 
 			default:
@@ -433,7 +461,7 @@ function __do_admin_post_rocket_purge_opcache() {
     }
 
     if ( function_exists( 'opcache_reset' ) ) {
-        opcache_reset();
+        @opcache_reset();
     }
 
     wp_redirect( wp_get_referer() );
@@ -458,7 +486,7 @@ function __rocket_preload_cache() {
         }
 
 		$lang = isset( $_GET['lang'] ) && $_GET['lang'] != 'all' ? sanitize_key( $_GET['lang'] ) : '';
-		run_rocket_bot( 'cache-preload', $lang );
+		run_rocket_preload_cache( 'cache-preload' );
 
         wp_redirect( wp_get_referer() );
         die();

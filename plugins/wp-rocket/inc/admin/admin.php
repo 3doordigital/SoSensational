@@ -89,7 +89,7 @@ add_filter( 'user_row_actions', '__rocket_user_row_actions', 10, 2 );
 function __rocket_user_row_actions( $actions, $user ) {			
 	/** This filter is documented in inc/admin-bar.php */
 	if ( current_user_can( apply_filters( 'rocket_capacity', 'manage_options' ) ) && get_rocket_option( 'cache_logged_user', false ) ) {
-		$url = wp_nonce_url( admin_url( 'admin-post.php?action=purge_cache&type=user-' . $user->id ), 'purge_cache_user-' . $user->id );
+		$url = wp_nonce_url( admin_url( 'admin-post.php?action=purge_cache&type=user-' . $user->ID ), 'purge_cache_user-' . $user->ID );
 		$actions['rocket_purge'] = sprintf( '<a href="%s">%s</a>', $url, __( 'Clear this cache', 'rocket' ) );
 	}
     
@@ -241,7 +241,9 @@ function __rocket_do_options_export() {
 		wp_nonce_ays( '' );
 	}
 
-	$filename = sprintf( 'wp-rocket-settings-%s-%s.txt', date( 'Y-m-d' ), uniqid() );
+    $filename_prefix = rocket_is_white_label() ? sanitize_title( get_rocket_option( 'wl_plugin_name' ) ) : 'wp-rocket';
+
+	$filename = sprintf( '%s-settings-%s-%s.txt', $filename_prefix, date( 'Y-m-d' ), uniqid() );
 	$gz = 'gz' . strrev( 'etalfed' );
 	$options = $gz//;
 	( serialize( get_option( WP_ROCKET_SLUG ) ), 1 ); // do not use get_rocket_option() here
@@ -336,4 +338,22 @@ function __rocket_maybe_set_wp_cache_define() {
 	if( defined( 'WP_CACHE' ) && ! WP_CACHE ) {
 		set_rocket_wp_cache_define( true );
 	}
+}
+
+/**
+ * Launches the database optimization from admin
+ *
+ * @since 2.8
+ * @author Remy Perona
+ */
+add_action( 'admin_post_rocket_optimize_database', '__rocket_optimize_database' );
+function __rocket_optimize_database() {
+    if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'rocket_optimize_database' ) ) {
+        wp_nonce_ays( '' );
+    }
+
+    do_rocket_database_optimization();
+
+    wp_redirect( wp_get_referer() );
+    die();
 }

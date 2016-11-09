@@ -102,11 +102,10 @@ function rocket_field( $args ) {
 			break;
 
 			case 'checkbox' : 
-				if ( isset( $args['label_screen'] ) ) {
-					?>
-						<legend class="screen-reader-text"><span><?php echo $args['label_screen']; ?></span></legend>
-					<?php } ?>
-					<label><input type="checkbox" id="<?php echo $args['name']; ?>" class="<?php echo $class; ?>" name="wp_rocket_settings[<?php echo $args['name']; ?>]" value="1"<?php echo $readonly; ?> <?php checked( get_rocket_option( $args['name'], 0 ), 1 ); ?> <?php echo $parent; ?>/> <?php echo $args['label']; ?>
+				if ( isset( $args['label_screen'] ) ) { ?>
+                    <legend class="screen-reader-text"><span><?php echo $args['label_screen']; ?></span></legend>
+				<?php } ?>
+					<label><input type="checkbox" id="<?php echo $args['name']; ?>" class="<?php echo $class; ?>" name="wp_rocket_settings[<?php echo $args['name']; ?>]" value="1"<?php echo $readonly; ?> <?php checked( get_rocket_option( $args['name'], $default ), 1 ); ?> <?php echo $parent; ?>/> <?php echo $args['label']; ?>
 					</label>
 
 			<?php
@@ -115,7 +114,7 @@ function rocket_field( $args ) {
 			case 'select' : ?>
 
 					<legend class="screen-reader-text"><span><?php echo $args['label_screen']; ?></span></legend>
-					<label>	<select id="<?php echo $args['name']; ?>" name="wp_rocket_settings[<?php echo $args['name']; ?>]"<?php echo $readonly; ?>>
+					<label>	<select id="<?php echo $args['name']; ?>" class="<?php echo $class; ?>" name="wp_rocket_settings[<?php echo $args['name']; ?>]"<?php echo $readonly; ?> <?php echo $parent; ?>>
 							<?php foreach( $args['options'] as $val => $title) { ?>
 								<option value="<?php echo $val; ?>" <?php selected( get_rocket_option( $args['name'] ), $val ); ?>><?php echo $title; ?></option>
 							<?php } ?>
@@ -125,6 +124,11 @@ function rocket_field( $args ) {
 
 			<?php
 			break;
+
+            case 'submit_optimize' : ?>
+
+            <input type="submit" name="wp_rocket_settings[submit_optimize]" id="rocket_submit_optimize" class="button button-primary" value="<?php _e( 'Save and optimize', 'rocket' ); ?>"> <a href="<?php echo wp_nonce_url( admin_url( 'admin-post.php?action=rocket_optimize_database' ), 'rocket_optimize_database' ); ?>" class="button button-secondary"><?php _e( 'Optimize', 'rocket' ); ?></a>
+            <?php break;
 
 			case 'repeater' :
 
@@ -435,6 +439,8 @@ function rocket_display_options() {
 		'api-key',
 		'basic',
 		'advanced',
+		'database',
+		'preload',
 		'cloudflare',
 		'cdn',
 		'varnish',
@@ -469,7 +475,8 @@ function rocket_display_options() {
 				'minify_css_key', 
 				'minify_js_key', 
 				'version', 
-				'cloudflare_old_settings' 
+				'cloudflare_old_settings',
+				'cloudflare_zone_id'
 			)
 		); 
 				
@@ -479,6 +486,8 @@ function rocket_display_options() {
 			<?php if( rocket_valid_key() ) { ?>
 				<a href="#tab_basic" class="nav-tab"><?php _e( 'Basic options', 'rocket' ); ?></a>
 				<a href="#tab_advanced" class="nav-tab"><?php _e( 'Advanced options', 'rocket' ); ?></a>
+				<a href="#tab_database" class="nav-tab"><?php _e( 'Database', 'rocket' ); ?></a>
+				<a href="#tab_preload" class="nav-tab"><?php _e( 'Preload', 'rocket' ); ?></a>
 				<?php if ( get_rocket_option( 'do_cloudflare' ) ) { ?>
 					<a href="#tab_cloudflare" class="nav-tab">CloudFlare</a>
 				<?php } ?>
@@ -512,6 +521,12 @@ function rocket_display_options() {
 			<?php if( rocket_valid_key() ) { ?>
 				<div class="rkt-tab" id="tab_basic"><?php do_settings_sections( 'rocket_basic' ); ?></div>
 				<div class="rkt-tab" id="tab_advanced"><?php do_settings_sections( 'rocket_advanced' ); ?></div>
+				<div class="rkt-tab" id="tab_database">
+    				<p class="description database_description"><?php _e( 'The following options help you optimize your database.', 'rocket' ); ?></p>
+                    <p class="description warning file-error database_description"><?php _e( 'Before you do any optimization, please backup your database first because any cleanup done is irreversible!', 'rocket' ); ?></p>
+    				<?php do_settings_sections( 'rocket_database' ); ?>
+				</div>
+				<div class="rkt-tab" id="tab_preload"><?php do_settings_sections( 'rocket_preload' ); ?></div>
 				<div class="rkt-tab" id="tab_cloudflare" <?php echo get_rocket_option( 'do_cloudflare' ) ? '' : 'style="display:none"'; ?>><?php do_settings_sections( 'rocket_cloudflare' ); ?></div>
 				<div class="rkt-tab" id="tab_cdn"><?php do_settings_sections( 'rocket_cdn' ); ?></div>
 				<?php 
@@ -743,7 +758,51 @@ function rocket_settings_callback( $inputs ) {
 	} else {
 		$inputs['minify_js_in_footer'] = array();
 	}
+
+    /**
+     * Database options
+     */
+    $inputs['database_revisions']          = ! empty( $inputs['database_revisions'] ) ? 1 : 0;
+    $inputs['database_auto_drafts']        = ! empty( $inputs['database_auto_drafts'] ) ? 1 : 0;
+    $inputs['database_trashed_posts']      = ! empty( $inputs['database_trashed_posts'] ) ? 1 : 0;
+    $inputs['database_spam_comments']      = ! empty( $inputs['database_spam_comments'] ) ? 1 : 0;
+    $inputs['database_trashed_comments']   = ! empty( $inputs['database_trashed_comments'] ) ? 1 : 0;
+    $inputs['database_expired_transients'] = ! empty( $inputs['database_expired_transients'] ) ? 1 : 0;
+    $inputs['database_all_transients']     = ! empty( $inputs['database_all_transients'] ) ? 1 : 0;
+    $inputs['database_optimize_tables']    = ! empty( $inputs['database_optimize_tables'] ) ? 1 : 0;
+    $inputs['schedule_automatic_cleanup']  = ! empty( $inputs['schedule_automatic_cleanup'] ) ? 1 : 0;
+    $inputs['automatic_cleanup_frequency'] = ! empty( $inputs['automatic_cleanup_frequency'] ) ? $inputs['automatic_cleanup_frequency'] : '';
+
+    if ( $inputs['schedule_automatic_cleanup'] != 1 && ( 'daily' != $inputs['automatic_cleanup_frequency'] || 'weekly' != $inputs['automatic_cleanup_frequency'] || 'monthly' != $inputs['automatic_cleanup_frequency'] ) ) {
+        unset( $inputs['automatic_cleanup_frequency'] );
+    }
 	
+    /**
+     * Options: Activate bot preload
+     */
+    $inputs['manual_preload']    = ! empty( $inputs['manual_preload'] ) ? 1 : 0;
+    $inputs['automatic_preload'] = ! empty( $inputs['automatic_preload'] ) ? 1 : 0;
+
+    /*
+     * Option: activate sitemap preload
+     */
+    $inputs['sitemap_preload'] = ! empty( $inputs['sitemap_preload'] ) ? 1 : 0;
+
+    /*
+     * Option : XML sitemaps URLs
+     */
+    if ( ! empty( $inputs['sitemaps'] ) ) {
+		if ( ! is_array( $inputs['sitemaps'] ) ) {
+			$inputs['sitemaps'] = explode( "\n", $inputs['sitemaps'] );
+		}
+		$inputs['sitemaps'] = array_map( 'trim', $inputs['sitemaps'] );
+		$inputs['sitemaps'] = array_map( 'rocket_sanitize_xml', $inputs['sitemaps'] );
+		$inputs['sitemaps'] = (array) array_filter( $inputs['sitemaps'] );
+		$inputs['sitemaps'] = array_unique( $inputs['sitemaps'] );
+	} else {
+		$inputs['sitemaps'] = array();
+	}
+
 	/*
 	 * Option : CloudFlare Domain
 	 */
@@ -788,6 +847,7 @@ function rocket_settings_callback( $inputs ) {
 		}
 
 		$inputs['cdn_cnames'] 	= array_values( $inputs['cdn_cnames'] );
+		$inputs['cdn_cnames']   = array_map( 'untrailingslashit', $inputs['cdn_cnames'] );
 		ksort( $inputs['cdn_zone'] );
 		$inputs['cdn_zone'] 	= array_values( $inputs['cdn_zone'] );
 	}
@@ -821,9 +881,11 @@ function rocket_settings_callback( $inputs ) {
 			 unset($inputs[$option]);
 		 }
 	}
+	
+	$filename_prefix = rocket_is_white_label() ? sanitize_title( get_rocket_option( 'wl_plugin_name' ) ) : 'wp-rocket';
 	 
 	if ( isset( $_FILES['import'] )
-		&& preg_match( '/wp-rocket-settings-20\d{2}-\d{2}-\d{2}-[a-f0-9]{13}\.txt/', $_FILES['import']['name'] )
+		&& preg_match( '/'. $filename_prefix . '-settings-20\d{2}-\d{2}-\d{2}-[a-f0-9]{13}\.txt/', $_FILES['import']['name'] )
 		&& 'text/plain' == $_FILES['import']['type'] ) {
 		$file_name 			= $_FILES['import']['name'];
 		$_POST_action 		= $_POST['action'];
@@ -867,7 +929,7 @@ function rocket_settings_callback( $inputs ) {
 		add_settings_error( 'general', 'settings_updated', __( 'Settings saved.', 'rocket' ), 'updated' );
 	}
 
-	return $inputs;
+	return apply_filters( 'rocket_inputs_sanitize', $inputs );
 }
 
 /**
@@ -917,10 +979,17 @@ function rocket_after_save_options( $oldvalue, $value ) {
 	if ( ! empty( $_POST ) && ( $oldvalue['minify_js'] != $value['minify_js'] || $oldvalue['exclude_js']  != $value['exclude_js'] ) || ( isset( $oldvalue['cdn'] ) && ! isset( $value['cdn'] ) || ! isset( $oldvalue['cdn'] ) && isset( $value['cdn'] ) ) ) {
 		rocket_clean_minify( 'js' );
 	}
+
+    /*
+     * Performs the database optimization when settings are saved with the "save and optimize" submit button"
+     */
+    if ( ! empty( $_POST ) && isset( $_POST['wp_rocket_settings']['submit_optimize'] ) ) {
+        do_rocket_database_optimization();
+    }
 		
 	// Update CloudFlare Development Mode
 	if ( ! empty( $_POST ) && ( $oldvalue['cloudflare_devmode'] != $value['cloudflare_devmode'] ) ) {
-		set_rocket_cloudflare_devmode( (bool) $value['cloudflare_devmode'] );
+		set_rocket_cloudflare_devmode( $value['cloudflare_devmode'] );
 	}
 	
 	// Update CloudFlare settings
@@ -928,16 +997,20 @@ function rocket_after_save_options( $oldvalue, $value ) {
 		$cf_old_settings = explode( ',', $value['cloudflare_old_settings'] );
 		
 		// Set Cache Level to Aggressive 
-		$cf_cache_lvl = ( isset( $cf_old_settings[0] ) && $value['cloudflare_auto_settings'] == 0 ) ? $cf_old_settings[0] : 'agg';
-		set_rocket_cloudflare_cache_lvl( $cf_cache_lvl );
+		$cf_cache_level = ( isset( $cf_old_settings[0] ) && $value['cloudflare_auto_settings'] == 0 ) ? $cf_old_settings[0] : 'aggressive';
+		set_rocket_cloudflare_cache_level( $cf_cache_level );
 		
 		// Active Minification for HTML, CSS & JS
-		$cf_minify = ( isset( $cf_old_settings[1] ) && $value['cloudflare_auto_settings'] == 0 ) ? $cf_old_settings[1] : 7;
+		$cf_minify = ( isset( $cf_old_settings[1] ) && $value['cloudflare_auto_settings'] == 0 ) ? $cf_old_settings[1] : 'on';
 		set_rocket_cloudflare_minify( $cf_minify );
 		
 		// Deactivate Rocket Loader to prevent conflicts
-		$cf_async = ( isset( $cf_old_settings[2] ) && $value['cloudflare_auto_settings'] == 0 ) ? $cf_old_settings[2] : false;
-		set_rocket_cloudflare_async( $cf_async );
+		$cf_rocket_loader = ( isset( $cf_old_settings[2] ) && $value['cloudflare_auto_settings'] == 0 ) ? $cf_old_settings[2] : 'off';
+		set_rocket_cloudflare_rocket_loader( $cf_rocket_loader );
+
+        // Set Browser cache to 1 month
+		$cf_browser_cache_ttl = ( isset( $cf_old_settings[3] ) && $value['cloudflare_auto_settings'] == 0 ) ? $cf_old_settings[3] : '2678400';
+		set_rocket_cloudflare_browser_cache_ttl( $cf_browser_cache_ttl );
 	}
 	
 	// Regenerate advanced-cache.php file
@@ -993,6 +1066,13 @@ function rocket_pre_main_option( $newvalue, $oldvalue ) {
 		}
 	}
 
+    // Clear WP Rocket database optimize cron if the setting has been modified
+    if ( ( isset( $newvalue['schedule_automatic_cleanup'], $oldvalue['schedule_automatic_cleanup'] ) && $newvalue['schedule_automatic_cleanup'] != $oldvalue['schedule_automatic_cleanup'] ) || ( ( isset( $newvalue['automatic_cleanup_frequency'], $oldvalue['automatic_cleanup_frequency'] ) && $newvalue['automatic_cleanup_frequency'] != $oldvalue['automatic_cleanup_frequency'] ) ) ) {
+        if ( wp_next_scheduled( 'rocket_database_optimization_time_event' ) ) {
+            wp_clear_scheduled_hook( 'rocket_database_optimization_time_event' );
+        }
+    }
+
 	// Regenerate the minify key if CSS files have been modified
 	if ( ( isset( $newvalue['minify_css'], $oldvalue['minify_css'] ) && $newvalue['minify_css'] != $oldvalue['minify_css'] )
 		|| ( isset( $newvalue['exclude_css'], $oldvalue['exclude_css'] ) && $newvalue['exclude_css'] != $oldvalue['exclude_css'] )
@@ -1010,13 +1090,17 @@ function rocket_pre_main_option( $newvalue, $oldvalue ) {
 		$newvalue['minify_js_key'] = create_rocket_uniqid();
 	}
 
+    // Update CloudFlare zone ID if CloudFlare domain was changed
+    if ( isset( $newvalue['cloudflare_domain'], $oldvalue['cloudflare_domain'] ) && $newvalue['cloudflare_domain'] != $oldvalue['cloudflare_domain'] && phpversion() >= '5.4' ) {
+        require( WP_ROCKET_ADMIN_PATH . 'compat/cf-options-5.4.php' );
+    }
+
 	// Save old CloudFlare settings
 	if ( ( isset( $newvalue['cloudflare_auto_settings'], $oldvalue['cloudflare_auto_settings'] ) && $newvalue['cloudflare_auto_settings'] != $oldvalue['cloudflare_auto_settings'] && $newvalue['cloudflare_auto_settings'] == 1 ) ) {
 		$cf_settings = get_rocket_cloudflare_settings();
-		$cf_settings = array( $cf_settings->cache_lvl, (int) $cf_settings->minify, ! is_string( $cf_settings->async ) ? (int) $cf_settings->async : $cf_settings->async );
-		$cf_settings = array_filter( $cf_settings );
-		
-		$newvalue['cloudflare_old_settings'] = ( isset ( $cf_settings ) ) ? implode( ',' , $cf_settings ) : '';
+		if ( ( bool ) $cf_settings ) {
+    		$newvalue['cloudflare_old_settings'] = ( isset ( $cf_settings ) ) ? implode( ',' , array_filter( $cf_settings ) ) : '';
+		}
 	}
 	
 	// Checked the SSL option if the whole website is on SSL
@@ -1067,4 +1151,49 @@ function rocket_import_upload_form() {
 		</p>
 		<?php submit_button( __( 'Upload file and import settings', 'rocket' ), 'button', 'import' );
 	}
+}
+
+/**
+ * Count the number of items concerned by the database cleanup
+ *
+ * @since 2.8
+ * @author Remy Perona
+ *
+ * @param string $type Item type to count
+ * @return int Number of items for this type
+ */
+function rocket_database_count_cleanup_items( $type ) {
+    global $wpdb;
+
+    $count = 0;
+
+    switch( $type ) {
+        case 'revisions':
+            $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = %s", 'revision' ) );
+            break;
+        case 'auto_drafts':
+            $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_status = %s", 'auto-draft' ) );
+            break;
+        case 'trashed_posts':
+            $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_status = %s", 'trash' ) );
+            break;
+        case 'spam_comments':
+            $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(comment_ID) FROM $wpdb->comments WHERE comment_approved = %s", 'spam' ) );
+            break;
+        case 'trashed_comments':
+            $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(comment_ID) FROM $wpdb->comments WHERE (comment_approved = %s OR comment_approved = %s)", 'trash', 'post-trashed' ) );
+            break;
+        case 'expired_transients':
+            $time = isset( $_SERVER['REQUEST_TIME'] ) ? (int) $_SERVER['REQUEST_TIME'] : time();
+            $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(option_name) FROM $wpdb->options WHERE option_name LIKE %s AND option_value < %d;", '_transient_timeout%', $time ) );
+            break;
+        case 'all_transients':
+            $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(option_id) FROM $wpdb->options WHERE option_name LIKE %s", '%_transient_%' ) );
+            break;
+        case 'optimize_tables':
+            $count = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema = %s and Engine <> 'InnoDB' and data_free > 0", DB_NAME ) );
+            break;
+    }
+
+    return $count;
 }

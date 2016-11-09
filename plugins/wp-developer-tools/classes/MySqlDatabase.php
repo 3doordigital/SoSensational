@@ -35,7 +35,7 @@ class MySqlDatabase {
 	}
 	
 	function connect($new = false) {
-		$this->conn = mysql_connect($this->host, $this->user, $this->password, $new);
+		$this->conn = mysqli_connect($this->host, $this->user, $this->password, $new);
 		if(!$this->conn) {
 			throw new Exception('We\'re working on a few connection issues.');
 		}
@@ -44,14 +44,14 @@ class MySqlDatabase {
 	function changeDatabase($database) {
 		$this->database = $database;
 		if($this->conn) {
-			if(!mysql_select_db($database, $this->conn)) {
-				throw new CustomException('We\'re working on a few connection issues.');
+			if(!mysqli_select_db($this->conn,$database)) {
+				throw new Exception('We\'re working on a few connection issues.');
 			}
 		}
 	}
 	
 	function lazyLoadConnection() {
-		$this->connect(true);
+		$this->connect($this->database);
 		if($this->database) $this->changeDatabase($this->database);
 	}
 	
@@ -62,28 +62,29 @@ class MySqlDatabase {
 	function query($sql) {
 		if(!$this->conn) $this->lazyLoadConnection();
 		$start = $this->getTime();
-		$rs = mysql_query($sql, $this->conn);
+		$rs = mysqli_query($this->conn,$sql);
 		
 		$this->lastresult = array();
 		$num_rows = 0;
-		while ( $row = @mysql_fetch_object( $rs ) ) {
+		while ( $row = @mysqli_fetch_object( $rs ) ) {
 			$this->lastresult[$num_rows] = $row;
 			$num_rows++;
 		}
-		//$row = mysql_fetch_array($rs);
+		//$row = mysqli_fetch_array($rs);
 		$this->queryCount += 1;
 		$this->logQuery($sql, $start, strlen(serialize($this->lastresult)));
-		if(!$rs) {
-			throw new Exception('Could not execute query.');
-		}
+                // Comment out this, as preventing JS panel to load
+		//if(!$rs) {
+		//	throw new Exception('Could not execute query.'.$sql);
+		//}
 		
 		//return $rs;
 		return $sql;
 	}
 	
 	function fetch_array($sql) {
-		$rs = mysql_query($sql, $this->conn);
-		$row = mysql_fetch_array($rs, MYSQL_ASSOC);
+		$rs = mysqli_query($this->conn,$sql);
+		$row = mysqli_fetch_array($rs, MYSQLI_ASSOC);
 		return $row;
 	}
 	
@@ -126,7 +127,7 @@ class MySqlDatabase {
 	
 	function __destruct()  {
 		remove_filter('query',array(&$this,'query'));
-		@mysql_close($this->conn);
+		@mysqli_close($this->conn);
 	}
 	
 }

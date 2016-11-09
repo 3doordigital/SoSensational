@@ -72,10 +72,7 @@ final class ITSEC_Logger_All_Logs extends ITSEC_WP_List_Table {
 	 *
 	 **/
 	function column_host( $item ) {
-		if ( ! class_exists( 'ITSEC_Lib_IP_Tools' ) ) {
-			$itsec_core = ITSEC_Core::get_instance();
-			require_once( dirname( $itsec_core->get_plugin_file() ) . '/core/lib/class-itsec-lib-ip-tools.php' );
-		}
+		require_once( ITSEC_Core::get_core_dir() . '/lib/class-itsec-lib-ip-tools.php' );
 
 		$r = array();
 		if ( ! is_array( $item['host'] ) ) {
@@ -151,9 +148,9 @@ final class ITSEC_Logger_All_Logs extends ITSEC_WP_List_Table {
 		global $itsec_logger;
 
 		$raw_data = maybe_unserialize( $item['data'] );
-		
+
 		$data = apply_filters( "itsec_logger_filter_{$item['type']}_data_column_details", '', $raw_data );
-		
+
 		if ( empty( $data ) ) {
 			if ( is_array( $raw_data ) && sizeof( $raw_data ) > 0 ) {
 

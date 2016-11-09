@@ -84,8 +84,9 @@ if (isset($_GET['p_type'])) {
     if ($_GET['p_type'] == "boutiques") {
         $user_query = new WP_User_Query(array('role' => 'boutique_role', 'fields' => 'ID'));
     }
-
-    $users = $user_query->get_results();
+	if($user_query){
+	    $users = $user_query->get_results();	
+	}
 }
 
 if (empty($mainChildren)):

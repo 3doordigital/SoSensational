@@ -4,9 +4,15 @@ class wfCrawl {
 	public static function isCrawler($UA){
 		$browscap = new wfBrowscap();
 		$b = $browscap->getBrowser($UA);
-		if($b && isset($b['Crawler']) && $b['Crawler']){
+		if (!$b || $b['Parent'] == 'DefaultProperties') {
+			$log = new wfLog(wfConfig::get('apiKey'), wfUtils::getWPVersion());
+			$IP = wfUtils::getIP(); 
+			return !(isset($_COOKIE['wordfence_verifiedHuman']) && $log->validateVerifiedHumanCookie($_COOKIE['wordfence_verifiedHuman'], $UA, $IP));
+		}
+		else if (isset($b['Crawler']) && $b['Crawler']) {
 			return true;
 		}
+		
 		return false;
 	}
 	public static function verifyCrawlerPTR($hostPattern, $IP){
@@ -47,20 +53,18 @@ class wfCrawl {
 			return false;
 		}
 	}
-	public static function isGooglebot(){
-		$UA = (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
-		if(preg_match('/Googlebot\/\d\.\d/', $UA)){ // UA: Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html) or (rarely used): Googlebot/2.1 (+http://www.google.com/bot.html)
-			return true;
+	public static function isGooglebot($userAgent = null){
+		if ($userAgent === null) {
+			$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		}
-		return false;
+		return (bool) preg_match('/Googlebot\/\d\.\d/', $userAgent);
 	}
-	public static function isGoogleCrawler($UA = null){
-		if ($UA === null) {
-			$UA = (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
+	public static function isGoogleCrawler($userAgent = null){
+		if ($userAgent === null) {
+			$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		}
-
-		foreach(self::$googPat as $pat){
-			if(preg_match($pat . 'i', $UA)){
+		foreach (self::$googPat as $pat) {
+			if (preg_match($pat . 'i', $userAgent)) {
 				return true;
 			}
 		}

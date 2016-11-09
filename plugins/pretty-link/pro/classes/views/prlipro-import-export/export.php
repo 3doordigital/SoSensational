@@ -4,7 +4,7 @@ if(!defined('ABSPATH'))
 
 require_once('prlipro-config.php');
 
-if(is_user_logged_in() and current_user_can('level_10'))
+if(is_user_logged_in() and current_user_can( 'update_core' ))
 {
   $filename = date("ymdHis",time()) . '_pretty_link_links.csv';
   header("Content-Type: text/x-csv");

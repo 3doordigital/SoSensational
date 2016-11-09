@@ -14,7 +14,7 @@ if(!defined('ABSPATH'))
         if($current_page > 1)
         {
           ?>
-          <a class='prev page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=<?php echo ($current_page-1); ?>&size=<?php echo $_REQUEST['size']; ?>'>&laquo;</a>
+          <a class='prev page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=<?php echo ($current_page-1); ?>&size=<?php echo (int)$_REQUEST['size']; ?>'>&laquo;</a>
           <?php
         }
       
@@ -28,7 +28,7 @@ if(!defined('ABSPATH'))
         else
         {
           ?>
-          <a class='page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=1&size=<?php echo $_REQUEST['size']; ?>'>1</a>
+          <a class='page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=1&size=<?php echo (int)$_REQUEST['size']; ?>'>1</a>
           <?php
         }
       
@@ -54,7 +54,7 @@ if(!defined('ABSPATH'))
           else
           {
             ?>
-            <a class='page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=<?php echo $i; ?>&size=<?php echo $_REQUEST['size']; ?>'><?php echo $i; ?></a>
+            <a class='page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=<?php echo $i; ?>&size=<?php echo (int)$_REQUEST['size']; ?>'><?php echo $i; ?></a>
             <?php
           }
         }
@@ -77,7 +77,7 @@ if(!defined('ABSPATH'))
         else
         {
           ?>
-          <a class='page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=<?php echo $page_count; ?>&size=<?php echo $_REQUEST['size']; ?>'><?php echo $page_count; ?></a>
+          <a class='page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=<?php echo $page_count; ?>&size=<?php echo (int)$_REQUEST['size']; ?>'><?php echo $page_count; ?></a>
           <?php
         }
       
@@ -85,7 +85,7 @@ if(!defined('ABSPATH'))
         if($current_page < $page_count)
         {
           ?>
-          <a class='next page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=<?php echo ($current_page + 1); ?>&size=<?php echo $_REQUEST['size']; ?>'>&raquo;</a>
+          <a class='next page-numbers' href='?page=<?php echo esc_html($_REQUEST['page'].$page_params); ?>&paged=<?php echo ($current_page + 1); ?>&size=<?php echo (int)$_REQUEST['size']; ?>'>&raquo;</a>
           <?php
         }
         ?>

@@ -10,7 +10,7 @@ Plugin URI: https://wordpress.org/plugins/wp-developer-tools/
 Description: Collection of useful developer tools
 Author: PHK Corporation
 Author URI: http://www.phkcorp.com
-Version: 1.0.1
+Version: 1.1
 License: GPLv2
 */
 
@@ -324,14 +324,14 @@ if (!class_exists( 'WP_Developer_Tools' ))
 		}
 
 		function wpdt_init() {
-			if (!is_admin() && current_user_can("level_10") && get_option('wpdt_quick_profiler')) {
+			if (!is_admin() && current_user_can("activate_plugins") && get_option('wpdt_quick_profiler')) {
 				$this->db = new MySqlDatabase(DB_HOST,DB_USER,DB_PASSWORD);
-				$this->db->connect(true);
+				$this->db->connect(DB_NAME);
 				$this->db->changeDatabase(DB_NAME);
 
 				$this->profiler = new PhpQuickProfiler(PhpQuickProfiler::getMicroTime());
 
-				Console::logSpeed('Initializing...');
+                                Console::logSpeed('Initializing...');
 				if (get_option('wpdt_log_predefined_php') == 'checked') {
 
 					//PHP Predefined Variables
@@ -360,7 +360,7 @@ if (!class_exists( 'WP_Developer_Tools' ))
 		}
 
 		function wpdt_end() {
-			if (!is_admin() && current_user_can("level_10") && get_option('wpdt_quick_profiler')) {
+			if (!is_admin() && current_user_can("activate_plugins") && get_option('wpdt_quick_profiler')) {
 				Console::logSpeed('Concluding!');
 				$this->profiler->display($this->db);
 				remove_action('init',array(&$this,'wpdt_init'));
@@ -381,6 +381,11 @@ if (!class_exists( 'WP_Developer_Tools' ))
 		function activate()
 		{
 			global $wp_roles;
+                        
+                        if (!function_exists('mysqli_connect')) {
+                            deactivate_plugins(basename(__FILE__)); 
+                            wp_die('Missing MySQLi extension');
+                        }
 
 			add_option('wpdt_quick_profiler',FALSE);
 			add_option('save_log_predefined_php',FALSE);
